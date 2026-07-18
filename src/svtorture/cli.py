@@ -148,7 +148,7 @@ def _prepare(
         )
     adapter = adapter_for(
         tool.adapter,
-        rules_path=ROOT / "toolchains" / "diagnostic-rules.toml",
+        rules_path=ROOT / "tools" / "diagnostic-rules.toml",
     )
     if tool.execution is ExecutionBackend.DOCKER:
         if image is None:
@@ -246,7 +246,7 @@ def list_items(
             )
     elif kind == "suites":
         for suite in catalog.suites.values():
-            typer.echo(f"{suite.id}\t{len(suite.cases)}\t{suite.description}")
+            typer.echo(f"{suite.id}\t{len(catalog.suite_cases[suite.id])}\t{suite.description}")
     elif kind == "tools":
         for tool in catalog.tools.tools:
             profiles = ",".join(profile.id for profile in tool.profiles)

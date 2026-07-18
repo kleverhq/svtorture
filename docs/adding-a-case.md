@@ -1,18 +1,22 @@
 # Adding a case
 
 Start from [`templates/case/`](../templates/case/) and place the finished case in
-`cases/<stable-kebab-id>/`. Add its ID to `suites/all.toml` and to
-`suites/smoke.toml` only when it adds a fast, distinct smoke path.
+`cases/<stable-kebab-id>/`. `suites/all.toml` selects it automatically through
+`["*"]`; add it to `suites/smoke.toml` only when it adds a fast, distinct smoke
+path.
 
 ## 1. Map the requirement
 
-Add or reuse one entry in `standards/requirements.toml`. It needs one stable ID,
-the 2023 chapter/clause and concise anchor, normativity, testability, coverage
-state, related clauses, tags, and a rule for every supported revision. Do not
-copy substantial IEEE text.
+Add or reuse one entry in the matching
+`standards/requirements/chapter-NN.toml`. It needs one stable ID, the 2023
+chapter/clause, a concise anchor, related clauses, controlled tags, and a rule
+for every supported revision. Add a new chapter to `standards/index.toml`.
+Requirements in this inventory are normative and testable in principle by
+definition. Coverage is derived from case mappings rather than stored.
 
 The case names exactly one primary requirement. Related requirements are context,
-not scoring units.
+not scoring units. Reuse tags from `standards/tags.toml`; add a concise registry
+entry when a genuinely new semantic category is needed.
 
 ## 2. Select revision, phase, and oracle
 
@@ -41,14 +45,7 @@ Multi-file cases put package/compilation-unit order directly in `sources`.
 Negative evidence should locate the intended token or construct, not a later
 cascade.
 
-## 4. Record provenance
-
-Use `original`, `adapted`, or `inspired`. Adapted/inspired cases require the
-source URL or stable reference label, full source commit/fingerprint, path,
-license note, and a clear account of the rewrite. Existing results are not an
-oracle.
-
-## 5. Validate
+## 4. Validate
 
 ```text
 just schemas

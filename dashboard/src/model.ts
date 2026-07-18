@@ -50,7 +50,7 @@ export interface Filters {
   clause: string;
   phase: string;
   expectation: string;
-  state: string;
+  casePresence: string;
   tag: string;
   tool: string;
   status: string;
@@ -68,7 +68,7 @@ export const EMPTY_FILTERS: Filters = {
   clause: "",
   phase: "",
   expectation: "",
-  state: "",
+  casePresence: "",
   tag: "",
   tool: "",
   status: "",
@@ -174,11 +174,18 @@ export function filterCorpus(
   const changed = changedCaseKeys(dataset, campaign);
   const disagreement = disagreementCaseKeys(campaign);
   const resultMap = resultsByKey(campaign);
+  const requirementMap = new Map(
+    dataset.requirements.map((requirement) => [requirement.id, requirement]),
+  );
+  const allCasesByRequirement = new Map<string, CaseDefinition[]>();
+  for (const testCase of dataset.cases) {
+    const linked = allCasesByRequirement.get(testCase.primary_requirement) ?? [];
+    linked.push(testCase);
+    allCasesByRequirement.set(testCase.primary_requirement, linked);
+  }
   const needle = filters.search.toLocaleLowerCase();
   const cases = dataset.cases.filter((testCase) => {
-    const requirement = dataset.requirements.find(
-      (item) => item.id === testCase.primary_requirement,
-    );
+    const requirement = requirementMap.get(testCase.primary_requirement);
     const candidateResults = [...resultMap.values()].filter(
       (result) =>
         result.case_id === testCase.id &&
@@ -193,7 +200,6 @@ export function filterCorpus(
       requirement?.id ?? "",
       requirement?.clause ?? "",
       requirement?.paragraph_anchor ?? "",
-      testCase.provenance.notes,
       ...testCase.tags,
       ...candidateResults.flatMap((result) => [
         result.status,
@@ -218,7 +224,6 @@ export function filterCorpus(
       (!filters.clause || requirement?.clause.startsWith(filters.clause)) &&
       (!filters.phase || testCase.target_phase === filters.phase) &&
       (!filters.expectation || testCase.expectation === filters.expectation) &&
-      (!filters.state || requirement?.coverage_state === filters.state) &&
       (!filters.tag ||
         testCase.tags.includes(filters.tag) ||
         requirement?.tags.includes(filters.tag)) &&
@@ -230,11 +235,49 @@ export function filterCorpus(
       (!filters.disagreement || disagreement.has(testCase.id))
     );
   });
-  const requirementIds = new Set(cases.map((testCase) => testCase.primary_requirement));
+  const matchedCaseIds = new Set(cases.map((testCase) => testCase.id));
+  const caseSpecificFilter = Boolean(
+    filters.phase ||
+      filters.expectation ||
+      filters.status ||
+      filters.reason ||
+      filters.changed ||
+      filters.disagreement,
+  );
+  const requirements = dataset.requirements.filter((requirement) => {
+    const linkedCases = allCasesByRequirement.get(requirement.id) ?? [];
+    const matchingCases = linkedCases.filter((testCase) => matchedCaseIds.has(testCase.id));
+    const hasCases = linkedCases.length > 0;
+    const rule = filters.revision
+      ? requirement.revision_applicability[filters.revision]
+      : undefined;
+    const searchable = [
+      requirement.id,
+      requirement.summary,
+      requirement.clause,
+      requirement.paragraph_anchor,
+      ...requirement.tags,
+    ]
+      .join(" ")
+      .toLocaleLowerCase();
+    return (
+      (!needle || searchable.includes(needle) || matchingCases.length > 0) &&
+      (!filters.revision ||
+        rule?.status === "applicable" ||
+        rule?.status === "same-rule-different-clause") &&
+      (!filters.chapter || String(requirement.chapter) === filters.chapter) &&
+      (!filters.clause || requirement.clause.startsWith(filters.clause)) &&
+      (!filters.casePresence ||
+        (filters.casePresence === "with-cases" ? hasCases : !hasCases)) &&
+      (!filters.tag ||
+        requirement.tags.includes(filters.tag) ||
+        matchingCases.some((testCase) => testCase.tags.includes(filters.tag))) &&
+      (!caseSpecificFilter || matchingCases.length > 0)
+    );
+  });
+  const requirementIds = new Set(requirements.map((requirement) => requirement.id));
   return {
-    requirements: dataset.requirements.filter((requirement) =>
-      requirementIds.has(requirement.id),
-    ),
-    cases,
+    requirements,
+    cases: cases.filter((testCase) => requirementIds.has(testCase.primary_requirement)),
   };
 }

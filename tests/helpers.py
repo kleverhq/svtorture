@@ -192,7 +192,9 @@ def copy_catalog(
     return Catalog(
         root=Path(catalog.root),
         inventory=catalog.inventory,
+        tags=catalog.tags,
         cases=cases or dict(catalog.cases),
         suites=dict(catalog.suites),
+        suite_cases=dict(catalog.suite_cases),
         tools=catalog.tools,
     )

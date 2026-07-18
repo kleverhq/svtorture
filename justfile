@@ -95,7 +95,7 @@ commercial suite="all":
 
 # Create the gitignored private-wrapper configuration once.
 private-config:
-    test -e toolchains/private.toml || cp toolchains/private.example.toml toolchains/private.toml
+    test -e tools/private.toml || cp tools/private.example.toml tools/private.toml
 
 # Regenerate deterministic frontend fixture data.
 fixture:

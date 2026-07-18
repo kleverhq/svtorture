@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import fixture from "../public/data/dataset.json";
+import fixture from "../../fixtures/dashboard/data/dataset.json";
 import {
   aggregateStatus,
   EMPTY_FILTERS,
@@ -38,6 +38,29 @@ describe("requirements model", () => {
     );
     expect(filtered.requirements).toHaveLength(1);
     expect(filtered.cases[0]?.id).toBe("ch13-output-copyout-width");
+  });
+
+  it("derives case coverage and keeps uncovered requirements visible", () => {
+    const seed = dataset.requirements[0];
+    if (!seed) throw new Error("fixture has no requirements");
+    const uncovered = {
+      ...seed,
+      id: "SV-2023-04-UNMAPPED-FIXTURE",
+      summary: "Fixture requirement without a mapped case.",
+    };
+    const extended = {
+      ...dataset,
+      requirements: [...dataset.requirements, uncovered],
+    };
+    const filtered = filterCorpus(
+      extended,
+      { ...EMPTY_FILTERS, casePresence: "without-cases" },
+      selectedCampaign(extended, ""),
+    );
+    expect(filtered.requirements.map((requirement) => requirement.id)).toEqual([
+      uncovered.id,
+    ]);
+    expect(filtered.cases).toHaveLength(0);
   });
 
   it("uses a failure-safe aggregate precedence", () => {

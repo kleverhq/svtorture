@@ -3,13 +3,13 @@
 SVTORTURE keeps the units of evidence distinct:
 
 ```text
-standards/requirements.toml
+standards/index.toml + requirements/chapter-NN.toml
           │
           ▼
 cases/<id>/case.toml + ordered sources
           │
           ▼
-toolchains/tools.toml ──► adapter ──► typed ExecutionPlan
+tools/tools.toml ───────► adapter ──► typed ExecutionPlan
                                       │
                                       ▼
                               StageObservation[]

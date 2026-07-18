@@ -1,6 +1,6 @@
 # Adding a tool
 
-Every tool is registered in `toolchains/tools.toml` and implements the adapter
+Every tool is registered in `tools/tools.toml` and implements the adapter
 contract in `src/svtorture/adapters/`. Adapters construct typed stages and
 normalize diagnostics; they never decide conformance.
 
@@ -54,7 +54,7 @@ differently named commercial simulator.
 ## Diagnostics and tests
 
 Prefer source/line normalization. A locationless message/code rule belongs in
-`toolchains/diagnostic-rules.toml`, is scoped to adapter and case, and receives
+`tools/diagnostic-rules.toml`, is scoped to adapter and case, and receives
 separate review.
 
 Add tests for:

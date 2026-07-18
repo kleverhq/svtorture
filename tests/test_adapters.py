@@ -165,7 +165,7 @@ def test_locationless_adapter_rule_is_separate_from_case(catalog: Catalog, root:
     case: LoadedCase = catalog.cases["ch05-base-format-whitespace-rejected"]
     adapter = adapter_for(
         "vcs",
-        rules_path=root / "toolchains" / "diagnostic-rules.toml",
+        rules_path=root / "tools" / "diagnostic-rules.toml",
     )
     diagnostics, _ = adapter.normalize_diagnostics(
         "",

@@ -74,7 +74,7 @@ export function MatrixView({
         ),
       }),
       helper.accessor("summary", {
-        header: "Covered normative requirement",
+        header: "Normative requirement",
         cell: (context) => (
           <div>
             <strong className="matrix__requirement-id">{context.row.original.id}</strong>
@@ -169,16 +169,20 @@ export function MatrixView({
                       <p>{row.original.paragraph_anchor}</p>
                     </div>
                     <div className="matrix__cases">
-                      {supporting.map((testCase) => (
-                        <article key={testCase.id}>
-                          <div>
-                            <span className="phase">{testCase.target_phase}</span>
-                            <span className="phase">{testCase.expectation}</span>
-                          </div>
-                          <strong>{testCase.id}</strong>
-                          <span>{testCase.title}</span>
-                        </article>
-                      ))}
+                      {supporting.length ? (
+                        supporting.map((testCase) => (
+                          <article key={testCase.id}>
+                            <div>
+                              <span className="phase">{testCase.target_phase}</span>
+                              <span className="phase">{testCase.expectation}</span>
+                            </div>
+                            <strong>{testCase.id}</strong>
+                            <span>{testCase.title}</span>
+                          </article>
+                        ))
+                      ) : (
+                        <p>No case currently maps to this requirement.</p>
+                      )}
                     </div>
                   </div>
                 )}

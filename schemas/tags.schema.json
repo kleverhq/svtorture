@@ -1,0 +1,47 @@
+{
+  "$defs": {
+    "TagDefinition": {
+      "additionalProperties": false,
+      "properties": {
+        "description": {
+          "maxLength": 4096,
+          "minLength": 1,
+          "title": "Description",
+          "type": "string"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "description"
+      ],
+      "title": "TagDefinition",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "maximum": 1,
+      "minimum": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "tags": {
+      "items": {
+        "$ref": "#/$defs/TagDefinition"
+      },
+      "title": "Tags",
+      "type": "array"
+    }
+  },
+  "required": [
+    "schema_version",
+    "tags"
+  ],
+  "title": "TagRegistry",
+  "type": "object"
+}

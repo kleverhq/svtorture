@@ -1,0 +1,39 @@
+{
+  "$defs": {
+    "StandardRevision": {
+      "enum": [
+        "1800-2012",
+        "1800-2017",
+        "1800-2023"
+      ],
+      "title": "StandardRevision",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "authority": {
+      "$ref": "#/$defs/StandardRevision"
+    },
+    "chapters": {
+      "items": {
+        "type": "integer"
+      },
+      "title": "Chapters",
+      "type": "array"
+    },
+    "schema_version": {
+      "maximum": 1,
+      "minimum": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "schema_version",
+    "authority",
+    "chapters"
+  ],
+  "title": "StandardsIndex",
+  "type": "object"
+}

@@ -86,73 +86,6 @@
       "title": "Phase",
       "type": "string"
     },
-    "Provenance": {
-      "additionalProperties": false,
-      "properties": {
-        "license": {
-          "maxLength": 4096,
-          "minLength": 1,
-          "title": "License",
-          "type": "string"
-        },
-        "notes": {
-          "maxLength": 4096,
-          "minLength": 1,
-          "title": "Notes",
-          "type": "string"
-        },
-        "origin": {
-          "pattern": "^(original|adapted|inspired)$",
-          "title": "Origin",
-          "type": "string"
-        },
-        "source_commit": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Source Commit"
-        },
-        "source_path": {
-          "anyOf": [
-            {
-              "maxLength": 500,
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Source Path"
-        },
-        "source_url": {
-          "anyOf": [
-            {
-              "maxLength": 500,
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Source Url"
-        }
-      },
-      "required": [
-        "origin",
-        "license",
-        "notes"
-      ],
-      "title": "Provenance",
-      "type": "object"
-    },
     "ResourceLimits": {
       "additionalProperties": false,
       "properties": {
@@ -248,9 +181,6 @@
       "title": "Primary Requirement",
       "type": "string"
     },
-    "provenance": {
-      "$ref": "#/$defs/Provenance"
-    },
     "related_requirements": {
       "default": [],
       "items": {
@@ -296,6 +226,34 @@
     "tags": {
       "default": [],
       "items": {
+        "enum": [
+          "addition",
+          "conditional",
+          "context",
+          "conversion",
+          "copy-out",
+          "four-state",
+          "generate",
+          "hierarchy",
+          "import",
+          "include",
+          "layout",
+          "lexical",
+          "literal",
+          "macro",
+          "module",
+          "nba",
+          "output",
+          "package",
+          "packed-struct",
+          "ports",
+          "preprocessor",
+          "scheduling",
+          "sizing",
+          "subroutine",
+          "two-state",
+          "unique"
+        ],
         "type": "string"
       },
       "title": "Tags",
@@ -335,8 +293,7 @@
     "expectation",
     "evidence",
     "sources",
-    "oracle",
-    "provenance"
+    "oracle"
   ],
   "title": "CaseDefinition",
   "type": "object"

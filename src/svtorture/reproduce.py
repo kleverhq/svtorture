@@ -141,7 +141,7 @@ def reproduce_case(
     loaded = catalog.cases[case_id]
     adapter = adapter_for(
         campaign_tool.definition.adapter,
-        rules_path=checkout / "toolchains" / "diagnostic-rules.toml",
+        rules_path=checkout / "tools" / "diagnostic-rules.toml",
     )
     wrapper = None
     image = None

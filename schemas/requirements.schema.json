@@ -11,24 +11,6 @@
       "title": "Applicability",
       "type": "string"
     },
-    "CoverageState": {
-      "enum": [
-        "covered",
-        "partial",
-        "deferred",
-        "not-testable"
-      ],
-      "title": "CoverageState",
-      "type": "string"
-    },
-    "Normativity": {
-      "enum": [
-        "normative",
-        "informative"
-      ],
-      "title": "Normativity",
-      "type": "string"
-    },
     "Requirement": {
       "additionalProperties": false,
       "properties": {
@@ -43,15 +25,9 @@
           "title": "Clause",
           "type": "string"
         },
-        "coverage_state": {
-          "$ref": "#/$defs/CoverageState"
-        },
         "id": {
           "title": "Id",
           "type": "string"
-        },
-        "normativity": {
-          "$ref": "#/$defs/Normativity"
         },
         "paragraph_anchor": {
           "maxLength": 4096,
@@ -89,13 +65,38 @@
         "tags": {
           "default": [],
           "items": {
+            "enum": [
+              "addition",
+              "conditional",
+              "context",
+              "conversion",
+              "copy-out",
+              "four-state",
+              "generate",
+              "hierarchy",
+              "import",
+              "include",
+              "layout",
+              "lexical",
+              "literal",
+              "macro",
+              "module",
+              "nba",
+              "output",
+              "package",
+              "packed-struct",
+              "ports",
+              "preprocessor",
+              "scheduling",
+              "sizing",
+              "subroutine",
+              "two-state",
+              "unique"
+            ],
             "type": "string"
           },
           "title": "Tags",
           "type": "array"
-        },
-        "testability": {
-          "$ref": "#/$defs/Testability"
         }
       },
       "required": [
@@ -105,9 +106,6 @@
         "clause",
         "paragraph_anchor",
         "summary",
-        "normativity",
-        "testability",
-        "coverage_state",
         "revision_applicability"
       ],
       "title": "Requirement",
@@ -159,15 +157,6 @@
         "1800-2023"
       ],
       "title": "StandardRevision",
-      "type": "string"
-    },
-    "Testability": {
-      "enum": [
-        "testable",
-        "non-testable",
-        "deferred"
-      ],
-      "title": "Testability",
       "type": "string"
     }
   },

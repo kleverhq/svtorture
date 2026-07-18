@@ -1,5 +1,11 @@
 #!/usr/bin/env python3
-"""Aggregate every downloaded nightly campaign and record honest completeness."""
+"""Turn nightly job artifacts into one honest campaign record.
+
+The nightly workflow calls this helper after its per-tool jobs finish. It
+combines every campaign it can find and records expected tools that produced no
+artifact, so publication cannot silently present a partial run as complete. The
+output is a campaign path consumed by the Pages publication job.
+"""
 
 from __future__ import annotations
 

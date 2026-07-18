@@ -1,5 +1,11 @@
 #!/usr/bin/env python3
-"""Generate deterministic mixed-result dashboard data from the strict models."""
+"""Build the dashboard's deterministic example dataset.
+
+The checked-in fixture keeps frontend tests and the default static build useful
+without requiring a real campaign. ``just fixture`` regenerates the single
+canonical JSON file from strict catalog and campaign models; ``--check`` lets CI
+detect model or corpus changes that were not reflected in that fixture.
+"""
 
 from __future__ import annotations
 
@@ -271,19 +277,15 @@ def main() -> int:
     campaigns = (_campaign(catalog, 0), _campaign(catalog, 1))
     dataset = build_dataset(catalog, campaigns, visibility="local")
     serialized = json.dumps(dataset, indent=2, sort_keys=True) + "\n"
-    outputs = (
-        ROOT / "fixtures" / "dashboard" / "dataset.json",
-        ROOT / "dashboard" / "public" / "data" / "dataset.json",
-    )
-    for output in outputs:
-        if arguments.check:
-            if not output.is_file() or output.read_text(encoding="utf-8") != serialized:
-                print(f"stale fixture: {output.relative_to(ROOT)}")
-                return 1
-        else:
-            output.parent.mkdir(parents=True, exist_ok=True)
-            output.write_text(serialized, encoding="utf-8")
-            print(output.relative_to(ROOT))
+    output = ROOT / "fixtures" / "dashboard" / "data" / "dataset.json"
+    if arguments.check:
+        if not output.is_file() or output.read_text(encoding="utf-8") != serialized:
+            print(f"stale fixture: {output.relative_to(ROOT)}")
+            return 1
+    else:
+        output.parent.mkdir(parents=True, exist_ok=True)
+        output.write_text(serialized, encoding="utf-8")
+        print(output.relative_to(ROOT))
     return 0
 
 

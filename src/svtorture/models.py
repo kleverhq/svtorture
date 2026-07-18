@@ -65,24 +65,6 @@ class OracleKind(StrEnum):
     DIAGNOSTIC_AT_ANCHOR = "diagnostic-at-anchor"
 
 
-class Normativity(StrEnum):
-    NORMATIVE = "normative"
-    INFORMATIVE = "informative"
-
-
-class Testability(StrEnum):
-    TESTABLE = "testable"
-    NON_TESTABLE = "non-testable"
-    DEFERRED = "deferred"
-
-
-class CoverageState(StrEnum):
-    COVERED = "covered"
-    PARTIAL = "partial"
-    DEFERRED = "deferred"
-    NOT_TESTABLE = "not-testable"
-
-
 class Distribution(StrEnum):
     OPEN_SOURCE = "open-source"
     COMMERCIAL = "commercial"
@@ -189,9 +171,6 @@ class Requirement(StrictModel):
     clause: str = Field(pattern=r"^[0-9]+(?:\.[0-9]+)*$")
     paragraph_anchor: SafeText
     summary: SafeText
-    normativity: Normativity
-    testability: Testability
-    coverage_state: CoverageState
     related_clauses: tuple[str, ...] = ()
     tags: tuple[str, ...] = ()
     revision_applicability: dict[StandardRevision, RevisionRule]
@@ -225,6 +204,8 @@ class Requirement(StrictModel):
             raise ValueError("duplicate tags")
         if any(ID_RE.fullmatch(tag) is None for tag in value):
             raise ValueError("tags must use lowercase kebab-case")
+        if tuple(sorted(value)) != value:
+            raise ValueError("tags must be sorted")
         return value
 
     @model_validator(mode="after")
@@ -254,6 +235,70 @@ class RequirementInventory(StrictModel):
         return self
 
 
+class StandardsIndex(StrictModel):
+    schema_version: SchemaVersion
+    authority: StandardRevision
+    chapters: tuple[int, ...]
+
+    @model_validator(mode="after")
+    def valid_index(self) -> Self:
+        if self.authority is not StandardRevision.IEEE_1800_2023:
+            raise ValueError("standards authority must be IEEE 1800-2023")
+        if (
+            not self.chapters
+            or len(self.chapters) != len(set(self.chapters))
+            or tuple(sorted(self.chapters)) != self.chapters
+            or any(chapter < 1 or chapter > 41 for chapter in self.chapters)
+        ):
+            raise ValueError("standards chapters must be unique, sorted, and in range 1-41")
+        return self
+
+
+class RequirementChapter(StrictModel):
+    schema_version: SchemaVersion
+    chapter: int = Field(ge=1, le=41)
+    requirements: tuple[Requirement, ...]
+
+    @model_validator(mode="after")
+    def valid_chapter(self) -> Self:
+        if not self.requirements:
+            raise ValueError("requirement chapter must not be empty")
+        ids = [requirement.id for requirement in self.requirements]
+        if len(ids) != len(set(ids)):
+            raise ValueError("duplicate requirement ids in chapter")
+        if any(requirement.chapter != self.chapter for requirement in self.requirements):
+            raise ValueError("requirement chapter does not match chapter file")
+        if ids != sorted(ids):
+            raise ValueError("requirements must be sorted by id")
+        return self
+
+
+class TagDefinition(StrictModel):
+    id: str
+    description: SafeText
+
+    @field_validator("id")
+    @classmethod
+    def valid_id(cls, value: str) -> str:
+        if ID_RE.fullmatch(value) is None:
+            raise ValueError("tag id must use lowercase kebab-case")
+        return value
+
+
+class TagRegistry(StrictModel):
+    schema_version: SchemaVersion
+    tags: tuple[TagDefinition, ...]
+
+    @model_validator(mode="after")
+    def unique_and_sorted(self) -> Self:
+        ids = [tag.id for tag in self.tags]
+        if not ids or len(ids) != len(set(ids)):
+            raise ValueError("tag ids must be nonempty and unique")
+        if ids != sorted(ids):
+            raise ValueError("tag registry must be sorted by id")
+        return self
+
+
 class ResourceLimits(StrictModel):
     timeout_seconds: int = Field(default=30, ge=1, le=300)
     output_bytes: int = Field(default=65536, ge=1024, le=1_048_576)
@@ -265,30 +310,6 @@ class Oracle(StrictModel):
     kind: OracleKind
     marker: str | None = Field(default=None, max_length=256)
     anchor: str | None = Field(default=None, max_length=256)
-
-
-class Provenance(StrictModel):
-    origin: str = Field(pattern=r"^(original|adapted|inspired)$")
-    source_url: str | None = Field(default=None, max_length=500)
-    source_commit: str | None = None
-    source_path: str | None = Field(default=None, max_length=500)
-    license: SafeText
-    notes: SafeText
-
-    @field_validator("source_commit")
-    @classmethod
-    def valid_commit(cls, value: str | None) -> str | None:
-        if value is not None and SHA_RE.fullmatch(value) is None:
-            raise ValueError("source_commit must be a full lowercase SHA")
-        return value
-
-    @model_validator(mode="after")
-    def adapted_has_source(self) -> Self:
-        if self.origin in {"adapted", "inspired"} and (
-            not self.source_url or not self.source_commit or not self.source_path
-        ):
-            raise ValueError("adapted and inspired cases require complete source provenance")
-        return self
 
 
 def safe_relative_path(value: str) -> str:
@@ -324,7 +345,6 @@ class CaseDefinition(StrictModel):
     runtime_args: tuple[str, ...] = ()
     limits: ResourceLimits = ResourceLimits()
     oracle: Oracle
-    provenance: Provenance
     tags: tuple[str, ...] = ()
 
     @field_validator("id")
@@ -400,6 +420,8 @@ class CaseDefinition(StrictModel):
             raise ValueError("duplicate case tags")
         if any(ID_RE.fullmatch(tag) is None for tag in value):
             raise ValueError("case tags must use lowercase kebab-case")
+        if tuple(sorted(value)) != value:
+            raise ValueError("case tags must be sorted")
         return value
 
     @model_validator(mode="after")
@@ -451,9 +473,18 @@ class SuiteDefinition(StrictModel):
         return value
 
     @model_validator(mode="after")
-    def unique_cases(self) -> Self:
+    def valid_case_patterns(self) -> Self:
         if not self.cases or len(self.cases) != len(set(self.cases)):
-            raise ValueError("suite cases must be nonempty and unique")
+            raise ValueError("suite case patterns must be nonempty and unique")
+        if any(
+            not pattern
+            or "/" in pattern
+            or "\\" in pattern
+            or "\x00" in pattern
+            or re.fullmatch(r"[a-z0-9*?\[\]-]+", pattern) is None
+            for pattern in self.cases
+        ):
+            raise ValueError("suite case patterns must be safe case-id globs")
         return self
 
 

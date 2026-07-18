@@ -1,0 +1,192 @@
+{
+  "$defs": {
+    "Applicability": {
+      "enum": [
+        "applicable",
+        "same-rule-different-clause",
+        "changed-expectation",
+        "not-applicable",
+        "not-assessed"
+      ],
+      "title": "Applicability",
+      "type": "string"
+    },
+    "Requirement": {
+      "additionalProperties": false,
+      "properties": {
+        "chapter": {
+          "maximum": 41,
+          "minimum": 1,
+          "title": "Chapter",
+          "type": "integer"
+        },
+        "clause": {
+          "pattern": "^[0-9]+(?:\\.[0-9]+)*$",
+          "title": "Clause",
+          "type": "string"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "paragraph_anchor": {
+          "maxLength": 4096,
+          "minLength": 1,
+          "title": "Paragraph Anchor",
+          "type": "string"
+        },
+        "related_clauses": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Related Clauses",
+          "type": "array"
+        },
+        "revision_applicability": {
+          "additionalProperties": {
+            "$ref": "#/$defs/RevisionRule"
+          },
+          "propertyNames": {
+            "$ref": "#/$defs/StandardRevision"
+          },
+          "title": "Revision Applicability",
+          "type": "object"
+        },
+        "standard_revision": {
+          "$ref": "#/$defs/StandardRevision"
+        },
+        "summary": {
+          "maxLength": 4096,
+          "minLength": 1,
+          "title": "Summary",
+          "type": "string"
+        },
+        "tags": {
+          "default": [],
+          "items": {
+            "enum": [
+              "addition",
+              "conditional",
+              "context",
+              "conversion",
+              "copy-out",
+              "four-state",
+              "generate",
+              "hierarchy",
+              "import",
+              "include",
+              "layout",
+              "lexical",
+              "literal",
+              "macro",
+              "module",
+              "nba",
+              "output",
+              "package",
+              "packed-struct",
+              "ports",
+              "preprocessor",
+              "scheduling",
+              "sizing",
+              "subroutine",
+              "two-state",
+              "unique"
+            ],
+            "type": "string"
+          },
+          "title": "Tags",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "standard_revision",
+        "chapter",
+        "clause",
+        "paragraph_anchor",
+        "summary",
+        "revision_applicability"
+      ],
+      "title": "Requirement",
+      "type": "object"
+    },
+    "RevisionRule": {
+      "additionalProperties": false,
+      "properties": {
+        "clause": {
+          "anyOf": [
+            {
+              "pattern": "^[0-9]+(?:\\.[0-9]+)*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Clause"
+        },
+        "note": {
+          "anyOf": [
+            {
+              "maxLength": 500,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Note"
+        },
+        "status": {
+          "$ref": "#/$defs/Applicability"
+        }
+      },
+      "required": [
+        "status"
+      ],
+      "title": "RevisionRule",
+      "type": "object"
+    },
+    "StandardRevision": {
+      "enum": [
+        "1800-2012",
+        "1800-2017",
+        "1800-2023"
+      ],
+      "title": "StandardRevision",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "chapter": {
+      "maximum": 41,
+      "minimum": 1,
+      "title": "Chapter",
+      "type": "integer"
+    },
+    "requirements": {
+      "items": {
+        "$ref": "#/$defs/Requirement"
+      },
+      "title": "Requirements",
+      "type": "array"
+    },
+    "schema_version": {
+      "maximum": 1,
+      "minimum": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "schema_version",
+    "chapter",
+    "requirements"
+  ],
+  "title": "RequirementChapter",
+  "type": "object"
+}

@@ -1,5 +1,11 @@
 #!/usr/bin/env python3
-"""Append trusted campaigns to gh-pages and push without rewriting history."""
+"""Publish trusted campaign data through the append-only Pages branch.
+
+The Pages workflow invokes this helper after building the dashboard. It creates
+a temporary ``gh-pages`` worktree, asks the strict publisher to merge new
+campaigns with retained history, commits the resulting site, and pushes without
+rewriting existing publication history.
+"""
 
 from __future__ import annotations
 

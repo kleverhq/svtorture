@@ -7,6 +7,7 @@ import subprocess
 import tomllib
 from collections.abc import Iterable
 from dataclasses import dataclass
+from fnmatch import fnmatchcase
 from pathlib import Path, PurePosixPath
 from typing import Any
 
@@ -22,8 +23,11 @@ from svtorture.models import (
     Phase,
     RepositoryIdentity,
     Requirement,
+    RequirementChapter,
     RequirementInventory,
+    StandardsIndex,
     SuiteDefinition,
+    TagRegistry,
     ToolRegistry,
     model_to_jsonable,
 )
@@ -47,8 +51,10 @@ class LoadedCase:
 class Catalog:
     root: Path
     inventory: RequirementInventory
+    tags: TagRegistry
     cases: dict[str, LoadedCase]
     suites: dict[str, SuiteDefinition]
+    suite_cases: dict[str, tuple[str, ...]]
     tools: ToolRegistry
 
     @property
@@ -57,10 +63,10 @@ class Catalog:
 
     def selected_cases(self, suite_id: str) -> tuple[LoadedCase, ...]:
         try:
-            suite = self.suites[suite_id]
+            case_ids = self.suite_cases[suite_id]
         except KeyError as error:
             raise CatalogError(f"unknown suite {suite_id!r}") from error
-        return tuple(self.cases[case_id] for case_id in suite.cases)
+        return tuple(self.cases[case_id] for case_id in case_ids)
 
     def case_manifest_hash(self, selected: Iterable[LoadedCase] | None = None) -> str:
         cases = tuple(selected) if selected is not None else tuple(self.cases.values())
@@ -97,6 +103,71 @@ def _parse(path: Path, model_type: type[Any]) -> Any:
         return model_type.model_validate(_read_toml(path))
     except ValidationError as error:
         raise CatalogError(f"{path}: {error}") from error
+
+
+def _load_requirements(root: Path) -> RequirementInventory:
+    standards = root / "standards"
+    index = _parse(standards / "index.toml", StandardsIndex)
+    requirements_directory = standards / "requirements"
+    expected_paths = {
+        requirements_directory / f"chapter-{chapter:02d}.toml" for chapter in index.chapters
+    }
+    actual_paths = set(requirements_directory.glob("chapter-*.toml"))
+    if actual_paths != expected_paths:
+        missing = sorted(path.name for path in expected_paths - actual_paths)
+        extra = sorted(path.name for path in actual_paths - expected_paths)
+        raise CatalogError(
+            f"{requirements_directory}: chapter index mismatch; missing={missing}, extra={extra}"
+        )
+    requirements: list[Requirement] = []
+    for chapter, path in zip(index.chapters, sorted(expected_paths), strict=True):
+        document = _parse(path, RequirementChapter)
+        if document.chapter != chapter:
+            raise CatalogError(
+                f"{path}: declared chapter {document.chapter} does not match index {chapter}"
+            )
+        requirements.extend(document.requirements)
+    try:
+        return RequirementInventory(
+            schema_version=index.schema_version,
+            authority=index.authority,
+            requirements=tuple(requirements),
+        )
+    except ValidationError as error:
+        raise CatalogError(f"{standards}: {error}") from error
+
+
+def _validate_controlled_tags(
+    inventory: RequirementInventory,
+    cases: Iterable[CaseDefinition],
+    registry: TagRegistry,
+) -> None:
+    allowed = {tag.id for tag in registry.tags}
+    for owner, tags in (
+        *((requirement.id, requirement.tags) for requirement in inventory.requirements),
+        *((case.id, case.tags) for case in cases),
+    ):
+        unknown = sorted(set(tags) - allowed)
+        if unknown:
+            raise CatalogError(f"{owner}: unknown tags: {', '.join(unknown)}")
+
+
+def _expand_suite(
+    suite: SuiteDefinition,
+    case_ids: tuple[str, ...],
+    path: Path,
+) -> tuple[str, ...]:
+    selected: list[str] = []
+    seen: set[str] = set()
+    for pattern in suite.cases:
+        matches = tuple(case_id for case_id in case_ids if fnmatchcase(case_id, pattern))
+        if not matches:
+            raise CatalogError(f"{path}: case pattern {pattern!r} matched no cases")
+        for case_id in matches:
+            if case_id not in seen:
+                selected.append(case_id)
+                seen.add(case_id)
+    return tuple(selected)
 
 
 def _source_text(path: Path) -> str:
@@ -225,7 +296,8 @@ def _load_case(path: Path, requirements: dict[str, Requirement]) -> LoadedCase:
 
 def load_catalog(root: Path) -> Catalog:
     root = root.resolve()
-    inventory = _parse(root / "standards" / "requirements.toml", RequirementInventory)
+    inventory = _load_requirements(root)
+    tags = _parse(root / "standards" / "tags.toml", TagRegistry)
     requirements = {item.id: item for item in inventory.requirements}
 
     loaded_cases: dict[str, LoadedCase] = {}
@@ -236,21 +308,26 @@ def load_catalog(root: Path) -> Catalog:
         loaded_cases[loaded.definition.id] = loaded
     if not loaded_cases:
         raise CatalogError("no cases found")
+    _validate_controlled_tags(
+        inventory,
+        (loaded.definition for loaded in loaded_cases.values()),
+        tags,
+    )
 
     suites: dict[str, SuiteDefinition] = {}
+    suite_cases: dict[str, tuple[str, ...]] = {}
+    case_ids = tuple(sorted(loaded_cases))
     for suite_path in sorted((root / "suites").glob("*.toml")):
         suite = _parse(suite_path, SuiteDefinition)
         if suite.id in suites:
             raise CatalogError(f"duplicate suite id {suite.id}")
-        unknown = sorted(set(suite.cases) - set(loaded_cases))
-        if unknown:
-            raise CatalogError(f"{suite_path}: unknown cases: {', '.join(unknown)}")
         suites[suite.id] = suite
-    if "all" not in suites or set(suites["all"].cases) != set(loaded_cases):
+        suite_cases[suite.id] = _expand_suite(suite, case_ids, suite_path)
+    if "all" not in suites or set(suite_cases["all"]) != set(loaded_cases):
         raise CatalogError("suite 'all' must contain every case exactly once")
     if "smoke" not in suites:
         raise CatalogError("suite 'smoke' is required")
-    smoke = [loaded_cases[item].definition for item in suites["smoke"].cases]
+    smoke = [loaded_cases[item].definition for item in suite_cases["smoke"]]
     smoke_checks = {
         "positive": any(item.expectation is Expectation.ACCEPT for item in smoke),
         "negative": any(item.expectation is Expectation.REJECT for item in smoke),
@@ -262,8 +339,8 @@ def load_catalog(root: Path) -> Catalog:
         missing = sorted(name for name, present in smoke_checks.items() if not present)
         raise CatalogError(f"smoke suite misses required paths: {', '.join(missing)}")
 
-    tools = _parse(root / "toolchains" / "tools.toml", ToolRegistry)
-    rules_path = root / "toolchains" / "diagnostic-rules.toml"
+    tools = _parse(root / "tools" / "tools.toml", ToolRegistry)
+    rules_path = root / "tools" / "diagnostic-rules.toml"
     if not rules_path.is_file() or rules_path.is_symlink():
         raise CatalogError("missing or unsafe adapter diagnostic rules")
     from svtorture.adapters.registry import AdapterError, adapter_for
@@ -288,8 +365,10 @@ def load_catalog(root: Path) -> Catalog:
     return Catalog(
         root=root,
         inventory=inventory,
+        tags=tags,
         cases=loaded_cases,
         suites=suites,
+        suite_cases=suite_cases,
         tools=tools,
     )
 
@@ -316,11 +395,22 @@ def write_json_schema(root: Path, output: Path) -> None:
 
     from svtorture.models import Campaign, NormalizedResult  # local to avoid cycles
 
+    tag_values = [tag.id for tag in _parse(root / "standards" / "tags.toml", TagRegistry).tags]
+    case_schema = CaseDefinition.model_json_schema()
+    case_schema["properties"]["tags"]["items"]["enum"] = tag_values
+    requirements_schema = RequirementInventory.model_json_schema()
+    requirements_schema["$defs"]["Requirement"]["properties"]["tags"]["items"]["enum"] = tag_values
+    chapter_schema = RequirementChapter.model_json_schema()
+    chapter_schema["$defs"]["Requirement"]["properties"]["tags"]["items"]["enum"] = tag_values
     schemas = {
         "campaign.schema.json": Campaign.model_json_schema(),
-        "case.schema.json": CaseDefinition.model_json_schema(),
-        "requirements.schema.json": RequirementInventory.model_json_schema(),
+        "case.schema.json": case_schema,
+        "requirement-chapter.schema.json": chapter_schema,
+        "requirements.schema.json": requirements_schema,
         "result.schema.json": NormalizedResult.model_json_schema(),
+        "standards-index.schema.json": StandardsIndex.model_json_schema(),
+        "suite.schema.json": SuiteDefinition.model_json_schema(),
+        "tags.schema.json": TagRegistry.model_json_schema(),
         "tools.schema.json": ToolRegistry.model_json_schema(),
     }
     output.mkdir(parents=True, exist_ok=True)
@@ -354,10 +444,6 @@ def mvp_audit(catalog: Catalog) -> dict[str, int]:
             bool(item.include_dirs or item.defines) or any("preprocess" in tag for tag in item.tags)
             for item in definitions
         ),
-        "adapted_or_inspired": sum(
-            item.provenance.origin in {"adapted", "inspired"} for item in definitions
-        ),
-        "original": sum(item.provenance.origin == "original" for item in definitions),
     }
     minimums = {
         "chapters": 8,
@@ -367,8 +453,6 @@ def mvp_audit(catalog: Catalog) -> dict[str, int]:
         "diagnostic": 1,
         "multi_file": 1,
         "preprocessing": 1,
-        "adapted_or_inspired": 4,
-        "original": 4,
     }
     if not 10 <= counts["cases"] <= 12:
         raise CatalogError("MVP seed corpus must contain 10-12 cases")

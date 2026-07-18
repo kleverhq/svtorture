@@ -17,12 +17,67 @@ from svtorture.models import (
 from tests.helpers import campaign_tool, make_campaign, normalized
 
 
+def _copy_catalog_tree(catalog: Catalog, destination: Path) -> None:
+    for directory in ("standards", "suites", "tools", "cases"):
+        shutil.copytree(catalog.root / directory, destination / directory)
+
+
 def test_seed_catalog_meets_mvp(catalog: Catalog) -> None:
     counts = mvp_audit(catalog)
     assert counts["cases"] == 12
     assert counts["chapters"] == 11
     assert counts["simulation_acceptance"] >= 4
     assert counts["rejection"] >= 2
+
+
+def test_repository_directories_have_navigation_readmes(catalog: Catalog) -> None:
+    top_level = (
+        ".github",
+        "cases",
+        "dashboard",
+        "docs",
+        "fixtures",
+        "schemas",
+        "scripts",
+        "src",
+        "standards",
+        "suites",
+        "templates",
+        "tests",
+        "tools",
+    )
+    tool_directories = ("fake-tool", "icarus", "slang", "vcs", "verilator")
+    assert all((catalog.root / directory / "README.md").is_file() for directory in top_level)
+    assert all(
+        (catalog.root / "tools" / directory / "README.md").is_file()
+        for directory in tool_directories
+    )
+
+
+def test_tool_recipes_are_colocated_under_tools(catalog: Catalog) -> None:
+    expected_directories = {
+        "fake": "fake-tool",
+        "icarus": "icarus",
+        "slang": "slang",
+        "verilator": "verilator",
+    }
+    for tool_id, directory in expected_directories.items():
+        tool = catalog.tools.tool(tool_id)
+        assert tool.dockerfile == f"tools/{directory}/Dockerfile"
+        assert (catalog.root / "tools" / directory / "README.md").is_file()
+
+
+def test_generated_schemas_use_the_controlled_tag_registry(catalog: Catalog) -> None:
+    expected = [tag.id for tag in catalog.tags.tags]
+    case_schema = json.loads((catalog.root / "schemas" / "case.schema.json").read_text())
+    requirement_schema = json.loads(
+        (catalog.root / "schemas" / "requirements.schema.json").read_text()
+    )
+    assert case_schema["properties"]["tags"]["items"]["enum"] == expected
+    assert (
+        requirement_schema["$defs"]["Requirement"]["properties"]["tags"]["items"]["enum"]
+        == expected
+    )
 
 
 def test_unknown_metadata_is_rejected(catalog: Catalog) -> None:
@@ -57,11 +112,7 @@ def test_duplicate_requirement_ids_are_rejected(catalog: Catalog) -> None:
 
 def test_catalog_rejects_duplicate_case_directory(catalog: Catalog, tmp_path: Path) -> None:
     root = tmp_path / "repo"
-    shutil.copytree(catalog.root / "standards", root / "standards")
-    shutil.copytree(catalog.root / "suites", root / "suites")
-    shutil.copytree(catalog.root / "toolchains", root / "toolchains")
-    shutil.copytree(catalog.root / "containers", root / "containers")
-    shutil.copytree(catalog.root / "cases", root / "cases")
+    _copy_catalog_tree(catalog, root)
     duplicate = root / "cases" / "different-directory"
     shutil.copytree(root / "cases" / "ch04-nba-rhs-captured", duplicate)
     with pytest.raises(CatalogError, match="containing directory"):
@@ -70,13 +121,111 @@ def test_catalog_rejects_duplicate_case_directory(catalog: Catalog, tmp_path: Pa
 
 def test_catalog_rejects_a_symlinked_case_source(catalog: Catalog, tmp_path: Path) -> None:
     root = tmp_path / "repo"
-    for directory in ("standards", "suites", "toolchains", "containers", "cases"):
-        shutil.copytree(catalog.root / directory, root / directory)
+    _copy_catalog_tree(catalog, root)
     case_directory = root / "cases" / "ch04-nba-rhs-captured"
     source = case_directory / "top.sv"
     source.rename(case_directory / "actual.sv")
     source.symlink_to("actual.sv")
     with pytest.raises(CatalogError, match="symbolic link"):
+        load_catalog(root)
+
+
+def test_requirement_chapter_must_match_index(catalog: Catalog, tmp_path: Path) -> None:
+    root = tmp_path / "repo"
+    _copy_catalog_tree(catalog, root)
+    chapter = root / "standards" / "requirements" / "chapter-04.toml"
+    chapter.write_text(
+        chapter.read_text(encoding="utf-8").replace("chapter = 4", "chapter = 5", 1),
+        encoding="utf-8",
+    )
+    with pytest.raises(CatalogError, match="chapter"):
+        load_catalog(root)
+
+
+def test_unknown_controlled_tag_is_rejected(catalog: Catalog, tmp_path: Path) -> None:
+    root = tmp_path / "repo"
+    _copy_catalog_tree(catalog, root)
+    metadata = root / "cases" / "ch04-nba-rhs-captured" / "case.toml"
+    metadata.write_text(
+        metadata.read_text(encoding="utf-8").replace(
+            'tags = ["nba", "scheduling"]',
+            'tags = ["nba", "scheduling", "zz-unknown"]',
+        ),
+        encoding="utf-8",
+    )
+    with pytest.raises(CatalogError, match="unknown tags: zz-unknown"):
+        load_catalog(root)
+
+
+def test_unknown_requirement_tag_is_rejected(catalog: Catalog, tmp_path: Path) -> None:
+    root = tmp_path / "repo"
+    _copy_catalog_tree(catalog, root)
+    chapter = root / "standards" / "requirements" / "chapter-04.toml"
+    chapter.write_text(
+        chapter.read_text(encoding="utf-8").replace(
+            'tags = ["nba", "scheduling"]',
+            'tags = ["nba", "scheduling", "zz-unknown"]',
+        ),
+        encoding="utf-8",
+    )
+    with pytest.raises(CatalogError, match="unknown tags: zz-unknown"):
+        load_catalog(root)
+
+
+def test_unsorted_tags_are_rejected(catalog: Catalog, tmp_path: Path) -> None:
+    root = tmp_path / "repo"
+    _copy_catalog_tree(catalog, root)
+    metadata = root / "cases" / "ch04-nba-rhs-captured" / "case.toml"
+    metadata.write_text(
+        metadata.read_text(encoding="utf-8").replace(
+            'tags = ["nba", "scheduling"]',
+            'tags = ["scheduling", "nba"]',
+        ),
+        encoding="utf-8",
+    )
+    with pytest.raises(CatalogError, match="tags must be sorted"):
+        load_catalog(root)
+
+
+def test_suite_globs_expand_deterministically(catalog: Catalog, tmp_path: Path) -> None:
+    root = tmp_path / "repo"
+    _copy_catalog_tree(catalog, root)
+    (root / "suites" / "chapter-12.toml").write_text(
+        "\n".join(
+            (
+                "schema_version = 1",
+                'id = "chapter-12"',
+                'description = "Chapter 12 cases."',
+                'cases = ["ch12-*", "ch12-if-*"]',
+                "",
+            )
+        ),
+        encoding="utf-8",
+    )
+    loaded = load_catalog(root)
+    assert loaded.suite_cases["all"] == tuple(sorted(loaded.cases))
+    assert loaded.suite_cases["chapter-12"] == (
+        "ch12-if-x-takes-else",
+        "ch12-unique-if-no-match-diagnostic",
+    )
+
+
+def test_suite_glob_without_matches_is_rejected(catalog: Catalog, tmp_path: Path) -> None:
+    root = tmp_path / "repo"
+    _copy_catalog_tree(catalog, root)
+    (root / "suites" / "empty.toml").write_text(
+        "\n".join(
+            (
+                "schema_version = 1",
+                'id = "empty"',
+                'description = "Invalid empty selection."',
+                'cases = ["ch99-*"]',
+                "",
+            )
+        ),
+        encoding="utf-8",
+    )
+    with pytest.raises(CatalogError, match="matched no cases"):
         load_catalog(root)
 
 

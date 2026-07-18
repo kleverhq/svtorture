@@ -148,17 +148,14 @@ export function Filters({ dataset, filters, setFilters, onReset }: FilterProps) 
             </select>
           </label>
           <label>
-            <span>Requirement state</span>
+            <span>Case presence</span>
             <select
-              value={filters.state}
-              onChange={(event) => update("state", event.target.value)}
+              value={filters.casePresence}
+              onChange={(event) => update("casePresence", event.target.value)}
             >
               <option value="">Any</option>
-              {choices(dataset.requirements.map((item) => item.coverage_state)).map(
-                (state) => (
-                  <option key={state}>{state}</option>
-                ),
-              )}
+              <option value="with-cases">With cases</option>
+              <option value="without-cases">Without cases</option>
             </select>
           </label>
           <label>

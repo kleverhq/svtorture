@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import shutil
 from pathlib import Path
 
 import pytest
@@ -81,6 +82,7 @@ def test_unsupported_revision_is_not_a_normal_result(catalog: Catalog) -> None:
     custom = Catalog(
         root=catalog.root,
         inventory=catalog.inventory,
+        tags=catalog.tags,
         cases={definition.id: loaded},
         suites={
             "revision-test": SuiteDefinition(
@@ -90,6 +92,7 @@ def test_unsupported_revision_is_not_a_normal_result(catalog: Catalog) -> None:
                 cases=(definition.id,),
             )
         },
+        suite_cases={"revision-test": (definition.id,)},
         tools=catalog.tools,
     )
     campaign = run_campaign(
@@ -214,6 +217,7 @@ def test_aggregate_converts_preparation_failure_to_missing_tool(
 
 def test_local_aggregate_preserves_the_measured_execution_platform(
     catalog: Catalog,
+    tmp_path: Path,
 ) -> None:
     case = catalog.cases["ch04-nba-rhs-captured"]
     marker = case.definition.oracle.marker
@@ -254,8 +258,11 @@ def test_local_aggregate_preserves_the_measured_execution_platform(
         ),
         campaign_id="20260101T000000Z-aggregate-slang",
     )
+    root = tmp_path / "repo"
+    for directory in ("standards", "suites", "tools", "cases"):
+        shutil.copytree(catalog.root / directory, root / directory)
     aggregate = aggregate_campaigns(
-        catalog.root,
+        root,
         (fake_campaign, slang_campaign),
         expected_tools=("fake", "slang"),
     )

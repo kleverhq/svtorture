@@ -205,10 +205,6 @@ export function EvidenceView({
                   <strong>Sources</strong>
                   <SourceLinks testCase={testCase} campaign={campaign} />
                 </div>
-                <div>
-                  <strong>Provenance · {testCase.provenance.origin}</strong>
-                  <span>{testCase.provenance.notes}</span>
-                </div>
               </div>
               <div className="case-card__results">
                 {visibleProfiles.map((profile) => {

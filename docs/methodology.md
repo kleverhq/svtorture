@@ -39,15 +39,17 @@ pass.
 cases or tags:
 
 ```text
-applicable covered requirements whose every mandatory variant conforms
------------------------------------------------------------------------
-all applicable covered normative requirements in the profile phase scope
+applicable requirements whose selected mandatory variants all conform
+----------------------------------------------------------------------
+applicable requirements with selected cases in the profile phase scope
 ```
 
-Exploratory cases do not score. A requirement is counted once even with several
-variants. Nonconforming, inconclusive, unsupported, absent, crashed, or timed-out
-evidence does not enter the numerator. Not-applicable and non-testable/deferred
-requirements are excluded. Any harness error invalidates the profile metric.
+Requirement coverage is computed from current case mappings; it is not stored in
+the requirement catalog. Exploratory cases do not score. A requirement is
+counted once even with several variants. Nonconforming, inconclusive,
+unsupported, absent, crashed, or timed-out evidence does not enter the
+numerator. Not-applicable requirements are excluded. Any harness error
+invalidates the profile metric.
 
 Every displayed point includes numerator, denominator, revision, profile,
 corpus manifest, completeness, exact tool commit/tags/version, image digest,

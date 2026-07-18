@@ -8,12 +8,9 @@ from svtorture.catalog import Catalog, LoadedCase
 from svtorture.models import (
     Applicability,
     Campaign,
-    CoverageState,
     EvidenceLevel,
     MetricBreakdown,
-    Normativity,
     ResultStatus,
-    Testability,
     ToolDefinition,
     ToolProfile,
 )
@@ -45,9 +42,6 @@ def compute_metric(
                 Applicability.APPLICABLE,
                 Applicability.SAME_RULE_DIFFERENT_CLAUSE,
             }
-            and requirement.normativity is Normativity.NORMATIVE
-            and requirement.testability is Testability.TESTABLE
-            and requirement.coverage_state is CoverageState.COVERED
         ):
             scoped[requirement.id].append(loaded)
 

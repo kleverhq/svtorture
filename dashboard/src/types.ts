@@ -22,9 +22,6 @@ export interface Requirement {
   clause: string;
   paragraph_anchor: string;
   summary: string;
-  normativity: string;
-  testability: string;
-  coverage_state: string;
   related_clauses: string[];
   tags: string[];
   revision_applicability: Record<string, RevisionRule>;
@@ -34,15 +31,6 @@ export interface Oracle {
   kind: string;
   marker?: string | null;
   anchor?: string | null;
-}
-
-export interface Provenance {
-  origin: string;
-  source_url?: string | null;
-  source_commit?: string | null;
-  source_path?: string | null;
-  license: string;
-  notes: string;
 }
 
 export interface CaseDefinition {
@@ -63,7 +51,6 @@ export interface CaseDefinition {
   include_dirs: string[];
   runtime_args: string[];
   oracle: Oracle;
-  provenance: Provenance;
   tags: string[];
   content_sha256: string;
 }

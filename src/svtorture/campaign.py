@@ -64,7 +64,7 @@ class PreparedTool:
 
 def load_private_config(root: Path) -> PrivateToolConfig | None:
     configured = os.environ.get("SVTORTURE_TOOL_CONFIG")
-    path = Path(configured).expanduser() if configured else root / "toolchains" / "private.toml"
+    path = Path(configured).expanduser() if configured else root / "tools" / "private.toml"
     if not path.exists():
         return None
     try:
@@ -300,7 +300,7 @@ def run_campaign(
     )
     campaign_id = f"{started:%Y%m%dT%H%M%SZ}-{identity_hash[:16]}"
     work_root = catalog.root / ".svtorture" / "work" / campaign_id
-    rules_path = catalog.root / "toolchains" / "diagnostic-rules.toml"
+    rules_path = catalog.root / "tools" / "diagnostic-rules.toml"
     results: list[NormalizedResult] = []
     for prepared_tool in prepared:
         tool = prepared_tool.definition
