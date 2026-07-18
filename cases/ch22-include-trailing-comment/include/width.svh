@@ -1,0 +1,2 @@
+`define SVTORTURE_WIDTH 7
+

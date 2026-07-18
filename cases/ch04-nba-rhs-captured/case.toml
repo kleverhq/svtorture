@@ -1,0 +1,21 @@
+schema_version = 1
+id = "ch04-nba-rhs-captured"
+title = "An NBA captures its right-hand value when scheduled"
+description = "The source changes after scheduling a current-slot NBA; the committed value must still be the earlier sample."
+primary_requirement = "SV-2023-04-NBA-RHS-CAPTURE"
+related_requirements = []
+standard_revision = "1800-2023"
+revision_applicability = { "1800-2012" = "applicable", "1800-2017" = "applicable", "1800-2023" = "applicable" }
+target_phase = "simulate"
+expectation = "accept"
+evidence = "mandatory"
+sources = ["top.sv"]
+top = "top"
+defines = []
+include_dirs = []
+runtime_args = []
+tags = ["nba", "scheduling", "runtime"]
+limits = { timeout_seconds = 30, output_bytes = 65536, memory_mb = 2048, pids = 256 }
+oracle = { kind = "runtime-pass-marker", marker = "SVTORTURE_PASS:ch04-nba-rhs-captured" }
+provenance = { origin = "adapted", source_url = "local-reference:verilator-torture", source_commit = "8caf56f527527ae931e5efef5fed311aef625bc1", source_path = "cases/chapter-04/assignments/ch04-nba-rhs-captured", license = "No license file was present in the reference checkout; this minimal source was independently rewritten and attribution is retained.", notes = "Preserves the reviewed normative hypothesis while replacing the reference PASS convention with the SVTORTURE marker." }
+

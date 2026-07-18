@@ -1,0 +1,374 @@
+{
+  "$defs": {
+    "CapturedStream": {
+      "additionalProperties": false,
+      "properties": {
+        "excerpt": {
+          "title": "Excerpt",
+          "type": "string"
+        },
+        "sha256": {
+          "title": "Sha256",
+          "type": "string"
+        },
+        "size_bytes": {
+          "minimum": 0,
+          "title": "Size Bytes",
+          "type": "integer"
+        },
+        "truncated": {
+          "title": "Truncated",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "excerpt",
+        "size_bytes",
+        "sha256",
+        "truncated"
+      ],
+      "title": "CapturedStream",
+      "type": "object"
+    },
+    "Diagnostic": {
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "anyOf": [
+            {
+              "maxLength": 100,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Code"
+        },
+        "column": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Column"
+        },
+        "line": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Line"
+        },
+        "message": {
+          "maxLength": 4096,
+          "title": "Message",
+          "type": "string"
+        },
+        "severity": {
+          "pattern": "^(error|warning|fatal|note|info)$",
+          "title": "Severity",
+          "type": "string"
+        },
+        "source": {
+          "anyOf": [
+            {
+              "maxLength": 500,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source"
+        },
+        "target_case_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Target Case Id"
+        }
+      },
+      "required": [
+        "severity",
+        "message"
+      ],
+      "title": "Diagnostic",
+      "type": "object"
+    },
+    "EvidenceLevel": {
+      "enum": [
+        "mandatory",
+        "exploratory"
+      ],
+      "title": "EvidenceLevel",
+      "type": "string"
+    },
+    "Phase": {
+      "enum": [
+        "preprocess",
+        "parse",
+        "elaborate",
+        "simulate"
+      ],
+      "title": "Phase",
+      "type": "string"
+    },
+    "RawOutcome": {
+      "enum": [
+        "normal-exit",
+        "signal",
+        "timeout",
+        "launch-failure",
+        "container-failure",
+        "backend-unavailable"
+      ],
+      "title": "RawOutcome",
+      "type": "string"
+    },
+    "ReasonCode": {
+      "enum": [
+        "expectation-met",
+        "unexpected-accept",
+        "unexpected-reject",
+        "missing-diagnostic",
+        "off-target-diagnostic",
+        "missing-pass-marker",
+        "multiple-pass-markers",
+        "pass-marker-with-nonzero-status",
+        "wrong-runtime-result",
+        "timeout",
+        "crash",
+        "internal-error",
+        "container-failure",
+        "launch-failure",
+        "missing-artifact",
+        "invalid-execution-plan",
+        "unsupported-phase",
+        "unsupported-revision",
+        "not-applicable",
+        "tool-unavailable",
+        "manifest-mismatch",
+        "output-truncated",
+        "tool-preparation-failure"
+      ],
+      "title": "ReasonCode",
+      "type": "string"
+    },
+    "ResultStatus": {
+      "enum": [
+        "conforming",
+        "nonconforming",
+        "inconclusive",
+        "unsupported-capability",
+        "unsupported-revision",
+        "not-applicable",
+        "skipped-unavailable",
+        "harness-error"
+      ],
+      "title": "ResultStatus",
+      "type": "string"
+    },
+    "StageObservation": {
+      "additionalProperties": false,
+      "properties": {
+        "artifact_present": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Artifact Present"
+        },
+        "diagnostics": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/Diagnostic"
+          },
+          "title": "Diagnostics",
+          "type": "array"
+        },
+        "duration_seconds": {
+          "minimum": 0,
+          "title": "Duration Seconds",
+          "type": "number"
+        },
+        "exit_code": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Exit Code"
+        },
+        "internal_error": {
+          "default": false,
+          "title": "Internal Error",
+          "type": "boolean"
+        },
+        "outcome": {
+          "$ref": "#/$defs/RawOutcome"
+        },
+        "phase": {
+          "$ref": "#/$defs/Phase"
+        },
+        "portable_argv": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Portable Argv",
+          "type": "array"
+        },
+        "signal": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Signal"
+        },
+        "stage_id": {
+          "title": "Stage Id",
+          "type": "string"
+        },
+        "stderr": {
+          "$ref": "#/$defs/CapturedStream"
+        },
+        "stdout": {
+          "$ref": "#/$defs/CapturedStream"
+        }
+      },
+      "required": [
+        "stage_id",
+        "phase",
+        "outcome",
+        "duration_seconds",
+        "stdout",
+        "stderr",
+        "portable_argv"
+      ],
+      "title": "StageObservation",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "case_id": {
+      "title": "Case Id",
+      "type": "string"
+    },
+    "evidence": {
+      "$ref": "#/$defs/EvidenceLevel"
+    },
+    "known_issue": {
+      "anyOf": [
+        {
+          "maxLength": 500,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Known Issue"
+    },
+    "observations": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/StageObservation"
+      },
+      "title": "Observations",
+      "type": "array"
+    },
+    "profile_id": {
+      "title": "Profile Id",
+      "type": "string"
+    },
+    "reason": {
+      "$ref": "#/$defs/ReasonCode"
+    },
+    "reproduction_command": {
+      "anyOf": [
+        {
+          "maxLength": 1000,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Reproduction Command"
+    },
+    "requirement_id": {
+      "title": "Requirement Id",
+      "type": "string"
+    },
+    "schema_version": {
+      "maximum": 1,
+      "minimum": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "status": {
+      "$ref": "#/$defs/ResultStatus"
+    },
+    "summary": {
+      "maxLength": 4096,
+      "minLength": 1,
+      "title": "Summary",
+      "type": "string"
+    },
+    "tool_id": {
+      "title": "Tool Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "case_id",
+    "requirement_id",
+    "tool_id",
+    "profile_id",
+    "status",
+    "reason",
+    "summary",
+    "evidence"
+  ],
+  "title": "NormalizedResult",
+  "type": "object"
+}

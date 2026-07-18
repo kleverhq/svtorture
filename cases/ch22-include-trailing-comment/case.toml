@@ -1,0 +1,21 @@
+schema_version = 1
+id = "ch22-include-trailing-comment"
+title = "A comment may follow an include directive"
+description = "An included macro controls a declaration width while a block comment follows the include operand."
+primary_requirement = "SV-2023-22-INCLUDE-COMMENT"
+related_requirements = []
+standard_revision = "1800-2023"
+revision_applicability = { "1800-2012" = "applicable", "1800-2017" = "applicable", "1800-2023" = "applicable" }
+target_phase = "elaborate"
+expectation = "accept"
+evidence = "mandatory"
+sources = ["top.sv"]
+top = "top"
+defines = ["SVTORTURE_EXTERNAL_BIAS=1"]
+include_dirs = ["include"]
+runtime_args = []
+tags = ["include", "macro", "preprocessor"]
+limits = { timeout_seconds = 30, output_bytes = 65536, memory_mb = 2048, pids = 256 }
+oracle = { kind = "phase-exit" }
+provenance = { origin = "adapted", source_url = "local-reference:verilator-torture", source_commit = "8caf56f527527ae931e5efef5fed311aef625bc1", source_path = "cases/chapter-22/includes/ch22-include-trailing-comment", license = "No license file was present in the reference checkout; this case was independently rewritten and attribution is retained.", notes = "Changed from simulation to elaboration and added explicit define/include-directory inputs to exercise adapter preprocessing." }
+

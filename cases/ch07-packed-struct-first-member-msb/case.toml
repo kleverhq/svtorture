@@ -1,0 +1,21 @@
+schema_version = 1
+id = "ch07-packed-struct-first-member-msb"
+title = "The first packed-structure member is most significant"
+description = "Member writes and a whole-vector read establish the exact packed layout."
+primary_requirement = "SV-2023-07-PACKED-STRUCT-ORDER"
+related_requirements = []
+standard_revision = "1800-2023"
+revision_applicability = { "1800-2012" = "applicable", "1800-2017" = "applicable", "1800-2023" = "applicable" }
+target_phase = "simulate"
+expectation = "accept"
+evidence = "mandatory"
+sources = ["top.sv"]
+top = "top"
+defines = []
+include_dirs = []
+runtime_args = []
+tags = ["packed-struct", "layout", "runtime"]
+limits = { timeout_seconds = 30, output_bytes = 65536, memory_mb = 2048, pids = 256 }
+oracle = { kind = "runtime-pass-marker", marker = "SVTORTURE_PASS:ch07-packed-struct-first-member-msb" }
+provenance = { origin = "adapted", source_url = "local-reference:verilator-torture", source_commit = "8caf56f527527ae931e5efef5fed311aef625bc1", source_path = "cases/chapter-07/structures-and-unions/ch07-packed-struct-first-member-msb", license = "No license file was present in the reference checkout; this minimal source was independently rewritten and attribution is retained.", notes = "Reduced to one member-to-vector direction because that is sufficient to distinguish ordering." }
+

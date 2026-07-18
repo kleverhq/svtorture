@@ -1,0 +1,981 @@
+{
+  "$defs": {
+    "CampaignTool": {
+      "additionalProperties": false,
+      "properties": {
+        "definition": {
+          "$ref": "#/$defs/ToolDefinition"
+        },
+        "image": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ImageIdentity"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "preparation_error": {
+          "anyOf": [
+            {
+              "maxLength": 500,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Preparation Error"
+        },
+        "profile_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Profile Ids",
+          "type": "array"
+        },
+        "reported_version": {
+          "anyOf": [
+            {
+              "maxLength": 1000,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reported Version"
+        },
+        "selection": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ToolSelection"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "definition",
+        "profile_ids"
+      ],
+      "title": "CampaignTool",
+      "type": "object"
+    },
+    "CampaignTrust": {
+      "additionalProperties": false,
+      "properties": {
+        "checkout_sha": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Checkout Sha"
+        },
+        "repository": {
+          "anyOf": [
+            {
+              "maxLength": 300,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Repository"
+        },
+        "source": {
+          "pattern": "^(local|github-actions)$",
+          "title": "Source",
+          "type": "string"
+        },
+        "workflow_run_id": {
+          "anyOf": [
+            {
+              "maxLength": 100,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Workflow Run Id"
+        }
+      },
+      "required": [
+        "source"
+      ],
+      "title": "CampaignTrust",
+      "type": "object"
+    },
+    "CapturedStream": {
+      "additionalProperties": false,
+      "properties": {
+        "excerpt": {
+          "title": "Excerpt",
+          "type": "string"
+        },
+        "sha256": {
+          "title": "Sha256",
+          "type": "string"
+        },
+        "size_bytes": {
+          "minimum": 0,
+          "title": "Size Bytes",
+          "type": "integer"
+        },
+        "truncated": {
+          "title": "Truncated",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "excerpt",
+        "size_bytes",
+        "sha256",
+        "truncated"
+      ],
+      "title": "CapturedStream",
+      "type": "object"
+    },
+    "CaseIdentity": {
+      "additionalProperties": false,
+      "properties": {
+        "content_sha256": {
+          "title": "Content Sha256",
+          "type": "string"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "content_sha256"
+      ],
+      "title": "CaseIdentity",
+      "type": "object"
+    },
+    "Diagnostic": {
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "anyOf": [
+            {
+              "maxLength": 100,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Code"
+        },
+        "column": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Column"
+        },
+        "line": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Line"
+        },
+        "message": {
+          "maxLength": 4096,
+          "title": "Message",
+          "type": "string"
+        },
+        "severity": {
+          "pattern": "^(error|warning|fatal|note|info)$",
+          "title": "Severity",
+          "type": "string"
+        },
+        "source": {
+          "anyOf": [
+            {
+              "maxLength": 500,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source"
+        },
+        "target_case_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Target Case Id"
+        }
+      },
+      "required": [
+        "severity",
+        "message"
+      ],
+      "title": "Diagnostic",
+      "type": "object"
+    },
+    "Distribution": {
+      "enum": [
+        "open-source",
+        "commercial",
+        "internal"
+      ],
+      "title": "Distribution",
+      "type": "string"
+    },
+    "EvidenceLevel": {
+      "enum": [
+        "mandatory",
+        "exploratory"
+      ],
+      "title": "EvidenceLevel",
+      "type": "string"
+    },
+    "ExecutionBackend": {
+      "enum": [
+        "docker",
+        "local-wrapper"
+      ],
+      "title": "ExecutionBackend",
+      "type": "string"
+    },
+    "ImageIdentity": {
+      "additionalProperties": false,
+      "properties": {
+        "base_image": {
+          "maxLength": 4096,
+          "minLength": 1,
+          "title": "Base Image",
+          "type": "string"
+        },
+        "base_image_digest": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Base Image Digest"
+        },
+        "digest": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Digest"
+        },
+        "image_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Image Id"
+        },
+        "platform": {
+          "maxLength": 4096,
+          "minLength": 1,
+          "title": "Platform",
+          "type": "string"
+        },
+        "recipe_sha256": {
+          "title": "Recipe Sha256",
+          "type": "string"
+        },
+        "reference": {
+          "maxLength": 4096,
+          "minLength": 1,
+          "title": "Reference",
+          "type": "string"
+        }
+      },
+      "required": [
+        "reference",
+        "recipe_sha256",
+        "base_image",
+        "platform"
+      ],
+      "title": "ImageIdentity",
+      "type": "object"
+    },
+    "ManifestHashes": {
+      "additionalProperties": false,
+      "properties": {
+        "cases": {
+          "title": "Cases",
+          "type": "string"
+        },
+        "requirements": {
+          "title": "Requirements",
+          "type": "string"
+        },
+        "selection": {
+          "title": "Selection",
+          "type": "string"
+        }
+      },
+      "required": [
+        "requirements",
+        "cases",
+        "selection"
+      ],
+      "title": "ManifestHashes",
+      "type": "object"
+    },
+    "NormalizedResult": {
+      "additionalProperties": false,
+      "properties": {
+        "case_id": {
+          "title": "Case Id",
+          "type": "string"
+        },
+        "evidence": {
+          "$ref": "#/$defs/EvidenceLevel"
+        },
+        "known_issue": {
+          "anyOf": [
+            {
+              "maxLength": 500,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Known Issue"
+        },
+        "observations": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/StageObservation"
+          },
+          "title": "Observations",
+          "type": "array"
+        },
+        "profile_id": {
+          "title": "Profile Id",
+          "type": "string"
+        },
+        "reason": {
+          "$ref": "#/$defs/ReasonCode"
+        },
+        "reproduction_command": {
+          "anyOf": [
+            {
+              "maxLength": 1000,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reproduction Command"
+        },
+        "requirement_id": {
+          "title": "Requirement Id",
+          "type": "string"
+        },
+        "schema_version": {
+          "maximum": 1,
+          "minimum": 1,
+          "title": "Schema Version",
+          "type": "integer"
+        },
+        "status": {
+          "$ref": "#/$defs/ResultStatus"
+        },
+        "summary": {
+          "maxLength": 4096,
+          "minLength": 1,
+          "title": "Summary",
+          "type": "string"
+        },
+        "tool_id": {
+          "title": "Tool Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema_version",
+        "case_id",
+        "requirement_id",
+        "tool_id",
+        "profile_id",
+        "status",
+        "reason",
+        "summary",
+        "evidence"
+      ],
+      "title": "NormalizedResult",
+      "type": "object"
+    },
+    "Phase": {
+      "enum": [
+        "preprocess",
+        "parse",
+        "elaborate",
+        "simulate"
+      ],
+      "title": "Phase",
+      "type": "string"
+    },
+    "RawOutcome": {
+      "enum": [
+        "normal-exit",
+        "signal",
+        "timeout",
+        "launch-failure",
+        "container-failure",
+        "backend-unavailable"
+      ],
+      "title": "RawOutcome",
+      "type": "string"
+    },
+    "ReasonCode": {
+      "enum": [
+        "expectation-met",
+        "unexpected-accept",
+        "unexpected-reject",
+        "missing-diagnostic",
+        "off-target-diagnostic",
+        "missing-pass-marker",
+        "multiple-pass-markers",
+        "pass-marker-with-nonzero-status",
+        "wrong-runtime-result",
+        "timeout",
+        "crash",
+        "internal-error",
+        "container-failure",
+        "launch-failure",
+        "missing-artifact",
+        "invalid-execution-plan",
+        "unsupported-phase",
+        "unsupported-revision",
+        "not-applicable",
+        "tool-unavailable",
+        "manifest-mismatch",
+        "output-truncated",
+        "tool-preparation-failure"
+      ],
+      "title": "ReasonCode",
+      "type": "string"
+    },
+    "RepositoryIdentity": {
+      "additionalProperties": false,
+      "properties": {
+        "commit": {
+          "title": "Commit",
+          "type": "string"
+        },
+        "dirty": {
+          "title": "Dirty",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "commit",
+        "dirty"
+      ],
+      "title": "RepositoryIdentity",
+      "type": "object"
+    },
+    "ResultStatus": {
+      "enum": [
+        "conforming",
+        "nonconforming",
+        "inconclusive",
+        "unsupported-capability",
+        "unsupported-revision",
+        "not-applicable",
+        "skipped-unavailable",
+        "harness-error"
+      ],
+      "title": "ResultStatus",
+      "type": "string"
+    },
+    "StageObservation": {
+      "additionalProperties": false,
+      "properties": {
+        "artifact_present": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Artifact Present"
+        },
+        "diagnostics": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/Diagnostic"
+          },
+          "title": "Diagnostics",
+          "type": "array"
+        },
+        "duration_seconds": {
+          "minimum": 0,
+          "title": "Duration Seconds",
+          "type": "number"
+        },
+        "exit_code": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Exit Code"
+        },
+        "internal_error": {
+          "default": false,
+          "title": "Internal Error",
+          "type": "boolean"
+        },
+        "outcome": {
+          "$ref": "#/$defs/RawOutcome"
+        },
+        "phase": {
+          "$ref": "#/$defs/Phase"
+        },
+        "portable_argv": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Portable Argv",
+          "type": "array"
+        },
+        "signal": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Signal"
+        },
+        "stage_id": {
+          "title": "Stage Id",
+          "type": "string"
+        },
+        "stderr": {
+          "$ref": "#/$defs/CapturedStream"
+        },
+        "stdout": {
+          "$ref": "#/$defs/CapturedStream"
+        }
+      },
+      "required": [
+        "stage_id",
+        "phase",
+        "outcome",
+        "duration_seconds",
+        "stdout",
+        "stderr",
+        "portable_argv"
+      ],
+      "title": "StageObservation",
+      "type": "object"
+    },
+    "StandardRevision": {
+      "enum": [
+        "1800-2012",
+        "1800-2017",
+        "1800-2023"
+      ],
+      "title": "StandardRevision",
+      "type": "string"
+    },
+    "ToolDefinition": {
+      "additionalProperties": false,
+      "properties": {
+        "adapter": {
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "title": "Adapter",
+          "type": "string"
+        },
+        "ci": {
+          "title": "Ci",
+          "type": "boolean"
+        },
+        "default_branch": {
+          "anyOf": [
+            {
+              "maxLength": 200,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Default Branch"
+        },
+        "display_name": {
+          "maxLength": 4096,
+          "minLength": 1,
+          "title": "Display Name",
+          "type": "string"
+        },
+        "distribution": {
+          "$ref": "#/$defs/Distribution"
+        },
+        "dockerfile": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Dockerfile"
+        },
+        "execution": {
+          "$ref": "#/$defs/ExecutionBackend"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "image_repository": {
+          "anyOf": [
+            {
+              "maxLength": 500,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Image Repository"
+        },
+        "profiles": {
+          "items": {
+            "$ref": "#/$defs/ToolProfile"
+          },
+          "title": "Profiles",
+          "type": "array"
+        },
+        "publish": {
+          "title": "Publish",
+          "type": "boolean"
+        },
+        "recipe_files": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Recipe Files",
+          "type": "array"
+        },
+        "upstream_url": {
+          "anyOf": [
+            {
+              "maxLength": 500,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Upstream Url"
+        }
+      },
+      "required": [
+        "id",
+        "display_name",
+        "adapter",
+        "distribution",
+        "execution",
+        "ci",
+        "publish",
+        "profiles"
+      ],
+      "title": "ToolDefinition",
+      "type": "object"
+    },
+    "ToolProfile": {
+      "additionalProperties": false,
+      "properties": {
+        "effective_language": {
+          "maxLength": 100,
+          "minLength": 1,
+          "title": "Effective Language",
+          "type": "string"
+        },
+        "headline": {
+          "default": false,
+          "title": "Headline",
+          "type": "boolean"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "phases": {
+          "items": {
+            "$ref": "#/$defs/Phase"
+          },
+          "title": "Phases",
+          "type": "array"
+        },
+        "standard_revision": {
+          "$ref": "#/$defs/StandardRevision"
+        }
+      },
+      "required": [
+        "id",
+        "phases",
+        "standard_revision",
+        "effective_language"
+      ],
+      "title": "ToolProfile",
+      "type": "object"
+    },
+    "ToolSelection": {
+      "additionalProperties": false,
+      "properties": {
+        "default_branch": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Default Branch"
+        },
+        "exact_tags": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Exact Tags",
+          "type": "array"
+        },
+        "nearest_tag": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Nearest Tag"
+        },
+        "requested_ref": {
+          "title": "Requested Ref",
+          "type": "string"
+        },
+        "resolved_at": {
+          "format": "date-time",
+          "title": "Resolved At",
+          "type": "string"
+        },
+        "resolved_sha": {
+          "title": "Resolved Sha",
+          "type": "string"
+        },
+        "tool": {
+          "title": "Tool",
+          "type": "string"
+        }
+      },
+      "required": [
+        "tool",
+        "requested_ref",
+        "resolved_sha",
+        "resolved_at"
+      ],
+      "title": "ToolSelection",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "case_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Case Ids",
+      "type": "array"
+    },
+    "cases": {
+      "items": {
+        "$ref": "#/$defs/CaseIdentity"
+      },
+      "title": "Cases",
+      "type": "array"
+    },
+    "complete": {
+      "title": "Complete",
+      "type": "boolean"
+    },
+    "expected_tool_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Expected Tool Ids",
+      "type": "array"
+    },
+    "finished_at": {
+      "format": "date-time",
+      "title": "Finished At",
+      "type": "string"
+    },
+    "hashes": {
+      "$ref": "#/$defs/ManifestHashes"
+    },
+    "id": {
+      "pattern": "^[0-9]{8}T[0-9]{6}Z-[A-Za-z0-9](?:[A-Za-z0-9-]{0,126}[A-Za-z0-9])?$",
+      "title": "Id",
+      "type": "string"
+    },
+    "missing_tool_ids": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Missing Tool Ids",
+      "type": "array"
+    },
+    "platform": {
+      "maxLength": 4096,
+      "minLength": 1,
+      "title": "Platform",
+      "type": "string"
+    },
+    "repository": {
+      "$ref": "#/$defs/RepositoryIdentity"
+    },
+    "results": {
+      "items": {
+        "$ref": "#/$defs/NormalizedResult"
+      },
+      "title": "Results",
+      "type": "array"
+    },
+    "schema_version": {
+      "maximum": 1,
+      "minimum": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "selection_name": {
+      "maxLength": 4096,
+      "minLength": 1,
+      "title": "Selection Name",
+      "type": "string"
+    },
+    "started_at": {
+      "format": "date-time",
+      "title": "Started At",
+      "type": "string"
+    },
+    "tools": {
+      "items": {
+        "$ref": "#/$defs/CampaignTool"
+      },
+      "title": "Tools",
+      "type": "array"
+    },
+    "trust": {
+      "$ref": "#/$defs/CampaignTrust"
+    }
+  },
+  "required": [
+    "schema_version",
+    "id",
+    "started_at",
+    "finished_at",
+    "repository",
+    "platform",
+    "selection_name",
+    "case_ids",
+    "cases",
+    "tools",
+    "expected_tool_ids",
+    "hashes",
+    "results",
+    "complete",
+    "trust"
+  ],
+  "title": "Campaign",
+  "type": "object"
+}

@@ -1,0 +1,56 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "svtorture"
+version = "0.1.0"
+description = "Standards-driven SystemVerilog conformance campaigns"
+readme = "README.md"
+requires-python = ">=3.12"
+license = "Apache-2.0"
+authors = [{ name = "SVTORTURE contributors" }]
+dependencies = [
+  "pydantic>=2.11,<3",
+  "tomli-w>=1.2,<2",
+  "typer>=0.16,<1",
+]
+
+[project.scripts]
+svtorture = "svtorture.cli:entrypoint"
+
+[dependency-groups]
+dev = [
+  "mypy>=1.16,<2",
+  "pre-commit>=4.2,<5",
+  "pytest>=8.4,<9",
+  "pytest-cov>=6.2,<7",
+  "ruff>=0.12,<1",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/svtorture"]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "SIM", "RUF"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S101"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+packages = ["svtorture"]
+exclude = '(^|/)(dashboard|\.svtorture)(/|$)'
+
+[tool.pytest.ini_options]
+addopts = "-ra --strict-markers"
+testpaths = ["tests"]
+markers = [
+  "docker: requires a working Docker daemon",
+  "network: requires network access",
+]

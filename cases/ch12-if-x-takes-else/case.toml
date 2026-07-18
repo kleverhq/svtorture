@@ -1,0 +1,21 @@
+schema_version = 1
+id = "ch12-if-x-takes-else"
+title = "An X-valued if predicate selects else"
+description = "An all-X predicate must be false, leaving the then branch untouched and executing else."
+primary_requirement = "SV-2023-12-IF-X-FALSE"
+related_requirements = []
+standard_revision = "1800-2023"
+revision_applicability = { "1800-2012" = "applicable", "1800-2017" = "applicable", "1800-2023" = "applicable" }
+target_phase = "simulate"
+expectation = "accept"
+evidence = "mandatory"
+sources = ["top.sv"]
+top = "top"
+defines = []
+include_dirs = []
+runtime_args = []
+tags = ["conditional", "four-state", "runtime"]
+limits = { timeout_seconds = 30, output_bytes = 65536, memory_mb = 2048, pids = 256 }
+oracle = { kind = "runtime-pass-marker", marker = "SVTORTURE_PASS:ch12-if-x-takes-else" }
+provenance = { origin = "original", license = "Apache-2.0", notes = "Independently authored as a direct semantic boundary from IEEE 1800-2023 clause 12.4." }
+

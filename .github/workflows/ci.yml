@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v6
+      - uses: astral-sh/setup-uv@v8
+        with:
+          enable-cache: false
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+      - uses: extractions/setup-just@v4
+      - name: Run the local CI contract
+        run: just ci
+      - name: Retain campaigns and full stage logs
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: pr-evidence-${{ github.run_id }}
+          path: |
+            .svtorture/campaigns/**/campaign.json
+            .svtorture/work/**/*.log
+          if-no-files-found: warn
+          include-hidden-files: true
+          retention-days: 30

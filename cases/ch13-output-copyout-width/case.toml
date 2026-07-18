@@ -1,0 +1,21 @@
+schema_version = 1
+id = "ch13-output-copyout-width"
+title = "Output copy-out converts to the actual width"
+description = "An eight-bit output formal returns into a four-bit actual only when the task returns."
+primary_requirement = "SV-2023-13-OUTPUT-COPYOUT"
+related_requirements = []
+standard_revision = "1800-2023"
+revision_applicability = { "1800-2012" = "applicable", "1800-2017" = "applicable", "1800-2023" = "applicable" }
+target_phase = "simulate"
+expectation = "accept"
+evidence = "mandatory"
+sources = ["top.sv"]
+top = "top"
+defines = []
+include_dirs = []
+runtime_args = []
+tags = ["copy-out", "output", "subroutine"]
+limits = { timeout_seconds = 30, output_bytes = 65536, memory_mb = 2048, pids = 256 }
+oracle = { kind = "runtime-pass-marker", marker = "SVTORTURE_PASS:ch13-output-copyout-width" }
+provenance = { origin = "inspired", source_url = "local-reference:verilator-torture", source_commit = "8caf56f527527ae931e5efef5fed311aef625bc1", source_path = "cases/chapter-13/argument-passing/ch13-output-copyout-converts-width", license = "No license file was present in the reference checkout; this source was independently rewritten and attribution is retained.", notes = "Keeps the one-dimensional width boundary while using a different identifier and checking convention." }
+

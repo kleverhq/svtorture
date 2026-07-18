@@ -1,0 +1,21 @@
+schema_version = 1
+id = "ch05-base-format-whitespace-rejected"
+title = "White space cannot split an apostrophe from a literal base"
+description = "A based integer literal deliberately separates its apostrophe and base letter."
+primary_requirement = "SV-2023-05-BASED-LITERAL-TOKEN"
+related_requirements = []
+standard_revision = "1800-2023"
+revision_applicability = { "1800-2012" = "applicable", "1800-2017" = "applicable", "1800-2023" = "applicable" }
+target_phase = "parse"
+expectation = "reject"
+evidence = "mandatory"
+sources = ["top.sv"]
+top = "top"
+defines = []
+include_dirs = []
+runtime_args = []
+tags = ["lexical", "literal", "negative"]
+limits = { timeout_seconds = 30, output_bytes = 65536, memory_mb = 2048, pids = 256 }
+oracle = { kind = "diagnostic-at-anchor", anchor = "SVTORTURE_DIAG_ANCHOR:ch05-base-format-whitespace-rejected" }
+provenance = { origin = "original", license = "Apache-2.0", notes = "Independently authored from IEEE 1800-2023 clause 5.7.1 after checking the same rule in 2012 and 2017." }
+

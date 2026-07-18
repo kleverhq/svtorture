@@ -1,0 +1,171 @@
+schema_version = 1
+authority = "1800-2023"
+
+[[requirements]]
+id = "SV-2023-04-NBA-RHS-CAPTURE"
+standard_revision = "1800-2023"
+chapter = 4
+clause = "4.9.4"
+paragraph_anchor = "Nonblocking assignment: values in effect when the update is queued determine the right-hand value and target."
+summary = "A nonblocking assignment captures its right-hand value when the NBA update is scheduled."
+normativity = "normative"
+testability = "testable"
+coverage_state = "covered"
+related_clauses = ["10.4.2"]
+tags = ["scheduling", "nba", "runtime"]
+revision_applicability = { "1800-2012" = { status = "applicable", clause = "4.9.4" }, "1800-2017" = { status = "applicable", clause = "4.9.4" }, "1800-2023" = { status = "applicable", clause = "4.9.4" } }
+
+[[requirements]]
+id = "SV-2023-05-BASED-LITERAL-TOKEN"
+standard_revision = "1800-2023"
+chapter = 5
+clause = "5.7.1"
+paragraph_anchor = "Integer literal constants: the apostrophe and base-format character may not be separated by white space."
+summary = "White space between an apostrophe and a based-literal format character is illegal."
+normativity = "normative"
+testability = "testable"
+coverage_state = "covered"
+related_clauses = ["5.2"]
+tags = ["lexical", "literal", "negative"]
+revision_applicability = { "1800-2012" = { status = "applicable", clause = "5.7.1" }, "1800-2017" = { status = "applicable", clause = "5.7.1" }, "1800-2023" = { status = "applicable", clause = "5.7.1" } }
+
+[[requirements]]
+id = "SV-2023-06-FOUR-TO-TWO-CONVERSION"
+standard_revision = "1800-2023"
+chapter = 6
+clause = "6.11.2"
+paragraph_anchor = "2-state and 4-state data types: X and Z bits convert to zero during automatic conversion to a 2-state value."
+summary = "Automatic conversion from a four-state value maps each X or Z bit to zero."
+normativity = "normative"
+testability = "testable"
+coverage_state = "covered"
+related_clauses = []
+tags = ["four-state", "two-state", "conversion"]
+revision_applicability = { "1800-2012" = { status = "applicable", clause = "6.11.2" }, "1800-2017" = { status = "applicable", clause = "6.11.2" }, "1800-2023" = { status = "applicable", clause = "6.11.2" } }
+
+[[requirements]]
+id = "SV-2023-07-PACKED-STRUCT-ORDER"
+standard_revision = "1800-2023"
+chapter = 7
+clause = "7.2.1"
+paragraph_anchor = "Packed structures: the first declared member is most significant and later members decrease in significance."
+summary = "The first member of a packed structure occupies its most-significant bits."
+normativity = "normative"
+testability = "testable"
+coverage_state = "covered"
+related_clauses = []
+tags = ["packed-struct", "layout", "runtime"]
+revision_applicability = { "1800-2012" = { status = "applicable", clause = "7.2.1" }, "1800-2017" = { status = "applicable", clause = "7.2.1" }, "1800-2023" = { status = "applicable", clause = "7.2.1" } }
+
+[[requirements]]
+id = "SV-2023-11-ADDITION-CONTEXT-WIDTH"
+standard_revision = "1800-2023"
+chapter = 11
+clause = "11.6.1"
+paragraph_anchor = "Expression bit lengths: addition uses the largest operand width, including an assignment left-hand side."
+summary = "An assignment context propagates its width into addition operands before the addition is evaluated."
+normativity = "normative"
+testability = "testable"
+coverage_state = "covered"
+related_clauses = ["11.4.3", "11.8.2"]
+tags = ["sizing", "addition", "context"]
+revision_applicability = { "1800-2012" = { status = "applicable", clause = "11.6.1" }, "1800-2017" = { status = "applicable", clause = "11.6.1" }, "1800-2023" = { status = "applicable", clause = "11.6.1" } }
+
+[[requirements]]
+id = "SV-2023-12-IF-X-FALSE"
+standard_revision = "1800-2023"
+chapter = 12
+clause = "12.4"
+paragraph_anchor = "Conditional if-else: a predicate with value X or Z is false and selects the else branch when present."
+summary = "An all-X conditional predicate is false and does not execute the then branch."
+normativity = "normative"
+testability = "testable"
+coverage_state = "covered"
+related_clauses = []
+tags = ["conditional", "four-state", "runtime"]
+revision_applicability = { "1800-2012" = { status = "applicable", clause = "12.4" }, "1800-2017" = { status = "applicable", clause = "12.4" }, "1800-2023" = { status = "applicable", clause = "12.4" } }
+
+[[requirements]]
+id = "SV-2023-12-UNIQUE-NOMATCH-REPORT"
+standard_revision = "1800-2023"
+chapter = 12
+clause = "12.4.2"
+paragraph_anchor = "Unique-if: without an explicit else, a unique if issues a violation report when no condition matches."
+summary = "A unique-if chain with no true condition and no else produces a violation diagnostic."
+normativity = "normative"
+testability = "testable"
+coverage_state = "covered"
+related_clauses = []
+tags = ["conditional", "unique", "diagnostic"]
+revision_applicability = { "1800-2012" = { status = "applicable", clause = "12.4.2" }, "1800-2017" = { status = "applicable", clause = "12.4.2" }, "1800-2023" = { status = "applicable", clause = "12.4.2" } }
+
+[[requirements]]
+id = "SV-2023-13-OUTPUT-COPYOUT"
+standard_revision = "1800-2023"
+chapter = 13
+clause = "13.5"
+paragraph_anchor = "Subroutine calls: return copies output and inout formal values back to the corresponding actual variables."
+summary = "A subroutine output is copied to its actual when the subroutine returns, using assignment conversion."
+normativity = "normative"
+testability = "testable"
+coverage_state = "covered"
+related_clauses = ["4.9.7", "10.8"]
+tags = ["subroutine", "output", "copy-out"]
+revision_applicability = { "1800-2012" = { status = "applicable", clause = "13.5" }, "1800-2017" = { status = "applicable", clause = "13.5" }, "1800-2023" = { status = "applicable", clause = "13.5" } }
+
+[[requirements]]
+id = "SV-2023-22-INCLUDE-COMMENT"
+standard_revision = "1800-2023"
+chapter = 22
+clause = "22.4"
+paragraph_anchor = "Include directive: only white space or a comment may follow the directive on its line."
+summary = "A block comment may follow an include directive on the same source line."
+normativity = "normative"
+testability = "testable"
+coverage_state = "covered"
+related_clauses = ["22.5.1"]
+tags = ["preprocessor", "include", "macro"]
+revision_applicability = { "1800-2012" = { status = "applicable", clause = "22.4" }, "1800-2017" = { status = "applicable", clause = "22.4" }, "1800-2023" = { status = "applicable", clause = "22.4" } }
+
+[[requirements]]
+id = "SV-2023-23-PORT-CONNECTION-STYLE"
+standard_revision = "1800-2023"
+chapter = 23
+clause = "23.3.2"
+paragraph_anchor = "Module instances: positional and named connections may not be mixed in one instance."
+summary = "All port connections for one module instance are either positional or named."
+normativity = "normative"
+testability = "testable"
+coverage_state = "covered"
+related_clauses = ["23.3.2.1", "23.3.2.2"]
+tags = ["module", "ports", "negative"]
+revision_applicability = { "1800-2012" = { status = "applicable", clause = "23.3.2" }, "1800-2017" = { status = "applicable", clause = "23.3.2" }, "1800-2023" = { status = "applicable", clause = "23.3.2" } }
+
+[[requirements]]
+id = "SV-2023-26-PACKAGE-IMPORT"
+standard_revision = "1800-2023"
+chapter = 26
+clause = "26.3"
+paragraph_anchor = "Package references: compiling a package precedes importing scopes, and import makes identifiers directly visible."
+summary = "A declaration imported from an earlier package source is directly visible in the importing module."
+normativity = "normative"
+testability = "testable"
+coverage_state = "covered"
+related_clauses = ["26.2"]
+tags = ["package", "import", "multi-file"]
+revision_applicability = { "1800-2012" = { status = "applicable", clause = "26.3" }, "1800-2017" = { status = "applicable", clause = "26.3" }, "1800-2023" = { status = "applicable", clause = "26.3" } }
+
+[[requirements]]
+id = "SV-2023-27-CONDITIONAL-GENERATE"
+standard_revision = "1800-2023"
+chapter = 27
+clause = "27.5"
+paragraph_anchor = "Conditional generate: at most one constant-selected branch is instantiated into the elaborated model."
+summary = "Declarations and instances in an unselected conditional-generate branch are not instantiated."
+normativity = "normative"
+testability = "testable"
+coverage_state = "covered"
+related_clauses = ["23.3"]
+tags = ["generate", "hierarchy", "elaboration"]
+revision_applicability = { "1800-2012" = { status = "applicable", clause = "27.5" }, "1800-2017" = { status = "applicable", clause = "27.5" }, "1800-2023" = { status = "applicable", clause = "27.5" } }
+

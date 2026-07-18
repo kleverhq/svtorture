@@ -1,0 +1,212 @@
+{
+  "$defs": {
+    "Distribution": {
+      "enum": [
+        "open-source",
+        "commercial",
+        "internal"
+      ],
+      "title": "Distribution",
+      "type": "string"
+    },
+    "ExecutionBackend": {
+      "enum": [
+        "docker",
+        "local-wrapper"
+      ],
+      "title": "ExecutionBackend",
+      "type": "string"
+    },
+    "Phase": {
+      "enum": [
+        "preprocess",
+        "parse",
+        "elaborate",
+        "simulate"
+      ],
+      "title": "Phase",
+      "type": "string"
+    },
+    "StandardRevision": {
+      "enum": [
+        "1800-2012",
+        "1800-2017",
+        "1800-2023"
+      ],
+      "title": "StandardRevision",
+      "type": "string"
+    },
+    "ToolDefinition": {
+      "additionalProperties": false,
+      "properties": {
+        "adapter": {
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "title": "Adapter",
+          "type": "string"
+        },
+        "ci": {
+          "title": "Ci",
+          "type": "boolean"
+        },
+        "default_branch": {
+          "anyOf": [
+            {
+              "maxLength": 200,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Default Branch"
+        },
+        "display_name": {
+          "maxLength": 4096,
+          "minLength": 1,
+          "title": "Display Name",
+          "type": "string"
+        },
+        "distribution": {
+          "$ref": "#/$defs/Distribution"
+        },
+        "dockerfile": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Dockerfile"
+        },
+        "execution": {
+          "$ref": "#/$defs/ExecutionBackend"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "image_repository": {
+          "anyOf": [
+            {
+              "maxLength": 500,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Image Repository"
+        },
+        "profiles": {
+          "items": {
+            "$ref": "#/$defs/ToolProfile"
+          },
+          "title": "Profiles",
+          "type": "array"
+        },
+        "publish": {
+          "title": "Publish",
+          "type": "boolean"
+        },
+        "recipe_files": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Recipe Files",
+          "type": "array"
+        },
+        "upstream_url": {
+          "anyOf": [
+            {
+              "maxLength": 500,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Upstream Url"
+        }
+      },
+      "required": [
+        "id",
+        "display_name",
+        "adapter",
+        "distribution",
+        "execution",
+        "ci",
+        "publish",
+        "profiles"
+      ],
+      "title": "ToolDefinition",
+      "type": "object"
+    },
+    "ToolProfile": {
+      "additionalProperties": false,
+      "properties": {
+        "effective_language": {
+          "maxLength": 100,
+          "minLength": 1,
+          "title": "Effective Language",
+          "type": "string"
+        },
+        "headline": {
+          "default": false,
+          "title": "Headline",
+          "type": "boolean"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "phases": {
+          "items": {
+            "$ref": "#/$defs/Phase"
+          },
+          "title": "Phases",
+          "type": "array"
+        },
+        "standard_revision": {
+          "$ref": "#/$defs/StandardRevision"
+        }
+      },
+      "required": [
+        "id",
+        "phases",
+        "standard_revision",
+        "effective_language"
+      ],
+      "title": "ToolProfile",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "maximum": 1,
+      "minimum": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "tools": {
+      "items": {
+        "$ref": "#/$defs/ToolDefinition"
+      },
+      "title": "Tools",
+      "type": "array"
+    }
+  },
+  "required": [
+    "schema_version",
+    "tools"
+  ],
+  "title": "ToolRegistry",
+  "type": "object"
+}

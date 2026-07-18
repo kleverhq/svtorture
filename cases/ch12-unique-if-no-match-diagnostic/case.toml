@@ -1,0 +1,21 @@
+schema_version = 1
+id = "ch12-unique-if-no-match-diagnostic"
+title = "Unique-if without a match emits a violation report"
+description = "No condition is true and no else is present, so a standards-required violation report must target the unique-if."
+primary_requirement = "SV-2023-12-UNIQUE-NOMATCH-REPORT"
+related_requirements = []
+standard_revision = "1800-2023"
+revision_applicability = { "1800-2012" = "applicable", "1800-2017" = "applicable", "1800-2023" = "applicable" }
+target_phase = "simulate"
+expectation = "diagnostic"
+evidence = "mandatory"
+sources = ["top.sv"]
+top = "top"
+defines = []
+include_dirs = []
+runtime_args = []
+tags = ["conditional", "diagnostic", "unique"]
+limits = { timeout_seconds = 30, output_bytes = 65536, memory_mb = 2048, pids = 256 }
+oracle = { kind = "diagnostic-at-anchor", anchor = "SVTORTURE_DIAG_ANCHOR:ch12-unique-if-no-match-diagnostic", marker = "SVTORTURE_PASS:ch12-unique-if-no-match-diagnostic" }
+provenance = { origin = "original", license = "Apache-2.0", notes = "Independently authored from the no-match rule in IEEE 1800-2023 clause 12.4.2; diagnostic severity is intentionally not prescribed." }
+

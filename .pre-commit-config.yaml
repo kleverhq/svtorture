@@ -1,0 +1,27 @@
+repos:
+  - repo: local
+    hooks:
+      - id: svtorture-python
+        name: SVTORTURE Python format/lint/type
+        entry: just hook-python
+        language: system
+        pass_filenames: false
+        always_run: true
+      - id: svtorture-metadata
+        name: SVTORTURE strict metadata/schema
+        entry: just hook-metadata
+        language: system
+        pass_filenames: false
+        files: ^(cases/|standards/|suites/|toolchains/|schemas/|src/svtorture/models\.py$|scripts/generate_dashboard_fixture\.py$)
+      - id: svtorture-focused-tests
+        name: SVTORTURE focused unit tests
+        entry: just hook-tests
+        language: system
+        pass_filenames: false
+        files: ^(src|tests|cases|standards|suites|toolchains)/
+      - id: svtorture-dashboard
+        name: SVTORTURE dashboard type/tests
+        entry: just hook-frontend
+        language: system
+        pass_filenames: false
+        files: ^(dashboard|fixtures/dashboard)/

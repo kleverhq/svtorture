@@ -1,0 +1,21 @@
+schema_version = 1
+id = "ch27-unselected-undefined-module"
+title = "An unselected generate branch is not instantiated"
+description = "A constant-false generate branch names an undefined leaf that must not enter the elaborated hierarchy."
+primary_requirement = "SV-2023-27-CONDITIONAL-GENERATE"
+related_requirements = []
+standard_revision = "1800-2023"
+revision_applicability = { "1800-2012" = "applicable", "1800-2017" = "applicable", "1800-2023" = "applicable" }
+target_phase = "elaborate"
+expectation = "accept"
+evidence = "mandatory"
+sources = ["top.sv"]
+top = "top"
+defines = []
+include_dirs = []
+runtime_args = []
+tags = ["elaboration", "generate", "hierarchy"]
+limits = { timeout_seconds = 30, output_bytes = 65536, memory_mb = 2048, pids = 256 }
+oracle = { kind = "phase-exit" }
+provenance = { origin = "adapted", source_url = "local-reference:verilator-torture", source_commit = "8caf56f527527ae931e5efef5fed311aef625bc1", source_path = "cases/chapter-27/conditional-generate/ch27-unselected-undefined-module-ignored", license = "No license file was present in the reference checkout; this case was independently rewritten and attribution is retained.", notes = "Changed from runtime to the exact elaboration phase named by the normative rule." }
+

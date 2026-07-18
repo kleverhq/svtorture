@@ -1,0 +1,21 @@
+schema_version = 1
+id = "ch26-multifile-package-import"
+title = "An earlier package file supplies an imported declaration"
+description = "The ordered source list compiles a package before a module whose elaborated width uses a wildcard-imported parameter."
+primary_requirement = "SV-2023-26-PACKAGE-IMPORT"
+related_requirements = []
+standard_revision = "1800-2023"
+revision_applicability = { "1800-2012" = "applicable", "1800-2017" = "applicable", "1800-2023" = "applicable" }
+target_phase = "elaborate"
+expectation = "accept"
+evidence = "mandatory"
+sources = ["values_pkg.sv", "top.sv"]
+top = "top"
+defines = []
+include_dirs = []
+runtime_args = []
+tags = ["import", "multi-file", "package"]
+limits = { timeout_seconds = 30, output_bytes = 65536, memory_mb = 2048, pids = 256 }
+oracle = { kind = "phase-exit" }
+provenance = { origin = "original", license = "Apache-2.0", notes = "Independently authored as the corpus multi-file and ordered-source boundary." }
+

@@ -1,0 +1,80 @@
+schema_version = 1
+
+[[tools]]
+id = "slang"
+display_name = "Slang"
+adapter = "slang"
+distribution = "open-source"
+execution = "docker"
+ci = true
+publish = true
+upstream_url = "https://github.com/MikePopoloski/slang.git"
+default_branch = "master"
+dockerfile = "containers/slang.Dockerfile"
+image_repository = "svtorture/slang"
+profiles = [
+  { id = "parser", phases = ["preprocess", "parse"], headline = false, standard_revision = "1800-2023", effective_language = "IEEE 1800-2023 (--std=1800-2023)" },
+  { id = "elaborator", phases = ["preprocess", "parse", "elaborate"], headline = true, standard_revision = "1800-2023", effective_language = "IEEE 1800-2023 (--std=1800-2023)" },
+]
+
+[[tools]]
+id = "icarus"
+display_name = "Icarus Verilog"
+adapter = "icarus"
+distribution = "open-source"
+execution = "docker"
+ci = true
+publish = true
+upstream_url = "https://github.com/steveicarus/iverilog.git"
+default_branch = "master"
+dockerfile = "containers/icarus.Dockerfile"
+image_repository = "svtorture/icarus"
+profiles = [
+  { id = "elaborator", phases = ["elaborate"], headline = false, standard_revision = "1800-2012", effective_language = "IEEE 1800-2012 (-g2012)" },
+  { id = "simulator", phases = ["elaborate", "simulate"], headline = true, standard_revision = "1800-2012", effective_language = "IEEE 1800-2012 (-g2012)" },
+]
+
+[[tools]]
+id = "verilator"
+display_name = "Verilator"
+adapter = "verilator"
+distribution = "open-source"
+execution = "docker"
+ci = true
+publish = true
+upstream_url = "https://github.com/verilator/verilator.git"
+default_branch = "master"
+dockerfile = "containers/verilator.Dockerfile"
+image_repository = "svtorture/verilator"
+profiles = [
+  { id = "elaborator", phases = ["elaborate"], headline = false, standard_revision = "1800-2023", effective_language = "IEEE 1800-2023 (--language 1800-2023)" },
+  { id = "simulator", phases = ["elaborate", "simulate"], headline = true, standard_revision = "1800-2023", effective_language = "IEEE 1800-2023 (--language 1800-2023)" },
+]
+
+[[tools]]
+id = "vcs"
+display_name = "Synopsys VCS"
+adapter = "vcs"
+distribution = "commercial"
+execution = "local-wrapper"
+ci = false
+publish = false
+profiles = [
+  { id = "elaborator", phases = ["elaborate"], headline = false, standard_revision = "1800-2017", effective_language = "SystemVerilog (-sverilog), wrapper-defined licensed image" },
+  { id = "simulator", phases = ["elaborate", "simulate"], headline = true, standard_revision = "1800-2017", effective_language = "SystemVerilog (-sverilog), wrapper-defined licensed image" },
+]
+
+[[tools]]
+id = "fake"
+display_name = "Deterministic Fake Tool"
+adapter = "fake"
+distribution = "internal"
+execution = "docker"
+ci = true
+publish = false
+dockerfile = "containers/fake-tool/Dockerfile"
+recipe_files = ["containers/fake-tool/fake_tool.py"]
+image_repository = "svtorture/fake-tool"
+profiles = [
+  { id = "simulator", phases = ["preprocess", "parse", "elaborate", "simulate"], headline = true, standard_revision = "1800-2023", effective_language = "deterministic test protocol v1" },
+]

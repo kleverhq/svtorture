@@ -1,0 +1,343 @@
+{
+  "$defs": {
+    "Applicability": {
+      "enum": [
+        "applicable",
+        "same-rule-different-clause",
+        "changed-expectation",
+        "not-applicable",
+        "not-assessed"
+      ],
+      "title": "Applicability",
+      "type": "string"
+    },
+    "EvidenceLevel": {
+      "enum": [
+        "mandatory",
+        "exploratory"
+      ],
+      "title": "EvidenceLevel",
+      "type": "string"
+    },
+    "Expectation": {
+      "enum": [
+        "accept",
+        "reject",
+        "diagnostic"
+      ],
+      "title": "Expectation",
+      "type": "string"
+    },
+    "Oracle": {
+      "additionalProperties": false,
+      "properties": {
+        "anchor": {
+          "anyOf": [
+            {
+              "maxLength": 256,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Anchor"
+        },
+        "kind": {
+          "$ref": "#/$defs/OracleKind"
+        },
+        "marker": {
+          "anyOf": [
+            {
+              "maxLength": 256,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Marker"
+        }
+      },
+      "required": [
+        "kind"
+      ],
+      "title": "Oracle",
+      "type": "object"
+    },
+    "OracleKind": {
+      "enum": [
+        "phase-exit",
+        "runtime-pass-marker",
+        "diagnostic-at-anchor"
+      ],
+      "title": "OracleKind",
+      "type": "string"
+    },
+    "Phase": {
+      "enum": [
+        "preprocess",
+        "parse",
+        "elaborate",
+        "simulate"
+      ],
+      "title": "Phase",
+      "type": "string"
+    },
+    "Provenance": {
+      "additionalProperties": false,
+      "properties": {
+        "license": {
+          "maxLength": 4096,
+          "minLength": 1,
+          "title": "License",
+          "type": "string"
+        },
+        "notes": {
+          "maxLength": 4096,
+          "minLength": 1,
+          "title": "Notes",
+          "type": "string"
+        },
+        "origin": {
+          "pattern": "^(original|adapted|inspired)$",
+          "title": "Origin",
+          "type": "string"
+        },
+        "source_commit": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Commit"
+        },
+        "source_path": {
+          "anyOf": [
+            {
+              "maxLength": 500,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Path"
+        },
+        "source_url": {
+          "anyOf": [
+            {
+              "maxLength": 500,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Url"
+        }
+      },
+      "required": [
+        "origin",
+        "license",
+        "notes"
+      ],
+      "title": "Provenance",
+      "type": "object"
+    },
+    "ResourceLimits": {
+      "additionalProperties": false,
+      "properties": {
+        "memory_mb": {
+          "default": 2048,
+          "maximum": 32768,
+          "minimum": 128,
+          "title": "Memory Mb",
+          "type": "integer"
+        },
+        "output_bytes": {
+          "default": 65536,
+          "maximum": 1048576,
+          "minimum": 1024,
+          "title": "Output Bytes",
+          "type": "integer"
+        },
+        "pids": {
+          "default": 256,
+          "maximum": 4096,
+          "minimum": 16,
+          "title": "Pids",
+          "type": "integer"
+        },
+        "timeout_seconds": {
+          "default": 30,
+          "maximum": 300,
+          "minimum": 1,
+          "title": "Timeout Seconds",
+          "type": "integer"
+        }
+      },
+      "title": "ResourceLimits",
+      "type": "object"
+    },
+    "StandardRevision": {
+      "enum": [
+        "1800-2012",
+        "1800-2017",
+        "1800-2023"
+      ],
+      "title": "StandardRevision",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "defines": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Defines",
+      "type": "array"
+    },
+    "description": {
+      "maxLength": 4096,
+      "minLength": 1,
+      "title": "Description",
+      "type": "string"
+    },
+    "evidence": {
+      "$ref": "#/$defs/EvidenceLevel"
+    },
+    "expectation": {
+      "$ref": "#/$defs/Expectation"
+    },
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "include_dirs": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Include Dirs",
+      "type": "array"
+    },
+    "limits": {
+      "$ref": "#/$defs/ResourceLimits",
+      "default": {
+        "memory_mb": 2048,
+        "output_bytes": 65536,
+        "pids": 256,
+        "timeout_seconds": 30
+      }
+    },
+    "oracle": {
+      "$ref": "#/$defs/Oracle"
+    },
+    "primary_requirement": {
+      "title": "Primary Requirement",
+      "type": "string"
+    },
+    "provenance": {
+      "$ref": "#/$defs/Provenance"
+    },
+    "related_requirements": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Related Requirements",
+      "type": "array"
+    },
+    "revision_applicability": {
+      "additionalProperties": {
+        "$ref": "#/$defs/Applicability"
+      },
+      "propertyNames": {
+        "$ref": "#/$defs/StandardRevision"
+      },
+      "title": "Revision Applicability",
+      "type": "object"
+    },
+    "runtime_args": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Runtime Args",
+      "type": "array"
+    },
+    "schema_version": {
+      "maximum": 1,
+      "minimum": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "sources": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Sources",
+      "type": "array"
+    },
+    "standard_revision": {
+      "$ref": "#/$defs/StandardRevision"
+    },
+    "tags": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Tags",
+      "type": "array"
+    },
+    "target_phase": {
+      "$ref": "#/$defs/Phase"
+    },
+    "title": {
+      "maxLength": 4096,
+      "minLength": 1,
+      "title": "Title",
+      "type": "string"
+    },
+    "top": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Top"
+    }
+  },
+  "required": [
+    "schema_version",
+    "id",
+    "title",
+    "description",
+    "primary_requirement",
+    "standard_revision",
+    "revision_applicability",
+    "target_phase",
+    "expectation",
+    "evidence",
+    "sources",
+    "oracle",
+    "provenance"
+  ],
+  "title": "CaseDefinition",
+  "type": "object"
+}

@@ -1,0 +1,108 @@
+name: Nightly upstream conformance
+
+on:
+  schedule:
+    - cron: "17 2 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  packages: write
+
+concurrency:
+  group: nightly-pages
+  cancel-in-progress: false
+
+jobs:
+  policy:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.matrix.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@v6
+      - uses: astral-sh/setup-uv@v8
+        with:
+          enable-cache: false
+      - uses: extractions/setup-just@v4
+      - run: just setup-python
+      - id: matrix
+        name: Select tools from publication policy
+        run: echo "matrix=$(just --quiet ci-matrix)" >> "$GITHUB_OUTPUT"
+
+  collect:
+    needs: policy
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.policy.outputs.matrix) }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v6
+      - uses: astral-sh/setup-uv@v8
+        with:
+          enable-cache: false
+      - uses: extractions/setup-just@v4
+      - uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - run: just setup-python
+      - name: Resolve, build, push, and collect
+        id: collect
+        continue-on-error: true
+        run: just nightly "${{ matrix.tool }}"
+      - name: Retain normalized and full evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: campaign-${{ matrix.tool }}
+          path: |
+            .svtorture/campaigns/**/campaign.json
+            .svtorture/work/**/*.log
+          if-no-files-found: warn
+          include-hidden-files: true
+          retention-days: 30
+      - name: Report collection infrastructure failure
+        if: steps.collect.outcome == 'failure'
+        run: exit 1
+
+  aggregate:
+    if: always()
+    needs: [policy, collect]
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - uses: astral-sh/setup-uv@v8
+        with:
+          enable-cache: false
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+      - uses: extractions/setup-just@v4
+      - run: just setup-ci
+      - name: Download available matrix evidence
+        continue-on-error: true
+        uses: actions/download-artifact@v8
+        with:
+          pattern: campaign-*
+          path: .nightly-artifacts
+          merge-multiple: true
+      - name: Aggregate available tools
+        run: just aggregate-artifacts .nightly-artifacts
+      - name: Append trusted compact history to gh-pages
+        run: just pages-publish "$(cat .svtorture/nightly-aggregate-path)"
+      - name: Retain aggregate
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: aggregate-${{ github.run_id }}
+          path: |
+            .svtorture/campaigns/**/campaign.json
+            .svtorture/work/**/*.log
+          if-no-files-found: warn
+          include-hidden-files: true
+          retention-days: 30
