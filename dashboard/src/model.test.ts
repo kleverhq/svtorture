@@ -1,6 +1,5 @@
 import { describe, expect, it } from "vitest";
 
-import fixture from "../../fixtures/dashboard/data/dataset.json";
 import {
   aggregateStatus,
   EMPTY_FILTERS,
@@ -9,9 +8,10 @@ import {
   filtersToSearch,
   selectedCampaign,
 } from "./model";
-import type { Dataset, Result } from "./types";
+import { makeTestDataset } from "./testDataset";
+import type { Result } from "./types";
 
-const dataset = fixture as Dataset;
+const dataset = makeTestDataset();
 
 describe("URL-backed filters", () => {
   it("round-trips meaningful filter state", () => {
@@ -29,7 +29,7 @@ describe("URL-backed filters", () => {
 });
 
 describe("requirements model", () => {
-  it("loads the committed strict fixture and filters requirement units", () => {
+  it("filters requirement units from a small local dataset", () => {
     const campaign = selectedCampaign(dataset, "");
     const filtered = filterCorpus(
       dataset,
@@ -42,11 +42,11 @@ describe("requirements model", () => {
 
   it("derives case coverage and keeps uncovered requirements visible", () => {
     const seed = dataset.requirements[0];
-    if (!seed) throw new Error("fixture has no requirements");
+    if (!seed) throw new Error("test dataset has no requirements");
     const uncovered = {
       ...seed,
-      id: "SV-2023-04-UNMAPPED-FIXTURE",
-      summary: "Fixture requirement without a mapped case.",
+      id: "SV-2023-13-UNMAPPED-TEST",
+      summary: "Test requirement without a mapped case.",
     };
     const extended = {
       ...dataset,

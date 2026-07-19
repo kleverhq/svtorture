@@ -8,6 +8,6 @@
 
 ## Local guidance
 
-- The default build reads the canonical example dataset from `../fixtures/dashboard/data/dataset.json`.
-- Real campaign exports belong only in ignored `dist/data/`.
+- A plain frontend build contains no dataset; local and Pages workflows export campaign data after the build.
+- Local campaign exports belong only in ignored `dist/data/`.
 - Keep filters URL-backed and present absent or incomplete evidence explicitly.

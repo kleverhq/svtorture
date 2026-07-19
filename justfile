@@ -27,7 +27,6 @@ hook-python:
 # Strict metadata and committed-schema verification.
 hook-metadata:
     uv run svtorture validate
-    uv run python scripts/generate_dashboard_fixture.py --check
 
 # Focused deterministic framework tests; never invokes Docker or the network.
 hook-tests:
@@ -96,14 +95,6 @@ commercial suite="all":
 # Create the gitignored private-wrapper configuration once.
 private-config:
     test -e tools/private.toml || cp tools/private.example.toml tools/private.toml
-
-# Regenerate deterministic frontend fixture data.
-fixture:
-    uv run python scripts/generate_dashboard_fixture.py
-
-# Build the fixture-backed dashboard.
-dashboard-fixture:
-    npm --prefix dashboard run build
 
 # Build a local dashboard dataset from one or more campaign paths.
 dashboard-build campaigns visibility="local":

@@ -49,7 +49,6 @@ cascade.
 
 ```text
 just schemas
-just fixture
 just smoke
 just ci
 ```

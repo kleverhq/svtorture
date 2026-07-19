@@ -36,7 +36,6 @@ def test_repository_directories_have_navigation_readmes(catalog: Catalog) -> Non
         "cases",
         "dashboard",
         "docs",
-        "fixtures",
         "schemas",
         "scripts",
         "src",

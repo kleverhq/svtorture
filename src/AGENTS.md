@@ -10,4 +10,4 @@
 
 - Keep strict public models frozen and rejecting unknown fields.
 - Adapters construct execution plans and normalize diagnostics; only the evaluator decides conformance.
-- Update schemas, fixtures, tests, and relevant docs with public model changes.
+- Update schemas, tests, and relevant docs with public model changes.
