@@ -3,6 +3,9 @@
 SVTORTURE keeps the units of evidence distinct:
 
 ```text
+standards/ieee-1800-2023-annotated/anchors.json
+          │ validates citations
+          ▼
 standards/index.toml + requirements/chapter-NN.toml
           │
           ▼
@@ -25,8 +28,9 @@ tools/tools.toml ───────► adapter ──► typed ExecutionPlan
 ```
 
 `models.py` defines strict, frozen, unknown-field-rejecting public models.
-`catalog.py` validates cross-references, safe paths, anchors, marker uniqueness,
-source hashes, and the seed-corpus composition. Adapters only declare commands
+`catalog.py` validates requirement citations against the pinned annotated-standard
+anchor index, then validates cross-references, safe paths, diagnostic anchors,
+marker uniqueness, source hashes, and the seed-corpus composition. Adapters only declare commands
 and diagnostic normalization. `executor.py` runs argv arrays in isolated work
 directories and records bounded excerpts plus full-stream hashes. `evaluator.py`
 alone compares observations to the case oracle.

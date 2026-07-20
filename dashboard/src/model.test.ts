@@ -40,6 +40,20 @@ describe("requirements model", () => {
     expect(filtered.cases[0]?.id).toBe("ch13-output-copyout-width");
   });
 
+  it("searches exact annotated-standard anchors", () => {
+    const filtered = filterCorpus(
+      dataset,
+      { ...EMPTY_FILTERS, search: "[2023:10.8:L007:p260]" },
+      selectedCampaign(dataset, ""),
+    );
+    expect(filtered.requirements.map((requirement) => requirement.id)).toEqual([
+      "SV-2023-13-OUTPUT-COPYOUT",
+    ]);
+    expect(filtered.cases.map((testCase) => testCase.id)).toEqual([
+      "ch13-output-copyout-width",
+    ]);
+  });
+
   it("derives case coverage and keeps uncovered requirements visible", () => {
     const seed = dataset.requirements[0];
     if (!seed) throw new Error("test dataset has no requirements");

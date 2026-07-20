@@ -229,7 +229,7 @@ def build_dataset(
                 )
                 metrics.append(point)
     dataset = {
-        "schema_version": 1,
+        "schema_version": 2,
         "generated_from": [item.id for item in selected_campaigns],
         "visibility": visibility,
         "requirements": requirements,
@@ -256,7 +256,7 @@ def write_dataset(
 
 
 def merge_datasets(existing: dict[str, Any], new: dict[str, Any]) -> dict[str, Any]:
-    if existing.get("schema_version") != 1 or new.get("schema_version") != 1:
+    if existing.get("schema_version") != 2 or new.get("schema_version") != 2:
         raise PublicationError("cannot merge incompatible dashboard datasets")
     result = dict(new)
     for key, identity in (("campaigns", "id"), ("metrics", "campaign_id")):

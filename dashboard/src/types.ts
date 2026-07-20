@@ -20,7 +20,7 @@ export interface Requirement {
   standard_revision: string;
   chapter: number;
   clause: string;
-  paragraph_anchor: string;
+  anchors: string[];
   summary: string;
   related_clauses: string[];
   tags: string[];

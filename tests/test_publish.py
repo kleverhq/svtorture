@@ -321,18 +321,24 @@ def test_publication_probes_anonymous_registry_access(
 
 def test_dataset_merge_is_append_only_and_detects_collision() -> None:
     old = {
-        "schema_version": 1,
+        "schema_version": 2,
         "campaigns": [{"id": "one", "value": 1}],
         "metrics": [{"campaign_id": "one", "tool_id": "t", "profile_id": "p"}],
         "generated_from": ["one"],
     }
     new = {
-        "schema_version": 1,
+        "schema_version": 2,
         "campaigns": [{"id": "two", "value": 2}],
         "metrics": [{"campaign_id": "two", "tool_id": "t", "profile_id": "p"}],
         "generated_from": ["two"],
     }
+    legacy = dict(old)
+    legacy["schema_version"] = 1
+    with pytest.raises(PublicationError, match="incompatible dashboard datasets"):
+        merge_datasets(legacy, new)
+
     merged = merge_datasets(old, new)
+    assert merged["schema_version"] == 2
     assert {item["id"] for item in merged["campaigns"]} == {"one", "two"}
     collision = dict(new)
     collision["campaigns"] = [{"id": "one", "value": 999}]

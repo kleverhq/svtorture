@@ -199,7 +199,7 @@ export function filterCorpus(
       requirement?.summary ?? "",
       requirement?.id ?? "",
       requirement?.clause ?? "",
-      requirement?.paragraph_anchor ?? "",
+      ...(requirement?.anchors ?? []),
       ...testCase.tags,
       ...candidateResults.flatMap((result) => [
         result.status,
@@ -255,7 +255,7 @@ export function filterCorpus(
       requirement.id,
       requirement.summary,
       requirement.clause,
-      requirement.paragraph_anchor,
+      ...requirement.anchors,
       ...requirement.tags,
     ]
       .join(" ")

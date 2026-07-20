@@ -165,8 +165,12 @@ export function MatrixView({
                 {expanded.has(row.original.id) && (
                   <div className="matrix__support" style={{ gridColumn: "1 / -1" }}>
                     <div>
-                      <strong>Standard anchor</strong>
-                      <p>{row.original.paragraph_anchor}</p>
+                      <strong>Standard anchors</strong>
+                      <ul>
+                        {row.original.anchors.map((anchor) => (
+                          <li key={anchor}>{anchor}</li>
+                        ))}
+                      </ul>
                     </div>
                     <div className="matrix__cases">
                       {supporting.length ? (

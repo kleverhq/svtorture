@@ -19,10 +19,26 @@ from tests.helpers import campaign_tool, make_campaign, normalized
 
 def _copy_catalog_tree(catalog: Catalog, destination: Path) -> None:
     for directory in ("standards", "suites", "tools", "cases"):
-        shutil.copytree(catalog.root / directory, destination / directory)
+        source = catalog.root / directory
+        target = destination / directory
+        if directory != "standards":
+            shutil.copytree(source, target)
+            continue
+        shutil.copytree(
+            source,
+            target,
+            ignore=shutil.ignore_patterns("ieee-1800-2023-annotated"),
+        )
+        annotated = target / "ieee-1800-2023-annotated"
+        annotated.mkdir()
+        shutil.copy2(
+            source / "ieee-1800-2023-annotated" / "anchors.json",
+            annotated / "anchors.json",
+        )
 
 
 def test_seed_catalog_meets_mvp(catalog: Catalog) -> None:
+    assert catalog.inventory.schema_version == 2
     counts = mvp_audit(catalog)
     assert counts["cases"] == 12
     assert counts["chapters"] == 11
@@ -73,10 +89,11 @@ def test_generated_schemas_use_the_controlled_tag_registry(catalog: Catalog) -> 
         (catalog.root / "schemas" / "requirements.schema.json").read_text()
     )
     assert case_schema["properties"]["tags"]["items"]["enum"] == expected
-    assert (
-        requirement_schema["$defs"]["Requirement"]["properties"]["tags"]["items"]["enum"]
-        == expected
-    )
+    requirement_properties = requirement_schema["$defs"]["Requirement"]["properties"]
+    assert requirement_properties["tags"]["items"]["enum"] == expected
+    assert requirement_properties["anchors"]["minItems"] == 1
+    assert requirement_properties["anchors"]["uniqueItems"] is True
+    assert "paragraph_anchor" not in requirement_properties
 
 
 def test_unknown_metadata_is_rejected(catalog: Catalog) -> None:
@@ -93,6 +110,13 @@ def test_boolean_schema_version_is_rejected(catalog: Catalog) -> None:
         CaseDefinition.model_validate(value)
 
 
+def test_retired_requirement_schema_version_is_rejected(catalog: Catalog) -> None:
+    value = catalog.inventory.model_dump(mode="json")
+    value["schema_version"] = 1
+    with pytest.raises(ValidationError, match="greater than or equal to 2"):
+        RequirementInventory.model_validate(value)
+
+
 @pytest.mark.parametrize(
     "value",
     ("../escape.sv", "/absolute.sv", "nested/../escape.sv", r"windows\\escape.sv"),
@@ -107,6 +131,50 @@ def test_duplicate_requirement_ids_are_rejected(catalog: Catalog) -> None:
     inventory["requirements"].append(inventory["requirements"][0])
     with pytest.raises(ValidationError, match="duplicate requirement ids"):
         RequirementInventory.model_validate(inventory)
+
+
+def test_requirement_anchors_are_nonempty_and_unique(catalog: Catalog) -> None:
+    inventory = catalog.inventory.model_dump(mode="json")
+    requirement = inventory["requirements"][0]
+    requirement["anchors"] = []
+    with pytest.raises(ValidationError, match="at least 1 item"):
+        RequirementInventory.model_validate(inventory)
+
+    requirement["anchors"] = ["[2023:4.9.4:P001:p070]"] * 2
+    with pytest.raises(ValidationError, match="duplicate requirement anchors"):
+        RequirementInventory.model_validate(inventory)
+
+
+def test_retired_paragraph_anchor_is_rejected(catalog: Catalog) -> None:
+    inventory = catalog.inventory.model_dump(mode="json")
+    inventory["requirements"][0]["paragraph_anchor"] = "retired informal anchor"
+    with pytest.raises(ValidationError, match="Extra inputs are not permitted"):
+        RequirementInventory.model_validate(inventory)
+
+
+def test_catalog_rejects_anchor_absent_from_pinned_standard(
+    catalog: Catalog, tmp_path: Path
+) -> None:
+    root = tmp_path / "repo"
+    _copy_catalog_tree(catalog, root)
+    chapter = root / "standards" / "requirements" / "chapter-04.toml"
+    chapter.write_text(
+        chapter.read_text(encoding="utf-8").replace(
+            "[2023:4.9.4:P001:p070]",
+            "[2023:4.9.4:P999:p999]",
+        ),
+        encoding="utf-8",
+    )
+    with pytest.raises(CatalogError, match="absent from pinned annotated standard"):
+        load_catalog(root)
+
+
+def test_catalog_requires_annotated_anchor_index(catalog: Catalog, tmp_path: Path) -> None:
+    root = tmp_path / "repo"
+    _copy_catalog_tree(catalog, root)
+    (root / "standards" / "ieee-1800-2023-annotated" / "anchors.json").unlink()
+    with pytest.raises(CatalogError, match="cannot read JSON"):
+        load_catalog(root)
 
 
 def test_catalog_rejects_duplicate_case_directory(catalog: Catalog, tmp_path: Path) -> None:

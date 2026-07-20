@@ -5,6 +5,7 @@
 - Case design and validation workflow: `../docs/adding-a-case.md`
 - Conformance and oracle semantics: `../docs/methodology.md`
 - Starter metadata and source: `../templates/case/`
+- Pinned 1800-2023 text and citations: `../standards/ieee-1800-2023-annotated/`
 
 ## Local guidance
 

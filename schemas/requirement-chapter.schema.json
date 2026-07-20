@@ -14,6 +14,16 @@
     "Requirement": {
       "additionalProperties": false,
       "properties": {
+        "anchors": {
+          "items": {
+            "pattern": "^\\[2023:(?:[0-9]+(?:\\.[0-9]+)*|[A-Q](?:\\.[0-9]+)*):[A-Z][A-Z0-9]*(?:[-.][A-Z0-9]+)*:p[0-9]{3,4}(?:-[0-9]{3,4})?\\]$",
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Anchors",
+          "type": "array",
+          "uniqueItems": true
+        },
         "chapter": {
           "maximum": 41,
           "minimum": 1,
@@ -27,12 +37,6 @@
         },
         "id": {
           "title": "Id",
-          "type": "string"
-        },
-        "paragraph_anchor": {
-          "maxLength": 4096,
-          "minLength": 1,
-          "title": "Paragraph Anchor",
           "type": "string"
         },
         "related_clauses": {
@@ -104,7 +108,7 @@
         "standard_revision",
         "chapter",
         "clause",
-        "paragraph_anchor",
+        "anchors",
         "summary",
         "revision_applicability"
       ],
@@ -176,8 +180,8 @@
       "type": "array"
     },
     "schema_version": {
-      "maximum": 1,
-      "minimum": 1,
+      "maximum": 2,
+      "minimum": 2,
       "title": "Schema Version",
       "type": "integer"
     }

@@ -32,17 +32,41 @@ class ReproductionReport:
     differences: tuple[str, ...]
 
 
+def _initialize_submodules(checkout: Path) -> None:
+    status = subprocess.run(
+        ["git", "-C", str(checkout), "submodule", "status", "--recursive"],
+        check=False,
+        text=True,
+        capture_output=True,
+    )
+    if status.returncode != 0:
+        raise ReproductionError(status.stderr.strip() or "cannot inspect replay submodules")
+    if not any(line.startswith("-") for line in status.stdout.splitlines()):
+        return
+    update = subprocess.run(
+        ["git", "-C", str(checkout), "submodule", "update", "--init", "--recursive"],
+        check=False,
+        text=True,
+        capture_output=True,
+    )
+    if update.returncode != 0:
+        raise ReproductionError(update.stderr.strip() or "cannot initialize replay submodules")
+
+
 def _ensure_checkout(root: Path, campaign: Campaign) -> Path:
     current = repository_identity(root)
     if campaign.repository.dirty or campaign.repository.commit == "unborn":
+        _initialize_submodules(root)
         return root
     if current.commit == campaign.repository.commit:
+        _initialize_submodules(root)
         return root
     destination = root / ".svtorture" / "reproduce" / campaign.repository.commit
     if destination.exists():
         identity = repository_identity(destination)
         if identity.commit != campaign.repository.commit or identity.dirty:
             raise ReproductionError("existing replay worktree is not the recorded clean checkout")
+        _initialize_submodules(destination)
         return destination
     destination.parent.mkdir(parents=True, exist_ok=True)
     completed = subprocess.run(
@@ -65,6 +89,7 @@ def _ensure_checkout(root: Path, campaign: Campaign) -> Path:
     identity = repository_identity(destination)
     if identity.commit != campaign.repository.commit or identity.dirty:
         raise ReproductionError("created replay worktree is not the recorded clean checkout")
+    _initialize_submodules(destination)
     return destination
 
 

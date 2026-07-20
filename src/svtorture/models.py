@@ -17,8 +17,14 @@ SHA_RE = re.compile(r"^[0-9a-f]{40}$")
 SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
 HEX_DIGEST_RE = re.compile(r"^sha256:[0-9a-f]{64}$")
 CAMPAIGN_ID_RE = re.compile(r"^[0-9]{8}T[0-9]{6}Z-[A-Za-z0-9](?:[A-Za-z0-9-]{0,126}[A-Za-z0-9])?$")
+STANDARD_ANCHOR_PATTERN = (
+    r"^\[2023:(?:[0-9]+(?:\.[0-9]+)*|[A-Q](?:\.[0-9]+)*):"
+    r"[A-Z][A-Z0-9]*(?:[-.][A-Z0-9]+)*:p[0-9]{3,4}(?:-[0-9]{3,4})?\]$"
+)
 SafeText = Annotated[str, Field(min_length=1, max_length=4096)]
+StandardAnchor = Annotated[str, Field(pattern=STANDARD_ANCHOR_PATTERN)]
 SchemaVersion = Annotated[int, Field(strict=True, ge=1, le=1)]
+RequirementSchemaVersion = Annotated[int, Field(strict=True, ge=2, le=2)]
 
 
 class StrictModel(BaseModel):
@@ -169,7 +175,9 @@ class Requirement(StrictModel):
     standard_revision: StandardRevision
     chapter: int = Field(ge=1, le=41)
     clause: str = Field(pattern=r"^[0-9]+(?:\.[0-9]+)*$")
-    paragraph_anchor: SafeText
+    anchors: tuple[StandardAnchor, ...] = Field(
+        min_length=1, json_schema_extra={"uniqueItems": True}
+    )
     summary: SafeText
     related_clauses: tuple[str, ...] = ()
     tags: tuple[str, ...] = ()
@@ -188,6 +196,13 @@ class Requirement(StrictModel):
         cls, value: dict[StandardRevision, RevisionRule]
     ) -> dict[StandardRevision, RevisionRule]:
         return _check_revision_keys(value)
+
+    @field_validator("anchors")
+    @classmethod
+    def unique_anchors(cls, value: tuple[str, ...]) -> tuple[str, ...]:
+        if len(value) != len(set(value)):
+            raise ValueError("duplicate requirement anchors")
+        return value
 
     @field_validator("related_clauses")
     @classmethod
@@ -215,13 +230,15 @@ class Requirement(StrictModel):
         active = self.revision_applicability[self.standard_revision]
         if active.status is not Applicability.APPLICABLE or active.clause != self.clause:
             raise ValueError("active revision must be applicable at the declared clause")
+        if self.anchors[0].split(":", 2)[1] != self.clause:
+            raise ValueError("first requirement anchor must cite the declared clause")
         if not self.id.startswith(f"SV-2023-{self.chapter:02d}-"):
             raise ValueError("requirement id chapter does not match chapter field")
         return self
 
 
 class RequirementInventory(StrictModel):
-    schema_version: SchemaVersion
+    schema_version: RequirementSchemaVersion
     authority: StandardRevision
     requirements: tuple[Requirement, ...]
 
@@ -236,7 +253,7 @@ class RequirementInventory(StrictModel):
 
 
 class StandardsIndex(StrictModel):
-    schema_version: SchemaVersion
+    schema_version: RequirementSchemaVersion
     authority: StandardRevision
     chapters: tuple[int, ...]
 
@@ -255,7 +272,7 @@ class StandardsIndex(StrictModel):
 
 
 class RequirementChapter(StrictModel):
-    schema_version: SchemaVersion
+    schema_version: RequirementSchemaVersion
     chapter: int = Field(ge=1, le=41)
     requirements: tuple[Requirement, ...]
 

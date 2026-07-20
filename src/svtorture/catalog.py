@@ -98,6 +98,49 @@ def _read_toml(path: Path) -> dict[str, Any]:
     return value
 
 
+def _read_json(path: Path) -> dict[str, Any]:
+    try:
+        value = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, UnicodeDecodeError, json.JSONDecodeError) as error:
+        raise CatalogError(f"{path}: cannot read JSON: {error}") from error
+    if not isinstance(value, dict):
+        raise CatalogError(f"{path}: JSON root must be an object")
+    return value
+
+
+def _annotated_standard_anchors(standards: Path) -> frozenset[str]:
+    path = standards / "ieee-1800-2023-annotated" / "anchors.json"
+    value = _read_json(path)
+    if type(value.get("schema_version")) is not int or value["schema_version"] != 1:
+        raise CatalogError(f"{path}: unsupported anchor index schema version")
+    if value.get("edition") != "2023":
+        raise CatalogError(f"{path}: anchor index must describe edition 2023")
+
+    anchors: list[str] = []
+    for section in ("clauses", "annexes"):
+        entries = value.get(section)
+        if not isinstance(entries, list):
+            raise CatalogError(f"{path}: {section} must be an array")
+        for entry in entries:
+            if not isinstance(entry, dict) or not isinstance(entry.get("anchors"), list):
+                raise CatalogError(f"{path}: malformed {section} entry")
+            entry_anchors = entry["anchors"]
+            if any(not isinstance(anchor, str) for anchor in entry_anchors):
+                raise CatalogError(f"{path}: anchors must be strings")
+            if type(entry.get("anchor_count")) is not int or entry["anchor_count"] != len(
+                entry_anchors
+            ):
+                raise CatalogError(f"{path}: inconsistent {section} anchor count")
+            anchors.extend(entry_anchors)
+
+    unique = frozenset(anchors)
+    if len(unique) != len(anchors):
+        raise CatalogError(f"{path}: duplicate anchors")
+    if type(value.get("anchor_count")) is not int or value["anchor_count"] != len(anchors):
+        raise CatalogError(f"{path}: inconsistent total anchor count")
+    return unique
+
+
 def _parse(path: Path, model_type: type[Any]) -> Any:
     try:
         return model_type.model_validate(_read_toml(path))
@@ -128,13 +171,23 @@ def _load_requirements(root: Path) -> RequirementInventory:
             )
         requirements.extend(document.requirements)
     try:
-        return RequirementInventory(
+        inventory = RequirementInventory(
             schema_version=index.schema_version,
             authority=index.authority,
             requirements=tuple(requirements),
         )
     except ValidationError as error:
         raise CatalogError(f"{standards}: {error}") from error
+
+    available_anchors = _annotated_standard_anchors(standards)
+    for requirement in inventory.requirements:
+        unknown = [anchor for anchor in requirement.anchors if anchor not in available_anchors]
+        if unknown:
+            raise CatalogError(
+                f"{requirement.id}: anchors absent from pinned annotated standard: "
+                f"{', '.join(unknown)}"
+            )
+    return inventory
 
 
 def _validate_controlled_tags(

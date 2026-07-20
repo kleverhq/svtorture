@@ -8,9 +8,14 @@ export function makeTestDataset(): Dataset {
     standard_revision: "1800-2023",
     chapter: 13,
     clause: "13.5",
-    paragraph_anchor: "Output values are copied to actual arguments on return.",
-    summary: "A subroutine output is copied to its actual when the subroutine returns.",
-    related_clauses: ["10.8"],
+    anchors: [
+      "[2023:13.5:P005:p348]",
+      "[2023:10.8:L007:p260]",
+      "[2023:6.11.2:P004:p109-110]",
+    ],
+    summary:
+      "A subroutine output is copied to its actual when the subroutine returns, using assignment conversion.",
+    related_clauses: ["4.9.7", "6.11.2", "10.8"],
     tags: ["copy-out", "output", "subroutine"],
     revision_applicability: {
       "1800-2012": { status: "applicable", clause: "13.5" },
@@ -99,7 +104,7 @@ export function makeTestDataset(): Dataset {
     trust: { source: "local" },
   };
   return {
-    schema_version: 1,
+    schema_version: 2,
     generated_from: [campaign.id],
     visibility: "local",
     requirements: [requirement],
