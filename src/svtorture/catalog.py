@@ -108,8 +108,7 @@ def _read_json(path: Path) -> dict[str, Any]:
     return value
 
 
-def _annotated_standard_anchors(standards: Path) -> frozenset[str]:
-    path = standards / "ieee-1800-2023-annotated" / "anchors.json"
+def _standard_anchors(path: Path) -> frozenset[str]:
     value = _read_json(path)
     if type(value.get("schema_version")) is not int or value["schema_version"] != 1:
         raise CatalogError(f"{path}: unsupported anchor index schema version")
@@ -148,7 +147,7 @@ def _parse(path: Path, model_type: type[Any]) -> Any:
         raise CatalogError(f"{path}: {error}") from error
 
 
-def _load_requirements(root: Path) -> RequirementInventory:
+def _load_requirements(root: Path, anchor_index: Path) -> RequirementInventory:
     standards = root / "standards"
     index = _parse(standards / "index.toml", StandardsIndex)
     requirements_directory = standards / "requirements"
@@ -179,7 +178,7 @@ def _load_requirements(root: Path) -> RequirementInventory:
     except ValidationError as error:
         raise CatalogError(f"{standards}: {error}") from error
 
-    available_anchors = _annotated_standard_anchors(standards)
+    available_anchors = _standard_anchors(anchor_index)
     for requirement in inventory.requirements:
         unknown = [anchor for anchor in requirement.anchors if anchor not in available_anchors]
         if unknown:
@@ -347,9 +346,10 @@ def _load_case(path: Path, requirements: dict[str, Requirement]) -> LoadedCase:
     )
 
 
-def load_catalog(root: Path) -> Catalog:
+def load_catalog(root: Path, *, anchor_index: Path | None = None) -> Catalog:
     root = root.resolve()
-    inventory = _load_requirements(root)
+    anchor_index = anchor_index or root / "standards" / "ieee-1800-2023-anchors.json"
+    inventory = _load_requirements(root, anchor_index)
     tags = _parse(root / "standards" / "tags.toml", TagRegistry)
     requirements = {item.id: item for item in inventory.requirements}
 

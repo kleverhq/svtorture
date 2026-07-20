@@ -20,6 +20,7 @@ This change does not rewrite case stimuli or oracles, change historical 2012/201
 - [x] (2026-07-20 11:34Z) Replaced `paragraph_anchor` with a nonempty, unique `anchors` tuple and cross-validated every citation against the pinned anchor index.
 - [x] (2026-07-20 11:37Z) Migrated seed metadata, dashboard consumers, generated schema-version-2 snapshots, replay checkout handling, tests, and durable contributor guidance.
 - [x] (2026-07-20 12:10Z) Passed `just smoke`, all 92 non-Docker tests, dashboard production build, `just precommit`, diff checks, focused citation review, and implementation review.
+- [x] (2026-07-20 13:40Z) Vendored the runtime anchor index, removed every normal submodule dependency, passed 93 non-Docker tests, and passed `just smoke` plus `just precommit` with the submodule directory physically absent.
 
 ## Surprises & Discoveries
 
@@ -29,8 +30,6 @@ This change does not rewrite case stimuli or oracles, change historical 2012/201
   Evidence: both blocks are present in the pinned annotated text.
 - Observation: The addition-width seed record pointed at `11.6.1`, but the direct normative prose tested by the case is in 11.6 and 11.6.2.
   Evidence: `[2023:11.6:P003:p299]` explicitly includes an assignment left-hand side in the largest operand, and `[2023:11.6.2:P001:p300]` states the interim-result rule.
-- Observation: Replay worktrees do not initialize git submodules automatically.
-  Evidence: code review found that `git worktree add` could leave the mandatory anchor index absent; `src/svtorture/reproduce.py` now initializes uninitialized recursive submodules and `tests/test_reproduce.py` covers new and reused checkout support.
 - Observation: Two seed oracles crossed an additional scope or conversion boundary not captured by their first migration draft.
   Evidence: chapter 13 now cites the automatic truncation block, and chapter 26 now cites compilation-unit outer-scope lookup; focused citation re-review reported no substantive findings.
 
@@ -39,8 +38,8 @@ This change does not rewrite case stimuli or oracles, change historical 2012/201
 - Decision: Pin the user-provided HTTPS URL in `.gitmodules`, using SSH only as a local transport workaround for the initial clone.
   Rationale: The repository contract should retain the requested portable URL rather than encode one developer's SSH setup.
   Date/Author: 2026-07-20 / coding agent.
-- Decision: Validate citations against `standards/ieee-1800-2023-annotated/anchors.json` during catalog loading.
-  Rationale: Renaming the field alone would not ensure that future work actually uses the pinned annotated source.
+- Decision: Validate citations against a byte-identical vendored copy of the annotated corpus's `anchors.json` during catalog loading.
+  Rationale: Citation validation remains deterministic and exact without making a private authoring corpus a runtime dependency.
   Date/Author: 2026-07-20 / coding agent.
 - Decision: Keep anchors ordered and require at least one unique value; the first anchor will state the main rule and later anchors may support related semantics.
   Rationale: Order communicates the primary citation while allowing compound requirements without introducing another metadata field.
@@ -51,15 +50,15 @@ This change does not rewrite case stimuli or oracles, change historical 2012/201
 - Decision: Advance requirement metadata and dashboard datasets to schema version 2 with no version-1 compatibility path.
   Rationale: Replacing a required scalar with a required array is an intentionally breaking public-contract change. Catalog loading, dataset merge, and replay reject version-1 requirement data rather than translating or delegating it.
   Date/Author: 2026-07-20 / coding agent.
-- Decision: Use `ANNOTATED_STANDARD_TOKEN` only during checkout with `persist-credentials: false`, and authenticate the nightly Pages push separately with the repository-scoped `github.token`.
-  Rationale: The private submodule needs cross-repository read access, but later build steps must not inherit that credential and publication still needs narrowly scoped write access.
+- Decision: Do not initialize or authenticate the annotated submodule in normal CI or runtime paths.
+  Rationale: Only requirement authoring needs the full corpus. If it is initialized locally, pre-commit compares its anchor index byte-for-byte with the vendored runtime copy.
   Date/Author: 2026-07-20 / coding agent.
 
 ## Outcomes & Retrospective
 
-The parent repository now pins annotated commit `e63112d2a9dfb4586d0e33769721238c8c619ece`. All twelve seed requirements use verified complete anchors, including supporting conversion and scope blocks where their oracles span clauses. Catalog loading rejects a missing index, malformed index counts, unknown citations, empty or duplicate anchor lists, wrong primary clauses, retired fields, and requirement schema version 1. Requirement and dashboard contracts are version 2; the dashboard searches and displays every anchor, and dataset publication rejects version-1 datasets.
+The parent repository pins annotated commit `e63112d2a9dfb4586d0e33769721238c8c619ece` for optional requirement authoring and vendors its exact anchor index for runtime validation. All twelve seed requirements use verified complete anchors, including supporting conversion and scope blocks where their oracles span clauses. Catalog loading rejects a missing vendored index, malformed index counts, unknown citations, empty or duplicate anchor lists, wrong primary clauses, retired fields, and requirement schema version 1. Requirement and dashboard contracts are version 2; the dashboard searches and displays every anchor, and dataset publication rejects version-1 datasets.
 
-Replay initializes the submodule in worktrees and then uses the current strict catalog path; it has no version-1 parser or delegation path. CI and nightly jobs request recursive checkout without persisting the cross-repository credential, while nightly publication authenticates separately. Validation completed with `just smoke`, 92 passing non-Docker tests, a dashboard production build, `just precommit`, two focused review lanes, and their follow-ups. No implementation work remains; repository administrators must configure `ANNOTATED_STANDARD_TOKEN` while the submodule remains private.
+Normal clones, CI, execution, replay, and publication never initialize or read the submodule. Replay validates requirements from detached historical worktrees against the current checkout's vendored index, including the initial schema-version-2 commit that predates the vendored file. When a requirement author initializes the submodule, pre-commit requires its `anchors.json` and the vendored file to be byte-for-byte identical. This was verified by passing `just smoke` and `just precommit` with the submodule directory absent, and by proving that a one-byte mismatch fails the new hook. No private-repository credential is needed for normal repository use.
 
 ## Context and Orientation
 
@@ -71,13 +70,13 @@ The seed inventory currently has twelve requirements in eleven chapter files. Ev
 
 ## Open Questions
 
-There are no unresolved source-code questions. While the annotated repository remains private, repository administrators must configure `ANNOTATED_STANDARD_TOKEN` as a fine-grained token with read access to both repositories. The workflow falls back to `github.token` if the submodule becomes public.
+There are no unresolved source-code questions. Access to the private annotated repository is needed only by contributors who add or revise requirements.
 
 ## Plan of Work
 
-First add the git submodule at `standards/ieee-1800-2023-annotated`, preserving the requested HTTPS URL in `.gitmodules`, and configure every workflow job that loads the catalog to initialize submodules. Then change `Requirement` in `src/svtorture/models.py` to expose a non-empty ordered tuple `anchors`, rejecting duplicates and the removed field through the existing strict-model behavior.
+First add the git submodule at `standards/ieee-1800-2023-annotated`, preserving the requested HTTPS URL in `.gitmodules`, and vendor its `anchors.json` beside it. Normal workflows must not initialize the submodule. Then change `Requirement` in `src/svtorture/models.py` to expose a non-empty ordered tuple `anchors`, rejecting duplicates and the removed field through the existing strict-model behavior.
 
-In `src/svtorture/catalog.py`, load the pinned `anchors.json` once while assembling the inventory, verify its schema version and edition, ensure its declared count matches a duplicate-free set, and reject each requirement citation not found in that set. Tests will use a minimal copied anchor index rather than copy the entire vendor corpus into each temporary catalog.
+In `src/svtorture/catalog.py`, load the vendored `standards/ieee-1800-2023-anchors.json` once while assembling the inventory, verify its schema version and edition, ensure its declared count matches a duplicate-free set, and reject each requirement citation not found in that set. Tests copy the catalog without the submodule and prove that normal loading succeeds.
 
 Migrate each chapter TOML to exact complete anchor strings. Most requirements need one anchor; addition width, output copy-out, and package import need supporting anchors because their tested behavior combines rules. Change the addition requirement's active clause and 2023 applicability clause to `11.6`; do not speculate about or alter historical revision clauses.
 
@@ -114,7 +113,7 @@ The search should print nothing, submodule status should show `e63112d...` witho
 
 `load_catalog` must accept all twelve migrated requirements when the pinned index is present. A focused test must prove that replacing a known anchor with an invented but well-formed anchor raises `CatalogError`; model tests must prove that an empty or duplicate anchor list and the retired `paragraph_anchor` field are rejected. Generated version-2 schemas must require a unique `anchors` array with at least one string and must not expose `paragraph_anchor`.
 
-Dashboard type checking and tests must pass with `anchors: string[]`; search must include every anchor and the expanded requirement row must render all citations. Every GitHub Actions job that invokes Python catalog loading must request submodule checkout. Contributor guidance must name the pinned annotated corpus as the 2023 working source and explain that complete anchors, not project-owned paraphrase anchors, are required.
+Dashboard type checking and tests must pass with `anchors: string[]`; search must include every anchor and the expanded requirement row must render all citations. GitHub Actions and runtime paths must not initialize or access the submodule. Contributor guidance must identify it as an optional requirement-authoring source and explain that complete anchors, not project-owned paraphrase anchors, are required.
 
 ### Idempotence and Recovery
 
@@ -134,10 +133,12 @@ Representative migrated citations are:
 
 ### Interfaces and Dependencies
 
-No new package dependency is needed. `Requirement.anchors` in `src/svtorture/models.py` is a frozen nonempty tuple of unique format-checked strings. `RequirementInventory`, `RequirementChapter`, and `StandardsIndex` use `RequirementSchemaVersion` 2. `_load_requirements` in `src/svtorture/catalog.py` consumes the standard-library `json` module to load the submodule index and raises `CatalogError` for a missing, malformed, inconsistent, or unmatched index. The dashboard `Requirement` interface exposes `anchors: string[]`, and dashboard datasets use schema version 2.
+No new package dependency is needed. `Requirement.anchors` in `src/svtorture/models.py` is a frozen nonempty tuple of unique format-checked strings. `RequirementInventory`, `RequirementChapter`, and `StandardsIndex` use `RequirementSchemaVersion` 2. `_load_requirements` in `src/svtorture/catalog.py` consumes the standard-library `json` module to load the vendored index and raises `CatalogError` for a missing, malformed, inconsistent, or unmatched index. `scripts/check_annotated_anchors.py` performs the optional byte comparison during pre-commit. The dashboard `Requirement` interface exposes `anchors: string[]`, and dashboard datasets use schema version 2.
 
 Revision note (2026-07-20): Initial self-contained plan created after repository and annotated-corpus inspection so implementation could proceed with exact citations and observable validation.
 
 Revision note (2026-07-20 11:41Z): Updated the living plan after implementation, schema-version review, citation review, replay hardening, credential separation, and deterministic acceptance checks.
 
 Revision note (2026-07-20 12:10Z): Removed all schema-version-1 compatibility and replay delegation after the transition was clarified as intentionally breaking.
+
+Revision note (2026-07-20 13:40Z): Vendored the anchor index and removed the annotated submodule from every normal runtime and CI path; it remains optional for requirement authoring. Replay explicitly receives the current vendored index when loading a detached historical catalog.

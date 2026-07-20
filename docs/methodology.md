@@ -2,13 +2,14 @@
 
 ## Authority and revision
 
-IEEE Std 1800-2023 is the active authority. Interpretation uses the repository-
-pinned `standards/ieee-1800-2023-annotated/` corpus. Requirement records identify
-a clause and a nonempty list of complete corpus anchors; the first anchor cites
-the declared clause and later anchors support rules that span blocks. Catalog
-loading verifies every citation against the pinned `anchors.json`. Cases identify
-one primary normative requirement. Applicability to 1800-2012, 1800-2017, and
-1800-2023 is explicit and complete.
+IEEE Std 1800-2023 is the active authority. Requirement authoring uses the
+optional repository-pinned `standards/ieee-1800-2023-annotated/` corpus.
+Requirement records identify a clause and a nonempty list of complete corpus
+anchors; the first anchor cites the declared clause and later anchors support
+rules that span blocks. Catalog loading verifies every citation against the
+vendored `standards/ieee-1800-2023-anchors.json` without requiring the submodule.
+Cases identify one primary normative requirement. Applicability to 1800-2012,
+1800-2017, and 1800-2023 is explicit and complete.
 
 The expected result comes from the selected revision's rule. Tool behavior,
 documentation, `sv-tests`, and other simulators may corroborate or prioritize a

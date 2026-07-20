@@ -6,7 +6,7 @@
 - Use the root `justfile` as the stable development and CI interface.
 - Run `just smoke` for deterministic local checks and `just ci` before handoff when Docker and network access are available.
 - Regenerate schemas with `just schemas`; do not edit generated JSON by hand.
-- Ground 1800-2023 requirements and case oracles in the pinned `standards/ieee-1800-2023-annotated/` corpus and its complete anchors.
+- When adding or revising an 1800-2023 requirement, ground it in the optional pinned `standards/ieee-1800-2023-annotated/` authoring corpus and its complete anchors.
 - Do not weaken an oracle or add an expected-failure shortcut to match current tool behavior.
 - Keep commits free of `.svtorture/`, full logs, binaries, simulator output, licensed images, private wrapper configuration, credentials, and IEEE documents outside the pinned standards submodule.
 - Use Conventional Commits for repository commits.

@@ -22,8 +22,10 @@ just reproduce "https://raw.githubusercontent.com/<owner>/<repo>/gh-pages/histor
 ```
 
 Replay first verifies the campaign and current corpus. If the recorded corpus
-commit differs, it creates a detached git worktree. It then uses the recorded
-immutable public image reference, attempts to pull it, and only then rebuilds
+commit differs, it creates a detached git worktree. Requirement anchors in that
+worktree are checked against the current checkout's vendored anchor index, so
+replay never needs the annotated submodule. It then uses the recorded immutable
+public image reference, attempts to pull it, and only then rebuilds
 from the exact tool SHA, matching recipe hash, and recorded base-image digest.
 The normalized status/reason is compared and platform differences are reported.
 

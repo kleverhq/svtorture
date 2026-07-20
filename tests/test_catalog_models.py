@@ -29,12 +29,6 @@ def _copy_catalog_tree(catalog: Catalog, destination: Path) -> None:
             target,
             ignore=shutil.ignore_patterns("ieee-1800-2023-annotated"),
         )
-        annotated = target / "ieee-1800-2023-annotated"
-        annotated.mkdir()
-        shutil.copy2(
-            source / "ieee-1800-2023-annotated" / "anchors.json",
-            annotated / "anchors.json",
-        )
 
 
 def test_seed_catalog_meets_mvp(catalog: Catalog) -> None:
@@ -169,12 +163,29 @@ def test_catalog_rejects_anchor_absent_from_pinned_standard(
         load_catalog(root)
 
 
-def test_catalog_requires_annotated_anchor_index(catalog: Catalog, tmp_path: Path) -> None:
+def test_catalog_loads_without_annotated_submodule(catalog: Catalog, tmp_path: Path) -> None:
     root = tmp_path / "repo"
     _copy_catalog_tree(catalog, root)
-    (root / "standards" / "ieee-1800-2023-annotated" / "anchors.json").unlink()
+    assert not (root / "standards" / "ieee-1800-2023-annotated").exists()
+    load_catalog(root)
+
+
+def test_catalog_requires_vendored_anchor_index(catalog: Catalog, tmp_path: Path) -> None:
+    root = tmp_path / "repo"
+    _copy_catalog_tree(catalog, root)
+    (root / "standards" / "ieee-1800-2023-anchors.json").unlink()
     with pytest.raises(CatalogError, match="cannot read JSON"):
         load_catalog(root)
+
+
+def test_catalog_accepts_an_explicit_runtime_anchor_index(catalog: Catalog, tmp_path: Path) -> None:
+    root = tmp_path / "repo"
+    _copy_catalog_tree(catalog, root)
+    (root / "standards" / "ieee-1800-2023-anchors.json").unlink()
+    load_catalog(
+        root,
+        anchor_index=catalog.root / "standards" / "ieee-1800-2023-anchors.json",
+    )
 
 
 def test_catalog_rejects_duplicate_case_directory(catalog: Catalog, tmp_path: Path) -> None:

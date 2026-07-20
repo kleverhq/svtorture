@@ -10,12 +10,9 @@ The main path through the repository is:
 standards → cases → suites → tools → campaigns → dashboard
 ```
 
-Clone with `--recurse-submodules`, or initialize an existing checkout with
-`git submodule update --init --recursive`. Access to the annotated repository is
-required. GitHub Actions uses `ANNOTATED_STANDARD_TOKEN` when configured; for a
-private submodule, set it to a fine-grained token with read access to both
-repositories. Then run `just setup` and use `just smoke` for the fast local gate
-or `just ci` for the complete integration gate. The root `justfile` lists
+Start with `just setup`, then use `just smoke` for the fast local gate or
+`just ci` for the complete integration gate. The annotated-standard submodule is
+optional and needed only when authoring requirements. The root `justfile` lists
 campaign, reproduction, schema, and dashboard entrypoints.
 
 Documentation:

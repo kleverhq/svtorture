@@ -1,51 +1,39 @@
 from pathlib import Path
-from types import SimpleNamespace
 
 import pytest
 
 import svtorture.reproduce as reproduction
-from svtorture.models import RepositoryIdentity
-
-RECORDED_SHA = "1" * 40
-CURRENT_SHA = "2" * 40
 
 
-def test_initialize_submodules_updates_uninitialized_entries(
+class CatalogLoaded(Exception):
+    pass
+
+
+def test_replay_uses_the_current_vendored_anchor_index(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
-    calls: list[list[str]] = []
+    root = tmp_path / "current"
+    checkout = tmp_path / "recorded"
+    observed: dict[str, Path] = {}
 
-    def run(argv: list[str], **_kwargs: object) -> reproduction.subprocess.CompletedProcess[str]:
-        calls.append(argv)
-        if "status" in argv:
-            return reproduction.subprocess.CompletedProcess(
-                argv, 0, stdout=f"-{RECORDED_SHA} standards/annotated\n", stderr=""
-            )
-        return reproduction.subprocess.CompletedProcess(argv, 0, stdout="", stderr="")
+    monkeypatch.setattr(reproduction, "_ensure_checkout", lambda *_args: checkout)
 
-    monkeypatch.setattr(reproduction.subprocess, "run", run)
-    reproduction._initialize_submodules(tmp_path)
+    def load_catalog(path: Path, *, anchor_index: Path) -> None:
+        observed["checkout"] = path
+        observed["anchor_index"] = anchor_index
+        raise CatalogLoaded
 
-    assert calls[-1][-3:] == ["update", "--init", "--recursive"]
+    monkeypatch.setattr(reproduction, "load_catalog", load_catalog)
+    with pytest.raises(CatalogLoaded):
+        reproduction.reproduce_case(
+            root,
+            object(),
+            tool_id="tool",
+            profile_id="profile",
+            case_id="case",
+        )
 
-
-def test_reused_replay_worktree_initializes_submodules(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
-) -> None:
-    destination = tmp_path / ".svtorture" / "reproduce" / RECORDED_SHA
-    destination.mkdir(parents=True)
-    campaign = SimpleNamespace(repository=RepositoryIdentity(commit=RECORDED_SHA, dirty=False))
-
-    monkeypatch.setattr(
-        reproduction,
-        "repository_identity",
-        lambda path: RepositoryIdentity(
-            commit=RECORDED_SHA if path == destination else CURRENT_SHA,
-            dirty=False,
-        ),
-    )
-    initialized: list[Path] = []
-    monkeypatch.setattr(reproduction, "_initialize_submodules", initialized.append)
-
-    assert reproduction._ensure_checkout(tmp_path, campaign) == destination
-    assert initialized == [destination]
+    assert observed == {
+        "checkout": checkout,
+        "anchor_index": root / "standards" / "ieee-1800-2023-anchors.json",
+    }

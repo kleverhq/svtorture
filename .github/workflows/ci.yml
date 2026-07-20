@@ -18,10 +18,6 @@ jobs:
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@v6
-        with:
-          persist-credentials: false
-          submodules: recursive
-          token: ${{ secrets.ANNOTATED_STANDARD_TOKEN || github.token }}
       - uses: astral-sh/setup-uv@v8
         with:
           enable-cache: false
