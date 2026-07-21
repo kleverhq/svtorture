@@ -104,6 +104,7 @@ export interface Filters {
   campaign: string;
   date: string;
   caseId: string;
+  requirementId: string;
   changed: boolean;
   disagreement: boolean;
 }
@@ -124,6 +125,7 @@ export const EMPTY_FILTERS: Filters = {
   campaign: "",
   date: "",
   caseId: "",
+  requirementId: "",
   changed: false,
   disagreement: false,
 };

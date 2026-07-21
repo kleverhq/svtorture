@@ -5,7 +5,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { useVirtualizer } from "@tanstack/react-virtual";
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef } from "react";
 
 import { aggregateStatus, profileKeys, resultsByKey } from "./model";
 import { StatusBadge } from "./StatusBadge";
@@ -16,6 +16,8 @@ interface MatrixProps {
   cases: CaseDefinition[];
   campaign?: Campaign | undefined;
   toolFilter: string;
+  selectedRequirementId: string;
+  onSelectRequirement: (requirementId: string) => void;
   onInspectCase: (caseId: string) => void;
 }
 
@@ -26,10 +28,12 @@ export function MatrixView({
   cases,
   campaign,
   toolFilter,
+  selectedRequirementId,
+  onSelectRequirement,
   onInspectCase,
 }: MatrixProps) {
   const parentRef = useRef<HTMLDivElement>(null);
-  const [selectedRequirementId, setSelectedRequirementId] = useState("");
+  const inspectorRef = useRef<HTMLElement>(null);
   const resultMap = useMemo(() => resultsByKey(campaign), [campaign]);
   const profiles = profileKeys(campaign).filter(
     (profile) => !toolFilter || profile === toolFilter,
@@ -59,7 +63,13 @@ export function MatrixView({
             className="matrix__requirement"
             aria-pressed={selectedRequirementId === context.row.original.id}
             title={context.getValue()}
-            onClick={() => setSelectedRequirementId(context.row.original.id)}
+            onClick={() =>
+              onSelectRequirement(
+                selectedRequirementId === context.row.original.id
+                  ? ""
+                  : context.row.original.id,
+              )
+            }
           >
             <strong>{context.row.original.id}</strong>
             <span>{context.getValue()}</span>
@@ -112,6 +122,11 @@ export function MatrixView({
   const supporting = selectedRequirement
     ? (casesByRequirement.get(selectedRequirement.id) ?? [])
     : [];
+  useEffect(() => {
+    if (!selectedRequirement) return;
+    inspectorRef.current?.focus({ preventScroll: true });
+    inspectorRef.current?.scrollIntoView({ block: "nearest" });
+  }, [selectedRequirement]);
 
   return (
     <section className="panel matrix" aria-labelledby="matrix-title">
@@ -171,17 +186,22 @@ export function MatrixView({
         </div>
 
         {selectedRequirement && (
-          <aside className="matrix-inspector" aria-label="Requirement inspector">
+          <aside
+            className="matrix-inspector"
+            ref={inspectorRef}
+            tabIndex={-1}
+            aria-labelledby="requirement-inspector-title"
+          >
             <header>
               <div>
                 <span>Clause {selectedRequirement.clause}</span>
-                <strong>{selectedRequirement.id}</strong>
+                <strong id="requirement-inspector-title">{selectedRequirement.id}</strong>
               </div>
               <button
                 type="button"
                 className="icon-button"
                 aria-label="Close requirement inspector"
-                onClick={() => setSelectedRequirementId("")}
+                onClick={() => onSelectRequirement("")}
               >
                 ×
               </button>

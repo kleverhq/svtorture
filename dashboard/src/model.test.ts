@@ -24,6 +24,7 @@ describe("URL-backed filters", () => {
       chapter: "13",
       statusGroup: "fail",
       caseId: "ch13-output-copyout-width",
+      requirementId: "SV-2023-13-OUTPUT-COPYOUT",
       changed: true,
       disagreement: true,
     };

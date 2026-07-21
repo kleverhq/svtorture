@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useId, useMemo, useRef, useState } from "react";
 
 import {
   resultsByKey,
@@ -15,12 +15,53 @@ import type {
   Result,
 } from "./types";
 
+interface SourceContent {
+  name: string;
+  text: string;
+}
+
+interface OpenSource extends SourceContent {
+  caseId: string;
+  campaignId: string;
+}
+
+type SourceTarget =
+  | { kind: "embedded"; text: string }
+  | { kind: "external"; href: string }
+  | { kind: "unavailable" };
+
+function sourceTarget(link: string | undefined): SourceTarget {
+  const prefix = "data:text/plain;charset=utf-8,";
+  if (link?.startsWith(prefix)) {
+    try {
+      return { kind: "embedded", text: decodeURIComponent(link.slice(prefix.length)) };
+    } catch {
+      return { kind: "unavailable" };
+    }
+  }
+  if (!link || link.startsWith("data:")) return { kind: "unavailable" };
+  try {
+    const url = new URL(link);
+    return url.protocol === "https:" && url.hostname === "github.com"
+      ? { kind: "external", href: url.toString() }
+      : { kind: "unavailable" };
+  } catch {
+    return { kind: "unavailable" };
+  }
+}
+
 function SourceLinks({
   testCase,
   campaign,
+  openSourceName,
+  viewerId,
+  onToggleSource,
 }: {
   testCase: CaseDefinition;
   campaign?: Campaign | undefined;
+  openSourceName?: string | undefined;
+  viewerId: string;
+  onToggleSource: (source: SourceContent, trigger: HTMLButtonElement) => void;
 }) {
   return (
     <div className="source-links">
@@ -34,12 +75,43 @@ function SourceLinks({
                 .map(encodeURIComponent)
                 .join("/")}`
             : testCase.source_links?.[source];
-        return link ? (
-          <a key={source} href={link}>
-            {source}
-          </a>
-        ) : (
-          <code key={source}>{source}</code>
+        const target = sourceTarget(link);
+        if (target.kind === "embedded") {
+          const expanded = openSourceName === source;
+          return (
+            <button
+              type="button"
+              className="source-link"
+              key={source}
+              aria-expanded={expanded}
+              aria-controls={viewerId}
+              onClick={(event) =>
+                onToggleSource(
+                  { name: source, text: target.text },
+                  event.currentTarget,
+                )
+              }
+            >
+              {source}
+            </button>
+          );
+        }
+        if (target.kind === "external") {
+          return (
+            <a
+              key={source}
+              href={target.href}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {source} ↗
+            </a>
+          );
+        }
+        return (
+          <span className="source-unavailable" title="Source content unavailable" key={source}>
+            {source} · unavailable
+          </span>
         );
       })}
     </div>
@@ -148,6 +220,7 @@ export function EvidenceView({
   toolFilter,
   selectedCaseId,
   onSelectCase,
+  onInspectRequirement,
 }: {
   cases: CaseDefinition[];
   requirements: Requirement[];
@@ -155,7 +228,11 @@ export function EvidenceView({
   toolFilter: string;
   selectedCaseId: string;
   onSelectCase: (caseId: string) => void;
+  onInspectRequirement: (requirementId: string) => void;
 }) {
+  const [openSource, setOpenSource] = useState<OpenSource | undefined>();
+  const sourceTriggerRef = useRef<HTMLButtonElement | null>(null);
+  const sourceViewerId = useId();
   const resultMap = useMemo(() => resultsByKey(campaign), [campaign]);
   const profiles =
     campaign?.tools.flatMap((tool) =>
@@ -175,6 +252,21 @@ export function EvidenceView({
   const requirement = selected
     ? requirementMap.get(selected.primary_requirement)
     : undefined;
+  const campaignId = campaign?.id ?? "";
+  const visibleSource =
+    openSource &&
+    openSource.caseId === selected?.id &&
+    openSource.campaignId === campaignId
+      ? openSource
+      : undefined;
+  const closeSource = () => {
+    sourceTriggerRef.current?.focus();
+    setOpenSource(undefined);
+  };
+  useEffect(() => {
+    setOpenSource(undefined);
+    sourceTriggerRef.current = null;
+  }, [campaignId, selected?.id]);
 
   return (
     <section className="panel evidence" aria-labelledby="evidence-title">
@@ -250,8 +342,14 @@ export function EvidenceView({
               <div>
                 <dt>Requirement</dt>
                 <dd>
-                  <strong>{selected.primary_requirement}</strong>
-                  <span>{requirement?.summary}</span>
+                  <button
+                    type="button"
+                    className="relationship-link"
+                    onClick={() => onInspectRequirement(selected.primary_requirement)}
+                  >
+                    <strong>{selected.primary_requirement}</strong>
+                    <span>{requirement?.summary}</span>
+                  </button>
                 </dd>
               </div>
               <div>
@@ -268,10 +366,52 @@ export function EvidenceView({
               <div>
                 <dt>Sources</dt>
                 <dd>
-                  <SourceLinks testCase={selected} campaign={campaign} />
+                  <SourceLinks
+                    testCase={selected}
+                    campaign={campaign}
+                    openSourceName={visibleSource?.name}
+                    viewerId={sourceViewerId}
+                    onToggleSource={(source, trigger) => {
+                      if (visibleSource?.name === source.name) {
+                        closeSource();
+                        return;
+                      }
+                      sourceTriggerRef.current = trigger;
+                      setOpenSource({
+                        ...source,
+                        caseId: selected.id,
+                        campaignId,
+                      });
+                    }}
+                  />
                 </dd>
               </div>
             </dl>
+            {visibleSource && (
+              <section
+                className="source-viewer"
+                id={sourceViewerId}
+                aria-label={`Source ${visibleSource.name}`}
+              >
+                <header>
+                  <div>
+                    <span>Case source</span>
+                    <strong>{visibleSource.name}</strong>
+                  </div>
+                  <button
+                    type="button"
+                    className="icon-button"
+                    aria-label="Close source"
+                    onClick={closeSource}
+                  >
+                    ×
+                  </button>
+                </header>
+                <pre>
+                  <code>{visibleSource.text}</code>
+                </pre>
+              </section>
+            )}
             <div className="tool-judgments">
               {visibleProfiles.map((profile) => {
                 const result = resultMap.get(

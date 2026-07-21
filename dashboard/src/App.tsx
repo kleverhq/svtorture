@@ -76,6 +76,10 @@ export default function App() {
     setFilters((current) => ({ ...current, caseId }));
     setView("evidence");
   };
+  const inspectRequirement = (requirementId: string) => {
+    setFilters((current) => ({ ...current, requirementId }));
+    setView("matrix");
+  };
 
   return (
     <>
@@ -166,6 +170,10 @@ export default function App() {
             cases={filtered.cases}
             campaign={campaign}
             toolFilter={filters.tool}
+            selectedRequirementId={filters.requirementId}
+            onSelectRequirement={(requirementId) =>
+              setFilters((current) => ({ ...current, requirementId }))
+            }
             onInspectCase={inspectCase}
           />
         )}
@@ -179,6 +187,7 @@ export default function App() {
             onSelectCase={(caseId) =>
               setFilters((current) => ({ ...current, caseId }))
             }
+            onInspectRequirement={inspectRequirement}
           />
         )}
         {view === "history" && (

@@ -11,8 +11,9 @@ The interface provides four URL-filtered views:
 
 - **Requirements** — a compact requirement/tool matrix with grouped verdicts,
   sticky identity columns, and a separate requirement inspector;
-- **Case evidence** — a master-detail case list with exact normalized results,
-  diagnostics, output hashes/excerpts, and reproduction commands;
+- **Case evidence** — a master-detail case list with inline local source viewing,
+  exact normalized results, diagnostics, output hashes/excerpts, reproduction
+  commands, and a return path to the requirement inspector;
 - **Changes** — regressions, new passes, tool/corpus boundaries, metric history,
   and comparison with the newest earlier campaign using the same tool profiles;
 - **Campaigns** — compact run records with expandable corpus, tool source,
@@ -46,8 +47,8 @@ The frontend uses:
 `src/svtorture/publish.py` validates campaigns and creates the versioned dataset.
 The React model derives filters, comparable-campaign changes, and aggregate
 presentation from that immutable data. View, campaign, tool, search, status,
-advanced filters, and selected evidence case are encoded in the URL so an
-investigation can be shared or revisited. Broad matrix statuses are presentation
+advanced filters, selected evidence case, and selected requirement are encoded
+in the URL so an investigation can be shared or revisited. Broad matrix statuses are presentation
 categories only; evidence retains every exact result status and reason.
 
 The header provides `Auto`, `Light`, and `Dark` themes. `Auto` is the default and
