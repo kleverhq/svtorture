@@ -74,6 +74,7 @@ export interface Diagnostic {
 
 export interface Observation {
   stage_id: string;
+  kind: "compile" | "run";
   attempted_through_phase: string;
   outcome: string;
   exit_code?: number | null;

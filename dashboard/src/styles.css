@@ -477,8 +477,14 @@ footer {
 }
 
 .tool-outcome--unclear strong,
-.tool-metric--unavailable .tool-metric__coverage {
+.tool-metric--unavailable .tool-metric__coverage,
+.tool-metric__unavailable {
   color: var(--issue);
+}
+
+.tool-metric__unavailable {
+  justify-self: center;
+  font-size: 0.75rem;
 }
 
 .tool-metric__coverage {
@@ -1067,6 +1073,7 @@ details summary {
 
 .evidence-pane {
   min-width: 0;
+  overflow-x: hidden;
   overflow-y: auto;
   padding: 16px 18px 30px;
 }
@@ -1217,6 +1224,7 @@ details summary {
 
 .tool-judgments {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   margin-top: 15px;
   border-top: 1px solid var(--line);
 }
@@ -1257,6 +1265,7 @@ details summary {
 }
 
 .evidence-detail__identity {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   margin-bottom: 12px;
 }
 
@@ -1314,6 +1323,8 @@ pre {
 
 .reproduce code {
   min-width: 0;
+  overflow-x: auto;
+  white-space: nowrap;
 }
 
 .known-fail {

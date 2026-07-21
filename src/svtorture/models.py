@@ -742,6 +742,10 @@ class ExecutionStage(StrictModel):
 
     @model_validator(mode="after")
     def valid_command(self) -> Self:
+        if self.kind is StageKind.RUN and self.attempted_through_phase is not Phase.SIMULATE:
+            raise ValueError("runtime stages must attempt through simulation")
+        if self.kind is StageKind.COMPILE and self.attempted_through_phase is Phase.SIMULATE:
+            raise ValueError("compile stages cannot claim simulation evidence")
         if not self.argv or not self.portable_argv:
             raise ValueError("execution argv must not be empty")
         if len(self.argv) != len(self.portable_argv):
@@ -810,6 +814,7 @@ class Diagnostic(StrictModel):
 
 class StageObservation(StrictModel):
     stage_id: str
+    kind: StageKind
     attempted_through_phase: Phase
     outcome: RawOutcome
     exit_code: int | None = Field(default=None, ge=0)
@@ -824,6 +829,10 @@ class StageObservation(StrictModel):
 
     @model_validator(mode="after")
     def coherent_outcome(self) -> Self:
+        if self.kind is StageKind.RUN and self.attempted_through_phase is not Phase.SIMULATE:
+            raise ValueError("runtime observations must attempt through simulation")
+        if self.kind is StageKind.COMPILE and self.attempted_through_phase is Phase.SIMULATE:
+            raise ValueError("compile observations cannot claim simulation evidence")
         if self.outcome is RawOutcome.NORMAL_EXIT:
             if self.exit_code is None or self.signal is not None:
                 raise ValueError("normal exit requires only a nonnegative exit_code")
@@ -900,15 +909,34 @@ class NormalizedResult(StrictModel):
             ResultStatus.NONCONFORMING,
             ResultStatus.INCONCLUSIVE,
         }
-        if (
-            self.status is ResultStatus.CONFORMING
-            and self.evidence_mode is EvidenceMode.NOT_OBSERVED
-        ):
-            raise ValueError("conformance requires direct or cumulative evidence")
         if self.status in executable and not self.observations:
             raise ValueError("an executable judgment requires observations")
-        if not self.observations and self.evidence_mode is not EvidenceMode.NOT_OBSERVED:
-            raise ValueError("a result without observations must be not-observed")
+        covering = next(
+            (
+                observation
+                for observation in self.observations
+                if phase_reaches(observation.attempted_through_phase, self.target_phase)
+            ),
+            None,
+        )
+        expected_mode = EvidenceMode.NOT_OBSERVED
+        if covering is not None:
+            expected_mode = (
+                EvidenceMode.DIRECT
+                if covering.attempted_through_phase is self.target_phase
+                else EvidenceMode.CUMULATIVE
+            )
+        if self.evidence_mode is not expected_mode:
+            raise ValueError("evidence mode does not match the recorded observations")
+        if self.status is ResultStatus.CONFORMING and covering is None:
+            raise ValueError("conformance requires target-reaching evidence")
+        synthetic_statuses = {
+            ResultStatus.UNSUPPORTED_CAPABILITY,
+            ResultStatus.UNSUPPORTED_REVISION,
+            ResultStatus.NOT_APPLICABLE,
+        }
+        if self.status in synthetic_statuses and self.observations:
+            raise ValueError("a structural synthetic result cannot carry observations")
         return self
 
 

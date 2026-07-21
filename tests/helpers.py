@@ -23,9 +23,11 @@ from svtorture.models import (
     ReasonCode,
     RepositoryIdentity,
     ResultStatus,
+    StageKind,
     StageObservation,
     ToolDefinition,
     ToolSelection,
+    phase_reaches,
 )
 
 ZERO_SHA = "0" * 40
@@ -57,8 +59,10 @@ def observation(
     stdout_truncated: bool = False,
     stderr_truncated: bool = False,
 ) -> StageObservation:
+    kind = StageKind.RUN if attempted_through_phase is Phase.SIMULATE else StageKind.COMPILE
     return StageObservation(
-        stage_id=("run" if attempted_through_phase is Phase.SIMULATE else "compile"),
+        stage_id="run" if kind is StageKind.RUN else "compile",
+        kind=kind,
         attempted_through_phase=attempted_through_phase,
         outcome=outcome,
         exit_code=exit_code,
@@ -135,11 +139,19 @@ def normalized(
         ResultStatus.INCONCLUSIVE,
     }:
         observations = (observation(attempted_through_phase=case.definition.target_phase),)
+    covering = next(
+        (
+            item
+            for item in observations
+            if phase_reaches(item.attempted_through_phase, case.definition.target_phase)
+        ),
+        None,
+    )
     mode = EvidenceMode.NOT_OBSERVED
-    if observations:
+    if covering is not None:
         mode = (
             EvidenceMode.DIRECT
-            if observations[-1].attempted_through_phase is case.definition.target_phase
+            if covering.attempted_through_phase is case.definition.target_phase
             else EvidenceMode.CUMULATIVE
         )
     return NormalizedResult(

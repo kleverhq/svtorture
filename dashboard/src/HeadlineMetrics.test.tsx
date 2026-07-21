@@ -72,7 +72,7 @@ describe("HeadlineMetrics", () => {
       valid: false,
       corpus_coverage: 1,
       execution_coverage: 1,
-      conforming: 0,
+      conforming: 1,
       nonconforming: 0,
       inconclusive: 0,
       unsupported: 0,
@@ -95,6 +95,10 @@ describe("HeadlineMetrics", () => {
     expect(unavailable.closest("article")?.classList).toContain(
       "tool-metric--unavailable",
     );
+    expect(screen.getByText("Unavailable").classList).toContain(
+      "tool-metric__unavailable",
+    );
+    expect(screen.queryByLabelText("fake requirement outcomes")).toBeNull();
     expect(document.querySelector(".meter")).toBeNull();
 
     metric.valid = true;

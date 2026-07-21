@@ -568,6 +568,14 @@
       "title": "ResultStatus",
       "type": "string"
     },
+    "StageKind": {
+      "enum": [
+        "compile",
+        "run"
+      ],
+      "title": "StageKind",
+      "type": "string"
+    },
     "StageObservation": {
       "additionalProperties": false,
       "properties": {
@@ -617,6 +625,9 @@
           "title": "Internal Error",
           "type": "boolean"
         },
+        "kind": {
+          "$ref": "#/$defs/StageKind"
+        },
         "outcome": {
           "$ref": "#/$defs/RawOutcome"
         },
@@ -653,6 +664,7 @@
       },
       "required": [
         "stage_id",
+        "kind",
         "attempted_through_phase",
         "outcome",
         "duration_seconds",

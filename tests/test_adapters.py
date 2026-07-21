@@ -8,8 +8,9 @@ import pytest
 from svtorture.adapters.base import ToolAdapter
 from svtorture.adapters.commercial import VcsAdapter
 from svtorture.adapters.open_source import IcarusAdapter, SlangAdapter, VerilatorAdapter
+from svtorture.campaign import validate_plan_for_profile
 from svtorture.catalog import Catalog, LoadedCase
-from svtorture.models import Phase
+from svtorture.models import ExecutionStage, Phase, StageKind
 
 
 @pytest.mark.parametrize(
@@ -131,6 +132,68 @@ def test_open_source_preprocessing_is_direct(
     assert plan.target_phase is Phase.PREPROCESS
     assert plan.stages[0].attempted_through_phase is Phase.PREPROCESS
     assert preprocessor_flag in plan.stages[0].argv
+
+
+def test_plan_identity_must_match_requested_case_and_profile(catalog: Catalog) -> None:
+    case = catalog.cases["ch05-base-format-whitespace-rejected"]
+    tool = catalog.tools.tool("icarus")
+    profile = tool.profile("simulator")
+    plan = (
+        IcarusAdapter()
+        .build_plan(
+            case,
+            tool,
+            profile,
+            image="image",
+            wrapper=None,
+        )
+        .model_copy(update={"case_id": "different-case"})
+    )
+    with pytest.raises(ValueError, match="identity"):
+        validate_plan_for_profile(
+            plan,
+            case,
+            tool,
+            profile,
+            image="image",
+            wrapper=None,
+        )
+
+
+def test_plan_backend_identity_must_match_prepared_tool(catalog: Catalog) -> None:
+    case = catalog.cases["ch05-base-format-whitespace-rejected"]
+    tool = catalog.tools.tool("icarus")
+    profile = tool.profile("simulator")
+    plan = IcarusAdapter().build_plan(
+        case,
+        tool,
+        profile,
+        image="unexpected-image",
+        wrapper=None,
+    )
+    with pytest.raises(ValueError, match="backend identity"):
+        validate_plan_for_profile(
+            plan,
+            case,
+            tool,
+            profile,
+            image="recorded-image",
+            wrapper=None,
+        )
+
+
+def test_stage_kind_cannot_claim_an_incoherent_phase(catalog: Catalog) -> None:
+    case = catalog.cases["ch04-nba-rhs-captured"]
+    with pytest.raises(ValueError, match="compile stages cannot claim simulation"):
+        ExecutionStage(
+            id="compile",
+            kind=StageKind.COMPILE,
+            attempted_through_phase=Phase.SIMULATE,
+            argv=("tool",),
+            portable_argv=("tool",),
+            timeout_seconds=case.definition.limits.timeout_seconds,
+            output_bytes=case.definition.limits.output_bytes,
+        )
 
 
 def test_include_define_and_ordered_sources_are_adapter_inputs(catalog: Catalog) -> None:

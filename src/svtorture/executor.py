@@ -231,6 +231,7 @@ def _observation(
         artifact_present = artifact.is_file() and not artifact.is_symlink()
     return StageObservation(
         stage_id=stage.id,
+        kind=stage.kind,
         attempted_through_phase=stage.attempted_through_phase,
         outcome=result.outcome,
         exit_code=result.exit_code,

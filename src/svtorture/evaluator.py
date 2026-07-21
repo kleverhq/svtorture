@@ -180,8 +180,15 @@ def _operational_failure(
     return None
 
 
-def _targeted(observation: StageObservation, case_id: str) -> bool:
-    return any(item.target_case_id == case_id for item in observation.diagnostics)
+def _targeted(
+    observation: StageObservation,
+    case_id: str,
+    severities: frozenset[str],
+) -> bool:
+    return any(
+        item.target_case_id == case_id and item.severity in severities
+        for item in observation.diagnostics
+    )
 
 
 def _marker_count(observation: StageObservation, marker: str) -> int:
@@ -258,7 +265,7 @@ def evaluate(
                 "The construct that requires rejection was accepted.",
                 observations,
             )
-        if _targeted(target, case.definition.id):
+        if _targeted(target, case.definition.id, frozenset({"error", "fatal"})):
             return _result(
                 case,
                 tool_id,
@@ -284,7 +291,11 @@ def evaluate(
         )
 
     if case.definition.expectation is Expectation.DIAGNOSTIC:
-        if not _targeted(target, case.definition.id):
+        if not _targeted(
+            target,
+            case.definition.id,
+            frozenset({"warning", "error", "fatal"}),
+        ):
             reason = (
                 ReasonCode.OFF_TARGET_DIAGNOSTIC
                 if target.diagnostics

@@ -7,12 +7,21 @@ from pathlib import Path
 import pytest
 from pydantic import ValidationError
 
-from svtorture.campaign import CampaignError, load_campaign
+from svtorture.campaign import (
+    CampaignError,
+    load_campaign,
+    verify_campaign_against_catalog,
+)
 from svtorture.catalog import Catalog, CatalogError, load_catalog, mvp_audit
+from svtorture.evaluator import synthetic_result
 from svtorture.models import (
     CaseDefinition,
+    EvidenceMode,
+    NormalizedResult,
     Phase,
+    ReasonCode,
     RequirementInventory,
+    ResultStatus,
     ToolProfile,
     safe_relative_path,
 )
@@ -344,6 +353,78 @@ def test_version_one_campaign_is_rejected(catalog: Catalog, tmp_path: Path) -> N
     path.write_text(json.dumps(value), encoding="utf-8")
     with pytest.raises(CampaignError, match="greater than or equal to 2"):
         load_campaign(path)
+
+
+def test_result_evidence_mode_must_match_observations(catalog: Catalog) -> None:
+    case = catalog.cases["ch04-nba-rhs-captured"]
+    value = normalized(case, "fake", "simulator").model_dump(mode="json")
+    value["evidence_mode"] = "cumulative"
+    with pytest.raises(ValidationError, match="evidence mode"):
+        NormalizedResult.model_validate(value)
+
+
+@pytest.mark.parametrize(
+    ("update", "message"),
+    (
+        (
+            {
+                "target_phase": Phase.PARSE,
+                "evidence_mode": EvidenceMode.CUMULATIVE,
+            },
+            "wrong target phase",
+        ),
+        ({"evidence_mode": EvidenceMode.CUMULATIVE}, "does not match observations"),
+    ),
+)
+def test_campaign_phase_provenance_tamper_is_rejected(
+    catalog: Catalog,
+    update: dict[str, object],
+    message: str,
+) -> None:
+    case = catalog.cases["ch04-nba-rhs-captured"]
+    tool = campaign_tool(catalog.tools.tool("fake"), ("simulator",))
+    result = normalized(case, "fake", "simulator")
+    campaign = make_campaign(
+        catalog,
+        cases=(case,),
+        tool=tool,
+        results=(result,),
+    ).model_copy(update={"results": (result.model_copy(update=update),)})
+    with pytest.raises(CampaignError, match=message):
+        verify_campaign_against_catalog(catalog, campaign)
+
+
+@pytest.mark.parametrize(
+    ("status", "reason"),
+    (
+        (ResultStatus.UNSUPPORTED_CAPABILITY, ReasonCode.UNSUPPORTED_PHASE),
+        (ResultStatus.HARNESS_ERROR, ReasonCode.INVALID_EXECUTION_PLAN),
+    ),
+)
+def test_supported_case_cannot_be_suppressed_without_observations(
+    catalog: Catalog,
+    status: ResultStatus,
+    reason: ReasonCode,
+) -> None:
+    case = catalog.cases["ch05-base-format-whitespace-rejected"]
+    tool = campaign_tool(catalog.tools.tool("icarus"), ("simulator",))
+    result = synthetic_result(
+        case,
+        "icarus",
+        "simulator",
+        status,
+        reason,
+        "tampered observation-free result",
+    )
+    campaign = make_campaign(
+        catalog,
+        cases=(case,),
+        tool=tool,
+        results=(result,),
+        complete=status is not ResultStatus.HARNESS_ERROR,
+    )
+    with pytest.raises(CampaignError, match=r"observations|structural result"):
+        verify_campaign_against_catalog(catalog, campaign)
 
 
 def test_campaign_manifest_tamper_is_rejected(catalog: Catalog, tmp_path: Path) -> None:

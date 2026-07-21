@@ -58,7 +58,9 @@ presentation from that immutable data. View, campaign, tool, search, status,
 advanced filters, selected evidence case, and selected requirement are encoded
 in the URL so an investigation can be shared or revisited. Broad matrix statuses are presentation categories only; evidence retains every
 exact result status and reason together with the target phase, the phase the
-command attempted through, and whether attribution is direct or cumulative.
+command attempted through, and whether attribution is direct, cumulative, or
+not observed. Synthetic unsupported, unavailable, and inapplicable results use
+`not-observed` and have no attempted-through observation.
 
 The header provides `Auto`, `Light`, and `Dark` themes. `Auto` is the default and
 follows the browser or operating-system color preference. An explicit selection

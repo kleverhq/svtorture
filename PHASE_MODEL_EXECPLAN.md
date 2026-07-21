@@ -24,8 +24,8 @@ This work does not add cases or weaken any standards oracle. It does not infer a
 - [x] (2026-07-21 23:25Z) Implemented the version-2 tool, execution, observation, result, and campaign contracts and regenerated committed schemas.
 - [x] (2026-07-21 23:31Z) Implemented cumulative phase execution and safe evaluator inference across open-source, commercial, and fake adapters.
 - [x] (2026-07-21 23:35Z) Updated metric scope, requirement-level PASS/FAIL/UNCLEAR presentation, evidence provenance, documentation, and Python/frontend tests.
-- [ ] Collect a fresh three-tool full campaign, build the dashboard, and validate desktop/mobile behavior and Chapter 5 evidence in Chrome.
-- [ ] Run focused and independent control reviews, fix every substantive finding, run `just ci`, finalize this plan, and remove the completed plan from the repository.
+- [ ] Collect a fresh three-tool full campaign, build the dashboard, and validate desktop/mobile behavior and Chapter 5 evidence in Chrome (completed once before the review-added observation-kind field; fresh final collection remains).
+- [ ] Run focused and independent control reviews, fix every substantive finding, run `just ci`, finalize this plan, and remove the completed plan from the repository (focused model, integrity, dashboard, and docs reviews completed; all findings fixed and rechecked clean; independent control pass remains).
 
 ## Surprises & Discoveries
 
@@ -43,6 +43,9 @@ This work does not add cases or weaken any standards oracle. It does not infer a
 
 - Observation: The pinned Icarus image needs an explicit stdout destination for bounded preprocessing.
   Evidence: `iverilog -g2012 -E` attempted to create read-only `a.out`; `iverilog -g2012 -E -o -` emitted the preprocessed source to stdout successfully. Verilator `-E` emitted source directly.
+
+- Observation: Evidence attribution must bind more than the aggregate result mode.
+  Evidence: Focused review found that stage kind, exact attempted-through phase, plan backend image/wrapper, and observation-free structural eligibility all needed strict validation to prevent tampered provenance or suppressed execution.
 
 ## Decision Log
 
@@ -65,6 +68,10 @@ This work does not add cases or weaken any standards oracle. It does not infer a
 - Decision: The Overview triple uses requirement-level `MetricBreakdown.conforming`, `nonconforming`, and `inconclusive`, not raw case-result counts.
   Rationale: The headline metric weights each normative requirement once and requires every mandatory variant to conform. The visual labels must describe that same denominator.
   Date/Author: 2026-07-21 / coding agent
+
+- Decision: Version-2 observations record `kind` as well as attempted-through phase, and campaign/replay verification binds exact plan backend and phase provenance.
+  Rationale: Without kind and contextual identity, a malformed compile observation could claim simulation or an adapter could substitute an unrecorded image while preserving the same aggregate evidence mode.
+  Date/Author: 2026-07-22 / coding agent
 
 ## Outcomes & Retrospective
 
@@ -203,3 +210,5 @@ In the dashboard, consume `MetricPoint.conforming`, `nonconforming`, and `inconc
 Plan revision note (2026-07-21 20:11Z): Created the initial self-contained implementation plan after repository and runtime analysis. It records the user-authorized clean schema break, safe cumulative inference rules, required visual redesign, destructive evidence cleanup, and final review workflow.
 
 Plan revision note (2026-07-21 23:35Z): Recorded completion of the clean contract, runtime, evaluator, metric, dashboard, documentation, and focused test milestones. Added the verified Icarus and Verilator preprocessing command behavior that determined direct-phase metadata.
+
+Plan revision note (2026-07-22 00:22Z): Recorded focused review status and the resulting integrity hardening: severity-aware negative evidence, stage kind, exact plan backend identity, derived result-mode coherence, recomputed structural dispositions, exact replay provenance, coherent frontend fixtures, and unavailable-metric presentation.

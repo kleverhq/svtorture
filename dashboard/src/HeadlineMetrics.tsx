@@ -153,23 +153,27 @@ export function HeadlineMetrics({
                     <strong>{metric.tool_id}</strong>
                     <span>{metric.profile_id}</span>
                   </div>
-                  <div
-                    className="tool-metric__outcomes"
-                    aria-label={`${metric.tool_id} requirement outcomes`}
-                  >
-                    <div className="tool-outcome tool-outcome--pass">
-                      <strong>{metric.conforming}</strong>
-                      <span>PASS</span>
+                  {metric.valid ? (
+                    <div
+                      className="tool-metric__outcomes"
+                      aria-label={`${metric.tool_id} requirement outcomes`}
+                    >
+                      <div className="tool-outcome tool-outcome--pass">
+                        <strong>{metric.conforming}</strong>
+                        <span>PASS</span>
+                      </div>
+                      <div className="tool-outcome tool-outcome--fail">
+                        <strong>{metric.nonconforming}</strong>
+                        <span>FAIL</span>
+                      </div>
+                      <div className="tool-outcome tool-outcome--unclear">
+                        <strong>{metric.inconclusive}</strong>
+                        <span>UNCLEAR</span>
+                      </div>
                     </div>
-                    <div className="tool-outcome tool-outcome--fail">
-                      <strong>{metric.nonconforming}</strong>
-                      <span>FAIL</span>
-                    </div>
-                    <div className="tool-outcome tool-outcome--unclear">
-                      <strong>{metric.inconclusive}</strong>
-                      <span>UNCLEAR</span>
-                    </div>
-                  </div>
+                  ) : (
+                    <strong className="tool-metric__unavailable">Unavailable</strong>
+                  )}
                   <span className="tool-metric__coverage">
                     {metric.valid
                       ? `${percentage.toFixed(0)}% of IEEE ${metric.revision} applicable requirements`

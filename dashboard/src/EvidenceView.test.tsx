@@ -63,13 +63,70 @@ describe("EvidenceView", () => {
       "direct",
     );
     expect(screen.getByText("Attempted through").parentElement?.textContent).toContain(
-      "not observed",
+      "simulate",
     );
 
     fireEvent.click(
       screen.getByRole("button", { name: /SV-2023-13-OUTPUT-COPYOUT/ }),
     );
     expect(inspectRequirement).toHaveBeenCalledWith("SV-2023-13-OUTPUT-COPYOUT");
+  });
+
+  it("shows cumulative evidence through a later phase", () => {
+    const dataset = makeTestDataset();
+    const testCase = dataset.cases[0];
+    const campaign = dataset.campaigns[0];
+    const result = campaign?.results[0];
+    const observation = result?.observations[0];
+    if (!testCase || !campaign || !result || !observation) {
+      throw new Error("incomplete test dataset");
+    }
+    testCase.target_phase = "parse";
+    testCase.expectation = "reject";
+    testCase.oracle = {
+      kind: "diagnostic-at-anchor",
+      anchor: `SVTORTURE_DIAG_ANCHOR:${testCase.id}`,
+    };
+    result.target_phase = "parse";
+    result.evidence_mode = "cumulative";
+    result.summary = "The tool rejected the anchored construct.";
+    observation.kind = "compile";
+    observation.attempted_through_phase = "elaborate";
+    observation.exit_code = 1;
+    observation.stdout.excerpt = "";
+    observation.stdout.size_bytes = 0;
+    observation.diagnostics = [
+      {
+        severity: "error",
+        message: "target diagnostic",
+        source: "$CASE/top.sv",
+        line: 2,
+        target_case_id: testCase.id,
+      },
+    ];
+
+    render(
+      <EvidenceView
+        cases={dataset.cases}
+        requirements={dataset.requirements}
+        campaign={campaign}
+        toolFilter=""
+        selectedCaseId={testCase.id}
+        onSelectCase={() => undefined}
+        onInspectRequirement={() => undefined}
+      />,
+    );
+
+    expect(screen.getByText("Target phase").parentElement?.textContent).toContain(
+      "parse",
+    );
+    expect(screen.getByText("Evidence mode").parentElement?.textContent).toContain(
+      "cumulative",
+    );
+    expect(screen.getByText("Attempted through").parentElement?.textContent).toContain(
+      "elaborate",
+    );
+    expect(screen.getByText("through elaborate")).toBeTruthy();
   });
 
   it("does not navigate to malformed or untrusted source links", () => {

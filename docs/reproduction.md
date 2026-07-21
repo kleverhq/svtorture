@@ -2,9 +2,11 @@
 
 A campaign records the corpus commit/dirty state, requirement/case/selection
 manifest hashes, exact case content hashes, tool source selection, reported
-version, image and base-image digests, profiles and their phase ceilings, target phases, direct/cumulative evidence
-modes, attempted-through phases, portable commands, normalized diagnostics,
-bounded excerpts, and full-stream hashes.
+version, image and base-image digests, profiles and their phase ceilings, target phases, `direct`, `cumulative`, or
+`not-observed` evidence modes, attempted-through phases, portable commands,
+normalized diagnostics, bounded excerpts, and full-stream hashes. Synthetic
+unsupported, unavailable, and inapplicable results use `not-observed` and carry
+no attempted-through observation.
 
 Replay one result:
 

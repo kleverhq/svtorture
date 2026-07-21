@@ -11,6 +11,7 @@ from svtorture.adapters.registry import adapter_for
 from svtorture.campaign import (
     CampaignError,
     load_private_config,
+    validate_plan_for_profile,
     verify_campaign_against_catalog,
     wrapper_available,
 )
@@ -160,6 +161,17 @@ def reproduce_case(
         image=image,
         wrapper=wrapper.command[0] if wrapper else None,
     )
+    try:
+        validate_plan_for_profile(
+            plan,
+            loaded,
+            campaign_tool.definition,
+            profile,
+            image=image,
+            wrapper=wrapper.command[0] if wrapper else None,
+        )
+    except ValueError as error:
+        raise ReproductionError(f"invalid replay execution plan: {error}") from error
     observations = execute_plan(
         plan,
         loaded,
@@ -191,6 +203,29 @@ def reproduce_case(
     if replayed.reason != recorded.reason:
         differences.append(
             f"reason: recorded {recorded.reason.value}, replayed {replayed.reason.value}"
+        )
+    if replayed.target_phase != recorded.target_phase:
+        differences.append(
+            "target phase: "
+            f"recorded {recorded.target_phase.value}, replayed {replayed.target_phase.value}"
+        )
+    if replayed.evidence_mode != recorded.evidence_mode:
+        differences.append(
+            "evidence mode: "
+            f"recorded {recorded.evidence_mode.value}, "
+            f"replayed {replayed.evidence_mode.value}"
+        )
+    recorded_phases = tuple(
+        (item.stage_id, item.kind.value, item.attempted_through_phase.value)
+        for item in recorded.observations
+    )
+    replayed_phases = tuple(
+        (item.stage_id, item.kind.value, item.attempted_through_phase.value)
+        for item in replayed.observations
+    )
+    if replayed_phases != recorded_phases:
+        differences.append(
+            f"phase provenance: recorded {recorded_phases!r}, replayed {replayed_phases!r}"
         )
     return ReproductionReport(
         recorded=recorded,

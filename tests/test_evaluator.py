@@ -162,6 +162,30 @@ def test_targeted_cumulative_rejection_conforms(catalog: Catalog) -> None:
     )
 
 
+def test_anchored_note_cannot_turn_an_unrelated_error_into_a_rejection_pass(
+    catalog: Catalog,
+) -> None:
+    case = catalog.cases["ch05-base-format-whitespace-rejected"]
+    anchored_note = targeted(case).model_copy(update={"severity": "note"})
+    unrelated_error = targeted(case, line_offset=1)
+    result = evaluate(
+        case,
+        "tool",
+        "simulator",
+        (
+            observation(
+                attempted_through_phase=Phase.ELABORATE,
+                exit_code=1,
+                diagnostics=(anchored_note, unrelated_error),
+            ),
+        ),
+    )
+    assert (result.status, result.reason) == (
+        ResultStatus.INCONCLUSIVE,
+        ReasonCode.OFF_TARGET_DIAGNOSTIC,
+    )
+
+
 def test_later_success_proves_earlier_acceptance(catalog: Catalog) -> None:
     original = catalog.cases["ch22-include-trailing-comment"]
     case = replace(
