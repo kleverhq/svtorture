@@ -26,7 +26,7 @@ This work will not change campaign, requirement, result, metric, or publication 
 - [x] (2026-07-21 11:38Z) Refactored case evidence into URL-addressable master-detail and connected matrix supporting-case actions to the selected evidence case.
 - [x] (2026-07-21 11:38Z) Added comparable-campaign change analysis before the history chart and converted campaign provenance into a compact expandable list.
 - [x] (2026-07-21 11:38Z) Replaced the dark-only decorative stylesheet with semantic light/dark tokens, system fonts, compact responsive layouts, focus states, and internal overflow boundaries; added a local data-URL favicon.
-- [ ] Exercise all views and interactive states visually in Auto, Light, and Dark at desktop and mobile widths (completed: all four desktop views, Auto dark, explicit light, true 390-pixel matrix, matrix inspector, selected evidence and open observation; remaining: actual UI theme toggles/reload, filter/empty states, Firefox, and multi-campaign comparison).
+- [x] (2026-07-21 11:54Z) Exercised all views through a two-campaign dataset; verified actual UI selection and computed palettes for Light, Dark, Auto-with-light-system, and Auto-with-dark-system; captured true 390-pixel matrix/evidence work surfaces, inspector and matrix-to-evidence drill-down, fail-only and empty states, open observation details, and comparable-campaign history. All Chrome sessions reported no runtime/network errors or page overflow. Attempted Firefox twice, including a clean profile and software-rendering preferences, but its installed headless compositor cannot create a framebuffer even for `about:blank`; recorded the environment limitation instead of adding a browser dependency.
 - [ ] Run all frontend and repository gates, perform focused reviews and a fresh control review, fix findings, record outcomes, commit the implementation, and remove this completed plan.
 
 ## Surprises & Discoveries
@@ -50,7 +50,11 @@ This work will not change campaign, requirement, result, metric, or publication 
 - Observation: CSS custom-property color strings are retained by ECharts' SVG renderer, allowing the chart text/grid palette to follow root theme changes without disposing and recreating the chart.
   Evidence: Auto-dark and explicit-light history screenshots render chart axes and grid from `var(--text-muted)` and `var(--line)` values while the existing series data remains unchanged.
 - Observation: The redesign moves actual requirement rows from below the initial desktop viewport to roughly the top half of a 1440×1200 viewport.
-  Evidence: `/tmp/svtorture-dashboard-visual-after/matrix-light-desktop.png` shows the heading plus eleven compact requirement rows, compared with zero rows in the baseline screenshot.
+  Evidence: `/tmp/svtorture-dashboard-visual-final/matrix-light-desktop.png` shows the heading plus eleven compact requirement rows, compared with zero rows in the baseline screenshot.
+- Observation: The installed Firefox 152 executable cannot produce any headless screenshot in this host environment, independently of dashboard code.
+  Evidence: both dashboard and `about:blank` attempts timed out with `RenderCompositorSWGL failed mapping default framebuffer, no dt` after clean-profile, safe-mode, disabled WebRender/acceleration, and software-GL attempts. Chrome 145 visual sessions remained clean; no project dependency was added to work around a host renderer.
+- Observation: A second real aggregate campaign made change analysis observable and caught a genuine source-boundary event without inventing result changes.
+  Evidence: `just latest-all` produced campaign `20260721T115117Z-d10811d4fe5fc852`; exporting it with the earlier aggregate displayed 0 regressions, 0 new passes, 1 tool revision change (Verilator), no corpus boundary, and two points per profile.
 
 ## Decision Log
 
@@ -81,7 +85,9 @@ This work will not change campaign, requirement, result, metric, or publication 
 
 ## Outcomes & Retrospective
 
-The evidence-first layout milestone is complete without schema or dependency changes. Theme state defaults safely to Auto and is applied before React renders; exact statuses have a tested five-group presentation mapping; broad and exact filters cannot conflict; URL state includes grouped status and selected evidence case; and campaign comparison refuses unrelated tool/profile sets. The desktop matrix now exposes eleven rows in the first viewport, its inspector drills into the evidence pane, evidence uses a structured master-detail layout, and history/provenance lead with operational content. Fourteen frontend tests, strict TypeScript, and the production build pass. Remaining work is final interaction/cross-browser visual verification, repository gates, review, and cleanup.
+The evidence-first implementation and visual validation milestones are complete without schema, backend, or dependency changes. Theme state defaults safely to Auto and follows emulated user light/dark preferences; actual Light/Dark UI choices change the computed palette and selected control value. Exact statuses have a tested five-group presentation mapping; broad and exact filters cannot conflict; URL state includes grouped status and selected evidence case; and comparison refuses unrelated tool/profile sets.
+
+The desktop matrix now exposes eleven rows in the first viewport, its inspector drills into the URL-selected evidence pane, evidence uses a structured master-detail layout, and history/provenance lead with operational content. A real second aggregate campaign proves the comparison summary and source-revision boundary. True 390-pixel Chrome measurements report `innerWidth: 390` and `documentScrollWidth: 375` in both Auto palettes; every desktop/mobile session reports empty runtime/network error arrays. Firefox visual execution is blocked by its host compositor even for a blank page, not by application behavior. Fourteen frontend tests, strict TypeScript, and the production build pass. Remaining work is repository gates, focused/control review, final plan evidence, commits, and cleanup.
 
 ## Context and Orientation
 
@@ -154,10 +160,10 @@ Work from `/home/esynr3z/projects/sv-torture`.
 
 4. Exercise the final application:
 
-       just dashboard-build ".svtorture/campaigns/20260721T103601Z-5c523fd5a0275145/campaign.json"
+       just dashboard-build ".svtorture/campaigns/20260721T103601Z-5c523fd5a0275145/campaign.json .svtorture/campaigns/20260721T115117Z-d10811d4fe5fc852/campaign.json"
        just dashboard-serve 4173
 
-   If that ignored local campaign no longer exists, substitute any valid campaign path printed by `just latest verilator smoke`; use more than one compatible campaign when validating history.
+   If those ignored local campaigns no longer exist, substitute any valid campaign path printed by `just latest verilator smoke`; use more than one campaign with the same tool/profile set when validating history.
 
 5. Capture final screenshots for `matrix`, `evidence`, `history`, and `campaigns` at 1440×1200 and 390×844. Repeat at least the matrix and evidence views with `data-theme` forced through the UI to Light and Dark. Save temporary screenshots under `/tmp`, not the repository.
 
@@ -183,7 +189,7 @@ Grouped status chips must filter by the five presentation groups while Advanced 
 
 History must summarize what changed relative to the previous campaign before presenting the chart. With no previous campaign it must state that comparison is unavailable, not display zero regressions as if a comparison occurred. Campaign provenance must retain all current facts but keep them in compact drill-down content.
 
-Automated acceptance requires strict TypeScript, all Vitest tests, Vite build, `just frontend`, `just smoke`, `just precommit`, and `just ci` to pass. Visual acceptance requires before/after screenshots inspected in both themes and desktop/mobile layouts with no console errors, failed dataset request, accidental page overflow, illegible muted text, duplicate top-level status labels, or major clipping.
+Automated acceptance requires strict TypeScript, all Vitest tests, Vite build, `just frontend`, `just smoke`, `just precommit`, and `just ci` to pass. Visual acceptance requires before/after screenshots inspected in both themes and desktop/mobile layouts with no console errors, failed dataset request, accidental page overflow, illegible muted text, duplicate top-level status labels, or major clipping. Chrome is the required local renderer because the installed Firefox compositor fails before rendering even `about:blank`; record that failure rather than treating a host framebuffer problem as dashboard evidence.
 
 ### Idempotence and Recovery
 
@@ -245,3 +251,5 @@ Revision note (2026-07-21 11:17Z): Recorded baseline desktop/mobile screenshot e
 Revision note (2026-07-21 11:20Z): Recorded the completed theme/model foundation, comparable-campaign rule, deterministic storage test shim, and passing frontend tests.
 
 Revision note (2026-07-21 11:38Z): Recorded the complete evidence-first component/layout/palette milestone, corrected the headless mobile measurement artifact, added visual evidence, updated current architecture orientation, and narrowed remaining validation work.
+
+Revision note (2026-07-21 11:54Z): Closed visual validation with actual theme controls, system-theme emulation, true mobile measurements, filter/empty/drill-down states, a real two-campaign comparison, clean browser diagnostics, and an evidence-backed Firefox host limitation.

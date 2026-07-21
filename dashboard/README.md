@@ -9,13 +9,14 @@ server or live database.
 
 The interface provides four URL-filtered views:
 
-- **Requirements matrix** — requirement-level status across selected tool
-  profiles;
-- **Case evidence** — case metadata, normalized results, diagnostics, and
-  retained output excerpts;
-- **History & compare** — metric history and changes between campaigns;
-- **Campaign provenance** — corpus, tool source, image, platform, and trust
-  information needed to understand a run.
+- **Requirements** — a compact requirement/tool matrix with grouped verdicts,
+  sticky identity columns, and a separate requirement inspector;
+- **Case evidence** — a master-detail case list with exact normalized results,
+  diagnostics, output hashes/excerpts, and reproduction commands;
+- **Changes** — regressions, new passes, tool/corpus boundaries, metric history,
+  and comparison with the newest earlier campaign using the same tool profiles;
+- **Campaigns** — compact run records with expandable corpus, tool source,
+  image, platform, and trust provenance.
 
 The headline metric is defined in
 [the conformance methodology](../docs/methodology.md). Missing, unsupported,
@@ -43,9 +44,16 @@ The frontend uses:
 - Vitest, Testing Library, and jsdom for unit tests.
 
 `src/svtorture/publish.py` validates campaigns and creates the versioned dataset.
-The React model derives filters, comparisons, and aggregate presentation from
-that immutable data. Filters are encoded in the URL so a selected view can be
-shared or revisited.
+The React model derives filters, comparable-campaign changes, and aggregate
+presentation from that immutable data. View, campaign, tool, search, status,
+advanced filters, and selected evidence case are encoded in the URL so an
+investigation can be shared or revisited. Broad matrix statuses are presentation
+categories only; evidence retains every exact result status and reason.
+
+The header provides `Auto`, `Light`, and `Dark` themes. `Auto` is the default and
+follows the browser or operating-system color preference. An explicit selection
+is saved in local storage for this dashboard origin; it does not alter datasets
+or shared URLs.
 
 A plain `npm run build` creates only the application assets; it does not embed
 campaign evidence. `just dashboard-build` first builds those assets and then
