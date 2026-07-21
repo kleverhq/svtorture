@@ -2,14 +2,16 @@ import { describe, expect, it } from "vitest";
 
 import {
   aggregateStatus,
+  compareCampaigns,
   EMPTY_FILTERS,
   filterCorpus,
   filtersFromSearch,
   filtersToSearch,
   selectedCampaign,
+  statusGroup,
 } from "./model";
 import { makeTestDataset } from "./testDataset";
-import type { Result } from "./types";
+import type { Campaign, Result } from "./types";
 
 const dataset = makeTestDataset();
 
@@ -19,6 +21,8 @@ describe("URL-backed filters", () => {
       ...EMPTY_FILTERS,
       search: "copy-out",
       chapter: "13",
+      statusGroup: "fail",
+      caseId: "ch13-output-copyout-width",
       changed: true,
       disagreement: true,
     };
@@ -75,6 +79,93 @@ describe("requirements model", () => {
       uncovered.id,
     ]);
     expect(filtered.cases).toHaveLength(0);
+  });
+
+  it("filters by broad status group without losing exact statuses", () => {
+    const campaign = selectedCampaign(dataset, "");
+    const passing = filterCorpus(
+      dataset,
+      { ...EMPTY_FILTERS, statusGroup: "pass" },
+      campaign,
+    );
+    const failing = filterCorpus(
+      dataset,
+      { ...EMPTY_FILTERS, statusGroup: "fail" },
+      campaign,
+    );
+    expect(passing.cases).toHaveLength(1);
+    expect(failing.cases).toHaveLength(0);
+  });
+
+  it("maps exact statuses into five scan-level groups", () => {
+    expect(statusGroup("conforming")).toBe("pass");
+    expect(statusGroup("nonconforming")).toBe("fail");
+    expect(statusGroup("unsupported-revision")).toBe("unsupported");
+    expect(statusGroup("harness-error")).toBe("issue");
+    expect(statusGroup("inconclusive")).toBe("issue");
+    expect(statusGroup("not-applicable")).toBe("unscored");
+  });
+
+  it("compares only campaigns with the same tool profiles", () => {
+    const seed = dataset.campaigns[0];
+    if (!seed) throw new Error("test dataset has no campaign");
+    const prior = {
+      ...seed,
+      id: "20260101T000000Z-prior",
+      finished_at: "2026-01-01T00:00:01Z",
+      results: seed.results.map((result) => ({
+        ...result,
+        status: "nonconforming" as const,
+      })),
+    } satisfies Campaign;
+    const current = {
+      ...seed,
+      id: "20260102T000000Z-current",
+      started_at: "2026-01-02T00:00:00Z",
+      finished_at: "2026-01-02T00:00:01Z",
+    } satisfies Campaign;
+    const unrelated = {
+      ...prior,
+      id: "20260101T120000Z-unrelated",
+      finished_at: "2026-01-01T12:00:01Z",
+      tools: [],
+      results: [],
+    } satisfies Campaign;
+    const comparison = compareCampaigns(
+      { ...dataset, campaigns: [prior, unrelated, current] },
+      current,
+    );
+    expect(comparison.previousCampaignId).toBe(prior.id);
+    expect(comparison.newPasses.map((change) => change.caseId)).toEqual([
+      "ch13-output-copyout-width",
+    ]);
+    expect(comparison.regressions).toHaveLength(0);
+  });
+
+  it("classifies a loss of a verified pass as a regression", () => {
+    const seed = dataset.campaigns[0];
+    if (!seed) throw new Error("test dataset has no campaign");
+    const prior = {
+      ...seed,
+      id: "20260101T000000Z-prior",
+      finished_at: "2026-01-01T00:00:01Z",
+    } satisfies Campaign;
+    const current = {
+      ...seed,
+      id: "20260102T000000Z-current",
+      started_at: "2026-01-02T00:00:00Z",
+      finished_at: "2026-01-02T00:00:01Z",
+      results: seed.results.map((result) => ({
+        ...result,
+        status: "nonconforming" as const,
+      })),
+    } satisfies Campaign;
+    const comparison = compareCampaigns(
+      { ...dataset, campaigns: [prior, current] },
+      current,
+    );
+    expect(comparison.regressions).toHaveLength(1);
+    expect(comparison.newPasses).toHaveLength(0);
   });
 
   it("uses a failure-safe aggregate precedence", () => {

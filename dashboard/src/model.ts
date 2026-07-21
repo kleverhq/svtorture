@@ -31,6 +31,51 @@ export const STATUS_SYMBOLS: Record<Status, string> = {
   "not-run": "·",
 };
 
+export type StatusGroup = "pass" | "fail" | "unsupported" | "issue" | "unscored";
+
+export const STATUS_GROUP_LABELS: Record<StatusGroup, string> = {
+  pass: "Pass",
+  fail: "Fail",
+  unsupported: "Unsupported",
+  issue: "Infra / unclear",
+  unscored: "Unscored",
+};
+
+export const STATUS_GROUP_SYMBOLS: Record<StatusGroup, string> = {
+  pass: "✓",
+  fail: "×",
+  unsupported: "—",
+  issue: "!",
+  unscored: "·",
+};
+
+export const STATUS_GROUP_ORDER: StatusGroup[] = [
+  "pass",
+  "fail",
+  "unsupported",
+  "issue",
+  "unscored",
+];
+
+export function statusGroup(status: Status): StatusGroup {
+  switch (status) {
+    case "conforming":
+      return "pass";
+    case "nonconforming":
+      return "fail";
+    case "unsupported-capability":
+    case "unsupported-revision":
+      return "unsupported";
+    case "harness-error":
+    case "inconclusive":
+      return "issue";
+    case "not-applicable":
+    case "skipped-unavailable":
+    case "not-run":
+      return "unscored";
+  }
+}
+
 const STATUS_PRIORITY: Status[] = [
   "harness-error",
   "nonconforming",
@@ -53,10 +98,12 @@ export interface Filters {
   casePresence: string;
   tag: string;
   tool: string;
+  statusGroup: string;
   status: string;
   reason: string;
   campaign: string;
   date: string;
+  caseId: string;
   changed: boolean;
   disagreement: boolean;
 }
@@ -71,10 +118,12 @@ export const EMPTY_FILTERS: Filters = {
   casePresence: "",
   tag: "",
   tool: "",
+  statusGroup: "",
   status: "",
   reason: "",
   campaign: "",
   date: "",
+  caseId: "",
   changed: false,
   disagreement: false,
 };
@@ -109,6 +158,132 @@ export function selectedCampaign(dataset: Dataset, campaignId: string): Campaign
   return [...dataset.campaigns].sort((left, right) =>
     right.finished_at.localeCompare(left.finished_at),
   )[0];
+}
+
+export interface StatusTransition {
+  caseId: string;
+  toolId: string;
+  profileId: string;
+  previous: Status;
+  current: Status;
+}
+
+export interface ToolRevisionChange {
+  toolId: string;
+  previous: string;
+  current: string;
+}
+
+export interface CampaignComparison {
+  previousCampaignId?: string | undefined;
+  regressions: StatusTransition[];
+  newPasses: StatusTransition[];
+  otherChanges: StatusTransition[];
+  toolRevisionChanges: ToolRevisionChange[];
+  corpusChanged: boolean;
+  denominatorChanged: boolean;
+}
+
+function campaignProfileSignature(campaign: Campaign): string {
+  return campaign.tools
+    .flatMap((tool) =>
+      tool.profile_ids.map((profileId) => `${tool.definition.id}/${profileId}`),
+    )
+    .sort()
+    .join("|");
+}
+
+export function previousComparableCampaign(
+  dataset: Dataset,
+  selected: Campaign | undefined,
+): Campaign | undefined {
+  if (!selected) return undefined;
+  const signature = campaignProfileSignature(selected);
+  return dataset.campaigns
+    .filter(
+      (campaign) =>
+        campaign.finished_at < selected.finished_at &&
+        campaignProfileSignature(campaign) === signature,
+    )
+    .sort((left, right) => right.finished_at.localeCompare(left.finished_at))[0];
+}
+
+export function compareCampaigns(
+  dataset: Dataset,
+  selected: Campaign | undefined,
+): CampaignComparison {
+  const previous = previousComparableCampaign(dataset, selected);
+  const empty = {
+    previousCampaignId: previous?.id,
+    regressions: [],
+    newPasses: [],
+    otherChanges: [],
+    toolRevisionChanges: [],
+    corpusChanged: false,
+    denominatorChanged: false,
+  } satisfies CampaignComparison;
+  if (!selected || !previous) return empty;
+
+  const priorResults = resultsByKey(previous);
+  const regressions: StatusTransition[] = [];
+  const newPasses: StatusTransition[] = [];
+  const otherChanges: StatusTransition[] = [];
+  for (const result of selected.results) {
+    const prior = priorResults.get(resultKey(result));
+    if (!prior || prior.status === result.status) continue;
+    const transition = {
+      caseId: result.case_id,
+      toolId: result.tool_id,
+      profileId: result.profile_id,
+      previous: prior.status,
+      current: result.status,
+    };
+    if (statusGroup(prior.status) === "pass" && statusGroup(result.status) !== "pass") {
+      regressions.push(transition);
+    } else if (
+      statusGroup(prior.status) !== "pass" &&
+      statusGroup(result.status) === "pass"
+    ) {
+      newPasses.push(transition);
+    } else {
+      otherChanges.push(transition);
+    }
+  }
+
+  const priorTools = new Map(previous.tools.map((tool) => [tool.definition.id, tool]));
+  const toolRevisionChanges = selected.tools.flatMap((tool): ToolRevisionChange[] => {
+    const prior = priorTools.get(tool.definition.id);
+    const priorRevision = prior?.selection?.resolved_sha ?? prior?.reported_version ?? "local";
+    const currentRevision =
+      tool.selection?.resolved_sha ?? tool.reported_version ?? "local";
+    return prior && priorRevision !== currentRevision
+      ? [{ toolId: tool.definition.id, previous: priorRevision, current: currentRevision }]
+      : [];
+  });
+  const priorDenominators = new Map(
+    dataset.metrics
+      .filter((metric) => metric.campaign_id === previous.id)
+      .map((metric) => [`${metric.tool_id}/${metric.profile_id}`, metric.denominator]),
+  );
+  const denominatorChanged = dataset.metrics
+    .filter((metric) => metric.campaign_id === selected.id)
+    .some(
+      (metric) =>
+        priorDenominators.get(`${metric.tool_id}/${metric.profile_id}`) !==
+        metric.denominator,
+    );
+
+  return {
+    previousCampaignId: previous.id,
+    regressions,
+    newPasses,
+    otherChanges,
+    toolRevisionChanges,
+    corpusChanged:
+      selected.hashes.cases !== previous.hashes.cases ||
+      selected.hashes.requirements !== previous.hashes.requirements,
+    denominatorChanged,
+  };
 }
 
 export function resultKey(result: Result): string {
@@ -227,6 +402,10 @@ export function filterCorpus(
       (!filters.tag ||
         testCase.tags.includes(filters.tag) ||
         requirement?.tags.includes(filters.tag)) &&
+      (!filters.statusGroup ||
+        candidateResults.some(
+          (result) => statusGroup(result.status) === filters.statusGroup,
+        )) &&
       (!filters.status ||
         candidateResults.some((result) => result.status === filters.status)) &&
       (!filters.reason ||
@@ -239,6 +418,7 @@ export function filterCorpus(
   const caseSpecificFilter = Boolean(
     filters.phase ||
       filters.expectation ||
+      filters.statusGroup ||
       filters.status ||
       filters.reason ||
       filters.changed ||

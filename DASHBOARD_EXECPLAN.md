@@ -19,8 +19,8 @@ This work will not change campaign, requirement, result, metric, or publication 
 ## Progress
 
 - [x] (2026-07-21 11:14Z) Read the supplied `review.md`, current dashboard components, model, tests, stylesheet, package configuration, local guidance, and current aggregate dataset.
-- [ ] Capture baseline desktop/mobile screenshots and record concrete layout observations.
-- [ ] Add theme state, grouped status/filter model, change-summary helpers, and deterministic tests.
+- [x] (2026-07-21 11:17Z) Captured matrix, evidence, history, and campaign desktop baselines plus matrix/evidence mobile baselines under `/tmp/svtorture-dashboard-visual-before/` and inspected them.
+- [x] (2026-07-21 11:20Z) Added Auto/Light/Dark preference state and persistence, pre-render application, five grouped statuses, URL-backed `statusGroup`/`caseId`, comparable-campaign change analysis, and deterministic tests (12 frontend tests pass).
 - [ ] Replace the promotional top section and scattered controls with a compact overview and sticky global control bar.
 - [ ] Refactor the requirements matrix into a dense sticky-column table with a separate detail inspector.
 - [ ] Refactor case evidence into a master-detail investigation surface and connect matrix drill-down to it.
@@ -39,6 +39,14 @@ This work will not change campaign, requirement, result, metric, or publication 
   Evidence: the only font references are `font-family` declarations in `dashboard/src/styles.css`. The redesign must use reliable system UI and monospace stacks so screenshots do not depend on untracked host fonts.
 - Observation: Most dashboard navigation state already lives in the query string, which makes deterministic screenshots of views and filters practical without adding browser automation.
   Evidence: `dashboard/src/model.ts` implements `filtersFromSearch` and `filtersToSearch`; `dashboard/src/App.tsx` reads `view` from the query string.
+- Observation: The baseline confirms the review quantitatively: at 1440×1200 the matrix header only begins around the bottom 275 pixels, after the hero, 255-pixel metrics, filters, tabs, and a ten-item legend.
+  Evidence: `/tmp/svtorture-dashboard-visual-before/matrix-desktop.png` shows no requirement rows in the initial viewport.
+- Observation: The current 390-pixel layout has page-level clipping before the working interface is reached.
+  Evidence: `/tmp/svtorture-dashboard-visual-before/matrix-mobile.png` crops the hero sentence and wide metric content at the right edge, and the first viewport contains branding plus only part of two metric cards.
+- Observation: The server repeatedly requests a missing favicon during every screenshot route.
+  Evidence: the baseline server log records HTTP 404 for `/favicon.ico`; a small inline or committed local favicon can remove avoidable console/network noise without adding a dependency.
+- Observation: This Node 25/Vitest environment exposed a nonfunctional built-in `window.localStorage` shim unless a storage file is configured.
+  Evidence: the first component test run warned about `--localstorage-file` and its `getItem`, `setItem`, and `clear` members were not functions. The production theme code already fails safely; tests now install a deterministic in-memory `Storage` implementation.
 
 ## Decision Log
 
@@ -60,13 +68,16 @@ This work will not change campaign, requirement, result, metric, or publication 
 - Decision: Keep selected evidence case URL-backed and let matrix case actions navigate directly to that case in the evidence view.
   Rationale: Investigation state should be shareable and the expected user path is summary, anomaly, drill-down, proof.
   Date/Author: 2026-07-21 / coding agent.
+- Decision: Compare a selected campaign only with the newest earlier campaign containing the same tool/profile set.
+  Rationale: Comparing an aggregate three-tool campaign with an unrelated single-tool smoke campaign would manufacture changes from selection differences rather than tool behavior.
+  Date/Author: 2026-07-21 / coding agent.
 - Decision: Use installed headless Chrome and temporary scripts under `/tmp` for visual evidence; do not add Playwright yet.
   Rationale: URL-backed states and native screenshot support are sufficient for this concrete redesign. A permanent dependency is justified only if maintainers later request committed visual regression baselines.
   Date/Author: 2026-07-21 / coding agent.
 
 ## Outcomes & Retrospective
 
-Implementation has not started. The initial analysis confirms that the current data model and dependencies are sufficient: this is a frontend/model refactor with no schema or backend migration. This section will be updated after every major milestone and finalized with screenshot, test, review, and commit evidence.
+The foundation milestone is complete without schema or dependency changes. Theme state defaults safely to Auto and is applied before React renders; exact statuses now have a tested five-group presentation mapping; URL state includes grouped status and selected evidence case; and campaign comparison refuses unrelated tool/profile sets. Layout and palette work remain.
 
 ## Context and Orientation
 
@@ -224,3 +235,7 @@ Change `EvidenceView` to accept selected-case state:
 Change `HistoryView` to receive the dataset and selected campaign so it can render change analysis without duplicating model logic. Preserve all current public dataset types in `dashboard/src/types.ts`.
 
 Revision note (2026-07-21 11:14Z): Created the initial self-contained plan from `review.md`, the requested Auto/Light/Dark behavior, current frontend architecture, available browser tooling, and the local aggregate visual dataset.
+
+Revision note (2026-07-21 11:17Z): Recorded baseline desktop/mobile screenshot evidence, initial-viewport density, mobile clipping, and the repeated missing-favicon request before implementation.
+
+Revision note (2026-07-21 11:20Z): Recorded the completed theme/model foundation, comparable-campaign rule, deterministic storage test shim, and passing frontend tests.
