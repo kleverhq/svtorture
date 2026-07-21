@@ -22,7 +22,7 @@ This change does not commit an IEEE PDF or generated annotated TXT files. It doe
 - [x] (2026-07-21 07:18Z) Imported the latest annotator source into `standards/ieee-1800-2023-annotate/`, removed the submodule and `.gitmodules`, and renamed terminology and code consistently.
 - [x] (2026-07-21 07:21Z) Added ignored local environment configuration, root `just` targets, integrated tests, and conditional CI anchor verification.
 - [x] (2026-07-21 07:22Z) Replaced annotator development documentation with `docs/annotation.md`, simplified its local README, and updated adjacent architecture and workflow documents.
-- [x] (2026-07-21 07:40Z) Materialized from the reference PDF, proved byte identity, passed strict verification and all deterministic gates, completed two focused reviews plus a fresh control review, fixed every finding, re-reviewed the fixes cleanly, and prepared the completion commit.
+- [x] (2026-07-21 07:45Z) Materialized from the reference PDF, proved byte identity, passed strict verification and `just ci`, completed two focused reviews plus a fresh control review, fixed every finding, re-reviewed the fixes cleanly, and committed the integration.
 
 ## Surprises & Discoveries
 
@@ -73,7 +73,7 @@ This change does not commit an IEEE PDF or generated annotated TXT files. It doe
 
 The private submodule and `.gitmodules` are gone; the repository owns the annotator source under the requested `standards/ieee-1800-2023-annotate/` path. The licensed PDF, `.env.local`, generated 58-part corpus, and generated index remain ignored. The committed runtime index did not change: generated and committed files share SHA-256 `34030dd64ab2d867124f0c449fe3e8146805df365dd7dd244ee2f38d4e71c9dc`.
 
-`just annotate-check` reports 16,963 anchors and complete object/marker inventories, while `just annotate-verify` reports 58/58 deterministic regenerations and `verification: PASS`. `just annotate-update-anchors` leaves no diff for the reference PDF, and a forced byte mismatch prints the required update-and-commit instruction. Ninety-three framework tests, fifteen annotator and utility tests, five dashboard tests, lint, typing, metadata validation, frontend build, pre-commit, smoke without dotenv, and source-hygiene scanning pass. No PDF or generated TXT is tracked.
+`just annotate-check` reports 16,963 anchors and complete object/marker inventories, while `just annotate-verify` reports 58/58 deterministic regenerations and `verification: PASS`. `just annotate-update-anchors` leaves no diff for the reference PDF, and a forced byte mismatch prints the required update-and-commit instruction. Ninety-three framework tests, fifteen annotator and utility tests, five dashboard tests, eleven Docker integration tests, lint, typing, metadata validation, frontend build, pre-commit, smoke without dotenv, source-hygiene scanning, and the full `just ci` gate pass. The real Icarus smoke campaign completed without an infrastructure failure. No PDF or generated TXT is tracked.
 
 Code/workflow and documentation reviewers found four substantive boundaries: pull-request secret exposure, unsafe shell interpolation, imprecise verification wording/stale plan state, and floating setup dependencies plus host-Python test execution. All were fixed. Focused re-reviews and a fresh control-finding re-review reported no substantive findings. The implementation is complete.
 
@@ -201,3 +201,5 @@ Revision note (2026-07-21 07:23Z): Recorded source integration, terminology migr
 Revision note (2026-07-21 07:31Z): Recorded strict regeneration, complete gates, focused review findings, trusted-branch secret isolation, shell-safe PDF arguments, and documentation corrections.
 
 Revision note (2026-07-21 07:40Z): Closed the plan after control review, action/version pinning, URL-step isolation, uv-backed source tests, clean re-review, and the final evidence audit.
+
+Revision note (2026-07-21 07:45Z): Added the successful full `just ci` result, including Docker integration and real-tool smoke evidence, and recorded the completed commits.
