@@ -2,8 +2,9 @@
 
 A campaign records the corpus commit/dirty state, requirement/case/selection
 manifest hashes, exact case content hashes, tool source selection, reported
-version, image and base-image digests, profiles, portable commands, normalized
-diagnostics, bounded excerpts, and full-stream hashes.
+version, image and base-image digests, profiles and their phase ceilings, target phases, direct/cumulative evidence
+modes, attempted-through phases, portable commands, normalized diagnostics,
+bounded excerpts, and full-stream hashes.
 
 Replay one result:
 

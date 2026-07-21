@@ -105,10 +105,11 @@ class VcsAdapter(ToolAdapter):
                 )
             )
         return ExecutionPlan(
-            schema_version=1,
+            schema_version=2,
             case_id=case.definition.id,
             tool_id=tool.id,
             profile_id=profile.id,
+            target_phase=case.definition.target_phase,
             backend=ExecutionBackend.LOCAL_WRAPPER,
             wrapper=wrapper,
             stages=tuple(stages),

@@ -11,7 +11,9 @@ from svtorture.campaign import CampaignError, load_campaign
 from svtorture.catalog import Catalog, CatalogError, load_catalog, mvp_audit
 from svtorture.models import (
     CaseDefinition,
+    Phase,
     RequirementInventory,
+    ToolProfile,
     safe_relative_path,
 )
 from tests.helpers import campaign_tool, make_campaign, normalized
@@ -88,6 +90,26 @@ def test_generated_schemas_use_the_controlled_tag_registry(catalog: Catalog) -> 
     assert requirement_properties["anchors"]["minItems"] == 1
     assert requirement_properties["anchors"]["uniqueItems"] is True
     assert "paragraph_anchor" not in requirement_properties
+
+
+def test_tool_phase_ceiling_is_cumulative(catalog: Catalog) -> None:
+    simulator = catalog.tools.tool("verilator").profile("simulator")
+    assert simulator.phase_ceiling is Phase.SIMULATE
+    assert simulator.supports(Phase.PREPROCESS)
+    assert simulator.supports(Phase.PARSE)
+    assert simulator.supports(Phase.ELABORATE)
+    assert simulator.supports(Phase.SIMULATE)
+    assert Phase.PARSE not in simulator.direct_phases
+
+
+def test_legacy_tool_phase_list_is_rejected(catalog: Catalog) -> None:
+    profile = catalog.tools.tool("verilator").profile("simulator")
+    value = profile.model_dump(mode="json")
+    value["phases"] = ["elaborate", "simulate"]
+    del value["phase_ceiling"]
+    del value["direct_phases"]
+    with pytest.raises(ValidationError, match=r"phase_ceiling|direct_phases"):
+        ToolProfile.model_validate(value)
 
 
 def test_unknown_metadata_is_rejected(catalog: Catalog) -> None:
@@ -305,6 +327,23 @@ def test_suite_glob_without_matches_is_rejected(catalog: Catalog, tmp_path: Path
     )
     with pytest.raises(CatalogError, match="matched no cases"):
         load_catalog(root)
+
+
+def test_version_one_campaign_is_rejected(catalog: Catalog, tmp_path: Path) -> None:
+    case = catalog.cases["ch04-nba-rhs-captured"]
+    tool = campaign_tool(catalog.tools.tool("fake"), ("simulator",))
+    campaign = make_campaign(
+        catalog,
+        cases=(case,),
+        tool=tool,
+        results=(normalized(case, "fake", "simulator"),),
+    )
+    value = campaign.model_dump(mode="json")
+    value["schema_version"] = 1
+    path = tmp_path / "campaign.json"
+    path.write_text(json.dumps(value), encoding="utf-8")
+    with pytest.raises(CampaignError, match="greater than or equal to 2"):
+        load_campaign(path)
 
 
 def test_campaign_manifest_tamper_is_rejected(catalog: Catalog, tmp_path: Path) -> None:

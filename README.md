@@ -46,8 +46,10 @@ observation to a reproducible conformance judgment.
 SVTORTURE goes deeper rather than broader:
 
 - IEEE requirements, not feature tags, are the unit of coverage and scoring;
-- every oracle names an exact target phase, and an earlier failure does not
-  satisfy it;
+- every oracle names an exact target phase while tool capability follows the
+  cumulative preprocess → parse → elaborate → simulate pipeline;
+- direct and cumulative evidence remain distinguishable, and an unrelated
+  later-phase failure never satisfies an earlier negative oracle;
 - negative tests require evidence tied to the intended construct;
 - tool behavior never defines the expected result;
 - campaigns retain exact tool revisions, container identities, portable

@@ -9,13 +9,19 @@ normalize diagnostics; they never decide conformance.
 Declare:
 
 - stable ID/display name and adapter implementation;
-- parser, elaborator, and/or simulator profiles with exact phase capabilities;
+- parser, elaborator, and/or simulator profiles with a cumulative
+  `phase_ceiling` and ordered `direct_phases`;
 - headline profile and effective language/revision mode;
 - `distribution`, `execution`, `ci`, and `publish` policy;
 - public upstream/default branch, Dockerfile, repository, and additional
   `recipe_files` where applicable.
 
-No synthesis profile belongs in this project.
+No synthesis profile belongs in this project. A parser ceiling is `parse`, an
+elaborator ceiling is `elaborate`, and a simulator ceiling is `simulate`; every
+profile supports prerequisite phases cumulatively. List a phase as direct only
+when the adapter has a command bounded at that phase. If no direct command exists,
+the adapter uses the nearest later command and records that later boundary rather
+than relabeling it.
 
 ## Open-source path
 
@@ -59,7 +65,10 @@ separate review.
 
 Add tests for:
 
-- command construction and portable paths;
+- command construction, portable paths, target phase, and attempted-through
+  phase;
+- direct and cumulative evidence boundaries, including an unrelated later
+  failure that must remain inconclusive;
 - profile/capability boundaries and language mode;
 - normal exit, timeout, signal/internal error, and backend failure ownership;
 - diagnostic parsing, source mapping, and fallback behavior;

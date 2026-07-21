@@ -125,13 +125,14 @@ def _wrapper_argv(
 ) -> tuple[tuple[str, ...], tuple[str, ...], dict[str, str]]:
     request_path = work_dir / f"wrapper-request-{stage.id}.json"
     request = {
-        "schema_version": 1,
+        "schema_version": 2,
         "tool": plan.tool_id,
         "case": plan.case_id,
         "profile": plan.profile_id,
         "stage": {
             "id": stage.id,
-            "phase": stage.phase.value,
+            "target_phase": plan.target_phase.value,
+            "attempted_through_phase": stage.attempted_through_phase.value,
             "argv": list(stage.argv),
             "portable_argv": list(stage.portable_argv),
             "timeout_seconds": stage.timeout_seconds,
@@ -230,7 +231,7 @@ def _observation(
         artifact_present = artifact.is_file() and not artifact.is_symlink()
     return StageObservation(
         stage_id=stage.id,
-        phase=stage.phase,
+        attempted_through_phase=stage.attempted_through_phase,
         outcome=result.outcome,
         exit_code=result.exit_code,
         signal=result.signal,

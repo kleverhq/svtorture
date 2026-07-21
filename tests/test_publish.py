@@ -67,7 +67,7 @@ def test_public_campaign_accepts_only_clean_trusted_public_data(
                 "parser",
                 observations=(
                     observation(
-                        phase=Phase.PARSE,
+                        attempted_through_phase=Phase.PARSE,
                         exit_code=1,
                         diagnostics=(targeted(case),),
                     ),
@@ -100,7 +100,8 @@ def test_publication_rejects_synthetic_commercial_tool_regardless_of_name(
         profiles=(
             ToolProfile(
                 id="elaborator",
-                phases=(Phase.ELABORATE,),
+                phase_ceiling=Phase.ELABORATE,
+                direct_phases=(Phase.ELABORATE,),
                 headline=True,
                 standard_revision="1800-2017",
                 effective_language="private wrapper",
@@ -136,7 +137,7 @@ def test_publication_rejects_private_path_leaks(
         "parser",
         observations=(
             observation(
-                phase=Phase.PARSE,
+                attempted_through_phase=Phase.PARSE,
                 exit_code=1,
                 stdout="/home/private-user/licensed/output",
                 diagnostics=(targeted(case),),
@@ -171,7 +172,7 @@ def test_publication_rejects_credentials_in_bounded_evidence(
         "parser",
         observations=(
             observation(
-                phase=Phase.PARSE,
+                attempted_through_phase=Phase.PARSE,
                 exit_code=1,
                 stderr="token=github_pat_abcdefghijklmnopqrstuvwxyz012345",
                 diagnostics=(targeted(case),),
@@ -211,7 +212,7 @@ def test_trust_fields_cannot_be_replayed_outside_github_actions(
                 "parser",
                 observations=(
                     observation(
-                        phase=Phase.PARSE,
+                        attempted_through_phase=Phase.PARSE,
                         exit_code=1,
                         diagnostics=(targeted(case),),
                     ),
@@ -243,7 +244,7 @@ def test_publication_rechecks_judgment_against_observations(
                 reason=ReasonCode.UNEXPECTED_ACCEPT,
                 observations=(
                     observation(
-                        phase=Phase.PARSE,
+                        attempted_through_phase=Phase.PARSE,
                         exit_code=1,
                         diagnostics=(targeted(case),),
                     ),
@@ -286,7 +287,7 @@ def test_publication_requires_a_pullable_ghcr_digest(
                 "parser",
                 observations=(
                     observation(
-                        phase=Phase.PARSE,
+                        attempted_through_phase=Phase.PARSE,
                         exit_code=1,
                         diagnostics=(targeted(case),),
                     ),
@@ -364,7 +365,7 @@ def test_pages_publish_preserves_history_and_regenerates_index(
                 "simulator",
                 observations=(
                     observation(
-                        phase=Phase.SIMULATE,
+                        attempted_through_phase=Phase.SIMULATE,
                         stdout=case.definition.oracle.marker or "",
                     ),
                 ),
@@ -383,7 +384,7 @@ def test_pages_publish_preserves_history_and_regenerates_index(
                 "simulator",
                 observations=(
                     observation(
-                        phase=Phase.SIMULATE,
+                        attempted_through_phase=Phase.SIMULATE,
                         stdout=case.definition.oracle.marker or "",
                     ),
                 ),

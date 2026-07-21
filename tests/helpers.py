@@ -14,6 +14,7 @@ from svtorture.models import (
     CapturedStream,
     Diagnostic,
     EvidenceLevel,
+    EvidenceMode,
     ImageIdentity,
     ManifestHashes,
     NormalizedResult,
@@ -44,7 +45,7 @@ def stream(text: str = "", *, truncated: bool = False) -> CapturedStream:
 
 def observation(
     *,
-    phase: Phase,
+    attempted_through_phase: Phase,
     exit_code: int | None = 0,
     outcome: RawOutcome = RawOutcome.NORMAL_EXIT,
     signal: int | None = None,
@@ -57,8 +58,8 @@ def observation(
     stderr_truncated: bool = False,
 ) -> StageObservation:
     return StageObservation(
-        stage_id="run" if phase is Phase.SIMULATE else "compile",
-        phase=phase,
+        stage_id=("run" if attempted_through_phase is Phase.SIMULATE else "compile"),
+        attempted_through_phase=attempted_through_phase,
         outcome=outcome,
         exit_code=exit_code,
         signal=signal,
@@ -128,12 +129,27 @@ def normalized(
     reason: ReasonCode = ReasonCode.EXPECTATION_MET,
     observations: tuple[StageObservation, ...] = (),
 ) -> NormalizedResult:
+    if not observations and status in {
+        ResultStatus.CONFORMING,
+        ResultStatus.NONCONFORMING,
+        ResultStatus.INCONCLUSIVE,
+    }:
+        observations = (observation(attempted_through_phase=case.definition.target_phase),)
+    mode = EvidenceMode.NOT_OBSERVED
+    if observations:
+        mode = (
+            EvidenceMode.DIRECT
+            if observations[-1].attempted_through_phase is case.definition.target_phase
+            else EvidenceMode.CUMULATIVE
+        )
     return NormalizedResult(
-        schema_version=1,
+        schema_version=2,
         case_id=case.definition.id,
         requirement_id=case.definition.primary_requirement,
         tool_id=tool_id,
         profile_id=profile_id,
+        target_phase=case.definition.target_phase,
+        evidence_mode=mode,
         status=status,
         reason=reason,
         summary="Synthetic deterministic test result.",
@@ -161,7 +177,7 @@ def make_campaign(
     case_ids = tuple(case.definition.id for case in cases)
     selection_hash = hash_json(_selection_payload("test", case_ids, (tool,), expected))
     return Campaign(
-        schema_version=1,
+        schema_version=2,
         id=campaign_id,
         started_at=datetime(2026, 1, 1, tzinfo=UTC),
         finished_at=datetime(2026, 1, 1, 0, 0, 1, tzinfo=UTC),

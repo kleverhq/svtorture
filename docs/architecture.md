@@ -39,10 +39,12 @@ then validates cross-references, safe paths, diagnostic anchors, marker
 uniqueness, source hashes, and the seed-corpus composition. The source under
 `standards/ieee-1800-2023-annotate/` materializes that index from a user-supplied
 PDF, but neither the annotator nor its generated text is in this runtime data
-flow. Adapters only declare commands
-and diagnostic normalization. `executor.py` runs argv arrays in isolated work
-directories and records bounded excerpts plus full-stream hashes. `evaluator.py`
-alone compares observations to the case oracle.
+flow. Tool profiles declare a cumulative phase ceiling plus the command boundaries the
+adapter can assess directly. Adapters only declare commands, the furthest phase
+each command attempts, and diagnostic normalization. `executor.py` runs argv
+arrays in isolated work directories and records bounded excerpts plus full-stream
+hashes. `evaluator.py` alone compares observations to the exact case oracle and
+records whether the evidence is direct or cumulative.
 
 If either bounded excerpt is truncated, the evaluator records an inconclusive
 `output-truncated` result; retained output can therefore never hide a second
@@ -54,9 +56,11 @@ read-only case input, and a per-case writable work mount. Full logs and generate
 artifacts remain under `.svtorture/work`; campaigns contain only sanitized,
 bounded evidence.
 
-Commercial execution uses the same `ExecutionPlan`, `StageObservation`, and
-`NormalizedResult` contracts. A private wrapper receives a versioned JSON
-request. Distribution, CI, and publication policy comes from tool metadata, so
+Commercial execution uses the same version-2 `ExecutionPlan`,
+`StageObservation`, and `NormalizedResult` contracts. A plan records its target
+phase; each stage and observation records `attempted_through_phase`; and the
+result records `direct`, `cumulative`, or `not-observed` evidence. A private
+wrapper receives a versioned JSON request. Distribution, CI, and publication policy comes from tool metadata, so
 publishers and workflows never infer it from an adapter name.
 
 Campaigns include a full result grid for every selected case and profile.

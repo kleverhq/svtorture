@@ -28,7 +28,7 @@ from svtorture.models import (
 def _stage(
     stage_id: str,
     kind: StageKind,
-    phase: Phase,
+    attempted_through_phase: Phase,
     argv: tuple[str, ...],
     portable_argv: tuple[str, ...],
     case: LoadedCase,
@@ -37,7 +37,7 @@ def _stage(
     return ExecutionStage(
         id=stage_id,
         kind=kind,
-        phase=phase,
+        attempted_through_phase=attempted_through_phase,
         argv=argv,
         portable_argv=portable_argv,
         timeout_seconds=case.definition.limits.timeout_seconds,
@@ -90,10 +90,11 @@ class SlangAdapter(ToolAdapter):
         base += source_argv(case)
         portable += source_argv(case, portable=True)
         return ExecutionPlan(
-            schema_version=1,
+            schema_version=2,
             case_id=case.definition.id,
             tool_id=tool.id,
             profile_id=profile.id,
+            target_phase=case.definition.target_phase,
             backend=ExecutionBackend.DOCKER,
             image=image,
             stages=(
@@ -148,14 +149,19 @@ class IcarusAdapter(ToolAdapter):
         del wrapper
         output = f"{WORK_ROOT}/sim.vvp"
         portable_output = f"{PORTABLE_WORK_ROOT}/sim.vvp"
-        compile_argv: tuple[str, ...] = ("iverilog", "-g2012", "-o", output)
-        portable_compile: tuple[str, ...] = (
-            "iverilog",
-            "-g2012",
-            "-o",
-            portable_output,
-        )
-        if case.definition.top:
+        preprocessing = case.definition.target_phase is Phase.PREPROCESS
+        if preprocessing:
+            compile_argv: tuple[str, ...] = ("iverilog", "-g2012", "-E", "-o", "-")
+            portable_compile: tuple[str, ...] = compile_argv
+        else:
+            compile_argv = ("iverilog", "-g2012", "-o", output)
+            portable_compile = (
+                "iverilog",
+                "-g2012",
+                "-o",
+                portable_output,
+            )
+        if case.definition.top and not preprocessing:
             compile_argv += ("-s", case.definition.top)
             portable_compile += ("-s", case.definition.top)
         compile_argv += include_argv(case, "joined") + define_argv(case, "joined")
@@ -168,11 +174,11 @@ class IcarusAdapter(ToolAdapter):
             _stage(
                 "compile",
                 StageKind.COMPILE,
-                Phase.ELABORATE,
+                Phase.PREPROCESS if preprocessing else Phase.ELABORATE,
                 compile_argv,
                 portable_compile,
                 case,
-                "sim.vvp",
+                None if preprocessing else "sim.vvp",
             )
         ]
         if case.definition.target_phase is Phase.SIMULATE:
@@ -189,10 +195,11 @@ class IcarusAdapter(ToolAdapter):
                 )
             )
         return ExecutionPlan(
-            schema_version=1,
+            schema_version=2,
             case_id=case.definition.id,
             tool_id=tool.id,
             profile_id=profile.id,
+            target_phase=case.definition.target_phase,
             backend=ExecutionBackend.DOCKER,
             image=image,
             stages=tuple(stages),
@@ -240,30 +247,34 @@ class VerilatorAdapter(ToolAdapter):
             "verilator",
             "--language",
             "1800-2023",
-            "--timing",
-            "-Wno-fatal",
-            "-Wpedantic",
         )
         portable: tuple[str, ...] = base
-        if case.definition.target_phase is Phase.SIMULATE:
-            base += (
-                "--binary",
-                "--Mdir",
-                f"{WORK_ROOT}/obj",
-                "-o",
-                "sim",
-            )
-            portable += (
-                "--binary",
-                "--Mdir",
-                f"{PORTABLE_WORK_ROOT}/obj",
-                "-o",
-                "sim",
-            )
+        preprocessing = case.definition.target_phase is Phase.PREPROCESS
+        if preprocessing:
+            base += ("-E",)
+            portable += ("-E",)
         else:
-            base += ("--lint-only",)
-            portable += ("--lint-only",)
-        if case.definition.top:
+            base += ("--timing", "-Wno-fatal", "-Wpedantic")
+            portable += ("--timing", "-Wno-fatal", "-Wpedantic")
+            if case.definition.target_phase is Phase.SIMULATE:
+                base += (
+                    "--binary",
+                    "--Mdir",
+                    f"{WORK_ROOT}/obj",
+                    "-o",
+                    "sim",
+                )
+                portable += (
+                    "--binary",
+                    "--Mdir",
+                    f"{PORTABLE_WORK_ROOT}/obj",
+                    "-o",
+                    "sim",
+                )
+            else:
+                base += ("--lint-only",)
+                portable += ("--lint-only",)
+        if case.definition.top and not preprocessing:
             base += ("--top-module", case.definition.top)
             portable += ("--top-module", case.definition.top)
         base += include_argv(case, "joined") + define_argv(case, "joined")
@@ -275,7 +286,7 @@ class VerilatorAdapter(ToolAdapter):
             _stage(
                 "compile",
                 StageKind.COMPILE,
-                Phase.ELABORATE,
+                Phase.PREPROCESS if preprocessing else Phase.ELABORATE,
                 base,
                 portable,
                 case,
@@ -294,10 +305,11 @@ class VerilatorAdapter(ToolAdapter):
                 )
             )
         return ExecutionPlan(
-            schema_version=1,
+            schema_version=2,
             case_id=case.definition.id,
             tool_id=tool.id,
             profile_id=profile.id,
+            target_phase=case.definition.target_phase,
             backend=ExecutionBackend.DOCKER,
             image=image,
             stages=tuple(stages),

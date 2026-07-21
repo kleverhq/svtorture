@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from dataclasses import replace
 from pathlib import Path
 
 import pytest
@@ -8,6 +9,7 @@ from svtorture.adapters.base import ToolAdapter
 from svtorture.adapters.commercial import VcsAdapter
 from svtorture.adapters.open_source import IcarusAdapter, SlangAdapter, VerilatorAdapter
 from svtorture.catalog import Catalog, LoadedCase
+from svtorture.models import Phase
 
 
 @pytest.mark.parametrize(
@@ -71,6 +73,64 @@ def test_real_adapter_command_construction(
         assert "-g2012" in flattened
     if tool_id == "vcs":
         assert plan.wrapper == "/private/wrapper"
+
+
+@pytest.mark.parametrize(
+    ("tool_id", "profile_id", "adapter_type"),
+    (
+        ("icarus", "simulator", IcarusAdapter),
+        ("verilator", "simulator", VerilatorAdapter),
+        ("vcs", "simulator", VcsAdapter),
+    ),
+)
+def test_integrated_compile_attempts_parse_case_through_elaboration(
+    catalog: Catalog,
+    tool_id: str,
+    profile_id: str,
+    adapter_type: type[ToolAdapter],
+) -> None:
+    case = catalog.cases["ch05-base-format-whitespace-rejected"]
+    tool = catalog.tools.tool(tool_id)
+    plan = adapter_type().build_plan(
+        case,
+        tool,
+        tool.profile(profile_id),
+        image=("image" if tool_id != "vcs" else None),
+        wrapper=("/private/wrapper" if tool_id == "vcs" else None),
+    )
+    assert plan.target_phase is Phase.PARSE
+    assert plan.stages[0].attempted_through_phase is Phase.ELABORATE
+
+
+@pytest.mark.parametrize(
+    ("tool_id", "adapter_type", "preprocessor_flag"),
+    (
+        ("icarus", IcarusAdapter, "-E"),
+        ("verilator", VerilatorAdapter, "-E"),
+    ),
+)
+def test_open_source_preprocessing_is_direct(
+    catalog: Catalog,
+    tool_id: str,
+    adapter_type: type[ToolAdapter],
+    preprocessor_flag: str,
+) -> None:
+    original = catalog.cases["ch22-include-trailing-comment"]
+    case = replace(
+        original,
+        definition=original.definition.model_copy(update={"target_phase": Phase.PREPROCESS}),
+    )
+    tool = catalog.tools.tool(tool_id)
+    plan = adapter_type().build_plan(
+        case,
+        tool,
+        tool.profile("elaborator"),
+        image="image",
+        wrapper=None,
+    )
+    assert plan.target_phase is Phase.PREPROCESS
+    assert plan.stages[0].attempted_through_phase is Phase.PREPROCESS
+    assert preprocessor_flag in plan.stages[0].argv
 
 
 def test_include_define_and_ordered_sources_are_adapter_inputs(catalog: Catalog) -> None:

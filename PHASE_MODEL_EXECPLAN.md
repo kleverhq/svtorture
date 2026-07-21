@@ -20,10 +20,10 @@ This work does not add cases or weaken any standards oracle. It does not infer a
 
 - [x] (2026-07-21 20:11Z) Analyzed the current exact-membership phase model, adapters, evaluator, metrics, schemas, dashboard, and current campaign behavior.
 - [x] (2026-07-21 20:11Z) Chose a clean version-2 cumulative capability and explicit evidence-attribution design with no backward compatibility.
-- [ ] Commit this active ExecPlan and remove all ignored version-1 campaigns and generated dashboard evidence.
-- [ ] Implement the version-2 tool, execution, observation, result, and campaign contracts and regenerate committed schemas.
-- [ ] Implement cumulative phase execution and safe evaluator inference across open-source, commercial, and fake adapters.
-- [ ] Update metric scope, requirement-level PASS/FAIL/UNCLEAR presentation, evidence provenance, documentation, and tests.
+- [x] (2026-07-21 20:13Z) Committed this active ExecPlan and removed all ignored version-1 campaigns, transient work, and generated dashboard evidence.
+- [x] (2026-07-21 23:25Z) Implemented the version-2 tool, execution, observation, result, and campaign contracts and regenerated committed schemas.
+- [x] (2026-07-21 23:31Z) Implemented cumulative phase execution and safe evaluator inference across open-source, commercial, and fake adapters.
+- [x] (2026-07-21 23:35Z) Updated metric scope, requirement-level PASS/FAIL/UNCLEAR presentation, evidence provenance, documentation, and Python/frontend tests.
 - [ ] Collect a fresh three-tool full campaign, build the dashboard, and validate desktop/mobile behavior and Chapter 5 evidence in Chrome.
 - [ ] Run focused and independent control reviews, fix every substantive finding, run `just ci`, finalize this plan, and remove the completed plan from the repository.
 
@@ -40,6 +40,9 @@ This work does not add cases or weaken any standards oracle. It does not infer a
 
 - Observation: The current corpus has zero preprocess targets, one parse target, four elaborate targets, and seven simulate targets.
   Evidence: The cumulative headline denominators should become 5 for Slang elaborator and 12 each for Icarus and Verilator simulators.
+
+- Observation: The pinned Icarus image needs an explicit stdout destination for bounded preprocessing.
+  Evidence: `iverilog -g2012 -E` attempted to create read-only `a.out`; `iverilog -g2012 -E -o -` emitted the preprocessed source to stdout successfully. Verilator `-E` emitted source directly.
 
 ## Decision Log
 
@@ -198,3 +201,5 @@ In `src/svtorture/evaluator.py`, keep `evaluate(case, tool_id, profile_id, obser
 In the dashboard, consume `MetricPoint.conforming`, `nonconforming`, and `inconclusive` directly. Do not recompute requirement counts from raw results in the component.
 
 Plan revision note (2026-07-21 20:11Z): Created the initial self-contained implementation plan after repository and runtime analysis. It records the user-authorized clean schema break, safe cumulative inference rules, required visual redesign, destructive evidence cleanup, and final review workflow.
+
+Plan revision note (2026-07-21 23:35Z): Recorded completion of the clean contract, runtime, evaluator, metric, dashboard, documentation, and focused test milestones. Added the verified Icarus and Verilator preprocessing command behavior that determined direct-phase metadata.

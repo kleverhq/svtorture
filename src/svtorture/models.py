@@ -23,7 +23,8 @@ STANDARD_ANCHOR_PATTERN = (
 )
 SafeText = Annotated[str, Field(min_length=1, max_length=4096)]
 StandardAnchor = Annotated[str, Field(pattern=STANDARD_ANCHOR_PATTERN)]
-SchemaVersion = Annotated[int, Field(strict=True, ge=1, le=1)]
+MetadataSchemaVersion = Annotated[int, Field(strict=True, ge=1, le=1)]
+ContractSchemaVersion = Annotated[int, Field(strict=True, ge=2, le=2)]
 RequirementSchemaVersion = Annotated[int, Field(strict=True, ge=2, le=2)]
 
 
@@ -52,6 +53,26 @@ class Phase(StrEnum):
     PARSE = "parse"
     ELABORATE = "elaborate"
     SIMULATE = "simulate"
+
+
+PHASE_ORDER = (
+    Phase.PREPROCESS,
+    Phase.PARSE,
+    Phase.ELABORATE,
+    Phase.SIMULATE,
+)
+
+
+def phase_reaches(attempted_through: Phase, target: Phase) -> bool:
+    """Return whether one invocation can attempt the target pipeline phase."""
+
+    return PHASE_ORDER.index(attempted_through) >= PHASE_ORDER.index(target)
+
+
+class EvidenceMode(StrEnum):
+    DIRECT = "direct"
+    CUMULATIVE = "cumulative"
+    NOT_OBSERVED = "not-observed"
 
 
 class Expectation(StrEnum):
@@ -130,6 +151,7 @@ class ReasonCode(StrEnum):
     TOOL_UNAVAILABLE = "tool-unavailable"
     MANIFEST_MISMATCH = "manifest-mismatch"
     OUTPUT_TRUNCATED = "output-truncated"
+    TARGET_PHASE_UNPROVEN = "target-phase-unproven"
     TOOL_PREPARATION_FAILURE = "tool-preparation-failure"
 
 
@@ -303,7 +325,7 @@ class TagDefinition(StrictModel):
 
 
 class TagRegistry(StrictModel):
-    schema_version: SchemaVersion
+    schema_version: MetadataSchemaVersion
     tags: tuple[TagDefinition, ...]
 
     @model_validator(mode="after")
@@ -344,7 +366,7 @@ def safe_relative_path(value: str) -> str:
 
 
 class CaseDefinition(StrictModel):
-    schema_version: SchemaVersion
+    schema_version: MetadataSchemaVersion
     id: str
     title: SafeText
     description: SafeText
@@ -477,7 +499,7 @@ class CaseDefinition(StrictModel):
 
 
 class SuiteDefinition(StrictModel):
-    schema_version: SchemaVersion
+    schema_version: MetadataSchemaVersion
     id: str
     description: SafeText
     cases: tuple[str, ...]
@@ -507,7 +529,8 @@ class SuiteDefinition(StrictModel):
 
 class ToolProfile(StrictModel):
     id: str
-    phases: tuple[Phase, ...]
+    phase_ceiling: Phase
+    direct_phases: tuple[Phase, ...]
     headline: bool = False
     standard_revision: StandardRevision
     effective_language: str = Field(min_length=1, max_length=100)
@@ -520,19 +543,28 @@ class ToolProfile(StrictModel):
         return value
 
     @model_validator(mode="after")
-    def unique_phases(self) -> Self:
-        if not self.phases or len(self.phases) != len(set(self.phases)):
-            raise ValueError("profile phases must be nonempty and unique")
-        allowed = {
-            "parser": {Phase.PREPROCESS, Phase.PARSE},
-            "elaborator": {Phase.PREPROCESS, Phase.PARSE, Phase.ELABORATE},
-            "simulator": set(Phase),
+    def coherent_phase_scope(self) -> Self:
+        expected_ceiling = {
+            "parser": Phase.PARSE,
+            "elaborator": Phase.ELABORATE,
+            "simulator": Phase.SIMULATE,
         }
-        if self.id not in allowed:
+        if self.id not in expected_ceiling:
             raise ValueError("profiles are limited to parser, elaborator, and simulator")
-        if not set(self.phases) <= allowed[self.id]:
-            raise ValueError(f"profile {self.id} declares a phase beyond its scope")
+        if self.phase_ceiling is not expected_ceiling[self.id]:
+            raise ValueError(f"profile {self.id} must end at {expected_ceiling[self.id].value}")
+        if not self.direct_phases or len(self.direct_phases) != len(set(self.direct_phases)):
+            raise ValueError("direct phases must be nonempty and unique")
+        if tuple(sorted(self.direct_phases, key=PHASE_ORDER.index)) != self.direct_phases:
+            raise ValueError("direct phases must follow pipeline order")
+        if any(not phase_reaches(self.phase_ceiling, phase) for phase in self.direct_phases):
+            raise ValueError("direct phase exceeds the profile ceiling")
+        if self.phase_ceiling not in self.direct_phases:
+            raise ValueError("profile ceiling must be directly assessable")
         return self
+
+    def supports(self, target: Phase) -> bool:
+        return phase_reaches(self.phase_ceiling, target)
 
 
 class ToolDefinition(StrictModel):
@@ -603,7 +635,7 @@ class ToolDefinition(StrictModel):
 
 
 class ToolRegistry(StrictModel):
-    schema_version: SchemaVersion
+    schema_version: ContractSchemaVersion
     tools: tuple[ToolDefinition, ...]
 
     @model_validator(mode="after")
@@ -638,7 +670,7 @@ class WrapperDefinition(StrictModel):
 
 
 class PrivateToolConfig(StrictModel):
-    schema_version: SchemaVersion
+    schema_version: MetadataSchemaVersion
     wrappers: tuple[WrapperDefinition, ...]
 
     @model_validator(mode="after")
@@ -696,7 +728,7 @@ class ImageIdentity(StrictModel):
 class ExecutionStage(StrictModel):
     id: str = Field(pattern=r"^[a-z][a-z0-9-]*$")
     kind: StageKind
-    phase: Phase
+    attempted_through_phase: Phase
     argv: tuple[str, ...]
     portable_argv: tuple[str, ...]
     timeout_seconds: int = Field(ge=1, le=300)
@@ -720,10 +752,11 @@ class ExecutionStage(StrictModel):
 
 
 class ExecutionPlan(StrictModel):
-    schema_version: SchemaVersion
+    schema_version: ContractSchemaVersion
     case_id: str
     tool_id: str
     profile_id: str
+    target_phase: Phase
     backend: ExecutionBackend
     image: str | None = None
     wrapper: str | None = None
@@ -744,6 +777,10 @@ class ExecutionPlan(StrictModel):
             raise ValueError("duplicate stage ids")
         if any(stage.kind is StageKind.RUN for stage in self.stages[:-1]):
             raise ValueError("runtime stage must be last")
+        if not any(
+            phase_reaches(stage.attempted_through_phase, self.target_phase) for stage in self.stages
+        ):
+            raise ValueError("execution plan does not attempt the target phase")
         return self
 
 
@@ -773,7 +810,7 @@ class Diagnostic(StrictModel):
 
 class StageObservation(StrictModel):
     stage_id: str
-    phase: Phase
+    attempted_through_phase: Phase
     outcome: RawOutcome
     exit_code: int | None = Field(default=None, ge=0)
     signal: int | None = Field(default=None, ge=1)
@@ -803,11 +840,13 @@ class StageObservation(StrictModel):
 
 
 class NormalizedResult(StrictModel):
-    schema_version: SchemaVersion
+    schema_version: ContractSchemaVersion
     case_id: str
     requirement_id: str
     tool_id: str
     profile_id: str
+    target_phase: Phase
+    evidence_mode: EvidenceMode
     status: ResultStatus
     reason: ReasonCode
     summary: SafeText
@@ -838,6 +877,7 @@ class NormalizedResult(StrictModel):
                 ReasonCode.CRASH,
                 ReasonCode.INTERNAL_ERROR,
                 ReasonCode.OUTPUT_TRUNCATED,
+                ReasonCode.TARGET_PHASE_UNPROVEN,
             },
             ResultStatus.UNSUPPORTED_CAPABILITY: {ReasonCode.UNSUPPORTED_PHASE},
             ResultStatus.UNSUPPORTED_REVISION: {ReasonCode.UNSUPPORTED_REVISION},
@@ -855,6 +895,20 @@ class NormalizedResult(StrictModel):
             raise ValueError(
                 f"reason {self.reason.value} is incoherent with status {self.status.value}"
             )
+        executable = {
+            ResultStatus.CONFORMING,
+            ResultStatus.NONCONFORMING,
+            ResultStatus.INCONCLUSIVE,
+        }
+        if (
+            self.status is ResultStatus.CONFORMING
+            and self.evidence_mode is EvidenceMode.NOT_OBSERVED
+        ):
+            raise ValueError("conformance requires direct or cumulative evidence")
+        if self.status in executable and not self.observations:
+            raise ValueError("an executable judgment requires observations")
+        if not self.observations and self.evidence_mode is not EvidenceMode.NOT_OBSERVED:
+            raise ValueError("a result without observations must be not-observed")
         return self
 
 
@@ -959,7 +1013,7 @@ class CampaignTrust(StrictModel):
 
 
 class Campaign(StrictModel):
-    schema_version: SchemaVersion
+    schema_version: ContractSchemaVersion
     id: str = Field(pattern=CAMPAIGN_ID_RE.pattern)
     started_at: datetime
     finished_at: datetime

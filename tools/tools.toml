@@ -1,4 +1,4 @@
-schema_version = 1
+schema_version = 2
 
 [[tools]]
 id = "slang"
@@ -13,8 +13,8 @@ default_branch = "master"
 dockerfile = "tools/slang/Dockerfile"
 image_repository = "svtorture/slang"
 profiles = [
-  { id = "parser", phases = ["preprocess", "parse"], headline = false, standard_revision = "1800-2023", effective_language = "IEEE 1800-2023 (--std=1800-2023)" },
-  { id = "elaborator", phases = ["preprocess", "parse", "elaborate"], headline = true, standard_revision = "1800-2023", effective_language = "IEEE 1800-2023 (--std=1800-2023)" },
+  { id = "parser", phase_ceiling = "parse", direct_phases = ["preprocess", "parse"], headline = false, standard_revision = "1800-2023", effective_language = "IEEE 1800-2023 (--std=1800-2023)" },
+  { id = "elaborator", phase_ceiling = "elaborate", direct_phases = ["preprocess", "parse", "elaborate"], headline = true, standard_revision = "1800-2023", effective_language = "IEEE 1800-2023 (--std=1800-2023)" },
 ]
 
 [[tools]]
@@ -30,8 +30,8 @@ default_branch = "master"
 dockerfile = "tools/icarus/Dockerfile"
 image_repository = "svtorture/icarus"
 profiles = [
-  { id = "elaborator", phases = ["elaborate"], headline = false, standard_revision = "1800-2012", effective_language = "IEEE 1800-2012 (-g2012)" },
-  { id = "simulator", phases = ["elaborate", "simulate"], headline = true, standard_revision = "1800-2012", effective_language = "IEEE 1800-2012 (-g2012)" },
+  { id = "elaborator", phase_ceiling = "elaborate", direct_phases = ["preprocess", "elaborate"], headline = false, standard_revision = "1800-2012", effective_language = "IEEE 1800-2012 (-g2012)" },
+  { id = "simulator", phase_ceiling = "simulate", direct_phases = ["preprocess", "elaborate", "simulate"], headline = true, standard_revision = "1800-2012", effective_language = "IEEE 1800-2012 (-g2012)" },
 ]
 
 [[tools]]
@@ -47,8 +47,8 @@ default_branch = "master"
 dockerfile = "tools/verilator/Dockerfile"
 image_repository = "svtorture/verilator"
 profiles = [
-  { id = "elaborator", phases = ["elaborate"], headline = false, standard_revision = "1800-2023", effective_language = "IEEE 1800-2023 (--language 1800-2023)" },
-  { id = "simulator", phases = ["elaborate", "simulate"], headline = true, standard_revision = "1800-2023", effective_language = "IEEE 1800-2023 (--language 1800-2023)" },
+  { id = "elaborator", phase_ceiling = "elaborate", direct_phases = ["preprocess", "elaborate"], headline = false, standard_revision = "1800-2023", effective_language = "IEEE 1800-2023 (--language 1800-2023)" },
+  { id = "simulator", phase_ceiling = "simulate", direct_phases = ["preprocess", "elaborate", "simulate"], headline = true, standard_revision = "1800-2023", effective_language = "IEEE 1800-2023 (--language 1800-2023)" },
 ]
 
 [[tools]]
@@ -60,8 +60,8 @@ execution = "local-wrapper"
 ci = false
 publish = false
 profiles = [
-  { id = "elaborator", phases = ["elaborate"], headline = false, standard_revision = "1800-2017", effective_language = "SystemVerilog (-sverilog), wrapper-defined licensed image" },
-  { id = "simulator", phases = ["elaborate", "simulate"], headline = true, standard_revision = "1800-2017", effective_language = "SystemVerilog (-sverilog), wrapper-defined licensed image" },
+  { id = "elaborator", phase_ceiling = "elaborate", direct_phases = ["elaborate"], headline = false, standard_revision = "1800-2017", effective_language = "SystemVerilog (-sverilog), wrapper-defined licensed image" },
+  { id = "simulator", phase_ceiling = "simulate", direct_phases = ["elaborate", "simulate"], headline = true, standard_revision = "1800-2017", effective_language = "SystemVerilog (-sverilog), wrapper-defined licensed image" },
 ]
 
 [[tools]]
@@ -76,5 +76,5 @@ dockerfile = "tools/fake-tool/Dockerfile"
 recipe_files = ["tools/fake-tool/fake_tool.py"]
 image_repository = "svtorture/fake-tool"
 profiles = [
-  { id = "simulator", phases = ["preprocess", "parse", "elaborate", "simulate"], headline = true, standard_revision = "1800-2023", effective_language = "deterministic test protocol v1" },
+  { id = "simulator", phase_ceiling = "simulate", direct_phases = ["preprocess", "parse", "elaborate", "simulate"], headline = true, standard_revision = "1800-2023", effective_language = "deterministic test protocol v2" },
 ]

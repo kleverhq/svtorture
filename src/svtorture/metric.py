@@ -30,7 +30,7 @@ def compute_metric(
         definition = loaded.definition
         requirement = catalog.requirements[definition.primary_requirement]
         if (
-            definition.target_phase in profile.phases
+            profile.supports(definition.target_phase)
             and definition.evidence is EvidenceLevel.MANDATORY
             and definition.revision_applicability[profile.standard_revision]
             in {

@@ -1,10 +1,13 @@
 from __future__ import annotations
 
+from dataclasses import replace
+
 import pytest
 
 from svtorture.catalog import Catalog
 from svtorture.evaluator import evaluate, exit_code_for_results, synthetic_result
 from svtorture.models import (
+    EvidenceMode,
     Phase,
     RawOutcome,
     ReasonCode,
@@ -52,7 +55,7 @@ def test_operational_failure_never_satisfies_negative_case(
         "parser",
         (
             observation(
-                phase=Phase.PARSE,
+                attempted_through_phase=Phase.PARSE,
                 outcome=outcome,
                 exit_code=None,
                 signal=signal,
@@ -71,7 +74,7 @@ def test_internal_error_never_satisfies_negative_case(catalog: Catalog) -> None:
         "parser",
         (
             observation(
-                phase=Phase.PARSE,
+                attempted_through_phase=Phase.PARSE,
                 exit_code=1,
                 diagnostics=(targeted(case),),
                 internal_error=True,
@@ -95,7 +98,7 @@ def test_wrong_diagnostic_location_is_not_a_negative_pass(
         "parser",
         (
             observation(
-                phase=Phase.PARSE,
+                attempted_through_phase=Phase.PARSE,
                 exit_code=1,
                 diagnostics=(targeted(case, line_offset=line_offset),),
             ),
@@ -113,7 +116,7 @@ def test_unrelated_error_is_not_a_negative_pass(catalog: Catalog) -> None:
         case,
         "tool",
         "parser",
-        (observation(phase=Phase.PARSE, exit_code=1, stderr="unparsed failure"),),
+        (observation(attempted_through_phase=Phase.PARSE, exit_code=1, stderr="unparsed failure"),),
     )
     assert (result.status, result.reason) == (
         ResultStatus.INCONCLUSIVE,
@@ -129,13 +132,79 @@ def test_targeted_rejection_conforms(catalog: Catalog) -> None:
         "parser",
         (
             observation(
-                phase=Phase.PARSE,
+                attempted_through_phase=Phase.PARSE,
                 exit_code=1,
                 diagnostics=(targeted(case),),
             ),
         ),
     )
     assert result.status is ResultStatus.CONFORMING
+    assert result.evidence_mode is EvidenceMode.DIRECT
+
+
+def test_targeted_cumulative_rejection_conforms(catalog: Catalog) -> None:
+    case = catalog.cases["ch05-base-format-whitespace-rejected"]
+    result = evaluate(
+        case,
+        "tool",
+        "simulator",
+        (
+            observation(
+                attempted_through_phase=Phase.ELABORATE,
+                exit_code=1,
+                diagnostics=(targeted(case),),
+            ),
+        ),
+    )
+    assert (result.status, result.evidence_mode) == (
+        ResultStatus.CONFORMING,
+        EvidenceMode.CUMULATIVE,
+    )
+
+
+def test_later_success_proves_earlier_acceptance(catalog: Catalog) -> None:
+    original = catalog.cases["ch22-include-trailing-comment"]
+    case = replace(
+        original,
+        definition=original.definition.model_copy(update={"target_phase": Phase.PARSE}),
+    )
+    result = evaluate(
+        case,
+        "tool",
+        "simulator",
+        (observation(attempted_through_phase=Phase.ELABORATE),),
+    )
+    assert (result.status, result.evidence_mode) == (
+        ResultStatus.CONFORMING,
+        EvidenceMode.CUMULATIVE,
+    )
+
+
+def test_unrelated_later_failure_does_not_fail_earlier_acceptance(
+    catalog: Catalog,
+) -> None:
+    original = catalog.cases["ch22-include-trailing-comment"]
+    case = replace(
+        original,
+        definition=original.definition.model_copy(update={"target_phase": Phase.PARSE}),
+    )
+    result = evaluate(
+        case,
+        "tool",
+        "simulator",
+        (
+            observation(
+                attempted_through_phase=Phase.ELABORATE,
+                exit_code=1,
+                stderr="unrelated elaboration failure",
+            ),
+        ),
+    )
+    assert (result.status, result.reason, result.evidence_mode) == (
+        ResultStatus.INCONCLUSIVE,
+        ReasonCode.TARGET_PHASE_UNPROVEN,
+        EvidenceMode.CUMULATIVE,
+    )
 
 
 def test_success_without_runtime_marker_fails(catalog: Catalog) -> None:
@@ -144,7 +213,7 @@ def test_success_without_runtime_marker_fails(catalog: Catalog) -> None:
         case,
         "tool",
         "simulator",
-        (observation(phase=Phase.SIMULATE, exit_code=0),),
+        (observation(attempted_through_phase=Phase.SIMULATE, exit_code=0),),
     )
     assert (result.status, result.reason) == (
         ResultStatus.NONCONFORMING,
@@ -162,7 +231,7 @@ def test_runtime_marker_must_be_a_complete_output_line(catalog: Catalog) -> None
         "simulator",
         (
             observation(
-                phase=Phase.SIMULATE,
+                attempted_through_phase=Phase.SIMULATE,
                 exit_code=0,
                 stdout=f"prefix-{marker}-suffix",
             ),
@@ -183,7 +252,7 @@ def test_pass_marker_with_nonzero_status_fails(catalog: Catalog) -> None:
         "simulator",
         (
             observation(
-                phase=Phase.SIMULATE,
+                attempted_through_phase=Phase.SIMULATE,
                 exit_code=1,
                 stdout=case.definition.oracle.marker,
             ),
@@ -203,7 +272,7 @@ def test_wrong_runtime_value_ending_in_fatal_fails(catalog: Catalog) -> None:
         "simulator",
         (
             observation(
-                phase=Phase.SIMULATE,
+                attempted_through_phase=Phase.SIMULATE,
                 exit_code=1,
                 stderr="FATAL: wrong value",
             ),
@@ -223,7 +292,7 @@ def test_multiple_runtime_markers_fail(catalog: Catalog) -> None:
         case,
         "tool",
         "simulator",
-        (observation(phase=Phase.SIMULATE, stdout=f"{marker}\n{marker}\n"),),
+        (observation(attempted_through_phase=Phase.SIMULATE, stdout=f"{marker}\n{marker}\n"),),
     )
     assert result.reason is ReasonCode.MULTIPLE_PASS_MARKERS
 
@@ -238,7 +307,7 @@ def test_truncated_output_cannot_hide_a_second_runtime_marker(catalog: Catalog) 
         "simulator",
         (
             observation(
-                phase=Phase.SIMULATE,
+                attempted_through_phase=Phase.SIMULATE,
                 stdout=marker,
                 stdout_truncated=True,
             ),
@@ -254,13 +323,17 @@ def test_exit_policies_keep_conformance_separate_from_infrastructure(
     catalog: Catalog,
 ) -> None:
     case = catalog.cases["ch04-nba-rhs-captured"]
-    nonconforming = synthetic_result(
+    nonconforming = evaluate(
         case,
         "tool",
         "simulator",
-        ResultStatus.NONCONFORMING,
-        ReasonCode.WRONG_RUNTIME_RESULT,
-        "wrong result",
+        (
+            observation(
+                attempted_through_phase=Phase.SIMULATE,
+                exit_code=1,
+                stderr="FATAL: wrong value",
+            ),
+        ),
     )
     harness = synthetic_result(
         case,

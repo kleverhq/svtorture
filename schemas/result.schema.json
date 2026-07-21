@@ -123,6 +123,15 @@
       "title": "EvidenceLevel",
       "type": "string"
     },
+    "EvidenceMode": {
+      "enum": [
+        "direct",
+        "cumulative",
+        "not-observed"
+      ],
+      "title": "EvidenceMode",
+      "type": "string"
+    },
     "Phase": {
       "enum": [
         "preprocess",
@@ -169,6 +178,7 @@
         "tool-unavailable",
         "manifest-mismatch",
         "output-truncated",
+        "target-phase-unproven",
         "tool-preparation-failure"
       ],
       "title": "ReasonCode",
@@ -202,6 +212,9 @@
           ],
           "default": null,
           "title": "Artifact Present"
+        },
+        "attempted_through_phase": {
+          "$ref": "#/$defs/Phase"
         },
         "diagnostics": {
           "default": [],
@@ -237,9 +250,6 @@
         "outcome": {
           "$ref": "#/$defs/RawOutcome"
         },
-        "phase": {
-          "$ref": "#/$defs/Phase"
-        },
         "portable_argv": {
           "items": {
             "type": "string"
@@ -273,7 +283,7 @@
       },
       "required": [
         "stage_id",
-        "phase",
+        "attempted_through_phase",
         "outcome",
         "duration_seconds",
         "stdout",
@@ -292,6 +302,9 @@
     },
     "evidence": {
       "$ref": "#/$defs/EvidenceLevel"
+    },
+    "evidence_mode": {
+      "$ref": "#/$defs/EvidenceMode"
     },
     "known_issue": {
       "anyOf": [
@@ -339,8 +352,8 @@
       "type": "string"
     },
     "schema_version": {
-      "maximum": 1,
-      "minimum": 1,
+      "maximum": 2,
+      "minimum": 2,
       "title": "Schema Version",
       "type": "integer"
     },
@@ -353,6 +366,9 @@
       "title": "Summary",
       "type": "string"
     },
+    "target_phase": {
+      "$ref": "#/$defs/Phase"
+    },
     "tool_id": {
       "title": "Tool Id",
       "type": "string"
@@ -364,6 +380,8 @@
     "requirement_id",
     "tool_id",
     "profile_id",
+    "target_phase",
+    "evidence_mode",
     "status",
     "reason",
     "summary",

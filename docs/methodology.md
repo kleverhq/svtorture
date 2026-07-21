@@ -18,12 +18,22 @@ case but never define its oracle.
 
 ## Judgment
 
-The target phase is exact. Parse success does not stand in for elaboration, and
-elaboration does not stand in for simulation.
+The pipeline is cumulative: `simulate` reaches `elaborate`, which reaches
+`parse`, which reaches `preprocess`. A tool profile declares its latest reachable
+`phase_ceiling` and the phases for which its adapter has independently bounded
+`direct_phases`. The case oracle still names one exact target.
 
-- Static acceptance requires a zero exit at the declared target phase.
+Evidence is **direct** when the command stops at that target and **cumulative**
+when a later-capable command proves the target oracle. A successful later command
+proves earlier acceptance. A nonzero later command proves an earlier rejection or
+required diagnostic only when normalized evidence identifies the unique case
+anchor. An unrelated later failure is inconclusive because it does not establish
+which phase rejected the source.
+
+- Static acceptance requires a zero exit from a command that reaches the target.
 - Simulation acceptance requires a zero runtime exit and exactly one
-  `SVTORTURE_PASS:<case-id>` after all self-checks.
+  `SVTORTURE_PASS:<case-id>` after all self-checks; compilation never substitutes
+  for runtime evidence.
 - Rejection requires a nonzero exit plus normalized evidence at the unique
   diagnostic anchor, or a separately reviewed adapter fallback for a tool that
   omits locations.
@@ -46,15 +56,16 @@ cases or tags:
 ```text
 applicable requirements whose selected mandatory variants all conform
 ----------------------------------------------------------------------
-applicable requirements with selected cases in the profile phase scope
+applicable requirements with selected cases at or below the profile phase ceiling
 ```
 
 Requirement coverage is computed from current case mappings; it is not stored in
 the requirement catalog. Exploratory cases do not score. A requirement is
-counted once even with several variants. Nonconforming, inconclusive,
-unsupported, absent, crashed, or timed-out evidence does not enter the
-numerator. Not-applicable requirements are excluded. Any harness error
-invalidates the profile metric.
+counted once even with several variants. Nonconforming and inconclusive
+requirements remain in the denominator but do not enter the numerator;
+inconclusive evidence is neither Pass nor Fail and is presented as Unclear.
+Unsupported, absent, and not-applicable requirements do not become verified.
+Any harness error invalidates the profile metric.
 
 Every displayed point includes numerator, denominator, revision, profile,
 corpus manifest, completeness, exact tool commit/tags/version, image digest,

@@ -6,12 +6,14 @@ import shlex
 
 from svtorture.catalog import LoadedCase
 from svtorture.models import (
+    EvidenceMode,
     Expectation,
     NormalizedResult,
     RawOutcome,
     ReasonCode,
     ResultStatus,
     StageObservation,
+    phase_reaches,
 )
 
 
@@ -24,16 +26,47 @@ def synthetic_result(
     summary: str,
 ) -> NormalizedResult:
     return NormalizedResult(
-        schema_version=1,
+        schema_version=2,
         case_id=case.definition.id,
         requirement_id=case.definition.primary_requirement,
         tool_id=tool_id,
         profile_id=profile_id,
+        target_phase=case.definition.target_phase,
+        evidence_mode=EvidenceMode.NOT_OBSERVED,
         status=status,
         reason=reason,
         summary=summary,
         evidence=case.definition.evidence,
     )
+
+
+def _target_observation(
+    case: LoadedCase,
+    observations: tuple[StageObservation, ...],
+) -> StageObservation | None:
+    return next(
+        (
+            observation
+            for observation in observations
+            if phase_reaches(
+                observation.attempted_through_phase,
+                case.definition.target_phase,
+            )
+        ),
+        None,
+    )
+
+
+def _evidence_mode(
+    case: LoadedCase,
+    observations: tuple[StageObservation, ...],
+) -> EvidenceMode:
+    target = _target_observation(case, observations)
+    if target is None:
+        return EvidenceMode.NOT_OBSERVED
+    if target.attempted_through_phase is case.definition.target_phase:
+        return EvidenceMode.DIRECT
+    return EvidenceMode.CUMULATIVE
 
 
 def _result(
@@ -49,11 +82,13 @@ def _result(
     if observations:
         reproduction = " ".join(shlex.quote(item) for item in observations[-1].portable_argv)
     return NormalizedResult(
-        schema_version=1,
+        schema_version=2,
         case_id=case.definition.id,
         requirement_id=case.definition.primary_requirement,
         tool_id=tool_id,
         profile_id=profile_id,
+        target_phase=case.definition.target_phase,
+        evidence_mode=_evidence_mode(case, observations),
         status=status,
         reason=reason,
         summary=summary,
@@ -179,7 +214,15 @@ def evaluate(
     if operational is not None:
         return operational
     for observation in observations:
-        if observation.artifact_present is False and observation.exit_code == 0:
+        missing_required_target_artifact = (
+            observation.artifact_present is False
+            and observation.exit_code == 0
+            and (
+                case.definition.target_phase.value == "simulate"
+                or observation.attempted_through_phase is case.definition.target_phase
+            )
+        )
+        if missing_required_target_artifact:
             return _result(
                 case,
                 tool_id,
@@ -190,10 +233,7 @@ def evaluate(
                 observations,
             )
 
-    target = next(
-        (item for item in reversed(observations) if item.phase is case.definition.target_phase),
-        None,
-    )
+    target = _target_observation(case, observations)
     if target is None:
         return _result(
             case,
@@ -205,6 +245,7 @@ def evaluate(
             observations,
         )
     assert target.exit_code is not None
+    cumulative = target.attempted_through_phase is not case.definition.target_phase
 
     if case.definition.expectation is Expectation.REJECT:
         if target.exit_code == 0:
@@ -249,6 +290,16 @@ def evaluate(
                 if target.diagnostics
                 else ReasonCode.MISSING_DIAGNOSTIC
             )
+            if cumulative and target.exit_code != 0:
+                return _result(
+                    case,
+                    tool_id,
+                    profile_id,
+                    ResultStatus.INCONCLUSIVE,
+                    ReasonCode.TARGET_PHASE_UNPROVEN,
+                    "A later-capable command failed without proving the target diagnostic.",
+                    observations,
+                )
             return _result(
                 case,
                 tool_id,
@@ -293,7 +344,21 @@ def evaluate(
                 profile_id,
                 ResultStatus.CONFORMING,
                 ReasonCode.EXPECTATION_MET,
-                "The target phase accepted the case.",
+                (
+                    "A later-capable command accepted the case through the target phase."
+                    if cumulative
+                    else "The target phase accepted the case."
+                ),
+                observations,
+            )
+        if cumulative:
+            return _result(
+                case,
+                tool_id,
+                profile_id,
+                ResultStatus.INCONCLUSIVE,
+                ReasonCode.TARGET_PHASE_UNPROVEN,
+                "A later-capable command failed without proving rejection at the target phase.",
                 observations,
             )
         return _result(

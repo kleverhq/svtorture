@@ -29,6 +29,7 @@ from svtorture.models import (
     Campaign,
     CampaignTool,
     CampaignTrust,
+    ExecutionPlan,
     ImageIdentity,
     ManifestHashes,
     NormalizedResult,
@@ -40,6 +41,7 @@ from svtorture.models import (
     ToolSelection,
     WrapperDefinition,
     model_to_jsonable,
+    phase_reaches,
 )
 from svtorture.process import run_process
 
@@ -48,7 +50,7 @@ class CampaignError(RuntimeError):
     pass
 
 
-AGGREGATION_CONTRACT_VERSION = 3
+AGGREGATION_CONTRACT_VERSION = 4
 
 
 @dataclass(frozen=True)
@@ -185,7 +187,7 @@ def report_wrapper_version(
     request_path.write_text(
         json.dumps(
             {
-                "schema_version": 1,
+                "schema_version": 2,
                 "kind": "version",
                 "tool": tool_id,
                 "argv": list(version_argv),
@@ -271,6 +273,20 @@ def _campaign_tools(prepared: tuple[PreparedTool, ...]) -> tuple[CampaignTool, .
     return tuple(result)
 
 
+def _validate_plan_phase_evidence(
+    plan: ExecutionPlan,
+    profile: ToolProfile,
+) -> None:
+    covering = next(
+        stage
+        for stage in plan.stages
+        if phase_reaches(stage.attempted_through_phase, plan.target_phase)
+    )
+    direct = covering.attempted_through_phase is plan.target_phase
+    if direct != (plan.target_phase in profile.direct_phases):
+        raise ValueError("execution plan contradicts the profile's direct phase metadata")
+
+
 def run_campaign(
     catalog: Catalog,
     prepared: tuple[PreparedTool, ...],
@@ -318,7 +334,7 @@ def run_campaign(
             case_number += 1
             if progress is not None:
                 progress(case_number, total_cases, tool.id, profile.id, case.id)
-            if case.target_phase not in profile.phases:
+            if not profile.supports(case.target_phase):
                 results.append(
                     synthetic_result(
                         loaded,
@@ -327,7 +343,7 @@ def run_campaign(
                         ResultStatus.UNSUPPORTED_CAPABILITY,
                         ReasonCode.UNSUPPORTED_PHASE,
                         (
-                            f"{tool.display_name}/{profile.id} does not implement "
+                            f"{tool.display_name}/{profile.id} cannot reach "
                             f"{case.target_phase.value}."
                         ),
                     )
@@ -392,6 +408,7 @@ def run_campaign(
                     image=image_reference,
                     wrapper=wrapper_reference,
                 )
+                _validate_plan_phase_evidence(plan, profile)
                 observations = execute_plan(
                     plan,
                     loaded,
@@ -425,7 +442,7 @@ def run_campaign(
         for result in recorded_results
     )
     campaign = Campaign(
-        schema_version=1,
+        schema_version=2,
         id=campaign_id,
         started_at=started,
         finished_at=finished,
@@ -613,7 +630,7 @@ def create_missing_campaign(
         }
     )
     campaign = Campaign(
-        schema_version=1,
+        schema_version=2,
         id=f"{now:%Y%m%dT%H%M%SZ}-missing-{identity_hash[:12]}",
         started_at=now,
         finished_at=now,
@@ -666,7 +683,7 @@ def create_preparation_failure_campaign(
     results: list[NormalizedResult] = []
     for loaded in selected:
         case = loaded.definition
-        if case.target_phase not in profile.phases:
+        if not profile.supports(case.target_phase):
             results.append(
                 synthetic_result(
                     loaded,
@@ -674,10 +691,7 @@ def create_preparation_failure_campaign(
                     profile.id,
                     ResultStatus.UNSUPPORTED_CAPABILITY,
                     ReasonCode.UNSUPPORTED_PHASE,
-                    (
-                        f"{tool.display_name}/{profile.id} does not implement "
-                        f"{case.target_phase.value}."
-                    ),
+                    (f"{tool.display_name}/{profile.id} cannot reach {case.target_phase.value}."),
                 )
             )
             continue
@@ -741,7 +755,7 @@ def create_preparation_failure_campaign(
         }
     )
     campaign = Campaign(
-        schema_version=1,
+        schema_version=2,
         id=f"{now:%Y%m%dT%H%M%SZ}-preparation-{identity_hash[:12]}",
         started_at=now,
         finished_at=now,
@@ -852,7 +866,7 @@ def aggregate_campaigns(
     aggregate_id = f"{finished:%Y%m%dT%H%M%SZ}-aggregate-{identity_hash[:12]}"
     aggregate_results = _attach_reproduction(results, aggregate_id, trust)
     aggregate = Campaign(
-        schema_version=1,
+        schema_version=2,
         id=aggregate_id,
         started_at=min(item.started_at for item in campaigns),
         finished_at=finished,

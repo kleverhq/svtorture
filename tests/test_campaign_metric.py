@@ -243,7 +243,7 @@ def test_local_aggregate_preserves_the_measured_execution_platform(
                 "simulator",
                 observations=(
                     observation(
-                        phase=Phase.SIMULATE,
+                        attempted_through_phase=Phase.SIMULATE,
                         stdout=marker,
                     ),
                 ),
@@ -297,6 +297,37 @@ def _variant(case: LoadedCase, root: Path) -> LoadedCase:
         anchor_line=None,
         content_sha256="2" * 64,
     )
+
+
+@pytest.mark.parametrize(
+    ("tool_id", "profile_id", "expected"),
+    (
+        ("slang", "elaborator", 5),
+        ("icarus", "simulator", 12),
+        ("verilator", "simulator", 12),
+    ),
+)
+def test_cumulative_phase_scope_sets_headline_denominator(
+    catalog: Catalog,
+    tool_id: str,
+    profile_id: str,
+    expected: int,
+) -> None:
+    cases = tuple(catalog.cases[case_id] for case_id in catalog.suite_cases["all"])
+    tool = campaign_tool(catalog.tools.tool(tool_id), (profile_id,))
+    campaign = make_campaign(
+        catalog,
+        cases=cases,
+        tool=tool,
+        results=tuple(normalized(case, tool_id, profile_id) for case in cases),
+    )
+    metric = compute_metric(
+        catalog,
+        campaign,
+        tool.definition,
+        tool.definition.profile(profile_id),
+    )
+    assert (metric.numerator, metric.denominator) == (expected, expected)
 
 
 def test_multiple_variants_do_not_increase_requirement_weight(
