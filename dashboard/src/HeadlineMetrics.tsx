@@ -158,12 +158,12 @@ export function HeadlineMetrics({
                         ? `${metric.numerator} / ${metric.denominator}`
                         : "Unavailable"}
                     </strong>
-                    <span>
-                      {metric.valid
-                        ? `${percentage.toFixed(0)}% of IEEE ${metric.revision}`
-                        : `Not scored · ${metric.infrastructure_state || metric.label}`}
-                    </span>
                   </div>
+                  <span className="tool-metric__coverage">
+                    {metric.valid
+                      ? `${percentage.toFixed(0)}% of IEEE ${metric.revision} registered requirements`
+                      : `Not scored · ${metric.infrastructure_state || metric.label}`}
+                  </span>
                 </article>
               );
             })}

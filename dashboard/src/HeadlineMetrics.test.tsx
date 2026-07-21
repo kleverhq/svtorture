@@ -94,7 +94,9 @@ describe("HeadlineMetrics", () => {
     expect(unavailable.parentElement?.classList).toContain(
       "tool-metric__score--unavailable",
     );
-    expect(screen.getByText("Not scored · harness errors present")).toBeTruthy();
+    expect(
+      screen.getByText("Not scored · harness errors present").classList,
+    ).toContain("tool-metric__coverage");
     expect(document.querySelector(".meter")).toBeNull();
 
     metric.valid = true;
@@ -106,7 +108,9 @@ describe("HeadlineMetrics", () => {
     expect(score.parentElement?.classList).not.toContain(
       "tool-metric__score--unavailable",
     );
-    expect(screen.getByText("91% of IEEE 1800-2023")).toBeTruthy();
+    expect(
+      screen.getByText("91% of IEEE 1800-2023 registered requirements").classList,
+    ).toContain("tool-metric__coverage");
     expect(screen.queryByText(/Not scored/)).toBeNull();
   });
 
