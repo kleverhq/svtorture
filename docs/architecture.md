@@ -3,8 +3,14 @@
 SVTORTURE keeps the units of evidence distinct:
 
 ```text
+licensed IEEE PDF (local path or CI secret URL)
+          │ optional authoring path
+          ▼
+standards/ieee-1800-2023-annotate/annotate.py
+          │ materializes ignored TXT + anchors.json
+          ▼ explicit annotate-update-anchors
 standards/ieee-1800-2023-anchors.json
-          │ validates citations
+          │ validates citations at runtime
           ▼
 standards/index.toml + requirements/chapter-NN.toml
           │
@@ -28,11 +34,12 @@ tools/tools.toml ───────► adapter ──► typed ExecutionPlan
 ```
 
 `models.py` defines strict, frozen, unknown-field-rejecting public models.
-`catalog.py` validates requirement citations against the vendored anchor index,
+`catalog.py` validates requirement citations against the committed anchor index,
 then validates cross-references, safe paths, diagnostic anchors, marker
-uniqueness, source hashes, and the seed-corpus composition. The optional
-annotated-standard submodule is an authoring source and is not in this runtime
-data flow. Adapters only declare commands
+uniqueness, source hashes, and the seed-corpus composition. The source under
+`standards/ieee-1800-2023-annotate/` materializes that index from a user-supplied
+PDF, but neither the annotator nor its generated text is in this runtime data
+flow. Adapters only declare commands
 and diagnostic normalization. `executor.py` runs argv arrays in isolated work
 directories and records bounded excerpts plus full-stream hashes. `evaluator.py`
 alone compares observations to the case oracle.

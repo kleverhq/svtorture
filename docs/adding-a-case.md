@@ -8,13 +8,14 @@ path.
 ## 1. Map the requirement
 
 Add or reuse one entry in `standards/requirements/chapter-NN.toml`. When adding
-or revising that requirement, initialize `standards/ieee-1800-2023-annotated/`
-and derive the expected rule from its matching `txt/NN.txt` blocks. The entry
-needs one stable ID, the 2023 chapter/clause, a nonempty `anchors` list, related
-clauses, controlled tags, and a rule for every supported revision. Use complete
-values from `standards/ieee-1800-2023-anchors.json`, with the declared clause's
-main anchor first and any supporting blocks after it. If a cited block has a
-visual-review marker, inspect its pinned PDF page before defining the oracle.
+or revising that requirement, configure the PDF path as described in
+`annotation.md`, run `just annotate`, and derive the expected rule from the
+matching generated `txt/NN.txt` blocks. The entry needs one stable ID, the 2023
+chapter/clause, a nonempty `anchors` list, related clauses, controlled tags, and
+a rule for every supported revision. Use complete values from
+`standards/ieee-1800-2023-anchors.json`, with the declared clause's main anchor
+first and any supporting blocks after it. If a cited block has a visual-review
+marker, inspect its PDF page before defining the oracle.
 Add a new chapter to `standards/index.toml`.
 Requirements in this inventory are normative and testable in principle by
 definition. Coverage is derived from case mappings rather than stored.

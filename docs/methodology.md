@@ -2,12 +2,13 @@
 
 ## Authority and revision
 
-IEEE Std 1800-2023 is the active authority. Requirement authoring uses the
-optional repository-pinned `standards/ieee-1800-2023-annotated/` corpus.
+IEEE Std 1800-2023 is the active authority. Requirement authors use the
+repository-owned annotator to materialize a local corpus from their PDF.
 Requirement records identify a clause and a nonempty list of complete corpus
 anchors; the first anchor cites the declared clause and later anchors support
 rules that span blocks. Catalog loading verifies every citation against the
-vendored `standards/ieee-1800-2023-anchors.json` without requiring the submodule.
+committed `standards/ieee-1800-2023-anchors.json` without requiring the PDF or
+generated corpus.
 Cases identify one primary normative requirement. Applicability to 1800-2012,
 1800-2017, and 1800-2023 is explicit and complete.
 

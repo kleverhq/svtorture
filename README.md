@@ -11,13 +11,14 @@ standards → cases → suites → tools → campaigns → dashboard
 ```
 
 Start with `just setup`, then use `just smoke` for the fast local gate or
-`just ci` for the complete integration gate. The annotated-standard submodule is
-optional and needed only when authoring requirements. The root `justfile` lists
+`just ci` for the complete integration gate. PDF annotation is optional and
+needed only when authoring requirements. The root `justfile` lists annotation,
 campaign, reproduction, schema, and dashboard entrypoints.
 
 Documentation:
 
 - [Architecture and data flow](docs/architecture.md)
+- [IEEE 1800-2023 annotation](docs/annotation.md)
 - [Conformance methodology and metric](docs/methodology.md)
 - [Adding a case](docs/adding-a-case.md)
 - [Adding a tool](docs/adding-a-tool.md)

@@ -1,5 +1,9 @@
 # Adopt the pinned annotated IEEE 1800-2023 corpus
 
+> Historical plan: the submodule design described here was superseded by
+> `integrate-standard-annotator.md`. Current behavior is documented in
+> `../annotation.md`.
+
 This ExecPlan is a living document. The sections `Progress`, `Surprises & Discoveries`, `Decision Log`, and `Outcomes & Retrospective` must be kept up to date as work proceeds.
 
 This document must be maintained in accordance with the `exec-plan` skill.
@@ -10,7 +14,7 @@ After this change, every requirement cites one or more stable anchors from the r
 
 ## Non-Goals
 
-This change does not rewrite case stimuli or oracles, change historical 2012/2017 applicability judgments, edit the annotated corpus, or add a second standards extraction mechanism. The parent repository only pins and consumes the external corpus.
+This change does not rewrite case stimuli or oracles, change historical 2012/2017 applicability judgments, edit the annotated corpus, or add a second standards annotation mechanism. The parent repository only pins and consumes the external corpus.
 
 ## Progress
 
@@ -80,7 +84,7 @@ In `src/svtorture/catalog.py`, load the vendored `standards/ieee-1800-2023-ancho
 
 Migrate each chapter TOML to exact complete anchor strings. Most requirements need one anchor; addition width, output copy-out, and package import need supporting anchors because their tested behavior combines rules. Change the addition requirement's active clause and 2023 applicability clause to `11.6`; do not speculate about or alter historical revision clauses.
 
-Update dashboard search, display, TypeScript types, and fixtures to consume `anchors`. Regenerate both requirement schemas through `just schemas`. Update `standards/AGENTS.md`, contributor documentation, architecture text, and root setup guidance so future interpretation starts from the pinned annotated corpus and complete anchors. Do not duplicate extracted standard prose in parent-repository docs.
+Update dashboard search, display, TypeScript types, and fixtures to consume `anchors`. Regenerate both requirement schemas through `just schemas`. Update `standards/AGENTS.md`, contributor documentation, architecture text, and root setup guidance so future interpretation starts from the pinned annotated corpus and complete anchors. Do not duplicate annotated standard prose in parent-repository docs.
 
 ### Concrete Steps
 

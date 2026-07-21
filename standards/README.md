@@ -1,19 +1,17 @@
 # Standards catalog
 
-`ieee-1800-2023-anchors.json` is the vendored runtime index used to validate
+`ieee-1800-2023-anchors.json` is the committed runtime index used to validate
 requirement citations. `index.toml` lists maintained chapters, `requirements/`
 stores one requirement document per chapter, and `tags.toml` defines the shared
 vocabulary used by requirements and cases. Normal setup, validation, execution,
-and publication do not require the annotated-standard submodule.
+and publication need neither a PDF nor generated standard text.
 
-When adding or revising a requirement, initialize the authoring corpus with:
+`ieee-1800-2023-annotate/` contains the repository-owned annotator. When adding
+or revising a requirement, configure `.env.local` and run `just annotate` to
+materialize the ignored corpus. Read the matching generated `txt/NN.txt` blocks
+and inspect the PDF for any visual-review marker. Use complete anchors from the
+committed index. If an intentional annotator change modifies the index, run
+`just annotate-update-anchors` and commit the result.
 
-```text
-git submodule update --init standards/ieee-1800-2023-annotated
-```
-
-Read the matching `txt/NN.txt` blocks and inspect the pinned PDF for any
-visual-review marker. Requirement `anchors` must be complete values from the
-vendored index. When the submodule is initialized, pre-commit verifies that its
-`anchors.json` is byte-for-byte identical to the vendored copy. Do not edit
-submodule contents from this repository.
+See `../docs/annotation.md` for prerequisites, targets, verification, and CI
+behavior.

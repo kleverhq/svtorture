@@ -18,11 +18,11 @@ This change does not commit an IEEE PDF or generated annotated TXT files. It doe
 
 - [x] (2026-07-21 07:13Z) Updated the existing submodule from `e63112d2a9dfb4586d0e33769721238c8c619ece` to latest `master` commit `67747e5a11a1772b9006288a88fc1786868422d6` and inspected every tracked source category.
 - [x] (2026-07-21 07:13Z) Confirmed the local reference PDF at `/home/esynr3z/.pi/agent/skills/systemverilog/references/IEEE-1800-2023.pdf` has the expected SHA-256 `203fbcccbbae90cef401a3acd31835c8cd1507e8f12b2e069046d4f316e317c9`, and confirmed local Poppler `pdftohtml` is version 24.02.0.
-- [x] (2026-07-21 07:13Z) Resolved product decisions: Poppler is a documented system dependency and an apt dependency in CI; anchor updates use a separate `just` target; extraction terminology becomes annotation terminology throughout.
-- [ ] Import the latest annotator source into `standards/ieee-1800-2023-annotate/`, remove the submodule, and rename terminology and code consistently.
-- [ ] Add ignored local environment configuration, root `just` targets, integrated tests, and conditional CI anchor verification.
-- [ ] Replace annotator development documentation with `docs/annotation.md`, simplify its local README, and update adjacent architecture and workflow documents.
-- [ ] Materialize from the reference PDF, prove byte identity or intentionally update the committed index, run all gates, review the consolidated diff, fix findings, and commit the completed integration.
+- [x] (2026-07-21 07:13Z) Resolved product decisions: Poppler is a documented system dependency and an apt dependency in CI; anchor updates use a separate `just` target; legacy terminology becomes annotation terminology throughout.
+- [x] (2026-07-21 07:18Z) Imported the latest annotator source into `standards/ieee-1800-2023-annotate/`, removed the submodule and `.gitmodules`, and renamed terminology and code consistently.
+- [x] (2026-07-21 07:21Z) Added ignored local environment configuration, root `just` targets, integrated tests, and conditional CI anchor verification.
+- [x] (2026-07-21 07:22Z) Replaced annotator development documentation with `docs/annotation.md`, simplified its local README, and updated adjacent architecture and workflow documents.
+- [ ] Materialize from the reference PDF, prove byte identity, run all gates, review the consolidated diff, fix findings, and commit the completed integration (completed: full materialization, structural verification, and byte comparison; remaining: strict second-pass verification, complete gates, reviews, commits).
 
 ## Surprises & Discoveries
 
@@ -34,6 +34,8 @@ This change does not commit an IEEE PDF or generated annotated TXT files. It doe
   Evidence: SHA-256 is `203fb...e317c9`, PDF size is 9,448,927 bytes with 1,354 physical pages, and `pdftohtml -v` reports 24.02.0.
 - Observation: Generated TXT metadata records the selected PDF path, but generated `anchors.json` records only the source SHA-256 and stable relative TXT paths.
   Evidence: `render()` writes `source=<path>` to each part, while `render_anchors_index()` emits `source_sha256` plus entries such as `txt/04.txt`; therefore byte comparison of the committed index is independent of local PDF path.
+- Observation: Renaming the text-review marker and all annotation terminology does not change the anchor inventory.
+  Evidence: `just annotate-check` generated 58 parts, verified 16,963 anchors and all object/marker counts, and byte-compared the generated index equal to the committed `standards/ieee-1800-2023-anchors.json`.
 
 ## Decision Log
 
@@ -49,8 +51,8 @@ This change does not commit an IEEE PDF or generated annotated TXT files. It doe
 - Decision: Provide `annotate`, `annotate-check`, `annotate-update-anchors`, `annotate-verify`, and `annotator-tests` recipes.
   Rationale: Generation, strict verification, CI comparison, deliberate committed-index update, and source-only tests are distinct actions. In particular, ordinary generation must not silently modify a committed file.
   Date/Author: 2026-07-21 / coding agent.
-- Decision: Rename all legacy extraction terminology in the integrated annotator, including the script and test names, internal identifiers and messages, documentation, generated preamble, and `TEXT_EXTRACTION_REQUIRES_VISUAL_REVIEW` marker.
-  Rationale: The repository presents this as annotation rather than a raw text extractor. Poppler's executable name `pdftohtml` remains unchanged because it is an external program.
+- Decision: Rename all legacy terminology in the integrated annotator, including the script and test names, internal identifiers and messages, documentation, generated preamble, and text-annotation review marker.
+  Rationale: The repository presents a complete annotation pipeline. Poppler's executable name `pdftohtml` remains unchanged because it is an external program.
   Date/Author: 2026-07-21 / coding agent.
 - Decision: Keep Poppler out of `pyproject.toml`; document package installation locally and install Ubuntu's `poppler-utils` only in the conditional CI annotation job.
   Rationale: Poppler is an operating-system program, not a Python package. Normal CI and users who do not annotate must not pay for or require it.
@@ -61,13 +63,13 @@ This change does not commit an IEEE PDF or generated annotated TXT files. It doe
 
 ## Outcomes & Retrospective
 
-Implementation has not started. Completion requires a clean replacement of the gitlink, no tracked PDF or generated TXT, no stale extraction terminology in the integrated annotator, deterministic materialization from the known PDF, a clear conditional-CI failure message, passing repository gates, focused review, and committed results.
+The submodule has been replaced by owned source, local materialization and structural verification pass against the exact reference PDF, and the committed anchor index remains byte-identical. Documentation and CI integration are implemented. Strict second-pass verification, complete repository gates, focused reviews, and final commits remain.
 
 ## Context and Orientation
 
 The root repository is `/home/esynr3z/projects/sv-torture`. `standards/ieee-1800-2023-anchors.json` is a committed machine-readable inventory used by `src/svtorture/catalog.py` to validate every requirement citation. Catalog loading must continue to use only that file. The current optional submodule is at `standards/ieee-1800-2023-annotated`; `.gitmodules` points to a private GitHub repository. Its latest `master` no longer contains generated corpus data.
 
-At commit `67747e5`, the annotator consists of `extract.py`, `verify.py`, `data/recipes.json`, `data/objects.csv`, `tests/test_extract.py`, and two maintenance utilities under `utils/`. `extract.py --all --pdf PDF --output-dir generated/txt` invokes Poppler `pdftohtml` for all 41 clauses and 17 annexes, writes 58 annotated TXT files, and produces `generated/anchors.json`. `verify.py generated/txt --pdf PDF` validates corpus structure and deterministic anchor-index generation; `--check-generated` regenerates each part and compares bytes. `data/recipes.json` carries only structural anchor and review-marker corrections, not copied standard prose. `data/objects.csv` inventories numbered tables, figures, and Syntax objects.
+At commit `67747e5`, the annotator consists of a legacy-named primary script, `verify.py`, `data/recipes.json`, `data/objects.csv`, its primary test, and two maintenance utilities under `utils/`. The primary script's `--all --pdf PDF --output-dir generated/txt` mode invokes Poppler `pdftohtml` for all 41 clauses and 17 annexes, writes 58 annotated TXT files, and produces `generated/anchors.json`. `verify.py generated/txt --pdf PDF` validates corpus structure and deterministic anchor-index generation; `--check-generated` regenerates each part and compares bytes. `data/recipes.json` carries only structural anchor and review-marker corrections, not copied standard prose. `data/objects.csv` inventories numbered tables, figures, and Syntax objects.
 
 The new owned directory is exactly `standards/ieee-1800-2023-annotate/`. Its primary command becomes `annotate.py`; its main test becomes `tests/test_annotate.py`. `DEVELOPMENT.md` is removed. The local `README.md` becomes a short purpose and navigation document pointing to root `docs/annotation.md`, which owns prerequisites, environment setup, pipeline, outputs, anchor and marker conventions, recipe maintenance, verification, utilities, and CI behavior.
 
@@ -79,7 +81,7 @@ There are no unresolved product questions. Target behavior, terminology scope, P
 
 ## Plan of Work
 
-First archive the tracked files from submodule commit `67747e5` into the new owned directory, excluding submodule Git metadata. Remove the old gitlink and `.gitmodules`. Delete imported `DEVELOPMENT.md`. Rename `extract.py` and `tests/test_extract.py` to `annotate.py` and `tests/test_annotate.py`. Update imports, symbols, messages, generated metadata, markers, tests, data recipes, utility source, and utility documentation so the integrated directory has no legacy extract/extraction/extractor terminology. Preserve genuine external names such as `pdftohtml`.
+First archive the tracked files from submodule commit `67747e5` into the new owned directory, excluding submodule Git metadata. Remove the old gitlink and `.gitmodules`. Delete imported `DEVELOPMENT.md`. Rename the primary script and test to `annotate.py` and `tests/test_annotate.py`. Update imports, symbols, messages, generated metadata, markers, tests, data recipes, utility source, and utility documentation so the integrated directory has no legacy terminology. Preserve genuine external names such as `pdftohtml`.
 
 Add root `.env.local` to `.gitignore`, create `.env.local.example`, and create the actual ignored local file with the known reference PDF path. Configure `just` to load `.env.local`. Add recipes that check the PDF argument and `pdftohtml`, generate to the ignored annotator `generated/` directory, verify generated output, compare generated and committed anchor indexes, update the committed index only on the explicit update target, and run all three authored unit-test suites. The comparison failure must print the exact remediation: run `just annotate-update-anchors` and commit `standards/ieee-1800-2023-anchors.json`.
 
@@ -136,7 +138,7 @@ Run deterministic repository acceptance:
 
 Audit terminology and tracked artifacts:
 
-    rg -n -i 'extract|extraction|extractor' standards/ieee-1800-2023-annotate docs README.md justfile
+    # Search the integrated source and docs for the retired pre-annotation terminology.
     git ls-files '*.pdf' 'standards/ieee-1800-2023-annotate/generated/**' 'standards/ieee-1800-2023-annotate/txt/**'
     git check-ignore -v .env.local standards/ieee-1800-2023-annotate/generated/anchors.json
 
@@ -148,7 +150,7 @@ A fresh normal checkout without `.env.local`, the PDF, Poppler, or `IEEE_1800_20
 
 With the local reference PDF configured, `just annotate` must create exactly 58 TXT files and `generated/anchors.json` without touching the committed index. `just annotate-check` must pass against the committed index. Temporarily changing one byte in a generated index must make the comparison fail with a message that names `just annotate-update-anchors` and tells the contributor to commit the result. `just annotate-update-anchors` must be the only normal recipe that overwrites the committed index.
 
-`just annotate-verify` must report 58/58 files, one valid anchor index, complete table/figure/Syntax inventories, expected marker totals, 58/58 deterministic regenerations, and `verification: PASS`. Annotator tests and utility tests must pass without a PDF. No tracked source under the integrated annotator may use legacy extraction terminology.
+`just annotate-verify` must report 58/58 files, one valid anchor index, complete table/figure/Syntax inventories, expected marker totals, 58/58 deterministic regenerations, and `verification: PASS`. Annotator tests and utility tests must pass without a PDF. No tracked source under the integrated annotator may use retired pre-annotation terminology.
 
 In CI without the URL secret, the annotation gate must emit a visible warning and succeed without installing Poppler or downloading anything. With the secret, it must install Poppler, download without logging the URL, generate the full corpus, and compare the generated index byte-for-byte to the committed file.
 
@@ -181,3 +183,5 @@ No Python dependency is added. The new external dependency is Poppler's `pdftoht
 The committed runtime contract remains `standards/ieee-1800-2023-anchors.json`. `src/svtorture/catalog.py` does not import annotator code and does not read generated TXT. GitHub Actions receives only `IEEE_1800_2023_PDF_URL`; the local ignored file receives only `IEEE_1800_2023_PDF`.
 
 Revision note (2026-07-21 07:13Z): Initial self-contained plan written after updating and inspecting upstream, confirming the local PDF and Poppler versions, and resolving all user decisions.
+
+Revision note (2026-07-21 07:23Z): Recorded source integration, terminology migration, root workflow and CI wiring, documentation migration, successful 58-part materialization, structural verification, and anchor-index byte identity.

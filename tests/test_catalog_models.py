@@ -27,7 +27,7 @@ def _copy_catalog_tree(catalog: Catalog, destination: Path) -> None:
         shutil.copytree(
             source,
             target,
-            ignore=shutil.ignore_patterns("ieee-1800-2023-annotated"),
+            ignore=shutil.ignore_patterns("ieee-1800-2023-annotate"),
         )
 
 
@@ -159,14 +159,14 @@ def test_catalog_rejects_anchor_absent_from_pinned_standard(
         ),
         encoding="utf-8",
     )
-    with pytest.raises(CatalogError, match="absent from pinned annotated standard"):
+    with pytest.raises(CatalogError, match="absent from committed IEEE 1800-2023 index"):
         load_catalog(root)
 
 
-def test_catalog_loads_without_annotated_submodule(catalog: Catalog, tmp_path: Path) -> None:
+def test_catalog_loads_without_materialized_annotation(catalog: Catalog, tmp_path: Path) -> None:
     root = tmp_path / "repo"
     _copy_catalog_tree(catalog, root)
-    assert not (root / "standards" / "ieee-1800-2023-annotated").exists()
+    assert not (root / "standards" / "ieee-1800-2023-annotate").exists()
     load_catalog(root)
 
 

@@ -183,7 +183,7 @@ def _load_requirements(root: Path, anchor_index: Path) -> RequirementInventory:
         unknown = [anchor for anchor in requirement.anchors if anchor not in available_anchors]
         if unknown:
             raise CatalogError(
-                f"{requirement.id}: anchors absent from pinned annotated standard: "
+                f"{requirement.id}: anchors absent from committed IEEE 1800-2023 index: "
                 f"{', '.join(unknown)}"
             )
     return inventory

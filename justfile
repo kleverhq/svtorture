@@ -1,4 +1,11 @@
 set shell := ["bash", "-eu", "-o", "pipefail", "-c"]
+set dotenv-load := true
+set dotenv-filename := ".env.local"
+
+annotator_dir := "standards/ieee-1800-2023-annotate"
+annotation_output := annotator_dir / "generated"
+annotation_python := annotator_dir / "annotate.py" + " " + annotator_dir / "verify.py" + " " + annotator_dir / "tests" + " " + annotator_dir / "utils"
+ieee_pdf := env_var_or_default("IEEE_1800_2023_PDF", "")
 
 default:
     @just --list
@@ -20,8 +27,8 @@ setup-python:
 
 # Fast Python formatting, linting, and typing.
 hook-python:
-    uv run ruff format --check src tests scripts
-    uv run ruff check src tests scripts
+    uv run ruff format --check src tests scripts {{annotation_python}}
+    uv run ruff check src tests scripts {{annotation_python}}
     uv run mypy src
 
 # Strict metadata and committed-schema verification.
@@ -31,6 +38,7 @@ hook-metadata:
 # Focused deterministic framework tests; never invokes Docker or the network.
 hook-tests:
     uv run pytest -q -m "not docker" tests/test_evaluator.py tests/test_catalog_models.py tests/test_adapters.py
+    just annotator-tests
 
 # Lightweight frontend type and unit checks.
 hook-frontend:
@@ -41,7 +49,7 @@ hook-frontend:
 smoke: hook-python hook-metadata hook-tests hook-frontend
 
 format:
-    uv run ruff format src tests scripts
+    uv run ruff format src tests scripts {{annotation_python}}
 
 lint: hook-python
 
@@ -49,6 +57,7 @@ metadata: hook-metadata
 
 unit:
     uv run pytest -m "not docker"
+    just annotator-tests
 
 frontend:
     npm --prefix dashboard run typecheck
@@ -57,6 +66,39 @@ frontend:
 
 precommit:
     git ls-files -z --cached --others --exclude-standard | xargs -0 uv run pre-commit run --files
+
+# Source-only tests for the annotator and its maintainer utilities.
+annotator-tests:
+    python3 -m unittest discover -s {{annotator_dir}}/tests -v
+    python3 -m unittest discover -s {{annotator_dir}}/utils/compare_baseline -p 'test_*.py' -v
+    python3 -m unittest discover -s {{annotator_dir}}/utils/scan_copied_text -p 'test_*.py' -v
+
+# Materialize the complete ignored annotated corpus without changing committed metadata.
+annotate pdf=ieee_pdf:
+    test -n "{{pdf}}" || { echo "Set IEEE_1800_2023_PDF in .env.local or pass a PDF path." >&2; exit 1; }
+    command -v pdftohtml >/dev/null || { echo "pdftohtml is required; install the poppler-utils package." >&2; exit 1; }
+    rm -rf {{annotation_output}}
+    python3 {{annotator_dir}}/annotate.py --all --pdf "{{pdf}}" --output-dir {{annotation_output}}/txt
+
+_check-annotation-index:
+    if ! cmp -s {{annotation_output}}/anchors.json standards/ieee-1800-2023-anchors.json; then echo "Generated anchors differ. Run 'just annotate-update-anchors', then commit standards/ieee-1800-2023-anchors.json." >&2; exit 1; fi
+
+# Materialize and compare the generated anchor index with the committed runtime index.
+annotate-check pdf=ieee_pdf:
+    just annotate "{{pdf}}"
+    python3 {{annotator_dir}}/verify.py {{annotation_output}}/txt --pdf "{{pdf}}"
+    just _check-annotation-index
+
+# Deliberately replace the committed runtime anchor index after successful annotation.
+annotate-update-anchors pdf=ieee_pdf:
+    just annotate "{{pdf}}"
+    python3 {{annotator_dir}}/verify.py {{annotation_output}}/txt --pdf "{{pdf}}"
+    cp {{annotation_output}}/anchors.json standards/ieee-1800-2023-anchors.json
+
+# Regenerate every part a second time and require complete byte-for-byte stability.
+annotate-verify pdf=ieee_pdf:
+    just annotate "{{pdf}}"
+    python3 {{annotator_dir}}/verify.py {{annotation_output}}/txt --pdf "{{pdf}}" --check-generated
 
 # Real executor/evaluator integration with the deterministic container.
 docker-fake:

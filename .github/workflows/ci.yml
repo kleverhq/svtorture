@@ -38,3 +38,38 @@ jobs:
           if-no-files-found: warn
           include-hidden-files: true
           retention-days: 30
+
+  annotation-index:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v6
+      - uses: extractions/setup-just@v4
+      - name: Detect licensed PDF URL
+        id: pdf
+        env:
+          PDF_URL: ${{ secrets.IEEE_1800_2023_PDF_URL }}
+        run: |
+          if test -n "$PDF_URL"; then
+            echo "available=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "available=false" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Report skipped anchor verification
+        if: steps.pdf.outputs.available != 'true'
+        run: echo "::warning title=IEEE 1800-2023 annotation::IEEE_1800_2023_PDF_URL is not configured; committed anchor regeneration was not verified."
+      - name: Install Poppler
+        if: steps.pdf.outputs.available == 'true'
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes poppler-utils
+      - name: Download licensed PDF and verify anchors
+        if: steps.pdf.outputs.available == 'true'
+        env:
+          PDF_URL: ${{ secrets.IEEE_1800_2023_PDF_URL }}
+        run: |
+          mkdir -p .svtorture/annotation-ci
+          curl --fail --location --silent --show-error \
+            "$PDF_URL" \
+            --output .svtorture/annotation-ci/IEEE-1800-2023.pdf
+          just annotate-check .svtorture/annotation-ci/IEEE-1800-2023.pdf
