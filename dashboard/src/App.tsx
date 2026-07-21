@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type KeyboardEvent } from "react";
 
 import { CampaignView } from "./CampaignView";
 import { EvidenceView } from "./EvidenceView";
@@ -16,9 +16,10 @@ import {
 import { ThemeControl } from "./ThemeControl";
 import { useDataset } from "./useDataset";
 
-type View = "matrix" | "evidence" | "history" | "campaigns";
+type View = "overview" | "matrix" | "evidence" | "history" | "campaigns";
 
 const VIEWS: Array<{ id: View; label: string }> = [
+  { id: "overview", label: "Overview" },
   { id: "matrix", label: "Requirements" },
   { id: "evidence", label: "Case evidence" },
   { id: "history", label: "Changes" },
@@ -27,7 +28,9 @@ const VIEWS: Array<{ id: View; label: string }> = [
 
 function initialView(): View {
   const requested = new URLSearchParams(window.location.search).get("view");
-  return VIEWS.some((view) => view.id === requested) ? (requested as View) : "matrix";
+  return VIEWS.some((view) => view.id === requested)
+    ? (requested as View)
+    : "overview";
 }
 
 export default function App() {
@@ -71,7 +74,6 @@ export default function App() {
       (!filters.campaign || item.id === filters.campaign) &&
       (!filters.date || item.finished_at.startsWith(filters.date)),
   );
-  const repository = campaign?.trust.repository;
   const inspectCase = (caseId: string) => {
     setFilters((current) => ({ ...current, caseId }));
     setView("evidence");
@@ -79,6 +81,21 @@ export default function App() {
   const inspectRequirement = (requirementId: string) => {
     setFilters((current) => ({ ...current, requirementId }));
     setView("matrix");
+  };
+  const moveTabFocus = (
+    event: KeyboardEvent<HTMLButtonElement>,
+    index: number,
+  ) => {
+    let nextIndex: number | undefined;
+    if (event.key === "ArrowRight") nextIndex = (index + 1) % VIEWS.length;
+    if (event.key === "ArrowLeft") nextIndex = (index - 1 + VIEWS.length) % VIEWS.length;
+    if (event.key === "Home") nextIndex = 0;
+    if (event.key === "End") nextIndex = VIEWS.length - 1;
+    if (nextIndex === undefined) return;
+    event.preventDefault();
+    event.currentTarget.parentElement
+      ?.querySelectorAll<HTMLButtonElement>("[role=tab]")
+      [nextIndex]?.focus();
   };
 
   return (
@@ -88,7 +105,6 @@ export default function App() {
           <span className="brand__mark">SV</span>
           <span>
             <strong>SVTORTURE</strong>
-            <small>Conformance evidence</small>
           </span>
         </a>
         <div className="site-header__meta">
@@ -96,7 +112,14 @@ export default function App() {
             {dataset.visibility}
           </span>
           <span>{dataset.campaigns.length} campaigns</span>
-          {repository && <a href={`https://github.com/${repository}`}>Source</a>}
+          <a
+            className="github-link"
+            href="https://github.com/kleverhq/sv-torture"
+            target="_blank"
+            rel="noreferrer"
+          >
+            GitHub ↗
+          </a>
           <ThemeControl />
         </div>
       </header>
@@ -105,7 +128,9 @@ export default function App() {
         <section className="campaign-overview" aria-labelledby="overview-title">
           <div>
             <span className="section-label">
-              {filters.campaign ? "Selected campaign" : "Latest campaign"}
+              {filters.campaign || filters.date
+                ? "Selected campaign"
+                : "Latest campaign"}
             </span>
             <h1 id="overview-title">Conformance overview</h1>
             {campaign ? (
@@ -140,65 +165,83 @@ export default function App() {
           )}
         </section>
 
-        <HeadlineMetrics dataset={dataset} campaign={campaign} />
-
         <section className="workspace-bar" aria-label="Dashboard controls">
-          <nav className="view-tabs" aria-label="Dashboard views">
-            {VIEWS.map((item) => (
-              <button
-                type="button"
-                key={item.id}
-                aria-current={view === item.id ? "page" : undefined}
-                onClick={() => setView(item.id)}
-              >
-                {item.label}
-              </button>
-            ))}
-          </nav>
+          <div className="view-tabs" role="tablist" aria-label="Dashboard views">
+            {VIEWS.map((item, index) => {
+              const selected = view === item.id;
+              return (
+                <button
+                  type="button"
+                  role="tab"
+                  id={`${item.id}-tab`}
+                  key={item.id}
+                  aria-selected={selected}
+                  aria-controls="dashboard-view-panel"
+                  tabIndex={selected ? 0 : -1}
+                  onClick={() => setView(item.id)}
+                  onKeyDown={(event) => moveTabFocus(event, index)}
+                >
+                  {item.label}
+                </button>
+              );
+            })}
+          </div>
           <Filters
             dataset={dataset}
             campaign={campaign}
             filters={filters}
             setFilters={setFilters}
             onReset={() => setFilters({ ...EMPTY_FILTERS })}
+            campaignOnly={view === "overview"}
           />
         </section>
 
-        {view === "matrix" && (
-          <MatrixView
-            requirements={filtered.requirements}
-            cases={filtered.cases}
-            campaign={campaign}
-            toolFilter={filters.tool}
-            selectedRequirementId={filters.requirementId}
-            onSelectRequirement={(requirementId) =>
-              setFilters((current) => ({ ...current, requirementId }))
-            }
-            onInspectCase={inspectCase}
-          />
-        )}
-        {view === "evidence" && (
-          <EvidenceView
-            requirements={filtered.requirements}
-            cases={filtered.cases}
-            campaign={campaign}
-            toolFilter={filters.tool}
-            selectedCaseId={filters.caseId}
-            onSelectCase={(caseId) =>
-              setFilters((current) => ({ ...current, caseId }))
-            }
-            onInspectRequirement={inspectRequirement}
-          />
-        )}
-        {view === "history" && (
-          <HistoryView
-            dataset={dataset}
-            campaign={campaign}
-            toolFilter={filters.tool}
-            dateFilter={filters.date}
-          />
-        )}
-        {view === "campaigns" && <CampaignView campaigns={visibleCampaigns} />}
+        <div
+          className="view-panel"
+          role="tabpanel"
+          id="dashboard-view-panel"
+          aria-labelledby={`${view}-tab`}
+          tabIndex={0}
+        >
+          {view === "overview" && (
+            <HeadlineMetrics dataset={dataset} campaign={campaign} />
+          )}
+          {view === "matrix" && (
+            <MatrixView
+              requirements={filtered.requirements}
+              cases={filtered.cases}
+              campaign={campaign}
+              toolFilter={filters.tool}
+              selectedRequirementId={filters.requirementId}
+              onSelectRequirement={(requirementId) =>
+                setFilters((current) => ({ ...current, requirementId }))
+              }
+              onInspectCase={inspectCase}
+            />
+          )}
+          {view === "evidence" && (
+            <EvidenceView
+              requirements={filtered.requirements}
+              cases={filtered.cases}
+              campaign={campaign}
+              toolFilter={filters.tool}
+              selectedCaseId={filters.caseId}
+              onSelectCase={(caseId) =>
+                setFilters((current) => ({ ...current, caseId }))
+              }
+              onInspectRequirement={inspectRequirement}
+            />
+          )}
+          {view === "history" && (
+            <HistoryView
+              dataset={dataset}
+              campaign={campaign}
+              toolFilter={filters.tool}
+              dateFilter={filters.date}
+            />
+          )}
+          {view === "campaigns" && <CampaignView campaigns={visibleCampaigns} />}
+        </div>
       </main>
       <footer>
         <span>SVTORTURE · Apache-2.0</span>

@@ -1,8 +1,10 @@
-import { render, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { cleanup, render, screen } from "@testing-library/react";
+import { afterEach, describe, expect, it } from "vitest";
 
 import { HeadlineMetrics } from "./HeadlineMetrics";
 import { makeTestDataset } from "./testDataset";
+
+afterEach(cleanup);
 
 describe("HeadlineMetrics", () => {
   it("counts requirements covered by selected campaign cases", () => {
@@ -27,7 +29,97 @@ describe("HeadlineMetrics", () => {
 
     render(<HeadlineMetrics dataset={dataset} campaign={campaign} />);
 
-    const requirements = screen.getByText("Requirements").parentElement;
+    const requirements = screen.getByText("Covered requirements").parentElement;
     expect(requirements?.querySelector("strong")?.textContent).toBe("1");
+    expect(requirements?.textContent).toContain(
+      "1 campaign case maps to these requirements.",
+    );
+    expect(screen.getByText("Selected campaign summary")).toBeTruthy();
+    expect(
+      screen.getByText(/Each evaluation is one tool\/profile running one case/),
+    ).toBeTruthy();
+    const unscored = screen.getByText("Unscored evaluations").parentElement;
+    expect(unscored?.querySelector("strong")?.textContent).toBe("0");
+    expect(unscored?.textContent).toContain(
+      "Cases that were not run or do not apply to the selected tool profile.",
+    );
+  });
+
+  it("reports an unmatched campaign selection instead of zero counts", () => {
+    const dataset = makeTestDataset();
+
+    render(<HeadlineMetrics dataset={dataset} />);
+
+    expect(
+      screen.getByText("No campaign matches the current campaign and date selection."),
+    ).toBeTruthy();
+    expect(screen.queryByText("Covered requirements")).toBeNull();
+  });
+
+  it("does not present an invalid metric as zero coverage", () => {
+    const dataset = makeTestDataset();
+    const campaign = dataset.campaigns[0];
+    if (!campaign) throw new Error("incomplete test dataset");
+    dataset.metrics.push({
+      label: "invalid because of harness errors",
+      revision: "1800-2023",
+      tool_id: "fake",
+      profile_id: "simulator",
+      numerator: 0,
+      denominator: 1,
+      corpus_sha: "0".repeat(64),
+      complete: true,
+      valid: false,
+      corpus_coverage: 1,
+      execution_coverage: 1,
+      conforming: 0,
+      nonconforming: 0,
+      inconclusive: 0,
+      unsupported: 0,
+      infrastructure_state: "harness errors present",
+      campaign_id: campaign.id,
+      timestamp: campaign.finished_at,
+      tool_sha: null,
+      exact_tags: [],
+      nearest_tag: null,
+      reported_version: "test-tool 1.0",
+      image_digest: null,
+      repository_commit: campaign.repository.commit,
+    });
+
+    render(<HeadlineMetrics dataset={dataset} campaign={campaign} />);
+
+    expect(screen.getByText("Unavailable")).toBeTruthy();
+    expect(screen.getByText("harness errors present")).toBeTruthy();
+    expect(screen.getByText("Not scored")).toBeTruthy();
+    expect(
+      screen.queryByLabelText("0 percent of requirements verified"),
+    ).toBeNull();
+  });
+
+  it("counts known issues only among failed evaluations", () => {
+    const dataset = makeTestDataset();
+    const campaign = dataset.campaigns[0];
+    const passingResult = campaign?.results[0];
+    if (!campaign || !passingResult) throw new Error("incomplete test dataset");
+    passingResult.known_issue = "Passing context must not count as a known failure.";
+    campaign.results.push({
+      ...passingResult,
+      status: "nonconforming",
+      reason: "unexpected-result",
+      known_issue: null,
+    });
+
+    render(<HeadlineMetrics dataset={dataset} campaign={campaign} />);
+
+    const failures = screen.getByText("Failed evaluations").parentElement;
+    expect(failures?.querySelector("strong")?.textContent).toBe("1");
+    expect(failures?.textContent).toContain(
+      "2 recorded evaluations; 0 failures linked to a known issue.",
+    );
+    expect(screen.getByText("Needs inspection")).toBeTruthy();
+    expect(
+      screen.getByText("Inconclusive observations or harness errors."),
+    ).toBeTruthy();
   });
 });

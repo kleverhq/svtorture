@@ -14,6 +14,7 @@ interface FilterProps {
   filters: FilterValues;
   setFilters: Dispatch<SetStateAction<FilterValues>>;
   onReset: () => void;
+  campaignOnly?: boolean | undefined;
 }
 
 function choices(values: Array<string | undefined>): string[] {
@@ -26,6 +27,7 @@ export function Filters({
   filters,
   setFilters,
   onReset,
+  campaignOnly = false,
 }: FilterProps) {
   const update = (name: keyof FilterValues, value: string | boolean) => {
     setFilters((current) => {
@@ -38,6 +40,10 @@ export function Filters({
       return { ...current, [name]: value };
     });
   };
+  const selectCampaign = (campaign: string) =>
+    setFilters((current) => ({ ...current, campaign, date: "" }));
+  const selectDate = (date: string) =>
+    setFilters((current) => ({ ...current, date, campaign: "" }));
   const profiles = choices(
     dataset.campaigns.flatMap((item) =>
       item.tools.flatMap((tool) =>
@@ -70,6 +76,43 @@ export function Filters({
       scopedResults.filter((result) => statusGroup(result.status) === group).length,
     ]),
   ) as Record<StatusGroup, number>;
+  const campaignOptions = [...dataset.campaigns]
+    .sort((left, right) => right.finished_at.localeCompare(left.finished_at))
+    .map((item) => (
+      <option key={item.id} value={item.id}>
+        {item.finished_at.slice(0, 10)} · {item.id}
+      </option>
+    ));
+
+  if (campaignOnly) {
+    return (
+      <div className="filters filters--campaign">
+        <div className="filters__primary filters__primary--campaign">
+          <label>
+            <span>Campaign</span>
+            <select
+              value={filters.campaign}
+              onChange={(event) => selectCampaign(event.target.value)}
+            >
+              <option value="">Latest campaign</option>
+              {campaignOptions}
+            </select>
+          </label>
+          <label>
+            <span>Campaign date</span>
+            <input
+              type="date"
+              value={filters.date}
+              onChange={(event) => selectDate(event.target.value)}
+            />
+          </label>
+          <button type="button" className="button button--quiet" onClick={onReset}>
+            Clear filters
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="filters">
@@ -126,16 +169,10 @@ export function Filters({
           <span>Campaign</span>
           <select
             value={filters.campaign}
-            onChange={(event) => update("campaign", event.target.value)}
+            onChange={(event) => selectCampaign(event.target.value)}
           >
             <option value="">Latest campaign</option>
-            {[...dataset.campaigns]
-              .sort((left, right) => right.finished_at.localeCompare(left.finished_at))
-              .map((item) => (
-                <option key={item.id} value={item.id}>
-                  {item.finished_at.slice(0, 10)} · {item.id}
-                </option>
-              ))}
+            {campaignOptions}
           </select>
         </label>
         <label>
@@ -270,7 +307,7 @@ export function Filters({
             <input
               type="date"
               value={filters.date}
-              onChange={(event) => update("date", event.target.value)}
+              onChange={(event) => selectDate(event.target.value)}
             />
           </label>
         </div>

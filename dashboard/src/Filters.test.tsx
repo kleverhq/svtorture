@@ -1,12 +1,14 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { useState } from "react";
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it } from "vitest";
 
 import { Filters } from "./Filters";
 import { EMPTY_FILTERS, selectedCampaign } from "./model";
 import { makeTestDataset } from "./testDataset";
 
-function FilterHarness() {
+afterEach(cleanup);
+
+function FilterHarness({ campaignOnly = false }: { campaignOnly?: boolean }) {
   const dataset = makeTestDataset();
   const [filters, setFilters] = useState({
     ...EMPTY_FILTERS,
@@ -19,6 +21,7 @@ function FilterHarness() {
       filters={filters}
       setFilters={setFilters}
       onReset={() => setFilters({ ...EMPTY_FILTERS })}
+      campaignOnly={campaignOnly}
     />
   );
 }
@@ -35,5 +38,16 @@ describe("Filters", () => {
     expect(
       screen.getByRole("button", { name: "Fail 0" }).getAttribute("aria-pressed"),
     ).toBe("true");
+  });
+
+  it("shows only campaign controls in the overview", () => {
+    render(<FilterHarness campaignOnly />);
+
+    expect(screen.getByLabelText("Campaign")).toBeTruthy();
+    expect(screen.getByLabelText("Campaign date")).toBeTruthy();
+    expect(screen.getByRole("button", { name: "Clear filters" })).toBeTruthy();
+    expect(screen.queryByLabelText("Search")).toBeNull();
+    expect(screen.queryByLabelText("Tool / profile")).toBeNull();
+    expect(screen.queryByRole("button", { name: "Fail 0" })).toBeNull();
   });
 });

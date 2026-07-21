@@ -7,8 +7,10 @@ server or live database.
 
 ## Views
 
-The interface provides four URL-filtered views:
+The interface provides five URL-filtered views. **Overview** is shown by default:
 
+- **Overview** — plain-language campaign counts and verified requirement coverage
+  by tool profile;
 - **Requirements** — a compact requirement/tool matrix with grouped verdicts,
   sticky identity columns, and a separate requirement inspector;
 - **Case evidence** — a master-detail case list with inline local source viewing,
@@ -19,7 +21,10 @@ The interface provides four URL-filtered views:
 - **Campaigns** — compact run records with expandable corpus, tool source,
   image, platform, and trust provenance.
 
-The headline metric is defined in
+Overview counts treat one tool/profile running one case as one evaluation. Their
+supporting text distinguishes requirement coverage, recorded evaluations,
+unsupported capability, evidence needing inspection, and comparable-campaign
+regressions. The headline metric is defined in
 [the conformance methodology](../docs/methodology.md). Missing, unsupported,
 incomplete, and nonconforming evidence remains visible rather than being
 collapsed into a pass/fail percentage.
