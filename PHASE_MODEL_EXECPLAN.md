@@ -24,8 +24,8 @@ This work does not add cases or weaken any standards oracle. It does not infer a
 - [x] (2026-07-21 23:25Z) Implemented the version-2 tool, execution, observation, result, and campaign contracts and regenerated committed schemas.
 - [x] (2026-07-21 23:31Z) Implemented cumulative phase execution and safe evaluator inference across open-source, commercial, and fake adapters.
 - [x] (2026-07-21 23:35Z) Updated metric scope, requirement-level PASS/FAIL/UNCLEAR presentation, evidence provenance, documentation, and Python/frontend tests.
-- [ ] Collect a fresh three-tool full campaign, build the dashboard, and validate desktop/mobile behavior and Chapter 5 evidence in Chrome (completed once before the review-added observation-kind field; fresh final collection remains).
-- [ ] Run focused and independent control reviews, fix every substantive finding, run `just ci`, finalize this plan, and remove the completed plan from the repository (focused reviews and independent control pass completed; all findings fixed and rechecked clean; final `just ci`, plan finalization, and removal remain).
+- [x] (2026-07-22 01:43Z) Collected fresh clean campaign `20260721T214314Z-2d3db761fd7c8eae`, built the dashboard, and validated desktop/mobile Overview, cumulative Chapter 5 evidence, and matrix alignment in Chrome without runtime/network/page-overflow errors.
+- [x] (2026-07-22 01:46Z) Completed focused and independent control reviews, fixed every substantive finding, obtained clean follow-up reviews, passed full `just ci`, and retained only the final full version-2 campaign locally.
 
 ## Surprises & Discoveries
 
@@ -78,7 +78,13 @@ This work does not add cases or weaken any standards oracle. It does not infer a
 
 ## Outcomes & Retrospective
 
-Implementation has not started. At completion this section must record the new schema versions, fresh campaign IDs and exact metrics, visual validation, review results, and any deviation from the planned inference rules.
+The cumulative phase model is complete. Tool registry, execution plan/wrapper request, normalized result, and campaign contracts are strict version 2 with no legacy aliases or parser. Profiles now expose a phase ceiling and direct phases; observations retain stage kind and attempted-through phase; results retain target phase and direct/cumulative/not-observed attribution. Safe cumulative inference made the Chapter 5 lexical rejection conforming for Slang, Icarus, and Verilator without allowing unrelated later failures to become false failures or passes.
+
+The final clean campaign is `20260721T214314Z-2d3db761fd7c8eae`, recorded at repository commit `dfbffbffd3b3d0df301dd08705e92a7d3006ffc5`. Slang recorded direct parse evidence and scored PASS 5 / FAIL 0 / UNCLEAR 0. Icarus recorded cumulative parse-through-elaboration evidence and scored 11 / 1 / 0, or 92% of 12 applicable requirements. Verilator recorded cumulative evidence and scored 12 / 0 / 0. The Overview and Evidence views expose those facts directly.
+
+Focused model, integrity, dashboard, and documentation reviews found issues in diagnostic severity, provenance tamper resistance, plan/backend binding, stage-kind coherence, observation-free result eligibility, replay identity, invalid metric presentation, fixture realism, and responsive evidence width. All were fixed and rechecked. A fresh independent control review then found that observed results also needed to match a legal adapter-plan prefix and that fallback image rebuilds needed exact image-ID comparison; those fixes also received a clean follow-up. Final validation passed 120 non-Docker framework tests, 15 annotator/utility tests, 23 frontend tests, 11 Docker tests, strict metadata/schema checks, lint, mypy, production build, real Icarus smoke, and complete `just ci`.
+
+No compatibility code remains. Old local campaigns were deleted rather than migrated; only the final full version-2 campaign remains under the ignored local campaign directory. The main lesson is that cumulative capability is simple, but durable evidence needs exact command-boundary, stage-kind, backend-identity, and plan-prefix provenance.
 
 ## Context and Orientation
 
@@ -198,7 +204,7 @@ The expected new Overview values for the current corpus are approximately:
     icarus/simulator: PASS 11, FAIL 1, UNCLEAR 0, 92%
     verilator/simulator: PASS 12, FAIL 0, UNCLEAR 0, 100%
 
-These are expectations to verify, not hard-coded product data.
+The final campaign verified these exact values; they remain measured data rather than hard-coded product data.
 
 ### Interfaces and Dependencies
 
@@ -217,3 +223,5 @@ Plan revision note (2026-07-21 23:35Z): Recorded completion of the clean contrac
 Plan revision note (2026-07-22 00:22Z): Recorded focused review status and the resulting integrity hardening: severity-aware negative evidence, stage kind, exact plan backend identity, derived result-mode coherence, recomputed structural dispositions, exact replay provenance, coherent frontend fixtures, and unavailable-metric presentation.
 
 Plan revision note (2026-07-22 01:02Z): Recorded the independent control pass and its fixes: structural eligibility now precedes observed judgments, recorded stages must match a rebuilt legal plan prefix, private-wrapper unavailability is explicitly verified, and fallback rebuilds must match the recorded image ID. A follow-up control review reported no substantive findings.
+
+Plan revision note (2026-07-22 01:46Z): Finalized the plan with the clean campaign ID, exact PASS/FAIL/UNCLEAR metrics, complete validation evidence, review outcomes, compatibility cleanup, and retrospective.
