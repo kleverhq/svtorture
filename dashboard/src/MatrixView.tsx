@@ -105,6 +105,7 @@ export function MatrixView({
     "minmax(320px, 1fr)",
     ...profiles.map(() => "minmax(128px, 148px)"),
   ].join(" ");
+  const tableWidth = `max(100%, ${112 + 320 + profiles.length * 148}px)`;
   const selectedRequirement = requirements.find(
     (requirement) => requirement.id === selectedRequirementId,
   );
@@ -125,7 +126,10 @@ export function MatrixView({
       </div>
       <div className={`matrix__workspace ${selectedRequirement ? "has-inspector" : ""}`}>
         <div className="matrix__scroll" ref={parentRef}>
-          <div className="matrix__header" style={{ gridTemplateColumns: template }}>
+          <div
+            className="matrix__header"
+            style={{ gridTemplateColumns: template, width: tableWidth }}
+          >
             {table.getHeaderGroups()[0]?.headers.map((header) => (
               <div key={header.id}>
                 {flexRender(header.column.columnDef.header, header.getContext())}
@@ -135,7 +139,7 @@ export function MatrixView({
           {rows.length ? (
             <div
               className="matrix__body"
-              style={{ height: `${virtualizer.getTotalSize()}px` }}
+              style={{ height: `${virtualizer.getTotalSize()}px`, width: tableWidth }}
             >
               {virtualizer.getVirtualItems().map((virtualRow) => {
                 const row = rows[virtualRow.index];

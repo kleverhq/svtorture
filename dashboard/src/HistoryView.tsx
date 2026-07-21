@@ -233,18 +233,56 @@ export function HistoryView({
           <span>Change counts become available after another run with the same tool profiles.</span>
         </div>
       )}
-      {(comparison.regressions.length > 0 || comparison.newPasses.length > 0) && (
+      {(comparison.regressions.length > 0 ||
+        comparison.newPasses.length > 0 ||
+        comparison.otherChanges.length > 0 ||
+        comparison.toolRevisionChanges.length > 0 ||
+        comparison.corpusChanged ||
+        comparison.denominatorChanged) && (
         <div className="change-details">
           {comparison.regressions.map((change) => (
-            <span className="change change--regression" key={`regression:${change.caseId}:${change.toolId}:${change.profileId}`}>
-              Regression · {change.caseId} · {change.toolId}/{change.profileId}
+            <span
+              className="change change--regression"
+              key={`regression:${change.caseId}:${change.toolId}:${change.profileId}`}
+            >
+              Regression · {change.caseId} · {change.toolId}/{change.profileId} ·{" "}
+              {change.previous} → {change.current}
             </span>
           ))}
           {comparison.newPasses.map((change) => (
-            <span className="change change--pass" key={`pass:${change.caseId}:${change.toolId}:${change.profileId}`}>
-              New pass · {change.caseId} · {change.toolId}/{change.profileId}
+            <span
+              className="change change--pass"
+              key={`pass:${change.caseId}:${change.toolId}:${change.profileId}`}
+            >
+              New pass · {change.caseId} · {change.toolId}/{change.profileId} ·{" "}
+              {change.previous} → {change.current}
             </span>
           ))}
+          {comparison.otherChanges.map((change) => (
+            <span
+              className="change change--other"
+              key={`other:${change.caseId}:${change.toolId}:${change.profileId}`}
+            >
+              Judgment · {change.caseId} · {change.toolId}/{change.profileId} ·{" "}
+              {change.previous} → {change.current}
+            </span>
+          ))}
+          {comparison.toolRevisionChanges.map((change) => (
+            <span
+              className="change change--tool"
+              key={`tool:${change.toolId}`}
+              title={`${change.previous} → ${change.current}`}
+            >
+              Tool source · {change.toolId} · {change.previous.slice(0, 12)} →{" "}
+              {change.current.slice(0, 12)}
+            </span>
+          ))}
+          {comparison.corpusChanged && (
+            <span className="change change--boundary">Requirement or case corpus changed</span>
+          )}
+          {comparison.denominatorChanged && (
+            <span className="change change--boundary">Metric denominator changed</span>
+          )}
         </div>
       )}
       <HistoryChart points={visible} />

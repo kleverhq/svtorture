@@ -27,7 +27,7 @@ This work will not change campaign, requirement, result, metric, or publication 
 - [x] (2026-07-21 11:38Z) Added comparable-campaign change analysis before the history chart and converted campaign provenance into a compact expandable list.
 - [x] (2026-07-21 11:38Z) Replaced the dark-only decorative stylesheet with semantic light/dark tokens, system fonts, compact responsive layouts, focus states, and internal overflow boundaries; added a local data-URL favicon.
 - [x] (2026-07-21 11:54Z) Exercised all views through a two-campaign dataset; verified actual UI selection and computed palettes for Light, Dark, Auto-with-light-system, and Auto-with-dark-system; captured true 390-pixel matrix/evidence work surfaces, inspector and matrix-to-evidence drill-down, fail-only and empty states, open observation details, and comparable-campaign history. All Chrome sessions reported no runtime/network errors or page overflow. Attempted Firefox twice, including a clean profile and software-rendering preferences, but its installed headless compositor cannot create a framebuffer even for `about:blank`; recorded the environment limitation instead of adding a browser dependency.
-- [ ] Run all frontend and repository gates, perform focused reviews and a fresh control review, fix findings, record outcomes, commit the implementation, and remove this completed plan.
+- [ ] Run all frontend and repository gates, perform focused reviews and a fresh control review, fix findings, record outcomes, commit the implementation, and remove this completed plan (completed: frontend, smoke, pre-commit, three focused reviews, fix re-reviews, fresh control review, final narrow verification, and all findings fixed; remaining: final `just ci`, completion audit, final plan update/removal, and cleanup commit).
 
 ## Surprises & Discoveries
 
@@ -55,6 +55,12 @@ This work will not change campaign, requirement, result, metric, or publication 
   Evidence: both dashboard and `about:blank` attempts timed out with `RenderCompositorSWGL failed mapping default framebuffer, no dt` after clean-profile, safe-mode, disabled WebRender/acceleration, and software-GL attempts. Chrome 145 visual sessions remained clean; no project dependency was added to work around a host renderer.
 - Observation: A second real aggregate campaign made change analysis observable and caught a genuine source-boundary event without inventing result changes.
   Evidence: `just latest-all` produced campaign `20260721T115117Z-d10811d4fe5fc852`; exporting it with the earlier aggregate displayed 0 regressions, 0 new passes, 1 tool revision change (Verilator), no corpus boundary, and two points per profile.
+- Observation: The first review pass found that two parts of the UI still used different meanings of “previous”: History used a profile-compatible campaign while the Changed filter used the immediate chronological campaign and counted missing keys.
+  Evidence: both correctness and maintainability reviewers independently found `changedCaseKeys`; it now reuses `previousComparableCampaign`, requires an existing prior result, and tests an interleaved unrelated campaign plus a prior campaign with missing results.
+- Observation: A virtual row's absolutely positioned children do not contribute intrinsic width, and a sticky cell can still be painted under an overflowing sibling unless the sibling is clipped and the sticky layer is explicit.
+  Evidence: the control review found the body width issue. After setting a shared 876-pixel table/body width, clipping matrix cells, and raising the Clause cell layer, true 390-pixel CDP reported `scrollLeft: 470`, `firstCellLeft: 0`, `pointText: 4.9.4`, visible tool verdicts, and no page overflow.
+- Observation: Review found six additional concrete UX/correctness boundaries: mobile's two sticky identity columns obscured statuses, History hid source/other transition identities, two small-text color pairs lacked contrast, invalid case URLs silently displayed another case, copied state could survive case changes, and headline requirements counted catalog scope rather than selected-campaign scope.
+  Evidence: all were fixed, focused re-reviews returned no substantive findings, the fresh control's two further findings received a clean independent verification, contrast ratios are 6.14:1 and 7.12:1, and 15 frontend tests pass.
 
 ## Decision Log
 
@@ -82,12 +88,17 @@ This work will not change campaign, requirement, result, metric, or publication 
 - Decision: Use installed headless Chrome and temporary scripts under `/tmp` for visual evidence; do not add Playwright yet.
   Rationale: URL-backed states and native screenshot support are sufficient for this concrete redesign. A permanent dependency is justified only if maintainers later request committed visual regression baselines.
   Date/Author: 2026-07-21 / coding agent.
+- Decision: On viewports up to 620 pixels, keep only Clause sticky and let Requirement scroll with verdict columns.
+  Rationale: Clause preserves row identity in 112 pixels; pinning the additional 320-pixel requirement column would consume more than the entire 390-pixel viewport and hide the product's core tool verdicts.
+  Date/Author: 2026-07-21 / coding agent.
 
 ## Outcomes & Retrospective
 
-The evidence-first implementation and visual validation milestones are complete without schema, backend, or dependency changes. Theme state defaults safely to Auto and follows emulated user light/dark preferences; actual Light/Dark UI choices change the computed palette and selected control value. Exact statuses have a tested five-group presentation mapping; broad and exact filters cannot conflict; URL state includes grouped status and selected evidence case; and comparison refuses unrelated tool/profile sets.
+The evidence-first implementation, visual validation, and review milestones are complete without schema, backend, or dependency changes. Theme state defaults safely to Auto and follows emulated user light/dark preferences; actual Light/Dark UI choices change the computed palette and selected control value. Exact statuses have a tested five-group presentation mapping; broad and exact filters cannot conflict; URL state includes grouped status and selected evidence case; and comparison/filtering share one profile-compatible baseline.
 
-The desktop matrix now exposes eleven rows in the first viewport, its inspector drills into the URL-selected evidence pane, evidence uses a structured master-detail layout, and history/provenance lead with operational content. A real second aggregate campaign proves the comparison summary and source-revision boundary. True 390-pixel Chrome measurements report `innerWidth: 390` and `documentScrollWidth: 375` in both Auto palettes; every desktop/mobile session reports empty runtime/network error arrays. Firefox visual execution is blocked by its host compositor even for a blank page, not by application behavior. Fourteen frontend tests, strict TypeScript, and the production build pass. Remaining work is repository gates, focused/control review, final plan evidence, commits, and cleanup.
+The desktop matrix exposes eleven rows in the first viewport, its inspector drills into URL-selected evidence, and mobile preserves Clause while exposing tool verdicts through internal scrolling. Evidence uses structured master-detail, invalid case links remain explicit, History names every result/source/boundary change, and provenance stays behind drill-down. Campaign summary counts selected-campaign requirements rather than exported catalog scope. A real second aggregate proves comparison and source-revision boundaries. True 390-pixel Chrome reports no page overflow in both Auto palettes; every session reports empty runtime/network error arrays. Firefox remains host-renderer-blocked even for a blank page.
+
+Fifteen frontend tests, strict TypeScript, production build, `just frontend`, `just smoke`, and `just precommit` pass. Three focused reviewers found eight substantive issues, all fixed and re-reviewed cleanly. A fresh control reviewer found two more scope/virtual-width issues; both are fixed, tested or measured, and independently verified with no substantive findings. Remaining work is full `just ci`, final evidence audit, plan cleanup, and the last commit.
 
 ## Context and Orientation
 
@@ -253,3 +264,5 @@ Revision note (2026-07-21 11:20Z): Recorded the completed theme/model foundation
 Revision note (2026-07-21 11:38Z): Recorded the complete evidence-first component/layout/palette milestone, corrected the headless mobile measurement artifact, added visual evidence, updated current architecture orientation, and narrowed remaining validation work.
 
 Revision note (2026-07-21 11:54Z): Closed visual validation with actual theme controls, system-theme emulation, true mobile measurements, filter/empty/drill-down states, a real two-campaign comparison, clean browser diagnostics, and an evidence-backed Firefox host limitation.
+
+Revision note (2026-07-21 12:15Z): Recorded focused/control review findings and fixes, unified comparison semantics, mobile sticky-column decision, transition detail/URL/state/contrast fixes, selected-scope counting, virtual-grid width evidence, 15 tests, and clean follow-up reviews.

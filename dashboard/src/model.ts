@@ -311,18 +311,14 @@ export function changedCaseKeys(
   dataset: Dataset,
   selected: Campaign | undefined,
 ): Set<string> {
-  const campaigns = [...dataset.campaigns].sort((left, right) =>
-    left.finished_at.localeCompare(right.finished_at),
-  );
-  const selectedIndex = selected
-    ? campaigns.findIndex((campaign) => campaign.id === selected.id)
-    : campaigns.length - 1;
-  if (selectedIndex <= 0) return new Set();
-  const latest = resultsByKey(campaigns[selectedIndex]);
-  const previous = resultsByKey(campaigns[selectedIndex - 1]);
+  const previousCampaign = previousComparableCampaign(dataset, selected);
+  if (!selected || !previousCampaign) return new Set();
+  const latest = resultsByKey(selected);
+  const previous = resultsByKey(previousCampaign);
   const changed = new Set<string>();
   for (const [key, result] of latest) {
-    if (previous.get(key)?.status !== result.status) changed.add(result.case_id);
+    const prior = previous.get(key);
+    if (prior && prior.status !== result.status) changed.add(result.case_id);
   }
   return changed;
 }

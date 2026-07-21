@@ -9,6 +9,12 @@ export function HeadlineMetrics({
   campaign?: Campaign | undefined;
 }) {
   const comparison = compareCampaigns(dataset, campaign);
+  const selectedCaseIds = new Set(campaign?.case_ids ?? []);
+  const coveredRequirements = new Set(
+    dataset.cases
+      .filter((testCase) => selectedCaseIds.has(testCase.id))
+      .map((testCase) => testCase.primary_requirement),
+  ).size;
   const results = campaign?.results ?? [];
   const counts = {
     pass: results.filter((result) => statusGroup(result.status) === "pass").length,
@@ -35,7 +41,7 @@ export function HeadlineMetrics({
   const summary = [
     {
       label: "Requirements",
-      value: dataset.requirements.length,
+      value: coveredRequirements,
       note: `${campaign?.case_ids.length ?? 0} selected cases`,
     },
     {

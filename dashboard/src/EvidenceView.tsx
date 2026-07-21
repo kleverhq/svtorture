@@ -169,7 +169,9 @@ export function EvidenceView({
     (profile) => !toolFilter || profile.key === toolFilter,
   );
   const requirementMap = new Map(requirements.map((item) => [item.id, item]));
-  const selected = cases.find((testCase) => testCase.id === selectedCaseId) ?? cases[0];
+  const selected = selectedCaseId
+    ? cases.find((testCase) => testCase.id === selectedCaseId)
+    : cases[0];
   const requirement = selected
     ? requirementMap.get(selected.primary_requirement)
     : undefined;
@@ -290,7 +292,11 @@ export function EvidenceView({
                       <span>{result?.reason ?? "no observation"}</span>
                     </summary>
                     {result ? (
-                      <ObservationDetail result={result} tool={tool} />
+                      <ObservationDetail
+                        key={`${result.case_id}:${profile.key}`}
+                        result={result}
+                        tool={tool}
+                      />
                     ) : (
                       <p className="empty-state">No result was recorded.</p>
                     )}
@@ -299,6 +305,23 @@ export function EvidenceView({
               })}
             </div>
           </article>
+        </div>
+      ) : selectedCaseId && cases.length ? (
+        <div className="empty-state">
+          <p>
+            Selected case <code>{selectedCaseId}</code> is unavailable under the current
+            filters.
+          </p>
+          <button
+            type="button"
+            className="button button--quiet"
+            onClick={() => {
+              const first = cases[0];
+              if (first) onSelectCase(first.id);
+            }}
+          >
+            Open first visible case
+          </button>
         </div>
       ) : (
         <div className="empty-state">No cases match the current filters.</div>

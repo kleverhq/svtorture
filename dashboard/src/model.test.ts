@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 
 import {
   aggregateStatus,
+  changedCaseKeys,
   compareCampaigns,
   EMPTY_FILTERS,
   filterCorpus,
@@ -140,6 +141,15 @@ describe("requirements model", () => {
       "ch13-output-copyout-width",
     ]);
     expect(comparison.regressions).toHaveLength(0);
+    expect(
+      changedCaseKeys({ ...dataset, campaigns: [prior, unrelated, current] }, current),
+    ).toEqual(new Set(["ch13-output-copyout-width"]));
+    expect(
+      changedCaseKeys(
+        { ...dataset, campaigns: [{ ...prior, results: [] }, current] },
+        current,
+      ),
+    ).toEqual(new Set());
   });
 
   it("reports tool, corpus, and denominator boundaries", () => {

@@ -18,7 +18,7 @@
   --accent: #087c67;
   --accent-strong: #056451;
   --accent-soft: #dff3ed;
-  --pass: #087c67;
+  --pass: #056451;
   --pass-soft: #ddf3ec;
   --fail: #b93333;
   --fail-soft: #fbe7e7;
@@ -193,7 +193,7 @@ summary:focus-visible {
   place-items: center;
   border-radius: 5px;
   color: #ffffff;
-  background: var(--accent-strong);
+  background: #056451;
   font-family: "SFMono-Regular", Consolas, monospace;
   font-size: 0.76rem;
   font-weight: 700;
@@ -703,6 +703,7 @@ details summary {
 .matrix__cell {
   display: flex;
   min-width: 0;
+  overflow: hidden;
   align-items: center;
   padding: 8px 10px;
   border-right: 1px solid var(--line);
@@ -730,6 +731,7 @@ details summary {
 }
 
 .matrix__row > .matrix__cell:nth-child(1) {
+  z-index: 8;
   left: 0;
 }
 
@@ -1252,6 +1254,21 @@ pre {
   background: var(--pass-soft);
 }
 
+.change--other {
+  color: var(--text-secondary);
+  background: var(--surface-hover);
+}
+
+.change--tool {
+  color: var(--accent-strong);
+  background: var(--accent-soft);
+}
+
+.change--boundary {
+  color: var(--issue);
+  background: var(--issue-soft);
+}
+
 .history-chart {
   width: 100%;
   height: 340px;
@@ -1586,6 +1603,11 @@ footer {
 
   .matrix__scroll {
     height: 58vh;
+  }
+
+  .matrix__header > div:nth-child(2),
+  .matrix__row > .matrix__cell:nth-child(2) {
+    position: static;
   }
 
   .matrix-inspector,
