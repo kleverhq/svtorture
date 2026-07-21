@@ -108,6 +108,10 @@ def _ensure_image(
     )
     if rebuilt.base_image_digest != campaign_tool.image.base_image_digest:
         raise ReproductionError("rebuilt image used a different base image digest")
+    if campaign_tool.image.image_id is None:
+        raise ReproductionError("recorded campaign lacks an exact image ID")
+    if rebuilt.image_id != campaign_tool.image.image_id:
+        raise ReproductionError("rebuilt image ID differs from the recorded image")
     return rebuilt.reference
 
 

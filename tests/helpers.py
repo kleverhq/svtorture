@@ -48,6 +48,7 @@ def stream(text: str = "", *, truncated: bool = False) -> CapturedStream:
 def observation(
     *,
     attempted_through_phase: Phase,
+    stage_id: str | None = None,
     exit_code: int | None = 0,
     outcome: RawOutcome = RawOutcome.NORMAL_EXIT,
     signal: int | None = None,
@@ -61,7 +62,7 @@ def observation(
 ) -> StageObservation:
     kind = StageKind.RUN if attempted_through_phase is Phase.SIMULATE else StageKind.COMPILE
     return StageObservation(
-        stage_id="run" if kind is StageKind.RUN else "compile",
+        stage_id=stage_id or ("run" if kind is StageKind.RUN else "compile"),
         kind=kind,
         attempted_through_phase=attempted_through_phase,
         outcome=outcome,
@@ -138,7 +139,16 @@ def normalized(
         ResultStatus.NONCONFORMING,
         ResultStatus.INCONCLUSIVE,
     }:
-        observations = (observation(attempted_through_phase=case.definition.target_phase),)
+        if case.definition.target_phase is Phase.SIMULATE:
+            observations = (
+                observation(attempted_through_phase=Phase.ELABORATE),
+                observation(
+                    attempted_through_phase=Phase.SIMULATE,
+                    stdout=case.definition.oracle.marker or "",
+                ),
+            )
+        else:
+            observations = (observation(attempted_through_phase=case.definition.target_phase),)
     covering = next(
         (
             item

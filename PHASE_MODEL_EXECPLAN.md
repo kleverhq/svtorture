@@ -25,7 +25,7 @@ This work does not add cases or weaken any standards oracle. It does not infer a
 - [x] (2026-07-21 23:31Z) Implemented cumulative phase execution and safe evaluator inference across open-source, commercial, and fake adapters.
 - [x] (2026-07-21 23:35Z) Updated metric scope, requirement-level PASS/FAIL/UNCLEAR presentation, evidence provenance, documentation, and Python/frontend tests.
 - [ ] Collect a fresh three-tool full campaign, build the dashboard, and validate desktop/mobile behavior and Chapter 5 evidence in Chrome (completed once before the review-added observation-kind field; fresh final collection remains).
-- [ ] Run focused and independent control reviews, fix every substantive finding, run `just ci`, finalize this plan, and remove the completed plan from the repository (focused model, integrity, dashboard, and docs reviews completed; all findings fixed and rechecked clean; independent control pass remains).
+- [ ] Run focused and independent control reviews, fix every substantive finding, run `just ci`, finalize this plan, and remove the completed plan from the repository (focused reviews and independent control pass completed; all findings fixed and rechecked clean; final `just ci`, plan finalization, and removal remain).
 
 ## Surprises & Discoveries
 
@@ -46,6 +46,9 @@ This work does not add cases or weaken any standards oracle. It does not infer a
 
 - Observation: Evidence attribution must bind more than the aggregate result mode.
   Evidence: Focused review found that stage kind, exact attempted-through phase, plan backend image/wrapper, and observation-free structural eligibility all needed strict validation to prevent tampered provenance or suppressed execution.
+
+- Observation: Re-evaluation alone does not prove that an observation could come from the registered adapter/profile.
+  Evidence: The independent control review found that campaign verification also needed to rebuild the expected plan and require the recorded stage provenance to be a legal execution prefix. It also found exact rebuilt image identity was missing from replay verification.
 
 ## Decision Log
 
@@ -212,3 +215,5 @@ Plan revision note (2026-07-21 20:11Z): Created the initial self-contained imple
 Plan revision note (2026-07-21 23:35Z): Recorded completion of the clean contract, runtime, evaluator, metric, dashboard, documentation, and focused test milestones. Added the verified Icarus and Verilator preprocessing command behavior that determined direct-phase metadata.
 
 Plan revision note (2026-07-22 00:22Z): Recorded focused review status and the resulting integrity hardening: severity-aware negative evidence, stage kind, exact plan backend identity, derived result-mode coherence, recomputed structural dispositions, exact replay provenance, coherent frontend fixtures, and unavailable-metric presentation.
+
+Plan revision note (2026-07-22 01:02Z): Recorded the independent control pass and its fixes: structural eligibility now precedes observed judgments, recorded stages must match a rebuilt legal plan prefix, private-wrapper unavailability is explicitly verified, and fallback rebuilds must match the recorded image ID. A follow-up control review reported no substantive findings.

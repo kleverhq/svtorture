@@ -242,6 +242,7 @@ def test_local_aggregate_preserves_the_measured_execution_platform(
                 "fake",
                 "simulator",
                 observations=(
+                    observation(attempted_through_phase=Phase.ELABORATE),
                     observation(
                         attempted_through_phase=Phase.SIMULATE,
                         stdout=marker,

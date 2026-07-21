@@ -68,6 +68,7 @@ def test_public_campaign_accepts_only_clean_trusted_public_data(
                 observations=(
                     observation(
                         attempted_through_phase=Phase.PARSE,
+                        stage_id="parse",
                         exit_code=1,
                         diagnostics=(targeted(case),),
                     ),
@@ -138,6 +139,7 @@ def test_publication_rejects_private_path_leaks(
         observations=(
             observation(
                 attempted_through_phase=Phase.PARSE,
+                stage_id="parse",
                 exit_code=1,
                 stdout="/home/private-user/licensed/output",
                 diagnostics=(targeted(case),),
@@ -173,6 +175,7 @@ def test_publication_rejects_credentials_in_bounded_evidence(
         observations=(
             observation(
                 attempted_through_phase=Phase.PARSE,
+                stage_id="parse",
                 exit_code=1,
                 stderr="token=github_pat_abcdefghijklmnopqrstuvwxyz012345",
                 diagnostics=(targeted(case),),
@@ -213,6 +216,7 @@ def test_trust_fields_cannot_be_replayed_outside_github_actions(
                 observations=(
                     observation(
                         attempted_through_phase=Phase.PARSE,
+                        stage_id="parse",
                         exit_code=1,
                         diagnostics=(targeted(case),),
                     ),
@@ -245,6 +249,7 @@ def test_publication_rechecks_judgment_against_observations(
                 observations=(
                     observation(
                         attempted_through_phase=Phase.PARSE,
+                        stage_id="parse",
                         exit_code=1,
                         diagnostics=(targeted(case),),
                     ),
@@ -288,6 +293,7 @@ def test_publication_requires_a_pullable_ghcr_digest(
                 observations=(
                     observation(
                         attempted_through_phase=Phase.PARSE,
+                        stage_id="parse",
                         exit_code=1,
                         diagnostics=(targeted(case),),
                     ),
@@ -364,6 +370,7 @@ def test_pages_publish_preserves_history_and_regenerates_index(
                 "fake",
                 "simulator",
                 observations=(
+                    observation(attempted_through_phase=Phase.ELABORATE),
                     observation(
                         attempted_through_phase=Phase.SIMULATE,
                         stdout=case.definition.oracle.marker or "",
@@ -383,6 +390,7 @@ def test_pages_publish_preserves_history_and_regenerates_index(
                 "fake",
                 "simulator",
                 observations=(
+                    observation(attempted_through_phase=Phase.ELABORATE),
                     observation(
                         attempted_through_phase=Phase.SIMULATE,
                         stdout=case.definition.oracle.marker or "",

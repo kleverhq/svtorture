@@ -611,42 +611,17 @@ def verify_campaign_against_catalog(catalog: Catalog, campaign: Campaign) -> Non
             raise CampaignError(f"campaign result {result.case_id} has a wrong target phase")
         campaign_tool = campaign_tools[result.tool_id]
         profile = campaign_tool.definition.profile(result.profile_id)
-        if result.observations:
-            reevaluated = evaluate(
-                loaded,
-                result.tool_id,
-                result.profile_id,
-                result.observations,
-            )
-            recorded = (
-                result.status,
-                result.reason,
-                result.target_phase,
-                result.evidence_mode,
-            )
-            expected = (
-                reevaluated.status,
-                reevaluated.reason,
-                reevaluated.target_phase,
-                reevaluated.evidence_mode,
-            )
-            if recorded != expected:
-                raise CampaignError(
-                    f"campaign judgment does not match observations for "
-                    f"{result.tool_id}/{result.profile_id}/{result.case_id}"
-                )
-            continue
-
         case = loaded.definition
+        structural_disposition: tuple[ResultStatus, ReasonCode] | None = None
         if not profile.supports(case.target_phase):
-            expected_disposition = (
+            structural_disposition = (
                 ResultStatus.UNSUPPORTED_CAPABILITY,
                 ReasonCode.UNSUPPORTED_PHASE,
             )
         else:
             applicability = case.revision_applicability[profile.standard_revision]
             if applicability is Applicability.NOT_APPLICABLE:
-                expected_disposition = (
+                structural_disposition = (
                     ResultStatus.NOT_APPLICABLE,
                     ReasonCode.NOT_APPLICABLE,
                 )
@@ -654,31 +629,97 @@ def verify_campaign_against_catalog(catalog: Catalog, campaign: Campaign) -> Non
                 Applicability.NOT_ASSESSED,
                 Applicability.CHANGED_EXPECTATION,
             }:
-                expected_disposition = (
+                structural_disposition = (
                     ResultStatus.UNSUPPORTED_REVISION,
                     ReasonCode.UNSUPPORTED_REVISION,
                 )
             elif campaign_tool.preparation_error is not None:
-                expected_disposition = (
+                structural_disposition = (
                     ResultStatus.HARNESS_ERROR,
                     ReasonCode.TOOL_PREPARATION_FAILURE,
                 )
-            else:
-                if result.status in {
-                    ResultStatus.UNSUPPORTED_CAPABILITY,
-                    ResultStatus.UNSUPPORTED_REVISION,
-                    ResultStatus.NOT_APPLICABLE,
-                }:
-                    raise CampaignError(
-                        f"campaign structural result is invalid for "
-                        f"{result.tool_id}/{result.profile_id}/{result.case_id}"
-                    )
+        if structural_disposition is not None:
+            if result.observations or (result.status, result.reason) != structural_disposition:
                 raise CampaignError(
-                    f"campaign result {result.case_id} lacks executable observations"
+                    f"campaign structural result is invalid for "
+                    f"{result.tool_id}/{result.profile_id}/{result.case_id}"
                 )
-        if (result.status, result.reason) != expected_disposition:
+            continue
+
+        if not result.observations:
+            unavailable_wrapper = (
+                campaign_tool.definition.execution.value == "local-wrapper"
+                and result.status is ResultStatus.SKIPPED_UNAVAILABLE
+                and result.reason is ReasonCode.TOOL_UNAVAILABLE
+            )
+            if unavailable_wrapper:
+                continue
+            raise CampaignError(f"campaign result {result.case_id} lacks executable observations")
+
+        adapter = adapter_for(
+            campaign_tool.definition.adapter,
+            rules_path=catalog.root / "tools" / "diagnostic-rules.toml",
+        )
+        image_reference = campaign_tool.image.reference if campaign_tool.image is not None else None
+        wrapper_reference = (
+            "$SVTORTURE_PRIVATE_WRAPPER"
+            if campaign_tool.definition.execution.value == "local-wrapper"
+            else None
+        )
+        try:
+            plan = adapter.build_plan(
+                loaded,
+                campaign_tool.definition,
+                profile,
+                image=image_reference,
+                wrapper=wrapper_reference,
+            )
+            validate_plan_for_profile(
+                plan,
+                loaded,
+                campaign_tool.definition,
+                profile,
+                image=image_reference,
+                wrapper=wrapper_reference,
+            )
+        except (ValueError, ValidationError) as error:
             raise CampaignError(
-                f"campaign structural result is invalid for "
+                f"campaign execution plan is invalid for "
+                f"{result.tool_id}/{result.profile_id}/{result.case_id}: {error}"
+            ) from error
+        expected_provenance = tuple(
+            (stage.id, stage.kind, stage.attempted_through_phase) for stage in plan.stages
+        )
+        recorded_provenance = tuple(
+            (item.stage_id, item.kind, item.attempted_through_phase) for item in result.observations
+        )
+        if recorded_provenance != expected_provenance[: len(recorded_provenance)]:
+            raise CampaignError(
+                f"campaign phase provenance does not match its execution plan for "
+                f"{result.tool_id}/{result.profile_id}/{result.case_id}"
+            )
+
+        reevaluated = evaluate(
+            loaded,
+            result.tool_id,
+            result.profile_id,
+            result.observations,
+        )
+        recorded = (
+            result.status,
+            result.reason,
+            result.target_phase,
+            result.evidence_mode,
+        )
+        expected = (
+            reevaluated.status,
+            reevaluated.reason,
+            reevaluated.target_phase,
+            reevaluated.evidence_mode,
+        )
+        if recorded != expected:
+            raise CampaignError(
+                f"campaign judgment does not match observations for "
                 f"{result.tool_id}/{result.profile_id}/{result.case_id}"
             )
 
