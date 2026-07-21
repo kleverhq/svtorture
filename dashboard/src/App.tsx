@@ -12,18 +12,17 @@ import {
   filtersFromSearch,
   filtersToSearch,
   selectedCampaign,
-  STATUS_LABELS,
-  STATUS_SYMBOLS,
 } from "./model";
+import { ThemeControl } from "./ThemeControl";
 import { useDataset } from "./useDataset";
 
 type View = "matrix" | "evidence" | "history" | "campaigns";
 
 const VIEWS: Array<{ id: View; label: string }> = [
-  { id: "matrix", label: "Requirements matrix" },
+  { id: "matrix", label: "Requirements" },
   { id: "evidence", label: "Case evidence" },
-  { id: "history", label: "History & compare" },
-  { id: "campaigns", label: "Campaign provenance" },
+  { id: "history", label: "Changes" },
+  { id: "campaigns", label: "Campaigns" },
 ];
 
 function initialView(): View {
@@ -52,7 +51,7 @@ export default function App() {
     return (
       <main className="loading">
         <span className="brand__mark">SV</span>
-        <p>Loading immutable campaign evidence…</p>
+        <p>Loading campaign evidence…</p>
       </main>
     );
   }
@@ -73,76 +72,93 @@ export default function App() {
       (!filters.date || item.finished_at.startsWith(filters.date)),
   );
   const repository = campaign?.trust.repository;
+  const inspectCase = (caseId: string) => {
+    setFilters((current) => ({ ...current, caseId }));
+    setView("evidence");
+  };
 
   return (
     <>
       <header className="site-header">
-        <a className="brand" href="?" aria-label="SVTORTURE home">
+        <a className="brand" href="?" aria-label="SVTORTURE dashboard home">
           <span className="brand__mark">SV</span>
           <span>
             <strong>SVTORTURE</strong>
-            <small>Standards evidence, not consensus</small>
+            <small>Conformance evidence</small>
           </span>
         </a>
         <div className="site-header__meta">
           <span className={`visibility visibility--${dataset.visibility}`}>
-            {dataset.visibility} dataset
+            {dataset.visibility}
           </span>
-          <span>{dataset.campaigns.length} immutable campaigns</span>
-          {repository && (
-            <a href={`https://github.com/${repository}`} aria-label="Repository">
-              Source
-            </a>
-          )}
+          <span>{dataset.campaigns.length} campaigns</span>
+          {repository && <a href={`https://github.com/${repository}`}>Source</a>}
+          <ThemeControl />
         </div>
       </header>
-      <main>
-        <section className="hero">
+
+      <main className="dashboard">
+        <section className="campaign-overview" aria-labelledby="overview-title">
           <div>
-            <span className="eyebrow">IEEE 1800 conformance framework</span>
-            <h1>
-              Verified support
-              <em>in the covered corpus.</em>
-            </h1>
+            <span className="section-label">
+              {filters.campaign ? "Selected campaign" : "Latest campaign"}
+            </span>
+            <h1 id="overview-title">Conformance overview</h1>
+            {campaign ? (
+              <p>
+                <strong>{new Date(campaign.finished_at).toLocaleString()}</strong>
+                <code>{campaign.id}</code>
+              </p>
+            ) : (
+              <p>No campaign matches the current selection.</p>
+            )}
           </div>
-          <p>
-            Requirements are scored once. Cases preserve phase, oracle, raw
-            observation, exact tool source, image identity, and a reproducible judgment.
-          </p>
+          {campaign && (
+            <dl className="campaign-overview__facts">
+              <div>
+                <dt>Run</dt>
+                <dd>{campaign.selection_name}</dd>
+              </div>
+              <div>
+                <dt>State</dt>
+                <dd className={campaign.complete ? "text-pass" : "text-issue"}>
+                  {campaign.complete ? "Complete" : "Incomplete"}
+                </dd>
+              </div>
+              <div>
+                <dt>Repository</dt>
+                <dd>
+                  <code>{campaign.repository.commit.slice(0, 12)}</code>
+                  {campaign.repository.dirty ? " · dirty" : " · clean"}
+                </dd>
+              </div>
+            </dl>
+          )}
         </section>
 
         <HeadlineMetrics dataset={dataset} campaign={campaign} />
-        <Filters
-          dataset={dataset}
-          filters={filters}
-          setFilters={setFilters}
-          onReset={() => setFilters({ ...EMPTY_FILTERS })}
-        />
 
-        <nav className="view-tabs" aria-label="Dashboard views">
-          {VIEWS.map((item) => (
-            <button
-              type="button"
-              key={item.id}
-              aria-current={view === item.id ? "page" : undefined}
-              onClick={() => setView(item.id)}
-            >
-              {item.label}
-            </button>
-          ))}
-        </nav>
-
-        <aside className="status-legend" aria-label="Result status legend">
-          {Object.entries(STATUS_LABELS).map(([status, label]) => (
-            <span className={`legend legend--${status}`} key={status}>
-              <b aria-hidden="true">{STATUS_SYMBOLS[status as keyof typeof STATUS_SYMBOLS]}</b>
-              {label}
-            </span>
-          ))}
-          <span className="legend legend--known-fail">
-            <b aria-hidden="true">×</b>Known fail
-          </span>
-        </aside>
+        <section className="workspace-bar" aria-label="Dashboard controls">
+          <nav className="view-tabs" aria-label="Dashboard views">
+            {VIEWS.map((item) => (
+              <button
+                type="button"
+                key={item.id}
+                aria-current={view === item.id ? "page" : undefined}
+                onClick={() => setView(item.id)}
+              >
+                {item.label}
+              </button>
+            ))}
+          </nav>
+          <Filters
+            dataset={dataset}
+            campaign={campaign}
+            filters={filters}
+            setFilters={setFilters}
+            onReset={() => setFilters({ ...EMPTY_FILTERS })}
+          />
+        </section>
 
         {view === "matrix" && (
           <MatrixView
@@ -150,6 +166,7 @@ export default function App() {
             cases={filtered.cases}
             campaign={campaign}
             toolFilter={filters.tool}
+            onInspectCase={inspectCase}
           />
         )}
         {view === "evidence" && (
@@ -158,11 +175,16 @@ export default function App() {
             cases={filtered.cases}
             campaign={campaign}
             toolFilter={filters.tool}
+            selectedCaseId={filters.caseId}
+            onSelectCase={(caseId) =>
+              setFilters((current) => ({ ...current, caseId }))
+            }
           />
         )}
         {view === "history" && (
           <HistoryView
-            points={dataset.metrics}
+            dataset={dataset}
+            campaign={campaign}
             toolFilter={filters.tool}
             dateFilter={filters.date}
           />
@@ -171,9 +193,7 @@ export default function App() {
       </main>
       <footer>
         <span>SVTORTURE · Apache-2.0</span>
-        <span>
-          Corpus consensus never defines the oracle. IEEE requirement metadata does.
-        </span>
+        <span>Immutable campaign evidence</span>
       </footer>
     </>
   );

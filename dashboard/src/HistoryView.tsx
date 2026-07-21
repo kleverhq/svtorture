@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef } from "react";
 
-import type { MetricPoint } from "./types";
+import { compareCampaigns } from "./model";
+import type { Campaign, Dataset, MetricPoint } from "./types";
 
 function escapeHtml(value: unknown): string {
   return String(value)
@@ -51,7 +52,7 @@ function HistoryChart({ points }: { points: MetricPoint[] }) {
         grid: { left: 50, right: 24, top: 46, bottom: 60 },
         legend: {
           top: 4,
-          textStyle: { color: "#c8d5d1" },
+          textStyle: { color: "var(--text-secondary)" },
         },
         tooltip: {
           trigger: "axis",
@@ -85,17 +86,17 @@ function HistoryChart({ points }: { points: MetricPoint[] }) {
         },
         xAxis: {
           type: "time",
-          axisLabel: { color: "#91a49f" },
-          axisLine: { lineStyle: { color: "#3d514d" } },
+          axisLabel: { color: "var(--text-muted)" },
+          axisLine: { lineStyle: { color: "var(--line-strong)" } },
         },
         yAxis: {
           type: "value",
           min: 0,
           max: 100,
           name: "verified %",
-          nameTextStyle: { color: "#91a49f" },
-          axisLabel: { color: "#91a49f", formatter: "{value}%" },
-          splitLine: { lineStyle: { color: "#263a36" } },
+          nameTextStyle: { color: "var(--text-muted)" },
+          axisLabel: { color: "var(--text-muted)", formatter: "{value}%" },
+          splitLine: { lineStyle: { color: "var(--line)" } },
         },
         series: [...groups.entries()].map(([name, values]) => {
           const sorted = [...values].sort((left, right) =>
@@ -125,7 +126,7 @@ function HistoryChart({ points }: { points: MetricPoint[] }) {
                 symbol: corpusChanged ? "diamond" : "circle",
                 symbolSize: corpusChanged ? 15 : 9,
                 itemStyle: corpusChanged
-                  ? { borderWidth: 3, borderColor: "#ffd166" }
+                  ? { borderWidth: 3, borderColor: "var(--issue)" }
                   : {},
               };
             }),
@@ -145,24 +146,27 @@ function HistoryChart({ points }: { points: MetricPoint[] }) {
 }
 
 export function HistoryView({
-  points,
+  dataset,
+  campaign,
   toolFilter,
   dateFilter,
 }: {
-  points: MetricPoint[];
+  dataset: Dataset;
+  campaign?: Campaign | undefined;
   toolFilter: string;
   dateFilter: string;
 }) {
+  const comparison = compareCampaigns(dataset, campaign);
   const visible = useMemo(
     () =>
-      points
+      dataset.metrics
         .filter(
           (point) =>
             (!toolFilter || `${point.tool_id}/${point.profile_id}` === toolFilter) &&
             (!dateFilter || point.timestamp.startsWith(dateFilter)),
         )
         .sort((left, right) => right.timestamp.localeCompare(left.timestamp)),
-    [dateFilter, points, toolFilter],
+    [dataset.metrics, dateFilter, toolFilter],
   );
   const historyGroups = new Map<string, MetricPoint[]>();
   for (const point of visible) {
@@ -189,16 +193,60 @@ export function HistoryView({
   }, 0);
   return (
     <section className="panel history" aria-labelledby="history-title">
-      <div className="panel__heading">
+      <div className="panel__heading panel__heading--compact">
         <div>
-          <span className="eyebrow">History and comparison</span>
-          <h2 id="history-title">Verified support over time</h2>
+          <h2 id="history-title">History and changes</h2>
+          <span>{visible.length} metric points · {corpusChanges} corpus boundaries</span>
         </div>
-        <p>
-          Diamond points mark corpus/denominator boundaries. {corpusChanges} visible
-          corpus changes.
-        </p>
       </div>
+      {comparison.previousCampaignId ? (
+        <section className="change-summary" aria-label="Changes from previous campaign">
+          <div>
+            <span>Regressions</span>
+            <strong>{comparison.regressions.length}</strong>
+          </div>
+          <div>
+            <span>New passes</span>
+            <strong>{comparison.newPasses.length}</strong>
+          </div>
+          <div>
+            <span>Other judgment changes</span>
+            <strong>{comparison.otherChanges.length}</strong>
+          </div>
+          <div>
+            <span>Tool revisions changed</span>
+            <strong>{comparison.toolRevisionChanges.length}</strong>
+          </div>
+          <div>
+            <span>Measurement boundary</span>
+            <strong>
+              {comparison.corpusChanged || comparison.denominatorChanged ? "Yes" : "No"}
+            </strong>
+          </div>
+          <p>
+            Compared with <code>{comparison.previousCampaignId}</code>
+          </p>
+        </section>
+      ) : (
+        <div className="comparison-empty">
+          <strong>No comparable previous campaign</strong>
+          <span>Change counts become available after another run with the same tool profiles.</span>
+        </div>
+      )}
+      {(comparison.regressions.length > 0 || comparison.newPasses.length > 0) && (
+        <div className="change-details">
+          {comparison.regressions.map((change) => (
+            <span className="change change--regression" key={`regression:${change.caseId}:${change.toolId}:${change.profileId}`}>
+              Regression · {change.caseId} · {change.toolId}/{change.profileId}
+            </span>
+          ))}
+          {comparison.newPasses.map((change) => (
+            <span className="change change--pass" key={`pass:${change.caseId}:${change.toolId}:${change.profileId}`}>
+              New pass · {change.caseId} · {change.toolId}/{change.profileId}
+            </span>
+          ))}
+        </div>
+      )}
       <HistoryChart points={visible} />
       <div className="history__table-wrap">
         <table className="history__table">

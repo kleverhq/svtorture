@@ -1,10 +1,16 @@
 import type { Dispatch, SetStateAction } from "react";
 
-import type { Filters as FilterValues } from "./model";
-import type { Dataset } from "./types";
+import {
+  STATUS_GROUP_LABELS,
+  STATUS_GROUP_ORDER,
+  statusGroup,
+} from "./model";
+import type { Filters as FilterValues, StatusGroup } from "./model";
+import type { Campaign, Dataset } from "./types";
 
 interface FilterProps {
   dataset: Dataset;
+  campaign?: Campaign | undefined;
   filters: FilterValues;
   setFilters: Dispatch<SetStateAction<FilterValues>>;
   onReset: () => void;
@@ -14,41 +20,105 @@ function choices(values: Array<string | undefined>): string[] {
   return [...new Set(values.filter((value): value is string => Boolean(value)))].sort();
 }
 
-export function Filters({ dataset, filters, setFilters, onReset }: FilterProps) {
+export function Filters({
+  dataset,
+  campaign,
+  filters,
+  setFilters,
+  onReset,
+}: FilterProps) {
   const update = (name: keyof FilterValues, value: string | boolean) => {
-    setFilters((current) => ({ ...current, [name]: value }));
+    setFilters((current) => {
+      if (name === "statusGroup") {
+        return { ...current, status: "", statusGroup: String(value) };
+      }
+      if (name === "status") {
+        return { ...current, status: String(value), statusGroup: "" };
+      }
+      return { ...current, [name]: value };
+    });
   };
   const profiles = choices(
-    dataset.campaigns.flatMap((campaign) =>
-      campaign.tools.flatMap((tool) =>
+    dataset.campaigns.flatMap((item) =>
+      item.tools.flatMap((tool) =>
         tool.profile_ids.map((profile) => `${tool.definition.id}/${profile}`),
       ),
     ),
   );
   const statuses = choices(
-    dataset.campaigns.flatMap((campaign) =>
-      campaign.results.map((result) => result.status),
+    dataset.campaigns.flatMap((item) =>
+      item.results.map((result) => result.status),
     ),
   );
   const reasons = choices(
-    dataset.campaigns.flatMap((campaign) =>
-      campaign.results.map((result) => result.reason),
+    dataset.campaigns.flatMap((item) =>
+      item.results.map((result) => result.reason),
     ),
   );
   const tags = choices([
     ...dataset.requirements.flatMap((requirement) => requirement.tags),
     ...dataset.cases.flatMap((testCase) => testCase.tags),
   ]);
+  const scopedResults =
+    campaign?.results.filter(
+      (result) =>
+        !filters.tool || `${result.tool_id}/${result.profile_id}` === filters.tool,
+    ) ?? [];
+  const groupCounts = Object.fromEntries(
+    STATUS_GROUP_ORDER.map((group) => [
+      group,
+      scopedResults.filter((result) => statusGroup(result.status) === group).length,
+    ]),
+  ) as Record<StatusGroup, number>;
 
   return (
-    <section className="filters" aria-label="Evidence filters">
+    <div className="filters">
+      <div className="filters__quick" aria-label="Result groups">
+        <span className="filters__quick-label">Show</span>
+        <button
+          type="button"
+          className="filter-chip"
+          aria-pressed={!filters.statusGroup}
+          onClick={() => update("statusGroup", "")}
+        >
+          All <b>{scopedResults.length}</b>
+        </button>
+        {STATUS_GROUP_ORDER.map((group) => (
+          <button
+            type="button"
+            className={`filter-chip filter-chip--${group}`}
+            aria-pressed={filters.statusGroup === group}
+            key={group}
+            onClick={() => update("statusGroup", group)}
+          >
+            {STATUS_GROUP_LABELS[group]} <b>{groupCounts[group]}</b>
+          </button>
+        ))}
+        <button
+          type="button"
+          className="filter-chip"
+          aria-pressed={filters.changed}
+          onClick={() => update("changed", !filters.changed)}
+        >
+          Changed
+        </button>
+        <button
+          type="button"
+          className="filter-chip"
+          aria-pressed={filters.disagreement}
+          onClick={() => update("disagreement", !filters.disagreement)}
+        >
+          Disagreement
+        </button>
+      </div>
+
       <div className="filters__primary">
         <label className="search">
-          <span>Search evidence</span>
+          <span>Search</span>
           <input
             type="search"
             value={filters.search}
-            placeholder="requirement, case, clause, semantic…"
+            placeholder="Requirement, case, clause, diagnostic…"
             onChange={(event) => update("search", event.target.value)}
           />
         </label>
@@ -61,9 +131,9 @@ export function Filters({ dataset, filters, setFilters, onReset }: FilterProps) 
             <option value="">Latest campaign</option>
             {[...dataset.campaigns]
               .sort((left, right) => right.finished_at.localeCompare(left.finished_at))
-              .map((campaign) => (
-                <option key={campaign.id} value={campaign.id}>
-                  {campaign.finished_at.slice(0, 10)} · {campaign.id}
+              .map((item) => (
+                <option key={item.id} value={item.id}>
+                  {item.finished_at.slice(0, 10)} · {item.id}
                 </option>
               ))}
           </select>
@@ -81,11 +151,12 @@ export function Filters({ dataset, filters, setFilters, onReset }: FilterProps) 
           </select>
         </label>
         <button type="button" className="button button--quiet" onClick={onReset}>
-          Clear filters
+          Clear
         </button>
       </div>
-      <details>
-        <summary>Precise filters</summary>
+
+      <details className="filters__advanced">
+        <summary>Advanced filters</summary>
         <div className="filters__grid">
           <label>
             <span>Revision</span>
@@ -171,7 +242,7 @@ export function Filters({ dataset, filters, setFilters, onReset }: FilterProps) 
             </select>
           </label>
           <label>
-            <span>Result</span>
+            <span>Exact result</span>
             <select
               value={filters.status}
               onChange={(event) => update("status", event.target.value)}
@@ -202,24 +273,8 @@ export function Filters({ dataset, filters, setFilters, onReset }: FilterProps) 
               onChange={(event) => update("date", event.target.value)}
             />
           </label>
-          <label className="check">
-            <input
-              type="checkbox"
-              checked={filters.changed}
-              onChange={(event) => update("changed", event.target.checked)}
-            />
-            <span>Changed from previous campaign</span>
-          </label>
-          <label className="check">
-            <input
-              type="checkbox"
-              checked={filters.disagreement}
-              onChange={(event) => update("disagreement", event.target.checked)}
-            />
-            <span>Tool disagreement</span>
-          </label>
         </div>
       </details>
-    </section>
+    </div>
   );
 }

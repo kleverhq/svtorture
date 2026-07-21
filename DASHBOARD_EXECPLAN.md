@@ -21,12 +21,12 @@ This work will not change campaign, requirement, result, metric, or publication 
 - [x] (2026-07-21 11:14Z) Read the supplied `review.md`, current dashboard components, model, tests, stylesheet, package configuration, local guidance, and current aggregate dataset.
 - [x] (2026-07-21 11:17Z) Captured matrix, evidence, history, and campaign desktop baselines plus matrix/evidence mobile baselines under `/tmp/svtorture-dashboard-visual-before/` and inspected them.
 - [x] (2026-07-21 11:20Z) Added Auto/Light/Dark preference state and persistence, pre-render application, five grouped statuses, URL-backed `statusGroup`/`caseId`, comparable-campaign change analysis, and deterministic tests (12 frontend tests pass).
-- [ ] Replace the promotional top section and scattered controls with a compact overview and sticky global control bar.
-- [ ] Refactor the requirements matrix into a dense sticky-column table with a separate detail inspector.
-- [ ] Refactor case evidence into a master-detail investigation surface and connect matrix drill-down to it.
-- [ ] Add change analysis to history and simplify campaign provenance into compact drill-down content.
-- [ ] Replace the dark-only decorative stylesheet with semantic light/dark tokens and compact responsive layouts.
-- [ ] Exercise all views and interactive states visually in Auto, Light, and Dark at desktop and mobile widths.
+- [x] (2026-07-21 11:38Z) Replaced the hero, tall cards, distributed tabs/filters, detailed legend, and ideological footer with a compact campaign overview, summary strip, tool rows, and sticky unified workspace controls.
+- [x] (2026-07-21 11:38Z) Refactored the requirements matrix into 54-pixel virtual rows with sticky Clause/Requirement columns, grouped verdicts, and a separate requirement/case inspector.
+- [x] (2026-07-21 11:38Z) Refactored case evidence into URL-addressable master-detail and connected matrix supporting-case actions to the selected evidence case.
+- [x] (2026-07-21 11:38Z) Added comparable-campaign change analysis before the history chart and converted campaign provenance into a compact expandable list.
+- [x] (2026-07-21 11:38Z) Replaced the dark-only decorative stylesheet with semantic light/dark tokens, system fonts, compact responsive layouts, focus states, and internal overflow boundaries; added a local data-URL favicon.
+- [ ] Exercise all views and interactive states visually in Auto, Light, and Dark at desktop and mobile widths (completed: all four desktop views, Auto dark, explicit light, true 390-pixel matrix, matrix inspector, selected evidence and open observation; remaining: actual UI theme toggles/reload, filter/empty states, Firefox, and multi-campaign comparison).
 - [ ] Run all frontend and repository gates, perform focused reviews and a fresh control review, fix findings, record outcomes, commit the implementation, and remove this completed plan.
 
 ## Surprises & Discoveries
@@ -41,12 +41,16 @@ This work will not change campaign, requirement, result, metric, or publication 
   Evidence: `dashboard/src/model.ts` implements `filtersFromSearch` and `filtersToSearch`; `dashboard/src/App.tsx` reads `view` from the query string.
 - Observation: The baseline confirms the review quantitatively: at 1440×1200 the matrix header only begins around the bottom 275 pixels, after the hero, 255-pixel metrics, filters, tabs, and a ten-item legend.
   Evidence: `/tmp/svtorture-dashboard-visual-before/matrix-desktop.png` shows no requirement rows in the initial viewport.
-- Observation: The current 390-pixel layout has page-level clipping before the working interface is reached.
-  Evidence: `/tmp/svtorture-dashboard-visual-before/matrix-mobile.png` crops the hero sentence and wide metric content at the right edge, and the first viewport contains branding plus only part of two metric cards.
+- Observation: The first narrow baseline looked clipped, but Chrome's direct headless `--window-size=390,844` produced a 390-pixel bitmap from a minimum 500-pixel layout viewport; it was not a reliable responsive measurement.
+  Evidence: Chrome DevTools Protocol later reported `innerWidth: 500` for the direct screenshot. Using `Emulation.setDeviceMetricsOverride` produced a true `innerWidth: 390`, `documentScrollWidth: 375`, and a complete responsive light-theme screenshot without page overflow.
 - Observation: The server repeatedly requests a missing favicon during every screenshot route.
   Evidence: the baseline server log records HTTP 404 for `/favicon.ico`; a small inline or committed local favicon can remove avoidable console/network noise without adding a dependency.
 - Observation: This Node 25/Vitest environment exposed a nonfunctional built-in `window.localStorage` shim unless a storage file is configured.
   Evidence: the first component test run warned about `--localstorage-file` and its `getItem`, `setItem`, and `clear` members were not functions. The production theme code already fails safely; tests now install a deterministic in-memory `Storage` implementation.
+- Observation: CSS custom-property color strings are retained by ECharts' SVG renderer, allowing the chart text/grid palette to follow root theme changes without disposing and recreating the chart.
+  Evidence: Auto-dark and explicit-light history screenshots render chart axes and grid from `var(--text-muted)` and `var(--line)` values while the existing series data remains unchanged.
+- Observation: The redesign moves actual requirement rows from below the initial desktop viewport to roughly the top half of a 1440×1200 viewport.
+  Evidence: `/tmp/svtorture-dashboard-visual-after/matrix-light-desktop.png` shows the heading plus eleven compact requirement rows, compared with zero rows in the baseline screenshot.
 
 ## Decision Log
 
@@ -77,15 +81,15 @@ This work will not change campaign, requirement, result, metric, or publication 
 
 ## Outcomes & Retrospective
 
-The foundation milestone is complete without schema or dependency changes. Theme state defaults safely to Auto and is applied before React renders; exact statuses now have a tested five-group presentation mapping; URL state includes grouped status and selected evidence case; and campaign comparison refuses unrelated tool/profile sets. Layout and palette work remain.
+The evidence-first layout milestone is complete without schema or dependency changes. Theme state defaults safely to Auto and is applied before React renders; exact statuses have a tested five-group presentation mapping; broad and exact filters cannot conflict; URL state includes grouped status and selected evidence case; and campaign comparison refuses unrelated tool/profile sets. The desktop matrix now exposes eleven rows in the first viewport, its inspector drills into the evidence pane, evidence uses a structured master-detail layout, and history/provenance lead with operational content. Fourteen frontend tests, strict TypeScript, and the production build pass. Remaining work is final interaction/cross-browser visual verification, repository gates, review, and cleanup.
 
 ## Context and Orientation
 
 SVTORTURE turns SystemVerilog tool runs into immutable campaign JSON files. `src/svtorture/publish.py` exports one or more campaigns into `dashboard/dist/data/dataset.json`. The React application fetches that file through `dashboard/src/useDataset.ts`; there is no live backend. `dashboard/src/types.ts` describes the exported data, and those types must remain compatible.
 
-`dashboard/src/App.tsx` owns the selected top-level view and URL-backed filters. It currently renders a sticky brand header, a large hero statement, tool metric cards, filters, tabs, a detailed legend, and one of four views. `dashboard/src/Filters.tsx` renders campaign/tool/search and advanced filters. `dashboard/src/model.ts` parses URL filters, selects campaigns, groups results, compares campaigns, and filters requirements/cases. `dashboard/src/model.test.ts` is the deterministic unit coverage for those transformations.
+`dashboard/src/App.tsx` owns the selected top-level view and URL-backed filters. It now renders a compact sticky brand header, selected-campaign facts, summary metrics, unified sticky workspace controls, and one of four work views. `dashboard/src/Filters.tsx` renders top-level status chips plus campaign/tool/search and hidden advanced exact filters. `dashboard/src/model.ts` parses URL filters, selects campaigns, groups results, compares only profile-compatible campaigns, and filters requirements/cases. `dashboard/src/model.test.ts`, `dashboard/src/Filters.test.tsx`, and `dashboard/src/ThemeControl.test.tsx` provide deterministic coverage.
 
-`dashboard/src/HeadlineMetrics.tsx` currently renders tall cards for headline tool metrics. `dashboard/src/MatrixView.tsx` uses TanStack Table and TanStack Virtual to render requirement rows; TanStack Virtual means only rows near the scroll viewport are mounted. `dashboard/src/EvidenceView.tsx` renders every case as a large card with expandable tool observations. `dashboard/src/HistoryView.tsx` renders an ECharts time series and metric table. `dashboard/src/CampaignView.tsx` renders campaign provenance cards. `dashboard/src/StatusBadge.tsx` maps detailed statuses to visual labels. `dashboard/src/styles.css` contains all visual and responsive behavior and is currently dark-only with many literal colors.
+`dashboard/src/HeadlineMetrics.tsx` renders a compact campaign summary and per-tool coverage rows. `dashboard/src/MatrixView.tsx` uses TanStack Table and TanStack Virtual for fixed-height requirement rows plus a separate inspector; TanStack Virtual means only rows near the scroll viewport are mounted. `dashboard/src/EvidenceView.tsx` renders a case list and selected structured evidence pane. `dashboard/src/HistoryView.tsx` renders change analysis before its ECharts time series and metric table. `dashboard/src/CampaignView.tsx` renders compact campaign rows with expandable provenance. `dashboard/src/ThemeControl.tsx` owns Auto/Light/Dark preference. `dashboard/src/StatusBadge.tsx` can render grouped or exact status. `dashboard/src/styles.css` now owns semantic light/dark tokens and responsive density.
 
 A status group is a broad UI category derived from an exact stored `Status`. `conforming` maps to Pass. `nonconforming` maps to Fail, including a known-fail annotation. Both unsupported statuses map to Unsupported. `harness-error` and `inconclusive` map to Infra/unclear because neither provides verified support. `not-applicable`, `skipped-unavailable`, and `not-run` map to Unscored. This mapping must never change campaign data or the evaluator.
 
@@ -239,3 +243,5 @@ Revision note (2026-07-21 11:14Z): Created the initial self-contained plan from 
 Revision note (2026-07-21 11:17Z): Recorded baseline desktop/mobile screenshot evidence, initial-viewport density, mobile clipping, and the repeated missing-favicon request before implementation.
 
 Revision note (2026-07-21 11:20Z): Recorded the completed theme/model foundation, comparable-campaign rule, deterministic storage test shim, and passing frontend tests.
+
+Revision note (2026-07-21 11:38Z): Recorded the complete evidence-first component/layout/palette milestone, corrected the headless mobile measurement artifact, added visual evidence, updated current architecture orientation, and narrowed remaining validation work.

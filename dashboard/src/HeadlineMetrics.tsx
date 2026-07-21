@@ -1,3 +1,4 @@
+import { compareCampaigns, statusGroup } from "./model";
 import type { Campaign, Dataset } from "./types";
 
 export function HeadlineMetrics({
@@ -7,6 +8,17 @@ export function HeadlineMetrics({
   dataset: Dataset;
   campaign?: Campaign | undefined;
 }) {
+  const comparison = compareCampaigns(dataset, campaign);
+  const results = campaign?.results ?? [];
+  const counts = {
+    pass: results.filter((result) => statusGroup(result.status) === "pass").length,
+    fail: results.filter((result) => statusGroup(result.status) === "fail").length,
+    unsupported: results.filter(
+      (result) => statusGroup(result.status) === "unsupported",
+    ).length,
+    issue: results.filter((result) => statusGroup(result.status) === "issue").length,
+  };
+  const knownFailures = results.filter((result) => result.known_issue).length;
   const headlineProfiles = new Set(
     campaign?.tools.flatMap((tool) =>
       tool.definition.profiles
@@ -14,93 +26,82 @@ export function HeadlineMetrics({
         .map((profile) => `${tool.definition.id}/${profile.id}`),
     ) ?? [],
   );
-  const metrics = dataset.metrics.filter(
+  const points = dataset.metrics.filter(
     (metric) =>
-      (!campaign || metric.campaign_id === campaign.id) &&
-      (!campaign || headlineProfiles.has(`${metric.tool_id}/${metric.profile_id}`)),
+      metric.campaign_id === campaign?.id &&
+      headlineProfiles.has(`${metric.tool_id}/${metric.profile_id}`),
   );
-  const latestTimestamp = [...metrics]
-    .map((metric) => metric.timestamp)
-    .sort()
-    .at(-1);
-  const points = metrics.filter((metric) => metric.timestamp === latestTimestamp);
+
+  const summary = [
+    {
+      label: "Requirements",
+      value: dataset.requirements.length,
+      note: `${campaign?.case_ids.length ?? 0} selected cases`,
+    },
+    {
+      label: "Tools",
+      value: campaign?.tools.length ?? 0,
+      note: campaign?.missing_tool_ids.length
+        ? `${campaign.missing_tool_ids.length} missing`
+        : "all expected present",
+    },
+    { label: "Passing results", value: counts.pass, note: `${results.length} total` },
+    {
+      label: "Failing results",
+      value: counts.fail,
+      note: knownFailures ? `${knownFailures} known` : "none marked known",
+    },
+    {
+      label: "Unsupported",
+      value: counts.unsupported,
+      note: "capability or revision",
+    },
+    { label: "Infra / unclear", value: counts.issue, note: "requires inspection" },
+    {
+      label: "Regressions",
+      value: comparison.previousCampaignId ? comparison.regressions.length : "—",
+      note: comparison.previousCampaignId ? "from comparable prior" : "no comparable prior",
+    },
+  ];
+
   return (
-    <section className="metric-strip" aria-label="Headline metrics">
-      {points.map((metric) => (
-        <article className="metric-card" key={`${metric.tool_id}/${metric.profile_id}`}>
-          <div className="metric-card__topline">
-            <strong>{metric.tool_id}</strong>
-            <span>{metric.profile_id}</span>
+    <section className="overview-metrics" aria-label="Campaign summary">
+      <div className="summary-strip">
+        {summary.map((item) => (
+          <div className="summary-stat" key={item.label}>
+            <span>{item.label}</span>
+            <strong>{item.value}</strong>
+            <small>{item.note}</small>
           </div>
-          <div className="metric-card__score">
-            {metric.valid ? `${metric.numerator}/${metric.denominator}` : "Invalid"}
-          </div>
-          <p>{metric.label}</p>
-          <span className="metric-card__scope">
-            {metric.profile_id === "simulator"
-              ? "Scope includes simulation"
-              : metric.profile_id === "elaborator"
-                ? "Scope ends at elaboration"
-                : "Scope ends at parsing"}
-          </span>
-          <div className="meter" aria-hidden="true">
-            <span
-              style={{
-                width: `${
-                  metric.denominator ? (100 * metric.numerator) / metric.denominator : 0
-                }%`,
-              }}
-            />
-          </div>
-          <details>
-            <summary>
-              {metric.revision} · {metric.complete ? "complete" : "incomplete"}
-            </summary>
-            <dl className="compact-dl">
-              <div>
-                <dt>Corpus scope</dt>
-                <dd>{metric.corpus_coverage}</dd>
+        ))}
+      </div>
+      <div className="tool-metrics" aria-label="Verified support by tool">
+        {points.map((metric) => {
+          const percentage = metric.denominator
+            ? (100 * metric.numerator) / metric.denominator
+            : 0;
+          return (
+            <article key={`${metric.tool_id}/${metric.profile_id}`}>
+              <div className="tool-metric__identity">
+                <strong>{metric.tool_id}</strong>
+                <span>{metric.profile_id}</span>
               </div>
-              <div>
-                <dt>Executed</dt>
-                <dd>{metric.execution_coverage}</dd>
+              <div className="tool-metric__score">
+                <strong>
+                  {metric.valid ? `${metric.numerator}/${metric.denominator}` : "Invalid"}
+                </strong>
+                <span>{metric.valid ? `${percentage.toFixed(0)}% verified` : metric.label}</span>
               </div>
-              <div>
-                <dt>Conforming</dt>
-                <dd>{metric.conforming}</dd>
+              <div className="meter" aria-label={`${percentage.toFixed(0)} percent verified`}>
+                <span style={{ width: `${percentage}%` }} />
               </div>
-              <div>
-                <dt>Nonconforming</dt>
-                <dd>{metric.nonconforming}</dd>
-              </div>
-              <div>
-                <dt>Inconclusive</dt>
-                <dd>{metric.inconclusive}</dd>
-              </div>
-              <div>
-                <dt>Unsupported</dt>
-                <dd>{metric.unsupported}</dd>
-              </div>
-              <div>
-                <dt>Infrastructure</dt>
-                <dd>{metric.infrastructure_state}</dd>
-              </div>
-              <div>
-                <dt>Corpus SHA</dt>
-                <dd>
-                  <code title={metric.corpus_sha}>{metric.corpus_sha.slice(0, 12)}</code>
-                </dd>
-              </div>
-              <div>
-                <dt>Campaign</dt>
-                <dd>
-                  <code>{metric.campaign_id}</code>
-                </dd>
-              </div>
-            </dl>
-          </details>
-        </article>
-      ))}
+              <span className="tool-metric__state">
+                {metric.revision} · {metric.complete ? "complete" : "incomplete"}
+              </span>
+            </article>
+          );
+        })}
+      </div>
     </section>
   );
 }

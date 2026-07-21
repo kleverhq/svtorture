@@ -11,7 +11,7 @@ import {
   statusGroup,
 } from "./model";
 import { makeTestDataset } from "./testDataset";
-import type { Campaign, Result } from "./types";
+import type { Campaign, MetricPoint, Result } from "./types";
 
 const dataset = makeTestDataset();
 
@@ -140,6 +140,56 @@ describe("requirements model", () => {
       "ch13-output-copyout-width",
     ]);
     expect(comparison.regressions).toHaveLength(0);
+  });
+
+  it("reports tool, corpus, and denominator boundaries", () => {
+    const seed = dataset.campaigns[0];
+    if (!seed) throw new Error("test dataset has no campaign");
+    const prior = {
+      ...seed,
+      id: "20260101T000000Z-prior",
+      finished_at: "2026-01-01T00:00:01Z",
+    } satisfies Campaign;
+    const current = {
+      ...seed,
+      id: "20260102T000000Z-current",
+      started_at: "2026-01-02T00:00:00Z",
+      finished_at: "2026-01-02T00:00:01Z",
+      hashes: { ...seed.hashes, cases: "1".repeat(64) },
+      tools: seed.tools.map((tool) => ({ ...tool, reported_version: "test-tool 2.0" })),
+    } satisfies Campaign;
+    const baseMetric = {
+      label: "verified support in the covered corpus",
+      revision: "1800-2023",
+      tool_id: "fake",
+      profile_id: "simulator",
+      numerator: 1,
+      denominator: 1,
+      corpus_sha: "0".repeat(64),
+      complete: true,
+      valid: true,
+      corpus_coverage: 1,
+      execution_coverage: 1,
+      conforming: 1,
+      nonconforming: 0,
+      inconclusive: 0,
+      unsupported: 0,
+      infrastructure_state: "complete",
+      timestamp: prior.finished_at,
+      exact_tags: [],
+      repository_commit: "0".repeat(40),
+    };
+    const metrics = [
+      { ...baseMetric, campaign_id: prior.id },
+      { ...baseMetric, campaign_id: current.id, denominator: 2 },
+    ] satisfies MetricPoint[];
+    const comparison = compareCampaigns(
+      { ...dataset, campaigns: [prior, current], metrics },
+      current,
+    );
+    expect(comparison.toolRevisionChanges).toHaveLength(1);
+    expect(comparison.corpusChanged).toBe(true);
+    expect(comparison.denominatorChanged).toBe(true);
   });
 
   it("classifies a loss of a verified pass as a regression", () => {

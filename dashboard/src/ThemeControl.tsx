@@ -44,7 +44,11 @@ export function ThemeControl() {
       <select
         aria-label="Theme"
         value={theme}
-        onChange={(event) => setTheme(event.target.value as ThemePreference)}
+        onChange={(event) => {
+          if (isThemePreference(event.target.value)) {
+            setTheme(event.target.value);
+          }
+        }}
       >
         <option value="auto">Auto</option>
         <option value="light">Light</option>

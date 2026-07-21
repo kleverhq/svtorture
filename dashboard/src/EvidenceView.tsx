@@ -1,6 +1,11 @@
 import { useMemo, useState } from "react";
 
-import { resultsByKey } from "./model";
+import {
+  resultsByKey,
+  STATUS_GROUP_LABELS,
+  STATUS_GROUP_SYMBOLS,
+  statusGroup,
+} from "./model";
 import { StatusBadge } from "./StatusBadge";
 import type {
   Campaign,
@@ -60,7 +65,7 @@ function ObservationDetail({
     <div className="evidence-detail">
       <p>{result.summary}</p>
       {tool && (
-        <dl className="compact-dl evidence-detail__identity">
+        <dl className="fact-grid evidence-detail__identity">
           <div>
             <dt>Tool source</dt>
             <dd>
@@ -91,7 +96,7 @@ function ObservationDetail({
       {result.observations.map((observation) => (
         <article className="observation" key={observation.stage_id}>
           <div className="observation__facts">
-            <span>{observation.stage_id}</span>
+            <strong>{observation.stage_id}</strong>
             <span>{observation.phase}</span>
             <span>{observation.outcome}</span>
             <span>
@@ -128,7 +133,7 @@ function ObservationDetail({
         <div className="reproduce">
           <code>{reproduce}</code>
           <button type="button" className="button button--quiet" onClick={copy}>
-            {copied ? "Copied" : "Copy reproduction command"}
+            {copied ? "Copied" : "Copy command"}
           </button>
         </div>
       )}
@@ -141,11 +146,15 @@ export function EvidenceView({
   requirements,
   campaign,
   toolFilter,
+  selectedCaseId,
+  onSelectCase,
 }: {
   cases: CaseDefinition[];
   requirements: Requirement[];
   campaign?: Campaign | undefined;
   toolFilter: string;
+  selectedCaseId: string;
+  onSelectCase: (caseId: string) => void;
 }) {
   const resultMap = useMemo(() => resultsByKey(campaign), [campaign]);
   const profiles =
@@ -160,84 +169,140 @@ export function EvidenceView({
     (profile) => !toolFilter || profile.key === toolFilter,
   );
   const requirementMap = new Map(requirements.map((item) => [item.id, item]));
+  const selected = cases.find((testCase) => testCase.id === selectedCaseId) ?? cases[0];
+  const requirement = selected
+    ? requirementMap.get(selected.primary_requirement)
+    : undefined;
+
   return (
     <section className="panel evidence" aria-labelledby="evidence-title">
-      <div className="panel__heading">
+      <div className="panel__heading panel__heading--compact">
         <div>
-          <span className="eyebrow">Case-level evidence</span>
-          <h2 id="evidence-title">Oracle and observations</h2>
+          <h2 id="evidence-title">Case evidence</h2>
+          <span>
+            {cases.length} cases · {visibleProfiles.length} tool profiles
+          </span>
         </div>
-        <p>Expand a tool judgment to inspect normalized evidence, hashes, and replay.</p>
       </div>
-      <div className="evidence__list">
-        {cases.map((testCase) => {
-          const requirement = requirementMap.get(testCase.primary_requirement);
-          return (
-            <article className="case-card" key={testCase.id}>
-              <header>
-                <div>
-                  <span className="eyebrow">
-                    Clause {requirement?.clause} · {testCase.target_phase} ·{" "}
-                    {testCase.expectation}
+      {selected ? (
+        <div className="evidence-workspace">
+          <nav className="case-list" aria-label="Cases">
+            {cases.map((testCase) => {
+              const itemRequirement = requirementMap.get(testCase.primary_requirement);
+              return (
+                <button
+                  type="button"
+                  className={testCase.id === selected.id ? "is-selected" : ""}
+                  aria-current={testCase.id === selected.id ? "true" : undefined}
+                  key={testCase.id}
+                  onClick={() => onSelectCase(testCase.id)}
+                >
+                  <span className="case-list__clause">
+                    {itemRequirement?.clause ?? "—"} · {testCase.target_phase}
                   </span>
-                  <h3>{testCase.title}</h3>
+                  <strong>{testCase.title}</strong>
                   <code>{testCase.id}</code>
-                </div>
-                <div className="tag-list">
-                  {testCase.tags.map((tag) => (
-                    <span key={tag}>{tag}</span>
-                  ))}
-                </div>
-              </header>
-              <p>{testCase.description}</p>
-              <div className="case-card__meta">
-                <div>
-                  <strong>{testCase.primary_requirement}</strong>
+                  <span className="case-list__verdicts">
+                    {visibleProfiles.map((profile) => {
+                      const result = resultMap.get(
+                        `${testCase.id}:${profile.toolId}:${profile.profileId}`,
+                      );
+                      const group = statusGroup(result?.status ?? "not-run");
+                      return (
+                        <span
+                          className={`verdict-dot status--${group}`}
+                          title={`${profile.key}: ${
+                            result?.reason ?? STATUS_GROUP_LABELS[group]
+                          }`}
+                          aria-label={`${profile.key}: ${STATUS_GROUP_LABELS[group]}`}
+                          key={profile.key}
+                        >
+                          {STATUS_GROUP_SYMBOLS[group]}
+                        </span>
+                      );
+                    })}
+                  </span>
+                </button>
+              );
+            })}
+          </nav>
+
+          <article className="evidence-pane">
+            <header className="evidence-pane__header">
+              <div>
+                <span className="section-label">
+                  Clause {requirement?.clause} · {selected.target_phase} ·{" "}
+                  {selected.expectation}
+                </span>
+                <h3>{selected.title}</h3>
+                <code>{selected.id}</code>
+              </div>
+              <div className="tag-list">
+                {selected.tags.map((tag) => (
+                  <span key={tag}>{tag}</span>
+                ))}
+              </div>
+            </header>
+            <p className="evidence-pane__description">{selected.description}</p>
+            <dl className="fact-grid case-facts">
+              <div>
+                <dt>Requirement</dt>
+                <dd>
+                  <strong>{selected.primary_requirement}</strong>
                   <span>{requirement?.summary}</span>
-                </div>
-                <div>
-                  <strong>Oracle · {testCase.oracle.kind}</strong>
+                </dd>
+              </div>
+              <div>
+                <dt>Oracle</dt>
+                <dd>
+                  <strong>{selected.oracle.kind}</strong>
                   <code>
-                    {testCase.oracle.marker ?? testCase.oracle.anchor ?? "target phase exit"}
+                    {selected.oracle.marker ??
+                      selected.oracle.anchor ??
+                      "target phase exit"}
                   </code>
-                </div>
-                <div>
-                  <strong>Sources</strong>
-                  <SourceLinks testCase={testCase} campaign={campaign} />
-                </div>
+                </dd>
               </div>
-              <div className="case-card__results">
-                {visibleProfiles.map((profile) => {
-                  const result = resultMap.get(
-                    `${testCase.id}:${profile.toolId}:${profile.profileId}`,
-                  );
-                  const tool = campaign?.tools.find(
-                    (item) => item.definition.id === profile.toolId,
-                  );
-                  return (
-                    <details key={profile.key}>
-                      <summary>
-                        <strong>{profile.key}</strong>
-                        <StatusBadge
-                          status={result?.status ?? "not-run"}
-                          reason={result?.reason}
-                          knownIssue={result?.known_issue}
-                        />
-                        <span>{result?.reason ?? "no observation"}</span>
-                      </summary>
-                      {result ? (
-                        <ObservationDetail result={result} tool={tool} />
-                      ) : (
-                        <p>No result was recorded for this tool/profile.</p>
-                      )}
-                    </details>
-                  );
-                })}
+              <div>
+                <dt>Sources</dt>
+                <dd>
+                  <SourceLinks testCase={selected} campaign={campaign} />
+                </dd>
               </div>
-            </article>
-          );
-        })}
-      </div>
+            </dl>
+            <div className="tool-judgments">
+              {visibleProfiles.map((profile) => {
+                const result = resultMap.get(
+                  `${selected.id}:${profile.toolId}:${profile.profileId}`,
+                );
+                const tool = campaign?.tools.find(
+                  (item) => item.definition.id === profile.toolId,
+                );
+                return (
+                  <details key={profile.key}>
+                    <summary>
+                      <strong>{profile.key}</strong>
+                      <StatusBadge
+                        status={result?.status ?? "not-run"}
+                        reason={result?.reason}
+                        knownIssue={result?.known_issue}
+                      />
+                      <span>{result?.reason ?? "no observation"}</span>
+                    </summary>
+                    {result ? (
+                      <ObservationDetail result={result} tool={tool} />
+                    ) : (
+                      <p className="empty-state">No result was recorded.</p>
+                    )}
+                  </details>
+                );
+              })}
+            </div>
+          </article>
+        </div>
+      ) : (
+        <div className="empty-state">No cases match the current filters.</div>
+      )}
     </section>
   );
 }

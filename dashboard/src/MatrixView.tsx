@@ -9,18 +9,14 @@ import { useMemo, useRef, useState } from "react";
 
 import { aggregateStatus, profileKeys, resultsByKey } from "./model";
 import { StatusBadge } from "./StatusBadge";
-import type {
-  Campaign,
-  CaseDefinition,
-  Requirement,
-  Result,
-} from "./types";
+import type { Campaign, CaseDefinition, Requirement, Result } from "./types";
 
 interface MatrixProps {
   requirements: Requirement[];
   cases: CaseDefinition[];
   campaign?: Campaign | undefined;
   toolFilter: string;
+  onInspectCase: (caseId: string) => void;
 }
 
 const helper = createColumnHelper<Requirement>();
@@ -30,9 +26,10 @@ export function MatrixView({
   cases,
   campaign,
   toolFilter,
+  onInspectCase,
 }: MatrixProps) {
   const parentRef = useRef<HTMLDivElement>(null);
-  const [expanded, setExpanded] = useState<Set<string>>(new Set());
+  const [selectedRequirementId, setSelectedRequirementId] = useState("");
   const resultMap = useMemo(() => resultsByKey(campaign), [campaign]);
   const profiles = profileKeys(campaign).filter(
     (profile) => !toolFilter || profile === toolFilter,
@@ -51,35 +48,22 @@ export function MatrixView({
       helper.accessor("clause", {
         header: "Clause",
         cell: (context) => (
-          <button
-            type="button"
-            className="matrix__expand"
-            aria-expanded={expanded.has(context.row.original.id)}
-            onClick={() =>
-              setExpanded((current) => {
-                const next = new Set(current);
-                if (next.has(context.row.original.id)) next.delete(context.row.original.id);
-                else next.add(context.row.original.id);
-                return next;
-              })
-            }
-          >
-            <span aria-hidden="true">
-              {expanded.has(context.row.original.id) ? "▾" : "▸"}
-            </span>
-            <span>
-              Ch. {context.row.original.chapter} · {context.getValue()}
-            </span>
-          </button>
+          <span className="matrix__clause">{context.getValue()}</span>
         ),
       }),
       helper.accessor("summary", {
-        header: "Normative requirement",
+        header: "Requirement",
         cell: (context) => (
-          <div>
-            <strong className="matrix__requirement-id">{context.row.original.id}</strong>
+          <button
+            type="button"
+            className="matrix__requirement"
+            aria-pressed={selectedRequirementId === context.row.original.id}
+            title={context.getValue()}
+            onClick={() => setSelectedRequirementId(context.row.original.id)}
+          >
+            <strong>{context.row.original.id}</strong>
             <span>{context.getValue()}</span>
-          </div>
+          </button>
         ),
       }),
       ...profiles.map((profileKey) =>
@@ -97,12 +81,12 @@ export function MatrixView({
               .filter((result): result is Result => Boolean(result))
               .map((result) => result.reason)
               .join(", ");
-            return <StatusBadge status={status} reason={reasons} />;
+            return <StatusBadge status={status} reason={reasons} grouped />;
           },
         }),
       ),
     ],
-    [casesByRequirement, expanded, profiles, resultMap],
+    [casesByRequirement, profiles, resultMap, selectedRequirementId],
   );
   const table = useReactTable({
     data: requirements,
@@ -113,87 +97,126 @@ export function MatrixView({
   const virtualizer = useVirtualizer({
     count: rows.length,
     getScrollElement: () => parentRef.current,
-    estimateSize: (index) => (expanded.has(rows[index]?.original.id ?? "") ? 255 : 78),
-    overscan: 8,
+    estimateSize: () => 54,
+    overscan: 10,
   });
-  const template = `150px minmax(340px, 1fr) repeat(${profiles.length}, minmax(150px, 190px))`;
+  const template = [
+    "112px",
+    "minmax(320px, 1fr)",
+    ...profiles.map(() => "minmax(128px, 148px)"),
+  ].join(" ");
+  const selectedRequirement = requirements.find(
+    (requirement) => requirement.id === selectedRequirementId,
+  );
+  const supporting = selectedRequirement
+    ? (casesByRequirement.get(selectedRequirement.id) ?? [])
+    : [];
 
   return (
     <section className="panel matrix" aria-labelledby="matrix-title">
-      <div className="panel__heading">
+      <div className="panel__heading panel__heading--compact">
         <div>
-          <span className="eyebrow">Primary view</span>
           <h2 id="matrix-title">Requirements matrix</h2>
+          <span>
+            {requirements.length} requirements · {cases.length} cases · {profiles.length}{" "}
+            profiles
+          </span>
         </div>
-        <p>
-          {requirements.length} requirements · {cases.length} supporting cases. A
-          requirement passes only when every mandatory variant passes.
-        </p>
       </div>
-      <div className="matrix__scroll" ref={parentRef}>
-        <div className="matrix__header" style={{ gridTemplateColumns: template }}>
-          {table.getHeaderGroups()[0]?.headers.map((header) => (
-            <div key={header.id}>
-              {flexRender(header.column.columnDef.header, header.getContext())}
+      <div className={`matrix__workspace ${selectedRequirement ? "has-inspector" : ""}`}>
+        <div className="matrix__scroll" ref={parentRef}>
+          <div className="matrix__header" style={{ gridTemplateColumns: template }}>
+            {table.getHeaderGroups()[0]?.headers.map((header) => (
+              <div key={header.id}>
+                {flexRender(header.column.columnDef.header, header.getContext())}
+              </div>
+            ))}
+          </div>
+          {rows.length ? (
+            <div
+              className="matrix__body"
+              style={{ height: `${virtualizer.getTotalSize()}px` }}
+            >
+              {virtualizer.getVirtualItems().map((virtualRow) => {
+                const row = rows[virtualRow.index];
+                if (!row) return null;
+                return (
+                  <div
+                    key={row.id}
+                    className={`matrix__row ${
+                      row.original.id === selectedRequirementId ? "is-selected" : ""
+                    }`}
+                    style={{
+                      height: `${virtualRow.size}px`,
+                      transform: `translateY(${virtualRow.start}px)`,
+                      gridTemplateColumns: template,
+                    }}
+                  >
+                    {row.getVisibleCells().map((cell) => (
+                      <div className="matrix__cell" key={cell.id}>
+                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                      </div>
+                    ))}
+                  </div>
+                );
+              })}
             </div>
-          ))}
+          ) : (
+            <div className="empty-state">No requirements match the current filters.</div>
+          )}
         </div>
-        <div
-          className="matrix__body"
-          style={{ height: `${virtualizer.getTotalSize()}px` }}
-        >
-          {virtualizer.getVirtualItems().map((virtualRow) => {
-            const row = rows[virtualRow.index];
-            if (!row) return null;
-            const supporting = casesByRequirement.get(row.original.id) ?? [];
-            return (
-              <div
-                key={row.id}
-                ref={virtualizer.measureElement}
-                data-index={virtualRow.index}
-                className="matrix__row"
-                style={{
-                  transform: `translateY(${virtualRow.start}px)`,
-                  gridTemplateColumns: template,
-                }}
+
+        {selectedRequirement && (
+          <aside className="matrix-inspector" aria-label="Requirement inspector">
+            <header>
+              <div>
+                <span>Clause {selectedRequirement.clause}</span>
+                <strong>{selectedRequirement.id}</strong>
+              </div>
+              <button
+                type="button"
+                className="icon-button"
+                aria-label="Close requirement inspector"
+                onClick={() => setSelectedRequirementId("")}
               >
-                {row.getVisibleCells().map((cell) => (
-                  <div className="matrix__cell" key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </div>
+                ×
+              </button>
+            </header>
+            <p>{selectedRequirement.summary}</p>
+            <section>
+              <h3>Standard anchors</h3>
+              <ul className="anchor-list">
+                {selectedRequirement.anchors.map((anchor) => (
+                  <li key={anchor}>
+                    <code>{anchor}</code>
+                  </li>
                 ))}
-                {expanded.has(row.original.id) && (
-                  <div className="matrix__support" style={{ gridColumn: "1 / -1" }}>
-                    <div>
-                      <strong>Standard anchors</strong>
-                      <ul>
-                        {row.original.anchors.map((anchor) => (
-                          <li key={anchor}>{anchor}</li>
-                        ))}
-                      </ul>
-                    </div>
-                    <div className="matrix__cases">
-                      {supporting.length ? (
-                        supporting.map((testCase) => (
-                          <article key={testCase.id}>
-                            <div>
-                              <span className="phase">{testCase.target_phase}</span>
-                              <span className="phase">{testCase.expectation}</span>
-                            </div>
-                            <strong>{testCase.id}</strong>
-                            <span>{testCase.title}</span>
-                          </article>
-                        ))
-                      ) : (
-                        <p>No case currently maps to this requirement.</p>
-                      )}
-                    </div>
-                  </div>
+              </ul>
+            </section>
+            <section>
+              <h3>Supporting cases</h3>
+              <div className="inspector-cases">
+                {supporting.length ? (
+                  supporting.map((testCase) => (
+                    <button
+                      type="button"
+                      key={testCase.id}
+                      onClick={() => onInspectCase(testCase.id)}
+                    >
+                      <span>
+                        {testCase.target_phase} · {testCase.expectation}
+                      </span>
+                      <strong>{testCase.title}</strong>
+                      <code>{testCase.id}</code>
+                    </button>
+                  ))
+                ) : (
+                  <p>No case currently maps to this requirement.</p>
                 )}
               </div>
-            );
-          })}
-        </div>
+            </section>
+          </aside>
+        )}
       </div>
     </section>
   );
