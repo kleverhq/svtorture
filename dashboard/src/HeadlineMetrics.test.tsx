@@ -90,28 +90,31 @@ describe("HeadlineMetrics", () => {
 
     const view = render(<HeadlineMetrics dataset={dataset} campaign={campaign} />);
 
-    const unavailable = screen.getByText("Unavailable");
-    expect(unavailable.parentElement?.classList).toContain(
-      "tool-metric__score--unavailable",
+    const unavailable = screen.getByText("Unavailable · harness errors present");
+    expect(unavailable.classList).toContain("tool-metric__coverage");
+    expect(unavailable.closest("article")?.classList).toContain(
+      "tool-metric--unavailable",
     );
-    expect(
-      screen.getByText("Not scored · harness errors present").classList,
-    ).toContain("tool-metric__coverage");
     expect(document.querySelector(".meter")).toBeNull();
 
     metric.valid = true;
-    metric.numerator = 10;
-    metric.denominator = 11;
+    metric.numerator = 11;
+    metric.denominator = 12;
+    metric.conforming = 11;
+    metric.nonconforming = 1;
+    metric.inconclusive = 0;
     view.rerender(<HeadlineMetrics dataset={dataset} campaign={campaign} />);
 
-    const score = screen.getByText("10 / 11");
-    expect(score.parentElement?.classList).not.toContain(
-      "tool-metric__score--unavailable",
+    const outcomes = screen.getByLabelText("fake requirement outcomes");
+    expect(outcomes.querySelector(".tool-outcome--pass")?.textContent).toBe("11PASS");
+    expect(outcomes.querySelector(".tool-outcome--fail")?.textContent).toBe("1FAIL");
+    expect(outcomes.querySelector(".tool-outcome--unclear")?.textContent).toBe(
+      "0UNCLEAR",
     );
     expect(
-      screen.getByText("91% of IEEE 1800-2023 registered requirements").classList,
+      screen.getByText("92% of IEEE 1800-2023 applicable requirements").classList,
     ).toContain("tool-metric__coverage");
-    expect(screen.queryByText(/Not scored/)).toBeNull();
+    expect(screen.queryByText(/registered requirements/)).toBeNull();
   });
 
   it("counts known issues only among failed evaluations", () => {

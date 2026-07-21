@@ -189,7 +189,17 @@ export interface CampaignComparison {
 function campaignProfileSignature(campaign: Campaign): string {
   return campaign.tools
     .flatMap((tool) =>
-      tool.profile_ids.map((profileId) => `${tool.definition.id}/${profileId}`),
+      tool.profile_ids.map((profileId) => {
+        const profile = tool.definition.profiles.find((item) => item.id === profileId);
+        if (!profile) return `${tool.definition.id}/${profileId}/invalid`;
+        return [
+          tool.definition.id,
+          profileId,
+          profile.standard_revision,
+          profile.phase_ceiling,
+          profile.direct_phases.join(","),
+        ].join("/");
+      }),
     )
     .sort()
     .join("|");

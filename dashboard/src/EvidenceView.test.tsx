@@ -56,6 +56,16 @@ describe("EvidenceView", () => {
     );
     expect(screen.queryByLabelText("Source top.sv")).toBeNull();
 
+    expect(screen.getByText("Target phase").parentElement?.textContent).toContain(
+      "simulate",
+    );
+    expect(screen.getByText("Evidence mode").parentElement?.textContent).toContain(
+      "direct",
+    );
+    expect(screen.getByText("Attempted through").parentElement?.textContent).toContain(
+      "not observed",
+    );
+
     fireEvent.click(
       screen.getByRole("button", { name: /SV-2023-13-OUTPUT-COPYOUT/ }),
     );

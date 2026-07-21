@@ -61,7 +61,8 @@ export function makeTestDataset(): Dataset {
       profiles: [
         {
           id: "simulator",
-          phases: ["simulate"],
+          phase_ceiling: "simulate",
+          direct_phases: ["preprocess", "parse", "elaborate", "simulate"],
           headline: true,
           standard_revision: "1800-2023",
           effective_language: "test protocol",
@@ -93,6 +94,8 @@ export function makeTestDataset(): Dataset {
         requirement_id: requirement.id,
         tool_id: tool.definition.id,
         profile_id: "simulator",
+        target_phase: "simulate",
+        evidence_mode: "direct" as const,
         status: "conforming" as const,
         reason: "expectation-met",
         summary: "The expected result was observed.",

@@ -74,7 +74,7 @@ export interface Diagnostic {
 
 export interface Observation {
   stage_id: string;
-  phase: string;
+  attempted_through_phase: string;
   outcome: string;
   exit_code?: number | null;
   signal?: number | null;
@@ -92,6 +92,8 @@ export interface Result {
   requirement_id: string;
   tool_id: string;
   profile_id: string;
+  target_phase: string;
+  evidence_mode: "direct" | "cumulative" | "not-observed";
   status: Status;
   reason: string;
   summary: string;
@@ -103,7 +105,8 @@ export interface Result {
 
 export interface ToolProfile {
   id: string;
-  phases: string[];
+  phase_ceiling: string;
+  direct_phases: string[];
   headline: boolean;
   standard_revision: string;
   effective_language: string;

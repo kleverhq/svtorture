@@ -127,6 +127,9 @@ function ObservationDetail({
 }) {
   const [copied, setCopied] = useState(false);
   const reproduce = result.reproduction_command;
+  const observedThrough = [
+    ...new Set(result.observations.map((item) => item.attempted_through_phase)),
+  ].join(", ");
   const copy = async () => {
     if (!reproduce) return;
     await navigator.clipboard.writeText(reproduce);
@@ -136,30 +139,44 @@ function ObservationDetail({
   return (
     <div className="evidence-detail">
       <p>{result.summary}</p>
-      {tool && (
-        <dl className="fact-grid evidence-detail__identity">
-          <div>
-            <dt>Tool source</dt>
-            <dd>
-              <code title={tool.selection?.resolved_sha}>
-                {tool.selection?.resolved_sha.slice(0, 12) ?? "local wrapper"}
-              </code>
-            </dd>
-          </div>
-          <div>
-            <dt>Reported version</dt>
-            <dd>{tool.reported_version ?? "unavailable"}</dd>
-          </div>
-          <div>
-            <dt>Image digest</dt>
-            <dd>
-              <code title={tool.image?.digest ?? undefined}>
-                {tool.image?.digest?.slice(0, 24) ?? "private wrapper"}
-              </code>
-            </dd>
-          </div>
-        </dl>
-      )}
+      <dl className="fact-grid evidence-detail__identity">
+        <div>
+          <dt>Target phase</dt>
+          <dd>{result.target_phase}</dd>
+        </div>
+        <div>
+          <dt>Evidence mode</dt>
+          <dd>{result.evidence_mode}</dd>
+        </div>
+        <div>
+          <dt>Attempted through</dt>
+          <dd>{observedThrough || "not observed"}</dd>
+        </div>
+        {tool && (
+          <>
+            <div>
+              <dt>Tool source</dt>
+              <dd>
+                <code title={tool.selection?.resolved_sha}>
+                  {tool.selection?.resolved_sha.slice(0, 12) ?? "local wrapper"}
+                </code>
+              </dd>
+            </div>
+            <div>
+              <dt>Reported version</dt>
+              <dd>{tool.reported_version ?? "unavailable"}</dd>
+            </div>
+            <div>
+              <dt>Image digest</dt>
+              <dd>
+                <code title={tool.image?.digest ?? undefined}>
+                  {tool.image?.digest?.slice(0, 24) ?? "private wrapper"}
+                </code>
+              </dd>
+            </div>
+          </>
+        )}
+      </dl>
       {result.known_issue && (
         <p className="known-fail">
           <strong>Known fail:</strong> {result.known_issue}
@@ -169,7 +186,7 @@ function ObservationDetail({
         <article className="observation" key={observation.stage_id}>
           <div className="observation__facts">
             <strong>{observation.stage_id}</strong>
-            <span>{observation.phase}</span>
+            <span>through {observation.attempted_through_phase}</span>
             <span>{observation.outcome}</span>
             <span>
               {observation.exit_code == null

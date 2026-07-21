@@ -9,8 +9,9 @@ server or live database.
 
 The interface provides five URL-filtered views. **Overview** is shown by default:
 
-- **Overview** — plain-language campaign counts and verified requirement coverage
-  by tool profile;
+- **Overview** — plain-language campaign counts plus requirement-level Pass,
+  Fail, and Unclear totals and verified applicable-requirement coverage by tool
+  profile;
 - **Requirements** — a compact requirement/tool matrix with grouped verdicts,
   sticky identity columns, and a separate requirement inspector;
 - **Case evidence** — a master-detail case list with inline local source viewing,
@@ -21,10 +22,12 @@ The interface provides five URL-filtered views. **Overview** is shown by default
 - **Campaigns** — compact run records with expandable corpus, tool source,
   image, platform, and trust provenance.
 
-Overview counts treat one tool/profile running one case as one evaluation. Their
-supporting text distinguishes requirement coverage, recorded evaluations,
-unsupported capability, evidence needing inspection, and comparable-campaign
-regressions. The headline metric is defined in
+Overview campaign counts treat one tool/profile running one case as one
+evaluation. Per-tool outcome totals use the requirement-weighted metric: every
+mandatory variant must conform for a requirement to pass, while inconclusive
+requirements remain in the denominator and appear as Unclear. Supporting text
+distinguishes recorded evaluations, unsupported capability, evidence needing
+inspection, and comparable-campaign regressions. The headline metric is defined in
 [the conformance methodology](../docs/methodology.md). Missing, unsupported,
 incomplete, and nonconforming evidence remains visible rather than being
 collapsed into a pass/fail percentage.
@@ -53,8 +56,9 @@ The frontend uses:
 The React model derives filters, comparable-campaign changes, and aggregate
 presentation from that immutable data. View, campaign, tool, search, status,
 advanced filters, selected evidence case, and selected requirement are encoded
-in the URL so an investigation can be shared or revisited. Broad matrix statuses are presentation
-categories only; evidence retains every exact result status and reason.
+in the URL so an investigation can be shared or revisited. Broad matrix statuses are presentation categories only; evidence retains every
+exact result status and reason together with the target phase, the phase the
+command attempted through, and whether attribution is direct or cumulative.
 
 The header provides `Auto`, `Light`, and `Dark` themes. `Auto` is the default and
 follows the browser or operating-system color preference. An explicit selection

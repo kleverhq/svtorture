@@ -153,6 +153,38 @@ describe("requirements model", () => {
     ).toEqual(new Set());
   });
 
+  it("does not compare campaigns across a phase-scope boundary", () => {
+    const seed = dataset.campaigns[0];
+    if (!seed) throw new Error("test dataset has no campaign");
+    const prior = {
+      ...seed,
+      id: "20260101T000000Z-prior",
+      finished_at: "2026-01-01T00:00:01Z",
+    } satisfies Campaign;
+    const current = {
+      ...seed,
+      id: "20260102T000000Z-current",
+      started_at: "2026-01-02T00:00:00Z",
+      finished_at: "2026-01-02T00:00:01Z",
+      tools: seed.tools.map((tool) => ({
+        ...tool,
+        definition: {
+          ...tool.definition,
+          profiles: tool.definition.profiles.map((profile) => ({
+            ...profile,
+            direct_phases: ["elaborate", "simulate"],
+          })),
+        },
+      })),
+    } satisfies Campaign;
+
+    const comparison = compareCampaigns(
+      { ...dataset, campaigns: [prior, current] },
+      current,
+    );
+    expect(comparison.previousCampaignId).toBeUndefined();
+  });
+
   it("reports tool, corpus, and denominator boundaries", () => {
     const seed = dataset.campaigns[0];
     if (!seed) throw new Error("test dataset has no campaign");
@@ -235,6 +267,8 @@ describe("requirements model", () => {
       requirement_id: "requirement",
       tool_id: "tool",
       profile_id: "profile",
+      target_phase: "simulate",
+      evidence_mode: "direct" as const,
       reason: "test",
       summary: "test",
       evidence: "mandatory",

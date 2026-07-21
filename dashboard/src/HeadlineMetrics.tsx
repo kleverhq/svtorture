@@ -145,24 +145,35 @@ export function HeadlineMetrics({
                   ? (100 * metric.numerator) / metric.denominator
                   : 0;
               return (
-                <article key={`${metric.tool_id}/${metric.profile_id}`}>
+                <article
+                  className={metric.valid ? "" : "tool-metric--unavailable"}
+                  key={`${metric.tool_id}/${metric.profile_id}`}
+                >
                   <div className="tool-metric__identity">
                     <strong>{metric.tool_id}</strong>
                     <span>{metric.profile_id}</span>
                   </div>
                   <div
-                    className={`tool-metric__score${metric.valid ? "" : " tool-metric__score--unavailable"}`}
+                    className="tool-metric__outcomes"
+                    aria-label={`${metric.tool_id} requirement outcomes`}
                   >
-                    <strong>
-                      {metric.valid
-                        ? `${metric.numerator} / ${metric.denominator}`
-                        : "Unavailable"}
-                    </strong>
+                    <div className="tool-outcome tool-outcome--pass">
+                      <strong>{metric.conforming}</strong>
+                      <span>PASS</span>
+                    </div>
+                    <div className="tool-outcome tool-outcome--fail">
+                      <strong>{metric.nonconforming}</strong>
+                      <span>FAIL</span>
+                    </div>
+                    <div className="tool-outcome tool-outcome--unclear">
+                      <strong>{metric.inconclusive}</strong>
+                      <span>UNCLEAR</span>
+                    </div>
                   </div>
                   <span className="tool-metric__coverage">
                     {metric.valid
-                      ? `${percentage.toFixed(0)}% of IEEE ${metric.revision} registered requirements`
-                      : `Not scored · ${metric.infrastructure_state || metric.label}`}
+                      ? `${percentage.toFixed(0)}% of IEEE ${metric.revision} applicable requirements`
+                      : `Unavailable · ${metric.infrastructure_state || metric.label}`}
                   </span>
                 </article>
               );

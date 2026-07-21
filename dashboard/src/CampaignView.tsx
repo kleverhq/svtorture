@@ -123,6 +123,18 @@ export function CampaignView({ campaigns }: { campaigns: Campaign[] }) {
                           </dd>
                         </div>
                         <div>
+                          <dt>Phase evidence</dt>
+                          <dd>
+                            {tool.definition.profiles
+                              .filter((profile) => tool.profile_ids.includes(profile.id))
+                              .map(
+                                (profile) =>
+                                  `${profile.id}: through ${profile.phase_ceiling}; direct ${profile.direct_phases.join(", ")}`,
+                              )
+                              .join("; ")}
+                          </dd>
+                        </div>
+                        <div>
                           <dt>Policy</dt>
                           <dd>
                             {tool.definition.distribution} · {tool.definition.execution} ·
