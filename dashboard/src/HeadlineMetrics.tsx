@@ -150,7 +150,9 @@ export function HeadlineMetrics({
                     <strong>{metric.tool_id}</strong>
                     <span>{metric.profile_id}</span>
                   </div>
-                  <div className="tool-metric__score">
+                  <div
+                    className={`tool-metric__score${metric.valid ? "" : " tool-metric__score--unavailable"}`}
+                  >
                     <strong>
                       {metric.valid
                         ? `${metric.numerator} / ${metric.denominator}`
@@ -158,23 +160,10 @@ export function HeadlineMetrics({
                     </strong>
                     <span>
                       {metric.valid
-                        ? `${percentage.toFixed(0)}% of requirements verified`
-                        : metric.infrastructure_state || metric.label}
+                        ? `${percentage.toFixed(0)}% of IEEE ${metric.revision}`
+                        : `Not scored · ${metric.infrastructure_state || metric.label}`}
                     </span>
                   </div>
-                  {metric.valid ? (
-                    <div
-                      className="meter"
-                      aria-label={`${percentage.toFixed(0)} percent of requirements verified`}
-                    >
-                      <span style={{ width: `${percentage}%` }} />
-                    </div>
-                  ) : (
-                    <span className="tool-metric__unavailable">Not scored</span>
-                  )}
-                  <span className="tool-metric__state">
-                    IEEE {metric.revision} · {metric.complete ? "complete" : "incomplete"}
-                  </span>
                 </article>
               );
             })}

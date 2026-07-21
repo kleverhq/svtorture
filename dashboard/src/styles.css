@@ -408,21 +408,21 @@ footer {
 
 .tool-metrics {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: 1fr;
 }
 
 .tool-metrics article {
   display: grid;
-  grid-template-columns: minmax(95px, 0.6fr) minmax(135px, 0.9fr) minmax(90px, 1fr) auto;
-  gap: 12px;
+  grid-template-columns: minmax(180px, 0.25fr) minmax(0, 1fr);
+  gap: 18px;
   align-items: center;
   min-width: 0;
-  padding: 12px 13px;
-  border-right: 1px solid var(--line);
+  padding: 14px 17px;
+  border-bottom: 1px solid var(--line);
 }
 
 .tool-metrics article:last-child {
-  border-right: 0;
+  border-bottom: 0;
 }
 
 .tool-metric__identity,
@@ -438,13 +438,10 @@ footer {
 }
 
 .tool-metric__identity span,
-.tool-metric__score span,
-.tool-metric__state {
-  overflow: hidden;
+.tool-metric__score span {
   color: var(--text-muted);
-  font-size: 0.65rem;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  font-size: 0.68rem;
+  line-height: 1.35;
 }
 
 .tool-metric__score strong {
@@ -453,24 +450,8 @@ footer {
   font-size: 1rem;
 }
 
-.tool-metric__unavailable {
+.tool-metric__score--unavailable strong {
   color: var(--issue);
-  font-size: 0.68rem;
-  font-weight: 650;
-}
-
-.meter {
-  min-width: 70px;
-  height: 5px;
-  overflow: hidden;
-  border-radius: 999px;
-  background: var(--surface-subtle);
-}
-
-.meter span {
-  display: block;
-  height: 100%;
-  background: var(--pass);
 }
 
 .workspace-bar {
@@ -1544,19 +1525,6 @@ footer {
 }
 
 @media (max-width: 1200px) {
-  .tool-metrics {
-    grid-template-columns: 1fr;
-  }
-
-  .tool-metrics article {
-    border-right: 0;
-    border-bottom: 1px solid var(--line);
-  }
-
-  .tool-metrics article:last-child {
-    border-bottom: 0;
-  }
-
   .matrix__workspace.has-inspector {
     grid-template-columns: minmax(0, 1fr) minmax(260px, 300px);
   }
@@ -1684,11 +1652,9 @@ footer {
   }
 
   .tool-metrics article {
-    grid-template-columns: minmax(78px, 0.6fr) minmax(90px, 0.8fr) 1fr;
-  }
-
-  .tool-metric__state {
-    display: none;
+    grid-template-columns: minmax(105px, 0.6fr) minmax(0, 1.4fr);
+    gap: 12px;
+    padding-inline: 12px;
   }
 
   .workspace-bar {

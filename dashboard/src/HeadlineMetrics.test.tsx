@@ -60,7 +60,7 @@ describe("HeadlineMetrics", () => {
     const dataset = makeTestDataset();
     const campaign = dataset.campaigns[0];
     if (!campaign) throw new Error("incomplete test dataset");
-    dataset.metrics.push({
+    const metric = {
       label: "invalid because of harness errors",
       revision: "1800-2023",
       tool_id: "fake",
@@ -85,16 +85,29 @@ describe("HeadlineMetrics", () => {
       reported_version: "test-tool 1.0",
       image_digest: null,
       repository_commit: campaign.repository.commit,
-    });
+    };
+    dataset.metrics.push(metric);
 
-    render(<HeadlineMetrics dataset={dataset} campaign={campaign} />);
+    const view = render(<HeadlineMetrics dataset={dataset} campaign={campaign} />);
 
-    expect(screen.getByText("Unavailable")).toBeTruthy();
-    expect(screen.getByText("harness errors present")).toBeTruthy();
-    expect(screen.getByText("Not scored")).toBeTruthy();
-    expect(
-      screen.queryByLabelText("0 percent of requirements verified"),
-    ).toBeNull();
+    const unavailable = screen.getByText("Unavailable");
+    expect(unavailable.parentElement?.classList).toContain(
+      "tool-metric__score--unavailable",
+    );
+    expect(screen.getByText("Not scored · harness errors present")).toBeTruthy();
+    expect(document.querySelector(".meter")).toBeNull();
+
+    metric.valid = true;
+    metric.numerator = 10;
+    metric.denominator = 11;
+    view.rerender(<HeadlineMetrics dataset={dataset} campaign={campaign} />);
+
+    const score = screen.getByText("10 / 11");
+    expect(score.parentElement?.classList).not.toContain(
+      "tool-metric__score--unavailable",
+    );
+    expect(screen.getByText("91% of IEEE 1800-2023")).toBeTruthy();
+    expect(screen.queryByText(/Not scored/)).toBeNull();
   });
 
   it("counts known issues only among failed evaluations", () => {
