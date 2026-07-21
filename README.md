@@ -106,6 +106,14 @@ it against the complete current corpus:
 just latest verilator
 ```
 
+The command reports source resolution, image preparation, and each selected case.
+The first image build can take several minutes. To also stream the Docker pull
+and build output when an image must be built, run:
+
+```bash
+just latest-verbose verilator
+```
+
 For a shorter first run, select the smoke suite instead:
 
 ```bash

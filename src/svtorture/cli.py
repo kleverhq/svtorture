@@ -6,6 +6,7 @@ import json
 import shutil
 import subprocess
 import tempfile
+from collections.abc import Callable
 from pathlib import Path
 from typing import Annotated
 
@@ -99,6 +100,8 @@ def _prepare(
     push: bool,
     repository: str | None,
     fake_scenario: str,
+    verbose: bool = False,
+    progress: Callable[[str], None] | None = None,
 ) -> PreparedTool:
     tool_id, requested_ref = parse_requested_tool(specification)
     try:
@@ -116,36 +119,54 @@ def _prepare(
     if tool.execution is ExecutionBackend.LOCAL_WRAPPER:
         if requested_ref != "local":
             raise typer.BadParameter("local-wrapper tools use the explicit ref 'local'")
+        if progress is not None:
+            progress(f"prepare: loading local wrapper for {tool.id}")
         private = load_private_config(ROOT)
         wrapper = private.wrapper(tool.id) if private else None
     elif tool.distribution is Distribution.INTERNAL:
         if requested_ref != "bundled":
             raise typer.BadParameter("internal fake tool uses the ref 'bundled'")
         suffix = f"bundled-{recipe_hash(ROOT, tool)}"
-        image = (
-            build_image(ROOT, tool, None, repository_override=repository, push=push)
-            if build
-            else load_cached_image(ROOT, tool, suffix)
-        )
+        if build:
+            image = build_image(
+                ROOT,
+                tool,
+                None,
+                repository_override=repository,
+                push=push,
+                verbose=verbose,
+                progress=progress,
+            )
+        else:
+            if progress is not None:
+                progress(f"image: loading cached {tool.id} image")
+            image = load_cached_image(ROOT, tool, suffix)
     else:
+        if progress is not None:
+            progress(f"resolve: {tool.id}@{requested_ref}")
         selection = resolve_tool_ref(tool, requested_ref)
+        if progress is not None:
+            progress(f"resolve: {tool.id}@{selection.resolved_sha[:12]}")
         _save_selection(selection)
-        image = (
-            build_image(
+        if build:
+            image = build_image(
                 ROOT,
                 tool,
                 selection,
                 repository_override=repository,
                 push=push,
+                verbose=verbose,
+                progress=progress,
             )
-            if build
-            else load_cached_image(
+        else:
+            if progress is not None:
+                progress(f"image: loading cached {tool.id} image")
+            image = load_cached_image(
                 ROOT,
                 tool,
                 selection.resolved_sha,
                 expected_source_sha=selection.resolved_sha,
             )
-        )
     adapter = adapter_for(
         tool.adapter,
         rules_path=ROOT / "tools" / "diagnostic-rules.toml",
@@ -153,18 +174,29 @@ def _prepare(
     if tool.execution is ExecutionBackend.DOCKER:
         if image is None:
             raise ImageError(f"no prepared image is cached for {tool.id}")
+        if progress is not None:
+            progress(f"prepare: reading {tool.id} version")
         reported_version = report_image_version(
             image,
             adapter.version_argv(),
             ROOT / ".svtorture" / "version-work" / tool.id,
         )
     elif wrapper is not None and wrapper_available(wrapper):
+        if progress is not None:
+            progress(f"prepare: reading {tool.id} version")
         reported_version = report_wrapper_version(
             wrapper,
             tool.id,
             adapter.version_argv(),
             ROOT / ".svtorture" / "version-work" / tool.id,
         )
+    if progress is not None:
+        if tool.execution is ExecutionBackend.LOCAL_WRAPPER and (
+            wrapper is None or not wrapper_available(wrapper)
+        ):
+            progress(f"prepare: unavailable {tool.id}/{profile.id}")
+        else:
+            progress(f"prepare: ready {tool.id}/{profile.id}")
     return PreparedTool(
         definition=tool,
         profile=profile,
@@ -397,6 +429,10 @@ def run(
         str | None,
         typer.Option("--repository", help="Image repository override for a pushed run."),
     ] = None,
+    verbose: Annotated[
+        bool,
+        typer.Option("--verbose", "-v", help="Stream Docker image preparation output."),
+    ] = False,
 ) -> None:
     if not tools:
         raise typer.BadParameter("at least one --tool is required")
@@ -413,10 +449,19 @@ def run(
             push=push,
             repository=repository,
             fake_scenario=fake_scenario,
+            verbose=verbose,
+            progress=typer.echo,
         )
         for selection in tools
     )
-    campaign = run_campaign(catalog, prepared, suite_id=suite)
+    campaign = run_campaign(
+        catalog,
+        prepared,
+        suite_id=suite,
+        progress=lambda current, total, tool_id, profile_id, case_id: typer.echo(
+            f"run [{current}/{total}]: {tool_id}/{profile_id} {case_id}"
+        ),
+    )
     counts: dict[str, int] = {}
     for result in campaign.results:
         counts[result.status.value] = counts.get(result.status.value, 0) + 1

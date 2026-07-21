@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 import re
 import subprocess
+from collections.abc import Callable
 from pathlib import Path
 
 from pydantic import ValidationError
@@ -17,19 +18,21 @@ class ImageError(RuntimeError):
     pass
 
 
-def _run(argv: list[str], timeout: int = 3600) -> str:
+def _run(argv: list[str], timeout: int = 3600, *, verbose: bool = False) -> str:
     completed = subprocess.run(
         argv,
         check=False,
         text=True,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.STDOUT,
+        stdout=None if verbose else subprocess.PIPE,
+        stderr=None if verbose else subprocess.STDOUT,
         timeout=timeout,
     )
+    output = completed.stdout or ""
     if completed.returncode != 0:
-        excerpt = completed.stdout[-12000:]
-        raise ImageError(f"command failed ({completed.returncode}): {' '.join(argv)}\n{excerpt}")
-    return completed.stdout
+        excerpt = output[-12000:]
+        detail = f"\n{excerpt}" if excerpt else ""
+        raise ImageError(f"command failed ({completed.returncode}): {' '.join(argv)}{detail}")
+    return output
 
 
 def _base_image(dockerfile: Path) -> str:
@@ -44,8 +47,8 @@ def _inspect(reference: str, field: str) -> str:
     return _run(["docker", "image", "inspect", "--format", field, reference], 120).strip()
 
 
-def _pull_base(base: str) -> tuple[str, str]:
-    _run(["docker", "pull", "--platform=linux/amd64", base], 900)
+def _pull_base(base: str, *, verbose: bool = False) -> tuple[str, str]:
+    _run(["docker", "pull", "--platform=linux/amd64", base], 900, verbose=verbose)
     repo_digests = _inspect(base, "{{json .RepoDigests}}")
     values = json.loads(repo_digests)
     if not values:
@@ -116,6 +119,8 @@ def build_image(
     repository_override: str | None = None,
     push: bool = False,
     base_image_reference: str | None = None,
+    verbose: bool = False,
+    progress: Callable[[str], None] | None = None,
 ) -> ImageIdentity:
     if tool.dockerfile is None or tool.image_repository is None:
         raise ImageError(f"tool {tool.id} does not define an image recipe")
@@ -132,11 +137,16 @@ def build_image(
         expected_source_sha=selection.resolved_sha if selection else None,
     )
     if cached is not None and not push:
+        if progress is not None:
+            display_identity = cached.image_id or cached.digest or cached.reference
+            progress(f"image: using cached {tool.id} image {display_identity[:19]}")
         return cached
     repository = repository_override or tool.image_repository
     tag = f"{repository}:{suffix}"
     base = base_image_reference or _base_image(dockerfile)
-    pinned_base, base_digest = _pull_base(base)
+    if progress is not None:
+        progress(f"image: pulling base image for {tool.id}")
+    pinned_base, base_digest = _pull_base(base, verbose=verbose)
     if base_image_reference is not None and pinned_base != base_image_reference:
         raise ImageError("recorded base image did not resolve to its original repository digest")
     argv = [
@@ -156,7 +166,10 @@ def build_image(
     if selection is not None:
         argv.extend(["--build-arg", f"TOOL_SHA={selection.resolved_sha}"])
     argv.append(str(root))
-    _run(argv, 7200)
+    if progress is not None:
+        revision = selection.resolved_sha[:12] if selection is not None else "bundled"
+        progress(f"image: building {tool.id} at {revision}")
+    _run(argv, 7200, verbose=verbose)
     image_id = _inspect(tag, "{{.Id}}")
     if not image_id.startswith("sha256:"):
         raise ImageError("Docker returned an invalid image id")
@@ -176,7 +189,9 @@ def build_image(
     digest = image_id
     reference = image_id
     if push:
-        _run(["docker", "push", tag], 3600)
+        if progress is not None:
+            progress(f"image: pushing {tool.id} image")
+        _run(["docker", "push", tag], 3600, verbose=verbose)
         values = json.loads(_inspect(tag, "{{json .RepoDigests}}"))
         matching = [item for item in values if item.startswith(repository + "@")]
         if not matching:
@@ -198,4 +213,6 @@ def build_image(
         json.dumps(model_to_jsonable(identity), indent=2, sort_keys=True) + "\n",
         encoding="utf-8",
     )
+    if progress is not None:
+        progress(f"image: ready {tool.id} image {image_id[:19]}")
     return identity

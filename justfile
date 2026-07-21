@@ -122,6 +122,10 @@ ci: setup-ci
 latest tool suite="all":
     uv run svtorture run --tool "{{tool}}@latest" --suite "{{suite}}" --exit-policy infra-only
 
+# Run one current upstream while streaming Docker image preparation output.
+latest-verbose tool suite="all":
+    uv run svtorture run --tool "{{tool}}@latest" --suite "{{suite}}" --exit-policy infra-only --verbose
+
 # Resolve an explicit tag, branch, or full SHA before building and running.
 pinned tool ref suite="all":
     uv run svtorture run --tool "{{tool}}@{{ref}}" --suite "{{suite}}" --exit-policy infra-only

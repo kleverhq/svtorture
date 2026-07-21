@@ -11,7 +11,7 @@ import tomllib
 import urllib.error
 import urllib.parse
 import urllib.request
-from collections.abc import Iterable
+from collections.abc import Callable, Iterable
 from dataclasses import dataclass
 from datetime import UTC, datetime
 from pathlib import Path
@@ -276,6 +276,7 @@ def run_campaign(
     prepared: tuple[PreparedTool, ...],
     *,
     suite_id: str,
+    progress: Callable[[int, int, str, str, str], None] | None = None,
 ) -> Campaign:
     if not prepared:
         raise CampaignError("a campaign needs at least one tool/profile")
@@ -302,6 +303,8 @@ def run_campaign(
     work_root = catalog.root / ".svtorture" / "work" / campaign_id
     rules_path = catalog.root / "tools" / "diagnostic-rules.toml"
     results: list[NormalizedResult] = []
+    total_cases = len(prepared) * len(selected)
+    case_number = 0
     for prepared_tool in prepared:
         tool = prepared_tool.definition
         profile = prepared_tool.profile
@@ -312,6 +315,9 @@ def run_campaign(
         )
         for loaded in selected:
             case = loaded.definition
+            case_number += 1
+            if progress is not None:
+                progress(case_number, total_cases, tool.id, profile.id, case.id)
             if case.target_phase not in profile.phases:
                 results.append(
                     synthetic_result(

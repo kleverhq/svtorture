@@ -40,6 +40,7 @@ def test_unsupported_phase_is_recorded_without_execution(catalog: Catalog) -> No
     tool = catalog.tools.tool("slang")
     profile = tool.profile("parser")
     recorded_tool = campaign_tool(tool, (profile.id,))
+    progress: list[tuple[int, int, str, str, str]] = []
     campaign = run_campaign(
         catalog,
         (
@@ -52,7 +53,14 @@ def test_unsupported_phase_is_recorded_without_execution(catalog: Catalog) -> No
             ),
         ),
         suite_id="smoke",
+        progress=lambda current, total, tool_id, profile_id, case_id: progress.append(
+            (current, total, tool_id, profile_id, case_id)
+        ),
     )
+    assert progress == [
+        (number, len(campaign.case_ids), tool.id, profile.id, case_id)
+        for number, case_id in enumerate(campaign.case_ids, start=1)
+    ]
     by_case = {result.case_id: result for result in campaign.results}
     assert by_case["ch04-nba-rhs-captured"].status is ResultStatus.UNSUPPORTED_CAPABILITY
     assert by_case["ch04-nba-rhs-captured"].reason is ReasonCode.UNSUPPORTED_PHASE
