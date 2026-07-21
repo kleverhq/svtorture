@@ -22,7 +22,7 @@ This change does not commit an IEEE PDF or generated annotated TXT files. It doe
 - [x] (2026-07-21 07:18Z) Imported the latest annotator source into `standards/ieee-1800-2023-annotate/`, removed the submodule and `.gitmodules`, and renamed terminology and code consistently.
 - [x] (2026-07-21 07:21Z) Added ignored local environment configuration, root `just` targets, integrated tests, and conditional CI anchor verification.
 - [x] (2026-07-21 07:22Z) Replaced annotator development documentation with `docs/annotation.md`, simplified its local README, and updated adjacent architecture and workflow documents.
-- [ ] Materialize from the reference PDF, prove byte identity, run all gates, review the consolidated diff, fix findings, and commit the completed integration (completed: full materialization, structural verification, and byte comparison; remaining: strict second-pass verification, complete gates, reviews, commits).
+- [x] (2026-07-21 07:40Z) Materialized from the reference PDF, proved byte identity, passed strict verification and all deterministic gates, completed two focused reviews plus a fresh control review, fixed every finding, re-reviewed the fixes cleanly, and prepared the completion commit.
 
 ## Surprises & Discoveries
 
@@ -36,6 +36,14 @@ This change does not commit an IEEE PDF or generated annotated TXT files. It doe
   Evidence: `render()` writes `source=<path>` to each part, while `render_anchors_index()` emits `source_sha256` plus entries such as `txt/04.txt`; therefore byte comparison of the committed index is independent of local PDF path.
 - Observation: Renaming the text-review marker and all annotation terminology does not change the anchor inventory.
   Evidence: `just annotate-check` generated 58 parts, verified 16,963 anchors and all object/marker counts, and byte-compared the generated index equal to the committed `standards/ieee-1800-2023-anchors.json`.
+- Observation: A secret-backed job in a pull-request workflow must not execute pull-request-controlled annotation code.
+  Evidence: code review identified the exposure; the annotation job is now restricted to trusted pushes to `main` and a branch-restricted GitHub environment.
+- Observation: Quoting a `just` parameter with literal shell double quotes does not prevent command substitution in an adversarial path.
+  Evidence: review identified the interpolation boundary. All PDF parameters now use Just's `quote()` function, and a path containing `$(touch ...)` was passed literally without creating the marker file.
+- Observation: Even a trusted-branch secret job should not run floating setup actions or retain the secret while executing repository code.
+  Evidence: the final control review identified the supply-chain boundary. The job now pins checkout, setup-just, and Just 1.21.0, scopes the URL to the curl-only step, and runs annotation in a later secret-free step.
+- Observation: Source-only tests in normal repository gates must use the Python environment installed by `just setup`.
+  Evidence: the final control review found direct host `python3` calls; `annotator-tests` now uses `uv run python`, and focused re-review reported no substantive findings.
 
 ## Decision Log
 
@@ -57,23 +65,27 @@ This change does not commit an IEEE PDF or generated annotated TXT files. It doe
 - Decision: Keep Poppler out of `pyproject.toml`; document package installation locally and install Ubuntu's `poppler-utils` only in the conditional CI annotation job.
   Rationale: Poppler is an operating-system program, not a Python package. Normal CI and users who do not annotate must not pay for or require it.
   Date/Author: 2026-07-21 / coding agent.
-- Decision: CI will download the PDF to ignored `.svtorture/` only when `IEEE_1800_2023_PDF_URL` is nonempty, run `just annotate-check <path>`, and otherwise emit a GitHub workflow warning.
-  Rationale: The licensed PDF and secret URL stay outside Git, while configured CI proves deterministic byte identity and unconfigured CI remains functional and explicit.
+- Decision: CI will run annotation only on trusted pushes to `main` in the branch-restricted `ieee-1800-2023-annotation` environment. It downloads the PDF to ignored `.svtorture/` only when the environment secret `IEEE_1800_2023_PDF_URL` is nonempty, runs `just annotate-check <path>` in a separate secret-free step, and otherwise emits a warning. Setup actions and Just are pinned.
+  Rationale: Pull-request-controlled code and floating setup dependencies never receive the licensed URL, while configured trusted CI proves deterministic byte identity and an unconfigured environment remains explicit.
   Date/Author: 2026-07-21 / coding agent.
 
 ## Outcomes & Retrospective
 
-The submodule has been replaced by owned source, local materialization and structural verification pass against the exact reference PDF, and the committed anchor index remains byte-identical. Documentation and CI integration are implemented. Strict second-pass verification, complete repository gates, focused reviews, and final commits remain.
+The private submodule and `.gitmodules` are gone; the repository owns the annotator source under the requested `standards/ieee-1800-2023-annotate/` path. The licensed PDF, `.env.local`, generated 58-part corpus, and generated index remain ignored. The committed runtime index did not change: generated and committed files share SHA-256 `34030dd64ab2d867124f0c449fe3e8146805df365dd7dd244ee2f38d4e71c9dc`.
+
+`just annotate-check` reports 16,963 anchors and complete object/marker inventories, while `just annotate-verify` reports 58/58 deterministic regenerations and `verification: PASS`. `just annotate-update-anchors` leaves no diff for the reference PDF, and a forced byte mismatch prints the required update-and-commit instruction. Ninety-three framework tests, fifteen annotator and utility tests, five dashboard tests, lint, typing, metadata validation, frontend build, pre-commit, smoke without dotenv, and source-hygiene scanning pass. No PDF or generated TXT is tracked.
+
+Code/workflow and documentation reviewers found four substantive boundaries: pull-request secret exposure, unsafe shell interpolation, imprecise verification wording/stale plan state, and floating setup dependencies plus host-Python test execution. All were fixed. Focused re-reviews and a fresh control-finding re-review reported no substantive findings. The implementation is complete.
 
 ## Context and Orientation
 
-The root repository is `/home/esynr3z/projects/sv-torture`. `standards/ieee-1800-2023-anchors.json` is a committed machine-readable inventory used by `src/svtorture/catalog.py` to validate every requirement citation. Catalog loading must continue to use only that file. The current optional submodule is at `standards/ieee-1800-2023-annotated`; `.gitmodules` points to a private GitHub repository. Its latest `master` no longer contains generated corpus data.
+The root repository is `/home/esynr3z/projects/sv-torture`. `standards/ieee-1800-2023-anchors.json` is a committed machine-readable inventory used by `src/svtorture/catalog.py` to validate every requirement citation. Catalog loading continues to use only that file. Before this plan, an optional submodule lived at `standards/ieee-1800-2023-annotated`; commit `8773fd9` replaced it and `.gitmodules` with owned annotator source.
 
 At commit `67747e5`, the annotator consists of a legacy-named primary script, `verify.py`, `data/recipes.json`, `data/objects.csv`, its primary test, and two maintenance utilities under `utils/`. The primary script's `--all --pdf PDF --output-dir generated/txt` mode invokes Poppler `pdftohtml` for all 41 clauses and 17 annexes, writes 58 annotated TXT files, and produces `generated/anchors.json`. `verify.py generated/txt --pdf PDF` validates corpus structure and deterministic anchor-index generation; `--check-generated` regenerates each part and compares bytes. `data/recipes.json` carries only structural anchor and review-marker corrections, not copied standard prose. `data/objects.csv` inventories numbered tables, figures, and Syntax objects.
 
 The new owned directory is exactly `standards/ieee-1800-2023-annotate/`. Its primary command becomes `annotate.py`; its main test becomes `tests/test_annotate.py`. `DEVELOPMENT.md` is removed. The local `README.md` becomes a short purpose and navigation document pointing to root `docs/annotation.md`, which owns prerequisites, environment setup, pipeline, outputs, anchor and marker conventions, recipe maintenance, verification, utilities, and CI behavior.
 
-The root `justfile` is the stable command interface. It currently does not load dotenv files. The new settings `set dotenv-load := true` and `set dotenv-filename := ".env.local"` make the ignored local configuration available to recipes without affecting environments where the file does not exist. `.env.local.example` documents the only initial setting. The actual ignored `.env.local` on this workstation will use `/home/esynr3z/.pi/agent/skills/systemverilog/references/IEEE-1800-2023.pdf`.
+The root `justfile` is the stable command interface. Before this integration it did not load dotenv files. It now uses `set dotenv-load := true` and `set dotenv-filename := ".env.local"` to make the ignored local configuration available to recipes without affecting environments where the file does not exist. `.env.local.example` documents the only initial setting. The actual ignored `.env.local` on this workstation will use `/home/esynr3z/.pi/agent/skills/systemverilog/references/IEEE-1800-2023.pdf`.
 
 ## Open Questions
 
@@ -152,7 +164,7 @@ With the local reference PDF configured, `just annotate` must create exactly 58 
 
 `just annotate-verify` must report 58/58 files, one valid anchor index, complete table/figure/Syntax inventories, expected marker totals, 58/58 deterministic regenerations, and `verification: PASS`. Annotator tests and utility tests must pass without a PDF. No tracked source under the integrated annotator may use retired pre-annotation terminology.
 
-In CI without the URL secret, the annotation gate must emit a visible warning and succeed without installing Poppler or downloading anything. With the secret, it must install Poppler, download without logging the URL, generate the full corpus, and compare the generated index byte-for-byte to the committed file.
+On a trusted `main` push, the branch-restricted annotation environment must emit a visible warning and succeed without installing Poppler when its URL secret is absent. With the environment secret present, it must install Poppler, download without logging the URL, generate the full corpus, and compare the generated index byte-for-byte to the committed file. Pull-request jobs must never receive or consume the secret.
 
 ### Idempotence and Recovery
 
@@ -185,3 +197,7 @@ The committed runtime contract remains `standards/ieee-1800-2023-anchors.json`. 
 Revision note (2026-07-21 07:13Z): Initial self-contained plan written after updating and inspecting upstream, confirming the local PDF and Poppler versions, and resolving all user decisions.
 
 Revision note (2026-07-21 07:23Z): Recorded source integration, terminology migration, root workflow and CI wiring, documentation migration, successful 58-part materialization, structural verification, and anchor-index byte identity.
+
+Revision note (2026-07-21 07:31Z): Recorded strict regeneration, complete gates, focused review findings, trusted-branch secret isolation, shell-safe PDF arguments, and documentation corrections.
+
+Revision note (2026-07-21 07:40Z): Closed the plan after control review, action/version pinning, URL-step isolation, uv-backed source tests, clean re-review, and the final evidence audit.

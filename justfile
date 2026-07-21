@@ -69,36 +69,36 @@ precommit:
 
 # Source-only tests for the annotator and its maintainer utilities.
 annotator-tests:
-    python3 -m unittest discover -s {{annotator_dir}}/tests -v
-    python3 -m unittest discover -s {{annotator_dir}}/utils/compare_baseline -p 'test_*.py' -v
-    python3 -m unittest discover -s {{annotator_dir}}/utils/scan_copied_text -p 'test_*.py' -v
+    uv run python -m unittest discover -s {{annotator_dir}}/tests -v
+    uv run python -m unittest discover -s {{annotator_dir}}/utils/compare_baseline -p 'test_*.py' -v
+    uv run python -m unittest discover -s {{annotator_dir}}/utils/scan_copied_text -p 'test_*.py' -v
 
 # Materialize the complete ignored annotated corpus without changing committed metadata.
 annotate pdf=ieee_pdf:
-    test -n "{{pdf}}" || { echo "Set IEEE_1800_2023_PDF in .env.local or pass a PDF path." >&2; exit 1; }
+    test -n {{quote(pdf)}} || { echo "Set IEEE_1800_2023_PDF in .env.local or pass a PDF path." >&2; exit 1; }
     command -v pdftohtml >/dev/null || { echo "pdftohtml is required; install the poppler-utils package." >&2; exit 1; }
     rm -rf {{annotation_output}}
-    python3 {{annotator_dir}}/annotate.py --all --pdf "{{pdf}}" --output-dir {{annotation_output}}/txt
+    python3 {{annotator_dir}}/annotate.py --all --pdf {{quote(pdf)}} --output-dir {{annotation_output}}/txt
 
 _check-annotation-index:
     if ! cmp -s {{annotation_output}}/anchors.json standards/ieee-1800-2023-anchors.json; then echo "Generated anchors differ. Run 'just annotate-update-anchors', then commit standards/ieee-1800-2023-anchors.json." >&2; exit 1; fi
 
 # Materialize and compare the generated anchor index with the committed runtime index.
 annotate-check pdf=ieee_pdf:
-    just annotate "{{pdf}}"
-    python3 {{annotator_dir}}/verify.py {{annotation_output}}/txt --pdf "{{pdf}}"
+    just annotate {{quote(pdf)}}
+    python3 {{annotator_dir}}/verify.py {{annotation_output}}/txt --pdf {{quote(pdf)}}
     just _check-annotation-index
 
 # Deliberately replace the committed runtime anchor index after successful annotation.
 annotate-update-anchors pdf=ieee_pdf:
-    just annotate "{{pdf}}"
-    python3 {{annotator_dir}}/verify.py {{annotation_output}}/txt --pdf "{{pdf}}"
+    just annotate {{quote(pdf)}}
+    python3 {{annotator_dir}}/verify.py {{annotation_output}}/txt --pdf {{quote(pdf)}}
     cp {{annotation_output}}/anchors.json standards/ieee-1800-2023-anchors.json
 
 # Regenerate every part a second time and require complete byte-for-byte stability.
 annotate-verify pdf=ieee_pdf:
-    just annotate "{{pdf}}"
-    python3 {{annotator_dir}}/verify.py {{annotation_output}}/txt --pdf "{{pdf}}" --check-generated
+    just annotate {{quote(pdf)}}
+    python3 {{annotator_dir}}/verify.py {{annotation_output}}/txt --pdf {{quote(pdf)}} --check-generated
 
 # Real executor/evaluator integration with the deterministic container.
 docker-fake:

@@ -87,12 +87,15 @@ git add standards/ieee-1800-2023-anchors.json
 git commit
 ```
 
-For the strongest local check, generate the corpus and then regenerate every
+For deterministic regeneration, generate the corpus and then regenerate every
 part a second time, requiring byte-for-byte stability:
 
 ```text
 just annotate-verify
 ```
+
+Complete local verification runs both `just annotate-check` for committed-index
+identity and `just annotate-verify` for deterministic corpus regeneration.
 
 Generated files are owned by
 `standards/ieee-1800-2023-annotate/generated/` and can be deleted at any time.
@@ -183,13 +186,17 @@ marked for visual review.
 
 ## CI verification
 
-The `annotation-index` CI job checks whether the repository secret
-`IEEE_1800_2023_PDF_URL` is configured. Without it, CI emits a visible warning
-and succeeds without installing Poppler or downloading anything.
+The `annotation-index` CI job runs only for trusted pushes to `main` in the
+branch-restricted `ieee-1800-2023-annotation` GitHub environment; pull requests
+never receive the licensed URL. Configure `IEEE_1800_2023_PDF_URL` as an
+environment secret. Without it, the trusted job emits a visible warning and
+succeeds without installing Poppler or downloading anything.
 
-When the secret is present, CI installs `poppler-utils`, downloads the PDF into
-ignored `.svtorture/`, runs `just annotate-check`, and byte-compares the generated
-index with `standards/ieee-1800-2023-anchors.json`. A mismatch fails with an
+When the secret is present, CI uses commit-pinned setup actions and Just 1.21.0,
+installs `poppler-utils`, and downloads the PDF into ignored `.svtorture/`. The
+URL is scoped only to that download step; the separate `just annotate-check`
+step receives only the local PDF path and byte-compares the generated index with
+`standards/ieee-1800-2023-anchors.json`. A mismatch fails with an
 instruction to run `just annotate-update-anchors` and commit the result. The URL
 and PDF must never be logged or uploaded as artifacts.
 
