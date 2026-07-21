@@ -5,7 +5,6 @@
 - `architecture.md` owns component boundaries and data flow.
 - `methodology.md` owns conformance judgments and metric semantics.
 - `adding-a-case.md`, `adding-a-tool.md`, and `reproduction.md` own maintainer workflows.
-- `../GOAL.md` is historical project context, not the current metadata contract.
 
 ## Local guidance
 
