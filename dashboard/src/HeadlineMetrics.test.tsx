@@ -1,5 +1,5 @@
-import { cleanup, render, screen } from "@testing-library/react";
-import { afterEach, describe, expect, it } from "vitest";
+import { cleanup, fireEvent, render, screen } from "@testing-library/react";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { HeadlineMetrics } from "./HeadlineMetrics";
 import { makeTestDataset } from "./testDataset";
@@ -7,56 +7,31 @@ import { makeTestDataset } from "./testDataset";
 afterEach(cleanup);
 
 describe("HeadlineMetrics", () => {
-  it("counts requirements covered by selected campaign cases", () => {
+  it("shows tool coverage without the campaign summary", () => {
     const dataset = makeTestDataset();
-    const requirement = dataset.requirements[0];
-    const testCase = dataset.cases[0];
     const campaign = dataset.campaigns[0];
-    if (!requirement || !testCase || !campaign) {
-      throw new Error("incomplete test dataset");
-    }
-    dataset.requirements.push({
-      ...requirement,
-      id: "SV-2023-99-UNSELECTED",
-      chapter: 99,
-      clause: "99.1",
-    });
-    dataset.cases.push({
-      ...testCase,
-      id: "ch99-unselected",
-      primary_requirement: "SV-2023-99-UNSELECTED",
-    });
+    if (!campaign) throw new Error("incomplete test dataset");
 
-    render(<HeadlineMetrics dataset={dataset} campaign={campaign} />);
+    render(
+      <HeadlineMetrics dataset={dataset} campaign={campaign} onSelectTool={vi.fn()} />,
+    );
 
-    const requirements = screen.getByText("Covered requirements").parentElement;
-    expect(requirements?.querySelector("strong")?.textContent).toBe("1");
-    expect(requirements?.textContent).toContain(
-      "1 campaign case maps to these requirements.",
-    );
-    expect(screen.getByText("Selected campaign summary")).toBeTruthy();
-    expect(
-      screen.getByText(/Each evaluation is one tool\/profile running one case/),
-    ).toBeTruthy();
-    const unscored = screen.getByText("Unscored evaluations").parentElement;
-    expect(unscored?.querySelector("strong")?.textContent).toBe("0");
-    expect(unscored?.textContent).toContain(
-      "Cases that were not run or do not apply to the selected tool profile.",
-    );
+    expect(screen.getByText("Verified requirement coverage by tool")).toBeTruthy();
+    expect(screen.queryByText("Selected campaign summary")).toBeNull();
+    expect(screen.queryByText("Covered requirements")).toBeNull();
   });
 
-  it("reports an unmatched campaign selection instead of zero counts", () => {
+  it("reports an unmatched campaign selection", () => {
     const dataset = makeTestDataset();
 
-    render(<HeadlineMetrics dataset={dataset} />);
+    render(<HeadlineMetrics dataset={dataset} onSelectTool={vi.fn()} />);
 
     expect(
       screen.getByText("No campaign matches the current campaign and date selection."),
     ).toBeTruthy();
-    expect(screen.queryByText("Covered requirements")).toBeNull();
   });
 
-  it("does not present an invalid metric as zero coverage", () => {
+  it("links a tool row to its requirements without presenting invalid counts", () => {
     const dataset = makeTestDataset();
     const campaign = dataset.campaigns[0];
     if (!campaign) throw new Error("incomplete test dataset");
@@ -87,19 +62,25 @@ describe("HeadlineMetrics", () => {
       repository_commit: campaign.repository.commit,
     };
     dataset.metrics.push(metric);
+    const onSelectTool = vi.fn();
 
-    const view = render(<HeadlineMetrics dataset={dataset} campaign={campaign} />);
+    const view = render(
+      <HeadlineMetrics
+        dataset={dataset}
+        campaign={campaign}
+        onSelectTool={onSelectTool}
+      />,
+    );
 
-    const unavailable = screen.getByText("Unavailable · harness errors present");
-    expect(unavailable.classList).toContain("tool-metric__coverage");
-    expect(unavailable.closest("article")?.classList).toContain(
-      "tool-metric--unavailable",
-    );
-    expect(screen.getByText("Unavailable").classList).toContain(
-      "tool-metric__unavailable",
-    );
+    const row = screen.getByRole("button", {
+      name: "View requirements for fake/simulator",
+    });
+    fireEvent.click(row);
+    expect(onSelectTool).toHaveBeenCalledWith("fake/simulator");
+    expect(row.classList).toContain("tool-metric--unavailable");
+    expect(screen.getByText("Unavailable · harness errors present")).toBeTruthy();
+    expect(screen.getByText("Unavailable")).toBeTruthy();
     expect(screen.queryByLabelText("fake requirement outcomes")).toBeNull();
-    expect(document.querySelector(".meter")).toBeNull();
 
     metric.valid = true;
     metric.numerator = 11;
@@ -107,7 +88,13 @@ describe("HeadlineMetrics", () => {
     metric.conforming = 11;
     metric.nonconforming = 1;
     metric.inconclusive = 0;
-    view.rerender(<HeadlineMetrics dataset={dataset} campaign={campaign} />);
+    view.rerender(
+      <HeadlineMetrics
+        dataset={dataset}
+        campaign={campaign}
+        onSelectTool={onSelectTool}
+      />,
+    );
 
     const outcomes = screen.getByLabelText("fake requirement outcomes");
     expect(outcomes.querySelector(".tool-outcome--pass")?.textContent).toBe("11PASS");
@@ -116,34 +103,7 @@ describe("HeadlineMetrics", () => {
       "0UNCLEAR",
     );
     expect(
-      screen.getByText("92% of IEEE 1800-2023 applicable requirements").classList,
-    ).toContain("tool-metric__coverage");
-    expect(screen.queryByText(/registered requirements/)).toBeNull();
-  });
-
-  it("counts known issues only among failed evaluations", () => {
-    const dataset = makeTestDataset();
-    const campaign = dataset.campaigns[0];
-    const passingResult = campaign?.results[0];
-    if (!campaign || !passingResult) throw new Error("incomplete test dataset");
-    passingResult.known_issue = "Passing context must not count as a known failure.";
-    campaign.results.push({
-      ...passingResult,
-      status: "nonconforming",
-      reason: "unexpected-result",
-      known_issue: null,
-    });
-
-    render(<HeadlineMetrics dataset={dataset} campaign={campaign} />);
-
-    const failures = screen.getByText("Failed evaluations").parentElement;
-    expect(failures?.querySelector("strong")?.textContent).toBe("1");
-    expect(failures?.textContent).toContain(
-      "2 recorded evaluations; 0 failures linked to a known issue.",
-    );
-    expect(screen.getByText("Needs inspection")).toBeTruthy();
-    expect(
-      screen.getByText("Inconclusive observations or harness errors."),
+      screen.getByText("92% of IEEE 1800-2023 applicable requirements"),
     ).toBeTruthy();
   });
 });

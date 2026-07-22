@@ -127,12 +127,11 @@ export default function App() {
       <main className="dashboard">
         <section className="campaign-overview" aria-labelledby="overview-title">
           <div>
-            <span className="section-label">
+            <span className="section-label" id="overview-title">
               {filters.campaign || filters.date
                 ? "Selected campaign"
                 : "Latest campaign"}
             </span>
-            <h1 id="overview-title">Conformance overview</h1>
             {campaign ? (
               <p>
                 <strong>{new Date(campaign.finished_at).toLocaleString()}</strong>
@@ -204,7 +203,14 @@ export default function App() {
           tabIndex={0}
         >
           {view === "overview" && (
-            <HeadlineMetrics dataset={dataset} campaign={campaign} />
+            <HeadlineMetrics
+              dataset={dataset}
+              campaign={campaign}
+              onSelectTool={(tool) => {
+                setFilters((current) => ({ ...current, tool }));
+                setView("matrix");
+              }}
+            />
           )}
           {view === "matrix" && (
             <MatrixView
