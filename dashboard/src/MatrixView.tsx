@@ -4,8 +4,8 @@ import {
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { useVirtualizer } from "@tanstack/react-virtual";
-import { useEffect, useMemo, useRef } from "react";
+import { useWindowVirtualizer } from "@tanstack/react-virtual";
+import { useMemo, useRef } from "react";
 
 import { aggregateStatus, profileKeys, resultsByKey } from "./model";
 import { StatusBadge } from "./StatusBadge";
@@ -33,7 +33,7 @@ export function MatrixView({
   onInspectCase,
 }: MatrixProps) {
   const parentRef = useRef<HTMLDivElement>(null);
-  const inspectorRef = useRef<HTMLElement>(null);
+  const headerScrollRef = useRef<HTMLDivElement>(null);
   const resultMap = useMemo(() => resultsByKey(campaign), [campaign]);
   const profiles = profileKeys(campaign).filter(
     (profile) => !toolFilter || profile === toolFilter,
@@ -104,11 +104,14 @@ export function MatrixView({
     getCoreRowModel: getCoreRowModel(),
   });
   const rows = table.getRowModel().rows;
-  const virtualizer = useVirtualizer({
+  const scrollMargin = parentRef.current
+    ? parentRef.current.getBoundingClientRect().top + window.scrollY
+    : 0;
+  const virtualizer = useWindowVirtualizer({
     count: rows.length,
-    getScrollElement: () => parentRef.current,
     estimateSize: () => 54,
     overscan: 10,
+    scrollMargin,
   });
   const template = [
     "112px",
@@ -122,12 +125,6 @@ export function MatrixView({
   const supporting = selectedRequirement
     ? (casesByRequirement.get(selectedRequirement.id) ?? [])
     : [];
-  useEffect(() => {
-    if (!selectedRequirement) return;
-    inspectorRef.current?.focus({ preventScroll: true });
-    inspectorRef.current?.scrollIntoView({ block: "nearest" });
-  }, [selectedRequirement]);
-
   return (
     <section className="panel matrix" aria-labelledby="matrix-title">
       <div className="panel__heading panel__heading--compact">
@@ -140,56 +137,82 @@ export function MatrixView({
         </div>
       </div>
       <div className={`matrix__workspace ${selectedRequirement ? "has-inspector" : ""}`}>
-        <div className="matrix__scroll" ref={parentRef}>
+        <div className="matrix__main">
           <div
-            className="matrix__header"
-            style={{ gridTemplateColumns: template, width: tableWidth }}
+            className="matrix__header-scroll"
+            ref={headerScrollRef}
+            onScroll={(event) => {
+              if (
+                parentRef.current &&
+                parentRef.current.scrollLeft !== event.currentTarget.scrollLeft
+              ) {
+                parentRef.current.scrollLeft = event.currentTarget.scrollLeft;
+              }
+            }}
           >
-            {table.getHeaderGroups()[0]?.headers.map((header) => (
-              <div key={header.id}>
-                {flexRender(header.column.columnDef.header, header.getContext())}
-              </div>
-            ))}
-          </div>
-          {rows.length ? (
             <div
-              className="matrix__body"
-              style={{ height: `${virtualizer.getTotalSize()}px`, width: tableWidth }}
+              className="matrix__header"
+              style={{ gridTemplateColumns: template, width: tableWidth }}
             >
-              {virtualizer.getVirtualItems().map((virtualRow) => {
-                const row = rows[virtualRow.index];
-                if (!row) return null;
-                return (
-                  <div
-                    key={row.id}
-                    className={`matrix__row ${
-                      row.original.id === selectedRequirementId ? "is-selected" : ""
-                    }`}
-                    style={{
-                      height: `${virtualRow.size}px`,
-                      transform: `translateY(${virtualRow.start}px)`,
-                      gridTemplateColumns: template,
-                    }}
-                  >
-                    {row.getVisibleCells().map((cell) => (
-                      <div className="matrix__cell" key={cell.id}>
-                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                      </div>
-                    ))}
-                  </div>
-                );
-              })}
+              {table.getHeaderGroups()[0]?.headers.map((header) => (
+                <div key={header.id}>
+                  {flexRender(header.column.columnDef.header, header.getContext())}
+                </div>
+              ))}
             </div>
-          ) : (
-            <div className="empty-state">No requirements match the current filters.</div>
-          )}
+          </div>
+          <div
+            className="matrix__scroll"
+            ref={parentRef}
+            onScroll={(event) => {
+              if (
+                headerScrollRef.current &&
+                headerScrollRef.current.scrollLeft !== event.currentTarget.scrollLeft
+              ) {
+                headerScrollRef.current.scrollLeft = event.currentTarget.scrollLeft;
+              }
+            }}
+          >
+            {rows.length ? (
+              <div
+                className="matrix__body"
+                style={{ height: `${virtualizer.getTotalSize()}px`, width: tableWidth }}
+              >
+                {virtualizer.getVirtualItems().map((virtualRow) => {
+                  const row = rows[virtualRow.index];
+                  if (!row) return null;
+                  return (
+                    <div
+                      key={row.id}
+                      className={`matrix__row ${
+                        row.original.id === selectedRequirementId ? "is-selected" : ""
+                      }`}
+                      style={{
+                        height: `${virtualRow.size}px`,
+                        transform: `translateY(${
+                          virtualRow.start - virtualizer.options.scrollMargin
+                        }px)`,
+                        gridTemplateColumns: template,
+                      }}
+                    >
+                      {row.getVisibleCells().map((cell) => (
+                        <div className="matrix__cell" key={cell.id}>
+                          {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                        </div>
+                      ))}
+                    </div>
+                  );
+                })}
+              </div>
+            ) : (
+              <div className="empty-state">No requirements match the current filters.</div>
+            )}
+          </div>
         </div>
 
         {selectedRequirement && (
           <aside
             className="matrix-inspector"
-            ref={inspectorRef}
-            tabIndex={-1}
             aria-labelledby="requirement-inspector-title"
           >
             <header>

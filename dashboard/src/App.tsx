@@ -1,4 +1,11 @@
-import { useEffect, useState, type KeyboardEvent } from "react";
+import {
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+  type KeyboardEvent,
+} from "react";
 
 import { CampaignView } from "./CampaignView";
 import { EvidenceView } from "./EvidenceView";
@@ -37,9 +44,21 @@ export default function App() {
   const state = useDataset();
   const [view, setView] = useState<View>(initialView);
   const [filters, setFilters] = useState(() => filtersFromSearch(window.location.search));
+  const [workspaceHeight, setWorkspaceHeight] = useState(0);
+  const workspaceRef = useRef<HTMLElement>(null);
   useEffect(() => {
     window.history.replaceState(null, "", filtersToSearch(filters, view));
   }, [filters, view]);
+  useLayoutEffect(() => {
+    const workspace = workspaceRef.current;
+    if (!workspace) return;
+    const measure = () => setWorkspaceHeight(workspace.getBoundingClientRect().height);
+    measure();
+    if (typeof ResizeObserver === "undefined") return;
+    const observer = new ResizeObserver(measure);
+    observer.observe(workspace);
+    return () => observer.disconnect();
+  }, [state.dataset]);
 
   if (state.error) {
     return (
@@ -124,7 +143,10 @@ export default function App() {
         </div>
       </header>
 
-      <main className="dashboard">
+      <main
+        className="dashboard"
+        style={{ "--workspace-height": `${workspaceHeight}px` } as CSSProperties}
+      >
         <section className="campaign-overview" aria-labelledby="overview-title">
           <div>
             <span className="section-label" id="overview-title">
@@ -164,7 +186,11 @@ export default function App() {
           )}
         </section>
 
-        <section className="workspace-bar" aria-label="Dashboard controls">
+        <section
+          className="workspace-bar"
+          aria-label="Dashboard controls"
+          ref={workspaceRef}
+        >
           <div className="view-tabs" role="tablist" aria-label="Dashboard views">
             {VIEWS.map((item, index) => {
               const selected = view === item.id;

@@ -10,6 +10,7 @@ afterEach(() => {
 });
 
 beforeEach(() => {
+  vi.stubGlobal("scrollTo", vi.fn());
   window.history.replaceState(null, "", "/");
 });
 
