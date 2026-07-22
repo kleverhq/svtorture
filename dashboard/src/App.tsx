@@ -251,7 +251,6 @@ export default function App() {
       </main>
       <footer>
         <span>SVTORTURE · Apache-2.0</span>
-        <span>Immutable campaign evidence</span>
       </footer>
     </>
   );
