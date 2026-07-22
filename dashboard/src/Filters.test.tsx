@@ -136,6 +136,47 @@ describe("Filters", () => {
     ).toBeTruthy();
   });
 
+  it("shows quick Campaigns facets across all records without Advanced filters", () => {
+    const dataset = makeTestDataset();
+    const campaign = dataset.campaigns[0];
+    const tool = campaign?.tools[0];
+    const profile = tool?.definition.profiles[0];
+    if (!campaign || !tool || !profile) throw new Error("incomplete test dataset");
+    dataset.campaigns.push({
+      ...campaign,
+      id: "older-campaign",
+      finished_at: "2026-01-01T00:00:00Z",
+      tools: [
+        {
+          ...tool,
+          definition: {
+            ...tool.definition,
+            id: "historical-tool",
+            display_name: "Historical Tool",
+            profiles: [{ ...profile, id: "parser" }],
+          },
+          profile_ids: ["parser"],
+        },
+      ],
+    });
+
+    render(<FilterHarness mode="campaigns" dataset={dataset} />);
+
+    expect(
+      within(screen.getByRole("group", { name: "Tools" })).getByRole("button", {
+        name: "Historical Tool 1",
+      }),
+    ).toBeTruthy();
+    expect(
+      within(screen.getByRole("group", { name: "Profiles" })).getByRole(
+        "button",
+        { name: "Parser 1" },
+      ),
+    ).toBeTruthy();
+    expect(screen.queryByText("Advanced filters")).toBeNull();
+    expect(screen.queryByLabelText("Search")).toBeNull();
+  });
+
   it("shows independent headline facets without result filters", () => {
     render(<FilterHarness mode="overview" />);
 

@@ -217,9 +217,11 @@ describe("App overview navigation", () => {
         "aria-selected",
       ),
     ).toBe("true");
-    expect(screen.queryByLabelText("Campaign")).toBeNull();
-    expect(screen.queryByLabelText("From")).toBeNull();
-    expect(screen.queryByLabelText("To")).toBeNull();
+    expect((screen.getByLabelText("Campaign") as HTMLSelectElement).disabled).toBe(
+      true,
+    );
+    expect((screen.getByLabelText("From") as HTMLInputElement).disabled).toBe(true);
+    expect((screen.getByLabelText("To") as HTMLInputElement).disabled).toBe(true);
     expect(screen.queryByText("Advanced filters")).toBeNull();
     expect(screen.getByRole("group", { name: "Tools" })).toBeTruthy();
     expect(screen.getByRole("group", { name: "Profiles" })).toBeTruthy();
@@ -236,6 +238,56 @@ describe("App overview navigation", () => {
     });
     expect(window.location.search).toContain("dateFrom=2099-01-01");
     expect(window.location.search).toContain("dateTo=2099-12-31");
+  });
+
+  it("filters Campaigns with quick Tool and Profile facets", async () => {
+    const dataset = makeTestDataset();
+    const campaign = dataset.campaigns[0];
+    const tool = campaign?.tools[0];
+    const profile = tool?.definition.profiles[0];
+    if (!campaign || !tool || !profile) throw new Error("incomplete test dataset");
+    const otherId = "20260101T000000Z-other";
+    const unavailableId = "20251201T000000Z-unavailable";
+    dataset.campaigns.push({
+      ...campaign,
+      id: otherId,
+      finished_at: "2026-01-01T00:00:00Z",
+      tools: [
+        {
+          ...tool,
+          definition: {
+            ...tool.definition,
+            id: "other",
+            display_name: "Other",
+            profiles: [{ ...profile, id: "parser" }],
+          },
+          profile_ids: ["parser"],
+        },
+      ],
+    });
+    dataset.campaigns.push({
+      ...campaign,
+      id: unavailableId,
+      finished_at: "2025-12-01T00:00:00Z",
+      tools: [],
+      missing_tool_ids: ["fake"],
+    });
+    window.history.replaceState(null, "", "/?view=campaigns&search=no-match");
+    mockDataset(dataset);
+
+    render(<App />);
+    const records = await screen.findByRole("region", { name: "Campaign records" });
+    expect(within(records).getByText(campaign.id)).toBeTruthy();
+    expect(within(records).getByText(otherId)).toBeTruthy();
+    expect(within(records).getByText(unavailableId)).toBeTruthy();
+    expect(screen.queryByText("Advanced filters")).toBeNull();
+
+    fireEvent.click(screen.getByRole("button", { name: "Other 1" }));
+    expect(within(records).queryByText(campaign.id)).toBeNull();
+    expect(within(records).queryByText(unavailableId)).toBeNull();
+    expect(within(records).getByText(otherId)).toBeTruthy();
+    fireEvent.click(screen.getByRole("button", { name: "Parser 1" }));
+    expect(within(records).getByText(otherId)).toBeTruthy();
   });
 
   it("filters campaign choices by an inclusive date range", async () => {

@@ -179,25 +179,15 @@ export default function App() {
   )
     ? filters.campaign
     : "";
-  const campaignNeedle = filters.search.toLocaleLowerCase();
   const visibleCampaigns = rangedCampaigns.filter(
     (item) =>
       (!campaignSelectValue || item.id === campaign?.id) &&
-      (!campaignNeedle ||
-        [
-          item.id,
-          item.selection_name,
-          item.repository.commit,
-          item.platform,
-          ...item.tools.flatMap((tool) => [
-            tool.definition.id,
-            tool.definition.display_name,
-            tool.reported_version ?? "",
-          ]),
-        ]
-          .join(" ")
-          .toLocaleLowerCase()
-          .includes(campaignNeedle)),
+      ((!filters.tool && !filters.profile) ||
+        item.tools.some(
+          (tool) =>
+            (!filters.tool || tool.definition.id === filters.tool) &&
+            (!filters.profile || tool.profile_ids.includes(filters.profile)),
+        )),
   );
   const resetLocalFilters = () =>
     setFilters((current) => ({
@@ -260,12 +250,18 @@ export default function App() {
         className={`dashboard${view === "history" ? " dashboard--history" : ""}`}
         style={{ "--workspace-height": `${workspaceHeight}px` } as CSSProperties}
       >
-        {view !== "history" && (
-          <section className="campaign-overview" aria-label="Campaign selection">
+        <section
+          className={`campaign-overview${
+            view === "history" ? " campaign-overview--disabled" : ""
+          }`}
+          aria-label="Campaign selection"
+          aria-disabled={view === "history"}
+        >
             <label className="campaign-overview__campaign">
               <span>Campaign</span>
               <select
                 value={campaignSelectValue}
+                disabled={view === "history"}
                 onChange={(event) =>
                   setFilters((current) => ({
                     ...current,
@@ -291,6 +287,7 @@ export default function App() {
               <span>From</span>
               <input
                 type="date"
+                disabled={view === "history"}
                 max={filters.dateTo || undefined}
                 value={filters.dateFrom}
                 onChange={(event) =>
@@ -308,6 +305,7 @@ export default function App() {
               <span>To</span>
               <input
                 type="date"
+                disabled={view === "history"}
                 min={filters.dateFrom || undefined}
                 value={filters.dateTo}
                 onChange={(event) =>
@@ -322,7 +320,6 @@ export default function App() {
               />
             </label>
           </section>
-        )}
 
         <section
           className="workspace-bar"

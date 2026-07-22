@@ -62,12 +62,12 @@ not observed. Synthetic unsupported, unavailable, and inapplicable results use
 
 The page header selects the campaign for campaign-scoped views. Optional inclusive
 `From` and `To` dates narrow the campaign dropdown; an empty selection resolves to
-the latest campaign in that range. Changes hides and ignores all three controls: its
-week, month, six-month, year, and all-time UTC windows are independent. Tool and
-profile facets are available on Overview, Requirements, Cases, and Changes.
-Overview and Changes intentionally expose only quick controls; Search and less
-common controls remain inside collapsed Advanced filters on Requirements, Cases,
-and Campaigns.
+the latest campaign in that range. Changes keeps all three controls visible but
+disabled and ignores their values: its week, month, six-month, year, and all-time
+UTC windows are independent. Tool and profile facets are available on Overview,
+Requirements, Cases, Changes, and Campaigns. Overview, Changes, and Campaigns
+intentionally expose only quick controls; Search and less common controls remain
+inside collapsed Advanced filters on Requirements and Cases.
 
 The site header provides `Auto`, `Light`, and `Dark` themes. `Auto` is the default and
 follows the browser or operating-system color preference. An explicit selection

@@ -85,10 +85,24 @@ export function Filters({
       ]),
     ).values(),
   ];
+  const campaignPairs = [
+    ...new Map(
+      dataset.campaigns.flatMap((item) =>
+        item.tools.flatMap((tool) =>
+          tool.profile_ids.map((profileId) => [
+            `${tool.definition.id}\u0000${profileId}`,
+            { toolId: tool.definition.id, profileId },
+          ]),
+        ),
+      ),
+    ).values(),
+  ];
   const profilePairs =
     mode === "history"
       ? historicalPairs
-      : (campaign?.tools.flatMap((tool) =>
+      : mode === "campaigns"
+        ? campaignPairs
+        : (campaign?.tools.flatMap((tool) =>
           tool.profile_ids.flatMap((profileId) => {
             const profile = tool.definition.profiles.find(
               (item) => item.id === profileId,
@@ -116,7 +130,10 @@ export function Filters({
         (!profileId || pair.profileId === profileId),
     ).length;
   const showFacets =
-    mode === "overview" || mode === "corpus" || mode === "history";
+    mode === "overview" ||
+    mode === "corpus" ||
+    mode === "history" ||
+    mode === "campaigns";
 
   return (
     <div className="filters">
@@ -217,7 +234,7 @@ export function Filters({
         </div>
       )}
 
-      {(mode === "corpus" || mode === "campaigns") && (
+      {mode === "corpus" && (
         <details className="filters__advanced">
           <summary>Advanced filters</summary>
         <div className="filters__grid">
