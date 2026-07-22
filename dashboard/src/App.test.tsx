@@ -9,8 +9,28 @@ import {
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import App from "./App";
+import { metricPointKey } from "./model";
 import { makeTestDataset } from "./testDataset";
-import type { Dataset } from "./types";
+import type { Dataset, MetricPoint } from "./types";
+
+vi.mock("echarts/core", () => ({
+  use: vi.fn(),
+  init: vi.fn(() => ({
+    setOption: vi.fn(),
+    on: vi.fn(),
+    getZr: () => ({ on: vi.fn() }),
+    resize: vi.fn(),
+    dispose: vi.fn(),
+  })),
+}));
+vi.mock("echarts/charts", () => ({ LineChart: {}, ScatterChart: {} }));
+vi.mock("echarts/components", () => ({
+  DataZoomComponent: {},
+  GridComponent: {},
+  LegendComponent: {},
+  TooltipComponent: {},
+}));
+vi.mock("echarts/renderers", () => ({ SVGRenderer: {} }));
 
 function mockDataset(dataset: Dataset) {
   vi.stubGlobal(
@@ -147,6 +167,75 @@ describe("App overview navigation", () => {
     await waitFor(() => {
       expect(window.location.search).toBe("?view=overview&tool=fake");
     });
+  });
+
+  it("keeps Changes independent from global campaign and date controls", async () => {
+    const dataset = makeTestDataset();
+    const campaign = dataset.campaigns[0];
+    if (!campaign) throw new Error("incomplete test dataset");
+    const point: MetricPoint = {
+      label: "history metric",
+      revision: "1800-2023",
+      tool_id: "fake",
+      profile_id: "simulator",
+      numerator: 1,
+      denominator: 1,
+      corpus_sha: "0".repeat(64),
+      complete: true,
+      valid: true,
+      corpus_coverage: 1,
+      execution_coverage: 1,
+      conforming: 1,
+      nonconforming: 0,
+      inconclusive: 0,
+      unsupported: 0,
+      infrastructure_state: "available",
+      campaign_id: campaign.id,
+      timestamp: campaign.finished_at,
+      tool_sha: null,
+      exact_tags: [],
+      nearest_tag: null,
+      reported_version: "fake 1.0",
+      image_digest: null,
+      repository_commit: campaign.repository.commit,
+    };
+    dataset.metrics = [point];
+    const parameters = new URLSearchParams({
+      view: "history",
+      campaign: campaign.id,
+      dateFrom: "2099-01-01",
+      dateTo: "2099-12-31",
+      historyRange: "week",
+      historyPoint: metricPointKey(point),
+    });
+    window.history.replaceState(null, "", `/?${parameters.toString()}`);
+    mockDataset(dataset);
+
+    render(<App />);
+    expect(
+      (await screen.findByRole("tab", { name: "Changes" })).getAttribute(
+        "aria-selected",
+      ),
+    ).toBe("true");
+    expect(screen.queryByLabelText("Campaign")).toBeNull();
+    expect(screen.queryByLabelText("From")).toBeNull();
+    expect(screen.queryByLabelText("To")).toBeNull();
+    expect(screen.queryByText("Advanced filters")).toBeNull();
+    expect(screen.getByRole("group", { name: "Tools" })).toBeTruthy();
+    expect(screen.getByRole("group", { name: "Profiles" })).toBeTruthy();
+    expect(
+      screen.getByRole("button", { name: "Last week" }).getAttribute(
+        "aria-pressed",
+      ),
+    ).toBe("true");
+    expect(screen.getByText("fake 1.0")).toBeTruthy();
+
+    fireEvent.click(screen.getByRole("button", { name: "Last 6 months" }));
+    await waitFor(() => {
+      expect(window.location.search).toContain("historyRange=six-months");
+    });
+    expect(window.location.search).toContain("dateFrom=2099-01-01");
+    expect(window.location.search).toContain("dateTo=2099-12-31");
   });
 
   it("filters campaign choices by an inclusive date range", async () => {

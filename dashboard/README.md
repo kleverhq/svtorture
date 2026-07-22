@@ -17,8 +17,8 @@ The interface provides five URL-filtered views. **Overview** is shown by default
 - **Cases** — a master-detail case list with inline local source viewing,
   exact normalized results, diagnostics, output hashes/excerpts, reproduction
   commands, and a return path to the requirement inspector;
-- **Changes** — regressions, new passes, tool/corpus boundaries, metric history,
-  and comparison with the newest earlier campaign using the same tool profiles;
+- **Changes** — an interactive 0–100% metric timeline with rolling UTC ranges,
+  tool/profile facets, wheel and slider zoom, and point-level provenance inspection;
 - **Campaigns** — compact run records with expandable corpus, tool source,
   image, platform, and trust provenance.
 
@@ -51,20 +51,23 @@ The frontend uses:
 
 `src/svtorture/publish.py` validates campaigns and creates the versioned dataset.
 The React model derives filters, comparable-campaign changes, and aggregate
-presentation from that immutable data. View, campaign, date range, tool, profile,
-search, status, advanced filters, selected evidence case, and requirement are encoded
-in the URL so an investigation can be shared or revisited. Broad matrix statuses are presentation categories only; evidence retains every
+presentation from that immutable data. View, campaign, date range, history range,
+selected metric point, tool, profile, search, status, advanced filters, selected
+evidence case, and requirement are encoded in the URL so an investigation can be
+shared or revisited. Broad matrix statuses are presentation categories only; evidence retains every
 exact result status and reason together with the target phase, the phase the
 command attempted through, and whether attribution is direct, cumulative, or
 not observed. Synthetic unsupported, unavailable, and inapplicable results use
 `not-observed` and have no attempted-through observation.
 
-The page header selects the campaign globally. Optional inclusive `From` and `To`
-dates narrow the campaign dropdown; an empty selection resolves to the latest
-campaign in that range. Tool and profile facets are independent on Overview,
-Requirements, and Cases. Overview intentionally exposes only those facets; Search
-and less common controls remain inside collapsed Advanced filters on the other
-views.
+The page header selects the campaign for campaign-scoped views. Optional inclusive
+`From` and `To` dates narrow the campaign dropdown; an empty selection resolves to
+the latest campaign in that range. Changes hides and ignores all three controls: its
+week, month, six-month, year, and all-time UTC windows are independent. Tool and
+profile facets are available on Overview, Requirements, Cases, and Changes.
+Overview and Changes intentionally expose only quick controls; Search and less
+common controls remain inside collapsed Advanced filters on Requirements, Cases,
+and Campaigns.
 
 The site header provides `Auto`, `Light`, and `Dark` themes. `Auto` is the default and
 follows the browser or operating-system color preference. An explicit selection

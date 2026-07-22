@@ -76,14 +76,14 @@ describe("Filters", () => {
     ).toBeTruthy();
   });
 
-  it("keeps Search inside collapsed Advanced filters", () => {
+  it("shows quick history facets without Advanced filters", () => {
     render(<FilterHarness mode="history" />);
 
+    expect(screen.getByRole("group", { name: "Tools" })).toBeTruthy();
+    expect(screen.getByRole("group", { name: "Profiles" })).toBeTruthy();
     expect(screen.queryByRole("group", { name: "Results" })).toBeNull();
-    expect(screen.queryByRole("group", { name: "Tools" })).toBeNull();
-    const advanced = screen.getByText("Advanced filters").closest("details");
-    expect(advanced?.open).toBe(false);
-    expect(screen.getByLabelText("Search")).toBeTruthy();
+    expect(screen.queryByText("Advanced filters")).toBeNull();
+    expect(screen.queryByLabelText("Search")).toBeNull();
   });
 
   it("offers historical tools that are absent from the selected campaign", () => {
@@ -116,11 +116,24 @@ describe("Filters", () => {
       image_digest: null,
       repository_commit: campaign.repository.commit,
     });
+    dataset.metrics.push({
+      ...dataset.metrics[0]!,
+      campaign_id: "another-older-campaign",
+    });
 
     render(<FilterHarness mode="history" dataset={dataset} />);
 
-    expect(screen.getByLabelText("Tool").textContent).toContain("historical-tool");
-    expect(screen.getByLabelText("Profile").textContent).toContain("parser");
+    expect(
+      within(screen.getByRole("group", { name: "Tools" })).getByRole("button", {
+        name: "Historical Tool 1",
+      }),
+    ).toBeTruthy();
+    expect(
+      within(screen.getByRole("group", { name: "Profiles" })).getByRole(
+        "button",
+        { name: "Parser 1" },
+      ),
+    ).toBeTruthy();
   });
 
   it("shows independent headline facets without result filters", () => {

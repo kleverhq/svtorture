@@ -9,6 +9,9 @@ import {
   filterCorpus,
   filtersFromSearch,
   filtersToSearch,
+  historyRangeBounds,
+  historyStateFromSearch,
+  metricPointKey,
   selectedCampaign,
   statusGroup,
 } from "./model";
@@ -36,6 +39,70 @@ describe("URL-backed filters", () => {
     const encoded = filtersToSearch(value, "evidence");
     expect(encoded).toContain("view=evidence");
     expect(filtersFromSearch(encoded)).toEqual(value);
+  });
+
+  it("round-trips independent history state and rejects unknown ranges", () => {
+    const point = "campaign:tool:profile";
+    const encoded = filtersToSearch(EMPTY_FILTERS, "history", {
+      range: "six-months",
+      point,
+    });
+
+    expect(encoded).toContain("historyRange=six-months");
+    expect(encoded).toContain("historyPoint=campaign%3Atool%3Aprofile");
+    expect(historyStateFromSearch(encoded)).toEqual({
+      range: "six-months",
+      point,
+    });
+    expect(historyStateFromSearch("?historyRange=forever")).toEqual({
+      range: "month",
+      point: "",
+    });
+    expect(filtersToSearch(EMPTY_FILTERS, "overview", {
+      range: "week",
+      point,
+    })).toBe("?view=overview");
+  });
+
+  it("builds UTC daily history windows with safe calendar subtraction", () => {
+    const point = {
+      campaign_id: "campaign",
+      tool_id: "tool",
+      profile_id: "profile",
+      timestamp: "2025-01-15T12:30:00Z",
+    } as MetricPoint;
+    const now = new Date("2027-03-31T18:45:00Z");
+
+    expect(historyRangeBounds([point], "week", now)).toMatchObject({
+      domainStart: Date.parse("2025-01-15T00:00:00Z"),
+      domainEnd: Date.parse("2027-04-01T00:00:00Z"),
+      rangeStart: Date.parse("2027-03-25T00:00:00Z"),
+    });
+    expect(historyRangeBounds([point], "month", now).rangeStart).toBe(
+      Date.parse("2027-02-28T00:00:00Z"),
+    );
+    expect(historyRangeBounds([point], "six-months", now).rangeStart).toBe(
+      Date.parse("2026-09-30T00:00:00Z"),
+    );
+    expect(historyRangeBounds([point], "year", now).rangeStart).toBe(
+      Date.parse("2026-03-31T00:00:00Z"),
+    );
+    expect(historyRangeBounds([point], "all", now).rangeStart).toBe(
+      Date.parse("2025-01-15T00:00:00Z"),
+    );
+  });
+
+  it("starts all-time history at the project boundary when data is newer", () => {
+    const bounds = historyRangeBounds([], "all", new Date("2026-07-22T12:00:00Z"));
+    expect(bounds.domainStart).toBe(Date.parse("2026-07-01T00:00:00Z"));
+    expect(bounds.rangeStart).toBe(bounds.domainStart);
+    expect(
+      metricPointKey({
+        campaign_id: "campaign",
+        tool_id: "tool",
+        profile_id: "profile",
+      } as MetricPoint),
+    ).toBe("campaign:tool:profile");
   });
 });
 

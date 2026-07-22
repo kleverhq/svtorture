@@ -2,6 +2,7 @@ import type {
   Campaign,
   CaseDefinition,
   Dataset,
+  MetricPoint,
   Requirement,
   Result,
   Status,
@@ -144,6 +145,112 @@ export const EMPTY_FILTERS: Filters = {
   disagreement: false,
 };
 
+export type HistoryRange =
+  | "week"
+  | "month"
+  | "six-months"
+  | "year"
+  | "all";
+
+export interface HistoryState {
+  range: HistoryRange;
+  point: string;
+}
+
+export const DEFAULT_HISTORY_STATE: HistoryState = {
+  range: "month",
+  point: "",
+};
+
+const HISTORY_RANGES = new Set<HistoryRange>([
+  "week",
+  "month",
+  "six-months",
+  "year",
+  "all",
+]);
+const DAY_MS = 24 * 60 * 60 * 1000;
+const PROJECT_START = Date.UTC(2026, 6, 1);
+
+export function historyStateFromSearch(search: string): HistoryState {
+  const parameters = new URLSearchParams(search);
+  const requestedRange = parameters.get("historyRange") as HistoryRange | null;
+  return {
+    range:
+      requestedRange && HISTORY_RANGES.has(requestedRange)
+        ? requestedRange
+        : DEFAULT_HISTORY_STATE.range,
+    point: parameters.get("historyPoint") ?? "",
+  };
+}
+
+export function metricPointKey(point: MetricPoint): string {
+  return `${point.campaign_id}:${point.tool_id}:${point.profile_id}`;
+}
+
+function subtractUtcMonths(timestamp: number, months: number): number {
+  const date = new Date(timestamp);
+  const monthIndex = date.getUTCFullYear() * 12 + date.getUTCMonth() - months;
+  const year = Math.floor(monthIndex / 12);
+  const month = ((monthIndex % 12) + 12) % 12;
+  const lastDay = new Date(Date.UTC(year, month + 1, 0)).getUTCDate();
+  return Date.UTC(year, month, Math.min(date.getUTCDate(), lastDay));
+}
+
+export function historyRangeBounds(
+  points: MetricPoint[],
+  range: HistoryRange,
+  now: Date,
+): {
+  domainStart: number;
+  domainEnd: number;
+  rangeStart: number;
+  rangeEnd: number;
+} {
+  const today = Date.UTC(
+    now.getUTCFullYear(),
+    now.getUTCMonth(),
+    now.getUTCDate(),
+  );
+  const domainEnd = today + DAY_MS;
+  const timestamps = points
+    .map((point) => Date.parse(point.timestamp))
+    .filter((timestamp) => Number.isFinite(timestamp));
+  const earliest = timestamps.length ? new Date(Math.min(...timestamps)) : null;
+  const earliestDay = earliest
+    ? Date.UTC(
+        earliest.getUTCFullYear(),
+        earliest.getUTCMonth(),
+        earliest.getUTCDate(),
+      )
+    : PROJECT_START;
+  const domainStart = Math.min(PROJECT_START, earliestDay);
+  let requestedStart: number;
+  switch (range) {
+    case "week":
+      requestedStart = domainEnd - 7 * DAY_MS;
+      break;
+    case "month":
+      requestedStart = subtractUtcMonths(today, 1);
+      break;
+    case "six-months":
+      requestedStart = subtractUtcMonths(today, 6);
+      break;
+    case "year":
+      requestedStart = subtractUtcMonths(today, 12);
+      break;
+    case "all":
+      requestedStart = domainStart;
+      break;
+  }
+  return {
+    domainStart,
+    domainEnd,
+    rangeStart: Math.max(domainStart, requestedStart),
+    rangeEnd: domainEnd,
+  };
+}
+
 export function filtersFromSearch(search: string): Filters {
   const parameters = new URLSearchParams(search);
   const result = { ...EMPTY_FILTERS };
@@ -157,12 +264,22 @@ export function filtersFromSearch(search: string): Filters {
   return result;
 }
 
-export function filtersToSearch(filters: Filters, view: string): string {
+export function filtersToSearch(
+  filters: Filters,
+  view: string,
+  history: HistoryState = DEFAULT_HISTORY_STATE,
+): string {
   const parameters = new URLSearchParams();
   parameters.set("view", view);
   for (const [key, value] of Object.entries(filters)) {
     if (value === false || value === "") continue;
     parameters.set(key, value === true ? "1" : String(value));
+  }
+  if (view === "history") {
+    if (history.range !== DEFAULT_HISTORY_STATE.range) {
+      parameters.set("historyRange", history.range);
+    }
+    if (history.point) parameters.set("historyPoint", history.point);
   }
   return `?${parameters.toString()}`;
 }

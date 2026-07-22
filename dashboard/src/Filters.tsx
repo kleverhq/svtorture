@@ -77,12 +77,17 @@ export function Filters({
       scopedResults.filter((result) => statusGroup(result.status) === group).length,
     ]),
   ) as Record<StatusGroup, number>;
+  const historicalPairs = [
+    ...new Map(
+      dataset.metrics.map((point) => [
+        `${point.tool_id}\u0000${point.profile_id}`,
+        { toolId: point.tool_id, profileId: point.profile_id },
+      ]),
+    ).values(),
+  ];
   const profilePairs =
     mode === "history"
-      ? dataset.metrics.map((point) => ({
-          toolId: point.tool_id,
-          profileId: point.profile_id,
-        }))
+      ? historicalPairs
       : (campaign?.tools.flatMap((tool) =>
           tool.profile_ids.flatMap((profileId) => {
             const profile = tool.definition.profiles.find(
@@ -110,7 +115,8 @@ export function Filters({
         (!toolId || pair.toolId === toolId) &&
         (!profileId || pair.profileId === profileId),
     ).length;
-  const showFacets = mode === "overview" || mode === "corpus";
+  const showFacets =
+    mode === "overview" || mode === "corpus" || mode === "history";
 
   return (
     <div className="filters">
@@ -211,7 +217,7 @@ export function Filters({
         </div>
       )}
 
-      {mode !== "overview" && (
+      {(mode === "corpus" || mode === "campaigns") && (
         <details className="filters__advanced">
           <summary>Advanced filters</summary>
         <div className="filters__grid">
@@ -224,34 +230,6 @@ export function Filters({
               onChange={(event) => update("search", event.target.value)}
             />
           </label>
-          {mode === "history" && (
-            <>
-              <label>
-                <span>Tool</span>
-                <select
-                  value={filters.tool}
-                  onChange={(event) => update("tool", event.target.value)}
-                >
-                  <option value="">All tools</option>
-                  {tools.map((tool) => (
-                    <option key={tool}>{tool}</option>
-                  ))}
-                </select>
-              </label>
-              <label>
-                <span>Profile</span>
-                <select
-                  value={filters.profile}
-                  onChange={(event) => update("profile", event.target.value)}
-                >
-                  <option value="">All profiles</option>
-                  {profiles.map((profile) => (
-                    <option key={profile}>{profile}</option>
-                  ))}
-                </select>
-              </label>
-            </>
-          )}
           {mode === "corpus" && (
             <>
               <label>

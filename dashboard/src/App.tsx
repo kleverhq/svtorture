@@ -1,4 +1,5 @@
 import {
+  useCallback,
   useEffect,
   useLayoutEffect,
   useRef,
@@ -19,7 +20,10 @@ import {
   filterCorpus,
   filtersFromSearch,
   filtersToSearch,
+  historyStateFromSearch,
+  metricPointKey,
   selectedCampaign,
+  type HistoryRange,
 } from "./model";
 import { ThemeControl } from "./ThemeControl";
 import { useDataset } from "./useDataset";
@@ -45,11 +49,14 @@ export default function App() {
   const state = useDataset();
   const [view, setView] = useState<View>(initialView);
   const [filters, setFilters] = useState(() => filtersFromSearch(window.location.search));
+  const [history, setHistory] = useState(() =>
+    historyStateFromSearch(window.location.search),
+  );
   const [workspaceHeight, setWorkspaceHeight] = useState(0);
   const workspaceRef = useRef<HTMLElement>(null);
   useEffect(() => {
-    window.history.replaceState(null, "", filtersToSearch(filters, view));
-  }, [filters, view]);
+    window.history.replaceState(null, "", filtersToSearch(filters, view, history));
+  }, [filters, history, view]);
   useLayoutEffect(() => {
     const workspace = workspaceRef.current;
     if (!workspace) return;
@@ -59,6 +66,16 @@ export default function App() {
     const observer = new ResizeObserver(measure);
     observer.observe(workspace);
     return () => observer.disconnect();
+  }, [state.dataset]);
+  useEffect(() => {
+    const dataset = state.dataset;
+    if (!dataset) return;
+    setHistory((current) =>
+      current.point &&
+      !dataset.metrics.some((point) => metricPointKey(point) === current.point)
+        ? { ...current, point: "" }
+        : current,
+    );
   }, [state.dataset]);
   useEffect(() => {
     const dataset = state.dataset;
@@ -117,6 +134,14 @@ export default function App() {
     state.dataset,
     view,
   ]);
+  const setHistoryRange = useCallback(
+    (range: HistoryRange) => setHistory((current) => ({ ...current, range })),
+    [],
+  );
+  const selectHistoryPoint = useCallback(
+    (point: string) => setHistory((current) => ({ ...current, point })),
+    [],
+  );
 
   if (state.error) {
     return (
@@ -232,68 +257,72 @@ export default function App() {
       </header>
 
       <main
-        className="dashboard"
+        className={`dashboard${view === "history" ? " dashboard--history" : ""}`}
         style={{ "--workspace-height": `${workspaceHeight}px` } as CSSProperties}
       >
-        <section className="campaign-overview" aria-label="Campaign selection">
-          <label className="campaign-overview__campaign">
-            <span>Campaign</span>
-            <select
-              value={campaignSelectValue}
-              onChange={(event) =>
-                setFilters((current) => ({
-                  ...current,
-                  campaign: event.target.value,
-                  tool: "",
-                  profile: "",
-                }))
-              }
-            >
-              <option value="">
-                {rangedCampaigns.length ? "Latest campaign" : "No campaigns in range"}
-              </option>
-              {rangedCampaigns.map((item) => (
-                <option key={item.id} value={item.id}>
-                  {item.finished_at.slice(0, 10)} · {item.id}
+        {view !== "history" && (
+          <section className="campaign-overview" aria-label="Campaign selection">
+            <label className="campaign-overview__campaign">
+              <span>Campaign</span>
+              <select
+                value={campaignSelectValue}
+                onChange={(event) =>
+                  setFilters((current) => ({
+                    ...current,
+                    campaign: event.target.value,
+                    tool: "",
+                    profile: "",
+                  }))
+                }
+              >
+                <option value="">
+                  {rangedCampaigns.length
+                    ? "Latest campaign"
+                    : "No campaigns in range"}
                 </option>
-              ))}
-            </select>
-          </label>
-          <label>
-            <span>From</span>
-            <input
-              type="date"
-              max={filters.dateTo || undefined}
-              value={filters.dateFrom}
-              onChange={(event) =>
-                setFilters((current) => ({
-                  ...current,
-                  campaign: "",
-                  dateFrom: event.target.value,
-                  tool: "",
-                  profile: "",
-                }))
-              }
-            />
-          </label>
-          <label>
-            <span>To</span>
-            <input
-              type="date"
-              min={filters.dateFrom || undefined}
-              value={filters.dateTo}
-              onChange={(event) =>
-                setFilters((current) => ({
-                  ...current,
-                  campaign: "",
-                  dateTo: event.target.value,
-                  tool: "",
-                  profile: "",
-                }))
-              }
-            />
-          </label>
-        </section>
+                {rangedCampaigns.map((item) => (
+                  <option key={item.id} value={item.id}>
+                    {item.finished_at.slice(0, 10)} · {item.id}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label>
+              <span>From</span>
+              <input
+                type="date"
+                max={filters.dateTo || undefined}
+                value={filters.dateFrom}
+                onChange={(event) =>
+                  setFilters((current) => ({
+                    ...current,
+                    campaign: "",
+                    dateFrom: event.target.value,
+                    tool: "",
+                    profile: "",
+                  }))
+                }
+              />
+            </label>
+            <label>
+              <span>To</span>
+              <input
+                type="date"
+                min={filters.dateFrom || undefined}
+                value={filters.dateTo}
+                onChange={(event) =>
+                  setFilters((current) => ({
+                    ...current,
+                    campaign: "",
+                    dateTo: event.target.value,
+                    tool: "",
+                    profile: "",
+                  }))
+                }
+              />
+            </label>
+          </section>
+        )}
 
         <section
           className="workspace-bar"
@@ -335,7 +364,7 @@ export default function App() {
         </section>
 
         <div
-          className="view-panel"
+          className={`view-panel${view === "history" ? " view-panel--history" : ""}`}
           role="tabpanel"
           id="dashboard-view-panel"
           aria-labelledby={`${view}-tab`}
@@ -384,18 +413,22 @@ export default function App() {
           {view === "history" && (
             <HistoryView
               dataset={dataset}
-              campaign={campaign}
               toolFilter={filters.tool}
               profileFilter={filters.profile}
-              searchFilter={filters.search}
+              range={history.range}
+              selectedPointKey={history.point}
+              onRangeChange={setHistoryRange}
+              onSelectPoint={selectHistoryPoint}
             />
           )}
           {view === "campaigns" && <CampaignView campaigns={visibleCampaigns} />}
         </div>
       </main>
-      <footer>
-        <span>SVTORTURE · Apache-2.0</span>
-      </footer>
+      {view !== "history" && (
+        <footer>
+          <span>SVTORTURE · Apache-2.0</span>
+        </footer>
+      )}
     </>
   );
 }
