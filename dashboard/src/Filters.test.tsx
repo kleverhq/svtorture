@@ -1,4 +1,4 @@
-import { cleanup, fireEvent, render, screen } from "@testing-library/react";
+import { cleanup, fireEvent, render, screen, within } from "@testing-library/react";
 import { useState } from "react";
 import { afterEach, describe, expect, it } from "vitest";
 
@@ -40,7 +40,7 @@ describe("Filters", () => {
     ).toBe("true");
   });
 
-  it("shows only campaign controls in the overview", () => {
+  it("shows independent tool and profile facets in the overview", () => {
     render(<FilterHarness campaignOnly />);
 
     expect(screen.getByLabelText("Campaign")).toBeTruthy();
@@ -49,5 +49,19 @@ describe("Filters", () => {
     expect(screen.queryByLabelText("Search")).toBeNull();
     expect(screen.queryByLabelText("Tool / profile")).toBeNull();
     expect(screen.queryByRole("button", { name: "Fail 0" })).toBeNull();
+
+    const tools = within(screen.getByRole("group", { name: "Tools" }));
+    const profiles = within(screen.getByRole("group", { name: "Profiles" }));
+    expect(tools.getByRole("button", { name: "All 1" })).toBeTruthy();
+    fireEvent.click(tools.getByRole("button", { name: "Fake 1" }));
+    expect(
+      tools.getByRole("button", { name: "Fake 1" }).getAttribute("aria-pressed"),
+    ).toBe("true");
+    fireEvent.click(profiles.getByRole("button", { name: "Simulator 1" }));
+    expect(
+      profiles
+        .getByRole("button", { name: "Simulator 1" })
+        .getAttribute("aria-pressed"),
+    ).toBe("true");
   });
 });

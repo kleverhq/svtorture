@@ -21,6 +21,14 @@ function choices(values: Array<string | undefined>): string[] {
   return [...new Set(values.filter((value): value is string => Boolean(value)))].sort();
 }
 
+const PROFILE_ORDER = ["preprocessor", "parser", "elaborator", "simulator"];
+
+function displayFilterValue(value: string): string {
+  return value
+    .replaceAll(/[-_]+/g, " ")
+    .replaceAll(/\b\w/g, (character) => character.toUpperCase());
+}
+
 export function Filters({
   dataset,
   campaign,
@@ -41,9 +49,21 @@ export function Filters({
     });
   };
   const selectCampaign = (campaign: string) =>
-    setFilters((current) => ({ ...current, campaign, date: "" }));
+    setFilters((current) => ({
+      ...current,
+      campaign,
+      date: "",
+      overviewTool: "",
+      overviewProfile: "",
+    }));
   const selectDate = (date: string) =>
-    setFilters((current) => ({ ...current, date, campaign: "" }));
+    setFilters((current) => ({
+      ...current,
+      date,
+      campaign: "",
+      overviewTool: "",
+      overviewProfile: "",
+    }));
   const profiles = choices(
     dataset.campaigns.flatMap((item) =>
       item.tools.flatMap((tool) =>
@@ -83,10 +103,82 @@ export function Filters({
         {item.finished_at.slice(0, 10)} · {item.id}
       </option>
     ));
+  const overviewPairs =
+    campaign?.tools.flatMap((tool) =>
+      tool.profile_ids.flatMap((profileId) => {
+        const profile = tool.definition.profiles.find((item) => item.id === profileId);
+        return profile?.headline
+          ? [{ toolId: tool.definition.id, profileId }]
+          : [];
+      }),
+    ) ?? [];
+  const overviewTools = [...new Set(overviewPairs.map((pair) => pair.toolId))];
+  const overviewProfiles = [...new Set(overviewPairs.map((pair) => pair.profileId))].sort(
+    (left, right) => {
+      const leftOrder = PROFILE_ORDER.indexOf(left);
+      const rightOrder = PROFILE_ORDER.indexOf(right);
+      if (leftOrder === -1 && rightOrder === -1) return left.localeCompare(right);
+      if (leftOrder === -1) return 1;
+      if (rightOrder === -1) return -1;
+      return leftOrder - rightOrder;
+    },
+  );
+  const overviewCount = (toolId: string, profileId: string) =>
+    overviewPairs.filter(
+      (pair) =>
+        (!toolId || pair.toolId === toolId) &&
+        (!profileId || pair.profileId === profileId),
+    ).length;
 
   if (campaignOnly) {
     return (
       <div className="filters filters--campaign">
+        <div className="filters__quick" role="group" aria-label="Tools">
+          <span className="filters__quick-label">Tools</span>
+          <button
+            type="button"
+            className="filter-chip"
+            aria-pressed={!filters.overviewTool}
+            onClick={() => update("overviewTool", "")}
+          >
+            All <b>{overviewCount("", filters.overviewProfile)}</b>
+          </button>
+          {overviewTools.map((toolId) => (
+            <button
+              type="button"
+              className="filter-chip"
+              aria-pressed={filters.overviewTool === toolId}
+              key={toolId}
+              onClick={() => update("overviewTool", toolId)}
+            >
+              {displayFilterValue(toolId)}{" "}
+              <b>{overviewCount(toolId, filters.overviewProfile)}</b>
+            </button>
+          ))}
+        </div>
+        <div className="filters__quick" role="group" aria-label="Profiles">
+          <span className="filters__quick-label">Profile</span>
+          <button
+            type="button"
+            className="filter-chip"
+            aria-pressed={!filters.overviewProfile}
+            onClick={() => update("overviewProfile", "")}
+          >
+            All <b>{overviewCount(filters.overviewTool, "")}</b>
+          </button>
+          {overviewProfiles.map((profileId) => (
+            <button
+              type="button"
+              className="filter-chip"
+              aria-pressed={filters.overviewProfile === profileId}
+              key={profileId}
+              onClick={() => update("overviewProfile", profileId)}
+            >
+              {displayFilterValue(profileId)}{" "}
+              <b>{overviewCount(filters.overviewTool, profileId)}</b>
+            </button>
+          ))}
+        </div>
         <div className="filters__primary filters__primary--campaign">
           <label>
             <span>Campaign</span>

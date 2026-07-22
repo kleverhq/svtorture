@@ -98,6 +98,8 @@ export interface Filters {
   casePresence: string;
   tag: string;
   tool: string;
+  overviewTool: string;
+  overviewProfile: string;
   statusGroup: string;
   status: string;
   reason: string;
@@ -119,6 +121,8 @@ export const EMPTY_FILTERS: Filters = {
   casePresence: "",
   tag: "",
   tool: "",
+  overviewTool: "",
+  overviewProfile: "",
   statusGroup: "",
   status: "",
   reason: "",

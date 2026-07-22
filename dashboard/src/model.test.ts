@@ -23,6 +23,8 @@ describe("URL-backed filters", () => {
       search: "copy-out",
       chapter: "13",
       statusGroup: "fail",
+      overviewTool: "fake",
+      overviewProfile: "simulator",
       caseId: "ch13-output-copyout-width",
       requirementId: "SV-2023-13-OUTPUT-COPYOUT",
       changed: true,

@@ -13,7 +13,13 @@ describe("HeadlineMetrics", () => {
     if (!campaign) throw new Error("incomplete test dataset");
 
     render(
-      <HeadlineMetrics dataset={dataset} campaign={campaign} onSelectTool={vi.fn()} />,
+      <HeadlineMetrics
+        dataset={dataset}
+        campaign={campaign}
+        toolFilter=""
+        profileFilter=""
+        onSelectTool={vi.fn()}
+      />,
     );
 
     expect(screen.getByText("Verified requirement coverage by tool")).toBeTruthy();
@@ -24,7 +30,14 @@ describe("HeadlineMetrics", () => {
   it("reports an unmatched campaign selection", () => {
     const dataset = makeTestDataset();
 
-    render(<HeadlineMetrics dataset={dataset} onSelectTool={vi.fn()} />);
+    render(
+      <HeadlineMetrics
+        dataset={dataset}
+        toolFilter=""
+        profileFilter=""
+        onSelectTool={vi.fn()}
+      />,
+    );
 
     expect(
       screen.getByText("No campaign matches the current campaign and date selection."),
@@ -68,6 +81,8 @@ describe("HeadlineMetrics", () => {
       <HeadlineMetrics
         dataset={dataset}
         campaign={campaign}
+        toolFilter=""
+        profileFilter=""
         onSelectTool={onSelectTool}
       />,
     );
@@ -92,6 +107,8 @@ describe("HeadlineMetrics", () => {
       <HeadlineMetrics
         dataset={dataset}
         campaign={campaign}
+        toolFilter=""
+        profileFilter=""
         onSelectTool={onSelectTool}
       />,
     );
@@ -104,6 +121,24 @@ describe("HeadlineMetrics", () => {
     );
     expect(
       screen.getByText("92% of IEEE 1800-2023 applicable requirements"),
+    ).toBeTruthy();
+
+    view.rerender(
+      <HeadlineMetrics
+        dataset={dataset}
+        campaign={campaign}
+        toolFilter=""
+        profileFilter="parser"
+        onSelectTool={onSelectTool}
+      />,
+    );
+    expect(
+      screen.queryByRole("button", {
+        name: "View requirements for fake/simulator",
+      }),
+    ).toBeNull();
+    expect(
+      screen.getByText("No tool profiles match the current Overview filters."),
     ).toBeTruthy();
   });
 });

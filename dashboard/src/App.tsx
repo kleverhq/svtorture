@@ -206,6 +206,8 @@ export default function App() {
             <HeadlineMetrics
               dataset={dataset}
               campaign={campaign}
+              toolFilter={filters.overviewTool}
+              profileFilter={filters.overviewProfile}
               onSelectTool={(tool) => {
                 setFilters((current) => ({ ...current, tool }));
                 setView("matrix");

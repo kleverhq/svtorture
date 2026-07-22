@@ -3,10 +3,14 @@ import type { Campaign, Dataset } from "./types";
 export function HeadlineMetrics({
   dataset,
   campaign,
+  toolFilter,
+  profileFilter,
   onSelectTool,
 }: {
   dataset: Dataset;
   campaign?: Campaign | undefined;
+  toolFilter: string;
+  profileFilter: string;
   onSelectTool: (tool: string) => void;
 }) {
   const headlineProfiles = new Set(
@@ -20,7 +24,9 @@ export function HeadlineMetrics({
     ? dataset.metrics.filter(
         (metric) =>
           metric.campaign_id === campaign.id &&
-          headlineProfiles.has(`${metric.tool_id}/${metric.profile_id}`),
+          headlineProfiles.has(`${metric.tool_id}/${metric.profile_id}`) &&
+          (!toolFilter || metric.tool_id === toolFilter) &&
+          (!profileFilter || metric.profile_id === profileFilter),
       )
     : [];
 
@@ -93,7 +99,11 @@ export function HeadlineMetrics({
           })}
         </div>
       ) : (
-        <p className="empty-state">No headline metrics were recorded.</p>
+        <p className="empty-state">
+          {toolFilter || profileFilter
+            ? "No tool profiles match the current Overview filters."
+            : "No headline metrics were recorded."}
+        </p>
       )}
     </section>
   );
