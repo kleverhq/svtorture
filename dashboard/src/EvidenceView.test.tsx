@@ -24,6 +24,7 @@ describe("EvidenceView", () => {
         requirements={dataset.requirements}
         campaign={campaign}
         toolFilter=""
+        profileFilter=""
         selectedCaseId={testCase.id}
         onSelectCase={() => undefined}
         onInspectRequirement={inspectRequirement}
@@ -49,6 +50,7 @@ describe("EvidenceView", () => {
         requirements={dataset.requirements}
         campaign={{ ...campaign, id: "20260102T000000Z-next" }}
         toolFilter=""
+        profileFilter=""
         selectedCaseId={testCase.id}
         onSelectCase={() => undefined}
         onInspectRequirement={inspectRequirement}
@@ -111,6 +113,7 @@ describe("EvidenceView", () => {
         requirements={dataset.requirements}
         campaign={campaign}
         toolFilter=""
+        profileFilter=""
         selectedCaseId={testCase.id}
         onSelectCase={() => undefined}
         onInspectRequirement={() => undefined}
@@ -144,6 +147,7 @@ describe("EvidenceView", () => {
         requirements={dataset.requirements}
         campaign={campaign}
         toolFilter=""
+        profileFilter=""
         selectedCaseId={testCase.id}
         onSelectCase={() => undefined}
         onInspectRequirement={() => undefined}

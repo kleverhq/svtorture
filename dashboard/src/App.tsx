@@ -15,6 +15,7 @@ import { HistoryView } from "./HistoryView";
 import { MatrixView } from "./MatrixView";
 import {
   EMPTY_FILTERS,
+  campaignsInDateRange,
   filterCorpus,
   filtersFromSearch,
   filtersToSearch,
@@ -59,6 +60,63 @@ export default function App() {
     observer.observe(workspace);
     return () => observer.disconnect();
   }, [state.dataset]);
+  useEffect(() => {
+    const dataset = state.dataset;
+    if (!dataset) return;
+    setFilters((current) => {
+      const ranged = campaignsInDateRange(dataset, current.dateFrom, current.dateTo);
+      const campaignIsValid =
+        !current.campaign || ranged.some((item) => item.id === current.campaign);
+      const campaignId = campaignIsValid ? current.campaign : "";
+      let tool = current.tool;
+      let profile = current.profile;
+      if (view === "overview") {
+        const selected = selectedCampaign(
+          dataset,
+          campaignId,
+          current.dateFrom,
+          current.dateTo,
+        );
+        const headlineProfiles =
+          selected?.tools.flatMap((item) =>
+            item.definition.profiles
+              .filter(
+                (candidate) =>
+                  candidate.headline && item.profile_ids.includes(candidate.id),
+              )
+              .map((candidate) => ({
+                toolId: item.definition.id,
+                profileId: candidate.id,
+              })),
+          ) ?? [];
+        if (tool && !headlineProfiles.some((item) => item.toolId === tool)) tool = "";
+        if (profile && !headlineProfiles.some((item) => item.profileId === profile)) {
+          profile = "";
+        }
+        if (
+          tool &&
+          profile &&
+          !headlineProfiles.some(
+            (item) => item.toolId === tool && item.profileId === profile,
+          )
+        ) {
+          profile = "";
+        }
+      }
+      if (campaignId === current.campaign && tool === current.tool && profile === current.profile) {
+        return current;
+      }
+      return { ...current, campaign: campaignId, tool, profile };
+    });
+  }, [
+    filters.campaign,
+    filters.dateFrom,
+    filters.dateTo,
+    filters.profile,
+    filters.tool,
+    state.dataset,
+    view,
+  ]);
 
   if (state.error) {
     return (
@@ -79,20 +137,50 @@ export default function App() {
   }
 
   const dataset = state.dataset;
-  const datedCampaign = filters.date
-    ? [...dataset.campaigns]
-        .filter((campaign) => campaign.finished_at.startsWith(filters.date))
-        .sort((left, right) => right.finished_at.localeCompare(left.finished_at))[0]
-    : undefined;
-  const campaign = filters.campaign
-    ? selectedCampaign(dataset, filters.campaign)
-    : (datedCampaign ?? selectedCampaign(dataset, ""));
-  const filtered = filterCorpus(dataset, filters, campaign);
-  const visibleCampaigns = dataset.campaigns.filter(
-    (item) =>
-      (!filters.campaign || item.id === filters.campaign) &&
-      (!filters.date || item.finished_at.startsWith(filters.date)),
+  const rangedCampaigns = campaignsInDateRange(
+    dataset,
+    filters.dateFrom,
+    filters.dateTo,
   );
+  const campaign = selectedCampaign(
+    dataset,
+    filters.campaign,
+    filters.dateFrom,
+    filters.dateTo,
+  );
+  const filtered = filterCorpus(dataset, filters, campaign);
+  const campaignSelectValue = rangedCampaigns.some(
+    (item) => item.id === filters.campaign,
+  )
+    ? filters.campaign
+    : "";
+  const campaignNeedle = filters.search.toLocaleLowerCase();
+  const visibleCampaigns = rangedCampaigns.filter(
+    (item) =>
+      (!campaignSelectValue || item.id === campaign?.id) &&
+      (!campaignNeedle ||
+        [
+          item.id,
+          item.selection_name,
+          item.repository.commit,
+          item.platform,
+          ...item.tools.flatMap((tool) => [
+            tool.definition.id,
+            tool.definition.display_name,
+            tool.reported_version ?? "",
+          ]),
+        ]
+          .join(" ")
+          .toLocaleLowerCase()
+          .includes(campaignNeedle)),
+  );
+  const resetLocalFilters = () =>
+    setFilters((current) => ({
+      ...EMPTY_FILTERS,
+      campaign: current.campaign,
+      dateFrom: current.dateFrom,
+      dateTo: current.dateTo,
+    }));
   const inspectCase = (caseId: string) => {
     setFilters((current) => ({ ...current, caseId }));
     setView("evidence");
@@ -147,43 +235,64 @@ export default function App() {
         className="dashboard"
         style={{ "--workspace-height": `${workspaceHeight}px` } as CSSProperties}
       >
-        <section className="campaign-overview" aria-labelledby="overview-title">
-          <div>
-            <span className="section-label" id="overview-title">
-              {filters.campaign || filters.date
-                ? "Selected campaign"
-                : "Latest campaign"}
-            </span>
-            {campaign ? (
-              <p>
-                <strong>{new Date(campaign.finished_at).toLocaleString()}</strong>
-                <code>{campaign.id}</code>
-              </p>
-            ) : (
-              <p>No campaign matches the current selection.</p>
-            )}
-          </div>
-          {campaign && (
-            <dl className="campaign-overview__facts">
-              <div>
-                <dt>Run</dt>
-                <dd>{campaign.selection_name}</dd>
-              </div>
-              <div>
-                <dt>State</dt>
-                <dd className={campaign.complete ? "text-pass" : "text-issue"}>
-                  {campaign.complete ? "Complete" : "Incomplete"}
-                </dd>
-              </div>
-              <div>
-                <dt>Repository</dt>
-                <dd>
-                  <code>{campaign.repository.commit.slice(0, 12)}</code>
-                  {campaign.repository.dirty ? " · dirty" : " · clean"}
-                </dd>
-              </div>
-            </dl>
-          )}
+        <section className="campaign-overview" aria-label="Campaign selection">
+          <label className="campaign-overview__campaign">
+            <span>Campaign</span>
+            <select
+              value={campaignSelectValue}
+              onChange={(event) =>
+                setFilters((current) => ({
+                  ...current,
+                  campaign: event.target.value,
+                  tool: "",
+                  profile: "",
+                }))
+              }
+            >
+              <option value="">
+                {rangedCampaigns.length ? "Latest campaign" : "No campaigns in range"}
+              </option>
+              {rangedCampaigns.map((item) => (
+                <option key={item.id} value={item.id}>
+                  {item.finished_at.slice(0, 10)} · {item.id}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label>
+            <span>From</span>
+            <input
+              type="date"
+              max={filters.dateTo || undefined}
+              value={filters.dateFrom}
+              onChange={(event) =>
+                setFilters((current) => ({
+                  ...current,
+                  campaign: "",
+                  dateFrom: event.target.value,
+                  tool: "",
+                  profile: "",
+                }))
+              }
+            />
+          </label>
+          <label>
+            <span>To</span>
+            <input
+              type="date"
+              min={filters.dateFrom || undefined}
+              value={filters.dateTo}
+              onChange={(event) =>
+                setFilters((current) => ({
+                  ...current,
+                  campaign: "",
+                  dateTo: event.target.value,
+                  tool: "",
+                  profile: "",
+                }))
+              }
+            />
+          </label>
         </section>
 
         <section
@@ -216,9 +325,12 @@ export default function App() {
             campaign={campaign}
             filters={filters}
             setFilters={setFilters}
-            onReset={() => setFilters({ ...EMPTY_FILTERS })}
-            campaignOnly={view === "overview"}
-            showQuickFilters={view === "matrix" || view === "evidence"}
+            onReset={resetLocalFilters}
+            mode={
+              view === "matrix" || view === "evidence"
+                ? "corpus"
+                : view
+            }
           />
         </section>
 
@@ -233,10 +345,11 @@ export default function App() {
             <HeadlineMetrics
               dataset={dataset}
               campaign={campaign}
-              toolFilter={filters.overviewTool}
-              profileFilter={filters.overviewProfile}
-              onSelectTool={(tool) => {
-                setFilters((current) => ({ ...current, tool }));
+              toolFilter={filters.tool}
+              profileFilter={filters.profile}
+              searchFilter={filters.search}
+              onSelectTool={(tool, profile) => {
+                setFilters((current) => ({ ...current, tool, profile }));
                 setView("matrix");
               }}
             />
@@ -247,6 +360,7 @@ export default function App() {
               cases={filtered.cases}
               campaign={campaign}
               toolFilter={filters.tool}
+              profileFilter={filters.profile}
               selectedRequirementId={filters.requirementId}
               onSelectRequirement={(requirementId) =>
                 setFilters((current) => ({ ...current, requirementId }))
@@ -260,6 +374,7 @@ export default function App() {
               cases={filtered.cases}
               campaign={campaign}
               toolFilter={filters.tool}
+              profileFilter={filters.profile}
               selectedCaseId={filters.caseId}
               onSelectCase={(caseId) =>
                 setFilters((current) => ({ ...current, caseId }))
@@ -272,7 +387,8 @@ export default function App() {
               dataset={dataset}
               campaign={campaign}
               toolFilter={filters.tool}
-              dateFilter={filters.date}
+              profileFilter={filters.profile}
+              searchFilter={filters.search}
             />
           )}
           {view === "campaigns" && <CampaignView campaigns={visibleCampaigns} />}

@@ -9,14 +9,15 @@ import {
 import type { Filters as FilterValues, StatusGroup } from "./model";
 import type { Campaign, Dataset, Status } from "./types";
 
+export type FilterMode = "overview" | "corpus" | "history" | "campaigns";
+
 interface FilterProps {
   dataset: Dataset;
   campaign?: Campaign | undefined;
   filters: FilterValues;
   setFilters: Dispatch<SetStateAction<FilterValues>>;
   onReset: () => void;
-  campaignOnly?: boolean | undefined;
-  showQuickFilters?: boolean | undefined;
+  mode: FilterMode;
 }
 
 function choices(values: Array<string | undefined>): string[] {
@@ -37,8 +38,7 @@ export function Filters({
   filters,
   setFilters,
   onReset,
-  campaignOnly = false,
-  showQuickFilters = true,
+  mode,
 }: FilterProps) {
   const update = (name: keyof FilterValues, value: string | boolean) => {
     setFilters((current) => {
@@ -51,29 +51,6 @@ export function Filters({
       return { ...current, [name]: value };
     });
   };
-  const selectCampaign = (campaign: string) =>
-    setFilters((current) => ({
-      ...current,
-      campaign,
-      date: "",
-      overviewTool: "",
-      overviewProfile: "",
-    }));
-  const selectDate = (date: string) =>
-    setFilters((current) => ({
-      ...current,
-      date,
-      campaign: "",
-      overviewTool: "",
-      overviewProfile: "",
-    }));
-  const profiles = choices(
-    dataset.campaigns.flatMap((item) =>
-      item.tools.flatMap((tool) =>
-        tool.profile_ids.map((profile) => `${tool.definition.id}/${profile}`),
-      ),
-    ),
-  );
   const statuses = choices(
     dataset.campaigns.flatMap((item) =>
       item.results.map((result) => result.status),
@@ -91,7 +68,8 @@ export function Filters({
   const scopedResults =
     campaign?.results.filter(
       (result) =>
-        !filters.tool || `${result.tool_id}/${result.profile_id}` === filters.tool,
+        (!filters.tool || result.tool_id === filters.tool) &&
+        (!filters.profile || result.profile_id === filters.profile),
     ) ?? [];
   const groupCounts = Object.fromEntries(
     STATUS_GROUP_ORDER.map((group) => [
@@ -99,24 +77,24 @@ export function Filters({
       scopedResults.filter((result) => statusGroup(result.status) === group).length,
     ]),
   ) as Record<StatusGroup, number>;
-  const campaignOptions = [...dataset.campaigns]
-    .sort((left, right) => right.finished_at.localeCompare(left.finished_at))
-    .map((item) => (
-      <option key={item.id} value={item.id}>
-        {item.finished_at.slice(0, 10)} · {item.id}
-      </option>
-    ));
-  const overviewPairs =
-    campaign?.tools.flatMap((tool) =>
-      tool.profile_ids.flatMap((profileId) => {
-        const profile = tool.definition.profiles.find((item) => item.id === profileId);
-        return profile?.headline
-          ? [{ toolId: tool.definition.id, profileId }]
-          : [];
-      }),
-    ) ?? [];
-  const overviewTools = [...new Set(overviewPairs.map((pair) => pair.toolId))];
-  const overviewProfiles = [...new Set(overviewPairs.map((pair) => pair.profileId))].sort(
+  const profilePairs =
+    mode === "history"
+      ? dataset.metrics.map((point) => ({
+          toolId: point.tool_id,
+          profileId: point.profile_id,
+        }))
+      : (campaign?.tools.flatMap((tool) =>
+          tool.profile_ids.flatMap((profileId) => {
+            const profile = tool.definition.profiles.find(
+              (item) => item.id === profileId,
+            );
+            return profile && (mode !== "overview" || profile.headline)
+              ? [{ toolId: tool.definition.id, profileId }]
+              : [];
+          }),
+        ) ?? []);
+  const tools = [...new Set(profilePairs.map((pair) => pair.toolId))];
+  const profiles = [...new Set(profilePairs.map((pair) => pair.profileId))].sort(
     (left, right) => {
       const leftOrder = PROFILE_ORDER.indexOf(left);
       const rightOrder = PROFILE_ORDER.indexOf(right);
@@ -126,93 +104,69 @@ export function Filters({
       return leftOrder - rightOrder;
     },
   );
-  const overviewCount = (toolId: string, profileId: string) =>
-    overviewPairs.filter(
+  const profileCount = (toolId: string, profileId: string) =>
+    profilePairs.filter(
       (pair) =>
         (!toolId || pair.toolId === toolId) &&
         (!profileId || pair.profileId === profileId),
     ).length;
-
-  if (campaignOnly) {
-    return (
-      <div className="filters filters--campaign">
-        <div className="filters__quick" role="group" aria-label="Tools">
-          <span className="filters__quick-label">Tools</span>
-          <button
-            type="button"
-            className="filter-chip"
-            aria-pressed={!filters.overviewTool}
-            onClick={() => update("overviewTool", "")}
-          >
-            All <b>{overviewCount("", filters.overviewProfile)}</b>
-          </button>
-          {overviewTools.map((toolId) => (
-            <button
-              type="button"
-              className="filter-chip"
-              aria-pressed={filters.overviewTool === toolId}
-              key={toolId}
-              onClick={() => update("overviewTool", toolId)}
-            >
-              {displayFilterValue(toolId)}{" "}
-              <b>{overviewCount(toolId, filters.overviewProfile)}</b>
-            </button>
-          ))}
-        </div>
-        <div className="filters__quick" role="group" aria-label="Profiles">
-          <span className="filters__quick-label">Profile</span>
-          <button
-            type="button"
-            className="filter-chip"
-            aria-pressed={!filters.overviewProfile}
-            onClick={() => update("overviewProfile", "")}
-          >
-            All <b>{overviewCount(filters.overviewTool, "")}</b>
-          </button>
-          {overviewProfiles.map((profileId) => (
-            <button
-              type="button"
-              className="filter-chip"
-              aria-pressed={filters.overviewProfile === profileId}
-              key={profileId}
-              onClick={() => update("overviewProfile", profileId)}
-            >
-              {displayFilterValue(profileId)}{" "}
-              <b>{overviewCount(filters.overviewTool, profileId)}</b>
-            </button>
-          ))}
-        </div>
-        <div className="filters__primary filters__primary--campaign">
-          <label>
-            <span>Campaign</span>
-            <select
-              value={filters.campaign}
-              onChange={(event) => selectCampaign(event.target.value)}
-            >
-              <option value="">Latest campaign</option>
-              {campaignOptions}
-            </select>
-          </label>
-          <label>
-            <span>Campaign date</span>
-            <input
-              type="date"
-              value={filters.date}
-              onChange={(event) => selectDate(event.target.value)}
-            />
-          </label>
-          <button type="button" className="button button--quiet" onClick={onReset}>
-            Clear filters
-          </button>
-        </div>
-      </div>
-    );
-  }
+  const showFacets = mode === "overview" || mode === "corpus";
 
   return (
     <div className="filters">
-      {showQuickFilters && (
-        <>
+      {showFacets && (
+        <div className="filters__pair-grid">
+          <div className="filters__quick" role="group" aria-label="Tools">
+            <span className="filters__quick-label">Tools</span>
+            <button
+              type="button"
+              className="filter-chip"
+              aria-pressed={!filters.tool}
+              onClick={() => update("tool", "")}
+            >
+              All <b>{profileCount("", filters.profile)}</b>
+            </button>
+            {tools.map((toolId) => (
+              <button
+                type="button"
+                className="filter-chip"
+                aria-pressed={filters.tool === toolId}
+                key={toolId}
+                onClick={() => update("tool", toolId)}
+              >
+                {displayFilterValue(toolId)}{" "}
+                <b>{profileCount(toolId, filters.profile)}</b>
+              </button>
+            ))}
+          </div>
+          <div className="filters__quick" role="group" aria-label="Profiles">
+            <span className="filters__quick-label">Profile</span>
+            <button
+              type="button"
+              className="filter-chip"
+              aria-pressed={!filters.profile}
+              onClick={() => update("profile", "")}
+            >
+              All <b>{profileCount(filters.tool, "")}</b>
+            </button>
+            {profiles.map((profileId) => (
+              <button
+                type="button"
+                className="filter-chip"
+                aria-pressed={filters.profile === profileId}
+                key={profileId}
+                onClick={() => update("profile", profileId)}
+              >
+                {displayFilterValue(profileId)}{" "}
+                <b>{profileCount(filters.tool, profileId)}</b>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {mode === "corpus" && (
+        <div className="filters__pair-grid">
           <div className="filters__quick" role="group" aria-label="Results">
             <span className="filters__quick-label">Result</span>
             <button
@@ -254,166 +208,165 @@ export function Filters({
               Cross-tool disagreement
             </button>
           </div>
-        </>
+        </div>
       )}
-
-      <div className="filters__primary">
-        <label className="search">
-          <span>Search</span>
-          <input
-            type="search"
-            value={filters.search}
-            placeholder="Requirement, case, clause, diagnostic…"
-            onChange={(event) => update("search", event.target.value)}
-          />
-        </label>
-        <label>
-          <span>Campaign</span>
-          <select
-            value={filters.campaign}
-            onChange={(event) => selectCampaign(event.target.value)}
-          >
-            <option value="">Latest campaign</option>
-            {campaignOptions}
-          </select>
-        </label>
-        <label>
-          <span>Tool / profile</span>
-          <select
-            value={filters.tool}
-            onChange={(event) => update("tool", event.target.value)}
-          >
-            <option value="">All profiles</option>
-            {profiles.map((profile) => (
-              <option key={profile}>{profile}</option>
-            ))}
-          </select>
-        </label>
-        <button type="button" className="button button--quiet" onClick={onReset}>
-          Clear
-        </button>
-      </div>
 
       <details className="filters__advanced">
         <summary>Advanced filters</summary>
         <div className="filters__grid">
-          <label>
-            <span>Revision</span>
-            <select
-              value={filters.revision}
-              onChange={(event) => update("revision", event.target.value)}
-            >
-              <option value="">Any</option>
-              <option>1800-2012</option>
-              <option>1800-2017</option>
-              <option>1800-2023</option>
-            </select>
-          </label>
-          <label>
-            <span>Chapter</span>
-            <select
-              value={filters.chapter}
-              onChange={(event) => update("chapter", event.target.value)}
-            >
-              <option value="">Any</option>
-              {choices(dataset.requirements.map((item) => String(item.chapter))).map(
-                (chapter) => (
-                  <option key={chapter}>{chapter}</option>
-                ),
-              )}
-            </select>
-          </label>
-          <label>
-            <span>Clause prefix</span>
+          <label className="search">
+            <span>Search</span>
             <input
-              value={filters.clause}
-              placeholder="12.4"
-              onChange={(event) => update("clause", event.target.value)}
+              type="search"
+              value={filters.search}
+              placeholder="Requirement, case, clause, diagnostic…"
+              onChange={(event) => update("search", event.target.value)}
             />
           </label>
-          <label>
-            <span>Phase</span>
-            <select
-              value={filters.phase}
-              onChange={(event) => update("phase", event.target.value)}
-            >
-              <option value="">Any</option>
-              {choices(dataset.cases.map((item) => item.target_phase)).map((phase) => (
-                <option key={phase}>{phase}</option>
-              ))}
-            </select>
-          </label>
-          <label>
-            <span>Expectation</span>
-            <select
-              value={filters.expectation}
-              onChange={(event) => update("expectation", event.target.value)}
-            >
-              <option value="">Any</option>
-              {choices(dataset.cases.map((item) => item.expectation)).map(
-                (expectation) => (
-                  <option key={expectation}>{expectation}</option>
-                ),
-              )}
-            </select>
-          </label>
-          <label>
-            <span>Case presence</span>
-            <select
-              value={filters.casePresence}
-              onChange={(event) => update("casePresence", event.target.value)}
-            >
-              <option value="">Any</option>
-              <option value="with-cases">With cases</option>
-              <option value="without-cases">Without cases</option>
-            </select>
-          </label>
-          <label>
-            <span>Tag</span>
-            <select
-              value={filters.tag}
-              onChange={(event) => update("tag", event.target.value)}
-            >
-              <option value="">Any</option>
-              {tags.map((tag) => (
-                <option key={tag}>{tag}</option>
-              ))}
-            </select>
-          </label>
-          <label>
-            <span>Exact result</span>
-            <select
-              value={filters.status}
-              onChange={(event) => update("status", event.target.value)}
-            >
-              <option value="">Any</option>
-              {statuses.map((status) => (
-                <option key={status} value={status}>
-                  {STATUS_LABELS[status]}
-                </option>
-              ))}
-            </select>
-          </label>
-          <label>
-            <span>Reason</span>
-            <select
-              value={filters.reason}
-              onChange={(event) => update("reason", event.target.value)}
-            >
-              <option value="">Any</option>
-              {reasons.map((reason) => (
-                <option key={reason}>{reason}</option>
-              ))}
-            </select>
-          </label>
-          <label>
-            <span>Date</span>
-            <input
-              type="date"
-              value={filters.date}
-              onChange={(event) => selectDate(event.target.value)}
-            />
-          </label>
+          {mode === "history" && (
+            <>
+              <label>
+                <span>Tool</span>
+                <select
+                  value={filters.tool}
+                  onChange={(event) => update("tool", event.target.value)}
+                >
+                  <option value="">All tools</option>
+                  {tools.map((tool) => (
+                    <option key={tool}>{tool}</option>
+                  ))}
+                </select>
+              </label>
+              <label>
+                <span>Profile</span>
+                <select
+                  value={filters.profile}
+                  onChange={(event) => update("profile", event.target.value)}
+                >
+                  <option value="">All profiles</option>
+                  {profiles.map((profile) => (
+                    <option key={profile}>{profile}</option>
+                  ))}
+                </select>
+              </label>
+            </>
+          )}
+          {mode === "corpus" && (
+            <>
+              <label>
+                <span>Revision</span>
+                <select
+                  value={filters.revision}
+                  onChange={(event) => update("revision", event.target.value)}
+                >
+                  <option value="">Any</option>
+                  <option>1800-2012</option>
+                  <option>1800-2017</option>
+                  <option>1800-2023</option>
+                </select>
+              </label>
+              <label>
+                <span>Chapter</span>
+                <select
+                  value={filters.chapter}
+                  onChange={(event) => update("chapter", event.target.value)}
+                >
+                  <option value="">Any</option>
+                  {choices(dataset.requirements.map((item) => String(item.chapter))).map(
+                    (chapter) => (
+                      <option key={chapter}>{chapter}</option>
+                    ),
+                  )}
+                </select>
+              </label>
+              <label>
+                <span>Clause prefix</span>
+                <input
+                  value={filters.clause}
+                  placeholder="12.4"
+                  onChange={(event) => update("clause", event.target.value)}
+                />
+              </label>
+              <label>
+                <span>Phase</span>
+                <select
+                  value={filters.phase}
+                  onChange={(event) => update("phase", event.target.value)}
+                >
+                  <option value="">Any</option>
+                  {choices(dataset.cases.map((item) => item.target_phase)).map((phase) => (
+                    <option key={phase}>{phase}</option>
+                  ))}
+                </select>
+              </label>
+              <label>
+                <span>Expectation</span>
+                <select
+                  value={filters.expectation}
+                  onChange={(event) => update("expectation", event.target.value)}
+                >
+                  <option value="">Any</option>
+                  {choices(dataset.cases.map((item) => item.expectation)).map(
+                    (expectation) => (
+                      <option key={expectation}>{expectation}</option>
+                    ),
+                  )}
+                </select>
+              </label>
+              <label>
+                <span>Case presence</span>
+                <select
+                  value={filters.casePresence}
+                  onChange={(event) => update("casePresence", event.target.value)}
+                >
+                  <option value="">Any</option>
+                  <option value="with-cases">With cases</option>
+                  <option value="without-cases">Without cases</option>
+                </select>
+              </label>
+              <label>
+                <span>Tag</span>
+                <select
+                  value={filters.tag}
+                  onChange={(event) => update("tag", event.target.value)}
+                >
+                  <option value="">Any</option>
+                  {tags.map((tag) => (
+                    <option key={tag}>{tag}</option>
+                  ))}
+                </select>
+              </label>
+              <label>
+                <span>Exact result</span>
+                <select
+                  value={filters.status}
+                  onChange={(event) => update("status", event.target.value)}
+                >
+                  <option value="">Any</option>
+                  {statuses.map((status) => (
+                    <option key={status} value={status}>
+                      {STATUS_LABELS[status]}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <label>
+                <span>Reason</span>
+                <select
+                  value={filters.reason}
+                  onChange={(event) => update("reason", event.target.value)}
+                >
+                  <option value="">Any</option>
+                  {reasons.map((reason) => (
+                    <option key={reason}>{reason}</option>
+                  ))}
+                </select>
+              </label>
+            </>
+          )}
+          <button type="button" className="button button--quiet" onClick={onReset}>
+            Clear local filters
+          </button>
         </div>
       </details>
     </div>

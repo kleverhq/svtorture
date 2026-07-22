@@ -235,6 +235,7 @@ export function EvidenceView({
   requirements,
   campaign,
   toolFilter,
+  profileFilter,
   selectedCaseId,
   onSelectCase,
   onInspectRequirement,
@@ -243,6 +244,7 @@ export function EvidenceView({
   requirements: Requirement[];
   campaign?: Campaign | undefined;
   toolFilter: string;
+  profileFilter: string;
   selectedCaseId: string;
   onSelectCase: (caseId: string) => void;
   onInspectRequirement: (requirementId: string) => void;
@@ -260,7 +262,9 @@ export function EvidenceView({
       })),
     ) ?? [];
   const visibleProfiles = profiles.filter(
-    (profile) => !toolFilter || profile.key === toolFilter,
+    (profile) =>
+      (!toolFilter || profile.toolId === toolFilter) &&
+      (!profileFilter || profile.profileId === profileFilter),
   );
   const requirementMap = new Map(requirements.map((item) => [item.id, item]));
   const selected = selectedCaseId
@@ -286,15 +290,7 @@ export function EvidenceView({
   }, [campaignId, selected?.id]);
 
   return (
-    <section className="panel evidence" aria-labelledby="evidence-title">
-      <div className="panel__heading panel__heading--compact">
-        <div>
-          <h2 id="evidence-title">Case evidence</h2>
-          <span>
-            {cases.length} cases · {visibleProfiles.length} tool profiles
-          </span>
-        </div>
-      </div>
+    <section className="panel evidence" aria-label="Case evidence">
       {selected ? (
         <div className="evidence-workspace">
           <nav className="case-list" aria-label="Cases">

@@ -7,7 +7,7 @@ import { makeTestDataset } from "./testDataset";
 afterEach(cleanup);
 
 describe("HeadlineMetrics", () => {
-  it("shows tool coverage without the campaign summary", () => {
+  it("renders coverage as a six-column table without an extra title", () => {
     const dataset = makeTestDataset();
     const campaign = dataset.campaigns[0];
     if (!campaign) throw new Error("incomplete test dataset");
@@ -18,23 +18,24 @@ describe("HeadlineMetrics", () => {
         campaign={campaign}
         toolFilter=""
         profileFilter=""
+        searchFilter=""
         onSelectTool={vi.fn()}
       />,
     );
 
-    expect(screen.getByText("Verified requirement coverage by tool")).toBeTruthy();
-    expect(screen.queryByText("Selected campaign summary")).toBeNull();
-    expect(screen.queryByText("Covered requirements")).toBeNull();
+    for (const heading of ["Tool", "Pass", "Fail", "Unclear", "Coverage", "Version"]) {
+      expect(screen.getByRole("columnheader", { name: heading })).toBeTruthy();
+    }
+    expect(screen.queryByText("Verified requirement coverage by tool")).toBeNull();
   });
 
   it("reports an unmatched campaign selection", () => {
-    const dataset = makeTestDataset();
-
     render(
       <HeadlineMetrics
-        dataset={dataset}
+        dataset={makeTestDataset()}
         toolFilter=""
         profileFilter=""
+        searchFilter=""
         onSelectTool={vi.fn()}
       />,
     );
@@ -44,12 +45,12 @@ describe("HeadlineMetrics", () => {
     ).toBeTruthy();
   });
 
-  it("links a tool row to its requirements without presenting invalid counts", () => {
+  it("links a tool row and filters it by profile or search", () => {
     const dataset = makeTestDataset();
     const campaign = dataset.campaigns[0];
     if (!campaign) throw new Error("incomplete test dataset");
     const metric = {
-      label: "invalid because of harness errors",
+      label: "invalid because of infrastructure errors",
       revision: "1800-2023",
       tool_id: "fake",
       profile_id: "simulator",
@@ -64,7 +65,7 @@ describe("HeadlineMetrics", () => {
       nonconforming: 0,
       inconclusive: 0,
       unsupported: 0,
-      infrastructure_state: "harness errors present",
+      infrastructure_state: "infra errors present",
       campaign_id: campaign.id,
       timestamp: campaign.finished_at,
       tool_sha: null,
@@ -83,45 +84,39 @@ describe("HeadlineMetrics", () => {
         campaign={campaign}
         toolFilter=""
         profileFilter=""
+        searchFilter=""
         onSelectTool={onSelectTool}
       />,
     );
 
-    const row = screen.getByRole("button", {
+    const button = screen.getByRole("button", {
       name: "View requirements for fake/simulator",
     });
-    fireEvent.click(row);
-    expect(onSelectTool).toHaveBeenCalledWith("fake/simulator");
-    expect(row.classList).toContain("tool-metric--unavailable");
-    expect(screen.getByText("Unavailable · harness errors present")).toBeTruthy();
-    expect(screen.getByText("Unavailable")).toBeTruthy();
-    expect(screen.queryByLabelText("fake requirement outcomes")).toBeNull();
+    fireEvent.click(button);
+    expect(onSelectTool).toHaveBeenCalledWith("fake", "simulator");
+    expect(button.closest("tr")?.classList).toContain("is-unavailable");
+    expect(screen.getByText("Unavailable · infra errors present")).toBeTruthy();
+    expect(screen.getAllByText("—")).toHaveLength(3);
 
     metric.valid = true;
     metric.numerator = 11;
     metric.denominator = 12;
     metric.conforming = 11;
     metric.nonconforming = 1;
-    metric.inconclusive = 0;
     view.rerender(
       <HeadlineMetrics
         dataset={dataset}
         campaign={campaign}
         toolFilter=""
         profileFilter=""
+        searchFilter="test-tool"
         onSelectTool={onSelectTool}
       />,
     );
-
-    const outcomes = screen.getByLabelText("fake requirement outcomes");
-    expect(outcomes.querySelector(".tool-outcome--pass")?.textContent).toBe("11PASS");
-    expect(outcomes.querySelector(".tool-outcome--fail")?.textContent).toBe("1FAIL");
-    expect(outcomes.querySelector(".tool-outcome--unclear")?.textContent).toBe(
-      "0UNCLEAR",
-    );
-    expect(
-      screen.getByText("92% of IEEE 1800-2023 applicable requirements"),
-    ).toBeTruthy();
+    expect(screen.getByText("11")).toBeTruthy();
+    expect(screen.getByText("1")).toBeTruthy();
+    expect(screen.getByText("92% · IEEE 1800-2023")).toBeTruthy();
+    expect(screen.getByText("test-tool 1.0")).toBeTruthy();
 
     view.rerender(
       <HeadlineMetrics
@@ -129,6 +124,7 @@ describe("HeadlineMetrics", () => {
         campaign={campaign}
         toolFilter=""
         profileFilter="parser"
+        searchFilter=""
         onSelectTool={onSelectTool}
       />,
     );

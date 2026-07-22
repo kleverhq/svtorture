@@ -2,20 +2,20 @@ import { cleanup, fireEvent, render, screen, within } from "@testing-library/rea
 import { useState } from "react";
 import { afterEach, describe, expect, it } from "vitest";
 
-import { Filters } from "./Filters";
+import { Filters, type FilterMode } from "./Filters";
 import { EMPTY_FILTERS, selectedCampaign } from "./model";
 import { makeTestDataset } from "./testDataset";
+import type { Dataset } from "./types";
 
 afterEach(cleanup);
 
 function FilterHarness({
-  campaignOnly = false,
-  showQuickFilters = true,
+  mode = "corpus",
+  dataset = makeTestDataset(),
 }: {
-  campaignOnly?: boolean;
-  showQuickFilters?: boolean;
+  mode?: FilterMode;
+  dataset?: Dataset;
 }) {
-  const dataset = makeTestDataset();
   const [filters, setFilters] = useState({
     ...EMPTY_FILTERS,
     status: "conforming",
@@ -27,8 +27,7 @@ function FilterHarness({
       filters={filters}
       setFilters={setFilters}
       onReset={() => setFilters({ ...EMPTY_FILTERS })}
-      campaignOnly={campaignOnly}
-      showQuickFilters={showQuickFilters}
+      mode={mode}
     />
   );
 }
@@ -47,8 +46,21 @@ describe("Filters", () => {
     ).toBe("true");
   });
 
-  it("uses clear result and comparison labels", () => {
+  it("shows side-by-side corpus facets and clear result labels", () => {
     render(<FilterHarness />);
+
+    const tools = within(screen.getByRole("group", { name: "Tools" }));
+    const profiles = within(screen.getByRole("group", { name: "Profiles" }));
+    fireEvent.click(tools.getByRole("button", { name: "Fake 1" }));
+    fireEvent.click(profiles.getByRole("button", { name: "Simulator 1" }));
+    expect(
+      tools.getByRole("button", { name: "Fake 1" }).getAttribute("aria-pressed"),
+    ).toBe("true");
+    expect(
+      profiles
+        .getByRole("button", { name: "Simulator 1" })
+        .getAttribute("aria-pressed"),
+    ).toBe("true");
 
     const results = within(screen.getByRole("group", { name: "Results" }));
     expect(results.getByRole("button", { name: "Not applicable 0" })).toBeTruthy();
@@ -64,36 +76,59 @@ describe("Filters", () => {
     ).toBeTruthy();
   });
 
-  it("can hide result filters outside Requirements and Cases", () => {
-    render(<FilterHarness showQuickFilters={false} />);
+  it("keeps Search inside collapsed Advanced filters", () => {
+    render(<FilterHarness mode="history" />);
 
     expect(screen.queryByRole("group", { name: "Results" })).toBeNull();
-    expect(screen.queryByRole("group", { name: "Comparison" })).toBeNull();
+    expect(screen.queryByRole("group", { name: "Tools" })).toBeNull();
+    const advanced = screen.getByText("Advanced filters").closest("details");
+    expect(advanced?.open).toBe(false);
     expect(screen.getByLabelText("Search")).toBeTruthy();
   });
 
-  it("shows independent tool and profile facets in the overview", () => {
-    render(<FilterHarness campaignOnly />);
+  it("offers historical tools that are absent from the selected campaign", () => {
+    const dataset = makeTestDataset();
+    const campaign = dataset.campaigns[0];
+    if (!campaign) throw new Error("test dataset has no campaign");
+    dataset.metrics.push({
+      label: "historical metric",
+      revision: "1800-2023",
+      tool_id: "historical-tool",
+      profile_id: "parser",
+      numerator: 1,
+      denominator: 1,
+      corpus_sha: "0".repeat(64),
+      complete: true,
+      valid: true,
+      corpus_coverage: 1,
+      execution_coverage: 1,
+      conforming: 1,
+      nonconforming: 0,
+      inconclusive: 0,
+      unsupported: 0,
+      infrastructure_state: "available",
+      campaign_id: "older-campaign",
+      timestamp: campaign.finished_at,
+      tool_sha: null,
+      exact_tags: [],
+      nearest_tag: null,
+      reported_version: "historical 1.0",
+      image_digest: null,
+      repository_commit: campaign.repository.commit,
+    });
 
-    expect(screen.getByLabelText("Campaign")).toBeTruthy();
-    expect(screen.getByLabelText("Campaign date")).toBeTruthy();
-    expect(screen.getByRole("button", { name: "Clear filters" })).toBeTruthy();
-    expect(screen.queryByLabelText("Search")).toBeNull();
-    expect(screen.queryByLabelText("Tool / profile")).toBeNull();
-    expect(screen.queryByRole("button", { name: "Fail 0" })).toBeNull();
+    render(<FilterHarness mode="history" dataset={dataset} />);
 
-    const tools = within(screen.getByRole("group", { name: "Tools" }));
-    const profiles = within(screen.getByRole("group", { name: "Profiles" }));
-    expect(tools.getByRole("button", { name: "All 1" })).toBeTruthy();
-    fireEvent.click(tools.getByRole("button", { name: "Fake 1" }));
-    expect(
-      tools.getByRole("button", { name: "Fake 1" }).getAttribute("aria-pressed"),
-    ).toBe("true");
-    fireEvent.click(profiles.getByRole("button", { name: "Simulator 1" }));
-    expect(
-      profiles
-        .getByRole("button", { name: "Simulator 1" })
-        .getAttribute("aria-pressed"),
-    ).toBe("true");
+    expect(screen.getByLabelText("Tool").textContent).toContain("historical-tool");
+    expect(screen.getByLabelText("Profile").textContent).toContain("parser");
+  });
+
+  it("shows independent headline facets without result filters", () => {
+    render(<FilterHarness mode="overview" />);
+
+    expect(screen.getByRole("group", { name: "Tools" })).toBeTruthy();
+    expect(screen.getByRole("group", { name: "Profiles" })).toBeTruthy();
+    expect(screen.queryByRole("group", { name: "Results" })).toBeNull();
+    expect(screen.queryByLabelText("Campaign")).toBeNull();
   });
 });

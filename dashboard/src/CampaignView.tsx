@@ -9,14 +9,15 @@ export function CampaignView({ campaigns }: { campaigns: Campaign[] }) {
     right.finished_at.localeCompare(left.finished_at),
   );
   return (
-    <section className="panel campaigns" aria-labelledby="campaign-title">
-      <div className="panel__heading panel__heading--compact">
-        <div>
-          <h2 id="campaign-title">Campaign provenance</h2>
-          <span>{ordered.length} immutable campaign records</span>
-        </div>
-      </div>
+    <section className="panel campaigns" aria-label="Campaign records">
       <div className="campaign-list">
+        <div className="campaign-row__header">
+          <span>Campaign</span>
+          <span>Run</span>
+          <span>Cases</span>
+          <span>Tools</span>
+          <span>State</span>
+        </div>
         {ordered.length ? (
           ordered.map((campaign) => (
             <article className="campaign-row" key={campaign.id}>

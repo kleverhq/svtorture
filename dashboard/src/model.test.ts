@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 
 import {
   aggregateStatus,
+  campaignsInDateRange,
   changedCaseKeys,
   compareCampaigns,
   EMPTY_FILTERS,
@@ -23,8 +24,10 @@ describe("URL-backed filters", () => {
       search: "copy-out",
       chapter: "13",
       statusGroup: "fail",
-      overviewTool: "fake",
-      overviewProfile: "simulator",
+      tool: "fake",
+      profile: "simulator",
+      dateFrom: "2026-01-01",
+      dateTo: "2026-12-31",
       caseId: "ch13-output-copyout-width",
       requirementId: "SV-2023-13-OUTPUT-COPYOUT",
       changed: true,
@@ -37,6 +40,30 @@ describe("URL-backed filters", () => {
 });
 
 describe("requirements model", () => {
+  it("filters campaigns by an inclusive range and falls back to the latest match", () => {
+    const seed = dataset.campaigns[0];
+    if (!seed) throw new Error("test dataset has no campaign");
+    const older = {
+      ...seed,
+      id: "20260101T000000Z-older",
+      finished_at: "2026-01-01T23:59:59Z",
+    } satisfies Campaign;
+    const newer = {
+      ...seed,
+      id: "20260102T000000Z-newer",
+      finished_at: "2026-01-02T00:00:01Z",
+    } satisfies Campaign;
+    const extended = { ...dataset, campaigns: [older, newer] };
+
+    expect(campaignsInDateRange(extended, "2026-01-01", "2026-01-01")).toEqual([
+      older,
+    ]);
+    expect(
+      selectedCampaign(extended, newer.id, "2026-01-01", "2026-01-01")?.id,
+    ).toBe(older.id);
+    expect(selectedCampaign(extended, "")?.id).toBe(newer.id);
+  });
+
   it("filters requirement units from a small local dataset", () => {
     const campaign = selectedCampaign(dataset, "");
     const filtered = filterCorpus(
@@ -101,7 +128,7 @@ describe("requirements model", () => {
     expect(failing.cases).toHaveLength(0);
   });
 
-  it("maps exact statuses into five scan-level groups", () => {
+  it("maps exact statuses into six scan-level groups", () => {
     expect(statusGroup("conforming")).toBe("pass");
     expect(statusGroup("nonconforming")).toBe("fail");
     expect(statusGroup("unsupported-capability")).toBe("not-applicable");

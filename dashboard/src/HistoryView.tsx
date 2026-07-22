@@ -149,56 +149,39 @@ export function HistoryView({
   dataset,
   campaign,
   toolFilter,
-  dateFilter,
+  profileFilter,
+  searchFilter,
 }: {
   dataset: Dataset;
   campaign?: Campaign | undefined;
   toolFilter: string;
-  dateFilter: string;
+  profileFilter: string;
+  searchFilter: string;
 }) {
   const comparison = compareCampaigns(dataset, campaign);
-  const visible = useMemo(
-    () =>
-      dataset.metrics
-        .filter(
-          (point) =>
-            (!toolFilter || `${point.tool_id}/${point.profile_id}` === toolFilter) &&
-            (!dateFilter || point.timestamp.startsWith(dateFilter)),
-        )
-        .sort((left, right) => right.timestamp.localeCompare(left.timestamp)),
-    [dataset.metrics, dateFilter, toolFilter],
-  );
-  const historyGroups = new Map<string, MetricPoint[]>();
-  for (const point of visible) {
-    const key = `${point.tool_id}/${point.profile_id}`;
-    const values = historyGroups.get(key) ?? [];
-    values.push(point);
-    historyGroups.set(key, values);
-  }
-  const corpusChanges = [...historyGroups.values()].reduce((total, values) => {
-    const ordered = [...values].sort((left, right) =>
-      left.timestamp.localeCompare(right.timestamp),
-    );
-    return (
-      total +
-      ordered.filter((point, index) => {
-        const previous = ordered[index - 1];
-        return (
-          previous !== undefined &&
-          (previous.corpus_sha !== point.corpus_sha ||
-            previous.denominator !== point.denominator)
-        );
-      }).length
-    );
-  }, 0);
+  const visible = useMemo(() => {
+    const needle = searchFilter.toLocaleLowerCase();
+    return dataset.metrics
+      .filter(
+        (point) =>
+          (!toolFilter || point.tool_id === toolFilter) &&
+          (!profileFilter || point.profile_id === profileFilter) &&
+          (!needle ||
+            [
+              point.campaign_id,
+              point.tool_id,
+              point.profile_id,
+              point.revision,
+              point.reported_version ?? "",
+            ]
+              .join(" ")
+              .toLocaleLowerCase()
+              .includes(needle)),
+      )
+      .sort((left, right) => right.timestamp.localeCompare(left.timestamp));
+  }, [dataset.metrics, profileFilter, searchFilter, toolFilter]);
   return (
-    <section className="panel history" aria-labelledby="history-title">
-      <div className="panel__heading panel__heading--compact">
-        <div>
-          <h2 id="history-title">History and changes</h2>
-          <span>{visible.length} metric points · {corpusChanges} corpus boundaries</span>
-        </div>
-      </div>
+    <section className="panel history" aria-label="History and changes">
       {comparison.previousCampaignId ? (
         <section className="change-summary" aria-label="Changes from previous campaign">
           <div>

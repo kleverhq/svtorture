@@ -16,6 +16,7 @@ interface MatrixProps {
   cases: CaseDefinition[];
   campaign?: Campaign | undefined;
   toolFilter: string;
+  profileFilter: string;
   selectedRequirementId: string;
   onSelectRequirement: (requirementId: string) => void;
   onInspectCase: (caseId: string) => void;
@@ -28,6 +29,7 @@ export function MatrixView({
   cases,
   campaign,
   toolFilter,
+  profileFilter,
   selectedRequirementId,
   onSelectRequirement,
   onInspectCase,
@@ -35,9 +37,13 @@ export function MatrixView({
   const parentRef = useRef<HTMLDivElement>(null);
   const headerScrollRef = useRef<HTMLDivElement>(null);
   const resultMap = useMemo(() => resultsByKey(campaign), [campaign]);
-  const profiles = profileKeys(campaign).filter(
-    (profile) => !toolFilter || profile === toolFilter,
-  );
+  const profiles = profileKeys(campaign).filter((key) => {
+    const [toolId, profileId] = key.split("/");
+    return (
+      (!toolFilter || toolId === toolFilter) &&
+      (!profileFilter || profileId === profileFilter)
+    );
+  });
   const casesByRequirement = useMemo(() => {
     const result = new Map<string, CaseDefinition[]>();
     for (const testCase of cases) {
@@ -126,16 +132,7 @@ export function MatrixView({
     ? (casesByRequirement.get(selectedRequirement.id) ?? [])
     : [];
   return (
-    <section className="panel matrix" aria-labelledby="matrix-title">
-      <div className="panel__heading panel__heading--compact">
-        <div>
-          <h2 id="matrix-title">Requirements matrix</h2>
-          <span>
-            {requirements.length} requirements · {cases.length} cases · {profiles.length}{" "}
-            profiles
-          </span>
-        </div>
-      </div>
+    <section className="panel matrix" aria-label="Requirements matrix">
       <div className={`matrix__workspace ${selectedRequirement ? "has-inspector" : ""}`}>
         <div className="matrix__main">
           <div

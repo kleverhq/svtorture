@@ -9,12 +9,11 @@ server or live database.
 
 The interface provides five URL-filtered views. **Overview** is shown by default:
 
-- **Overview** — plain-language campaign counts plus requirement-level Pass,
-  Fail, and Unclear totals and verified applicable-requirement coverage by tool
-  profile;
+- **Overview** — a compact tool table with requirement-level Pass, Fail, and
+  Unclear totals, verified applicable-requirement coverage, and reported version;
 - **Requirements** — a compact requirement/tool matrix with grouped verdicts,
   sticky identity columns, and a separate requirement inspector;
-- **Case evidence** — a master-detail case list with inline local source viewing,
+- **Cases** — a master-detail case list with inline local source viewing,
   exact normalized results, diagnostics, output hashes/excerpts, reproduction
   commands, and a return path to the requirement inspector;
 - **Changes** — regressions, new passes, tool/corpus boundaries, metric history,
@@ -22,15 +21,12 @@ The interface provides five URL-filtered views. **Overview** is shown by default
 - **Campaigns** — compact run records with expandable corpus, tool source,
   image, platform, and trust provenance.
 
-Overview campaign counts treat one tool/profile running one case as one
-evaluation. Per-tool outcome totals use the requirement-weighted metric: every
-mandatory variant must conform for a requirement to pass, while inconclusive
-requirements remain in the denominator and appear as Unclear. Supporting text
-distinguishes recorded evaluations, unsupported capability, evidence needing
-inspection, and comparable-campaign regressions. The headline metric is defined in
-[the conformance methodology](../docs/methodology.md). Missing, unsupported,
-incomplete, and nonconforming evidence remains visible rather than being
-collapsed into a pass/fail percentage.
+Overview outcome totals use the requirement-weighted metric: every mandatory
+variant must conform for a requirement to pass, while unclear requirements remain
+in the denominator. The headline metric is defined in [the conformance
+methodology](../docs/methodology.md). Missing, inapplicable, incomplete, and
+nonconforming evidence remains visible rather than being collapsed into a
+pass/fail percentage.
 
 ## Architecture and stack
 
@@ -54,15 +50,21 @@ The frontend uses:
 
 `src/svtorture/publish.py` validates campaigns and creates the versioned dataset.
 The React model derives filters, comparable-campaign changes, and aggregate
-presentation from that immutable data. View, campaign, tool, search, status,
-advanced filters, selected evidence case, and selected requirement are encoded
+presentation from that immutable data. View, campaign, date range, tool, profile,
+search, status, advanced filters, selected evidence case, and requirement are encoded
 in the URL so an investigation can be shared or revisited. Broad matrix statuses are presentation categories only; evidence retains every
 exact result status and reason together with the target phase, the phase the
 command attempted through, and whether attribution is direct, cumulative, or
 not observed. Synthetic unsupported, unavailable, and inapplicable results use
 `not-observed` and have no attempted-through observation.
 
-The header provides `Auto`, `Light`, and `Dark` themes. `Auto` is the default and
+The page header selects the campaign globally. Optional inclusive `From` and `To`
+dates narrow the campaign dropdown; an empty selection resolves to the latest
+campaign in that range. Tool and profile facets are independent on Overview,
+Requirements, and Cases. Search and less common controls remain inside collapsed
+Advanced filters.
+
+The site header provides `Auto`, `Light`, and `Dark` themes. `Auto` is the default and
 follows the browser or operating-system color preference. An explicit selection
 is saved in local storage for this dashboard origin; it does not alter datasets
 or shared URLs.

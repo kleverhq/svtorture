@@ -108,13 +108,13 @@ export interface Filters {
   casePresence: string;
   tag: string;
   tool: string;
-  overviewTool: string;
-  overviewProfile: string;
+  profile: string;
   statusGroup: string;
   status: string;
   reason: string;
   campaign: string;
-  date: string;
+  dateFrom: string;
+  dateTo: string;
   caseId: string;
   requirementId: string;
   changed: boolean;
@@ -131,13 +131,13 @@ export const EMPTY_FILTERS: Filters = {
   casePresence: "",
   tag: "",
   tool: "",
-  overviewTool: "",
-  overviewProfile: "",
+  profile: "",
   statusGroup: "",
   status: "",
   reason: "",
   campaign: "",
-  date: "",
+  dateFrom: "",
+  dateTo: "",
   caseId: "",
   requirementId: "",
   changed: false,
@@ -167,13 +167,27 @@ export function filtersToSearch(filters: Filters, view: string): string {
   return `?${parameters.toString()}`;
 }
 
-export function selectedCampaign(dataset: Dataset, campaignId: string): Campaign | undefined {
-  if (campaignId) {
-    return dataset.campaigns.find((campaign) => campaign.id === campaignId);
-  }
-  return [...dataset.campaigns].sort((left, right) =>
-    right.finished_at.localeCompare(left.finished_at),
-  )[0];
+export function campaignsInDateRange(
+  dataset: Dataset,
+  dateFrom: string,
+  dateTo: string,
+): Campaign[] {
+  return [...dataset.campaigns]
+    .filter((campaign) => {
+      const date = campaign.finished_at.slice(0, 10);
+      return (!dateFrom || date >= dateFrom) && (!dateTo || date <= dateTo);
+    })
+    .sort((left, right) => right.finished_at.localeCompare(left.finished_at));
+}
+
+export function selectedCampaign(
+  dataset: Dataset,
+  campaignId: string,
+  dateFrom = "",
+  dateTo = "",
+): Campaign | undefined {
+  const campaigns = campaignsInDateRange(dataset, dateFrom, dateTo);
+  return campaigns.find((campaign) => campaign.id === campaignId) ?? campaigns[0];
 }
 
 export interface StatusTransition {
@@ -386,7 +400,8 @@ export function filterCorpus(
     const candidateResults = [...resultMap.values()].filter(
       (result) =>
         result.case_id === testCase.id &&
-        (!filters.tool || `${result.tool_id}/${result.profile_id}` === filters.tool),
+        (!filters.tool || result.tool_id === filters.tool) &&
+        (!filters.profile || result.profile_id === filters.profile),
     );
     const searchable = [
       testCase.id,
