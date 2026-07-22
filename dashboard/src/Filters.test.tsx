@@ -129,6 +129,8 @@ describe("Filters", () => {
     expect(screen.getByRole("group", { name: "Tools" })).toBeTruthy();
     expect(screen.getByRole("group", { name: "Profiles" })).toBeTruthy();
     expect(screen.queryByRole("group", { name: "Results" })).toBeNull();
+    expect(screen.queryByText("Advanced filters")).toBeNull();
+    expect(screen.queryByLabelText("Search")).toBeNull();
     expect(screen.queryByLabelText("Campaign")).toBeNull();
   });
 });

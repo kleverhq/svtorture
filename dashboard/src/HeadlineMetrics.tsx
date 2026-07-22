@@ -5,14 +5,12 @@ export function HeadlineMetrics({
   campaign,
   toolFilter,
   profileFilter,
-  searchFilter,
   onSelectTool,
 }: {
   dataset: Dataset;
   campaign?: Campaign | undefined;
   toolFilter: string;
   profileFilter: string;
-  searchFilter: string;
   onSelectTool: (tool: string, profile: string) => void;
 }) {
   const headlineProfiles = new Set(
@@ -22,24 +20,13 @@ export function HeadlineMetrics({
         .map((profile) => `${tool.definition.id}/${profile.id}`),
     ) ?? [],
   );
-  const needle = searchFilter.toLocaleLowerCase();
   const points = campaign
     ? dataset.metrics.filter(
         (metric) =>
           metric.campaign_id === campaign.id &&
           headlineProfiles.has(`${metric.tool_id}/${metric.profile_id}`) &&
           (!toolFilter || metric.tool_id === toolFilter) &&
-          (!profileFilter || metric.profile_id === profileFilter) &&
-          (!needle ||
-            [
-              metric.tool_id,
-              metric.profile_id,
-              metric.revision,
-              metric.reported_version ?? "",
-            ]
-              .join(" ")
-              .toLocaleLowerCase()
-              .includes(needle)),
+          (!profileFilter || metric.profile_id === profileFilter),
       )
     : [];
 
@@ -107,7 +94,7 @@ export function HeadlineMetrics({
             ) : (
               <tr>
                 <td className="empty-state" colSpan={6}>
-                  {toolFilter || profileFilter || searchFilter
+                  {toolFilter || profileFilter
                     ? "No tool profiles match the current Overview filters."
                     : "No headline metrics were recorded."}
                 </td>

@@ -61,8 +61,9 @@ not observed. Synthetic unsupported, unavailable, and inapplicable results use
 The page header selects the campaign globally. Optional inclusive `From` and `To`
 dates narrow the campaign dropdown; an empty selection resolves to the latest
 campaign in that range. Tool and profile facets are independent on Overview,
-Requirements, and Cases. Search and less common controls remain inside collapsed
-Advanced filters.
+Requirements, and Cases. Overview intentionally exposes only those facets; Search
+and less common controls remain inside collapsed Advanced filters on the other
+views.
 
 The site header provides `Auto`, `Light`, and `Dark` themes. `Auto` is the default and
 follows the browser or operating-system color preference. An explicit selection

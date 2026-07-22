@@ -347,7 +347,6 @@ export default function App() {
               campaign={campaign}
               toolFilter={filters.tool}
               profileFilter={filters.profile}
-              searchFilter={filters.search}
               onSelectTool={(tool, profile) => {
                 setFilters((current) => ({ ...current, tool, profile }));
                 setView("matrix");

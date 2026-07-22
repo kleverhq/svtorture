@@ -211,8 +211,9 @@ export function Filters({
         </div>
       )}
 
-      <details className="filters__advanced">
-        <summary>Advanced filters</summary>
+      {mode !== "overview" && (
+        <details className="filters__advanced">
+          <summary>Advanced filters</summary>
         <div className="filters__grid">
           <label className="search">
             <span>Search</span>
@@ -367,8 +368,9 @@ export function Filters({
           <button type="button" className="button button--quiet" onClick={onReset}>
             Clear local filters
           </button>
-        </div>
-      </details>
+          </div>
+        </details>
+      )}
     </div>
   );
 }

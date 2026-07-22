@@ -18,7 +18,6 @@ describe("HeadlineMetrics", () => {
         campaign={campaign}
         toolFilter=""
         profileFilter=""
-        searchFilter=""
         onSelectTool={vi.fn()}
       />,
     );
@@ -35,7 +34,6 @@ describe("HeadlineMetrics", () => {
         dataset={makeTestDataset()}
         toolFilter=""
         profileFilter=""
-        searchFilter=""
         onSelectTool={vi.fn()}
       />,
     );
@@ -45,7 +43,7 @@ describe("HeadlineMetrics", () => {
     ).toBeTruthy();
   });
 
-  it("links a tool row and filters it by profile or search", () => {
+  it("links a tool row and filters it by profile", () => {
     const dataset = makeTestDataset();
     const campaign = dataset.campaigns[0];
     if (!campaign) throw new Error("incomplete test dataset");
@@ -84,7 +82,6 @@ describe("HeadlineMetrics", () => {
         campaign={campaign}
         toolFilter=""
         profileFilter=""
-        searchFilter=""
         onSelectTool={onSelectTool}
       />,
     );
@@ -109,7 +106,6 @@ describe("HeadlineMetrics", () => {
         campaign={campaign}
         toolFilter=""
         profileFilter=""
-        searchFilter="test-tool"
         onSelectTool={onSelectTool}
       />,
     );
@@ -124,7 +120,6 @@ describe("HeadlineMetrics", () => {
         campaign={campaign}
         toolFilter=""
         profileFilter="parser"
-        searchFilter=""
         onSelectTool={onSelectTool}
       />,
     );
