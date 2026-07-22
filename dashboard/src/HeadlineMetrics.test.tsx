@@ -87,6 +87,7 @@ describe("HeadlineMetrics", () => {
       {
         ...base,
         tool_id: "zeta",
+        revision: "1800-2012",
         conforming: 2,
         nonconforming: 1,
         inconclusive: 1,
@@ -97,6 +98,7 @@ describe("HeadlineMetrics", () => {
       {
         ...base,
         tool_id: "alpha",
+        revision: "1800-2017",
         conforming: 3,
         nonconforming: 0,
         inconclusive: 2,
@@ -124,6 +126,7 @@ describe("HeadlineMetrics", () => {
       ["Fail", ["alpha", "zeta", "fake"]],
       ["Unclear", ["fake", "zeta", "alpha"]],
       ["Coverage", ["alpha", "fake", "zeta"]],
+      ["Standard", ["zeta", "alpha", "fake"]],
     ] as const;
 
     for (const [label, ascending] of expectations) {

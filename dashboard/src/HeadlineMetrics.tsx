@@ -2,11 +2,18 @@ import { useState } from "react";
 
 import type { Campaign, Dataset, MetricPoint } from "./types";
 
-type SortKey = "tool" | "pass" | "fail" | "unclear" | "coverage";
+type SortKey =
+  | "tool"
+  | "pass"
+  | "fail"
+  | "unclear"
+  | "coverage"
+  | "standard";
 type SortDirection = "ascending" | "descending";
 
 function sortValue(metric: MetricPoint, key: SortKey): number | string | null {
   if (key === "tool") return `${metric.tool_id}/${metric.profile_id}`;
+  if (key === "standard") return metric.revision;
   if (!metric.valid) return null;
   if (key === "pass") return metric.conforming;
   if (key === "fail") return metric.nonconforming;
@@ -110,7 +117,7 @@ export function HeadlineMetrics({
               {sortableHeader("fail", "Fail")}
               {sortableHeader("unclear", "Unclear")}
               {sortableHeader("coverage", "Coverage")}
-              <th>Standard</th>
+              {sortableHeader("standard", "Standard")}
               <th>Version</th>
             </tr>
           </thead>
