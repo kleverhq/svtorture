@@ -8,7 +8,13 @@ import { makeTestDataset } from "./testDataset";
 
 afterEach(cleanup);
 
-function FilterHarness({ campaignOnly = false }: { campaignOnly?: boolean }) {
+function FilterHarness({
+  campaignOnly = false,
+  showQuickFilters = true,
+}: {
+  campaignOnly?: boolean;
+  showQuickFilters?: boolean;
+}) {
   const dataset = makeTestDataset();
   const [filters, setFilters] = useState({
     ...EMPTY_FILTERS,
@@ -22,6 +28,7 @@ function FilterHarness({ campaignOnly = false }: { campaignOnly?: boolean }) {
       setFilters={setFilters}
       onReset={() => setFilters({ ...EMPTY_FILTERS })}
       campaignOnly={campaignOnly}
+      showQuickFilters={showQuickFilters}
     />
   );
 }
@@ -38,6 +45,31 @@ describe("Filters", () => {
     expect(
       screen.getByRole("button", { name: "Fail 0" }).getAttribute("aria-pressed"),
     ).toBe("true");
+  });
+
+  it("uses clear result and comparison labels", () => {
+    render(<FilterHarness />);
+
+    const results = within(screen.getByRole("group", { name: "Results" }));
+    expect(results.getByRole("button", { name: "Not applicable 0" })).toBeTruthy();
+    expect(results.getByRole("button", { name: "Unclear 0" })).toBeTruthy();
+    expect(results.getByRole("button", { name: "Infra error 0" })).toBeTruthy();
+    expect(results.getByRole("button", { name: "Not evaluated 0" })).toBeTruthy();
+    const comparison = within(screen.getByRole("group", { name: "Comparison" }));
+    expect(
+      comparison.getByRole("button", { name: "Changed since previous" }),
+    ).toBeTruthy();
+    expect(
+      comparison.getByRole("button", { name: "Cross-tool disagreement" }),
+    ).toBeTruthy();
+  });
+
+  it("can hide result filters outside Requirements and Cases", () => {
+    render(<FilterHarness showQuickFilters={false} />);
+
+    expect(screen.queryByRole("group", { name: "Results" })).toBeNull();
+    expect(screen.queryByRole("group", { name: "Comparison" })).toBeNull();
+    expect(screen.getByLabelText("Search")).toBeTruthy();
   });
 
   it("shows independent tool and profile facets in the overview", () => {

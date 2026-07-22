@@ -104,10 +104,13 @@ describe("requirements model", () => {
   it("maps exact statuses into five scan-level groups", () => {
     expect(statusGroup("conforming")).toBe("pass");
     expect(statusGroup("nonconforming")).toBe("fail");
-    expect(statusGroup("unsupported-revision")).toBe("unsupported");
-    expect(statusGroup("harness-error")).toBe("issue");
-    expect(statusGroup("inconclusive")).toBe("issue");
-    expect(statusGroup("not-applicable")).toBe("unscored");
+    expect(statusGroup("unsupported-capability")).toBe("not-applicable");
+    expect(statusGroup("unsupported-revision")).toBe("not-applicable");
+    expect(statusGroup("not-applicable")).toBe("not-applicable");
+    expect(statusGroup("inconclusive")).toBe("unclear");
+    expect(statusGroup("harness-error")).toBe("infra");
+    expect(statusGroup("skipped-unavailable")).toBe("not-evaluated");
+    expect(statusGroup("not-run")).toBe("not-evaluated");
   });
 
   it("compares only campaigns with the same tool profiles", () => {

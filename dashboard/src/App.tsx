@@ -218,6 +218,7 @@ export default function App() {
             setFilters={setFilters}
             onReset={() => setFilters({ ...EMPTY_FILTERS })}
             campaignOnly={view === "overview"}
+            showQuickFilters={view === "matrix" || view === "evidence"}
           />
         </section>
 

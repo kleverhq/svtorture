@@ -3,10 +3,11 @@ import type { Dispatch, SetStateAction } from "react";
 import {
   STATUS_GROUP_LABELS,
   STATUS_GROUP_ORDER,
+  STATUS_LABELS,
   statusGroup,
 } from "./model";
 import type { Filters as FilterValues, StatusGroup } from "./model";
-import type { Campaign, Dataset } from "./types";
+import type { Campaign, Dataset, Status } from "./types";
 
 interface FilterProps {
   dataset: Dataset;
@@ -15,6 +16,7 @@ interface FilterProps {
   setFilters: Dispatch<SetStateAction<FilterValues>>;
   onReset: () => void;
   campaignOnly?: boolean | undefined;
+  showQuickFilters?: boolean | undefined;
 }
 
 function choices(values: Array<string | undefined>): string[] {
@@ -36,6 +38,7 @@ export function Filters({
   setFilters,
   onReset,
   campaignOnly = false,
+  showQuickFilters = true,
 }: FilterProps) {
   const update = (name: keyof FilterValues, value: string | boolean) => {
     setFilters((current) => {
@@ -75,7 +78,7 @@ export function Filters({
     dataset.campaigns.flatMap((item) =>
       item.results.map((result) => result.status),
     ),
-  );
+  ) as Status[];
   const reasons = choices(
     dataset.campaigns.flatMap((item) =>
       item.results.map((result) => result.reason),
@@ -208,44 +211,51 @@ export function Filters({
 
   return (
     <div className="filters">
-      <div className="filters__quick" aria-label="Result groups">
-        <span className="filters__quick-label">Show</span>
-        <button
-          type="button"
-          className="filter-chip"
-          aria-pressed={!filters.statusGroup}
-          onClick={() => update("statusGroup", "")}
-        >
-          All <b>{scopedResults.length}</b>
-        </button>
-        {STATUS_GROUP_ORDER.map((group) => (
-          <button
-            type="button"
-            className={`filter-chip filter-chip--${group}`}
-            aria-pressed={filters.statusGroup === group}
-            key={group}
-            onClick={() => update("statusGroup", group)}
-          >
-            {STATUS_GROUP_LABELS[group]} <b>{groupCounts[group]}</b>
-          </button>
-        ))}
-        <button
-          type="button"
-          className="filter-chip"
-          aria-pressed={filters.changed}
-          onClick={() => update("changed", !filters.changed)}
-        >
-          Changed
-        </button>
-        <button
-          type="button"
-          className="filter-chip"
-          aria-pressed={filters.disagreement}
-          onClick={() => update("disagreement", !filters.disagreement)}
-        >
-          Disagreement
-        </button>
-      </div>
+      {showQuickFilters && (
+        <>
+          <div className="filters__quick" role="group" aria-label="Results">
+            <span className="filters__quick-label">Result</span>
+            <button
+              type="button"
+              className="filter-chip"
+              aria-pressed={!filters.statusGroup}
+              onClick={() => update("statusGroup", "")}
+            >
+              All <b>{scopedResults.length}</b>
+            </button>
+            {STATUS_GROUP_ORDER.map((group) => (
+              <button
+                type="button"
+                className={`filter-chip filter-chip--${group}`}
+                aria-pressed={filters.statusGroup === group}
+                key={group}
+                onClick={() => update("statusGroup", group)}
+              >
+                {STATUS_GROUP_LABELS[group]} <b>{groupCounts[group]}</b>
+              </button>
+            ))}
+          </div>
+          <div className="filters__quick" role="group" aria-label="Comparison">
+            <span className="filters__quick-label">Compare</span>
+            <button
+              type="button"
+              className="filter-chip"
+              aria-pressed={filters.changed}
+              onClick={() => update("changed", !filters.changed)}
+            >
+              Changed since previous
+            </button>
+            <button
+              type="button"
+              className="filter-chip"
+              aria-pressed={filters.disagreement}
+              onClick={() => update("disagreement", !filters.disagreement)}
+            >
+              Cross-tool disagreement
+            </button>
+          </div>
+        </>
+      )}
 
       <div className="filters__primary">
         <label className="search">
@@ -378,7 +388,9 @@ export function Filters({
             >
               <option value="">Any</option>
               {statuses.map((status) => (
-                <option key={status}>{status}</option>
+                <option key={status} value={status}>
+                  {STATUS_LABELS[status]}
+                </option>
               ))}
             </select>
           </label>

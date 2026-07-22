@@ -545,6 +545,10 @@ footer {
   flex: 0 0 48px;
 }
 
+.filters:not(.filters--campaign) .filters__quick-label {
+  flex: 0 0 62px;
+}
+
 .filter-chip {
   flex: 0 0 auto;
   min-height: 27px;
@@ -585,14 +589,15 @@ footer {
   background: var(--fail-soft);
 }
 
-.filter-chip--unsupported[aria-pressed="true"],
-.filter-chip--unscored[aria-pressed="true"] {
+.filter-chip--not-applicable[aria-pressed="true"],
+.filter-chip--not-evaluated[aria-pressed="true"] {
   border-color: var(--unsupported);
   color: var(--unsupported);
   background: var(--unsupported-soft);
 }
 
-.filter-chip--issue[aria-pressed="true"] {
+.filter-chip--unclear[aria-pressed="true"],
+.filter-chip--infra[aria-pressed="true"] {
   border-color: var(--issue);
   color: var(--issue);
   background: var(--issue-soft);
@@ -893,17 +898,18 @@ details summary {
   background: var(--fail-soft);
 }
 
-.status--unsupported {
+.status--not-applicable {
   color: var(--unsupported);
   background: var(--unsupported-soft);
 }
 
-.status--issue {
+.status--unclear,
+.status--infra {
   color: var(--issue);
   background: var(--issue-soft);
 }
 
-.status--unscored {
+.status--not-evaluated {
   color: var(--unscored);
   background: var(--unscored-soft);
 }

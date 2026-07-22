@@ -10,13 +10,13 @@ import type {
 export const STATUS_LABELS: Record<Status, string> = {
   conforming: "Pass",
   nonconforming: "Fail",
-  inconclusive: "Inconclusive",
-  "unsupported-capability": "Unsupported",
-  "unsupported-revision": "Unsupported revision",
+  inconclusive: "Unclear",
+  "unsupported-capability": "Not applicable · profile scope",
+  "unsupported-revision": "Not applicable · revision",
   "not-applicable": "Not applicable",
-  "skipped-unavailable": "Not run",
-  "harness-error": "Harness error",
-  "not-run": "Not run",
+  "skipped-unavailable": "Not evaluated · tool unavailable",
+  "harness-error": "Infra error",
+  "not-run": "Not evaluated · not run",
 };
 
 export const STATUS_SYMBOLS: Record<Status, string> = {
@@ -31,30 +31,39 @@ export const STATUS_SYMBOLS: Record<Status, string> = {
   "not-run": "·",
 };
 
-export type StatusGroup = "pass" | "fail" | "unsupported" | "issue" | "unscored";
+export type StatusGroup =
+  | "pass"
+  | "fail"
+  | "not-applicable"
+  | "unclear"
+  | "infra"
+  | "not-evaluated";
 
 export const STATUS_GROUP_LABELS: Record<StatusGroup, string> = {
   pass: "Pass",
   fail: "Fail",
-  unsupported: "Unsupported",
-  issue: "Infra / unclear",
-  unscored: "Unscored",
+  "not-applicable": "Not applicable",
+  unclear: "Unclear",
+  infra: "Infra error",
+  "not-evaluated": "Not evaluated",
 };
 
 export const STATUS_GROUP_SYMBOLS: Record<StatusGroup, string> = {
   pass: "✓",
   fail: "×",
-  unsupported: "—",
-  issue: "!",
-  unscored: "·",
+  "not-applicable": "○",
+  unclear: "?",
+  infra: "!",
+  "not-evaluated": "·",
 };
 
 export const STATUS_GROUP_ORDER: StatusGroup[] = [
   "pass",
   "fail",
-  "unsupported",
-  "issue",
-  "unscored",
+  "not-applicable",
+  "unclear",
+  "infra",
+  "not-evaluated",
 ];
 
 export function statusGroup(status: Status): StatusGroup {
@@ -65,14 +74,15 @@ export function statusGroup(status: Status): StatusGroup {
       return "fail";
     case "unsupported-capability":
     case "unsupported-revision":
-      return "unsupported";
-    case "harness-error":
-    case "inconclusive":
-      return "issue";
     case "not-applicable":
+      return "not-applicable";
+    case "inconclusive":
+      return "unclear";
+    case "harness-error":
+      return "infra";
     case "skipped-unavailable":
     case "not-run":
-      return "unscored";
+      return "not-evaluated";
   }
 }
 
