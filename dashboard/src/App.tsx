@@ -28,7 +28,7 @@ type View = "overview" | "matrix" | "evidence" | "history" | "campaigns";
 const VIEWS: Array<{ id: View; label: string }> = [
   { id: "overview", label: "Overview" },
   { id: "matrix", label: "Requirements" },
-  { id: "evidence", label: "Case evidence" },
+  { id: "evidence", label: "Cases" },
   { id: "history", label: "Changes" },
   { id: "campaigns", label: "Campaigns" },
 ];
