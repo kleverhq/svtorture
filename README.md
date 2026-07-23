@@ -1,22 +1,13 @@
 # SVTORTURE
 
-## What is SVTORTURE?
-
-SystemVerilog tools do not always agree: one compiler accepts a construct,
-another rejects it, and a third crashes or produces the wrong result. SVTORTURE
-helps determine which behavior follows the language standard and preserves the
-evidence needed to reproduce that judgment.
-
-SVTORTURE is a standards-driven conformance framework. It connects each small,
-tool-neutral test case to a specific IEEE 1800 requirement, runs the case at an
-explicit phase such as parsing, elaboration, or simulation, and evaluates the
-observation with a shared oracle. A timeout, crash, unrelated diagnostic, or
-known tool issue never becomes a passing result.
+SVTORTURE is a standards-driven SystemVerilog conformance framework for EDA
+tools. It connects each small, tool-neutral test case to a specific IEEE 1800
+requirement, runs the case, and evaluates the observation with a shared oracle.
 
 The main data flow is:
 
 ```text
-IEEE requirements
+IEEE 1800 requirements
         ↓
 SystemVerilog cases
         ↓
@@ -29,19 +20,17 @@ reproducible campaigns
 static evidence dashboard
 ```
 
-The committed corpus is intentionally small today. The goal is to expand it
-chapter by chapter while keeping every result reviewable and reproducible, not
-to claim complete SystemVerilog coverage prematurely.
+The public dashboard is available at <https://kleverhq.github.io/sv-torture>.
 
-## Another sv-tests?
+## How does SVTORTURE differ from sv-tests?
 
 SVTORTURE was inspired by
 [CHIPS Alliance sv-tests](https://github.com/chipsalliance/sv-tests) and its
 ability to run one SystemVerilog test collection across many tools. `sv-tests`
 provides useful broad compatibility data and distinguishes several test modes,
-but its feature/test-oriented results do not try to preserve SVTORTURE's
-complete chain from a normative requirement through a phase-specific oracle and
-observation to a reproducible conformance judgment.
+but its feature- and test-oriented results do not preserve the complete evidence
+chain that SVTORTURE targets: from a normative requirement through a
+phase-specific oracle and observation to a reproducible conformance judgment.
 
 SVTORTURE goes deeper rather than broader:
 
@@ -64,19 +53,18 @@ its corpus.
 
 ## Requirements
 
-Baseline development, metadata validation, and `just smoke` require:
+Development and campaign runs require:
 
 - a POSIX-style environment with Bash and Git;
 - Python 3.12 or newer;
 - [uv](https://docs.astral.sh/uv/);
 - Node.js 24 with npm, matching CI;
 - [Just](https://just.systems/) 1.21 or newer;
-- network access for the initial dependency installation.
+- a Docker daemon capable of running `linux/amd64` containers, either natively
+  or through emulation;
+- network access for dependency installation and upstream source resolution.
 
-Native Windows users need WSL or an equivalent POSIX environment. Running
-open-source tools or the complete `just ci` gate additionally requires network
-access for upstream source resolution and a Docker daemon capable of running
-`linux/amd64` containers, either natively or through emulation.
+Native Windows users need WSL or an equivalent POSIX environment.
 
 Compiler and simulator binaries do not need to be installed on the host.
 SVTORTURE resolves their source revisions and runs project-controlled Docker
@@ -102,18 +90,10 @@ just smoke
 ```
 
 Resolve the current upstream Verilator revision, build its Docker image, and run
-it against the complete current corpus:
+it against the entire current corpus:
 
 ```bash
 just latest verilator
-```
-
-The command reports source resolution, image preparation, and each selected case.
-The first image build can take several minutes. To also stream the Docker pull
-and build output when an image must be built, run:
-
-```bash
-just latest-verbose verilator
 ```
 
 For a shorter first run, select the smoke suite instead:
@@ -129,9 +109,7 @@ campaign: .svtorture/campaigns/<campaign-id>/campaign.json
 summary: conforming=… nonconforming=…
 ```
 
-Ordinary conformance failures are recorded in that campaign rather than treated
-as infrastructure failures. Build a local dashboard dataset from the printed
-path:
+Build a local dashboard dataset from the printed path:
 
 ```bash
 just dashboard-build ".svtorture/campaigns/<campaign-id>/campaign.json"
