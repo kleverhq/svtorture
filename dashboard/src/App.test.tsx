@@ -89,6 +89,9 @@ describe("App overview navigation", () => {
 
     render(<App />);
     expect(await screen.findByLabelText("Campaign")).toBeTruthy();
+    expect(
+      screen.getByText("SystemVerilog conformance framework for EDA tools"),
+    ).toBeTruthy();
     expect(screen.getByLabelText("From")).toBeTruthy();
     expect(screen.getByLabelText("To")).toBeTruthy();
     fireEvent.click(

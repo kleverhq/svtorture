@@ -20,7 +20,7 @@ reproducible campaigns
 static evidence dashboard
 ```
 
-The public dashboard is available at <https://kleverhq.github.io/sv-torture>.
+The public dashboard is available at <https://kleverhq.github.io/svtorture>.
 
 ## How does SVTORTURE differ from sv-tests?
 

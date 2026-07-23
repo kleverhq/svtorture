@@ -227,6 +227,7 @@ export default function App() {
           <span className="brand__mark">SV</span>
           <span>
             <strong>SVTORTURE</strong>
+            <small>SystemVerilog conformance framework for EDA tools</small>
           </span>
         </a>
         <div className="site-header__meta">
@@ -236,7 +237,7 @@ export default function App() {
           <span>{dataset.campaigns.length} campaigns</span>
           <a
             className="github-link"
-            href="https://github.com/kleverhq/sv-torture"
+            href="https://github.com/kleverhq/svtorture"
             target="_blank"
             rel="noreferrer"
           >
