@@ -2,18 +2,11 @@ import { useState } from "react";
 
 import type { Campaign, Dataset, MetricPoint } from "./types";
 
-type SortKey =
-  | "tool"
-  | "pass"
-  | "fail"
-  | "unclear"
-  | "coverage"
-  | "standard";
+type SortKey = "tool" | "pass" | "fail" | "unclear" | "pass-rate";
 type SortDirection = "ascending" | "descending";
 
 function sortValue(metric: MetricPoint, key: SortKey): number | string | null {
   if (key === "tool") return `${metric.tool_id}/${metric.profile_id}`;
-  if (key === "standard") return metric.revision;
   if (!metric.valid) return null;
   if (key === "pass") return metric.conforming;
   if (key === "fail") return metric.nonconforming;
@@ -107,7 +100,7 @@ export function HeadlineMetrics({
   );
 
   return (
-    <section className="overview-metrics" aria-label="Verified requirement coverage">
+    <section className="overview-metrics" aria-label="Requirement pass rates">
       <div className="overview-table-wrap">
         <table className="overview-table">
           <thead>
@@ -116,15 +109,14 @@ export function HeadlineMetrics({
               {sortableHeader("pass", "Pass")}
               {sortableHeader("fail", "Fail")}
               {sortableHeader("unclear", "Unclear")}
-              {sortableHeader("coverage", "Coverage")}
-              {sortableHeader("standard", "Standard")}
+              {sortableHeader("pass-rate", "Pass rate")}
               <th>Version</th>
             </tr>
           </thead>
           <tbody>
             {!campaign ? (
               <tr>
-                <td className="empty-state" colSpan={7}>
+                <td className="empty-state" colSpan={6}>
                   No campaign matches the current campaign and date selection.
                 </td>
               </tr>
@@ -164,14 +156,13 @@ export function HeadlineMetrics({
                         ? `${percentage.toFixed(0)}%`
                         : `Unavailable · ${metric.infrastructure_state || metric.label}`}
                     </td>
-                    <td>IEEE {metric.revision}</td>
                     <td>{metric.reported_version ?? "Unavailable"}</td>
                   </tr>
                 );
               })
             ) : (
               <tr>
-                <td className="empty-state" colSpan={7}>
+                <td className="empty-state" colSpan={6}>
                   {toolFilter || profileFilter
                     ? "No tool profiles match the current Overview filters."
                     : "No headline metrics were recorded."}

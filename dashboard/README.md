@@ -10,8 +10,7 @@ server or live database.
 The interface provides five URL-filtered views. **Overview** is shown by default:
 
 - **Overview** — a compact sortable tool table with requirement-level Pass,
-  Fail, and Unclear totals, separate coverage and IEEE standard columns, and the
-  reported tool version;
+  Fail, and Unclear totals, pass rate, and the reported tool version;
 - **Requirements** — a compact requirement/tool matrix with grouped verdicts,
   sticky identity columns, and a separate requirement inspector;
 - **Cases** — a master-detail case list with inline local source viewing,

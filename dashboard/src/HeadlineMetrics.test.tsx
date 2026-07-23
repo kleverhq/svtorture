@@ -13,7 +13,7 @@ import type { MetricPoint } from "./types";
 afterEach(cleanup);
 
 describe("HeadlineMetrics", () => {
-  it("renders coverage and standard as separate table columns", () => {
+  it("renders pass rate without a Standard column", () => {
     const dataset = makeTestDataset();
     const campaign = dataset.campaigns[0];
     if (!campaign) throw new Error("incomplete test dataset");
@@ -33,13 +33,12 @@ describe("HeadlineMetrics", () => {
       "Pass",
       "Fail",
       "Unclear",
-      "Coverage",
-      "Standard",
+      "Pass rate",
       "Version",
     ]) {
       expect(screen.getByRole("columnheader", { name: heading })).toBeTruthy();
     }
-    expect(screen.queryByText("Verified requirement coverage by tool")).toBeNull();
+    expect(screen.queryByRole("columnheader", { name: "Standard" })).toBeNull();
   });
 
   it("sorts each requested column and reverses it on the next click", () => {
@@ -125,8 +124,7 @@ describe("HeadlineMetrics", () => {
       ["Pass", ["fake", "zeta", "alpha"]],
       ["Fail", ["alpha", "zeta", "fake"]],
       ["Unclear", ["fake", "zeta", "alpha"]],
-      ["Coverage", ["alpha", "fake", "zeta"]],
-      ["Standard", ["zeta", "alpha", "fake"]],
+      ["Pass rate", ["alpha", "fake", "zeta"]],
     ] as const;
 
     for (const [label, ascending] of expectations) {
@@ -224,7 +222,7 @@ describe("HeadlineMetrics", () => {
     expect(screen.getByText("11")).toBeTruthy();
     expect(screen.getByText("1")).toBeTruthy();
     expect(screen.getByText("92%")).toBeTruthy();
-    expect(screen.getByText("IEEE 1800-2023")).toBeTruthy();
+    expect(screen.queryByText("IEEE 1800-2023")).toBeNull();
     expect(screen.getByText("test-tool 1.0")).toBeTruthy();
 
     view.rerender(
