@@ -12,7 +12,7 @@ export const STATUS_LABELS: Record<Status, string> = {
   conforming: "Pass",
   nonconforming: "Fail",
   inconclusive: "Unclear",
-  "unsupported-capability": "Not applicable · profile scope",
+  "unsupported-capability": "Not applicable",
   "unsupported-revision": "Not applicable · revision",
   "not-applicable": "Not applicable",
   "skipped-unavailable": "Not evaluated · tool unavailable",

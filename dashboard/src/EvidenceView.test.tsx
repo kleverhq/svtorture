@@ -74,6 +74,35 @@ describe("EvidenceView", () => {
     expect(inspectRequirement).toHaveBeenCalledWith("SV-2023-13-OUTPUT-COPYOUT");
   });
 
+  it("shows unsupported tool capability simply as Not applicable", () => {
+    const dataset = makeTestDataset();
+    const campaign = dataset.campaigns[0];
+    const result = campaign?.results[0];
+    const testCase = dataset.cases.find((item) => item.id === result?.case_id);
+    if (!campaign || !result || !testCase) {
+      throw new Error("incomplete test dataset");
+    }
+    result.status = "unsupported-capability";
+    result.reason = "unsupported-phase";
+
+    render(
+      <EvidenceView
+        cases={dataset.cases}
+        requirements={dataset.requirements}
+        campaign={campaign}
+        toolFilter=""
+        profileFilter=""
+        selectedCaseId={testCase.id}
+        onSelectCase={() => undefined}
+        onInspectRequirement={() => undefined}
+      />,
+    );
+
+    expect(screen.getByText("Not applicable")).toBeTruthy();
+    expect(screen.queryByText("Not applicable · profile scope")).toBeNull();
+    expect(screen.getByText("unsupported-phase")).toBeTruthy();
+  });
+
   it("shows cumulative evidence through a later phase", () => {
     const dataset = makeTestDataset();
     const testCase = dataset.cases[0];
