@@ -1024,12 +1024,14 @@ class CorpusMetricSummary(CorpusMetricValues):
     @model_validator(mode="after")
     def complete_breakdown(self) -> Self:
         identities = tuple((part.kind, part.id) for part in self.breakdown)
-        if len(self.breakdown) != 58 or len(set(identities)) != 58:
-            raise ValueError("corpus metric breakdown must contain 58 unique parts")
-        if sum(part.kind is StandardPartKind.CHAPTER for part in self.breakdown) != 41:
-            raise ValueError("corpus metric breakdown must contain 41 chapters")
-        if sum(part.kind is StandardPartKind.ANNEX for part in self.breakdown) != 17:
-            raise ValueError("corpus metric breakdown must contain 17 annexes")
+        expected = (
+            *((StandardPartKind.CHAPTER, str(chapter)) for chapter in range(1, 42)),
+            *((StandardPartKind.ANNEX, annex) for annex in "ABCDEFGHIJKLMNOPQ"),
+        )
+        if identities != expected:
+            raise ValueError(
+                "corpus metric breakdown must contain ordered chapters 1-41 and annexes A-Q"
+            )
         if self.coverage.numerator != sum(
             part.coverage.numerator for part in self.breakdown
         ) or self.coverage.denominator != sum(part.coverage.denominator for part in self.breakdown):
@@ -1044,6 +1046,16 @@ class CorpusMetricSummary(CorpusMetricValues):
 class CorpusMetrics(StrictModel):
     requirements: CorpusMetricSummary
     cases: CorpusMetricSummary
+
+    @model_validator(mode="after")
+    def matching_parts(self) -> Self:
+        requirements = tuple(
+            (part.kind, part.id, part.title) for part in self.requirements.breakdown
+        )
+        cases = tuple((part.kind, part.id, part.title) for part in self.cases.breakdown)
+        if requirements != cases:
+            raise ValueError("requirement and case metrics must describe the same parts")
+        return self
 
 
 class CampaignTool(StrictModel):

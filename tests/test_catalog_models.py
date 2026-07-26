@@ -377,13 +377,19 @@ def test_version_three_campaign_is_rejected(catalog: Catalog, tmp_path: Path) ->
         ),
         (
             lambda value: value["corpus_metrics"]["requirements"]["breakdown"].pop(),
-            "58 unique parts",
+            "ordered chapters 1-41",
         ),
         (
             lambda value: value["corpus_metrics"]["requirements"]["coverage"].update(
                 {"denominator": 16964}
             ),
             "aggregate does not match",
+        ),
+        (
+            lambda value: value["corpus_metrics"]["cases"]["breakdown"][0].update(
+                {"title": "Changed title"}
+            ),
+            "same parts",
         ),
     ),
 )

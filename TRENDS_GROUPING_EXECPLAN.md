@@ -19,7 +19,7 @@ This work does not add multiple chart widgets, overlay Pass rate with corpus lin
 - [x] (2026-07-26 19:54Z) Confirmed product decisions: one Coverage chart with two lines, one Density chart with two lines, chapters plus annexes, and strict campaign replacement.
 - [x] (2026-07-26 20:08Z) Added strict schema-version-4 per-part campaign snapshots, made publication use the shared typed snapshot, regenerated the campaign schema, and passed 76 focused backend tests plus metadata validation.
 - [x] (2026-07-26 20:18Z) Reduced Trends to three choices, implemented two-line corpus plots, hover/accessibility descriptions, hidden 110% label, and URL-backed chapter/annex multiselect facets; typecheck, 48 frontend tests, and production build pass.
-- [ ] Delete the schema-version-3 campaign, collect one full schema-version-4 campaign, and rebuild the dataset.
+- [x] (2026-07-26 20:25Z) Deleted the schema-version-3 campaign, collected full schema-version-4 campaign `20260726T201718Z-33850b3740767141`, and rebuilt/self-merged the one-campaign dataset.
 - [ ] Run focused reviews, full gates, and desktop/mobile browser validation; remove this completed plan.
 
 ## Surprises & Discoveries
@@ -29,6 +29,9 @@ This work does not add multiple chart widgets, overlay Pass rate with corpus lin
 
 - Observation: Per-part operand sums reproduce aggregate formulas without double counting.
   Evidence: requirement links are assigned by each anchor's owning standard part, and case links are assigned by the linked requirement's owning chapter. Standard parts are disjoint, so selected-row numerators and denominators can be summed before division.
+
+- Observation: A viewport-relative dropdown width still caused page overflow when positioned after the 62 px `CHAPTER` label on mobile.
+  Evidence: the first 390 px Chrome check measured body width 438 px while the viewport was 390 px. The mobile rule now offsets the popup back over the label and limits it to viewport width minus 20 px.
 
 ## Decision Log
 
@@ -66,7 +69,7 @@ This work does not add multiple chart widgets, overlay Pass rate with corpus lin
 
 ## Outcomes & Retrospective
 
-The backend and frontend milestones are complete. `Catalog.corpus_metrics()` owns aggregate and ordered 58-row calculations for both scopes; campaign schema version 4 requires coherent breakdowns and publication serializes the same snapshot. Trends now has Pass rate, Coverage, and Density; corpus selections produce Requirements and Cases lines from summed selected operands. Pass rate shows Tool/Profile while corpus trends show a chapter/annex multiselect, all state is URL-backed, option descriptions work on hover and through ARIA, the 100% reference is concise, and 110% is unlabeled while headroom remains. Replacement evidence and final validation remain.
+The backend, frontend, and evidence-reset milestones are complete. The sole campaign `20260726T201718Z-33850b3740767141` is schema version 4, clean, and contains three tools, 12 cases, 36 results, two ordered 58-row snapshots, and unchanged aggregates. Its schema-version-3 dashboard dataset self-merges through strict validation. Chrome shows three choices, one plot, two corpus lines, `100%` without `110%`, 1×/2×, Tool/Profile versus CHAPTER facet swapping, valid hover descriptions, and no runtime/network errors. Final reviews, gates, and corrected mobile-popup verification remain.
 
 ## Context and Orientation
 
@@ -190,3 +193,5 @@ Revision note (2026-07-26 19:54Z): Created the self-contained plan after the use
 Revision note (2026-07-26 20:08Z): Recorded completion of the strict shared per-part campaign/publication contract and focused backend evidence.
 
 Revision note (2026-07-26 20:18Z): Recorded completion of grouped frontend trends, part facets, tooltips, percent labeling, tests, and production build.
+
+Revision note (2026-07-26 20:25Z): Recorded the strict replacement campaign, dataset self-merge, initial Chrome evidence, and mobile dropdown overflow correction.
