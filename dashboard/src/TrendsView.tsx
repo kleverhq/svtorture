@@ -543,10 +543,6 @@ function TrendsInspector({
   definition: TrendDefinition;
   onClose: () => void;
 }) {
-  const ref = useRef<HTMLElement>(null);
-  useEffect(() => {
-    ref.current?.focus();
-  }, [definition.kind, point.pointKey]);
   const metric = point.metric;
   const campaign = point.campaign;
   const tag = metric?.exact_tags.length
@@ -559,8 +555,6 @@ function TrendsInspector({
       className="trends-inspector"
       aria-label="Trend point details"
       aria-live="polite"
-      tabIndex={-1}
-      ref={ref}
     >
       <header>
         <div>

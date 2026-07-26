@@ -23,7 +23,7 @@ This work does not add more than one visible chart, multi-select trend overlays,
 - [x] (2026-07-26 12:27Z) Added strict campaign schema version 3 corpus metrics, regenerated the campaign schema, and updated backend tests and durable documentation; 68 focused tests pass.
 - [x] (2026-07-26 12:36Z) Replaced Changes/history terminology and URL state with Trends, implemented the five-option selector and generic single chart, and updated frontend tests/documentation; typecheck, 48 tests, and production build pass.
 - [x] (2026-07-26 12:48Z) Deleted all current local campaigns, collected one clean full schema-v3 campaign, and rebuilt a schema-v3 dashboard dataset containing only that campaign.
-- [ ] Run focused review, repository gates, browser validation, and completion audit; remove this completed ExecPlan (completed: two focused lanes and first fresh control review, all five findings fixed, focused follow-ups clean, browser validation, 128 non-Docker tests, `just smoke`, 48 frontend tests, and 11 Docker tests; remaining: second/final control review, final gates, and plan removal).
+- [ ] Run focused review, repository gates, browser validation, and completion audit; remove this completed ExecPlan (completed: two focused lanes and two fresh control reviews, all ten findings fixed and targeted follow-ups clean, browser validation, 128 non-Docker tests, `just smoke`, 48 frontend tests, and 11 Docker tests; remaining: rerun final gates after the last fixes and remove the plan).
 
 ## Surprises & Discoveries
 
@@ -56,6 +56,21 @@ This work does not add more than one visible chart, multi-select trend overlays,
 
 - Observation: Stable metric identity checks do not prove a complete metric point is safe for the frontend.
   Evidence: the first fresh control review found that truncated/coercive/timestamp-invalid points, duplicates, and campaign-mismatched tool/profile pairs could survive. `PublishedMetricPoint` now validates every required field with strict counts/booleans and ISO timestamps before membership and uniqueness checks.
+
+- Observation: A `github-actions` trust label alone is insufficient when republishing preserved public history.
+  Evidence: the final control review showed dirty/unborn repositories, checkout mismatch, publication-ineligible tools, and incomplete image provenance could bypass the live validator. A shared offline public policy now validates every new and preserved campaign; only live checks depend on the current environment, catalog, checkout, network, or registry.
+
+- Observation: Complete metric types and identities still permit semantically forged trend values.
+  Evidence: the final control review identified derivable fields that were not cross-checked. Merge now binds each point to campaign/profile revision, finish time, corpus hash, repository/tool/image provenance, count equations, actual harness results, tool availability, execution coverage, infrastructure state, validity, and completeness.
+
+- Observation: Pydantic accepts several datetime representations and validation alone does not rewrite the dictionary retained by merge.
+  Evidence: date-only, timezone-less, or numeric campaign/metric timestamps could sort/display inconsistently. Merge now requires raw UTC-bearing ISO strings and emits canonical validated campaign and metric dumps.
+
+- Observation: Auto-focusing the point inspector interrupted the chart's advertised keyboard navigation.
+  Evidence: after one Arrow selection, subsequent arrows and Escape no longer reached the chart. The aria-live inspector no longer steals focus; tests verify retained chart focus, repeated navigation, and Escape.
+
+- Observation: Infrastructure-state consistency must be derived rather than trusted as another mutually agreeing field.
+  Evidence: targeted follow-up found an incomplete point could set state `valid` and `complete=true`. Merge now derives harness state from campaign results, availability from expected/missing tools, and incomplete state from execution coverage before checking state, validity, and completeness.
 
 ## Decision Log
 
@@ -97,7 +112,7 @@ This work does not add more than one visible chart, multi-select trend overlays,
 
 ## Outcomes & Retrospective
 
-The backend, frontend, and evidence-reset milestones are complete. Every campaign constructor records a typed, non-coercive corpus snapshot from `Catalog.corpus_metrics()`, catalog verification rejects changed operands, aggregation preserves the snapshot, dataset merging validates its strict v3 campaign/provenance envelope, and the generated campaign schema exposes the required object. The visible/internal route is now Trends; one native radio group drives one generic ECharts plot with pass-rate/coverage/density units, reference levels, URL state, disabled corpus facets, exact-operand boundaries, keyboard navigation, and provenance. The sole local campaign `20260726T124655Z-ec42760bfad01a5c` has 3 tools, 12 cases, 36 results, and operands 16/16963, 17/16, 12/12, and 12/12. Wide and 390 px Chrome checks show one plot, correct 100%/1×/2× references, no page overflow, no runtime/network errors, and URL-backed keyboard provenance. Two focused review lanes reported three findings; all were fixed and both follow-up reviews are clean. The first fresh control review found visibility-boundary and incomplete-metric validation gaps; both are fixed with strict tests. The second/final control review and plan removal remain.
+The backend, frontend, and evidence-reset milestones are complete. Every campaign constructor records a typed, non-coercive corpus snapshot from `Catalog.corpus_metrics()`, catalog verification rejects changed operands, aggregation preserves the snapshot, dataset merging validates its strict v3 campaign/provenance envelope, and the generated campaign schema exposes the required object. The visible/internal route is now Trends; one native radio group drives one generic ECharts plot with pass-rate/coverage/density units, reference levels, URL state, disabled corpus facets, exact-operand boundaries, keyboard navigation, and provenance. The sole local campaign `20260726T124655Z-ec42760bfad01a5c` has 3 tools, 12 cases, 36 results, and operands 16/16963, 17/16, 12/12, and 12/12. Wide and 390 px Chrome checks show one plot, correct 100%/1×/2× references, no page overflow, no runtime/network errors, and URL-backed keyboard provenance. Two focused review lanes and two fresh control passes completed. All findings were fixed: strict operands and envelopes, exact ratio boundaries, visibility isolation, complete metric typing, offline public provenance, semantic metric-to-campaign binding, canonical UTC timestamps, retained chart keyboard focus, and derived infrastructure state. Every impacted follow-up is clean. Final gates and plan removal remain.
 
 ## Context and Orientation
 
@@ -277,3 +292,5 @@ Revision note (2026-07-26 12:50Z): Recorded destructive old-campaign reset, the 
 Revision note (2026-07-26 13:01Z): Recorded focused-review findings and verified fixes for strict operands, strict dataset merge envelopes, and exact-operand corpus boundaries, plus final Python/frontend/Docker gate evidence.
 
 Revision note (2026-07-26 13:16Z): Recorded first-control findings and fixes for public/local visibility isolation and complete strict metric-point validation.
+
+Revision note (2026-07-26 13:32Z): Recorded final-control findings and verified fixes for preserved public trust, semantic metric provenance, canonical UTC timestamps, keyboard focus, and derived infrastructure state.

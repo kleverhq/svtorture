@@ -9,9 +9,9 @@ import shutil
 import subprocess
 from collections import defaultdict
 from collections.abc import Iterable
-from datetime import datetime
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
-from typing import Any
+from typing import Any, Literal
 from urllib.parse import quote
 
 from pydantic import Field, StrictBool, StrictInt, ValidationError, field_validator
@@ -24,6 +24,7 @@ from svtorture.models import (
     Distribution,
     ExecutionBackend,
     MetricBreakdown,
+    ResultStatus,
     model_to_jsonable,
 )
 
@@ -43,6 +44,7 @@ class PublishedMetricPoint(MetricBreakdown):
     nonconforming: StrictInt = Field(ge=0)
     inconclusive: StrictInt = Field(ge=0)
     unsupported: StrictInt = Field(ge=0)
+    infrastructure_state: Literal["valid", "harness-error", "missing-tool", "incomplete-evidence"]
     campaign_id: str
     timestamp: datetime
     tool_sha: str | None
@@ -101,19 +103,9 @@ def _reject_private_material(value: object) -> None:
             raise PublicationError(f"public data contains private material: {match.group(0)!r}")
 
 
-def validate_public_campaign(catalog: Catalog, campaign: Campaign) -> None:
+def _validate_offline_public_campaign(campaign: Campaign) -> None:
     if campaign.trust.source != "github-actions":
         raise PublicationError("public export requires trusted GitHub Actions provenance")
-    if os.environ.get("GITHUB_ACTIONS") != "true":
-        raise PublicationError("public export must execute inside GitHub Actions")
-    trusted_environment = {
-        "repository": os.environ.get("GITHUB_REPOSITORY"),
-        "workflow_run_id": os.environ.get("GITHUB_RUN_ID"),
-        "checkout_sha": os.environ.get("GITHUB_SHA"),
-    }
-    for field, actual in trusted_environment.items():
-        if actual != getattr(campaign.trust, field):
-            raise PublicationError(f"GitHub Actions {field} does not match campaign provenance")
     if campaign.repository.dirty or campaign.repository.commit == "unborn":
         raise PublicationError("public export requires a clean committed checkout")
     if campaign.trust.checkout_sha != campaign.repository.commit:
@@ -128,6 +120,42 @@ def validate_public_campaign(catalog: Catalog, campaign: Campaign) -> None:
             raise PublicationError(
                 f"tool {definition.id} is not publication eligible by metadata policy"
             )
+        image = tool.image
+        if (
+            image is None
+            or image.digest is None
+            or image.image_id is None
+            or image.base_image_digest is None
+        ):
+            raise PublicationError(
+                f"tool {definition.id} lacks complete immutable image provenance"
+            )
+        match = PUBLIC_IMAGE_RE.fullmatch(image.reference)
+        if match is None or match.group(1) != image.digest:
+            raise PublicationError(
+                f"tool {definition.id} image is not a matching pullable GHCR digest"
+            )
+        if not image.base_image.endswith(f"@{image.base_image_digest}"):
+            raise PublicationError(f"tool {definition.id} base image digest is inconsistent")
+        if image.platform != "linux/amd64":
+            raise PublicationError(f"tool {definition.id} has an unsupported public image platform")
+        if not tool.reported_version:
+            raise PublicationError(f"tool {definition.id} lacks a reported version")
+    _reject_private_material(model_to_jsonable(campaign))
+
+
+def validate_public_campaign(catalog: Catalog, campaign: Campaign) -> None:
+    _validate_offline_public_campaign(campaign)
+    if os.environ.get("GITHUB_ACTIONS") != "true":
+        raise PublicationError("public export must execute inside GitHub Actions")
+    trusted_environment = {
+        "repository": os.environ.get("GITHUB_REPOSITORY"),
+        "workflow_run_id": os.environ.get("GITHUB_RUN_ID"),
+        "checkout_sha": os.environ.get("GITHUB_SHA"),
+    }
+    for field, actual in trusted_environment.items():
+        if actual != getattr(campaign.trust, field):
+            raise PublicationError(f"GitHub Actions {field} does not match campaign provenance")
     for expected_tool_id in campaign.expected_tool_ids:
         try:
             definition = catalog.tools.tool(expected_tool_id)
@@ -153,31 +181,8 @@ def validate_public_campaign(catalog: Catalog, campaign: Campaign) -> None:
             "public export must run from the clean checkout recorded by the campaign"
         )
     for tool in campaign.tools:
-        image = tool.image
-        if (
-            image is None
-            or image.digest is None
-            or image.image_id is None
-            or image.base_image_digest is None
-        ):
-            raise PublicationError(
-                f"tool {tool.definition.id} lacks complete immutable image provenance"
-            )
-        match = PUBLIC_IMAGE_RE.fullmatch(image.reference)
-        if match is None or match.group(1) != image.digest:
-            raise PublicationError(
-                f"tool {tool.definition.id} image is not a matching pullable GHCR digest"
-            )
-        _require_pullable_public_image(image.reference)
-        if not image.base_image.endswith(f"@{image.base_image_digest}"):
-            raise PublicationError(f"tool {tool.definition.id} base image digest is inconsistent")
-        if image.platform != "linux/amd64":
-            raise PublicationError(
-                f"tool {tool.definition.id} has an unsupported public image platform"
-            )
-        if not tool.reported_version:
-            raise PublicationError(f"tool {tool.definition.id} lacks a reported version")
-    _reject_private_material(model_to_jsonable(campaign))
+        assert tool.image is not None
+        _require_pullable_public_image(tool.image.reference)
 
 
 def _source_link(catalog: Catalog, campaign: Campaign, case_id: str, source: str) -> str:
@@ -423,7 +428,74 @@ def write_dataset(
     return output
 
 
-def _validate_merge_dataset(dataset: dict[str, Any]) -> None:
+def _require_utc_timestamp(value: object, label: str) -> None:
+    if not isinstance(value, str):
+        raise PublicationError(f"{label} must be an ISO timestamp string")
+    try:
+        parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
+    except ValueError as error:
+        raise PublicationError(f"{label} must be an ISO timestamp string") from error
+    if parsed.utcoffset() != timedelta(0):
+        raise PublicationError(f"{label} must include a UTC timezone")
+
+
+def _validate_metric_provenance(point: PublishedMetricPoint, campaign: Campaign) -> None:
+    tool = next(item for item in campaign.tools if item.definition.id == point.tool_id)
+    profile = next(item for item in tool.definition.profiles if item.id == point.profile_id)
+    selection = tool.selection
+    expected = {
+        "label": "Verified support in the covered corpus",
+        "revision": profile.standard_revision,
+        "corpus_sha": campaign.hashes.cases,
+        "timestamp": campaign.finished_at.astimezone(UTC),
+        "tool_sha": selection.resolved_sha if selection else None,
+        "exact_tags": selection.exact_tags if selection else (),
+        "nearest_tag": selection.nearest_tag if selection else None,
+        "reported_version": tool.reported_version,
+        "image_digest": tool.image.digest if tool.image else None,
+        "repository_commit": campaign.repository.commit,
+    }
+    for field, value in expected.items():
+        if getattr(point, field) != value:
+            raise PublicationError(
+                f"dashboard metric {point.campaign_id}/{point.tool_id}/{point.profile_id} "
+                f"has inconsistent {field}"
+            )
+    if (
+        point.numerator != point.conforming
+        or point.corpus_coverage != point.denominator
+        or point.execution_coverage != point.conforming + point.nonconforming + point.inconclusive
+        or point.denominator
+        != point.conforming + point.nonconforming + point.inconclusive + point.unsupported
+    ):
+        raise PublicationError("dashboard metric has inconsistent count operands")
+    harness = any(
+        result.tool_id == point.tool_id
+        and result.profile_id == point.profile_id
+        and result.status is ResultStatus.HARNESS_ERROR
+        for result in campaign.results
+    )
+    profile_available = (
+        point.tool_id in campaign.expected_tool_ids
+        and point.tool_id not in campaign.missing_tool_ids
+    )
+    if harness:
+        expected_state = "harness-error"
+    elif not profile_available:
+        expected_state = "missing-tool"
+    elif point.execution_coverage != point.denominator:
+        expected_state = "incomplete-evidence"
+    else:
+        expected_state = "valid"
+    if point.infrastructure_state != expected_state:
+        raise PublicationError("dashboard metric has inconsistent infrastructure state")
+    if point.complete != (expected_state == "valid"):
+        raise PublicationError("dashboard metric has inconsistent completeness")
+    if point.valid != (not harness):
+        raise PublicationError("dashboard metric has inconsistent validity")
+
+
+def _validate_merge_dataset(dataset: dict[str, Any]) -> dict[str, Any]:
     if dataset.get("schema_version") != 3:
         raise PublicationError("cannot merge incompatible dashboard datasets")
     required_sequences = ("generated_from", "requirements", "cases", "campaigns", "metrics")
@@ -435,6 +507,11 @@ def _validate_merge_dataset(dataset: dict[str, Any]) -> None:
     if not isinstance(dataset.get("corpus_coverage"), dict):
         raise PublicationError("dashboard dataset has invalid corpus_coverage")
 
+    for value in dataset["campaigns"]:
+        if not isinstance(value, dict):
+            raise PublicationError("dashboard dataset has an invalid campaign")
+        _require_utc_timestamp(value.get("started_at"), "campaign started_at")
+        _require_utc_timestamp(value.get("finished_at"), "campaign finished_at")
     try:
         campaigns = [Campaign.model_validate(value) for value in dataset["campaigns"]]
     except ValidationError as error:
@@ -442,16 +519,19 @@ def _validate_merge_dataset(dataset: dict[str, Any]) -> None:
     campaign_ids = [campaign.id for campaign in campaigns]
     if len(campaign_ids) != len(set(campaign_ids)):
         raise PublicationError("dashboard dataset has duplicate campaigns")
-    if dataset["visibility"] == "public" and any(
-        campaign.trust.source != "github-actions" for campaign in campaigns
-    ):
-        raise PublicationError("public dashboard history contains a local campaign")
+    if dataset["visibility"] == "public":
+        for campaign in campaigns:
+            _validate_offline_public_campaign(campaign)
     generated_from = dataset["generated_from"]
     if not all(isinstance(value, str) for value in generated_from):
         raise PublicationError("dashboard dataset has invalid generated_from")
     if set(generated_from) != set(campaign_ids):
         raise PublicationError("dashboard dataset campaign provenance is incomplete")
 
+    for value in dataset["metrics"]:
+        if not isinstance(value, dict):
+            raise PublicationError("dashboard dataset has an invalid metric point")
+        _require_utc_timestamp(value.get("timestamp"), "metric timestamp")
     try:
         points = [PublishedMetricPoint.model_validate(value) for value in dataset["metrics"]]
     except ValidationError as error:
@@ -474,11 +554,18 @@ def _validate_merge_dataset(dataset: dict[str, Any]) -> None:
             raise PublicationError("dashboard metric references an unknown campaign")
         if (point.tool_id, point.profile_id) not in campaign_profiles[point.campaign_id]:
             raise PublicationError("dashboard metric does not match its campaign")
+        campaign = campaigns[campaign_ids.index(point.campaign_id)]
+        _validate_metric_provenance(point, campaign)
+
+    canonical = dict(dataset)
+    canonical["campaigns"] = [model_to_jsonable(campaign) for campaign in campaigns]
+    canonical["metrics"] = [point.model_dump(mode="json") for point in points]
+    return canonical
 
 
 def merge_datasets(existing: dict[str, Any], new: dict[str, Any]) -> dict[str, Any]:
-    _validate_merge_dataset(existing)
-    _validate_merge_dataset(new)
+    existing = _validate_merge_dataset(existing)
+    new = _validate_merge_dataset(new)
     if existing["visibility"] != new["visibility"]:
         raise PublicationError("cannot merge dashboard datasets with different visibility")
     result = dict(new)

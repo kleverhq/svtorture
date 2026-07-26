@@ -314,10 +314,11 @@ describe("TrendsView", () => {
     await waitFor(() => expect(chartMock.handlers.click).toBeTruthy());
     const key = toolTrendPointKey(point);
 
-    fireEvent.keyDown(
-      screen.getByRole("group", { name: /Tool pass rate over time/ }),
-      { key: "ArrowRight" },
-    );
+    const chartGroup = screen.getByRole("group", {
+      name: /Tool pass rate over time/,
+    });
+    chartGroup.focus();
+    fireEvent.keyDown(chartGroup, { key: "ArrowRight" });
     expect(onSelectPoint).toHaveBeenLastCalledWith(key);
 
     act(() => {
@@ -329,7 +330,11 @@ describe("TrendsView", () => {
     const inspector = screen.getByRole("complementary", {
       name: "Trend point details",
     });
-    await waitFor(() => expect(document.activeElement).toBe(inspector));
+    expect(document.activeElement).toBe(chartGroup);
+    fireEvent.keyDown(chartGroup, { key: "ArrowRight" });
+    expect(onSelectPoint).toHaveBeenLastCalledWith(key);
+    fireEvent.keyDown(chartGroup, { key: "Escape" });
+    expect(onSelectPoint).toHaveBeenLastCalledWith("");
     expect(screen.getByText("fake/simulator")).toBeTruthy();
     expect(screen.getByText("75%")).toBeTruthy();
     expect(screen.getByText("3/4")).toBeTruthy();

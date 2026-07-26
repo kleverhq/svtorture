@@ -87,6 +87,56 @@ def test_public_campaign_accepts_only_clean_trusted_public_data(
     validate_public_campaign(catalog, campaign)
 
 
+def test_merge_rechecks_offline_public_campaign_invariants(catalog: Catalog) -> None:
+    case = catalog.cases["ch05-base-format-whitespace-rejected"]
+    tool = campaign_tool(catalog.tools.tool("slang"), ("parser",))
+    campaign = make_campaign(
+        catalog,
+        cases=(case,),
+        tool=tool,
+        results=(
+            normalized(
+                case,
+                "slang",
+                "parser",
+                observations=(
+                    observation(
+                        attempted_through_phase=Phase.PARSE,
+                        stage_id="parse",
+                        exit_code=1,
+                        diagnostics=(targeted(case),),
+                    ),
+                ),
+            ),
+        ),
+        trust=_trusted(),
+    )
+    dataset = publication.build_dataset(catalog, (campaign,), visibility="local")
+    dataset["visibility"] = "public"
+    assert merge_datasets(dataset, dataset)["visibility"] == "public"
+
+    for mutate, message in (
+        (
+            lambda value: value["campaigns"][0]["repository"].update({"dirty": True}),
+            "clean committed checkout",
+        ),
+        (
+            lambda value: value["campaigns"][0]["trust"].update({"checkout_sha": "f" * 40}),
+            "trusted checkout SHA",
+        ),
+        (
+            lambda value: value["campaigns"][0]["tools"][0]["definition"].update(
+                {"publish": False}
+            ),
+            "metadata policy",
+        ),
+    ):
+        tampered = json.loads(json.dumps(dataset))
+        mutate(tampered)
+        with pytest.raises(PublicationError, match=message):
+            merge_datasets(tampered, dataset)
+
+
 def test_publication_rejects_synthetic_commercial_tool_regardless_of_name(
     catalog: Catalog, monkeypatch: pytest.MonkeyPatch
 ) -> None:
@@ -473,7 +523,7 @@ def test_dataset_merge_is_strict_append_only_and_detects_collision(
 
     numeric_timestamp = json.loads(json.dumps(old))
     numeric_timestamp["metrics"][0]["timestamp"] = 123
-    with pytest.raises(PublicationError, match="invalid metric point"):
+    with pytest.raises(PublicationError, match="ISO timestamp"):
         merge_datasets(numeric_timestamp, new)
 
     duplicate_metric = json.loads(json.dumps(old))
@@ -486,20 +536,58 @@ def test_dataset_merge_is_strict_append_only_and_detects_collision(
     with pytest.raises(PublicationError, match="does not match its campaign"):
         merge_datasets(mismatched_metric, new)
 
+    for field, value in (
+        ("numerator", old["metrics"][0]["numerator"] + 1),
+        ("corpus_sha", "f" * 64),
+        ("repository_commit", "f" * 40),
+        ("timestamp", "2026-01-03T00:00:00Z"),
+        ("revision", "1800-2017"),
+        ("tool_sha", "f" * 40),
+    ):
+        forged_metric = json.loads(json.dumps(old))
+        forged_metric["metrics"][0][field] = value
+        with pytest.raises(PublicationError, match="inconsistent"):
+            merge_datasets(forged_metric, new)
+
+    forged_complete = json.loads(json.dumps(old))
+    forged_complete["metrics"][0].update(
+        {
+            "numerator": 0,
+            "execution_coverage": 0,
+            "conforming": 0,
+            "unsupported": 1,
+        }
+    )
+    with pytest.raises(PublicationError, match="infrastructure state"):
+        merge_datasets(forged_complete, new)
+
+    forged_harness = json.loads(json.dumps(old))
+    forged_harness["metrics"][0].update(
+        {
+            "complete": False,
+            "valid": False,
+            "infrastructure_state": "harness-error",
+        }
+    )
+    with pytest.raises(PublicationError, match="infrastructure state"):
+        merge_datasets(forged_harness, new)
+
+    for field, value in (
+        ("started_at", "2026-01-01"),
+        ("finished_at", "2026-01-01T00:00:00"),
+        ("finished_at", 123),
+    ):
+        malformed_campaign = json.loads(json.dumps(old))
+        malformed_campaign["campaigns"][0][field] = value
+        with pytest.raises(PublicationError, match=r"ISO timestamp|UTC timezone"):
+            merge_datasets(malformed_campaign, new)
+
     public_with_local_campaign = json.loads(json.dumps(new))
     public_with_local_campaign["visibility"] = "public"
-    with pytest.raises(PublicationError, match="contains a local campaign"):
+    with pytest.raises(PublicationError, match="trusted GitHub Actions"):
         merge_datasets(public_with_local_campaign, public_with_local_campaign)
 
-    public = json.loads(json.dumps(new))
-    public["visibility"] = "public"
-    for campaign in public["campaigns"]:
-        campaign["trust"] = {
-            "source": "github-actions",
-            "repository": "kleverhq/svtorture",
-            "workflow_run_id": "1",
-            "checkout_sha": campaign["repository"]["commit"],
-        }
+    public = publication.build_dataset(catalog, (), visibility="public")
     with pytest.raises(PublicationError, match="different visibility"):
         merge_datasets(old, public)
 
@@ -587,6 +675,7 @@ def test_pages_publish_preserves_history_and_regenerates_index(
         }
     )
     monkeypatch.setattr(publication, "validate_public_campaign", lambda *_args: None)
+    monkeypatch.setattr(publication, "_validate_offline_public_campaign", lambda _campaign: None)
     built = tmp_path / "dist"
     built.mkdir()
     (built / "index.html").write_text("first", encoding="utf-8")
