@@ -200,10 +200,35 @@ export interface MetricPoint {
   repository_commit: string;
 }
 
+export interface CorpusRatio {
+  numerator: number;
+  denominator: number;
+}
+
+export interface CorpusCoveragePart {
+  kind: "chapter" | "annex";
+  id: string;
+  title: string;
+  coverage: CorpusRatio;
+  density: CorpusRatio;
+}
+
+export interface CorpusCoverageMetric {
+  coverage: CorpusRatio;
+  density: CorpusRatio;
+  breakdown: CorpusCoveragePart[];
+}
+
+export interface CorpusCoverage {
+  requirements: CorpusCoverageMetric;
+  cases: CorpusCoverageMetric;
+}
+
 export interface Dataset {
   schema_version: number;
   generated_from: string[];
   visibility: "local" | "public";
+  corpus_coverage: CorpusCoverage;
   requirements: Requirement[];
   cases: CaseDefinition[];
   campaigns: Campaign[];

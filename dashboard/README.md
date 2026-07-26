@@ -21,6 +21,14 @@ The interface provides five URL-filtered views. **Overview** is shown by default
 - **Campaigns** — compact run records with expandable corpus, tool source,
   image, platform, and trust provenance.
 
+Requirements and Cases include a compact corpus summary that expands into all
+standard chapters and annexes. Requirements Coverage is unique referenced
+anchors divided by all standard anchors; its Density is unique
+requirement–anchor links divided by covered anchors. Cases Coverage is unique
+requirements linked from cases divided by all catalog requirements; its Density
+is unique case–requirement links divided by covered requirements. Primary and
+related case requirements both count.
+
 Overview outcome totals use the requirement-weighted metric: every mandatory
 variant must conform for a requirement to pass, while unclear requirements remain
 in the denominator. The headline metric is defined in [the conformance

@@ -9,6 +9,7 @@ import {
 } from "react";
 
 import { CampaignView } from "./CampaignView";
+import { CorpusCoverage } from "./CorpusCoverage";
 import { EvidenceView } from "./EvidenceView";
 import { Filters } from "./Filters";
 import { HeadlineMetrics } from "./HeadlineMetrics";
@@ -321,6 +322,16 @@ export default function App() {
               />
             </label>
           </section>
+
+        {view === "matrix" && (
+          <CorpusCoverage
+            kind="requirements"
+            metric={dataset.corpus_coverage.requirements}
+          />
+        )}
+        {view === "evidence" && (
+          <CorpusCoverage kind="cases" metric={dataset.corpus_coverage.cases} />
+        )}
 
         <section
           className="workspace-bar"

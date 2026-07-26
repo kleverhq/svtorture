@@ -134,6 +134,48 @@ export function makeTestDataset(): Dataset {
     schema_version: 2,
     generated_from: [campaign.id],
     visibility: "local",
+    corpus_coverage: {
+      requirements: {
+        coverage: { numerator: 3, denominator: 16963 },
+        density: { numerator: 3, denominator: 3 },
+        breakdown: [
+          {
+            kind: "chapter",
+            id: "13",
+            title: "Tasks and functions",
+            coverage: { numerator: 1, denominator: 500 },
+            density: { numerator: 1, denominator: 1 },
+          },
+          {
+            kind: "annex",
+            id: "A",
+            title: "Formal syntax",
+            coverage: { numerator: 0, denominator: 224 },
+            density: { numerator: 0, denominator: 0 },
+          },
+        ],
+      },
+      cases: {
+        coverage: { numerator: 1, denominator: 1 },
+        density: { numerator: 1, denominator: 1 },
+        breakdown: [
+          {
+            kind: "chapter",
+            id: "13",
+            title: "Tasks and functions",
+            coverage: { numerator: 1, denominator: 1 },
+            density: { numerator: 1, denominator: 1 },
+          },
+          {
+            kind: "annex",
+            id: "A",
+            title: "Formal syntax",
+            coverage: { numerator: 0, denominator: 0 },
+            density: { numerator: 0, denominator: 0 },
+          },
+        ],
+      },
+    },
     requirements: [requirement],
     cases: [testCase],
     campaigns: [campaign],

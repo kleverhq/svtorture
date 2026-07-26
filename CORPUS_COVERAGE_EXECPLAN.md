@@ -19,8 +19,8 @@ This work does not change conformance scoring, campaign selection, tool results,
 - [x] (2026-07-26 11:24Z) Confirmed the formulas with the user; Requirements Density is requirements per covered anchor.
 - [x] (2026-07-26 11:24Z) Mapped the anchor index, dashboard export pipeline, frontend types, sticky layout, and test surfaces.
 - [x] (2026-07-26 11:38Z) Added deterministic corpus coverage and density operands to the generated dashboard dataset, including 58 ordered breakdown rows and related-requirement counting.
-- [ ] Add compact Requirements and Cases disclosure strips with formulas and complete chapter/annex breakdowns.
-- [ ] Add backend, frontend, documentation, responsive, and accessibility validation.
+- [x] (2026-07-26 14:40Z) Added compact Requirements and Cases disclosure strips with hover formulas, accessible descriptions, and complete chapter/annex breakdowns.
+- [ ] Add backend, frontend, documentation, responsive, and accessibility validation (completed: focused backend tests, frontend typecheck, 43 frontend tests, production build, desktop/mobile Chrome inspection; remaining: focused review and root smoke gate).
 - [ ] Run the repository gates, remove this completed ExecPlan, and leave the working tree ready for handoff.
 
 ## Surprises & Discoveries
@@ -64,7 +64,7 @@ This work does not change conformance scoring, campaign selection, tool results,
 
 ## Outcomes & Retrospective
 
-The dataset milestone is complete: publication now emits exact integer operands for both summaries and all 58 standard parts. Focused publication validation passes 12 tests. Frontend implementation and visual validation remain.
+The dataset and frontend milestones are complete. Publication emits exact integer operands for both summaries and all 58 standard parts. Requirements shows 0.09% and 1.06; Cases shows 100% and 1. The compact and expanded layouts have been inspected in Chrome at 1840×1004 and 390×844 with no runtime, network, or page-overflow errors. Focused review and the root smoke gate remain.
 
 ## Context and Orientation
 
@@ -212,3 +212,5 @@ Revision note (2026-07-26 11:24Z): Initial plan created after repository explora
 Revision note (2026-07-26 11:38Z): Updated progress and outcomes after completing the deterministic dataset milestone; focused publication tests pass 12/12.
 
 Revision note (2026-07-26 11:42Z): Recorded and corrected the stale test expectation for the intentionally removed `.github/README.md`, discovered by the milestone pre-commit gate.
+
+Revision note (2026-07-26 14:40Z): Updated progress and outcomes after implementing the frontend strip, complete disclosure tables, formulas, documentation, tests, and responsive Chrome checks.

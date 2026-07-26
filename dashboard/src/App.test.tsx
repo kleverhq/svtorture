@@ -55,6 +55,27 @@ beforeEach(() => {
 });
 
 describe("App overview navigation", () => {
+  it("shows corpus coverage only on Requirements and Cases", async () => {
+    mockDataset(makeTestDataset());
+    render(<App />);
+
+    await screen.findByLabelText("Campaign");
+    expect(screen.queryByLabelText("Requirement corpus coverage")).toBeNull();
+    expect(screen.queryByLabelText("Case corpus coverage")).toBeNull();
+
+    fireEvent.click(screen.getByRole("tab", { name: "Requirements" }));
+    expect(screen.getByLabelText("Requirement corpus coverage")).toBeTruthy();
+    expect(screen.queryByLabelText("Case corpus coverage")).toBeNull();
+
+    fireEvent.click(screen.getByRole("tab", { name: "Cases" }));
+    expect(screen.getByLabelText("Case corpus coverage")).toBeTruthy();
+    expect(screen.queryByLabelText("Requirement corpus coverage")).toBeNull();
+
+    fireEvent.click(screen.getByRole("tab", { name: "Changes" }));
+    expect(screen.queryByLabelText("Requirement corpus coverage")).toBeNull();
+    expect(screen.queryByLabelText("Case corpus coverage")).toBeNull();
+  });
+
   it("opens Requirements with the clicked tool profile selected", async () => {
     const dataset = makeTestDataset();
     const campaign = dataset.campaigns[0];
