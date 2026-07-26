@@ -6,13 +6,14 @@ import {
   changedCaseKeys,
   compareCampaigns,
   EMPTY_FILTERS,
+  corpusTrendPointKey,
   filterCorpus,
   filtersFromSearch,
   filtersToSearch,
-  historyRangeBounds,
-  historyStateFromSearch,
-  metricPointKey,
   selectedCampaign,
+  toolTrendPointKey,
+  trendRangeBounds,
+  trendStateFromSearch,
   statusGroup,
 } from "./model";
 import { makeTestDataset } from "./testDataset";
@@ -41,30 +42,52 @@ describe("URL-backed filters", () => {
     expect(filtersFromSearch(encoded)).toEqual(value);
   });
 
-  it("round-trips independent history state and rejects unknown ranges", () => {
-    const point = "campaign:tool:profile";
-    const encoded = filtersToSearch(EMPTY_FILTERS, "history", {
+  it("round-trips strict trend state and rejects unknown values", () => {
+    const point = "corpus:campaign";
+    const encoded = filtersToSearch(EMPTY_FILTERS, "trends", {
+      kind: "cases-density",
       range: "six-months",
       point,
     });
 
-    expect(encoded).toContain("historyRange=six-months");
-    expect(encoded).toContain("historyPoint=campaign%3Atool%3Aprofile");
-    expect(historyStateFromSearch(encoded)).toEqual({
+    expect(encoded).toContain("trend=cases-density");
+    expect(encoded).toContain("trendRange=six-months");
+    expect(encoded).toContain("trendPoint=corpus%3Acampaign");
+    expect(trendStateFromSearch(encoded)).toEqual({
+      kind: "cases-density",
       range: "six-months",
       point,
     });
-    expect(historyStateFromSearch("?historyRange=forever")).toEqual({
+    expect(trendStateFromSearch("?trend=unknown&trendRange=forever")).toEqual({
+      kind: "tool-pass-rate",
       range: "month",
       point: "",
     });
-    expect(filtersToSearch(EMPTY_FILTERS, "overview", {
-      range: "week",
-      point,
-    })).toBe("?view=overview");
+    for (const kind of [
+      "tool-pass-rate",
+      "requirements-coverage",
+      "cases-coverage",
+      "requirements-density",
+      "cases-density",
+    ] as const) {
+      const search = filtersToSearch(EMPTY_FILTERS, "trends", {
+        kind,
+        range: "month",
+        point: "",
+      });
+      expect(trendStateFromSearch(search).kind).toBe(kind);
+    }
+    expect(filtersToSearch(EMPTY_FILTERS, "trends")).toBe("?view=trends");
+    expect(
+      filtersToSearch(EMPTY_FILTERS, "overview", {
+        kind: "requirements-coverage",
+        range: "week",
+        point,
+      }),
+    ).toBe("?view=overview");
   });
 
-  it("builds UTC daily history windows with safe calendar subtraction", () => {
+  it("builds UTC daily trend windows with safe calendar subtraction", () => {
     const point = {
       campaign_id: "campaign",
       tool_id: "tool",
@@ -73,36 +96,39 @@ describe("URL-backed filters", () => {
     } as MetricPoint;
     const now = new Date("2027-03-31T18:45:00Z");
 
-    expect(historyRangeBounds([point], "week", now)).toMatchObject({
+    expect(trendRangeBounds([point], "week", now)).toMatchObject({
       domainStart: Date.parse("2025-01-15T00:00:00Z"),
       domainEnd: Date.parse("2027-04-01T00:00:00Z"),
       rangeStart: Date.parse("2027-03-25T00:00:00Z"),
     });
-    expect(historyRangeBounds([point], "month", now).rangeStart).toBe(
+    expect(trendRangeBounds([point], "month", now).rangeStart).toBe(
       Date.parse("2027-02-28T00:00:00Z"),
     );
-    expect(historyRangeBounds([point], "six-months", now).rangeStart).toBe(
+    expect(trendRangeBounds([point], "six-months", now).rangeStart).toBe(
       Date.parse("2026-09-30T00:00:00Z"),
     );
-    expect(historyRangeBounds([point], "year", now).rangeStart).toBe(
+    expect(trendRangeBounds([point], "year", now).rangeStart).toBe(
       Date.parse("2026-03-31T00:00:00Z"),
     );
-    expect(historyRangeBounds([point], "all", now).rangeStart).toBe(
+    expect(trendRangeBounds([point], "all", now).rangeStart).toBe(
       Date.parse("2025-01-15T00:00:00Z"),
     );
   });
 
-  it("starts all-time history at the project boundary when data is newer", () => {
-    const bounds = historyRangeBounds([], "all", new Date("2026-07-22T12:00:00Z"));
+  it("starts all-time trends at the project boundary when data is newer", () => {
+    const bounds = trendRangeBounds([], "all", new Date("2026-07-22T12:00:00Z"));
     expect(bounds.domainStart).toBe(Date.parse("2026-07-01T00:00:00Z"));
     expect(bounds.rangeStart).toBe(bounds.domainStart);
     expect(
-      metricPointKey({
+      toolTrendPointKey({
         campaign_id: "campaign",
         tool_id: "tool",
         profile_id: "profile",
       } as MetricPoint),
-    ).toBe("campaign:tool:profile");
+    ).toBe("tool:campaign:tool:profile");
+    expect(corpusTrendPointKey(dataset.campaigns[0]!)).toBe(
+      "corpus:20260101T000000Z-test",
+    );
   });
 });
 

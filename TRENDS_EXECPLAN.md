@@ -21,7 +21,7 @@ This work does not add more than one visible chart, multi-select trend overlays,
 - [x] (2026-07-26 12:13Z) Researched the campaign, publication, metric, dashboard, URL, ECharts, responsive, accessibility, and test paths.
 - [x] (2026-07-26 12:13Z) Chose a strict campaign-owned corpus snapshot and a single selected trend with no compatibility path.
 - [x] (2026-07-26 12:27Z) Added strict campaign schema version 3 corpus metrics, regenerated the campaign schema, and updated backend tests and durable documentation; 68 focused tests pass.
-- [ ] Replace the Changes/history frontend terminology and URL state with Trends, implement the selector and generic chart, and update frontend tests and documentation.
+- [x] (2026-07-26 12:36Z) Replaced Changes/history terminology and URL state with Trends, implemented the five-option selector and generic single chart, and updated frontend tests/documentation; typecheck, 48 tests, and production build pass.
 - [ ] Delete current local campaigns, collect one new full multi-tool campaign, and rebuild the local dashboard dataset.
 - [ ] Run focused review, repository gates, browser validation, and completion audit; remove this completed ExecPlan.
 
@@ -79,7 +79,7 @@ This work does not add more than one visible chart, multi-select trend overlays,
 
 ## Outcomes & Retrospective
 
-The backend milestone is complete. Every campaign constructor now records a typed corpus snapshot from `Catalog.corpus_metrics()`, catalog verification rejects changed operands, aggregation preserves the snapshot, dashboard dataset schema 3 rejects older data, and the generated campaign schema exposes the strict required object. The frontend replacement, fresh collection, and final validation remain.
+The backend and frontend milestones are complete. Every campaign constructor records a typed corpus snapshot from `Catalog.corpus_metrics()`, catalog verification rejects changed operands, aggregation preserves the snapshot, dashboard dataset schema 3 rejects older data, and the generated campaign schema exposes the strict required object. The visible/internal route is now Trends; one native radio group drives one generic ECharts plot with pass-rate/coverage/density units, reference levels, URL state, disabled corpus facets, boundaries, keyboard navigation, and provenance. Fresh collection and final browser/review validation remain.
 
 ## Context and Orientation
 
@@ -251,3 +251,5 @@ The non-default URL contract is `?view=trends&trend=<id>&trendRange=<range>&tren
 Revision note (2026-07-26 12:13Z): Created the self-contained implementation plan after backend and frontend execution-path research and the user's explicit no-compatibility decision.
 
 Revision note (2026-07-26 12:27Z): Recorded completion of the strict campaign/dataset contract milestone and its focused test evidence.
+
+Revision note (2026-07-26 12:36Z): Recorded completion of the Trends frontend milestone, strict URL rename, chart behavior, and frontend test/build evidence.

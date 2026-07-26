@@ -12,9 +12,11 @@ afterEach(cleanup);
 function FilterHarness({
   mode = "corpus",
   dataset = makeTestDataset(),
+  facetsDisabled = false,
 }: {
   mode?: FilterMode;
   dataset?: Dataset;
+  facetsDisabled?: boolean;
 }) {
   const [filters, setFilters] = useState({
     ...EMPTY_FILTERS,
@@ -28,6 +30,7 @@ function FilterHarness({
       setFilters={setFilters}
       onReset={() => setFilters({ ...EMPTY_FILTERS })}
       mode={mode}
+      facetsDisabled={facetsDisabled}
     />
   );
 }
@@ -76,14 +79,37 @@ describe("Filters", () => {
     ).toBeTruthy();
   });
 
-  it("shows quick history facets without Advanced filters", () => {
-    render(<FilterHarness mode="history" />);
+  it("shows quick trend facets without Advanced filters", () => {
+    render(<FilterHarness mode="trends" />);
 
     expect(screen.getByRole("group", { name: "Tools" })).toBeTruthy();
     expect(screen.getByRole("group", { name: "Profiles" })).toBeTruthy();
     expect(screen.queryByRole("group", { name: "Results" })).toBeNull();
     expect(screen.queryByText("Advanced filters")).toBeNull();
     expect(screen.queryByLabelText("Search")).toBeNull();
+  });
+
+  it("disables and explains tool facets for corpus trends", () => {
+    render(<FilterHarness mode="trends" facetsDisabled />);
+
+    const tools = screen.getByRole("group", { name: "Tools" });
+    const profiles = screen.getByRole("group", { name: "Profiles" });
+    expect(
+      (within(tools).getByRole("button", { name: "All 0" }) as HTMLButtonElement)
+        .disabled,
+    ).toBe(true);
+    expect(
+      (
+        within(profiles).getByRole("button", {
+          name: "All 0",
+        }) as HTMLButtonElement
+      ).disabled,
+    ).toBe(true);
+    const descriptionId = tools.getAttribute("aria-describedby");
+    expect(descriptionId).toBeTruthy();
+    expect(document.getElementById(descriptionId!)?.textContent).toContain(
+      "apply to Tool pass rate only",
+    );
   });
 
   it("offers historical tools that are absent from the selected campaign", () => {
@@ -121,7 +147,7 @@ describe("Filters", () => {
       campaign_id: "another-older-campaign",
     });
 
-    render(<FilterHarness mode="history" dataset={dataset} />);
+    render(<FilterHarness mode="trends" dataset={dataset} />);
 
     expect(
       within(screen.getByRole("group", { name: "Tools" })).getByRole("button", {

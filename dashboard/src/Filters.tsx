@@ -9,7 +9,7 @@ import {
 import type { Filters as FilterValues, StatusGroup } from "./model";
 import type { Campaign, Dataset, Status } from "./types";
 
-export type FilterMode = "overview" | "corpus" | "history" | "campaigns";
+export type FilterMode = "overview" | "corpus" | "trends" | "campaigns";
 
 interface FilterProps {
   dataset: Dataset;
@@ -18,6 +18,7 @@ interface FilterProps {
   setFilters: Dispatch<SetStateAction<FilterValues>>;
   onReset: () => void;
   mode: FilterMode;
+  facetsDisabled?: boolean;
 }
 
 function choices(values: Array<string | undefined>): string[] {
@@ -39,6 +40,7 @@ export function Filters({
   setFilters,
   onReset,
   mode,
+  facetsDisabled = false,
 }: FilterProps) {
   const update = (name: keyof FilterValues, value: string | boolean) => {
     setFilters((current) => {
@@ -77,7 +79,7 @@ export function Filters({
       scopedResults.filter((result) => statusGroup(result.status) === group).length,
     ]),
   ) as Record<StatusGroup, number>;
-  const historicalPairs = [
+  const trendPairs = [
     ...new Map(
       dataset.metrics.map((point) => [
         `${point.tool_id}\u0000${point.profile_id}`,
@@ -98,8 +100,8 @@ export function Filters({
     ).values(),
   ];
   const profilePairs =
-    mode === "history"
-      ? historicalPairs
+    mode === "trends"
+      ? trendPairs
       : mode === "campaigns"
         ? campaignPairs
         : (campaign?.tools.flatMap((tool) =>
@@ -132,19 +134,30 @@ export function Filters({
   const showFacets =
     mode === "overview" ||
     mode === "corpus" ||
-    mode === "history" ||
+    mode === "trends" ||
     mode === "campaigns";
 
   return (
     <div className="filters">
       {showFacets && (
         <div className="filters__pair-grid">
-          <div className="filters__quick" role="group" aria-label="Tools">
+          {facetsDisabled && (
+            <span id="trend-facet-scope" className="visually-hidden">
+              Tool and profile filters apply to Tool pass rate only.
+            </span>
+          )}
+          <div
+            className="filters__quick"
+            role="group"
+            aria-label="Tools"
+            aria-describedby={facetsDisabled ? "trend-facet-scope" : undefined}
+          >
             <span className="filters__quick-label">Tools</span>
             <button
               type="button"
               className="filter-chip"
               aria-pressed={!filters.tool}
+              disabled={facetsDisabled}
               onClick={() => update("tool", "")}
             >
               All <b>{profileCount("", filters.profile)}</b>
@@ -154,6 +167,7 @@ export function Filters({
                 type="button"
                 className="filter-chip"
                 aria-pressed={filters.tool === toolId}
+                disabled={facetsDisabled}
                 key={toolId}
                 onClick={() => update("tool", toolId)}
               >
@@ -162,12 +176,18 @@ export function Filters({
               </button>
             ))}
           </div>
-          <div className="filters__quick" role="group" aria-label="Profiles">
+          <div
+            className="filters__quick"
+            role="group"
+            aria-label="Profiles"
+            aria-describedby={facetsDisabled ? "trend-facet-scope" : undefined}
+          >
             <span className="filters__quick-label">Profile</span>
             <button
               type="button"
               className="filter-chip"
               aria-pressed={!filters.profile}
+              disabled={facetsDisabled}
               onClick={() => update("profile", "")}
             >
               All <b>{profileCount(filters.tool, "")}</b>
@@ -177,6 +197,7 @@ export function Filters({
                 type="button"
                 className="filter-chip"
                 aria-pressed={filters.profile === profileId}
+                disabled={facetsDisabled}
                 key={profileId}
                 onClick={() => update("profile", profileId)}
               >

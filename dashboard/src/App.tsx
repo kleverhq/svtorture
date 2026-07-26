@@ -13,7 +13,7 @@ import { CorpusCoverage } from "./CorpusCoverage";
 import { EvidenceView } from "./EvidenceView";
 import { Filters } from "./Filters";
 import { HeadlineMetrics } from "./HeadlineMetrics";
-import { HistoryView } from "./HistoryView";
+import { TrendsView } from "./TrendsView";
 import { MatrixView } from "./MatrixView";
 import {
   EMPTY_FILTERS,
@@ -21,21 +21,23 @@ import {
   filterCorpus,
   filtersFromSearch,
   filtersToSearch,
-  historyStateFromSearch,
-  metricPointKey,
+  corpusTrendPointKey,
   selectedCampaign,
-  type HistoryRange,
+  toolTrendPointKey,
+  trendStateFromSearch,
+  type TrendKind,
+  type TrendRange,
 } from "./model";
 import { ThemeControl } from "./ThemeControl";
 import { useDataset } from "./useDataset";
 
-type View = "overview" | "matrix" | "evidence" | "history" | "campaigns";
+type View = "overview" | "matrix" | "evidence" | "trends" | "campaigns";
 
 const VIEWS: Array<{ id: View; label: string }> = [
   { id: "overview", label: "Overview" },
   { id: "matrix", label: "Requirements" },
   { id: "evidence", label: "Cases" },
-  { id: "history", label: "Changes" },
+  { id: "trends", label: "Trends" },
   { id: "campaigns", label: "Campaigns" },
 ];
 
@@ -50,14 +52,14 @@ export default function App() {
   const state = useDataset();
   const [view, setView] = useState<View>(initialView);
   const [filters, setFilters] = useState(() => filtersFromSearch(window.location.search));
-  const [history, setHistory] = useState(() =>
-    historyStateFromSearch(window.location.search),
+  const [trend, setTrend] = useState(() =>
+    trendStateFromSearch(window.location.search),
   );
   const [workspaceHeight, setWorkspaceHeight] = useState(0);
   const workspaceRef = useRef<HTMLElement>(null);
   useEffect(() => {
-    window.history.replaceState(null, "", filtersToSearch(filters, view, history));
-  }, [filters, history, view]);
+    window.history.replaceState(null, "", filtersToSearch(filters, view, trend));
+  }, [filters, trend, view]);
   useLayoutEffect(() => {
     const workspace = workspaceRef.current;
     if (!workspace) return;
@@ -71,12 +73,18 @@ export default function App() {
   useEffect(() => {
     const dataset = state.dataset;
     if (!dataset) return;
-    setHistory((current) =>
-      current.point &&
-      !dataset.metrics.some((point) => metricPointKey(point) === current.point)
-        ? { ...current, point: "" }
-        : current,
-    );
+    setTrend((current) => {
+      if (!current.point) return current;
+      const valid =
+        current.kind === "tool-pass-rate"
+          ? dataset.metrics.some(
+              (point) => toolTrendPointKey(point) === current.point,
+            )
+          : dataset.campaigns.some(
+              (campaign) => corpusTrendPointKey(campaign) === current.point,
+            );
+      return valid ? current : { ...current, point: "" };
+    });
   }, [state.dataset]);
   useEffect(() => {
     const dataset = state.dataset;
@@ -135,12 +143,16 @@ export default function App() {
     state.dataset,
     view,
   ]);
-  const setHistoryRange = useCallback(
-    (range: HistoryRange) => setHistory((current) => ({ ...current, range })),
+  const setTrendKind = useCallback(
+    (kind: TrendKind) => setTrend((current) => ({ ...current, kind, point: "" })),
     [],
   );
-  const selectHistoryPoint = useCallback(
-    (point: string) => setHistory((current) => ({ ...current, point })),
+  const setTrendRange = useCallback(
+    (range: TrendRange) => setTrend((current) => ({ ...current, range })),
+    [],
+  );
+  const selectTrendPoint = useCallback(
+    (point: string) => setTrend((current) => ({ ...current, point })),
     [],
   );
 
@@ -249,21 +261,21 @@ export default function App() {
       </header>
 
       <main
-        className={`dashboard${view === "history" ? " dashboard--history" : ""}`}
+        className={`dashboard${view === "trends" ? " dashboard--trends" : ""}`}
         style={{ "--workspace-height": `${workspaceHeight}px` } as CSSProperties}
       >
         <section
           className={`campaign-overview${
-            view === "history" ? " campaign-overview--disabled" : ""
+            view === "trends" ? " campaign-overview--disabled" : ""
           }`}
           aria-label="Campaign selection"
-          aria-disabled={view === "history"}
+          aria-disabled={view === "trends"}
         >
             <label className="campaign-overview__campaign">
               <span>Campaign</span>
               <select
                 value={campaignSelectValue}
-                disabled={view === "history"}
+                disabled={view === "trends"}
                 onChange={(event) =>
                   setFilters((current) => ({
                     ...current,
@@ -289,7 +301,7 @@ export default function App() {
               <span>From</span>
               <input
                 type="date"
-                disabled={view === "history"}
+                disabled={view === "trends"}
                 max={filters.dateTo || undefined}
                 value={filters.dateFrom}
                 onChange={(event) =>
@@ -307,7 +319,7 @@ export default function App() {
               <span>To</span>
               <input
                 type="date"
-                disabled={view === "history"}
+                disabled={view === "trends"}
                 min={filters.dateFrom || undefined}
                 value={filters.dateTo}
                 onChange={(event) =>
@@ -369,11 +381,14 @@ export default function App() {
                 ? "corpus"
                 : view
             }
+            facetsDisabled={
+              view === "trends" && trend.kind !== "tool-pass-rate"
+            }
           />
         </section>
 
         <div
-          className={`view-panel${view === "history" ? " view-panel--history" : ""}`}
+          className={`view-panel${view === "trends" ? " view-panel--trends" : ""}`}
           role="tabpanel"
           id="dashboard-view-panel"
           aria-labelledby={`${view}-tab`}
@@ -419,21 +434,23 @@ export default function App() {
               onInspectRequirement={inspectRequirement}
             />
           )}
-          {view === "history" && (
-            <HistoryView
+          {view === "trends" && (
+            <TrendsView
               dataset={dataset}
               toolFilter={filters.tool}
               profileFilter={filters.profile}
-              range={history.range}
-              selectedPointKey={history.point}
-              onRangeChange={setHistoryRange}
-              onSelectPoint={selectHistoryPoint}
+              trend={trend.kind}
+              range={trend.range}
+              selectedPointKey={trend.point}
+              onTrendChange={setTrendKind}
+              onRangeChange={setTrendRange}
+              onSelectPoint={selectTrendPoint}
             />
           )}
           {view === "campaigns" && <CampaignView campaigns={visibleCampaigns} />}
         </div>
       </main>
-      {view !== "history" && (
+      {view !== "trends" && (
         <footer>
           <span>SVTORTURE · Apache-2.0</span>
         </footer>

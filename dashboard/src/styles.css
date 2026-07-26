@@ -690,6 +690,15 @@ footer {
   background: var(--surface-hover);
 }
 
+.filter-chip:disabled {
+  cursor: not-allowed;
+  opacity: 0.48;
+}
+
+.filter-chip:disabled:hover {
+  background: var(--surface-subtle);
+}
+
 .filter-chip[aria-pressed="true"] {
   border-color: var(--accent);
   color: var(--accent-strong);
@@ -1435,28 +1444,28 @@ pre {
   color: var(--fail);
 }
 
-.dashboard--history {
+.dashboard--trends {
   display: flex;
   height: calc(100dvh - var(--site-header-height));
   flex-direction: column;
   overflow: hidden;
 }
 
-.dashboard--history .campaign-overview,
-.dashboard--history .workspace-bar {
+.dashboard--trends .campaign-overview,
+.dashboard--trends .workspace-bar {
   flex: 0 0 auto;
 }
 
-.dashboard--history .workspace-bar {
+.dashboard--trends .workspace-bar {
   position: static;
 }
 
-.view-panel--history {
+.view-panel--trends {
   min-height: 0;
   flex: 1 1 auto;
 }
 
-.history {
+.trends {
   display: flex;
   height: 100%;
   min-height: 0;
@@ -1465,7 +1474,7 @@ pre {
   margin-bottom: 0;
 }
 
-.history__controls {
+.trends__controls {
   display: flex;
   flex: 0 0 auto;
   gap: 12px;
@@ -1477,7 +1486,7 @@ pre {
   background: var(--surface-subtle);
 }
 
-.history__ranges {
+.trends__ranges {
   display: flex;
   min-width: 0;
   gap: 5px;
@@ -1486,82 +1495,141 @@ pre {
   scrollbar-width: none;
 }
 
-.history__ranges::-webkit-scrollbar {
+.trends__ranges::-webkit-scrollbar {
   display: none;
 }
 
-.history__zoom-controls {
+.trends__zoom-controls {
   display: flex;
   flex: 0 0 auto;
   gap: 10px;
   align-items: center;
 }
 
-.history__zoom-controls span {
+.trends__zoom-controls span {
   color: var(--text-muted);
   font-size: 0.68rem;
   white-space: nowrap;
 }
 
-.history__boundary-key strong {
+.trends__boundary-key strong {
   color: var(--issue);
 }
 
-.history__zoom-controls .button {
+.trends__zoom-controls .button {
   padding: 6px 9px;
   white-space: nowrap;
 }
 
-.history__workspace {
+.trends__workspace {
   display: grid;
   min-width: 0;
   min-height: 0;
   flex: 1 1 auto;
-  grid-template-columns: minmax(0, 1fr);
+  grid-template-columns: minmax(150px, 170px) minmax(0, 1fr);
 }
 
-.history__workspace.has-inspector {
-  grid-template-columns: minmax(0, 1fr) minmax(310px, 360px);
+.trends__workspace.has-inspector {
+  grid-template-columns:
+    minmax(150px, 170px)
+    minmax(0, 1fr)
+    minmax(310px, 360px);
 }
 
-.history__main {
+.trends__selector {
+  min-width: 0;
+  margin: 0;
+  padding: 12px 9px;
+  border: 0;
+  border-right: 1px solid var(--line);
+  background: var(--surface-subtle);
+}
+
+.trends__selector legend {
+  width: 100%;
+  padding: 0 5px 8px;
+  color: var(--text-muted);
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.trends__options {
+  display: grid;
+  gap: 4px;
+}
+
+.trends__options label {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 7px;
+  align-items: center;
+  padding: 7px 6px;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  color: var(--text-secondary);
+  font-size: 0.7rem;
+  line-height: 1.25;
+  cursor: pointer;
+}
+
+.trends__options label:has(input:checked) {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: var(--text);
+}
+
+.trends__options label:has(input:focus-visible) {
+  outline: 2px solid var(--focus);
+  outline-offset: 1px;
+}
+
+.trends__options input {
+  width: 14px;
+  height: 14px;
+  margin: 0;
+  accent-color: var(--accent);
+}
+
+.trends__main {
   display: flex;
   min-width: 0;
   min-height: 0;
 }
 
-.history-chart-shell {
+.trends-chart-shell {
   width: 100%;
   height: 100%;
   min-height: 320px;
 }
 
-.history-chart-shell:focus-visible {
+.trends-chart-shell:focus-visible {
   outline: 2px solid var(--focus);
   outline-offset: -2px;
 }
 
-.history-chart {
+.trends-chart {
   width: 100%;
   height: 100%;
   color: var(--text-muted);
 }
 
-.history-inspector {
+.trends-inspector {
   min-width: 0;
   overflow-y: auto;
   padding: 14px;
   border-left: 1px solid var(--line);
   background: var(--surface-subtle);
-  animation: history-inspector-in 160ms ease-out;
+  animation: trends-inspector-in 160ms ease-out;
 }
 
-.history-inspector:focus-visible {
+.trends-inspector:focus-visible {
   outline: 2px solid var(--focus);
   outline-offset: -2px;
 }
 
-@keyframes history-inspector-in {
+@keyframes trends-inspector-in {
   from {
     opacity: 0;
     transform: translateX(18px);
@@ -1573,7 +1641,7 @@ pre {
   }
 }
 
-.history-inspector > header {
+.trends-inspector > header {
   display: flex;
   gap: 10px;
   align-items: start;
@@ -1581,61 +1649,61 @@ pre {
   padding-bottom: 12px;
 }
 
-.history-inspector > header > div {
+.trends-inspector > header > div {
   display: grid;
   min-width: 0;
   gap: 3px;
 }
 
-.history-inspector > header span,
-.history-inspector h3 {
+.trends-inspector > header span,
+.trends-inspector h3 {
   color: var(--text-muted);
   font-size: 0.66rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
 
-.history-inspector h2 {
+.trends-inspector h2 {
   margin: 0;
   font-size: 1rem;
   overflow-wrap: anywhere;
 }
 
-.history-inspector > header code {
+.trends-inspector > header code {
   font-size: 0.68rem;
 }
 
-.history-inspector section {
+.trends-inspector section {
   padding: 12px 0;
   border-top: 1px solid var(--line);
 }
 
-.history-inspector h3 {
+.trends-inspector h3 {
   margin-bottom: 8px;
 }
 
-.history-inspector__facts {
+.trends-inspector__facts {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 9px 12px;
   margin: 0;
 }
 
-.history-inspector__facts--stacked {
+.trends-inspector__facts--stacked {
   grid-template-columns: 1fr;
 }
 
-.history-inspector__facts > div {
+.trends-inspector__facts > div {
   min-width: 0;
 }
 
-.history-inspector__facts dt {
+.trends-inspector__facts dt {
   margin-bottom: 2px;
   color: var(--text-muted);
   font-size: 0.62rem;
 }
 
-.history-inspector__facts dd {
+.trends-inspector__facts dd {
   margin: 0;
   color: var(--text-secondary);
   font-size: 0.72rem;
@@ -1771,8 +1839,11 @@ footer {
     grid-template-columns: minmax(0, 1fr) minmax(260px, 300px);
   }
 
-  .history__workspace.has-inspector {
-    grid-template-columns: minmax(0, 1fr) minmax(280px, 320px);
+  .trends__workspace.has-inspector {
+    grid-template-columns:
+      minmax(140px, 155px)
+      minmax(0, 1fr)
+      minmax(280px, 320px);
   }
 }
 
@@ -1810,28 +1881,53 @@ footer {
     border-bottom: 1px solid var(--line);
   }
 
-  .dashboard--history {
+  .dashboard--trends {
     height: auto;
     min-height: calc(100dvh - var(--site-header-height));
     overflow: visible;
   }
 
-  .view-panel--history,
-  .history {
+  .view-panel--trends,
+  .trends {
     height: auto;
     min-height: 0;
   }
 
-  .history__workspace.has-inspector {
+  .trends__workspace,
+  .trends__workspace.has-inspector {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .history-chart-shell {
+  .trends__selector {
+    overflow-x: auto;
+    padding: 8px 10px;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .trends__selector legend {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+
+  .trends__options {
+    display: flex;
+    width: max-content;
+  }
+
+  .trends__options label {
+    white-space: nowrap;
+  }
+
+  .trends-chart-shell {
     height: 460px;
     min-height: 0;
   }
 
-  .history-inspector {
+  .trends-inspector {
     max-height: none;
     overflow: visible;
     border-top: 1px solid var(--line);
@@ -1966,27 +2062,27 @@ footer {
     flex-direction: column;
   }
 
-  .history__controls {
+  .trends__controls {
     align-items: stretch;
     flex-direction: column;
     gap: 7px;
   }
 
-  .history__zoom-controls {
+  .trends__zoom-controls {
     flex-wrap: wrap;
     justify-content: space-between;
   }
 
-  .history__zoom-controls span {
+  .trends__zoom-controls span {
     overflow: hidden;
     text-overflow: ellipsis;
   }
 
-  .history-chart-shell {
+  .trends-chart-shell {
     height: 340px;
   }
 
-  .history-inspector {
+  .trends-inspector {
     padding-inline: 12px;
   }
 
@@ -2015,17 +2111,17 @@ footer {
     position: static;
   }
 
-  .dashboard--history {
+  .dashboard--trends {
     height: auto;
     overflow: visible;
   }
 
-  .view-panel--history,
-  .history {
+  .view-panel--trends,
+  .trends {
     height: auto;
   }
 
-  .history-chart-shell {
+  .trends-chart-shell {
     height: 300px;
     min-height: 0;
   }

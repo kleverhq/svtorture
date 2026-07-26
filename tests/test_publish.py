@@ -327,6 +327,30 @@ def test_publication_probes_anonymous_registry_access(
         )
 
 
+def test_dataset_embeds_campaign_corpus_metrics(catalog: Catalog) -> None:
+    case = catalog.cases["ch13-output-copyout-width"]
+    campaign = make_campaign(
+        catalog,
+        cases=(case,),
+        tool=campaign_tool(catalog.tools.tool("fake"), ("simulator",)),
+        results=(normalized(case, "fake", "simulator"),),
+    )
+
+    dataset = publication.build_dataset(catalog, (campaign,), visibility="local")
+    assert dataset["schema_version"] == 3
+    assert dataset["campaigns"][0]["schema_version"] == 3
+    assert dataset["campaigns"][0]["corpus_metrics"] == {
+        "requirements": {
+            "coverage": {"numerator": 16, "denominator": 16963},
+            "density": {"numerator": 17, "denominator": 16},
+        },
+        "cases": {
+            "coverage": {"numerator": 12, "denominator": 12},
+            "density": {"numerator": 12, "denominator": 12},
+        },
+    }
+
+
 def test_dataset_reports_corpus_coverage_by_standard_part(catalog: Catalog) -> None:
     dataset = publication.build_dataset(catalog, (), visibility="local")
     assert dataset["schema_version"] == 3

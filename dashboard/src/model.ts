@@ -145,24 +145,35 @@ export const EMPTY_FILTERS: Filters = {
   disagreement: false,
 };
 
-export type HistoryRange =
-  | "week"
-  | "month"
-  | "six-months"
-  | "year"
-  | "all";
+export type TrendKind =
+  | "tool-pass-rate"
+  | "requirements-coverage"
+  | "cases-coverage"
+  | "requirements-density"
+  | "cases-density";
 
-export interface HistoryState {
-  range: HistoryRange;
+export type TrendRange = "week" | "month" | "six-months" | "year" | "all";
+
+export interface TrendState {
+  kind: TrendKind;
+  range: TrendRange;
   point: string;
 }
 
-export const DEFAULT_HISTORY_STATE: HistoryState = {
+export const DEFAULT_TREND_STATE: TrendState = {
+  kind: "tool-pass-rate",
   range: "month",
   point: "",
 };
 
-const HISTORY_RANGES = new Set<HistoryRange>([
+const TREND_KINDS = new Set<TrendKind>([
+  "tool-pass-rate",
+  "requirements-coverage",
+  "cases-coverage",
+  "requirements-density",
+  "cases-density",
+]);
+const TREND_RANGES = new Set<TrendRange>([
   "week",
   "month",
   "six-months",
@@ -172,20 +183,29 @@ const HISTORY_RANGES = new Set<HistoryRange>([
 const DAY_MS = 24 * 60 * 60 * 1000;
 const PROJECT_START = Date.UTC(2026, 6, 1);
 
-export function historyStateFromSearch(search: string): HistoryState {
+export function trendStateFromSearch(search: string): TrendState {
   const parameters = new URLSearchParams(search);
-  const requestedRange = parameters.get("historyRange") as HistoryRange | null;
+  const requestedKind = parameters.get("trend") as TrendKind | null;
+  const requestedRange = parameters.get("trendRange") as TrendRange | null;
   return {
+    kind:
+      requestedKind && TREND_KINDS.has(requestedKind)
+        ? requestedKind
+        : DEFAULT_TREND_STATE.kind,
     range:
-      requestedRange && HISTORY_RANGES.has(requestedRange)
+      requestedRange && TREND_RANGES.has(requestedRange)
         ? requestedRange
-        : DEFAULT_HISTORY_STATE.range,
-    point: parameters.get("historyPoint") ?? "",
+        : DEFAULT_TREND_STATE.range,
+    point: parameters.get("trendPoint") ?? "",
   };
 }
 
-export function metricPointKey(point: MetricPoint): string {
-  return `${point.campaign_id}:${point.tool_id}:${point.profile_id}`;
+export function toolTrendPointKey(point: MetricPoint): string {
+  return `tool:${point.campaign_id}:${point.tool_id}:${point.profile_id}`;
+}
+
+export function corpusTrendPointKey(campaign: Campaign): string {
+  return `corpus:${campaign.id}`;
 }
 
 function subtractUtcMonths(timestamp: number, months: number): number {
@@ -197,9 +217,9 @@ function subtractUtcMonths(timestamp: number, months: number): number {
   return Date.UTC(year, month, Math.min(date.getUTCDate(), lastDay));
 }
 
-export function historyRangeBounds(
-  points: MetricPoint[],
-  range: HistoryRange,
+export function trendRangeBounds(
+  points: Array<{ timestamp: string }>,
+  range: TrendRange,
   now: Date,
 ): {
   domainStart: number;
@@ -267,7 +287,7 @@ export function filtersFromSearch(search: string): Filters {
 export function filtersToSearch(
   filters: Filters,
   view: string,
-  history: HistoryState = DEFAULT_HISTORY_STATE,
+  trend: TrendState = DEFAULT_TREND_STATE,
 ): string {
   const parameters = new URLSearchParams();
   parameters.set("view", view);
@@ -275,11 +295,14 @@ export function filtersToSearch(
     if (value === false || value === "") continue;
     parameters.set(key, value === true ? "1" : String(value));
   }
-  if (view === "history") {
-    if (history.range !== DEFAULT_HISTORY_STATE.range) {
-      parameters.set("historyRange", history.range);
+  if (view === "trends") {
+    if (trend.kind !== DEFAULT_TREND_STATE.kind) {
+      parameters.set("trend", trend.kind);
     }
-    if (history.point) parameters.set("historyPoint", history.point);
+    if (trend.range !== DEFAULT_TREND_STATE.range) {
+      parameters.set("trendRange", trend.range);
+    }
+    if (trend.point) parameters.set("trendPoint", trend.point);
   }
   return `?${parameters.toString()}`;
 }

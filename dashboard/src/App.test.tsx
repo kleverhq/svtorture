@@ -9,7 +9,7 @@ import {
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import App from "./App";
-import { metricPointKey } from "./model";
+import { toolTrendPointKey } from "./model";
 import { makeTestDataset } from "./testDataset";
 import type { Dataset, MetricPoint } from "./types";
 
@@ -28,6 +28,7 @@ vi.mock("echarts/components", () => ({
   DataZoomComponent: {},
   GridComponent: {},
   LegendComponent: {},
+  MarkLineComponent: {},
   TooltipComponent: {},
 }));
 vi.mock("echarts/renderers", () => ({ SVGRenderer: {} }));
@@ -71,7 +72,7 @@ describe("App overview navigation", () => {
     expect(screen.getByLabelText("Case corpus coverage")).toBeTruthy();
     expect(screen.queryByLabelText("Requirement corpus coverage")).toBeNull();
 
-    fireEvent.click(screen.getByRole("tab", { name: "Changes" }));
+    fireEvent.click(screen.getByRole("tab", { name: "Trends" }));
     expect(screen.queryByLabelText("Requirement corpus coverage")).toBeNull();
     expect(screen.queryByLabelText("Case corpus coverage")).toBeNull();
   });
@@ -193,12 +194,12 @@ describe("App overview navigation", () => {
     });
   });
 
-  it("keeps Changes independent from global campaign and date controls", async () => {
+  it("keeps Trends independent from global campaign and date controls", async () => {
     const dataset = makeTestDataset();
     const campaign = dataset.campaigns[0];
     if (!campaign) throw new Error("incomplete test dataset");
     const point: MetricPoint = {
-      label: "history metric",
+      label: "trend metric",
       revision: "1800-2023",
       tool_id: "fake",
       profile_id: "simulator",
@@ -225,19 +226,21 @@ describe("App overview navigation", () => {
     };
     dataset.metrics = [point];
     const parameters = new URLSearchParams({
-      view: "history",
+      view: "trends",
       campaign: campaign.id,
       dateFrom: "2099-01-01",
       dateTo: "2099-12-31",
-      historyRange: "week",
-      historyPoint: metricPointKey(point),
+      trendRange: "week",
+      trendPoint: toolTrendPointKey(point),
+      tool: "fake",
+      profile: "simulator",
     });
     window.history.replaceState(null, "", `/?${parameters.toString()}`);
     mockDataset(dataset);
 
     render(<App />);
     expect(
-      (await screen.findByRole("tab", { name: "Changes" })).getAttribute(
+      (await screen.findByRole("tab", { name: "Trends" })).getAttribute(
         "aria-selected",
       ),
     ).toBe("true");
@@ -247,6 +250,7 @@ describe("App overview navigation", () => {
     expect((screen.getByLabelText("From") as HTMLInputElement).disabled).toBe(true);
     expect((screen.getByLabelText("To") as HTMLInputElement).disabled).toBe(true);
     expect(screen.queryByText("Advanced filters")).toBeNull();
+    expect(document.querySelectorAll(".trends-chart")).toHaveLength(1);
     expect(screen.getByRole("group", { name: "Tools" })).toBeTruthy();
     expect(screen.getByRole("group", { name: "Profiles" })).toBeTruthy();
     expect(
@@ -258,10 +262,28 @@ describe("App overview navigation", () => {
 
     fireEvent.click(screen.getByRole("button", { name: "Last 6 months" }));
     await waitFor(() => {
-      expect(window.location.search).toContain("historyRange=six-months");
+      expect(window.location.search).toContain("trendRange=six-months");
     });
     expect(window.location.search).toContain("dateFrom=2099-01-01");
     expect(window.location.search).toContain("dateTo=2099-12-31");
+
+    fireEvent.click(
+      screen.getByRole("radio", { name: "Requirements coverage" }),
+    );
+    await waitFor(() => {
+      expect(window.location.search).toContain("trend=requirements-coverage");
+    });
+    expect(window.location.search).toContain("tool=fake");
+    expect(window.location.search).toContain("profile=simulator");
+    expect(document.querySelectorAll(".trends-chart")).toHaveLength(1);
+    expect(
+      (
+        within(screen.getByRole("group", { name: "Tools" })).getByRole(
+          "button",
+          { name: "Fake 1" },
+        ) as HTMLButtonElement
+      ).disabled,
+    ).toBe(true);
   });
 
   it("filters Campaigns with quick Tool and Profile facets", async () => {

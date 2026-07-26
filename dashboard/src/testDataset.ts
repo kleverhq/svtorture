@@ -73,6 +73,7 @@ export function makeTestDataset(): Dataset {
     reported_version: "test-tool 1.0",
   };
   const campaign = {
+    schema_version: 3 as const,
     id: "20260101T000000Z-test",
     started_at: "2026-01-01T00:00:00Z",
     finished_at: "2026-01-01T00:00:01Z",
@@ -87,6 +88,16 @@ export function makeTestDataset(): Dataset {
       requirements: HASH,
       cases: HASH,
       selection: HASH,
+    },
+    corpus_metrics: {
+      requirements: {
+        coverage: { numerator: 3, denominator: 16963 },
+        density: { numerator: 3, denominator: 3 },
+      },
+      cases: {
+        coverage: { numerator: 1, denominator: 1 },
+        density: { numerator: 1, denominator: 1 },
+      },
     },
     results: [
       {
@@ -131,7 +142,7 @@ export function makeTestDataset(): Dataset {
     trust: { source: "local" },
   };
   return {
-    schema_version: 2,
+    schema_version: 3,
     generated_from: [campaign.id],
     visibility: "local",
     corpus_coverage: {

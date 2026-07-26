@@ -142,6 +142,21 @@ export interface ImageIdentity {
   platform: string;
 }
 
+export interface CorpusRatio {
+  numerator: number;
+  denominator: number;
+}
+
+export interface CorpusMetricSummary {
+  coverage: CorpusRatio;
+  density: CorpusRatio;
+}
+
+export interface CorpusMetrics {
+  requirements: CorpusMetricSummary;
+  cases: CorpusMetricSummary;
+}
+
 export interface CampaignTool {
   definition: ToolDefinition;
   selection?: ToolSelection | null;
@@ -152,6 +167,7 @@ export interface CampaignTool {
 }
 
 export interface Campaign {
+  schema_version: 3;
   id: string;
   started_at: string;
   finished_at: string;
@@ -163,6 +179,7 @@ export interface Campaign {
   expected_tool_ids: string[];
   missing_tool_ids: string[];
   hashes: { requirements: string; cases: string; selection: string };
+  corpus_metrics: CorpusMetrics;
   results: Result[];
   complete: boolean;
   trust: {
@@ -200,11 +217,6 @@ export interface MetricPoint {
   repository_commit: string;
 }
 
-export interface CorpusRatio {
-  numerator: number;
-  denominator: number;
-}
-
 export interface CorpusCoveragePart {
   kind: "chapter" | "annex";
   id: string;
@@ -213,9 +225,7 @@ export interface CorpusCoveragePart {
   density: CorpusRatio;
 }
 
-export interface CorpusCoverageMetric {
-  coverage: CorpusRatio;
-  density: CorpusRatio;
+export interface CorpusCoverageMetric extends CorpusMetricSummary {
   breakdown: CorpusCoveragePart[];
 }
 
@@ -225,7 +235,7 @@ export interface CorpusCoverage {
 }
 
 export interface Dataset {
-  schema_version: number;
+  schema_version: 3;
   generated_from: string[];
   visibility: "local" | "public";
   corpus_coverage: CorpusCoverage;
