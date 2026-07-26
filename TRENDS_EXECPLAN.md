@@ -22,7 +22,7 @@ This work does not add more than one visible chart, multi-select trend overlays,
 - [x] (2026-07-26 12:13Z) Chose a strict campaign-owned corpus snapshot and a single selected trend with no compatibility path.
 - [x] (2026-07-26 12:27Z) Added strict campaign schema version 3 corpus metrics, regenerated the campaign schema, and updated backend tests and durable documentation; 68 focused tests pass.
 - [x] (2026-07-26 12:36Z) Replaced Changes/history terminology and URL state with Trends, implemented the five-option selector and generic single chart, and updated frontend tests/documentation; typecheck, 48 tests, and production build pass.
-- [ ] Delete current local campaigns, collect one new full multi-tool campaign, and rebuild the local dashboard dataset.
+- [x] (2026-07-26 12:48Z) Deleted all current local campaigns, collected one clean full schema-v3 campaign, and rebuilt a schema-v3 dashboard dataset containing only that campaign.
 - [ ] Run focused review, repository gates, browser validation, and completion audit; remove this completed ExecPlan.
 
 ## Surprises & Discoveries
@@ -37,7 +37,10 @@ This work does not add more than one visible chart, multi-select trend overlays,
   Evidence: `dashboard/src/HistoryView.tsx` and the `.dashboard--history` rules in `dashboard/src/styles.css`; the feature should generalize this path rather than create parallel charts.
 
 - Observation: Tool/Profile facets derive from historical metric points and already provide the desired pass-rate series filtering, but corpus trends are global and must not silently react to those facets.
-  Evidence: `dashboard/src/Filters.tsx` builds `historicalPairs` for history mode. Native-disabled facet buttons plus an accessible scope explanation preserve toolbar geometry and make the distinction explicit.
+  Evidence: `dashboard/src/Filters.tsx` builds historical tool/profile pairs for Trends. Native-disabled facet buttons plus an accessible scope explanation preserve toolbar geometry and make the distinction explicit.
+
+- Observation: An ECharts mark-line label positioned at the line end was clipped by the right chart edge, even though the reference line itself was correct.
+  Evidence: the first wide Chrome screenshot showed only `100%` while the SVG contained `100% saturation`. Moving the label to `insideEndTop` made the complete reference label visible without increasing margins.
 
 ## Decision Log
 
@@ -79,7 +82,7 @@ This work does not add more than one visible chart, multi-select trend overlays,
 
 ## Outcomes & Retrospective
 
-The backend and frontend milestones are complete. Every campaign constructor records a typed corpus snapshot from `Catalog.corpus_metrics()`, catalog verification rejects changed operands, aggregation preserves the snapshot, dashboard dataset schema 3 rejects older data, and the generated campaign schema exposes the strict required object. The visible/internal route is now Trends; one native radio group drives one generic ECharts plot with pass-rate/coverage/density units, reference levels, URL state, disabled corpus facets, boundaries, keyboard navigation, and provenance. Fresh collection and final browser/review validation remain.
+The backend, frontend, and evidence-reset milestones are complete. Every campaign constructor records a typed corpus snapshot from `Catalog.corpus_metrics()`, catalog verification rejects changed operands, aggregation preserves the snapshot, dashboard dataset schema 3 rejects older data, and the generated campaign schema exposes the strict required object. The visible/internal route is now Trends; one native radio group drives one generic ECharts plot with pass-rate/coverage/density units, reference levels, URL state, disabled corpus facets, boundaries, keyboard navigation, and provenance. The sole local campaign `20260726T124655Z-ec42760bfad01a5c` has 3 tools, 12 cases, 36 results, and operands 16/16963, 17/16, 12/12, and 12/12. Wide and 390 px Chrome checks show one plot, correct 100%/1×/2× references, no page overflow, no runtime/network errors, and URL-backed keyboard provenance. Focused review and final gates remain.
 
 ## Context and Orientation
 
@@ -253,3 +256,5 @@ Revision note (2026-07-26 12:13Z): Created the self-contained implementation pla
 Revision note (2026-07-26 12:27Z): Recorded completion of the strict campaign/dataset contract milestone and its focused test evidence.
 
 Revision note (2026-07-26 12:36Z): Recorded completion of the Trends frontend milestone, strict URL rename, chart behavior, and frontend test/build evidence.
+
+Revision note (2026-07-26 12:50Z): Recorded destructive old-campaign reset, the clean full replacement campaign, initial browser evidence, and the clipped reference-label correction.

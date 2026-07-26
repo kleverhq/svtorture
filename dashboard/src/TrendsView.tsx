@@ -474,6 +474,7 @@ function TrendsChart({
                 width: 2,
               },
               label: {
+                position: "insideEndTop",
                 color: "var(--accent-strong)",
                 backgroundColor: "var(--surface)",
                 padding: [2, 5],

@@ -221,7 +221,10 @@ describe("TrendsView", () => {
     expect(lineData[2]).toMatchObject({ boundary: true, symbol: "diamond" });
     expect(lineData[3].value[1]).toBeNull();
     expect(option.series[1]).toMatchObject({ type: "scatter" });
-    expect(option.series.at(-1).markLine.data[0]).toMatchObject({ yAxis: 100 });
+    expect(option.series.at(-1).markLine).toMatchObject({
+      label: { position: "insideEndTop" },
+      data: [{ yAxis: 100 }],
+    });
     expect(option.tooltip.formatter({ data: lineData[0] })).toBe(
       "<strong>75%</strong><br/>fake/simulator<br/>3/4<br/>2026-07-22 10:58 UTC",
     );
