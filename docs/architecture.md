@@ -64,8 +64,8 @@ wrapper receives a versioned JSON request. Distribution, CI, and publication pol
 publishers and workflows never infer it from an adapter name.
 
 Campaigns include a full result grid for every selected case and profile plus
-the exact requirement/case Coverage and Density operands computed from the full
-catalog at collection time. Loading rejects duplicate/missing results,
+the exact aggregate and per-chapter/annex requirement/case Coverage and Density
+operands computed from the full catalog at collection time. Loading rejects duplicate/missing results,
 mismatched case or selection manifests, and corpus metrics that no longer match
 the catalog. Aggregation records expected and missing tools rather than quietly
 changing completeness. If nightly collection fails before an immutable source

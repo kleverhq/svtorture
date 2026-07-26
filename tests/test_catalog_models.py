@@ -337,7 +337,7 @@ def test_suite_glob_without_matches_is_rejected(catalog: Catalog, tmp_path: Path
         load_catalog(root)
 
 
-def test_version_two_campaign_is_rejected(catalog: Catalog, tmp_path: Path) -> None:
+def test_version_three_campaign_is_rejected(catalog: Catalog, tmp_path: Path) -> None:
     case = catalog.cases["ch04-nba-rhs-captured"]
     tool = campaign_tool(catalog.tools.tool("fake"), ("simulator",))
     campaign = make_campaign(
@@ -347,10 +347,10 @@ def test_version_two_campaign_is_rejected(catalog: Catalog, tmp_path: Path) -> N
         results=(normalized(case, "fake", "simulator"),),
     )
     value = campaign.model_dump(mode="json")
-    value["schema_version"] = 2
+    value["schema_version"] = 3
     path = tmp_path / "campaign.json"
     path.write_text(json.dumps(value), encoding="utf-8")
-    with pytest.raises(CampaignError, match="greater than or equal to 3"):
+    with pytest.raises(CampaignError, match="greater than or equal to 4"):
         load_campaign(path)
 
 
@@ -370,6 +370,20 @@ def test_version_two_campaign_is_rejected(catalog: Catalog, tmp_path: Path) -> N
         (
             lambda value: value["corpus_metrics"]["cases"]["density"].update({"denominator": 0}),
             "density denominator",
+        ),
+        (
+            lambda value: value["corpus_metrics"]["requirements"].pop("breakdown"),
+            "breakdown",
+        ),
+        (
+            lambda value: value["corpus_metrics"]["requirements"]["breakdown"].pop(),
+            "58 unique parts",
+        ),
+        (
+            lambda value: value["corpus_metrics"]["requirements"]["coverage"].update(
+                {"denominator": 16964}
+            ),
+            "aggregate does not match",
         ),
     ),
 )

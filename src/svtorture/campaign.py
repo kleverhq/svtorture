@@ -474,7 +474,7 @@ def run_campaign(
         for result in recorded_results
     )
     campaign = Campaign(
-        schema_version=3,
+        schema_version=4,
         id=campaign_id,
         started_at=started,
         finished_at=finished,
@@ -763,7 +763,7 @@ def create_missing_campaign(
         }
     )
     campaign = Campaign(
-        schema_version=3,
+        schema_version=4,
         id=f"{now:%Y%m%dT%H%M%SZ}-missing-{identity_hash[:12]}",
         started_at=now,
         finished_at=now,
@@ -889,7 +889,7 @@ def create_preparation_failure_campaign(
         }
     )
     campaign = Campaign(
-        schema_version=3,
+        schema_version=4,
         id=f"{now:%Y%m%dT%H%M%SZ}-preparation-{identity_hash[:12]}",
         started_at=now,
         finished_at=now,
@@ -1002,7 +1002,7 @@ def aggregate_campaigns(
     aggregate_id = f"{finished:%Y%m%dT%H%M%SZ}-aggregate-{identity_hash[:12]}"
     aggregate_results = _attach_reproduction(results, aggregate_id, trust)
     aggregate = Campaign(
-        schema_version=3,
+        schema_version=4,
         id=aggregate_id,
         started_at=min(item.started_at for item in campaigns),
         finished_at=finished,

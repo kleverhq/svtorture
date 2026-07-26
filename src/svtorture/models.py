@@ -25,7 +25,7 @@ SafeText = Annotated[str, Field(min_length=1, max_length=4096)]
 StandardAnchor = Annotated[str, Field(pattern=STANDARD_ANCHOR_PATTERN)]
 MetadataSchemaVersion = Annotated[int, Field(strict=True, ge=1, le=1)]
 ContractSchemaVersion = Annotated[int, Field(strict=True, ge=2, le=2)]
-CampaignSchemaVersion = Annotated[int, Field(strict=True, ge=3, le=3)]
+CampaignSchemaVersion = Annotated[int, Field(strict=True, ge=4, le=4)]
 RequirementSchemaVersion = Annotated[int, Field(strict=True, ge=2, le=2)]
 
 
@@ -983,7 +983,7 @@ class CorpusRatio(StrictModel):
     denominator: int = Field(strict=True, ge=0)
 
 
-class CorpusMetricSummary(StrictModel):
+class CorpusMetricValues(StrictModel):
     coverage: CorpusRatio
     density: CorpusRatio
 
@@ -995,6 +995,49 @@ class CorpusMetricSummary(StrictModel):
             raise ValueError("density denominator must equal the coverage numerator")
         if self.density.numerator < self.density.denominator:
             raise ValueError("density numerator cannot be below its denominator")
+        return self
+
+
+class StandardPartKind(StrEnum):
+    CHAPTER = "chapter"
+    ANNEX = "annex"
+
+
+class CorpusPartMetric(CorpusMetricValues):
+    id: str
+    kind: StandardPartKind
+    title: str = Field(min_length=1, max_length=500)
+
+    @model_validator(mode="after")
+    def valid_part_id(self) -> Self:
+        if self.kind is StandardPartKind.CHAPTER:
+            if re.fullmatch(r"[1-9][0-9]*", self.id) is None:
+                raise ValueError("chapter metric needs a numeric part ID")
+        elif re.fullmatch(r"[A-Q]", self.id) is None:
+            raise ValueError("annex metric needs an A-Q part ID")
+        return self
+
+
+class CorpusMetricSummary(CorpusMetricValues):
+    breakdown: tuple[CorpusPartMetric, ...]
+
+    @model_validator(mode="after")
+    def complete_breakdown(self) -> Self:
+        identities = tuple((part.kind, part.id) for part in self.breakdown)
+        if len(self.breakdown) != 58 or len(set(identities)) != 58:
+            raise ValueError("corpus metric breakdown must contain 58 unique parts")
+        if sum(part.kind is StandardPartKind.CHAPTER for part in self.breakdown) != 41:
+            raise ValueError("corpus metric breakdown must contain 41 chapters")
+        if sum(part.kind is StandardPartKind.ANNEX for part in self.breakdown) != 17:
+            raise ValueError("corpus metric breakdown must contain 17 annexes")
+        if self.coverage.numerator != sum(
+            part.coverage.numerator for part in self.breakdown
+        ) or self.coverage.denominator != sum(part.coverage.denominator for part in self.breakdown):
+            raise ValueError("coverage aggregate does not match its breakdown")
+        if self.density.numerator != sum(
+            part.density.numerator for part in self.breakdown
+        ) or self.density.denominator != sum(part.density.denominator for part in self.breakdown):
+            raise ValueError("density aggregate does not match its breakdown")
         return self
 
 

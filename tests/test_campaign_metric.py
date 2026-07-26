@@ -19,7 +19,6 @@ from svtorture.catalog import Catalog, LoadedCase
 from svtorture.metric import compute_metric
 from svtorture.models import (
     Applicability,
-    CorpusMetricSummary,
     CorpusRatio,
     OracleKind,
     Phase,
@@ -186,11 +185,13 @@ def test_campaign_corpus_metrics_are_strictly_verified(catalog: Catalog) -> None
         suite_id="smoke",
         expected_tool_ids=("slang",),
     )
-    assert campaign.schema_version == 3
+    assert campaign.schema_version == 4
     assert campaign.corpus_metrics == catalog.corpus_metrics()
-    changed_requirements = CorpusMetricSummary(
-        coverage=CorpusRatio(numerator=15, denominator=16963),
-        density=CorpusRatio(numerator=17, denominator=15),
+    changed_requirements = campaign.corpus_metrics.requirements.model_copy(
+        update={
+            "coverage": CorpusRatio(numerator=15, denominator=16963),
+            "density": CorpusRatio(numerator=17, denominator=15),
+        }
     )
     tampered = campaign.model_copy(
         update={

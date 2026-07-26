@@ -77,5 +77,7 @@ anchor in the committed index; Requirements Density is unique
 requirement–anchor pairs divided by referenced anchors. Cases Coverage is the
 number of requirements linked as primary or related divided by all requirements;
 Cases Density is unique case–requirement pairs divided by linked requirements.
-These values describe the complete catalog and are independent of tool, profile,
-suite selection, and result filters.
+Campaigns preserve the same operands for every chapter and annex, including
+zero rows. Selecting several standard parts sums their operands before applying
+the formula. These values describe the complete catalog and are independent of
+tool, profile, suite selection, and result filters.

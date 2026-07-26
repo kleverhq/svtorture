@@ -175,6 +175,13 @@
     "CorpusMetricSummary": {
       "additionalProperties": false,
       "properties": {
+        "breakdown": {
+          "items": {
+            "$ref": "#/$defs/CorpusPartMetric"
+          },
+          "title": "Breakdown",
+          "type": "array"
+        },
         "coverage": {
           "$ref": "#/$defs/CorpusRatio"
         },
@@ -184,7 +191,8 @@
       },
       "required": [
         "coverage",
-        "density"
+        "density",
+        "breakdown"
       ],
       "title": "CorpusMetricSummary",
       "type": "object"
@@ -204,6 +212,39 @@
         "cases"
       ],
       "title": "CorpusMetrics",
+      "type": "object"
+    },
+    "CorpusPartMetric": {
+      "additionalProperties": false,
+      "properties": {
+        "coverage": {
+          "$ref": "#/$defs/CorpusRatio"
+        },
+        "density": {
+          "$ref": "#/$defs/CorpusRatio"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "$ref": "#/$defs/StandardPartKind"
+        },
+        "title": {
+          "maxLength": 500,
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "coverage",
+        "density",
+        "id",
+        "kind",
+        "title"
+      ],
+      "title": "CorpusPartMetric",
       "type": "object"
     },
     "CorpusRatio": {
@@ -730,6 +771,14 @@
       "title": "StageObservation",
       "type": "object"
     },
+    "StandardPartKind": {
+      "enum": [
+        "chapter",
+        "annex"
+      ],
+      "title": "StandardPartKind",
+      "type": "string"
+    },
     "StandardRevision": {
       "enum": [
         "1800-2012",
@@ -1024,8 +1073,8 @@
       "type": "array"
     },
     "schema_version": {
-      "maximum": 3,
-      "minimum": 3,
+      "maximum": 4,
+      "minimum": 4,
       "title": "Schema Version",
       "type": "integer"
     },

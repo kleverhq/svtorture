@@ -20,6 +20,7 @@ from svtorture.models import (
     CaseIdentity,
     CorpusMetrics,
     CorpusMetricSummary,
+    CorpusPartMetric,
     CorpusRatio,
     Expectation,
     OracleKind,
@@ -28,6 +29,7 @@ from svtorture.models import (
     Requirement,
     RequirementChapter,
     RequirementInventory,
+    StandardPartKind,
     StandardsIndex,
     SuiteDefinition,
     TagRegistry,
@@ -38,6 +40,14 @@ from svtorture.models import (
 
 class CatalogError(ValueError):
     """The corpus or registry cannot be trusted."""
+
+
+@dataclass(frozen=True)
+class _StandardPart:
+    id: str
+    kind: StandardPartKind
+    title: str
+    anchors: tuple[str, ...]
 
 
 @dataclass(frozen=True)
@@ -85,12 +95,13 @@ class Catalog:
         return hash_json(model_to_jsonable(self.inventory))
 
     def corpus_metrics(self) -> CorpusMetrics:
+        parts = _standard_parts(self.anchor_index)
+        anchor_parts = {anchor: (part.kind, part.id) for part in parts for anchor in part.anchors}
         requirement_links = {
             (requirement.id, anchor)
             for requirement in self.inventory.requirements
             for anchor in requirement.anchors
         }
-        covered_anchors = {anchor for _, anchor in requirement_links}
         case_links = {
             (loaded.definition.id, requirement_id)
             for loaded in self.cases.values()
@@ -99,28 +110,70 @@ class Catalog:
                 *loaded.definition.related_requirements,
             )
         }
-        covered_requirements = {requirement_id for _, requirement_id in case_links}
+
+        requirement_breakdown: list[CorpusPartMetric] = []
+        case_breakdown: list[CorpusPartMetric] = []
+        for part in parts:
+            identity = (part.kind, part.id)
+            part_requirement_links = {
+                link for link in requirement_links if anchor_parts[link[1]] == identity
+            }
+            covered_anchors = {anchor for _, anchor in part_requirement_links}
+            requirement_breakdown.append(
+                CorpusPartMetric(
+                    id=part.id,
+                    kind=part.kind,
+                    title=part.title,
+                    coverage=CorpusRatio(
+                        numerator=len(covered_anchors),
+                        denominator=len(part.anchors),
+                    ),
+                    density=CorpusRatio(
+                        numerator=len(part_requirement_links),
+                        denominator=len(covered_anchors),
+                    ),
+                )
+            )
+
+            part_requirements = {
+                requirement.id
+                for requirement in self.inventory.requirements
+                if part.kind is StandardPartKind.CHAPTER and str(requirement.chapter) == part.id
+            }
+            part_case_links = {link for link in case_links if link[1] in part_requirements}
+            covered_requirements = {requirement_id for _, requirement_id in part_case_links}
+            case_breakdown.append(
+                CorpusPartMetric(
+                    id=part.id,
+                    kind=part.kind,
+                    title=part.title,
+                    coverage=CorpusRatio(
+                        numerator=len(covered_requirements),
+                        denominator=len(part_requirements),
+                    ),
+                    density=CorpusRatio(
+                        numerator=len(part_case_links),
+                        denominator=len(covered_requirements),
+                    ),
+                )
+            )
+
+        def summary(breakdown: list[CorpusPartMetric]) -> CorpusMetricSummary:
+            return CorpusMetricSummary(
+                coverage=CorpusRatio(
+                    numerator=sum(part.coverage.numerator for part in breakdown),
+                    denominator=sum(part.coverage.denominator for part in breakdown),
+                ),
+                density=CorpusRatio(
+                    numerator=sum(part.density.numerator for part in breakdown),
+                    denominator=sum(part.density.denominator for part in breakdown),
+                ),
+                breakdown=tuple(breakdown),
+            )
+
         return CorpusMetrics(
-            requirements=CorpusMetricSummary(
-                coverage=CorpusRatio(
-                    numerator=len(covered_anchors),
-                    denominator=len(_standard_anchors(self.anchor_index)),
-                ),
-                density=CorpusRatio(
-                    numerator=len(requirement_links),
-                    denominator=len(covered_anchors),
-                ),
-            ),
-            cases=CorpusMetricSummary(
-                coverage=CorpusRatio(
-                    numerator=len(covered_requirements),
-                    denominator=len(self.inventory.requirements),
-                ),
-                density=CorpusRatio(
-                    numerator=len(case_links),
-                    denominator=len(covered_requirements),
-                ),
-            ),
+            requirements=summary(requirement_breakdown),
+            cases=summary(case_breakdown),
         )
 
     def case_identities(self, selected: Iterable[LoadedCase]) -> tuple[CaseIdentity, ...]:
@@ -151,21 +204,29 @@ def _read_json(path: Path) -> dict[str, Any]:
     return value
 
 
-def _standard_anchors(path: Path) -> frozenset[str]:
+def _standard_parts(path: Path) -> tuple[_StandardPart, ...]:
     value = _read_json(path)
     if type(value.get("schema_version")) is not int or value["schema_version"] != 1:
         raise CatalogError(f"{path}: unsupported anchor index schema version")
     if value.get("edition") != "2023":
         raise CatalogError(f"{path}: anchor index must describe edition 2023")
 
+    parts: list[_StandardPart] = []
     anchors: list[str] = []
-    for section in ("clauses", "annexes"):
+    for section, kind, expected_count in (
+        ("clauses", StandardPartKind.CHAPTER, 41),
+        ("annexes", StandardPartKind.ANNEX, 17),
+    ):
         entries = value.get(section)
-        if not isinstance(entries, list):
-            raise CatalogError(f"{path}: {section} must be an array")
+        if not isinstance(entries, list) or len(entries) != expected_count:
+            raise CatalogError(f"{path}: {section} must contain {expected_count} entries")
         for entry in entries:
             if not isinstance(entry, dict) or not isinstance(entry.get("anchors"), list):
                 raise CatalogError(f"{path}: malformed {section} entry")
+            part_id = entry.get("id")
+            title = entry.get("title")
+            if not isinstance(part_id, str) or not isinstance(title, str) or not title:
+                raise CatalogError(f"{path}: malformed {section} identity")
             entry_anchors = entry["anchors"]
             if any(not isinstance(anchor, str) for anchor in entry_anchors):
                 raise CatalogError(f"{path}: anchors must be strings")
@@ -173,14 +234,27 @@ def _standard_anchors(path: Path) -> frozenset[str]:
                 entry_anchors
             ):
                 raise CatalogError(f"{path}: inconsistent {section} anchor count")
+            parts.append(
+                _StandardPart(
+                    id=part_id,
+                    kind=kind,
+                    title=title,
+                    anchors=tuple(entry_anchors),
+                )
+            )
             anchors.extend(entry_anchors)
 
-    unique = frozenset(anchors)
-    if len(unique) != len(anchors):
+    if len(set((part.kind, part.id) for part in parts)) != len(parts):
+        raise CatalogError(f"{path}: duplicate standard parts")
+    if len(frozenset(anchors)) != len(anchors):
         raise CatalogError(f"{path}: duplicate anchors")
     if type(value.get("anchor_count")) is not int or value["anchor_count"] != len(anchors):
         raise CatalogError(f"{path}: inconsistent total anchor count")
-    return unique
+    return tuple(parts)
+
+
+def _standard_anchors(path: Path) -> frozenset[str]:
+    return frozenset(anchor for part in _standard_parts(path) for anchor in part.anchors)
 
 
 def _parse(path: Path, model_type: type[Any]) -> Any:

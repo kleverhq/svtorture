@@ -388,17 +388,10 @@ def test_dataset_embeds_campaign_corpus_metrics(catalog: Catalog) -> None:
 
     dataset = publication.build_dataset(catalog, (campaign,), visibility="local")
     assert dataset["schema_version"] == 3
-    assert dataset["campaigns"][0]["schema_version"] == 3
-    assert dataset["campaigns"][0]["corpus_metrics"] == {
-        "requirements": {
-            "coverage": {"numerator": 16, "denominator": 16963},
-            "density": {"numerator": 17, "denominator": 16},
-        },
-        "cases": {
-            "coverage": {"numerator": 12, "denominator": 12},
-            "density": {"numerator": 12, "denominator": 12},
-        },
-    }
+    assert dataset["campaigns"][0]["schema_version"] == 4
+    assert dataset["campaigns"][0]["corpus_metrics"] == dataset["corpus_coverage"]
+    assert len(dataset["campaigns"][0]["corpus_metrics"]["requirements"]["breakdown"]) == 58
+    assert len(dataset["campaigns"][0]["corpus_metrics"]["cases"]["breakdown"]) == 58
 
 
 def test_dataset_reports_corpus_coverage_by_standard_part(catalog: Catalog) -> None:
