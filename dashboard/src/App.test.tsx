@@ -267,23 +267,22 @@ describe("App overview navigation", () => {
     expect(window.location.search).toContain("dateFrom=2099-01-01");
     expect(window.location.search).toContain("dateTo=2099-12-31");
 
-    fireEvent.click(
-      screen.getByRole("radio", { name: "Requirements coverage" }),
-    );
+    fireEvent.click(screen.getByRole("radio", { name: "Coverage" }));
     await waitFor(() => {
-      expect(window.location.search).toContain("trend=requirements-coverage");
+      expect(window.location.search).toContain("trend=coverage");
     });
     expect(window.location.search).toContain("tool=fake");
     expect(window.location.search).toContain("profile=simulator");
     expect(document.querySelectorAll(".trends-chart")).toHaveLength(1);
-    expect(
-      (
-        within(screen.getByRole("group", { name: "Tools" })).getByRole(
-          "button",
-          { name: "Fake 1" },
-        ) as HTMLButtonElement
-      ).disabled,
-    ).toBe(true);
+    expect(screen.queryByRole("group", { name: "Tools" })).toBeNull();
+    fireEvent.click(screen.getByText("All 3"));
+    const chapters = within(screen.getByRole("group", { name: "Chapters" }));
+    fireEvent.click(chapters.getByLabelText(/Chapter 5/));
+    fireEvent.click(chapters.getByLabelText(/Annex A/));
+    await waitFor(() => {
+      expect(window.location.search).toContain("chapter=chapter%3A5");
+      expect(window.location.search).toContain("chapter=annex%3AA");
+    });
   });
 
   it("filters Campaigns with quick Tool and Profile facets", async () => {

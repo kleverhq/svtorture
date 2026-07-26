@@ -145,12 +145,7 @@ export const EMPTY_FILTERS: Filters = {
   disagreement: false,
 };
 
-export type TrendKind =
-  | "tool-pass-rate"
-  | "requirements-coverage"
-  | "cases-coverage"
-  | "requirements-density"
-  | "cases-density";
+export type TrendKind = "pass-rate" | "coverage" | "density";
 
 export type TrendRange = "week" | "month" | "six-months" | "year" | "all";
 
@@ -158,21 +153,18 @@ export interface TrendState {
   kind: TrendKind;
   range: TrendRange;
   point: string;
+  parts: string[];
 }
 
 export const DEFAULT_TREND_STATE: TrendState = {
-  kind: "tool-pass-rate",
+  kind: "pass-rate",
   range: "month",
   point: "",
+  parts: [],
 };
 
-const TREND_KINDS = new Set<TrendKind>([
-  "tool-pass-rate",
-  "requirements-coverage",
-  "cases-coverage",
-  "requirements-density",
-  "cases-density",
-]);
+const TREND_KINDS = new Set<TrendKind>(["pass-rate", "coverage", "density"]);
+const TREND_PART_KEY = /^(?:chapter:[1-9][0-9]*|annex:[A-Q])$/;
 const TREND_RANGES = new Set<TrendRange>([
   "week",
   "month",
@@ -197,6 +189,13 @@ export function trendStateFromSearch(search: string): TrendState {
         ? requestedRange
         : DEFAULT_TREND_STATE.range,
     point: parameters.get("trendPoint") ?? "",
+    parts: [
+      ...new Set(
+        parameters
+          .getAll("chapter")
+          .filter((part) => TREND_PART_KEY.test(part)),
+      ),
+    ],
   };
 }
 
@@ -204,8 +203,11 @@ export function toolTrendPointKey(point: MetricPoint): string {
   return `tool:${point.campaign_id}:${point.tool_id}:${point.profile_id}`;
 }
 
-export function corpusTrendPointKey(campaign: Campaign): string {
-  return `corpus:${campaign.id}`;
+export function corpusTrendPointKey(
+  campaign: Campaign,
+  scope: "requirements" | "cases",
+): string {
+  return `corpus:${campaign.id}:${scope}`;
 }
 
 function subtractUtcMonths(timestamp: number, months: number): number {
@@ -303,6 +305,7 @@ export function filtersToSearch(
       parameters.set("trendRange", trend.range);
     }
     if (trend.point) parameters.set("trendPoint", trend.point);
+    for (const part of trend.parts) parameters.append("chapter", part);
   }
   return `?${parameters.toString()}`;
 }

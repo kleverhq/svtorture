@@ -114,12 +114,32 @@ function secondCampaign(dataset: Dataset): Campaign {
     },
     corpus_metrics: {
       requirements: {
-        coverage: { numerator: 5, denominator: 16963 },
-        density: { numerator: 8, denominator: 5 },
+        coverage: { numerator: 4, denominator: 16963 },
+        density: { numerator: 5, denominator: 4 },
+        breakdown: first.corpus_metrics.requirements.breakdown.map((part) =>
+          part.kind === "chapter" && part.id === "5"
+            ? {
+                ...part,
+                coverage: { numerator: 2, denominator: 300 },
+                density: { numerator: 3, denominator: 2 },
+              }
+            : part,
+        ),
       },
       cases: {
-        coverage: { numerator: 2, denominator: 3 },
+        coverage: { numerator: 2, denominator: 2 },
         density: { numerator: 4, denominator: 2 },
+        breakdown: first.corpus_metrics.cases.breakdown.map((part) =>
+          part.kind === "chapter" && part.id === "5"
+            ? {
+                ...part,
+                coverage: { numerator: 1, denominator: 1 },
+                density: { numerator: 2, denominator: 1 },
+              }
+            : part.kind === "chapter" && part.id === "13"
+              ? { ...part, density: { numerator: 2, denominator: 1 } }
+              : part,
+        ),
       },
     },
   } satisfies Campaign;
@@ -135,9 +155,10 @@ function renderView(
     dataset,
     toolFilter: "",
     profileFilter: "",
-    trend: "tool-pass-rate",
+    trend: "pass-rate",
     range: "month",
     selectedPointKey: "",
+    selectedParts: [],
     onTrendChange: vi.fn(),
     onRangeChange: vi.fn(),
     onSelectPoint: vi.fn(),
@@ -147,7 +168,7 @@ function renderView(
 }
 
 describe("TrendsView", () => {
-  it("normalizes all five trend formulas without applying tool facets to corpus data", () => {
+  it("normalizes grouped formulas and arbitrary chapter/annex combinations", () => {
     const { dataset, point } = makeMetric();
     const campaign = dataset.campaigns[0]!;
 
@@ -155,14 +176,31 @@ describe("TrendsView", () => {
     expect(ratioValue({ numerator: 3, denominator: 4 }, "percent")).toBe(75);
     expect(ratioValue({ numerator: 3, denominator: 2 }, "density")).toBe(1.5);
     expect(ratioValue({ numerator: 0, denominator: 0 }, "density")).toBeNull();
-    expect(trendPoints(dataset, "tool-pass-rate", "other", "")).toEqual([]);
+    expect(trendPoints(dataset, "pass-rate", "other", "")).toEqual([]);
+
+    const coverage = trendPoints(dataset, "coverage", "other", "parser");
+    expect(coverage).toHaveLength(2);
+    expect(coverage.find((item) => item.seriesName === "Requirements")?.value).toBeCloseTo(
+      (100 * 3) / 16963,
+    );
+    expect(coverage.find((item) => item.seriesName === "Cases")?.value).toBe(100);
+    const selected = trendPoints(dataset, "coverage", "", "", [
+      "chapter:13",
+      "annex:A",
+    ]);
+    expect(selected.find((item) => item.seriesName === "Requirements")?.value).toBeCloseTo(
+      (100 * 2) / 16663,
+    );
+    expect(selected.find((item) => item.seriesName === "Cases")?.value).toBe(100);
     expect(
-      trendPoints(dataset, "requirements-coverage", "other", "parser")[0]?.value,
-    ).toBeCloseTo((100 * 3) / 16963);
-    expect(trendPoints(dataset, "cases-coverage", "", "")[0]?.value).toBe(100);
-    expect(trendPoints(dataset, "requirements-density", "", "")[0]?.value).toBe(1);
-    expect(trendPoints(dataset, "cases-density", "", "")[0]?.value).toBe(1);
-    expect(corpusTrendPointKey(campaign)).toBe(`corpus:${campaign.id}`);
+      trendPoints(dataset, "density", "", "", ["chapter:5"]).find(
+        (item) => item.seriesName === "Cases",
+      )?.value,
+    ).toBeNull();
+
+    expect(corpusTrendPointKey(campaign, "requirements")).toBe(
+      `corpus:${campaign.id}:requirements`,
+    );
     const hashOnly = {
       ...campaign,
       id: "hash-only-change",
@@ -173,43 +211,48 @@ describe("TrendsView", () => {
       },
     } satisfies Campaign;
     dataset.campaigns.push(hashOnly);
-    const unchangedOperands = trendPoints(
-      dataset,
-      "requirements-coverage",
-      "",
-      "",
+    const unchangedOperands = trendPoints(dataset, "coverage", "", "").filter(
+      (item) => item.seriesName === "Requirements",
     );
     expect(unchangedOperands[0]?.boundaryKey).toBe(
       unchangedOperands[1]?.boundaryKey,
     );
     const changedOperands = secondCampaign(dataset);
     expect(
-      trendPoints(dataset, "requirements-coverage", "", "").find(
-        (item) => item.campaignId === changedOperands.id,
+      trendPoints(dataset, "coverage", "", "").find(
+        (item) =>
+          item.campaignId === changedOperands.id &&
+          item.seriesName === "Requirements",
       )?.boundaryKey,
     ).not.toBe(unchangedOperands[0]?.boundaryKey);
-    expect(toolTrendPointKey(point)).toBe(
-      `tool:${campaign.id}:fake:simulator`,
-    );
+    expect(toolTrendPointKey(point)).toBe(`tool:${campaign.id}:fake:simulator`);
     expect(formatUtcMinute(point.timestamp)).toBe("2026-07-22 10:58");
   });
 
-  it("offers exactly one selected trend and reports changes", () => {
+  it("offers three described trends with exactly one selected", () => {
     const { dataset } = makeMetric();
     const onTrendChange = vi.fn();
     renderView(dataset, { onTrendChange });
 
     const radios = screen.getAllByRole("radio");
-    expect(radios).toHaveLength(5);
+    expect(radios).toHaveLength(3);
     expect(radios.filter((radio) => (radio as HTMLInputElement).checked)).toHaveLength(
       1,
     );
     expect(
-      (screen.getByRole("radio", { name: "Tool pass rate" }) as HTMLInputElement)
+      (screen.getByRole("radio", { name: "Pass rate" }) as HTMLInputElement)
         .checked,
     ).toBe(true);
-    fireEvent.click(screen.getByRole("radio", { name: "Cases density" }));
-    expect(onTrendChange).toHaveBeenCalledWith("cases-density");
+    const coverage = screen.getByRole("radio", { name: "Coverage" });
+    const description = document.getElementById(
+      coverage.getAttribute("aria-describedby")!,
+    );
+    expect(description?.textContent).toContain("referenced anchors");
+    expect(coverage.closest("label")?.getAttribute("title")).toContain(
+      "referenced anchors",
+    );
+    fireEvent.click(screen.getByRole("radio", { name: "Density" }));
+    expect(onTrendChange).toHaveBeenCalledWith("density");
   });
 
   it("preserves tool zoom, boundaries, unavailable points, and 100% headroom", async () => {
@@ -234,6 +277,8 @@ describe("TrendsView", () => {
     await waitFor(() => expect(chartMock.option).toBeTruthy());
     const option = chartMock.option as any;
     expect(option.yAxis).toMatchObject({ min: 0, max: 110, interval: 20 });
+    expect(option.yAxis.axisLabel.formatter(100)).toBe("100%");
+    expect(option.yAxis.axisLabel.formatter(110)).toBe("");
     expect(option.xAxis.minInterval).toBe(24 * 60 * 60 * 1000);
     expect(option.dataZoom).toHaveLength(2);
     expect(option.dataZoom[0]).toMatchObject({
@@ -248,36 +293,32 @@ describe("TrendsView", () => {
     expect(option.series[1]).toMatchObject({ type: "scatter" });
     expect(option.series.at(-1).markLine).toMatchObject({
       label: { position: "insideEndTop" },
-      data: [{ yAxis: 100 }],
+      data: [{ yAxis: 100, label: { formatter: "100%" } }],
     });
     expect(option.tooltip.formatter({ data: lineData[0] })).toBe(
       "<strong>75%</strong><br/>fake/simulator<br/>3/4<br/>2026-07-22 10:58 UTC",
     );
   });
 
-  it("renders one corpus line with coverage and density reference markers", async () => {
+  it("renders Requirements and Cases lines with coverage and density markers", async () => {
     const { dataset } = makeMetric();
     secondCampaign(dataset);
-    const view = renderView(dataset, { trend: "requirements-coverage" });
+    const view = renderView(dataset, { trend: "coverage" });
 
     await waitFor(() => expect(chartMock.option).toBeTruthy());
     let option = chartMock.option as any;
-    expect(option.legend.data).toEqual(["Requirements coverage"]);
+    expect(option.legend.data).toEqual(["Requirements", "Cases"]);
     expect(option.series.filter((series: any) => series.name !== "Reference")).toHaveLength(
-      1,
+      2,
     );
     expect(option.series[0].data[0].value[1]).toBeCloseTo((100 * 3) / 16963);
+    expect(option.series[1].data[0].value[1]).toBe(100);
     expect(option.yAxis.max).toBe(110);
     expect(option.series.at(-1).markLine.data).toEqual([
-      { yAxis: 100, label: { formatter: "100% saturation" } },
+      { yAxis: 100, label: { formatter: "100%" } },
     ]);
 
-    view.rerender(
-      <TrendsView
-        {...view.props}
-        trend="cases-density"
-      />,
-    );
+    view.rerender(<TrendsView {...view.props} trend="density" />);
     await waitFor(() => {
       option = chartMock.option as any;
       expect(option.yAxis.name).toBe("density");
@@ -287,20 +328,26 @@ describe("TrendsView", () => {
       { yAxis: 1, label: { formatter: "1×" } },
       { yAxis: 2, label: { formatter: "2×" } },
     ]);
-    expect(option.series[0].data.at(-1).value[1]).toBe(2);
+    expect(option.series[0].data.at(-1).value[1]).toBe(1.25);
+    expect(option.series[1].data.at(-1).value[1]).toBe(2);
   });
 
   it("renders a zero-denominator corpus point as unavailable", async () => {
     const { dataset } = makeMetric();
     const campaign = dataset.campaigns[0]!;
     campaign.corpus_metrics.cases.density = { numerator: 0, denominator: 0 };
-    renderView(dataset, { trend: "cases-density" });
+    renderView(dataset, { trend: "density" });
 
     await waitFor(() => expect(chartMock.option).toBeTruthy());
     const option = chartMock.option as any;
-    expect(option.series[0].data[0].value[1]).toBeNull();
-    expect(option.series[1]).toMatchObject({ type: "scatter" });
-    expect(option.series[1].data[0]).toMatchObject({
+    const casesLine = option.series.find(
+      (series: any) => series.name === "Cases" && series.type === "line",
+    );
+    const casesUnavailable = option.series.find(
+      (series: any) => series.name === "Cases" && series.type === "scatter",
+    );
+    expect(casesLine.data[0].value[1]).toBeNull();
+    expect(casesUnavailable.data[0]).toMatchObject({
       unavailable: true,
       value: [expect.any(Number), 0],
     });
@@ -315,7 +362,7 @@ describe("TrendsView", () => {
     const key = toolTrendPointKey(point);
 
     const chartGroup = screen.getByRole("group", {
-      name: /Tool pass rate over time/,
+      name: /Pass rate over time/,
     });
     chartGroup.focus();
     fireEvent.keyDown(chartGroup, { key: "ArrowRight" });
@@ -353,20 +400,21 @@ describe("TrendsView", () => {
     expect(onSelectPoint).toHaveBeenLastCalledWith("");
 
     const campaign = dataset.campaigns[0]!;
-    const corpusKey = corpusTrendPointKey(campaign);
+    const corpusKey = corpusTrendPointKey(campaign, "requirements");
     view.rerender(
       <TrendsView
         {...view.props}
-        trend="requirements-density"
+        trend="density"
         selectedPointKey={corpusKey}
       />,
     );
     const corpusInspector = await screen.findByRole("complementary", {
       name: "Trend point details",
     });
-    expect(within(corpusInspector).getAllByText("Requirements density")).toHaveLength(
-      2,
-    );
+    expect(
+      within(corpusInspector).getByRole("heading", { name: "Requirements" }),
+    ).toBeTruthy();
+    expect(within(corpusInspector).getByText("Density")).toBeTruthy();
     expect(within(corpusInspector).getByText("1×")).toBeTruthy();
     expect(
       within(corpusInspector).getAllByText(campaign.hashes.requirements),

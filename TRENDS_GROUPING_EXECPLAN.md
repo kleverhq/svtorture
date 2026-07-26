@@ -18,7 +18,7 @@ This work does not add multiple chart widgets, overlay Pass rate with corpus lin
 
 - [x] (2026-07-26 19:54Z) Confirmed product decisions: one Coverage chart with two lines, one Density chart with two lines, chapters plus annexes, and strict campaign replacement.
 - [x] (2026-07-26 20:08Z) Added strict schema-version-4 per-part campaign snapshots, made publication use the shared typed snapshot, regenerated the campaign schema, and passed 76 focused backend tests plus metadata validation.
-- [ ] Reduce Trends to three choices, implement two-line corpus plots, tooltips, hidden 110% label, and URL-backed chapter/annex multiselect facets.
+- [x] (2026-07-26 20:18Z) Reduced Trends to three choices, implemented two-line corpus plots, hover/accessibility descriptions, hidden 110% label, and URL-backed chapter/annex multiselect facets; typecheck, 48 frontend tests, and production build pass.
 - [ ] Delete the schema-version-3 campaign, collect one full schema-version-4 campaign, and rebuild the dataset.
 - [ ] Run focused reviews, full gates, and desktop/mobile browser validation; remove this completed plan.
 
@@ -66,7 +66,7 @@ This work does not add multiple chart widgets, overlay Pass rate with corpus lin
 
 ## Outcomes & Retrospective
 
-The backend milestone is complete. `Catalog.corpus_metrics()` now owns aggregate and ordered 58-row calculations for both scopes; campaign schema version 4 requires coherent chapter/annex breakdowns whose sums equal each aggregate; publication serializes the same typed snapshot instead of a parallel implementation. Focused tests and generated schemas pass. The grouped frontend, replacement campaign, and final validation remain.
+The backend and frontend milestones are complete. `Catalog.corpus_metrics()` owns aggregate and ordered 58-row calculations for both scopes; campaign schema version 4 requires coherent breakdowns and publication serializes the same snapshot. Trends now has Pass rate, Coverage, and Density; corpus selections produce Requirements and Cases lines from summed selected operands. Pass rate shows Tool/Profile while corpus trends show a chapter/annex multiselect, all state is URL-backed, option descriptions work on hover and through ARIA, the 100% reference is concise, and 110% is unlabeled while headroom remains. Replacement evidence and final validation remain.
 
 ## Context and Orientation
 
@@ -188,3 +188,5 @@ Selected part URL values must be stable keys such as:
 Revision note (2026-07-26 19:54Z): Created the self-contained plan after the user confirmed two-line corpus plots, chapter-plus-annex filtering, and strict replacement evidence.
 
 Revision note (2026-07-26 20:08Z): Recorded completion of the strict shared per-part campaign/publication contract and focused backend evidence.
+
+Revision note (2026-07-26 20:18Z): Recorded completion of grouped frontend trends, part facets, tooltips, percent labeling, tests, and production build.

@@ -746,6 +746,84 @@ footer {
   margin-top: 3px;
 }
 
+.filters__part-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 35px;
+}
+
+.filters__part-row > .filters__quick-label {
+  flex: 0 0 62px;
+}
+
+.part-multiselect {
+  position: relative;
+}
+
+.part-multiselect > summary {
+  list-style: none;
+}
+
+.part-multiselect > summary::-webkit-details-marker {
+  display: none;
+}
+
+.part-multiselect > summary::after {
+  margin-left: 7px;
+  content: "▾";
+}
+
+.part-multiselect[open] > summary {
+  border-color: var(--accent);
+  color: var(--accent-strong);
+  background: var(--accent-soft);
+}
+
+.part-multiselect__menu {
+  position: absolute;
+  z-index: 80;
+  top: calc(100% + 5px);
+  left: 0;
+  overflow-y: auto;
+  width: min(390px, calc(100vw - 36px));
+  max-height: min(55vh, 460px);
+  padding: 6px;
+  border: 1px solid var(--line-strong);
+  border-radius: 7px;
+  background: var(--surface);
+  box-shadow: 0 12px 30px rgba(20, 35, 30, 0.2);
+}
+
+.part-multiselect__menu label {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 8px;
+  align-items: start;
+  padding: 7px;
+  border-radius: 5px;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+.part-multiselect__menu label:hover {
+  background: var(--surface-hover);
+}
+
+.part-multiselect__menu input {
+  width: 14px;
+  min-height: 14px;
+  margin: 2px 0 0;
+  accent-color: var(--accent);
+}
+
+.part-multiselect__menu small {
+  display: block;
+  margin-top: 2px;
+  color: var(--text-muted);
+  font-size: 0.62rem;
+}
+
 label {
   display: flex;
   min-width: 0;

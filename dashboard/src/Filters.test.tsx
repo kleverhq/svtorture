@@ -3,7 +3,7 @@ import { useState } from "react";
 import { afterEach, describe, expect, it } from "vitest";
 
 import { Filters, type FilterMode } from "./Filters";
-import { EMPTY_FILTERS, selectedCampaign } from "./model";
+import { EMPTY_FILTERS, selectedCampaign, type TrendKind } from "./model";
 import { makeTestDataset } from "./testDataset";
 import type { Dataset } from "./types";
 
@@ -12,16 +12,17 @@ afterEach(cleanup);
 function FilterHarness({
   mode = "corpus",
   dataset = makeTestDataset(),
-  facetsDisabled = false,
+  trendKind = "pass-rate",
 }: {
   mode?: FilterMode;
   dataset?: Dataset;
-  facetsDisabled?: boolean;
+  trendKind?: TrendKind;
 }) {
   const [filters, setFilters] = useState({
     ...EMPTY_FILTERS,
     status: "conforming",
   });
+  const [selectedParts, setSelectedParts] = useState<string[]>([]);
   return (
     <Filters
       dataset={dataset}
@@ -30,7 +31,10 @@ function FilterHarness({
       setFilters={setFilters}
       onReset={() => setFilters({ ...EMPTY_FILTERS })}
       mode={mode}
-      facetsDisabled={facetsDisabled}
+      trendKind={mode === "trends" ? trendKind : undefined}
+      standardParts={dataset.corpus_coverage.requirements.breakdown}
+      selectedParts={selectedParts}
+      onSelectedPartsChange={setSelectedParts}
     />
   );
 }
@@ -89,27 +93,28 @@ describe("Filters", () => {
     expect(screen.queryByLabelText("Search")).toBeNull();
   });
 
-  it("disables and explains tool facets for corpus trends", () => {
-    render(<FilterHarness mode="trends" facetsDisabled />);
+  it("replaces tool facets with an all-default chapter and annex multiselect", () => {
+    render(<FilterHarness mode="trends" trendKind="coverage" />);
 
-    const tools = screen.getByRole("group", { name: "Tools" });
-    const profiles = screen.getByRole("group", { name: "Profiles" });
-    expect(
-      (within(tools).getByRole("button", { name: "All 0" }) as HTMLButtonElement)
-        .disabled,
-    ).toBe(true);
-    expect(
-      (
-        within(profiles).getByRole("button", {
-          name: "All 0",
-        }) as HTMLButtonElement
-      ).disabled,
-    ).toBe(true);
-    const descriptionId = tools.getAttribute("aria-describedby");
-    expect(descriptionId).toBeTruthy();
-    expect(document.getElementById(descriptionId!)?.textContent).toContain(
-      "apply to Tool pass rate only",
+    expect(screen.queryByRole("group", { name: "Tools" })).toBeNull();
+    expect(screen.queryByRole("group", { name: "Profiles" })).toBeNull();
+    fireEvent.click(screen.getByText("All 3"));
+    const chapters = within(screen.getByRole("group", { name: "Chapters" }));
+    expect((chapters.getByLabelText("All") as HTMLInputElement).checked).toBe(true);
+
+    fireEvent.click(chapters.getByLabelText(/Chapter 5/));
+    fireEvent.click(chapters.getByLabelText(/Annex A/));
+    expect(screen.getByText("2 selected")).toBeTruthy();
+    expect((chapters.getByLabelText("All") as HTMLInputElement).checked).toBe(false);
+    expect((chapters.getByLabelText(/Chapter 5/) as HTMLInputElement).checked).toBe(
+      true,
     );
+    expect((chapters.getByLabelText(/Annex A/) as HTMLInputElement).checked).toBe(
+      true,
+    );
+
+    fireEvent.click(chapters.getByLabelText("All"));
+    expect(screen.getByText("All 3")).toBeTruthy();
   });
 
   it("offers historical tools that are absent from the selected campaign", () => {

@@ -1,10 +1,10 @@
-import type { CorpusCoverageMetric, CorpusRatio } from "./types";
+import type { CorpusMetricSummary, CorpusRatio } from "./types";
 
 export type CorpusCoverageKind = "requirements" | "cases";
 
 interface CorpusCoverageProps {
   kind: CorpusCoverageKind;
-  metric: CorpusCoverageMetric;
+  metric: CorpusMetricSummary;
 }
 
 const INTEGER_FORMAT = new Intl.NumberFormat("en-US");
@@ -34,7 +34,7 @@ function formatOperands(ratio: CorpusRatio): string {
 
 function formulaCopy(
   kind: CorpusCoverageKind,
-  metric: CorpusCoverageMetric,
+  metric: CorpusMetricSummary,
 ): { coverage: string; density: string } {
   const coverageValue = formatPercentage(metric.coverage);
   const densityValue = formatDensity(metric.density);

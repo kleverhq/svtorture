@@ -43,46 +43,51 @@ describe("URL-backed filters", () => {
   });
 
   it("round-trips strict trend state and rejects unknown values", () => {
-    const point = "corpus:campaign";
+    const point = "corpus:campaign:cases";
     const encoded = filtersToSearch(EMPTY_FILTERS, "trends", {
-      kind: "cases-density",
+      kind: "density",
       range: "six-months",
       point,
+      parts: ["chapter:5", "annex:A"],
     });
 
-    expect(encoded).toContain("trend=cases-density");
+    expect(encoded).toContain("trend=density");
     expect(encoded).toContain("trendRange=six-months");
-    expect(encoded).toContain("trendPoint=corpus%3Acampaign");
+    expect(encoded).toContain("trendPoint=corpus%3Acampaign%3Acases");
+    expect(encoded).toContain("chapter=chapter%3A5");
+    expect(encoded).toContain("chapter=annex%3AA");
     expect(trendStateFromSearch(encoded)).toEqual({
-      kind: "cases-density",
+      kind: "density",
       range: "six-months",
       point,
+      parts: ["chapter:5", "annex:A"],
     });
-    expect(trendStateFromSearch("?trend=unknown&trendRange=forever")).toEqual({
-      kind: "tool-pass-rate",
+    expect(
+      trendStateFromSearch(
+        "?trend=unknown&trendRange=forever&chapter=invalid&chapter=annex:Z",
+      ),
+    ).toEqual({
+      kind: "pass-rate",
       range: "month",
       point: "",
+      parts: [],
     });
-    for (const kind of [
-      "tool-pass-rate",
-      "requirements-coverage",
-      "cases-coverage",
-      "requirements-density",
-      "cases-density",
-    ] as const) {
+    for (const kind of ["pass-rate", "coverage", "density"] as const) {
       const search = filtersToSearch(EMPTY_FILTERS, "trends", {
         kind,
         range: "month",
         point: "",
+        parts: [],
       });
       expect(trendStateFromSearch(search).kind).toBe(kind);
     }
     expect(filtersToSearch(EMPTY_FILTERS, "trends")).toBe("?view=trends");
     expect(
       filtersToSearch(EMPTY_FILTERS, "overview", {
-        kind: "requirements-coverage",
+        kind: "coverage",
         range: "week",
         point,
+        parts: ["chapter:5"],
       }),
     ).toBe("?view=overview");
   });
@@ -126,8 +131,8 @@ describe("URL-backed filters", () => {
         profile_id: "profile",
       } as MetricPoint),
     ).toBe("tool:campaign:tool:profile");
-    expect(corpusTrendPointKey(dataset.campaigns[0]!)).toBe(
-      "corpus:20260101T000000Z-test",
+    expect(corpusTrendPointKey(dataset.campaigns[0]!, "requirements")).toBe(
+      "corpus:20260101T000000Z-test:requirements",
     );
   });
 });

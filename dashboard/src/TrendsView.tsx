@@ -7,7 +7,13 @@ import {
   type TrendKind,
   type TrendRange,
 } from "./model";
-import type { Campaign, CorpusRatio, Dataset, MetricPoint } from "./types";
+import type {
+  Campaign,
+  CorpusMetricSummary,
+  CorpusRatio,
+  Dataset,
+  MetricPoint,
+} from "./types";
 
 const DAY_MS = 24 * 60 * 60 * 1000;
 const RANGE_OPTIONS: Array<{ value: TrendRange; label: string }> = [
@@ -22,38 +28,33 @@ interface TrendDefinition {
   kind: TrendKind;
   label: string;
   unit: "percent" | "density";
+  description: string;
   referenceDescription: string;
 }
 
 export const TREND_OPTIONS: TrendDefinition[] = [
   {
-    kind: "tool-pass-rate",
-    label: "Tool pass rate",
+    kind: "pass-rate",
+    label: "Pass rate",
     unit: "percent",
-    referenceDescription: "The horizontal reference marks 100% saturation.",
+    description:
+      "Applicable requirements passed by each selected tool and profile, including Unclear in the denominator.",
+    referenceDescription: "The horizontal reference marks 100%.",
   },
   {
-    kind: "requirements-coverage",
-    label: "Requirements coverage",
+    kind: "coverage",
+    label: "Coverage",
     unit: "percent",
-    referenceDescription: "The horizontal reference marks 100% saturation.",
+    description:
+      "Requirements shows referenced anchors; Cases shows requirements linked from cases. Both are divided by the selected corpus total.",
+    referenceDescription: "The horizontal reference marks 100%.",
   },
   {
-    kind: "cases-coverage",
-    label: "Cases coverage",
-    unit: "percent",
-    referenceDescription: "The horizontal reference marks 100% saturation.",
-  },
-  {
-    kind: "requirements-density",
-    label: "Requirements density",
+    kind: "density",
+    label: "Density",
     unit: "density",
-    referenceDescription: "Horizontal references mark 1× and 2× density.",
-  },
-  {
-    kind: "cases-density",
-    label: "Cases density",
-    unit: "density",
+    description:
+      "Requirements shows links per covered anchor; Cases shows case links per covered requirement for the selected parts.",
     referenceDescription: "Horizontal references mark 1× and 2× density.",
   },
 ];
@@ -108,19 +109,22 @@ export function toolPassRate(point: MetricPoint): number | null {
   return (100 * point.numerator) / point.denominator;
 }
 
-function corpusRatio(campaign: Campaign, kind: TrendKind): CorpusRatio {
-  switch (kind) {
-    case "requirements-coverage":
-      return campaign.corpus_metrics.requirements.coverage;
-    case "cases-coverage":
-      return campaign.corpus_metrics.cases.coverage;
-    case "requirements-density":
-      return campaign.corpus_metrics.requirements.density;
-    case "cases-density":
-      return campaign.corpus_metrics.cases.density;
-    case "tool-pass-rate":
-      throw new Error("tool pass rate does not have a campaign corpus ratio");
-  }
+function corpusRatio(
+  summary: CorpusMetricSummary,
+  kind: "coverage" | "density",
+  selectedParts: string[],
+): CorpusRatio {
+  if (!selectedParts.length) return summary[kind];
+  const selected = new Set(selectedParts);
+  return summary.breakdown
+    .filter((part) => selected.has(`${part.kind}:${part.id}`))
+    .reduce(
+      (ratio, part) => ({
+        numerator: ratio.numerator + part[kind].numerator,
+        denominator: ratio.denominator + part[kind].denominator,
+      }),
+      { numerator: 0, denominator: 0 },
+    );
 }
 
 export function trendPoints(
@@ -128,8 +132,9 @@ export function trendPoints(
   kind: TrendKind,
   toolFilter: string,
   profileFilter: string,
+  selectedParts: string[] = [],
 ): TrendPoint[] {
-  if (kind === "tool-pass-rate") {
+  if (kind === "pass-rate") {
     const campaigns = new Map(dataset.campaigns.map((campaign) => [campaign.id, campaign]));
     return dataset.metrics
       .filter(
@@ -155,20 +160,26 @@ export function trendPoints(
   }
 
   const definition = definitionFor(kind);
-  return dataset.campaigns.map((campaign) => {
-    const ratio = corpusRatio(campaign, kind);
-    return {
-      pointKey: corpusTrendPointKey(campaign),
-      campaignId: campaign.id,
-      timestamp: campaign.finished_at,
-      seriesName: definition.label,
-      numerator: ratio.numerator,
-      denominator: ratio.denominator,
-      value: ratioValue(ratio, definition.unit),
-      boundaryKey: `${ratio.numerator}:${ratio.denominator}`,
-      campaign,
-    };
-  });
+  return dataset.campaigns.flatMap((campaign) =>
+    (["requirements", "cases"] as const).map((scope) => {
+      const ratio = corpusRatio(
+        campaign.corpus_metrics[scope],
+        kind,
+        selectedParts,
+      );
+      return {
+        pointKey: corpusTrendPointKey(campaign, scope),
+        campaignId: campaign.id,
+        timestamp: campaign.finished_at,
+        seriesName: scope === "requirements" ? "Requirements" : "Cases",
+        numerator: ratio.numerator,
+        denominator: ratio.denominator,
+        value: ratioValue(ratio, definition.unit),
+        boundaryKey: `${ratio.numerator}:${ratio.denominator}`,
+        campaign,
+      };
+    }),
+  );
 }
 
 function isMeasurementBoundary(
@@ -300,7 +311,7 @@ function TrendsChart({
       }
       const references =
         definition.unit === "percent"
-          ? [{ yAxis: 100, label: { formatter: "100% saturation" } }]
+          ? [{ yAxis: 100, label: { formatter: "100%" } }]
           : [
               { yAxis: 1, label: { formatter: "1×" } },
               { yAxis: 2, label: { formatter: "2×" } },
@@ -421,7 +432,10 @@ function TrendsChart({
           nameTextStyle: { color: "var(--text-muted)" },
           axisLabel: {
             color: "var(--text-muted)",
-            formatter: definition.unit === "percent" ? "{value}%" : "{value}×",
+            formatter:
+              definition.unit === "percent"
+                ? (value: number) => (value > 100 ? "" : `${value}%`)
+                : "{value}×",
           },
           splitLine: { lineStyle: { color: "var(--line)" } },
         },
@@ -559,7 +573,7 @@ function TrendsInspector({
       <header>
         <div>
           <span>Trend point</span>
-          <h2>{metric ? point.seriesName : definition.label}</h2>
+          <h2>{point.seriesName}</h2>
           <code>{formatUtcMinute(point.timestamp)} UTC</code>
         </div>
         <button
@@ -696,6 +710,7 @@ export function TrendsView({
   trend,
   range,
   selectedPointKey,
+  selectedParts,
   onTrendChange,
   onRangeChange,
   onSelectPoint,
@@ -706,6 +721,7 @@ export function TrendsView({
   trend: TrendKind;
   range: TrendRange;
   selectedPointKey: string;
+  selectedParts: string[];
   onTrendChange: (trend: TrendKind) => void;
   onRangeChange: (range: TrendRange) => void;
   onSelectPoint: (point: string) => void;
@@ -714,12 +730,12 @@ export function TrendsView({
   const [resetKey, setResetKey] = useState(0);
   const definition = definitionFor(trend);
   const visible = useMemo(
-    () => trendPoints(dataset, trend, toolFilter, profileFilter),
-    [dataset, profileFilter, toolFilter, trend],
+    () => trendPoints(dataset, trend, toolFilter, profileFilter, selectedParts),
+    [dataset, profileFilter, selectedParts, toolFilter, trend],
   );
   const timeline = useMemo(
     () =>
-      trend === "tool-pass-rate"
+      trend === "pass-rate"
         ? dataset.metrics.map((point) => ({ timestamp: point.timestamp }))
         : dataset.campaigns.map((campaign) => ({ timestamp: campaign.finished_at })),
     [dataset.campaigns, dataset.metrics, trend],
@@ -776,18 +792,26 @@ export function TrendsView({
         <fieldset className="trends__selector">
           <legend>Trend</legend>
           <div className="trends__options">
-            {TREND_OPTIONS.map((option) => (
-              <label key={option.kind}>
-                <input
-                  type="radio"
-                  name="trend"
-                  value={option.kind}
-                  checked={trend === option.kind}
-                  onChange={() => onTrendChange(option.kind)}
-                />
-                <span>{option.label}</span>
-              </label>
-            ))}
+            {TREND_OPTIONS.map((option) => {
+              const descriptionId = `trend-description-${option.kind}`;
+              return (
+                <label key={option.kind} title={option.description}>
+                  <input
+                    type="radio"
+                    name="trend"
+                    value={option.kind}
+                    checked={trend === option.kind}
+                    aria-label={option.label}
+                    aria-describedby={descriptionId}
+                    onChange={() => onTrendChange(option.kind)}
+                  />
+                  <span>{option.label}</span>
+                  <span id={descriptionId} className="visually-hidden">
+                    {option.description}
+                  </span>
+                </label>
+              );
+            })}
           </div>
         </fieldset>
         <div className="trends__main">

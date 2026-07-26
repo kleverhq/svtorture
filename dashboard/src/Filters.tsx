@@ -6,8 +6,12 @@ import {
   STATUS_LABELS,
   statusGroup,
 } from "./model";
-import type { Filters as FilterValues, StatusGroup } from "./model";
-import type { Campaign, Dataset, Status } from "./types";
+import type {
+  Filters as FilterValues,
+  StatusGroup,
+  TrendKind,
+} from "./model";
+import type { Campaign, CorpusPartMetric, Dataset, Status } from "./types";
 
 export type FilterMode = "overview" | "corpus" | "trends" | "campaigns";
 
@@ -18,7 +22,10 @@ interface FilterProps {
   setFilters: Dispatch<SetStateAction<FilterValues>>;
   onReset: () => void;
   mode: FilterMode;
-  facetsDisabled?: boolean;
+  trendKind?: TrendKind | undefined;
+  standardParts?: CorpusPartMetric[] | undefined;
+  selectedParts?: string[] | undefined;
+  onSelectedPartsChange?: ((parts: string[]) => void) | undefined;
 }
 
 function choices(values: Array<string | undefined>): string[] {
@@ -40,7 +47,10 @@ export function Filters({
   setFilters,
   onReset,
   mode,
-  facetsDisabled = false,
+  trendKind,
+  standardParts = [],
+  selectedParts = [],
+  onSelectedPartsChange,
 }: FilterProps) {
   const update = (name: keyof FilterValues, value: string | boolean) => {
     setFilters((current) => {
@@ -136,28 +146,30 @@ export function Filters({
     mode === "corpus" ||
     mode === "trends" ||
     mode === "campaigns";
+  const showToolFacets =
+    showFacets && (mode !== "trends" || trendKind === "pass-rate");
+  const showPartFacet =
+    mode === "trends" && trendKind !== undefined && trendKind !== "pass-rate";
+  const partKey = (part: CorpusPartMetric) => `${part.kind}:${part.id}`;
+  const togglePart = (key: string) => {
+    if (!onSelectedPartsChange) return;
+    if (selectedParts.includes(key)) {
+      onSelectedPartsChange(selectedParts.filter((part) => part !== key));
+    } else {
+      onSelectedPartsChange([...selectedParts, key]);
+    }
+  };
 
   return (
     <div className="filters">
-      {showFacets && (
+      {showToolFacets && (
         <div className="filters__pair-grid">
-          {facetsDisabled && (
-            <span id="trend-facet-scope" className="visually-hidden">
-              Tool and profile filters apply to Tool pass rate only.
-            </span>
-          )}
-          <div
-            className="filters__quick"
-            role="group"
-            aria-label="Tools"
-            aria-describedby={facetsDisabled ? "trend-facet-scope" : undefined}
-          >
+          <div className="filters__quick" role="group" aria-label="Tools">
             <span className="filters__quick-label">Tools</span>
             <button
               type="button"
               className="filter-chip"
               aria-pressed={!filters.tool}
-              disabled={facetsDisabled}
               onClick={() => update("tool", "")}
             >
               All <b>{profileCount("", filters.profile)}</b>
@@ -167,7 +179,6 @@ export function Filters({
                 type="button"
                 className="filter-chip"
                 aria-pressed={filters.tool === toolId}
-                disabled={facetsDisabled}
                 key={toolId}
                 onClick={() => update("tool", toolId)}
               >
@@ -176,18 +187,12 @@ export function Filters({
               </button>
             ))}
           </div>
-          <div
-            className="filters__quick"
-            role="group"
-            aria-label="Profiles"
-            aria-describedby={facetsDisabled ? "trend-facet-scope" : undefined}
-          >
+          <div className="filters__quick" role="group" aria-label="Profiles">
             <span className="filters__quick-label">Profile</span>
             <button
               type="button"
               className="filter-chip"
               aria-pressed={!filters.profile}
-              disabled={facetsDisabled}
               onClick={() => update("profile", "")}
             >
               All <b>{profileCount(filters.tool, "")}</b>
@@ -197,7 +202,6 @@ export function Filters({
                 type="button"
                 className="filter-chip"
                 aria-pressed={filters.profile === profileId}
-                disabled={facetsDisabled}
                 key={profileId}
                 onClick={() => update("profile", profileId)}
               >
@@ -206,6 +210,45 @@ export function Filters({
               </button>
             ))}
           </div>
+        </div>
+      )}
+
+      {showPartFacet && (
+        <div className="filters__part-row">
+          <span className="filters__quick-label">Chapter</span>
+          <details className="part-multiselect">
+            <summary className="filter-chip">
+              {selectedParts.length
+                ? `${selectedParts.length} selected`
+                : `All ${standardParts.length}`}
+            </summary>
+            <div className="part-multiselect__menu" role="group" aria-label="Chapters">
+              <label>
+                <input
+                  type="checkbox"
+                  checked={selectedParts.length === 0}
+                  onChange={() => onSelectedPartsChange?.([])}
+                />
+                <span>All</span>
+              </label>
+              {standardParts.map((part) => {
+                const key = partKey(part);
+                return (
+                  <label key={key}>
+                    <input
+                      type="checkbox"
+                      checked={selectedParts.includes(key)}
+                      onChange={() => togglePart(key)}
+                    />
+                    <span>
+                      {part.kind === "chapter" ? "Chapter" : "Annex"} {part.id}
+                      <small>{part.title}</small>
+                    </span>
+                  </label>
+                );
+              })}
+            </div>
+          </details>
         </div>
       )}
 

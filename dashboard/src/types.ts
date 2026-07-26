@@ -147,9 +147,18 @@ export interface CorpusRatio {
   denominator: number;
 }
 
+export interface CorpusPartMetric {
+  kind: "chapter" | "annex";
+  id: string;
+  title: string;
+  coverage: CorpusRatio;
+  density: CorpusRatio;
+}
+
 export interface CorpusMetricSummary {
   coverage: CorpusRatio;
   density: CorpusRatio;
+  breakdown: CorpusPartMetric[];
 }
 
 export interface CorpusMetrics {
@@ -167,7 +176,7 @@ export interface CampaignTool {
 }
 
 export interface Campaign {
-  schema_version: 3;
+  schema_version: 4;
   id: string;
   started_at: string;
   finished_at: string;
@@ -217,22 +226,7 @@ export interface MetricPoint {
   repository_commit: string;
 }
 
-export interface CorpusCoveragePart {
-  kind: "chapter" | "annex";
-  id: string;
-  title: string;
-  coverage: CorpusRatio;
-  density: CorpusRatio;
-}
-
-export interface CorpusCoverageMetric extends CorpusMetricSummary {
-  breakdown: CorpusCoveragePart[];
-}
-
-export interface CorpusCoverage {
-  requirements: CorpusCoverageMetric;
-  cases: CorpusCoverageMetric;
-}
+export type CorpusCoverage = CorpusMetrics;
 
 export interface Dataset {
   schema_version: 3;

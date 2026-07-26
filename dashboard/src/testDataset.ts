@@ -72,8 +72,64 @@ export function makeTestDataset(): Dataset {
     profile_ids: ["simulator"],
     reported_version: "test-tool 1.0",
   };
+  const corpusMetrics = {
+    requirements: {
+      coverage: { numerator: 3, denominator: 16963 },
+      density: { numerator: 3, denominator: 3 },
+      breakdown: [
+        {
+          kind: "chapter" as const,
+          id: "5",
+          title: "Lexical conventions",
+          coverage: { numerator: 1, denominator: 300 },
+          density: { numerator: 1, denominator: 1 },
+        },
+        {
+          kind: "chapter" as const,
+          id: "13",
+          title: "Tasks and functions",
+          coverage: { numerator: 2, denominator: 16439 },
+          density: { numerator: 2, denominator: 2 },
+        },
+        {
+          kind: "annex" as const,
+          id: "A",
+          title: "Formal syntax",
+          coverage: { numerator: 0, denominator: 224 },
+          density: { numerator: 0, denominator: 0 },
+        },
+      ],
+    },
+    cases: {
+      coverage: { numerator: 1, denominator: 1 },
+      density: { numerator: 1, denominator: 1 },
+      breakdown: [
+        {
+          kind: "chapter" as const,
+          id: "5",
+          title: "Lexical conventions",
+          coverage: { numerator: 0, denominator: 0 },
+          density: { numerator: 0, denominator: 0 },
+        },
+        {
+          kind: "chapter" as const,
+          id: "13",
+          title: "Tasks and functions",
+          coverage: { numerator: 1, denominator: 1 },
+          density: { numerator: 1, denominator: 1 },
+        },
+        {
+          kind: "annex" as const,
+          id: "A",
+          title: "Formal syntax",
+          coverage: { numerator: 0, denominator: 0 },
+          density: { numerator: 0, denominator: 0 },
+        },
+      ],
+    },
+  };
   const campaign = {
-    schema_version: 3 as const,
+    schema_version: 4 as const,
     id: "20260101T000000Z-test",
     started_at: "2026-01-01T00:00:00Z",
     finished_at: "2026-01-01T00:00:01Z",
@@ -89,16 +145,7 @@ export function makeTestDataset(): Dataset {
       cases: HASH,
       selection: HASH,
     },
-    corpus_metrics: {
-      requirements: {
-        coverage: { numerator: 3, denominator: 16963 },
-        density: { numerator: 3, denominator: 3 },
-      },
-      cases: {
-        coverage: { numerator: 1, denominator: 1 },
-        density: { numerator: 1, denominator: 1 },
-      },
-    },
+    corpus_metrics: corpusMetrics,
     results: [
       {
         case_id: testCase.id,
@@ -145,48 +192,7 @@ export function makeTestDataset(): Dataset {
     schema_version: 3,
     generated_from: [campaign.id],
     visibility: "local",
-    corpus_coverage: {
-      requirements: {
-        coverage: { numerator: 3, denominator: 16963 },
-        density: { numerator: 3, denominator: 3 },
-        breakdown: [
-          {
-            kind: "chapter",
-            id: "13",
-            title: "Tasks and functions",
-            coverage: { numerator: 1, denominator: 500 },
-            density: { numerator: 1, denominator: 1 },
-          },
-          {
-            kind: "annex",
-            id: "A",
-            title: "Formal syntax",
-            coverage: { numerator: 0, denominator: 224 },
-            density: { numerator: 0, denominator: 0 },
-          },
-        ],
-      },
-      cases: {
-        coverage: { numerator: 1, denominator: 1 },
-        density: { numerator: 1, denominator: 1 },
-        breakdown: [
-          {
-            kind: "chapter",
-            id: "13",
-            title: "Tasks and functions",
-            coverage: { numerator: 1, denominator: 1 },
-            density: { numerator: 1, denominator: 1 },
-          },
-          {
-            kind: "annex",
-            id: "A",
-            title: "Formal syntax",
-            coverage: { numerator: 0, denominator: 0 },
-            density: { numerator: 0, denominator: 0 },
-          },
-        ],
-      },
-    },
+    corpus_coverage: corpusMetrics,
     requirements: [requirement],
     cases: [testCase],
     campaigns: [campaign],

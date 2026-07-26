@@ -16,9 +16,9 @@ The interface provides five URL-filtered views. **Overview** is shown by default
 - **Cases** — a master-detail case list with inline local source viewing,
   exact normalized results, diagnostics, output hashes/excerpts, reproduction
   commands, and a return path to the requirement inspector;
-- **Trends** — one selectable historical chart for Tool pass rate, Requirements
-  Coverage, Cases Coverage, Requirements Density, or Cases Density, with rolling
-  UTC ranges, wheel/pinch and slider zoom, reference levels, and point provenance;
+- **Trends** — one selectable historical chart for Pass rate, Coverage, or
+  Density. Coverage and Density each compare Requirements and Cases lines, with
+  rolling UTC ranges, zoom, reference levels, and point provenance;
 - **Campaigns** — compact run records with expandable corpus, tool source,
   image, platform, and trust provenance.
 
@@ -73,18 +73,19 @@ The page header selects the campaign for campaign-scoped views. Optional inclusi
 the latest campaign in that range. Trends keeps all three controls visible but
 disabled and ignores their values: its week, month, six-month, year, and all-time
 UTC windows are independent. Tool and profile facets are available on Overview,
-Requirements, Cases, Trends, and Campaigns. On Trends they apply only to Tool
-pass rate and are disabled for corpus-wide measurements without discarding their
-URL-backed selections. Overview, Trends, and Campaigns intentionally expose only
+Requirements, Cases, Trends, and Campaigns. Trends shows Tool/Profile facets for
+Pass rate and replaces them with a chapter/annex multiselect for Coverage and
+Density without discarding either URL-backed selection. Overview, Trends, and Campaigns intentionally expose only
 quick controls; Search and less common controls remain
 inside collapsed Advanced filters on Requirements and Cases.
 
-Trends displays exactly one measurement at a time and defaults to Tool pass rate.
-Pass-rate and Coverage charts mark 100% saturation with headroom above it.
-Density charts mark 1× and 2×. Each campaign freezes the exact integer operands
-for all four corpus measurements, so historical points remain tied to the corpus
-that produced them. Non-default state uses the strict URL parameters `trend`,
-`trendRange`, and `trendPoint` under `view=trends`.
+Trends displays exactly one measurement at a time and defaults to Pass rate.
+Pass-rate and Coverage charts mark 100% and retain unlabeled headroom above it;
+Density marks 1× and 2×. Coverage and Density show Requirements and Cases as two
+lines. Each campaign freezes aggregate and per-part integer operands, so any
+chapter/annex combination remains tied to its historical corpus. Non-default
+state uses `trend`, repeated `chapter`, `trendRange`, and `trendPoint` under
+`view=trends`.
 
 The site header provides `Auto`, `Light`, and `Dark` themes. `Auto` is the default and
 follows the browser or operating-system color preference. An explicit selection

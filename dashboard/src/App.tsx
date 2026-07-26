@@ -74,16 +74,25 @@ export default function App() {
     const dataset = state.dataset;
     if (!dataset) return;
     setTrend((current) => {
-      if (!current.point) return current;
-      const valid =
-        current.kind === "tool-pass-rate"
+      const availableParts = new Set(
+        dataset.corpus_coverage.requirements.breakdown.map(
+          (part) => `${part.kind}:${part.id}`,
+        ),
+      );
+      const parts = current.parts.filter((part) => availableParts.has(part));
+      const pointIsValid =
+        !current.point ||
+        (current.kind === "pass-rate"
           ? dataset.metrics.some(
               (point) => toolTrendPointKey(point) === current.point,
             )
           : dataset.campaigns.some(
-              (campaign) => corpusTrendPointKey(campaign) === current.point,
-            );
-      return valid ? current : { ...current, point: "" };
+              (campaign) =>
+                corpusTrendPointKey(campaign, "requirements") === current.point ||
+                corpusTrendPointKey(campaign, "cases") === current.point,
+            ));
+      if (pointIsValid && parts.length === current.parts.length) return current;
+      return { ...current, parts, point: pointIsValid ? current.point : "" };
     });
   }, [state.dataset]);
   useEffect(() => {
@@ -153,6 +162,11 @@ export default function App() {
   );
   const selectTrendPoint = useCallback(
     (point: string) => setTrend((current) => ({ ...current, point })),
+    [],
+  );
+  const setTrendParts = useCallback(
+    (parts: string[]) =>
+      setTrend((current) => ({ ...current, parts, point: "" })),
     [],
   );
 
@@ -381,9 +395,10 @@ export default function App() {
                 ? "corpus"
                 : view
             }
-            facetsDisabled={
-              view === "trends" && trend.kind !== "tool-pass-rate"
-            }
+            trendKind={view === "trends" ? trend.kind : undefined}
+            standardParts={dataset.corpus_coverage.requirements.breakdown}
+            selectedParts={trend.parts}
+            onSelectedPartsChange={setTrendParts}
           />
         </section>
 
@@ -442,6 +457,7 @@ export default function App() {
               trend={trend.kind}
               range={trend.range}
               selectedPointKey={trend.point}
+              selectedParts={trend.parts}
               onTrendChange={setTrendKind}
               onRangeChange={setTrendRange}
               onSelectPoint={selectTrendPoint}
