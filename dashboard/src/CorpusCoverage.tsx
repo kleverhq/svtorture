@@ -68,6 +68,9 @@ export function CorpusCoverage({ kind, metric }: CorpusCoverageProps) {
       className="corpus-coverage"
       aria-label={`${label} corpus coverage`}
     >
+      <span id={formulaId} className="visually-hidden">
+        {formulas.coverage} {formulas.density}
+      </span>
       <details>
         <summary aria-describedby={formulaId}>
           <span
@@ -88,9 +91,6 @@ export function CorpusCoverage({ kind, metric }: CorpusCoverageProps) {
             </span>
           </span>
         </summary>
-        <span id={formulaId} className="visually-hidden">
-          {formulas.coverage} {formulas.density}
-        </span>
         <div className="corpus-coverage__table-wrap">
           <table className="corpus-coverage__table">
             <caption className="visually-hidden">

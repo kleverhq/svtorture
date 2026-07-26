@@ -229,6 +229,7 @@ def copy_catalog(
 ) -> Catalog:
     return Catalog(
         root=Path(catalog.root),
+        anchor_index=Path(catalog.anchor_index),
         inventory=catalog.inventory,
         tags=catalog.tags,
         cases=cases or dict(catalog.cases),

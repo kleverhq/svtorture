@@ -89,6 +89,7 @@ def test_unsupported_revision_is_not_a_normal_result(catalog: Catalog) -> None:
     old_fake = fake.model_copy(update={"profiles": (old_profile,)})
     custom = Catalog(
         root=catalog.root,
+        anchor_index=catalog.anchor_index,
         inventory=catalog.inventory,
         tags=catalog.tags,
         cases={definition.id: loaded},

@@ -365,6 +365,16 @@ def test_dataset_reports_corpus_coverage_by_standard_part(catalog: Catalog) -> N
     assert annex_a["density"] == {"numerator": 0, "denominator": 0}
 
 
+def test_dataset_uses_catalog_runtime_anchor_index(catalog: Catalog, tmp_path: Path) -> None:
+    external_catalog = replace(catalog, root=tmp_path)
+    assert not (tmp_path / "standards" / "ieee-1800-2023-anchors.json").exists()
+
+    coverage = publication.build_dataset(external_catalog, (), visibility="local")[
+        "corpus_coverage"
+    ]["requirements"]
+    assert coverage["coverage"] == {"numerator": 16, "denominator": 16963}
+
+
 def test_dataset_counts_related_case_requirements(catalog: Catalog) -> None:
     case_id = "ch04-nba-rhs-captured"
     loaded = catalog.cases[case_id]

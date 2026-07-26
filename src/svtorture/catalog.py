@@ -50,6 +50,7 @@ class LoadedCase:
 @dataclass(frozen=True)
 class Catalog:
     root: Path
+    anchor_index: Path
     inventory: RequirementInventory
     tags: TagRegistry
     cases: dict[str, LoadedCase]
@@ -348,7 +349,7 @@ def _load_case(path: Path, requirements: dict[str, Requirement]) -> LoadedCase:
 
 def load_catalog(root: Path, *, anchor_index: Path | None = None) -> Catalog:
     root = root.resolve()
-    anchor_index = anchor_index or root / "standards" / "ieee-1800-2023-anchors.json"
+    anchor_index = (anchor_index or root / "standards" / "ieee-1800-2023-anchors.json").resolve()
     inventory = _load_requirements(root, anchor_index)
     tags = _parse(root / "standards" / "tags.toml", TagRegistry)
     requirements = {item.id: item for item in inventory.requirements}
@@ -417,6 +418,7 @@ def load_catalog(root: Path, *, anchor_index: Path | None = None) -> Catalog:
                 raise CatalogError(f"tool {tool.id}: missing or unsafe recipe file {relative}")
     return Catalog(
         root=root,
+        anchor_index=anchor_index,
         inventory=inventory,
         tags=tags,
         cases=loaded_cases,

@@ -162,7 +162,7 @@ def _source_link(catalog: Catalog, campaign: Campaign, case_id: str, source: str
 
 
 def _corpus_coverage(catalog: Catalog) -> dict[str, Any]:
-    index_path = catalog.root / "standards" / "ieee-1800-2023-anchors.json"
+    index_path = catalog.anchor_index
     try:
         index = json.loads(index_path.read_text(encoding="utf-8"))
         sections = (

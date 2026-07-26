@@ -40,6 +40,12 @@ This work does not change conformance scoring, campaign selection, tool results,
 - Observation: The focused Python pre-commit gate still expected `.github/README.md`, which the user intentionally removed because GitHub displayed it instead of the root project README.
   Evidence: the first backend milestone commit attempt failed `test_repository_directories_have_navigation_readmes` in `tests/test_catalog_models.py`. The stale `.github` entry was removed from that navigation-README assertion; all other documented top-level directories remain covered.
 
+- Observation: `load_catalog()` accepts an explicit anchor index outside the repository root, but `Catalog` did not retain the validated path. The first implementation reopened only the default root path during publication.
+  Evidence: focused review identified `src/svtorture/publish.py` as incompatible with `test_catalog_accepts_an_explicit_runtime_anchor_index`. `Catalog.anchor_index` now retains the resolved validated path, publication uses it, and a checkout without its own index has a dedicated export test.
+
+- Observation: Content inside a closed native `<details>` is hidden from Chromium's accessibility tree, including an `aria-describedby` target used by its `<summary>`.
+  Evidence: focused UI review found that the initial formula description lived inside the disclosure. It now precedes `<details>` as visually hidden sibling content, and a regression test asserts that the referenced node is outside the closed disclosure.
+
 ## Decision Log
 
 - Decision: Export integer metric operands from Python rather than shipping all 16,963 anchors to the browser or hard-coding totals in React.
@@ -58,8 +64,8 @@ This work does not change conformance scoring, campaign selection, tool results,
   Rationale: The strip then scrolls away naturally without changing sticky offsets, nested scrolling, or filter behavior. It appears only for Requirements and Cases.
   Date/Author: 2026-07-26 / coding assistant
 
-- Decision: Use native `<details>` and `<summary>` for disclosure and native hover titles plus an `aria-describedby` explanation for formulas.
-  Rationale: The repository already uses native disclosure controls. This supplies keyboard behavior and hover explanations without JavaScript state or another UI dependency.
+- Decision: Use native `<details>` and `<summary>` for disclosure and native hover titles plus an `aria-describedby` explanation for formulas; keep the hidden description outside `<details>`.
+  Rationale: The repository already uses native disclosure controls. This supplies keyboard behavior and hover explanations without JavaScript state or another UI dependency, while keeping formulas in the accessibility tree when the disclosure is closed.
   Date/Author: 2026-07-26 / coding assistant
 
 ## Outcomes & Retrospective
@@ -214,3 +220,5 @@ Revision note (2026-07-26 11:38Z): Updated progress and outcomes after completin
 Revision note (2026-07-26 11:42Z): Recorded and corrected the stale test expectation for the intentionally removed `.github/README.md`, discovered by the milestone pre-commit gate.
 
 Revision note (2026-07-26 14:40Z): Updated progress and outcomes after implementing the frontend strip, complete disclosure tables, formulas, documentation, tests, and responsive Chrome checks.
+
+Revision note (2026-07-26 14:53Z): Recorded two focused-review findings and their fixes: retained external anchor-index provenance and an accessible formula description outside the closed disclosure.

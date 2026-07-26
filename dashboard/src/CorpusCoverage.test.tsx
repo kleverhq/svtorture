@@ -17,6 +17,13 @@ describe("CorpusCoverage", () => {
     if (!summary || !details) throw new Error("coverage disclosure is missing");
 
     expect(details.open).toBe(false);
+    const formulaId = summary.getAttribute("aria-describedby");
+    const formula = formulaId ? document.getElementById(formulaId) : null;
+    expect(formula).toBeTruthy();
+    expect(details.contains(formula)).toBe(false);
+    expect(formula?.textContent).toContain(
+      "unique referenced anchors / all standard anchors",
+    );
     expect(within(summary).getByText("0.02%")).toBeTruthy();
     expect(within(summary).getByText("1")).toBeTruthy();
     expect(
