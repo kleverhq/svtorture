@@ -25,6 +25,7 @@ SafeText = Annotated[str, Field(min_length=1, max_length=4096)]
 StandardAnchor = Annotated[str, Field(pattern=STANDARD_ANCHOR_PATTERN)]
 MetadataSchemaVersion = Annotated[int, Field(strict=True, ge=1, le=1)]
 ContractSchemaVersion = Annotated[int, Field(strict=True, ge=2, le=2)]
+CampaignSchemaVersion = Annotated[int, Field(strict=True, ge=3, le=3)]
 RequirementSchemaVersion = Annotated[int, Field(strict=True, ge=2, le=2)]
 
 
@@ -977,6 +978,31 @@ class CaseIdentity(StrictModel):
         return value
 
 
+class CorpusRatio(StrictModel):
+    numerator: int = Field(ge=0)
+    denominator: int = Field(ge=0)
+
+
+class CorpusMetricSummary(StrictModel):
+    coverage: CorpusRatio
+    density: CorpusRatio
+
+    @model_validator(mode="after")
+    def valid_operands(self) -> Self:
+        if self.coverage.numerator > self.coverage.denominator:
+            raise ValueError("coverage numerator cannot exceed its denominator")
+        if self.density.denominator != self.coverage.numerator:
+            raise ValueError("density denominator must equal the coverage numerator")
+        if self.density.numerator < self.density.denominator:
+            raise ValueError("density numerator cannot be below its denominator")
+        return self
+
+
+class CorpusMetrics(StrictModel):
+    requirements: CorpusMetricSummary
+    cases: CorpusMetricSummary
+
+
 class CampaignTool(StrictModel):
     definition: ToolDefinition
     selection: ToolSelection | None = None
@@ -1041,7 +1067,7 @@ class CampaignTrust(StrictModel):
 
 
 class Campaign(StrictModel):
-    schema_version: ContractSchemaVersion
+    schema_version: CampaignSchemaVersion
     id: str = Field(pattern=CAMPAIGN_ID_RE.pattern)
     started_at: datetime
     finished_at: datetime
@@ -1054,6 +1080,7 @@ class Campaign(StrictModel):
     expected_tool_ids: tuple[str, ...]
     missing_tool_ids: tuple[str, ...] = ()
     hashes: ManifestHashes
+    corpus_metrics: CorpusMetrics
     results: tuple[NormalizedResult, ...]
     complete: bool
     trust: CampaignTrust

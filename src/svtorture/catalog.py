@@ -18,6 +18,9 @@ from svtorture.models import (
     Applicability,
     CaseDefinition,
     CaseIdentity,
+    CorpusMetrics,
+    CorpusMetricSummary,
+    CorpusRatio,
     Expectation,
     OracleKind,
     Phase,
@@ -80,6 +83,45 @@ class Catalog:
 
     def requirement_manifest_hash(self) -> str:
         return hash_json(model_to_jsonable(self.inventory))
+
+    def corpus_metrics(self) -> CorpusMetrics:
+        requirement_links = {
+            (requirement.id, anchor)
+            for requirement in self.inventory.requirements
+            for anchor in requirement.anchors
+        }
+        covered_anchors = {anchor for _, anchor in requirement_links}
+        case_links = {
+            (loaded.definition.id, requirement_id)
+            for loaded in self.cases.values()
+            for requirement_id in (
+                loaded.definition.primary_requirement,
+                *loaded.definition.related_requirements,
+            )
+        }
+        covered_requirements = {requirement_id for _, requirement_id in case_links}
+        return CorpusMetrics(
+            requirements=CorpusMetricSummary(
+                coverage=CorpusRatio(
+                    numerator=len(covered_anchors),
+                    denominator=len(_standard_anchors(self.anchor_index)),
+                ),
+                density=CorpusRatio(
+                    numerator=len(requirement_links),
+                    denominator=len(covered_anchors),
+                ),
+            ),
+            cases=CorpusMetricSummary(
+                coverage=CorpusRatio(
+                    numerator=len(covered_requirements),
+                    denominator=len(self.inventory.requirements),
+                ),
+                density=CorpusRatio(
+                    numerator=len(case_links),
+                    denominator=len(covered_requirements),
+                ),
+            ),
+        )
 
     def case_identities(self, selected: Iterable[LoadedCase]) -> tuple[CaseIdentity, ...]:
         return tuple(

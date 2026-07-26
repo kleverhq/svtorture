@@ -199,7 +199,7 @@ def make_campaign(
     case_ids = tuple(case.definition.id for case in cases)
     selection_hash = hash_json(_selection_payload("test", case_ids, (tool,), expected))
     return Campaign(
-        schema_version=2,
+        schema_version=3,
         id=campaign_id,
         started_at=datetime(2026, 1, 1, tzinfo=UTC),
         finished_at=datetime(2026, 1, 1, 0, 0, 1, tzinfo=UTC),
@@ -216,6 +216,7 @@ def make_campaign(
             cases=catalog.case_manifest_hash(cases),
             selection=selection_hash,
         ),
+        corpus_metrics=catalog.corpus_metrics(),
         results=results,
         complete=complete,
         trust=trust,

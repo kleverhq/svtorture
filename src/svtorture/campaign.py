@@ -474,7 +474,7 @@ def run_campaign(
         for result in recorded_results
     )
     campaign = Campaign(
-        schema_version=2,
+        schema_version=3,
         id=campaign_id,
         started_at=started,
         finished_at=finished,
@@ -487,6 +487,7 @@ def run_campaign(
         expected_tool_ids=expected_tool_ids,
         missing_tool_ids=(),
         hashes=hashes,
+        corpus_metrics=catalog.corpus_metrics(),
         results=recorded_results,
         complete=complete,
         trust=trust,
@@ -583,6 +584,8 @@ def verify_campaign_against_catalog(catalog: Catalog, campaign: Campaign) -> Non
         raise CampaignError("current case content does not match the campaign")
     if catalog.requirement_manifest_hash() != campaign.hashes.requirements:
         raise CampaignError("current requirement inventory does not match the campaign")
+    if catalog.corpus_metrics() != campaign.corpus_metrics:
+        raise CampaignError("current corpus metrics do not match the campaign")
     for expected_tool_id in campaign.expected_tool_ids:
         try:
             catalog.tools.tool(expected_tool_id)
@@ -760,7 +763,7 @@ def create_missing_campaign(
         }
     )
     campaign = Campaign(
-        schema_version=2,
+        schema_version=3,
         id=f"{now:%Y%m%dT%H%M%SZ}-missing-{identity_hash[:12]}",
         started_at=now,
         finished_at=now,
@@ -777,6 +780,7 @@ def create_missing_campaign(
             cases=catalog.case_manifest_hash(selected),
             selection=selection_hash,
         ),
+        corpus_metrics=catalog.corpus_metrics(),
         results=(),
         complete=False,
         trust=_campaign_trust(),
@@ -885,7 +889,7 @@ def create_preparation_failure_campaign(
         }
     )
     campaign = Campaign(
-        schema_version=2,
+        schema_version=3,
         id=f"{now:%Y%m%dT%H%M%SZ}-preparation-{identity_hash[:12]}",
         started_at=now,
         finished_at=now,
@@ -902,6 +906,7 @@ def create_preparation_failure_campaign(
             cases=catalog.case_manifest_hash(selected),
             selection=selection_hash,
         ),
+        corpus_metrics=catalog.corpus_metrics(),
         results=tuple(results),
         complete=False,
         trust=_campaign_trust(),
@@ -930,6 +935,7 @@ def aggregate_campaigns(
             or campaign.cases != first.cases
             or campaign.hashes.requirements != first.hashes.requirements
             or campaign.hashes.cases != first.hashes.cases
+            or campaign.corpus_metrics != first.corpus_metrics
         ):
             raise CampaignError("campaigns do not share one corpus snapshot")
     tools: list[CampaignTool] = []
@@ -996,7 +1002,7 @@ def aggregate_campaigns(
     aggregate_id = f"{finished:%Y%m%dT%H%M%SZ}-aggregate-{identity_hash[:12]}"
     aggregate_results = _attach_reproduction(results, aggregate_id, trust)
     aggregate = Campaign(
-        schema_version=2,
+        schema_version=3,
         id=aggregate_id,
         started_at=min(item.started_at for item in campaigns),
         finished_at=finished,
@@ -1013,6 +1019,7 @@ def aggregate_campaigns(
             cases=first.hashes.cases,
             selection=selection_hash,
         ),
+        corpus_metrics=first.corpus_metrics,
         results=aggregate_results,
         complete=not missing
         and not any(

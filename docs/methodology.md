@@ -69,4 +69,13 @@ Any harness error invalidates the profile metric.
 
 Every displayed point includes numerator, denominator, revision, profile,
 corpus manifest, completeness, exact tool commit/tags/version, image digest,
-timestamp, and campaign ID. Corpus changes are visibly marked in history.
+timestamp, and campaign ID. Corpus changes are visibly marked in Trends.
+
+Each campaign also freezes four corpus-wide trend operands. Requirements
+Coverage is the number of unique referenced standard anchors divided by every
+anchor in the committed index; Requirements Density is unique
+requirement–anchor pairs divided by referenced anchors. Cases Coverage is the
+number of requirements linked as primary or related divided by all requirements;
+Cases Density is unique case–requirement pairs divided by linked requirements.
+These values describe the complete catalog and are independent of tool, profile,
+suite selection, and result filters.

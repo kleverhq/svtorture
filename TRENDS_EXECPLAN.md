@@ -20,7 +20,7 @@ This work does not add more than one visible chart, multi-select trend overlays,
 
 - [x] (2026-07-26 12:13Z) Researched the campaign, publication, metric, dashboard, URL, ECharts, responsive, accessibility, and test paths.
 - [x] (2026-07-26 12:13Z) Chose a strict campaign-owned corpus snapshot and a single selected trend with no compatibility path.
-- [ ] Add strict campaign schema version 3 corpus metrics, regenerate schemas, and update backend tests and durable documentation.
+- [x] (2026-07-26 12:27Z) Added strict campaign schema version 3 corpus metrics, regenerated the campaign schema, and updated backend tests and durable documentation; 68 focused tests pass.
 - [ ] Replace the Changes/history frontend terminology and URL state with Trends, implement the selector and generic chart, and update frontend tests and documentation.
 - [ ] Delete current local campaigns, collect one new full multi-tool campaign, and rebuild the local dashboard dataset.
 - [ ] Run focused review, repository gates, browser validation, and completion audit; remove this completed ExecPlan.
@@ -79,7 +79,7 @@ This work does not add more than one visible chart, multi-select trend overlays,
 
 ## Outcomes & Retrospective
 
-Implementation has not started. The intended outcome is a strict version-3 evidence pipeline, one freshly collected campaign, and a Trends tab whose five measurements are independently selectable and demonstrably preserve existing interaction quality.
+The backend milestone is complete. Every campaign constructor now records a typed corpus snapshot from `Catalog.corpus_metrics()`, catalog verification rejects changed operands, aggregation preserves the snapshot, dashboard dataset schema 3 rejects older data, and the generated campaign schema exposes the strict required object. The frontend replacement, fresh collection, and final validation remain.
 
 ## Context and Orientation
 
@@ -249,3 +249,5 @@ The frontend must expose these strict trend identifiers:
 The non-default URL contract is `?view=trends&trend=<id>&trendRange=<range>&trendPoint=<key>`. No `view=history`, `historyRange`, or `historyPoint` interpretation remains.
 
 Revision note (2026-07-26 12:13Z): Created the self-contained implementation plan after backend and frontend execution-path research and the user's explicit no-compatibility decision.
+
+Revision note (2026-07-26 12:27Z): Recorded completion of the strict campaign/dataset contract milestone and its focused test evidence.

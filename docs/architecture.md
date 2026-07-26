@@ -63,9 +63,11 @@ result records `direct`, `cumulative`, or `not-observed` evidence. A private
 wrapper receives a versioned JSON request. Distribution, CI, and publication policy comes from tool metadata, so
 publishers and workflows never infer it from an adapter name.
 
-Campaigns include a full result grid for every selected case and profile.
-Loading rejects duplicate/missing results and mismatched case or selection
-manifests. Aggregation records expected and missing tools rather than quietly
+Campaigns include a full result grid for every selected case and profile plus
+the exact requirement/case Coverage and Density operands computed from the full
+catalog at collection time. Loading rejects duplicate/missing results,
+mismatched case or selection manifests, and corpus metrics that no longer match
+the catalog. Aggregation records expected and missing tools rather than quietly
 changing completeness. If nightly collection fails before an immutable source
 and image identity exists, its private artifact still contains a per-case grid
 with explicit `tool-preparation-failure` harness results (while preserving

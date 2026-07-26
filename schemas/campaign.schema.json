@@ -172,6 +172,61 @@
       "title": "CaseIdentity",
       "type": "object"
     },
+    "CorpusMetricSummary": {
+      "additionalProperties": false,
+      "properties": {
+        "coverage": {
+          "$ref": "#/$defs/CorpusRatio"
+        },
+        "density": {
+          "$ref": "#/$defs/CorpusRatio"
+        }
+      },
+      "required": [
+        "coverage",
+        "density"
+      ],
+      "title": "CorpusMetricSummary",
+      "type": "object"
+    },
+    "CorpusMetrics": {
+      "additionalProperties": false,
+      "properties": {
+        "cases": {
+          "$ref": "#/$defs/CorpusMetricSummary"
+        },
+        "requirements": {
+          "$ref": "#/$defs/CorpusMetricSummary"
+        }
+      },
+      "required": [
+        "requirements",
+        "cases"
+      ],
+      "title": "CorpusMetrics",
+      "type": "object"
+    },
+    "CorpusRatio": {
+      "additionalProperties": false,
+      "properties": {
+        "denominator": {
+          "minimum": 0,
+          "title": "Denominator",
+          "type": "integer"
+        },
+        "numerator": {
+          "minimum": 0,
+          "title": "Numerator",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "numerator",
+        "denominator"
+      ],
+      "title": "CorpusRatio",
+      "type": "object"
+    },
     "Diagnostic": {
       "additionalProperties": false,
       "properties": {
@@ -921,6 +976,9 @@
       "title": "Complete",
       "type": "boolean"
     },
+    "corpus_metrics": {
+      "$ref": "#/$defs/CorpusMetrics"
+    },
     "expected_tool_ids": {
       "items": {
         "type": "string"
@@ -966,8 +1024,8 @@
       "type": "array"
     },
     "schema_version": {
-      "maximum": 2,
-      "minimum": 2,
+      "maximum": 3,
+      "minimum": 3,
       "title": "Schema Version",
       "type": "integer"
     },
@@ -1006,6 +1064,7 @@
     "tools",
     "expected_tool_ids",
     "hashes",
+    "corpus_metrics",
     "results",
     "complete",
     "trust"

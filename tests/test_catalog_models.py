@@ -15,6 +15,7 @@ from svtorture.campaign import (
 from svtorture.catalog import Catalog, CatalogError, load_catalog, mvp_audit
 from svtorture.evaluator import synthetic_result
 from svtorture.models import (
+    Campaign,
     CaseDefinition,
     EvidenceMode,
     NormalizedResult,
@@ -336,7 +337,7 @@ def test_suite_glob_without_matches_is_rejected(catalog: Catalog, tmp_path: Path
         load_catalog(root)
 
 
-def test_version_one_campaign_is_rejected(catalog: Catalog, tmp_path: Path) -> None:
+def test_version_two_campaign_is_rejected(catalog: Catalog, tmp_path: Path) -> None:
     case = catalog.cases["ch04-nba-rhs-captured"]
     tool = campaign_tool(catalog.tools.tool("fake"), ("simulator",))
     campaign = make_campaign(
@@ -346,11 +347,49 @@ def test_version_one_campaign_is_rejected(catalog: Catalog, tmp_path: Path) -> N
         results=(normalized(case, "fake", "simulator"),),
     )
     value = campaign.model_dump(mode="json")
-    value["schema_version"] = 1
+    value["schema_version"] = 2
     path = tmp_path / "campaign.json"
     path.write_text(json.dumps(value), encoding="utf-8")
-    with pytest.raises(CampaignError, match="greater than or equal to 2"):
+    with pytest.raises(CampaignError, match="greater than or equal to 3"):
         load_campaign(path)
+
+
+@pytest.mark.parametrize(
+    ("mutate", "message"),
+    (
+        (
+            lambda value: value.pop("corpus_metrics"),
+            "corpus_metrics",
+        ),
+        (
+            lambda value: value["corpus_metrics"]["requirements"]["coverage"].update(
+                {"numerator": 20000}
+            ),
+            "coverage numerator",
+        ),
+        (
+            lambda value: value["corpus_metrics"]["cases"]["density"].update({"denominator": 0}),
+            "density denominator",
+        ),
+    ),
+)
+def test_campaign_requires_coherent_corpus_metrics(
+    catalog: Catalog,
+    mutate,
+    message: str,
+) -> None:
+    case = catalog.cases["ch04-nba-rhs-captured"]
+    tool = campaign_tool(catalog.tools.tool("fake"), ("simulator",))
+    campaign = make_campaign(
+        catalog,
+        cases=(case,),
+        tool=tool,
+        results=(normalized(case, "fake", "simulator"),),
+    )
+    value = campaign.model_dump(mode="json")
+    mutate(value)
+    with pytest.raises(ValidationError, match=message):
+        Campaign.model_validate(value)
 
 
 def test_result_evidence_mode_must_match_observations(catalog: Catalog) -> None:

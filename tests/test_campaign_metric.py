@@ -6,6 +6,7 @@ from pathlib import Path
 import pytest
 
 from svtorture.campaign import (
+    CampaignError,
     PreparedTool,
     aggregate_campaigns,
     create_missing_campaign,
@@ -18,6 +19,8 @@ from svtorture.catalog import Catalog, LoadedCase
 from svtorture.metric import compute_metric
 from svtorture.models import (
     Applicability,
+    CorpusMetricSummary,
+    CorpusRatio,
     OracleKind,
     Phase,
     ReasonCode,
@@ -177,6 +180,29 @@ def test_no_artifacts_is_an_honest_missing_campaign(catalog: Catalog) -> None:
         campaign.__class__.model_validate(value)
 
 
+def test_campaign_corpus_metrics_are_strictly_verified(catalog: Catalog) -> None:
+    campaign = create_missing_campaign(
+        catalog,
+        suite_id="smoke",
+        expected_tool_ids=("slang",),
+    )
+    assert campaign.schema_version == 3
+    assert campaign.corpus_metrics == catalog.corpus_metrics()
+    changed_requirements = CorpusMetricSummary(
+        coverage=CorpusRatio(numerator=15, denominator=16963),
+        density=CorpusRatio(numerator=17, denominator=15),
+    )
+    tampered = campaign.model_copy(
+        update={
+            "corpus_metrics": campaign.corpus_metrics.model_copy(
+                update={"requirements": changed_requirements}
+            )
+        }
+    )
+    with pytest.raises(CampaignError, match="current corpus metrics"):
+        verify_campaign_against_catalog(catalog, tampered)
+
+
 def test_preparation_failure_emits_a_normalized_result_grid(catalog: Catalog) -> None:
     campaign = create_preparation_failure_campaign(
         catalog,
@@ -221,6 +247,7 @@ def test_aggregate_converts_preparation_failure_to_missing_tool(
     assert aggregate.results == ()
     assert aggregate.expected_tool_ids == ("slang",)
     assert aggregate.missing_tool_ids == ("slang",)
+    assert aggregate.corpus_metrics == preparation.corpus_metrics
     verify_campaign_against_catalog(catalog, aggregate)
 
 

@@ -329,6 +329,7 @@ def test_publication_probes_anonymous_registry_access(
 
 def test_dataset_reports_corpus_coverage_by_standard_part(catalog: Catalog) -> None:
     dataset = publication.build_dataset(catalog, (), visibility="local")
+    assert dataset["schema_version"] == 3
     coverage = dataset["corpus_coverage"]
 
     assert coverage["requirements"]["coverage"] == {
@@ -401,26 +402,26 @@ def test_dataset_counts_related_case_requirements(catalog: Catalog) -> None:
 
 def test_dataset_merge_is_append_only_and_detects_collision() -> None:
     old = {
-        "schema_version": 2,
+        "schema_version": 3,
         "corpus_coverage": {"source": "old"},
         "campaigns": [{"id": "one", "value": 1}],
         "metrics": [{"campaign_id": "one", "tool_id": "t", "profile_id": "p"}],
         "generated_from": ["one"],
     }
     new = {
-        "schema_version": 2,
+        "schema_version": 3,
         "corpus_coverage": {"source": "new"},
         "campaigns": [{"id": "two", "value": 2}],
         "metrics": [{"campaign_id": "two", "tool_id": "t", "profile_id": "p"}],
         "generated_from": ["two"],
     }
     legacy = dict(old)
-    legacy["schema_version"] = 1
+    legacy["schema_version"] = 2
     with pytest.raises(PublicationError, match="incompatible dashboard datasets"):
         merge_datasets(legacy, new)
 
     merged = merge_datasets(old, new)
-    assert merged["schema_version"] == 2
+    assert merged["schema_version"] == 3
     assert merged["corpus_coverage"] == {"source": "new"}
     assert {item["id"] for item in merged["campaigns"]} == {"one", "two"}
     collision = dict(new)

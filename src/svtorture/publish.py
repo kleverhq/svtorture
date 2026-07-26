@@ -282,29 +282,14 @@ def _corpus_coverage(catalog: Catalog) -> dict[str, Any]:
             }
         )
 
-    covered_anchors = {anchor for _, anchor in requirement_links}
-    covered_requirements = {requirement_id for _, requirement_id in case_links}
+    summary = model_to_jsonable(catalog.corpus_metrics())
     return {
         "requirements": {
-            "coverage": {
-                "numerator": len(covered_anchors),
-                "denominator": len(anchor_parts),
-            },
-            "density": {
-                "numerator": len(requirement_links),
-                "denominator": len(covered_anchors),
-            },
+            **summary["requirements"],
             "breakdown": requirement_breakdown,
         },
         "cases": {
-            "coverage": {
-                "numerator": len(covered_requirements),
-                "denominator": len(requirements),
-            },
-            "density": {
-                "numerator": len(case_links),
-                "denominator": len(covered_requirements),
-            },
+            **summary["cases"],
             "breakdown": case_breakdown,
         },
     }
@@ -379,7 +364,7 @@ def build_dataset(
                 )
                 metrics.append(point)
     dataset = {
-        "schema_version": 2,
+        "schema_version": 3,
         "generated_from": [item.id for item in selected_campaigns],
         "visibility": visibility,
         "corpus_coverage": _corpus_coverage(catalog),
@@ -407,7 +392,7 @@ def write_dataset(
 
 
 def merge_datasets(existing: dict[str, Any], new: dict[str, Any]) -> dict[str, Any]:
-    if existing.get("schema_version") != 2 or new.get("schema_version") != 2:
+    if existing.get("schema_version") != 3 or new.get("schema_version") != 3:
         raise PublicationError("cannot merge incompatible dashboard datasets")
     result = dict(new)
     for key, identity in (("campaigns", "id"), ("metrics", "campaign_id")):
