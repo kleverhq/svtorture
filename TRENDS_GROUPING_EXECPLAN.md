@@ -33,6 +33,15 @@ This work does not add multiple chart widgets, overlay Pass rate with corpus lin
 - Observation: A viewport-relative dropdown width still caused page overflow when positioned after the 62 px `CHAPTER` label on mobile.
   Evidence: the first 390 px Chrome check measured body width 438 px while the viewport was 390 px. The mobile rule now offsets the popup back over the label and limits it to viewport width minus 20 px.
 
+- Observation: Qualified trend `chapter` query values shared a parameter name with the ordinary single Chapter corpus filter.
+  Evidence: focused UI review found `filtersFromSearch()` loading `chapter:5` into `filters.chapter`. It now accepts only unqualified numeric values for the corpus filter while `trendStateFromSearch()` exclusively accepts qualified chapter/annex keys.
+
+- Observation: Runtime model validators do not automatically produce JSON Schema array cardinality.
+  Evidence: focused contract review found campaign schema allowed an empty breakdown even though model validation required 58 rows. The field now declares min/max length 58, and the generated schema exposes both constraints.
+
+- Observation: Top-level dataset `corpus_coverage` and external anchor-part identities needed the same strictness as campaign snapshots.
+  Evidence: focused review found merge accepted `{}` and external indexes with noncanonical part IDs until later computation. Merge now validates/canonicalizes `CorpusMetrics`; catalog loading rejects IDs outside ordered chapters 1–41 and annexes A–Q.
+
 ## Decision Log
 
 - Decision: Bump only `CampaignSchemaVersion` from exactly 3 to exactly 4; execution/result contracts remain version 2 and dashboard dataset remains strict version 3.
@@ -195,3 +204,5 @@ Revision note (2026-07-26 20:08Z): Recorded completion of the strict shared per-
 Revision note (2026-07-26 20:18Z): Recorded completion of grouped frontend trends, part facets, tooltips, percent labeling, tests, and production build.
 
 Revision note (2026-07-26 20:25Z): Recorded the strict replacement campaign, dataset self-merge, initial Chrome evidence, and mobile dropdown overflow correction.
+
+Revision note (2026-07-26 20:31Z): Recorded focused-review findings and fixes for strict top-level coverage, generated cardinality, canonical anchor parts, disjoint URL parsing, and disclosure labeling.

@@ -279,6 +279,9 @@ export function filtersFromSearch(search: string): Filters {
   for (const key of Object.keys(EMPTY_FILTERS) as (keyof Filters)[]) {
     if (key === "changed" || key === "disagreement") {
       result[key] = parameters.get(key) === "1";
+    } else if (key === "chapter") {
+      result[key] =
+        parameters.getAll(key).find((value) => /^[1-9][0-9]*$/.test(value)) ?? "";
     } else {
       result[key] = parameters.get(key) ?? "";
     }

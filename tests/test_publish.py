@@ -504,6 +504,11 @@ def test_dataset_merge_is_strict_append_only_and_detects_collision(
     with pytest.raises(PublicationError, match="invalid metrics"):
         merge_datasets(incomplete, new)
 
+    invalid_coverage = dict(old)
+    invalid_coverage["corpus_coverage"] = {}
+    with pytest.raises(PublicationError, match="invalid corpus_coverage"):
+        merge_datasets(invalid_coverage, new)
+
     truncated_metric = json.loads(json.dumps(old))
     truncated_metric["metrics"][0].pop("numerator")
     with pytest.raises(PublicationError, match="invalid metric point"):

@@ -213,20 +213,22 @@ def _standard_parts(path: Path) -> tuple[_StandardPart, ...]:
 
     parts: list[_StandardPart] = []
     anchors: list[str] = []
-    for section, kind, expected_count in (
-        ("clauses", StandardPartKind.CHAPTER, 41),
-        ("annexes", StandardPartKind.ANNEX, 17),
+    for section, kind, expected_ids in (
+        ("clauses", StandardPartKind.CHAPTER, tuple(str(value) for value in range(1, 42))),
+        ("annexes", StandardPartKind.ANNEX, tuple("ABCDEFGHIJKLMNOPQ")),
     ):
         entries = value.get(section)
-        if not isinstance(entries, list) or len(entries) != expected_count:
-            raise CatalogError(f"{path}: {section} must contain {expected_count} entries")
-        for entry in entries:
+        if not isinstance(entries, list) or len(entries) != len(expected_ids):
+            raise CatalogError(f"{path}: {section} must contain {len(expected_ids)} entries")
+        for entry, expected_id in zip(entries, expected_ids, strict=True):
             if not isinstance(entry, dict) or not isinstance(entry.get("anchors"), list):
                 raise CatalogError(f"{path}: malformed {section} entry")
             part_id = entry.get("id")
             title = entry.get("title")
             if not isinstance(part_id, str) or not isinstance(title, str) or not title:
                 raise CatalogError(f"{path}: malformed {section} identity")
+            if part_id != expected_id:
+                raise CatalogError(f"{path}: {section} IDs are not in canonical order")
             entry_anchors = entry["anchors"]
             if any(not isinstance(anchor, str) for anchor in entry_anchors):
                 raise CatalogError(f"{path}: anchors must be strings")

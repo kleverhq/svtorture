@@ -218,6 +218,18 @@ def test_catalog_accepts_an_explicit_runtime_anchor_index(catalog: Catalog, tmp_
     assert loaded.anchor_index == anchor_index.resolve()
 
 
+def test_catalog_rejects_noncanonical_anchor_part_order(catalog: Catalog, tmp_path: Path) -> None:
+    root = tmp_path / "repo"
+    _copy_catalog_tree(catalog, root)
+    index_path = root / "standards" / "ieee-1800-2023-anchors.json"
+    index = json.loads(index_path.read_text(encoding="utf-8"))
+    index["clauses"][0]["id"] = "2"
+    index_path.write_text(json.dumps(index), encoding="utf-8")
+
+    with pytest.raises(CatalogError, match="canonical order"):
+        load_catalog(root)
+
+
 def test_catalog_rejects_duplicate_case_directory(catalog: Catalog, tmp_path: Path) -> None:
     root = tmp_path / "repo"
     _copy_catalog_tree(catalog, root)
@@ -377,6 +389,12 @@ def test_version_three_campaign_is_rejected(catalog: Catalog, tmp_path: Path) ->
         ),
         (
             lambda value: value["corpus_metrics"]["requirements"]["breakdown"].pop(),
+            "at least 58 items",
+        ),
+        (
+            lambda value: value["corpus_metrics"]["requirements"]["breakdown"][0].update(
+                {"id": "2"}
+            ),
             "ordered chapters 1-41",
         ),
         (

@@ -150,6 +150,9 @@ export function Filters({
     showFacets && (mode !== "trends" || trendKind === "pass-rate");
   const showPartFacet =
     mode === "trends" && trendKind !== undefined && trendKind !== "pass-rate";
+  const partSelectionLabel = selectedParts.length
+    ? `${selectedParts.length} selected`
+    : `All ${standardParts.length}`;
   const partKey = (part: CorpusPartMetric) => `${part.kind}:${part.id}`;
   const togglePart = (key: string) => {
     if (!onSelectedPartsChange) return;
@@ -217,10 +220,11 @@ export function Filters({
         <div className="filters__part-row">
           <span className="filters__quick-label">Chapter</span>
           <details className="part-multiselect">
-            <summary className="filter-chip">
-              {selectedParts.length
-                ? `${selectedParts.length} selected`
-                : `All ${standardParts.length}`}
+            <summary
+              className="filter-chip"
+              aria-label={`Chapter and annex filter: ${partSelectionLabel}`}
+            >
+              {partSelectionLabel}
             </summary>
             <div className="part-multiselect__menu" role="group" aria-label="Chapters">
               <label>

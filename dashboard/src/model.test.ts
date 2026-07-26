@@ -56,6 +56,7 @@ describe("URL-backed filters", () => {
     expect(encoded).toContain("trendPoint=corpus%3Acampaign%3Acases");
     expect(encoded).toContain("chapter=chapter%3A5");
     expect(encoded).toContain("chapter=annex%3AA");
+    expect(filtersFromSearch(encoded).chapter).toBe("");
     expect(trendStateFromSearch(encoded)).toEqual({
       kind: "density",
       range: "six-months",
@@ -82,6 +83,13 @@ describe("URL-backed filters", () => {
       expect(trendStateFromSearch(search).kind).toBe(kind);
     }
     expect(filtersToSearch(EMPTY_FILTERS, "trends")).toBe("?view=trends");
+    const mixed = filtersToSearch(
+      { ...EMPTY_FILTERS, chapter: "13" },
+      "trends",
+      { kind: "coverage", range: "month", point: "", parts: ["annex:A"] },
+    );
+    expect(filtersFromSearch(mixed).chapter).toBe("13");
+    expect(trendStateFromSearch(mixed).parts).toEqual(["annex:A"]);
     expect(
       filtersToSearch(EMPTY_FILTERS, "overview", {
         kind: "coverage",

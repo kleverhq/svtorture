@@ -20,6 +20,7 @@ from svtorture.catalog import Catalog, repository_identity
 from svtorture.metric import compute_metric
 from svtorture.models import (
     Campaign,
+    CorpusMetrics,
     Distribution,
     ExecutionBackend,
     MetricBreakdown,
@@ -369,8 +370,10 @@ def _validate_merge_dataset(dataset: dict[str, Any]) -> dict[str, Any]:
             raise PublicationError(f"dashboard dataset has invalid {key}")
     if dataset.get("visibility") not in {"local", "public"}:
         raise PublicationError("dashboard dataset has invalid visibility")
-    if not isinstance(dataset.get("corpus_coverage"), dict):
-        raise PublicationError("dashboard dataset has invalid corpus_coverage")
+    try:
+        corpus_coverage = CorpusMetrics.model_validate(dataset.get("corpus_coverage"))
+    except ValidationError as error:
+        raise PublicationError("dashboard dataset has invalid corpus_coverage") from error
 
     for value in dataset["campaigns"]:
         if not isinstance(value, dict):
@@ -423,6 +426,7 @@ def _validate_merge_dataset(dataset: dict[str, Any]) -> dict[str, Any]:
         _validate_metric_provenance(point, campaign)
 
     canonical = dict(dataset)
+    canonical["corpus_coverage"] = model_to_jsonable(corpus_coverage)
     canonical["campaigns"] = [model_to_jsonable(campaign) for campaign in campaigns]
     canonical["metrics"] = [point.model_dump(mode="json") for point in points]
     return canonical

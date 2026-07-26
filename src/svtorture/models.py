@@ -1019,7 +1019,7 @@ class CorpusPartMetric(CorpusMetricValues):
 
 
 class CorpusMetricSummary(CorpusMetricValues):
-    breakdown: tuple[CorpusPartMetric, ...]
+    breakdown: tuple[CorpusPartMetric, ...] = Field(min_length=58, max_length=58)
 
     @model_validator(mode="after")
     def complete_breakdown(self) -> Self:

@@ -98,7 +98,8 @@ describe("Filters", () => {
 
     expect(screen.queryByRole("group", { name: "Tools" })).toBeNull();
     expect(screen.queryByRole("group", { name: "Profiles" })).toBeNull();
-    fireEvent.click(screen.getByText("All 3"));
+    const disclosure = screen.getByLabelText("Chapter and annex filter: All 3");
+    fireEvent.click(disclosure);
     const chapters = within(screen.getByRole("group", { name: "Chapters" }));
     expect((chapters.getByLabelText("All") as HTMLInputElement).checked).toBe(true);
 
