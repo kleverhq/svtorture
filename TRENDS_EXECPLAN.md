@@ -23,7 +23,7 @@ This work does not add more than one visible chart, multi-select trend overlays,
 - [x] (2026-07-26 12:27Z) Added strict campaign schema version 3 corpus metrics, regenerated the campaign schema, and updated backend tests and durable documentation; 68 focused tests pass.
 - [x] (2026-07-26 12:36Z) Replaced Changes/history terminology and URL state with Trends, implemented the five-option selector and generic single chart, and updated frontend tests/documentation; typecheck, 48 tests, and production build pass.
 - [x] (2026-07-26 12:48Z) Deleted all current local campaigns, collected one clean full schema-v3 campaign, and rebuilt a schema-v3 dashboard dataset containing only that campaign.
-- [ ] Run focused review, repository gates, browser validation, and completion audit; remove this completed ExecPlan (completed: two focused lanes, all three findings fixed and follow-up reviews clean, browser validation, 128 non-Docker tests, `just smoke`, 48 frontend tests, and 11 Docker tests; remaining: fresh control review and plan removal).
+- [ ] Run focused review, repository gates, browser validation, and completion audit; remove this completed ExecPlan (completed: two focused lanes and first fresh control review, all five findings fixed, focused follow-ups clean, browser validation, 128 non-Docker tests, `just smoke`, 48 frontend tests, and 11 Docker tests; remaining: second/final control review, final gates, and plan removal).
 
 ## Surprises & Discoveries
 
@@ -50,6 +50,12 @@ This work does not add more than one visible chart, multi-select trend overlays,
 
 - Observation: Manifest hashes are broader than active trend operands and therefore create false chart boundaries for hash-only metadata changes.
   Evidence: focused UI review found corpus boundary keys using manifest hashes. They now use only the active ratio numerator and denominator; tests prove hash-only stability and numerator-change boundaries.
+
+- Observation: Dataset visibility was metadata rather than an enforced merge boundary, so a local dataset could be preserved when a new public dataset became the result envelope.
+  Evidence: the first fresh control review found that `merge_datasets()` inherited the new visibility. Merge now requires identical visibility, public history requires GitHub Actions trust on every preserved campaign, and publication tests exercise both rejection paths.
+
+- Observation: Stable metric identity checks do not prove a complete metric point is safe for the frontend.
+  Evidence: the first fresh control review found that truncated/coercive/timestamp-invalid points, duplicates, and campaign-mismatched tool/profile pairs could survive. `PublishedMetricPoint` now validates every required field with strict counts/booleans and ISO timestamps before membership and uniqueness checks.
 
 ## Decision Log
 
@@ -91,7 +97,7 @@ This work does not add more than one visible chart, multi-select trend overlays,
 
 ## Outcomes & Retrospective
 
-The backend, frontend, and evidence-reset milestones are complete. Every campaign constructor records a typed, non-coercive corpus snapshot from `Catalog.corpus_metrics()`, catalog verification rejects changed operands, aggregation preserves the snapshot, dataset merging validates its strict v3 campaign/provenance envelope, and the generated campaign schema exposes the required object. The visible/internal route is now Trends; one native radio group drives one generic ECharts plot with pass-rate/coverage/density units, reference levels, URL state, disabled corpus facets, exact-operand boundaries, keyboard navigation, and provenance. The sole local campaign `20260726T124655Z-ec42760bfad01a5c` has 3 tools, 12 cases, 36 results, and operands 16/16963, 17/16, 12/12, and 12/12. Wide and 390 px Chrome checks show one plot, correct 100%/1×/2× references, no page overflow, no runtime/network errors, and URL-backed keyboard provenance. Two focused review lanes reported three findings; all were fixed and both follow-up reviews are clean. The fresh control review and plan removal remain.
+The backend, frontend, and evidence-reset milestones are complete. Every campaign constructor records a typed, non-coercive corpus snapshot from `Catalog.corpus_metrics()`, catalog verification rejects changed operands, aggregation preserves the snapshot, dataset merging validates its strict v3 campaign/provenance envelope, and the generated campaign schema exposes the required object. The visible/internal route is now Trends; one native radio group drives one generic ECharts plot with pass-rate/coverage/density units, reference levels, URL state, disabled corpus facets, exact-operand boundaries, keyboard navigation, and provenance. The sole local campaign `20260726T124655Z-ec42760bfad01a5c` has 3 tools, 12 cases, 36 results, and operands 16/16963, 17/16, 12/12, and 12/12. Wide and 390 px Chrome checks show one plot, correct 100%/1×/2× references, no page overflow, no runtime/network errors, and URL-backed keyboard provenance. Two focused review lanes reported three findings; all were fixed and both follow-up reviews are clean. The first fresh control review found visibility-boundary and incomplete-metric validation gaps; both are fixed with strict tests. The second/final control review and plan removal remain.
 
 ## Context and Orientation
 
@@ -269,3 +275,5 @@ Revision note (2026-07-26 12:36Z): Recorded completion of the Trends frontend mi
 Revision note (2026-07-26 12:50Z): Recorded destructive old-campaign reset, the clean full replacement campaign, initial browser evidence, and the clipped reference-label correction.
 
 Revision note (2026-07-26 13:01Z): Recorded focused-review findings and verified fixes for strict operands, strict dataset merge envelopes, and exact-operand corpus boundaries, plus final Python/frontend/Docker gate evidence.
+
+Revision note (2026-07-26 13:16Z): Recorded first-control findings and fixes for public/local visibility isolation and complete strict metric-point validation.

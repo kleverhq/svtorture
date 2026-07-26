@@ -9,11 +9,12 @@ import shutil
 import subprocess
 from collections import defaultdict
 from collections.abc import Iterable
+from datetime import datetime
 from pathlib import Path
 from typing import Any
 from urllib.parse import quote
 
-from pydantic import ValidationError
+from pydantic import Field, StrictBool, StrictInt, ValidationError, field_validator
 
 from svtorture.campaign import CampaignError, verify_campaign_against_catalog
 from svtorture.catalog import Catalog, repository_identity
@@ -22,12 +23,41 @@ from svtorture.models import (
     Campaign,
     Distribution,
     ExecutionBackend,
+    MetricBreakdown,
     model_to_jsonable,
 )
 
 
 class PublicationError(RuntimeError):
     pass
+
+
+class PublishedMetricPoint(MetricBreakdown):
+    numerator: StrictInt = Field(ge=0)
+    denominator: StrictInt = Field(ge=0)
+    complete: StrictBool
+    valid: StrictBool
+    corpus_coverage: StrictInt = Field(ge=0)
+    execution_coverage: StrictInt = Field(ge=0)
+    conforming: StrictInt = Field(ge=0)
+    nonconforming: StrictInt = Field(ge=0)
+    inconclusive: StrictInt = Field(ge=0)
+    unsupported: StrictInt = Field(ge=0)
+    campaign_id: str
+    timestamp: datetime
+    tool_sha: str | None
+    exact_tags: tuple[str, ...]
+    nearest_tag: str | None
+    reported_version: str | None
+    image_digest: str | None
+    repository_commit: str
+
+    @field_validator("timestamp", mode="before")
+    @classmethod
+    def timestamp_is_an_iso_string(cls, value: Any) -> Any:
+        if not isinstance(value, str):
+            raise ValueError("metric timestamp must be an ISO string")
+        return value
 
 
 PRIVATE_PATTERN = re.compile(
@@ -412,25 +442,45 @@ def _validate_merge_dataset(dataset: dict[str, Any]) -> None:
     campaign_ids = [campaign.id for campaign in campaigns]
     if len(campaign_ids) != len(set(campaign_ids)):
         raise PublicationError("dashboard dataset has duplicate campaigns")
+    if dataset["visibility"] == "public" and any(
+        campaign.trust.source != "github-actions" for campaign in campaigns
+    ):
+        raise PublicationError("public dashboard history contains a local campaign")
     generated_from = dataset["generated_from"]
     if not all(isinstance(value, str) for value in generated_from):
         raise PublicationError("dashboard dataset has invalid generated_from")
     if set(generated_from) != set(campaign_ids):
         raise PublicationError("dashboard dataset campaign provenance is incomplete")
 
-    for point in dataset["metrics"]:
-        if not isinstance(point, dict):
-            raise PublicationError("dashboard dataset has an invalid metric point")
-        identities = (point.get("campaign_id"), point.get("tool_id"), point.get("profile_id"))
-        if not all(isinstance(value, str) and value for value in identities):
-            raise PublicationError("dashboard dataset has an invalid metric identity")
-        if point["campaign_id"] not in campaign_ids:
+    try:
+        points = [PublishedMetricPoint.model_validate(value) for value in dataset["metrics"]]
+    except ValidationError as error:
+        raise PublicationError("dashboard dataset has an invalid metric point") from error
+    campaign_profiles = {
+        campaign.id: {
+            (tool.definition.id, profile_id)
+            for tool in campaign.tools
+            for profile_id in tool.profile_ids
+        }
+        for campaign in campaigns
+    }
+    metric_ids: set[tuple[str, str, str]] = set()
+    for point in points:
+        identity = (point.campaign_id, point.tool_id, point.profile_id)
+        if identity in metric_ids:
+            raise PublicationError("dashboard dataset has duplicate metric points")
+        metric_ids.add(identity)
+        if point.campaign_id not in campaign_profiles:
             raise PublicationError("dashboard metric references an unknown campaign")
+        if (point.tool_id, point.profile_id) not in campaign_profiles[point.campaign_id]:
+            raise PublicationError("dashboard metric does not match its campaign")
 
 
 def merge_datasets(existing: dict[str, Any], new: dict[str, Any]) -> dict[str, Any]:
     _validate_merge_dataset(existing)
     _validate_merge_dataset(new)
+    if existing["visibility"] != new["visibility"]:
+        raise PublicationError("cannot merge dashboard datasets with different visibility")
     result = dict(new)
     for key, identity in (("campaigns", "id"), ("metrics", "campaign_id")):
         merged: dict[str, Any] = {}

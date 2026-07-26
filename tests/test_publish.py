@@ -461,6 +461,48 @@ def test_dataset_merge_is_strict_append_only_and_detects_collision(
     with pytest.raises(PublicationError, match="invalid metrics"):
         merge_datasets(incomplete, new)
 
+    truncated_metric = json.loads(json.dumps(old))
+    truncated_metric["metrics"][0].pop("numerator")
+    with pytest.raises(PublicationError, match="invalid metric point"):
+        merge_datasets(truncated_metric, new)
+
+    coercive_metric = json.loads(json.dumps(old))
+    coercive_metric["metrics"][0]["numerator"] = "1"
+    with pytest.raises(PublicationError, match="invalid metric point"):
+        merge_datasets(coercive_metric, new)
+
+    numeric_timestamp = json.loads(json.dumps(old))
+    numeric_timestamp["metrics"][0]["timestamp"] = 123
+    with pytest.raises(PublicationError, match="invalid metric point"):
+        merge_datasets(numeric_timestamp, new)
+
+    duplicate_metric = json.loads(json.dumps(old))
+    duplicate_metric["metrics"].append(dict(duplicate_metric["metrics"][0]))
+    with pytest.raises(PublicationError, match="duplicate metric points"):
+        merge_datasets(duplicate_metric, new)
+
+    mismatched_metric = json.loads(json.dumps(old))
+    mismatched_metric["metrics"][0]["profile_id"] = "parser"
+    with pytest.raises(PublicationError, match="does not match its campaign"):
+        merge_datasets(mismatched_metric, new)
+
+    public_with_local_campaign = json.loads(json.dumps(new))
+    public_with_local_campaign["visibility"] = "public"
+    with pytest.raises(PublicationError, match="contains a local campaign"):
+        merge_datasets(public_with_local_campaign, public_with_local_campaign)
+
+    public = json.loads(json.dumps(new))
+    public["visibility"] = "public"
+    for campaign in public["campaigns"]:
+        campaign["trust"] = {
+            "source": "github-actions",
+            "repository": "kleverhq/svtorture",
+            "workflow_run_id": "1",
+            "checkout_sha": campaign["repository"]["commit"],
+        }
+    with pytest.raises(PublicationError, match="different visibility"):
+        merge_datasets(old, public)
+
     merged = merge_datasets(old, new)
     assert merged["schema_version"] == 3
     assert merged["corpus_coverage"] == new["corpus_coverage"]
@@ -523,6 +565,26 @@ def test_pages_publish_preserves_history_and_regenerates_index(
             ),
         ),
         campaign_id="20260102T000000Z-second",
+    )
+    first = first.model_copy(
+        update={
+            "trust": CampaignTrust(
+                source="github-actions",
+                repository="kleverhq/svtorture",
+                workflow_run_id="1",
+                checkout_sha=first.repository.commit,
+            )
+        }
+    )
+    second = second.model_copy(
+        update={
+            "trust": CampaignTrust(
+                source="github-actions",
+                repository="kleverhq/svtorture",
+                workflow_run_id="2",
+                checkout_sha=second.repository.commit,
+            )
+        }
     )
     monkeypatch.setattr(publication, "validate_public_campaign", lambda *_args: None)
     built = tmp_path / "dist"
