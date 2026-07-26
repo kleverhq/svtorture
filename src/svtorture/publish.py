@@ -13,6 +13,8 @@ from pathlib import Path
 from typing import Any
 from urllib.parse import quote
 
+from pydantic import ValidationError
+
 from svtorture.campaign import CampaignError, verify_campaign_against_catalog
 from svtorture.catalog import Catalog, repository_identity
 from svtorture.metric import compute_metric
@@ -391,13 +393,48 @@ def write_dataset(
     return output
 
 
-def merge_datasets(existing: dict[str, Any], new: dict[str, Any]) -> dict[str, Any]:
-    if existing.get("schema_version") != 3 or new.get("schema_version") != 3:
+def _validate_merge_dataset(dataset: dict[str, Any]) -> None:
+    if dataset.get("schema_version") != 3:
         raise PublicationError("cannot merge incompatible dashboard datasets")
+    required_sequences = ("generated_from", "requirements", "cases", "campaigns", "metrics")
+    for key in required_sequences:
+        if not isinstance(dataset.get(key), list):
+            raise PublicationError(f"dashboard dataset has invalid {key}")
+    if dataset.get("visibility") not in {"local", "public"}:
+        raise PublicationError("dashboard dataset has invalid visibility")
+    if not isinstance(dataset.get("corpus_coverage"), dict):
+        raise PublicationError("dashboard dataset has invalid corpus_coverage")
+
+    try:
+        campaigns = [Campaign.model_validate(value) for value in dataset["campaigns"]]
+    except ValidationError as error:
+        raise PublicationError("dashboard dataset has an invalid campaign") from error
+    campaign_ids = [campaign.id for campaign in campaigns]
+    if len(campaign_ids) != len(set(campaign_ids)):
+        raise PublicationError("dashboard dataset has duplicate campaigns")
+    generated_from = dataset["generated_from"]
+    if not all(isinstance(value, str) for value in generated_from):
+        raise PublicationError("dashboard dataset has invalid generated_from")
+    if set(generated_from) != set(campaign_ids):
+        raise PublicationError("dashboard dataset campaign provenance is incomplete")
+
+    for point in dataset["metrics"]:
+        if not isinstance(point, dict):
+            raise PublicationError("dashboard dataset has an invalid metric point")
+        identities = (point.get("campaign_id"), point.get("tool_id"), point.get("profile_id"))
+        if not all(isinstance(value, str) and value for value in identities):
+            raise PublicationError("dashboard dataset has an invalid metric identity")
+        if point["campaign_id"] not in campaign_ids:
+            raise PublicationError("dashboard metric references an unknown campaign")
+
+
+def merge_datasets(existing: dict[str, Any], new: dict[str, Any]) -> dict[str, Any]:
+    _validate_merge_dataset(existing)
+    _validate_merge_dataset(new)
     result = dict(new)
     for key, identity in (("campaigns", "id"), ("metrics", "campaign_id")):
         merged: dict[str, Any] = {}
-        values = [*existing.get(key, []), *new.get(key, [])]
+        values = [*existing[key], *new[key]]
         for value in values:
             if key == "metrics":
                 stable_id = f"{value[identity]}:{value['tool_id']}:{value['profile_id']}"
@@ -410,8 +447,8 @@ def merge_datasets(existing: dict[str, Any], new: dict[str, Any]) -> dict[str, A
         result[key] = list(merged.values())
     result["generated_from"] = sorted(
         {
-            *existing.get("generated_from", []),
-            *new.get("generated_from", []),
+            *existing["generated_from"],
+            *new["generated_from"],
         }
     )
     return result

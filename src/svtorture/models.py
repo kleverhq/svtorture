@@ -979,8 +979,8 @@ class CaseIdentity(StrictModel):
 
 
 class CorpusRatio(StrictModel):
-    numerator: int = Field(ge=0)
-    denominator: int = Field(ge=0)
+    numerator: int = Field(strict=True, ge=0)
+    denominator: int = Field(strict=True, ge=0)
 
 
 class CorpusMetricSummary(StrictModel):

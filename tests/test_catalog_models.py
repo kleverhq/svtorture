@@ -392,6 +392,25 @@ def test_campaign_requires_coherent_corpus_metrics(
         Campaign.model_validate(value)
 
 
+@pytest.mark.parametrize("value", ("16", True, 16.0))
+def test_campaign_corpus_operands_reject_coercion(
+    catalog: Catalog,
+    value: object,
+) -> None:
+    case = catalog.cases["ch04-nba-rhs-captured"]
+    tool = campaign_tool(catalog.tools.tool("fake"), ("simulator",))
+    campaign = make_campaign(
+        catalog,
+        cases=(case,),
+        tool=tool,
+        results=(normalized(case, "fake", "simulator"),),
+    )
+    payload = campaign.model_dump(mode="json")
+    payload["corpus_metrics"]["requirements"]["coverage"]["numerator"] = value
+    with pytest.raises(ValidationError, match="valid integer"):
+        Campaign.model_validate(payload)
+
+
 def test_result_evidence_mode_must_match_observations(catalog: Catalog) -> None:
     case = catalog.cases["ch04-nba-rhs-captured"]
     value = normalized(case, "fake", "simulator").model_dump(mode="json")

@@ -163,6 +163,31 @@ describe("TrendsView", () => {
     expect(trendPoints(dataset, "requirements-density", "", "")[0]?.value).toBe(1);
     expect(trendPoints(dataset, "cases-density", "", "")[0]?.value).toBe(1);
     expect(corpusTrendPointKey(campaign)).toBe(`corpus:${campaign.id}`);
+    const hashOnly = {
+      ...campaign,
+      id: "hash-only-change",
+      hashes: {
+        requirements: "d".repeat(64),
+        cases: "e".repeat(64),
+        selection: "f".repeat(64),
+      },
+    } satisfies Campaign;
+    dataset.campaigns.push(hashOnly);
+    const unchangedOperands = trendPoints(
+      dataset,
+      "requirements-coverage",
+      "",
+      "",
+    );
+    expect(unchangedOperands[0]?.boundaryKey).toBe(
+      unchangedOperands[1]?.boundaryKey,
+    );
+    const changedOperands = secondCampaign(dataset);
+    expect(
+      trendPoints(dataset, "requirements-coverage", "", "").find(
+        (item) => item.campaignId === changedOperands.id,
+      )?.boundaryKey,
+    ).not.toBe(unchangedOperands[0]?.boundaryKey);
     expect(toolTrendPointKey(point)).toBe(
       `tool:${campaign.id}:fake:simulator`,
     );

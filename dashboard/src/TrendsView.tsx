@@ -157,9 +157,6 @@ export function trendPoints(
   const definition = definitionFor(kind);
   return dataset.campaigns.map((campaign) => {
     const ratio = corpusRatio(campaign, kind);
-    const corpusHash = kind.startsWith("requirements-")
-      ? campaign.hashes.requirements
-      : `${campaign.hashes.requirements}:${campaign.hashes.cases}`;
     return {
       pointKey: corpusTrendPointKey(campaign),
       campaignId: campaign.id,
@@ -168,7 +165,7 @@ export function trendPoints(
       numerator: ratio.numerator,
       denominator: ratio.denominator,
       value: ratioValue(ratio, definition.unit),
-      boundaryKey: `${corpusHash}:${ratio.denominator}`,
+      boundaryKey: `${ratio.numerator}:${ratio.denominator}`,
       campaign,
     };
   });

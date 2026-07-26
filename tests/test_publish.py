@@ -424,32 +424,55 @@ def test_dataset_counts_related_case_requirements(catalog: Catalog) -> None:
     assert chapter_five["density"] == {"numerator": 2, "denominator": 1}
 
 
-def test_dataset_merge_is_append_only_and_detects_collision() -> None:
-    old = {
-        "schema_version": 3,
-        "corpus_coverage": {"source": "old"},
-        "campaigns": [{"id": "one", "value": 1}],
-        "metrics": [{"campaign_id": "one", "tool_id": "t", "profile_id": "p"}],
-        "generated_from": ["one"],
-    }
-    new = {
-        "schema_version": 3,
-        "corpus_coverage": {"source": "new"},
-        "campaigns": [{"id": "two", "value": 2}],
-        "metrics": [{"campaign_id": "two", "tool_id": "t", "profile_id": "p"}],
-        "generated_from": ["two"],
-    }
+def test_dataset_merge_is_strict_append_only_and_detects_collision(
+    catalog: Catalog,
+) -> None:
+    case = catalog.cases["ch13-output-copyout-width"]
+    tool = campaign_tool(catalog.tools.tool("fake"), ("simulator",))
+    first = make_campaign(
+        catalog,
+        cases=(case,),
+        tool=tool,
+        results=(normalized(case, "fake", "simulator"),),
+        campaign_id="20260101T000000Z-one",
+    )
+    second = make_campaign(
+        catalog,
+        cases=(case,),
+        tool=tool,
+        results=(normalized(case, "fake", "simulator"),),
+        campaign_id="20260102T000000Z-two",
+    )
+    old = publication.build_dataset(catalog, (first,), visibility="local")
+    new = publication.build_dataset(catalog, (second,), visibility="local")
+
     legacy = dict(old)
     legacy["schema_version"] = 2
     with pytest.raises(PublicationError, match="incompatible dashboard datasets"):
         merge_datasets(legacy, new)
 
+    relabelled = json.loads(json.dumps(old))
+    relabelled["campaigns"][0]["schema_version"] = 2
+    with pytest.raises(PublicationError, match="invalid campaign"):
+        merge_datasets(relabelled, new)
+
+    incomplete = dict(old)
+    incomplete.pop("metrics")
+    with pytest.raises(PublicationError, match="invalid metrics"):
+        merge_datasets(incomplete, new)
+
     merged = merge_datasets(old, new)
     assert merged["schema_version"] == 3
-    assert merged["corpus_coverage"] == {"source": "new"}
-    assert {item["id"] for item in merged["campaigns"]} == {"one", "two"}
-    collision = dict(new)
-    collision["campaigns"] = [{"id": "one", "value": 999}]
+    assert merged["corpus_coverage"] == new["corpus_coverage"]
+    assert {item["id"] for item in merged["campaigns"]} == {first.id, second.id}
+    assert merged["generated_from"] == sorted((first.id, second.id))
+
+    collision = json.loads(json.dumps(new))
+    collision["campaigns"][0]["id"] = first.id
+    collision["campaigns"][0]["repository"]["dirty"] = True
+    collision["generated_from"] = [first.id]
+    for point in collision["metrics"]:
+        point["campaign_id"] = first.id
     with pytest.raises(PublicationError, match="stable public identity"):
         merge_datasets(old, collision)
 
