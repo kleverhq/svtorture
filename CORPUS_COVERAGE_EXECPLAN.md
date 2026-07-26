@@ -18,7 +18,7 @@ This work does not change conformance scoring, campaign selection, tool results,
 
 - [x] (2026-07-26 11:24Z) Confirmed the formulas with the user; Requirements Density is requirements per covered anchor.
 - [x] (2026-07-26 11:24Z) Mapped the anchor index, dashboard export pipeline, frontend types, sticky layout, and test surfaces.
-- [ ] Add deterministic corpus coverage and density operands to the generated dashboard dataset.
+- [x] (2026-07-26 11:38Z) Added deterministic corpus coverage and density operands to the generated dashboard dataset, including 58 ordered breakdown rows and related-requirement counting.
 - [ ] Add compact Requirements and Cases disclosure strips with formulas and complete chapter/annex breakdowns.
 - [ ] Add backend, frontend, documentation, responsive, and accessibility validation.
 - [ ] Run the repository gates, remove this completed ExecPlan, and leave the working tree ready for handoff.
@@ -36,6 +36,9 @@ This work does not change conformance scoring, campaign selection, tool results,
 
 - Observation: Cases expose both `primary_requirement` and `related_requirements`, although every current case has an empty related list.
   Evidence: `dashboard/src/types.ts::CaseDefinition` and `src/svtorture/models.py::CaseDefinition` define both fields. The implementation and tests must include both so future related links are counted correctly.
+
+- Observation: The focused Python pre-commit gate still expected `.github/README.md`, which the user intentionally removed because GitHub displayed it instead of the root project README.
+  Evidence: the first backend milestone commit attempt failed `test_repository_directories_have_navigation_readmes` in `tests/test_catalog_models.py`. The stale `.github` entry was removed from that navigation-README assertion; all other documented top-level directories remain covered.
 
 ## Decision Log
 
@@ -61,7 +64,7 @@ This work does not change conformance scoring, campaign selection, tool results,
 
 ## Outcomes & Retrospective
 
-Implementation has not started. At completion this section will record the exact shipped operands, tests, browser observations, and any remaining limitations.
+The dataset milestone is complete: publication now emits exact integer operands for both summaries and all 58 standard parts. Focused publication validation passes 12 tests. Frontend implementation and visual validation remain.
 
 ## Context and Orientation
 
@@ -205,3 +208,7 @@ In `dashboard/src/CorpusCoverage.tsx`, export:
 Use only React, native HTML disclosure/table semantics, and existing CSS variables. No dependency changes are permitted.
 
 Revision note (2026-07-26 11:24Z): Initial plan created after repository exploration and user confirmation of the Requirements Density direction.
+
+Revision note (2026-07-26 11:38Z): Updated progress and outcomes after completing the deterministic dataset milestone; focused publication tests pass 12/12.
+
+Revision note (2026-07-26 11:42Z): Recorded and corrected the stale test expectation for the intentionally removed `.github/README.md`, discovered by the milestone pre-commit gate.

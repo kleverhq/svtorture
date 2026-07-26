@@ -53,7 +53,6 @@ def test_seed_catalog_meets_mvp(catalog: Catalog) -> None:
 
 def test_repository_directories_have_navigation_readmes(catalog: Catalog) -> None:
     top_level = (
-        ".github",
         "cases",
         "dashboard",
         "docs",

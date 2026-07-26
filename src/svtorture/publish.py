@@ -7,6 +7,7 @@ import os
 import re
 import shutil
 import subprocess
+from collections import defaultdict
 from collections.abc import Iterable
 from pathlib import Path
 from typing import Any
@@ -160,6 +161,155 @@ def _source_link(catalog: Catalog, campaign: Campaign, case_id: str, source: str
     return "data:text/plain;charset=utf-8," + quote(text, safe="")
 
 
+def _corpus_coverage(catalog: Catalog) -> dict[str, Any]:
+    index_path = catalog.root / "standards" / "ieee-1800-2023-anchors.json"
+    try:
+        index = json.loads(index_path.read_text(encoding="utf-8"))
+        sections = (
+            ("chapter", index["clauses"]),
+            ("annex", index["annexes"]),
+        )
+    except (OSError, UnicodeDecodeError, json.JSONDecodeError, KeyError, TypeError) as error:
+        raise PublicationError(
+            f"cannot read standard anchor index {index_path}: {error}"
+        ) from error
+
+    parts: list[dict[str, Any]] = []
+    anchor_parts: dict[str, str] = {}
+    for kind, entries in sections:
+        for entry in entries:
+            part_id = str(entry["id"])
+            key = f"{kind}:{part_id}"
+            anchors = frozenset(entry["anchors"])
+            parts.append(
+                {
+                    "key": key,
+                    "kind": kind,
+                    "id": part_id,
+                    "title": str(entry["title"]),
+                    "anchors": anchors,
+                }
+            )
+            for anchor in anchors:
+                if anchor in anchor_parts:
+                    raise PublicationError(f"standard anchor {anchor!r} appears more than once")
+                anchor_parts[anchor] = key
+    if index.get("anchor_count") != len(anchor_parts):
+        raise PublicationError("standard anchor index has an inconsistent total anchor count")
+
+    requirement_links = {
+        (requirement.id, anchor)
+        for requirement in catalog.inventory.requirements
+        for anchor in requirement.anchors
+    }
+    requirement_anchors_by_part: defaultdict[str, set[str]] = defaultdict(set)
+    requirement_links_by_part: defaultdict[str, set[tuple[str, str]]] = defaultdict(set)
+    for requirement_id, anchor in requirement_links:
+        try:
+            part_key = anchor_parts[anchor]
+        except KeyError as error:
+            raise PublicationError(f"requirement references unknown anchor {anchor!r}") from error
+        requirement_anchors_by_part[part_key].add(anchor)
+        requirement_links_by_part[part_key].add((requirement_id, anchor))
+
+    requirements = {item.id: item for item in catalog.inventory.requirements}
+    part_keys = {part["key"] for part in parts}
+    requirements_by_part: defaultdict[str, set[str]] = defaultdict(set)
+    for requirement in requirements.values():
+        part_key = f"chapter:{requirement.chapter}"
+        if part_key not in part_keys:
+            raise PublicationError(
+                f"requirement {requirement.id!r} belongs to unknown chapter {requirement.chapter}"
+            )
+        requirements_by_part[part_key].add(requirement.id)
+
+    case_links = {
+        (loaded.definition.id, requirement_id)
+        for loaded in catalog.cases.values()
+        for requirement_id in (
+            loaded.definition.primary_requirement,
+            *loaded.definition.related_requirements,
+        )
+    }
+    case_requirements_by_part: defaultdict[str, set[str]] = defaultdict(set)
+    case_links_by_part: defaultdict[str, set[tuple[str, str]]] = defaultdict(set)
+    for case_id, requirement_id in case_links:
+        try:
+            requirement = requirements[requirement_id]
+        except KeyError as error:
+            raise PublicationError(
+                f"case references unknown requirement {requirement_id!r}"
+            ) from error
+        part_key = f"chapter:{requirement.chapter}"
+        case_requirements_by_part[part_key].add(requirement_id)
+        case_links_by_part[part_key].add((case_id, requirement_id))
+
+    requirement_breakdown: list[dict[str, Any]] = []
+    case_breakdown: list[dict[str, Any]] = []
+    for part in parts:
+        part_key = part["key"]
+        covered_anchors = requirement_anchors_by_part[part_key]
+        covered_requirements = case_requirements_by_part[part_key]
+        common = {
+            "kind": part["kind"],
+            "id": part["id"],
+            "title": part["title"],
+        }
+        requirement_breakdown.append(
+            {
+                **common,
+                "coverage": {
+                    "numerator": len(covered_anchors),
+                    "denominator": len(part["anchors"]),
+                },
+                "density": {
+                    "numerator": len(requirement_links_by_part[part_key]),
+                    "denominator": len(covered_anchors),
+                },
+            }
+        )
+        case_breakdown.append(
+            {
+                **common,
+                "coverage": {
+                    "numerator": len(covered_requirements),
+                    "denominator": len(requirements_by_part[part_key]),
+                },
+                "density": {
+                    "numerator": len(case_links_by_part[part_key]),
+                    "denominator": len(covered_requirements),
+                },
+            }
+        )
+
+    covered_anchors = {anchor for _, anchor in requirement_links}
+    covered_requirements = {requirement_id for _, requirement_id in case_links}
+    return {
+        "requirements": {
+            "coverage": {
+                "numerator": len(covered_anchors),
+                "denominator": len(anchor_parts),
+            },
+            "density": {
+                "numerator": len(requirement_links),
+                "denominator": len(covered_anchors),
+            },
+            "breakdown": requirement_breakdown,
+        },
+        "cases": {
+            "coverage": {
+                "numerator": len(covered_requirements),
+                "denominator": len(requirements),
+            },
+            "density": {
+                "numerator": len(case_links),
+                "denominator": len(covered_requirements),
+            },
+            "breakdown": case_breakdown,
+        },
+    }
+
+
 def build_dataset(
     catalog: Catalog,
     campaigns: Iterable[Campaign],
@@ -232,6 +382,7 @@ def build_dataset(
         "schema_version": 2,
         "generated_from": [item.id for item in selected_campaigns],
         "visibility": visibility,
+        "corpus_coverage": _corpus_coverage(catalog),
         "requirements": requirements,
         "cases": cases,
         "campaigns": campaign_values,

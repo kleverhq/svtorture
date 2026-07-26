@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+from dataclasses import replace
 from pathlib import Path
 
 import pytest
@@ -326,15 +327,79 @@ def test_publication_probes_anonymous_registry_access(
         )
 
 
+def test_dataset_reports_corpus_coverage_by_standard_part(catalog: Catalog) -> None:
+    dataset = publication.build_dataset(catalog, (), visibility="local")
+    coverage = dataset["corpus_coverage"]
+
+    assert coverage["requirements"]["coverage"] == {
+        "numerator": 16,
+        "denominator": 16963,
+    }
+    assert coverage["requirements"]["density"] == {
+        "numerator": 17,
+        "denominator": 16,
+    }
+    assert coverage["cases"]["coverage"] == {
+        "numerator": 12,
+        "denominator": 12,
+    }
+    assert coverage["cases"]["density"] == {
+        "numerator": 12,
+        "denominator": 12,
+    }
+
+    requirement_parts = coverage["requirements"]["breakdown"]
+    case_parts = coverage["cases"]["breakdown"]
+    assert len(requirement_parts) == len(case_parts) == 58
+    assert [(part["kind"], part["id"]) for part in requirement_parts] == [
+        *[("chapter", str(chapter)) for chapter in range(1, 42)],
+        *[("annex", letter) for letter in "ABCDEFGHIJKLMNOPQ"],
+    ]
+    chapter_six = next(part for part in requirement_parts if part["id"] == "6")
+    assert chapter_six["coverage"]["numerator"] == 1
+    assert chapter_six["density"] == {"numerator": 2, "denominator": 1}
+    chapter_three = next(part for part in requirement_parts if part["id"] == "3")
+    assert chapter_three["coverage"]["numerator"] == 1
+    annex_a = next(part for part in case_parts if part["id"] == "A")
+    assert annex_a["coverage"] == {"numerator": 0, "denominator": 0}
+    assert annex_a["density"] == {"numerator": 0, "denominator": 0}
+
+
+def test_dataset_counts_related_case_requirements(catalog: Catalog) -> None:
+    case_id = "ch04-nba-rhs-captured"
+    loaded = catalog.cases[case_id]
+    related_requirement = "SV-2023-05-BASED-LITERAL-TOKEN"
+    modified_case = replace(
+        loaded,
+        definition=loaded.definition.model_copy(
+            update={"related_requirements": (related_requirement,)}
+        ),
+    )
+    modified_catalog = replace(
+        catalog,
+        cases={**catalog.cases, case_id: modified_case},
+    )
+
+    coverage = publication.build_dataset(modified_catalog, (), visibility="local")[
+        "corpus_coverage"
+    ]["cases"]
+    assert coverage["coverage"] == {"numerator": 12, "denominator": 12}
+    assert coverage["density"] == {"numerator": 13, "denominator": 12}
+    chapter_five = next(part for part in coverage["breakdown"] if part["id"] == "5")
+    assert chapter_five["density"] == {"numerator": 2, "denominator": 1}
+
+
 def test_dataset_merge_is_append_only_and_detects_collision() -> None:
     old = {
         "schema_version": 2,
+        "corpus_coverage": {"source": "old"},
         "campaigns": [{"id": "one", "value": 1}],
         "metrics": [{"campaign_id": "one", "tool_id": "t", "profile_id": "p"}],
         "generated_from": ["one"],
     }
     new = {
         "schema_version": 2,
+        "corpus_coverage": {"source": "new"},
         "campaigns": [{"id": "two", "value": 2}],
         "metrics": [{"campaign_id": "two", "tool_id": "t", "profile_id": "p"}],
         "generated_from": ["two"],
@@ -346,6 +411,7 @@ def test_dataset_merge_is_append_only_and_detects_collision() -> None:
 
     merged = merge_datasets(old, new)
     assert merged["schema_version"] == 2
+    assert merged["corpus_coverage"] == {"source": "new"}
     assert {item["id"] for item in merged["campaigns"]} == {"one", "two"}
     collision = dict(new)
     collision["campaigns"] = [{"id": "one", "value": 999}]
