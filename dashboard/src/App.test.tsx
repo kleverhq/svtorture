@@ -77,6 +77,57 @@ describe("App overview navigation", () => {
     expect(screen.queryByLabelText("Case corpus coverage")).toBeNull();
   });
 
+  it("opens requirement details from a direct link", async () => {
+    const dataset = makeTestDataset();
+    const requirement = dataset.requirements[0];
+    if (!requirement) throw new Error("incomplete test dataset");
+    window.history.replaceState(
+      null,
+      "",
+      `/?view=matrix&requirementId=${encodeURIComponent(requirement.id)}`,
+    );
+    mockDataset(dataset);
+
+    render(<App />);
+
+    expect(
+      (await screen.findByRole("tab", { name: "Requirements" })).getAttribute(
+        "aria-selected",
+      ),
+    ).toBe("true");
+    const inspector = screen.getByRole("complementary", { name: requirement.id });
+    expect(within(inspector).getByText(requirement.summary)).toBeTruthy();
+    expect(within(inspector).getByRole("button", { name: "Copy link" })).toBeTruthy();
+  });
+
+  it("opens case details from a direct link", async () => {
+    const dataset = makeTestDataset();
+    const original = dataset.cases[0];
+    if (!original) throw new Error("incomplete test dataset");
+    const testCase = {
+      ...original,
+      id: "ch13-shared-deep-link",
+      title: "Case selected only by its deep link",
+    };
+    dataset.cases.push(testCase);
+    window.history.replaceState(
+      null,
+      "",
+      `/?view=evidence&caseId=${encodeURIComponent(testCase.id)}`,
+    );
+    mockDataset(dataset);
+
+    render(<App />);
+
+    expect(
+      (await screen.findByRole("tab", { name: "Cases" })).getAttribute(
+        "aria-selected",
+      ),
+    ).toBe("true");
+    expect(screen.getByRole("heading", { name: testCase.title })).toBeTruthy();
+    expect(screen.getByRole("button", { name: "Copy link" })).toBeTruthy();
+  });
+
   it("opens Requirements with the clicked tool profile selected", async () => {
     const dataset = makeTestDataset();
     const campaign = dataset.campaigns[0];

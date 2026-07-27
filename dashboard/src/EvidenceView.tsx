@@ -1,5 +1,6 @@
 import { useEffect, useId, useMemo, useRef, useState } from "react";
 
+import { CopyLinkButton } from "./CopyLinkButton";
 import {
   resultsByKey,
   STATUS_GROUP_LABELS,
@@ -344,10 +345,19 @@ export function EvidenceView({
                 <h3>{selected.title}</h3>
                 <code>{selected.id}</code>
               </div>
-              <div className="tag-list">
-                {selected.tags.map((tag) => (
-                  <span key={tag}>{tag}</span>
-                ))}
+              <div className="evidence-pane__meta">
+                <CopyLinkButton
+                  target={{
+                    view: "evidence",
+                    parameter: "caseId",
+                    id: selected.id,
+                  }}
+                />
+                <div className="tag-list">
+                  {selected.tags.map((tag) => (
+                    <span key={tag}>{tag}</span>
+                  ))}
+                </div>
               </div>
             </header>
             <p className="evidence-pane__description">{selected.description}</p>

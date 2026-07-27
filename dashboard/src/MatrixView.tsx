@@ -7,6 +7,7 @@ import {
 import { useWindowVirtualizer } from "@tanstack/react-virtual";
 import { useMemo, useRef } from "react";
 
+import { CopyLinkButton } from "./CopyLinkButton";
 import { aggregateStatus, profileKeys, resultsByKey } from "./model";
 import { StatusBadge } from "./StatusBadge";
 import type { Campaign, CaseDefinition, Requirement, Result } from "./types";
@@ -213,18 +214,27 @@ export function MatrixView({
             aria-labelledby="requirement-inspector-title"
           >
             <header>
-              <div>
+              <div className="matrix-inspector__identity">
                 <span>Clause {selectedRequirement.clause}</span>
                 <strong id="requirement-inspector-title">{selectedRequirement.id}</strong>
               </div>
-              <button
-                type="button"
-                className="icon-button"
-                aria-label="Close requirement inspector"
-                onClick={() => onSelectRequirement("")}
-              >
-                ×
-              </button>
+              <div className="inspector-header-actions">
+                <CopyLinkButton
+                  target={{
+                    view: "matrix",
+                    parameter: "requirementId",
+                    id: selectedRequirement.id,
+                  }}
+                />
+                <button
+                  type="button"
+                  className="icon-button"
+                  aria-label="Close requirement inspector"
+                  onClick={() => onSelectRequirement("")}
+                >
+                  ×
+                </button>
+              </div>
             </header>
             <p>{selectedRequirement.summary}</p>
             <section>

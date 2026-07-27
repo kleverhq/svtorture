@@ -71,8 +71,8 @@ not observed. Synthetic unsupported, unavailable, and inapplicable results use
 The page header selects the campaign for campaign-scoped views. Optional inclusive
 `From` and `To` dates narrow the campaign dropdown; an empty selection resolves to
 the latest campaign in that range. Trends keeps all three controls visible but
-disabled and ignores their values: its week, month, six-month, year, and all-time
-UTC windows are independent. Tool and profile facets are available on Overview,
+disabled and ignores their values: its week, month, three-month, six-month, year,
+and all-time UTC windows are independent, and all-time is the default. Tool and profile facets are available on Overview,
 Requirements, Cases, Trends, and Campaigns. Trends shows Tool/Profile facets for
 Pass rate and replaces them with a chapter/annex multiselect for Coverage and
 Density without discarding either URL-backed selection. Overview, Trends, and Campaigns intentionally expose only
@@ -85,7 +85,10 @@ Density marks 1× and 2×. Coverage and Density show Requirements and Cases as t
 lines. Each campaign freezes aggregate and per-part integer operands, so any
 chapter/annex combination remains tied to its historical corpus. Non-default
 state uses `trend`, repeated `chapter`, `trendRange`, and `trendPoint` under
-`view=trends`.
+`view=trends`. Case headers and opened requirement inspectors provide `Copy link`
+actions. They copy canonical, path-aware URLs containing only the target view and
+case or requirement identity, so unrelated investigation filters cannot hide the
+shared entity.
 
 The site header provides `Auto`, `Light`, and `Dark` themes. `Auto` is the default and
 follows the browser or operating-system color preference. An explicit selection

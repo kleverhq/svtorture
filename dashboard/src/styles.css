@@ -1116,11 +1116,21 @@ details summary {
   gap: 10px;
 }
 
-.matrix-inspector > header > div {
+.matrix-inspector__identity {
   display: flex;
   min-width: 0;
   flex-direction: column;
   gap: 3px;
+}
+
+.matrix-inspector__identity strong {
+  overflow-wrap: anywhere;
+}
+
+.inspector-header-actions {
+  display: flex;
+  flex: 0 0 auto;
+  gap: 6px;
 }
 
 .matrix-inspector > header span,
@@ -1281,6 +1291,31 @@ details summary {
 .evidence-pane__header h3 {
   margin-bottom: 3px;
   font-size: 1.25rem;
+}
+
+.evidence-pane__meta {
+  display: flex;
+  align-items: flex-end;
+  flex: 0 0 auto;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.copy-link-button {
+  min-width: 82px;
+  min-height: 30px;
+  padding: 4px 8px;
+  white-space: nowrap;
+}
+
+.copy-link-button[data-status="copied"] {
+  color: var(--pass);
+  border-color: var(--pass);
+}
+
+.copy-link-button[data-status="failed"] {
+  color: var(--fail);
+  border-color: var(--fail);
 }
 
 .evidence-pane__description {
@@ -2128,6 +2163,10 @@ footer {
   .evidence-pane__header {
     flex-direction: column;
     gap: 8px;
+  }
+
+  .evidence-pane__meta {
+    align-items: flex-start;
   }
 
   .tag-list {
