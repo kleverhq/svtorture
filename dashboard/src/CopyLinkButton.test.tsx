@@ -55,12 +55,16 @@ describe("CopyLinkButton", () => {
         view: "evidence",
         parameter: "caseId",
         id: "case with spaces",
+        campaignId: "20260101T000000Z-campaign",
       }),
     );
     expect(caseUrl.pathname).toBe("/svtorture/");
     expect(caseUrl.searchParams.get("view")).toBe("evidence");
     expect(caseUrl.searchParams.get("caseId")).toBe("case with spaces");
-    expect([...caseUrl.searchParams]).toHaveLength(2);
+    expect(caseUrl.searchParams.get("campaign")).toBe(
+      "20260101T000000Z-campaign",
+    );
+    expect([...caseUrl.searchParams]).toHaveLength(3);
     expect(caseUrl.hash).toBe("");
 
     const requirementUrl = new URL(
@@ -82,14 +86,19 @@ describe("CopyLinkButton", () => {
 
     render(
       <CopyLinkButton
-        target={{ view: "evidence", parameter: "caseId", id: "case-1" }}
+        target={{
+          view: "evidence",
+          parameter: "caseId",
+          id: "case-1",
+          campaignId: "older-campaign",
+        }}
       />,
     );
     fireEvent.click(screen.getByRole("button", { name: "Copy link" }));
 
     await waitFor(() => expect(writeText).toHaveBeenCalledOnce());
     expect(writeText.mock.calls[0]?.[0]).toMatch(
-      /\/svtorture\/\?view=evidence&caseId=case-1$/,
+      /\/svtorture\/\?view=evidence&caseId=case-1&campaign=older-campaign$/,
     );
     expect(screen.getByRole("button", { name: "Link copied" })).toBeTruthy();
   });

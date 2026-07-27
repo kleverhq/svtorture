@@ -351,6 +351,7 @@ export function EvidenceView({
                     view: "evidence",
                     parameter: "caseId",
                     id: selected.id,
+                    campaignId: campaign?.id,
                   }}
                 />
                 <div className="tag-list">

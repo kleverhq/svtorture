@@ -86,8 +86,9 @@ lines. Each campaign freezes aggregate and per-part integer operands, so any
 chapter/annex combination remains tied to its historical corpus. Non-default
 state uses `trend`, repeated `chapter`, `trendRange`, and `trendPoint` under
 `view=trends`. Case headers and opened requirement inspectors provide `Copy link`
-actions. They copy canonical, path-aware URLs containing only the target view and
-case or requirement identity, so unrelated investigation filters cannot hide the
+actions. They copy canonical, path-aware URLs containing the target view, case or
+requirement identity, and displayed campaign when available, so the recipient sees
+the same evidence context while unrelated investigation filters cannot hide the
 shared entity.
 
 The site header provides `Auto`, `Light`, and `Dark` themes. `Auto` is the default and

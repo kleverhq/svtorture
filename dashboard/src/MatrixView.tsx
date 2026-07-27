@@ -224,6 +224,7 @@ export function MatrixView({
                     view: "matrix",
                     parameter: "requirementId",
                     id: selectedRequirement.id,
+                    campaignId: campaign?.id,
                   }}
                 />
                 <button

@@ -110,10 +110,19 @@ describe("App overview navigation", () => {
       title: "Case selected only by its deep link",
     };
     dataset.cases.push(testCase);
+    const latestCampaign = dataset.campaigns[0];
+    if (!latestCampaign) throw new Error("incomplete test dataset");
+    const olderCampaign = {
+      ...latestCampaign,
+      id: "20251201T000000Z-older",
+      started_at: "2025-12-01T00:00:00Z",
+      finished_at: "2025-12-01T00:01:00Z",
+    };
+    dataset.campaigns.push(olderCampaign);
     window.history.replaceState(
       null,
       "",
-      `/?view=evidence&caseId=${encodeURIComponent(testCase.id)}`,
+      `/?view=evidence&caseId=${encodeURIComponent(testCase.id)}&campaign=${olderCampaign.id}`,
     );
     mockDataset(dataset);
 
@@ -125,6 +134,9 @@ describe("App overview navigation", () => {
       ),
     ).toBe("true");
     expect(screen.getByRole("heading", { name: testCase.title })).toBeTruthy();
+    expect((screen.getByLabelText("Campaign") as HTMLSelectElement).value).toBe(
+      olderCampaign.id,
+    );
     expect(screen.getByRole("button", { name: "Copy link" })).toBeTruthy();
   });
 

@@ -1,12 +1,54 @@
-import { cleanup, fireEvent, render, screen } from "@testing-library/react";
+import {
+  cleanup,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { EvidenceView } from "./EvidenceView";
 import { makeTestDataset } from "./testDataset";
 
-afterEach(cleanup);
+afterEach(() => {
+  cleanup();
+  vi.unstubAllGlobals();
+});
 
 describe("EvidenceView", () => {
+  it("copies the selected campaign in a case deep link", async () => {
+    const dataset = makeTestDataset();
+    const testCase = dataset.cases[0];
+    const campaign = dataset.campaigns[0];
+    if (!testCase || !campaign) throw new Error("incomplete test dataset");
+    campaign.id = "20251201T000000Z-selected";
+    const writeText = vi.fn().mockResolvedValue(undefined);
+    const navigatorWithClipboard = Object.create(navigator) as Navigator;
+    Object.defineProperty(navigatorWithClipboard, "clipboard", {
+      value: { writeText },
+    });
+    vi.stubGlobal("navigator", navigatorWithClipboard);
+
+    render(
+      <EvidenceView
+        cases={dataset.cases}
+        requirements={dataset.requirements}
+        campaign={campaign}
+        toolFilter=""
+        profileFilter=""
+        selectedCaseId={testCase.id}
+        onSelectCase={() => undefined}
+        onInspectRequirement={() => undefined}
+      />,
+    );
+    fireEvent.click(screen.getByRole("button", { name: "Copy link" }));
+
+    await waitFor(() => expect(writeText).toHaveBeenCalledOnce());
+    expect(new URL(writeText.mock.calls[0]?.[0] as string).search).toBe(
+      `?view=evidence&caseId=${testCase.id}&campaign=${campaign.id}`,
+    );
+  });
+
   it("opens embedded source and navigates back to its requirement", () => {
     const dataset = makeTestDataset();
     const testCase = dataset.cases[0];

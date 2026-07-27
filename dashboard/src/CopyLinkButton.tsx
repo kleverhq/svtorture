@@ -1,8 +1,18 @@
 import { useEffect, useRef, useState } from "react";
 
 type EntityLink =
-  | { view: "matrix"; parameter: "requirementId"; id: string }
-  | { view: "evidence"; parameter: "caseId"; id: string };
+  | {
+      view: "matrix";
+      parameter: "requirementId";
+      id: string;
+      campaignId?: string | undefined;
+    }
+  | {
+      view: "evidence";
+      parameter: "caseId";
+      id: string;
+      campaignId?: string | undefined;
+    };
 
 export function dashboardEntityUrl(target: EntityLink): string {
   const url = new URL(window.location.href);
@@ -10,6 +20,7 @@ export function dashboardEntityUrl(target: EntityLink): string {
   url.hash = "";
   url.searchParams.set("view", target.view);
   url.searchParams.set(target.parameter, target.id);
+  if (target.campaignId) url.searchParams.set("campaign", target.campaignId);
   return url.toString();
 }
 
