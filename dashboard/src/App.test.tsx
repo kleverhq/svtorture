@@ -128,7 +128,19 @@ describe("App overview navigation", () => {
     const detail = await screen.findByRole("article", {
       name: `Requirement ${related.id}`,
     });
-    expect(within(detail).getByText(testCase.title)).toBeTruthy();
+    const supportingCase = within(detail).getByText(testCase.title);
+    expect(supportingCase).toBeTruthy();
+
+    fireEvent.click(supportingCase);
+    expect(
+      await screen.findByRole("heading", { name: testCase.title }),
+    ).toBeTruthy();
+    await waitFor(() => {
+      const parameters = new URLSearchParams(window.location.search);
+      expect(parameters.get("view")).toBe("evidence");
+      expect(parameters.get("caseId")).toBe(testCase.id);
+      expect(parameters.has("chapter")).toBe(false);
+    });
   });
 
   it("recovers when filters hide the selected requirement", async () => {

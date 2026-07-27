@@ -224,11 +224,27 @@ export default function App() {
       dateTo: current.dateTo,
     }));
   const inspectCase = (caseId: string) => {
-    setFilters((current) => ({ ...current, caseId }));
+    setFilters((current) => ({
+      ...EMPTY_FILTERS,
+      campaign: current.campaign,
+      dateFrom: current.dateFrom,
+      dateTo: current.dateTo,
+      tool: current.tool,
+      profile: current.profile,
+      caseId,
+    }));
     setView("evidence");
   };
   const inspectRequirement = (requirementId: string) => {
-    setFilters((current) => ({ ...current, requirementId }));
+    setFilters((current) => ({
+      ...EMPTY_FILTERS,
+      campaign: current.campaign,
+      dateFrom: current.dateFrom,
+      dateTo: current.dateTo,
+      tool: current.tool,
+      profile: current.profile,
+      requirementId,
+    }));
     setView("matrix");
   };
   const moveTabFocus = (

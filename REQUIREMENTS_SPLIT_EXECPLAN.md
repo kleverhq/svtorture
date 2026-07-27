@@ -43,6 +43,9 @@ This work does not change dataset schemas, campaign evidence, filters, scoring, 
 - Observation: A ref-backed layout effect does not initialize if an empty view later mounts its workspace.
   Evidence: focused review found the original shared hook ran once with `ref.current=null`. It now uses a callback ref and state-backed node dependency; a test renders an empty Requirement result, rerenders one item, and observes `--split-workspace-height` being measured.
 
+- Observation: Cross-view drilldown cannot preserve filters whose meaning depends on the source entity context.
+  Evidence: control review found that clicking a related Chapter5 supporting Case preserved `chapter=5`, while Cases correctly interprets chapter through the Case's primary Chapter13 Requirement and hid the target. Drilldown now clears corpus predicates while preserving campaign/date/tool/profile and the target ID; an App test proves the Case opens and `chapter` leaves the URL.
+
 ## Decision Log
 
 - Decision: Remove the Requirements table entirely and do not add a mode switch.
@@ -75,9 +78,9 @@ This work does not change dataset schemas, campaign evidence, filters, scoring, 
 
 ## Outcomes & Retrospective
 
-Implementation, initial validation, and focused-review fixes are complete. Existing `view=matrix` links select and reveal the requested Requirement, but the rendered view contains no table. At 1840×1004 the workspace is 586/1172 px with the last selected item visible and three vertical profile rows. At 1100×620 list and details independently scroll in a 273 px workspace while document y remains zero. A temporary six-tool dataset rendered six compact verdicts and six vertical evidence rows without horizontal overflow. At 390×844 the one-column global-flow fallback reveals the selected item and body width remains375.
+Implementation, browser validation, focused-review fixes, and control-review fixes are complete. Existing `view=matrix` links select and reveal the requested Requirement, but the rendered view contains no table. At 1840×1004 the workspace is 586/1172 px with the last selected item visible and three vertical profile rows. At 1100×620 list and details independently scroll in a 273 px workspace while document y remains zero. A temporary six-tool dataset rendered six compact verdicts and six vertical evidence rows without horizontal overflow. At 390×844 the one-column global-flow fallback reveals the selected item and body width remains375.
 
-Code and UX review found four issues: related-only evidence under requirement-context filters, stale selected IDs, workspace mounting after an empty result, and excessive keyboard tab stops. All are fixed with App-level regressions, callback-ref measurement, automatic first-visible recovery, and roving listbox focus. Both focused follow-ups returned no substantive findings. Fresh control review and final gates remain.
+Code and UX review found four issues: related-only evidence under requirement-context filters, stale selected IDs, workspace mounting after an empty result, and excessive keyboard tab stops. All are fixed with App-level regressions, callback-ref measurement, automatic first-visible recovery, and roving listbox focus. Both focused follow-ups returned no substantive findings. Fresh control review found one cross-view related-Case filter leak; it was fixed and a narrow fresh recheck returned no substantive findings. Final production build and `just smoke` pass. Only completion audit and plan removal remain.
 
 ## Context and Orientation
 
@@ -191,3 +194,5 @@ Revision note (2026-07-27 10:45Z): Created the self-contained plan after confirm
 Revision note (2026-07-27 11:08Z): Recorded shared-hook extraction, complete table/dependency removal, focused tests, and wide/short/mobile/six-tool browser evidence.
 
 Revision note (2026-07-27 11:20Z): Recorded focused-review findings and clean follow-ups, requirement-context Case filtering, stale-selection recovery, callback-ref sizing, and roving keyboard navigation.
+
+Revision note (2026-07-27 11:29Z): Recorded control-review drilldown finding/fix, clean recheck, 61 frontend tests, production build, and final smoke evidence.
