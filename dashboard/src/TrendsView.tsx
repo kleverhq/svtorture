@@ -789,8 +789,14 @@ export function TrendsView({
         </div>
       </div>
       <div className={`trends__workspace${selectedPoint ? " has-inspector" : ""}`}>
-        <fieldset className="trends__selector">
-          <legend>Trend</legend>
+        <div
+          className="trends__selector"
+          role="radiogroup"
+          aria-labelledby="trend-selector-label"
+        >
+          <span id="trend-selector-label" className="trends__selector-title">
+            Trend
+          </span>
           <div className="trends__options">
             {TREND_OPTIONS.map((option) => {
               const descriptionId = `trend-description-${option.kind}`;
@@ -813,7 +819,7 @@ export function TrendsView({
               );
             })}
           </div>
-        </fieldset>
+        </div>
         <div className="trends__main">
           <TrendsChart
             points={visible}

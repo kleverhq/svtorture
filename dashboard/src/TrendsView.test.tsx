@@ -234,6 +234,7 @@ describe("TrendsView", () => {
     const onTrendChange = vi.fn();
     renderView(dataset, { onTrendChange });
 
+    expect(screen.getByRole("radiogroup", { name: "Trend" })).toBeTruthy();
     const radios = screen.getAllByRole("radio");
     expect(radios).toHaveLength(3);
     expect(radios.filter((radio) => (radio as HTMLInputElement).checked)).toHaveLength(
