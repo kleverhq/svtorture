@@ -339,6 +339,8 @@ describe("TrendsView", () => {
       expect(option.yAxis.name).toBe("density");
     });
     expect(option.yAxis.max).toBeGreaterThan(2);
+    expect(option.yAxis.axisLabel.formatter(2)).toBe("2×");
+    expect(option.yAxis.axisLabel.formatter(option.yAxis.max)).toBe("");
     expect(option.series.at(-1).markLine.data).toEqual([
       { yAxis: 1, label: { formatter: "1×" } },
       { yAxis: 2, label: { formatter: "2×" } },

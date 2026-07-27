@@ -310,6 +310,8 @@ function TrendsChart({
         values.push(point);
         groups.set(point.seriesName, values);
       }
+      const yAxisMaximum =
+        definition.unit === "percent" ? 110 : densityMaximum(points);
       const references =
         definition.unit === "percent"
           ? [{ yAxis: 100, label: { formatter: "100%" } }]
@@ -427,7 +429,7 @@ function TrendsChart({
         yAxis: {
           type: "value",
           min: 0,
-          max: definition.unit === "percent" ? 110 : densityMaximum(points),
+          max: yAxisMaximum,
           interval: definition.unit === "percent" ? 20 : 0.5,
           name: definition.unit === "percent" ? "percent" : "density",
           nameTextStyle: { color: "var(--text-muted)" },
@@ -436,7 +438,8 @@ function TrendsChart({
             formatter:
               definition.unit === "percent"
                 ? (value: number) => (value > 100 ? "" : `${value}%`)
-                : "{value}×",
+                : (value: number) =>
+                    value >= yAxisMaximum ? "" : `${value}×`,
           },
           splitLine: { lineStyle: { color: "var(--line)" } },
         },
