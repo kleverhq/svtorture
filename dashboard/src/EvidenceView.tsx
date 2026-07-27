@@ -252,6 +252,8 @@ export function EvidenceView({
 }) {
   const [openSource, setOpenSource] = useState<OpenSource | undefined>();
   const sourceTriggerRef = useRef<HTMLButtonElement | null>(null);
+  const caseButtonRefs = useRef(new Map<string, HTMLButtonElement>());
+  const revealedCase = useRef("");
   const sourceViewerId = useId();
   const resultMap = useMemo(() => resultsByKey(campaign), [campaign]);
   const profiles =
@@ -286,6 +288,22 @@ export function EvidenceView({
     setOpenSource(undefined);
   };
   useEffect(() => {
+    if (!selected?.id) {
+      revealedCase.current = "";
+      return;
+    }
+    if (revealedCase.current === selected.id) return;
+    const selectedId = selected.id;
+    const frame = window.requestAnimationFrame(() => {
+      caseButtonRefs.current.get(selectedId)?.scrollIntoView?.({
+        block: "nearest",
+        inline: "nearest",
+      });
+      revealedCase.current = selectedId;
+    });
+    return () => window.cancelAnimationFrame(frame);
+  }, [selected?.id]);
+  useEffect(() => {
     setOpenSource(undefined);
     sourceTriggerRef.current = null;
   }, [campaignId, selected?.id]);
@@ -303,6 +321,10 @@ export function EvidenceView({
                   className={testCase.id === selected.id ? "is-selected" : ""}
                   aria-current={testCase.id === selected.id ? "true" : undefined}
                   key={testCase.id}
+                  ref={(node) => {
+                    if (node) caseButtonRefs.current.set(testCase.id, node);
+                    else caseButtonRefs.current.delete(testCase.id);
+                  }}
                   onClick={() => onSelectCase(testCase.id)}
                 >
                   <span className="case-list__clause">

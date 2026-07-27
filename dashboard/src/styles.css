@@ -1208,7 +1208,7 @@ details summary {
 
 .evidence-workspace {
   display: grid;
-  grid-template-columns: minmax(240px, 290px) minmax(0, 1fr);
+  grid-template-columns: minmax(320px, 1fr) minmax(0, 2fr);
   min-width: 0;
   align-items: start;
 }
@@ -1946,6 +1946,22 @@ footer {
 .loading h1 {
   margin: 14px 0 5px;
   font-size: 1.5rem;
+}
+
+@media (min-width: 901px) and (min-height: 601px) {
+  .evidence-workspace {
+    height: calc(100dvh - var(--content-sticky-top) - 16px);
+    min-height: 300px;
+    align-items: stretch;
+  }
+
+  .case-list,
+  .evidence-pane {
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
+    scrollbar-gutter: stable;
+  }
 }
 
 @media (max-width: 1200px) {

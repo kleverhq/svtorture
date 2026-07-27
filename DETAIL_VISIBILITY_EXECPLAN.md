@@ -15,9 +15,9 @@ This change does not alter URL parameters, campaign selection, filtering semanti
 ## Progress
 
 - [x] (2026-07-27 10:08Z) Confirmed the required desktop behavior, including an independently scrollable details pane when its content exceeds the viewport.
-- [ ] Add selection-reveal behavior to the virtualized Requirements matrix and test a non-first selected row.
-- [ ] Add selection-reveal behavior to Cases and test initial and changed selections.
-- [ ] Change the desktop Cases workspace to one-third/two-thirds columns with bounded, independent vertical scroll regions and preserve the stacked mobile/short-viewport fallback.
+- [x] (2026-07-27 10:20Z) Added virtualizer-owned Requirement selection reveal and a focused non-first-row test.
+- [x] (2026-07-27 10:20Z) Added native nearest Case selection reveal with initial/rerender coverage.
+- [x] (2026-07-27 10:24Z) Changed desktop Cases to one-third/two-thirds bounded columns with independent contained scrolling; preserved stacked mobile and short-height flow.
 - [ ] Run focused review, repository gates, and wide/mobile browser validation; remove this completed plan.
 
 ## Surprises & Discoveries
@@ -25,8 +25,14 @@ This change does not alter URL parameters, campaign selection, filtering semanti
 - Observation: Requirements uses `useWindowVirtualizer`, so a deep-linked row might not exist in the DOM and cannot be revealed reliably with only `Element.scrollIntoView()`.
   Evidence: `dashboard/src/MatrixView.tsx` renders only `virtualizer.getVirtualItems()`. Selection reveal must first use `virtualizer.scrollToIndex()`.
 
-- Observation: Cases currently has no bounded workspace height or column scroll containers.
-  Evidence: `.evidence-workspace` defines only a two-column grid, while `.case-list` and `.evidence-pane` have no vertical overflow policy; scrolling therefore moves the global page and sends details above the viewport.
+- Observation: Cases initially had no bounded workspace height or column scroll containers.
+  Evidence: `.evidence-workspace` defined only a two-column grid, while `.case-list` and `.evidence-pane` had no vertical overflow policy; scrolling therefore moved the global page and sent details above the viewport.
+
+- Observation: `scrollIntoView({block: "nearest"})` naturally reveals the selected Case in both layouts without unnecessary movement.
+  Evidence: at 1840×1004 the last Case moved the list to `scrollTop=327` and occupied y=913..1004 inside the list; at 390×844 the same Case occupied y=753..844 with document scrolling and no nested list scroll.
+
+- Observation: Contained column scrolling prevents page movement even at scroll boundaries.
+  Evidence: at 1840×1004, scrolling the list from 327 to 67 and then to its zero boundary left `document.scrollY=108` and detail `scrollTop=0`. At 1100×620, scrolling details from 0 to its 52 px maximum left the list at 0 and document at 108.
 
 ## Decision Log
 
@@ -44,7 +50,7 @@ This change does not alter URL parameters, campaign selection, filtering semanti
 
 ## Outcomes & Retrospective
 
-Implementation has not started. Completion requires observable selection reveal in both views, stable details while the Case list scrolls, independent access to long details, no page-level horizontal overflow, and clean tests/reviews.
+Implementation and initial browser proof are complete. A direct link to the last Requirement produced a visible selected row at y=852..906 in a 1004 px viewport while its inspector stayed at y=257. A direct link to the last Case produced a visible selected list item and simultaneous details, exact 586/1172 px one-third/two-thirds columns in a 1758 px workspace, independent contained scroll, and no horizontal overflow. The 390×844 fallback remained stacked with the selected Case visible and body width equal to the 375 px document viewport. Focused review and final gates remain.
 
 ## Context and Orientation
 
@@ -129,3 +135,5 @@ Do not add dependencies. Continue using React effects and refs, TanStack Virtual
 No dataset, URL, or backend interface changes are permitted.
 
 Revision note (2026-07-27 10:08Z): Created the self-contained plan after the user confirmed independent scrolling for long Case details.
+
+Revision note (2026-07-27 10:24Z): Recorded implementation, focused tests, and initial wide/short/mobile Chrome evidence for selection reveal and independent scrolling.

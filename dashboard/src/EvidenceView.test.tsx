@@ -10,12 +10,68 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { EvidenceView } from "./EvidenceView";
 import { makeTestDataset } from "./testDataset";
 
+const originalScrollIntoView = Object.getOwnPropertyDescriptor(
+  HTMLElement.prototype,
+  "scrollIntoView",
+);
+
 afterEach(() => {
   cleanup();
   vi.unstubAllGlobals();
+  if (originalScrollIntoView) {
+    Object.defineProperty(
+      HTMLElement.prototype,
+      "scrollIntoView",
+      originalScrollIntoView,
+    );
+  } else {
+    Reflect.deleteProperty(HTMLElement.prototype, "scrollIntoView");
+  }
 });
 
 describe("EvidenceView", () => {
+  it("reveals the selected case initially and when selection changes", async () => {
+    const dataset = makeTestDataset();
+    const first = dataset.cases[0];
+    if (!first) throw new Error("incomplete test dataset");
+    const second = {
+      ...first,
+      id: "ch41-deep-linked-case",
+      title: "Case selected from a deep link",
+    };
+    dataset.cases.push(second);
+    const scrollIntoView = vi.fn();
+    Object.defineProperty(HTMLElement.prototype, "scrollIntoView", {
+      configurable: true,
+      value: scrollIntoView,
+    });
+
+    const props = {
+      cases: dataset.cases,
+      requirements: dataset.requirements,
+      campaign: dataset.campaigns[0],
+      toolFilter: "",
+      profileFilter: "",
+      onSelectCase: () => undefined,
+      onInspectRequirement: () => undefined,
+    };
+    const view = render(<EvidenceView {...props} selectedCaseId={second.id} />);
+
+    await waitFor(() => {
+      expect(scrollIntoView).toHaveBeenCalledWith({
+        block: "nearest",
+        inline: "nearest",
+      });
+    });
+    expect(
+      screen.getByRole("heading", { name: "Case selected from a deep link" }),
+    ).toBeTruthy();
+
+    scrollIntoView.mockReset();
+    view.rerender(<EvidenceView {...props} selectedCaseId={first.id} />);
+    await waitFor(() => expect(scrollIntoView).toHaveBeenCalledOnce());
+  });
+
   it("copies the selected campaign in a case deep link", async () => {
     const dataset = makeTestDataset();
     const testCase = dataset.cases[0];

@@ -89,7 +89,9 @@ state uses `trend`, repeated `chapter`, `trendRange`, and `trendPoint` under
 actions. They copy canonical, path-aware URLs containing the target view, case or
 requirement identity, and displayed campaign when available, so the recipient sees
 the same evidence context while unrelated investigation filters cannot hide the
-shared entity.
+shared entity. Opening one of these links reveals the selected matrix row or case
+item. On desktop, Cases keeps a one-third case list and two-thirds detail pane with
+independent vertical scrolling; narrow and short viewports retain document flow.
 
 The site header provides `Auto`, `Light`, and `Dark` themes. `Auto` is the default and
 follows the browser or operating-system color preference. An explicit selection

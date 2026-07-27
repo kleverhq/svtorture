@@ -5,7 +5,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { useWindowVirtualizer } from "@tanstack/react-virtual";
-import { useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 
 import { CopyLinkButton } from "./CopyLinkButton";
 import { aggregateStatus, profileKeys, resultsByKey } from "./model";
@@ -111,6 +111,9 @@ export function MatrixView({
     getCoreRowModel: getCoreRowModel(),
   });
   const rows = table.getRowModel().rows;
+  const selectedRowIndex = rows.findIndex(
+    (row) => row.original.id === selectedRequirementId,
+  );
   const scrollMargin = parentRef.current
     ? parentRef.current.getBoundingClientRect().top + window.scrollY
     : 0;
@@ -120,6 +123,20 @@ export function MatrixView({
     overscan: 10,
     scrollMargin,
   });
+  const revealedRequirement = useRef("");
+  useEffect(() => {
+    if (selectedRowIndex < 0) {
+      if (!selectedRequirementId) revealedRequirement.current = "";
+      return;
+    }
+    const revealKey = `${selectedRequirementId}:${selectedRowIndex}`;
+    if (revealedRequirement.current === revealKey) return;
+    const frame = window.requestAnimationFrame(() => {
+      revealedRequirement.current = revealKey;
+      virtualizer.scrollToIndex(selectedRowIndex, { align: "center" });
+    });
+    return () => window.cancelAnimationFrame(frame);
+  }, [selectedRequirementId, selectedRowIndex, virtualizer]);
   const template = [
     "112px",
     "minmax(320px, 1fr)",
