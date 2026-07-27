@@ -1,4 +1,11 @@
-import { useEffect, useId, useMemo, useRef, useState } from "react";
+import {
+  useEffect,
+  useId,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 
 import { CopyLinkButton } from "./CopyLinkButton";
 import {
@@ -252,6 +259,8 @@ export function EvidenceView({
 }) {
   const [openSource, setOpenSource] = useState<OpenSource | undefined>();
   const sourceTriggerRef = useRef<HTMLButtonElement | null>(null);
+  const workspaceRef = useRef<HTMLDivElement | null>(null);
+  const evidencePaneRef = useRef<HTMLElement | null>(null);
   const caseButtonRefs = useRef(new Map<string, HTMLButtonElement>());
   const revealedCase = useRef("");
   const sourceViewerId = useId();
@@ -273,6 +282,9 @@ export function EvidenceView({
   const selected = selectedCaseId
     ? cases.find((testCase) => testCase.id === selectedCaseId)
     : cases[0];
+  const selectedCaseIndex = selected
+    ? cases.findIndex((testCase) => testCase.id === selected.id)
+    : -1;
   const requirement = selected
     ? requirementMap.get(selected.primary_requirement)
     : undefined;
@@ -287,22 +299,58 @@ export function EvidenceView({
     sourceTriggerRef.current?.focus();
     setOpenSource(undefined);
   };
+  useLayoutEffect(() => {
+    const workspace = workspaceRef.current;
+    if (!workspace) return;
+    let frame = 0;
+    const updateHeight = () => {
+      window.cancelAnimationFrame(frame);
+      frame = window.requestAnimationFrame(() => {
+        const top = Math.max(0, workspace.getBoundingClientRect().top);
+        workspace.style.setProperty(
+          "--evidence-workspace-height",
+          `${Math.max(0, window.innerHeight - top)}px`,
+        );
+      });
+    };
+    updateHeight();
+    window.addEventListener("resize", updateHeight);
+    window.addEventListener("scroll", updateHeight, { passive: true });
+    const observer =
+      typeof ResizeObserver === "undefined" ? undefined : new ResizeObserver(updateHeight);
+    for (const selector of [
+      ".campaign-overview",
+      ".corpus-coverage",
+      ".workspace-bar",
+    ]) {
+      const element = document.querySelector(selector);
+      if (element) observer?.observe(element);
+    }
+    return () => {
+      window.cancelAnimationFrame(frame);
+      window.removeEventListener("resize", updateHeight);
+      window.removeEventListener("scroll", updateHeight);
+      observer?.disconnect();
+    };
+  }, []);
   useEffect(() => {
-    if (!selected?.id) {
+    if (!selected?.id || selectedCaseIndex < 0) {
       revealedCase.current = "";
       return;
     }
-    if (revealedCase.current === selected.id) return;
+    const revealKey = `${selected.id}:${selectedCaseIndex}`;
+    if (revealedCase.current === revealKey) return;
     const selectedId = selected.id;
+    evidencePaneRef.current?.scrollTo?.({ top: 0 });
     const frame = window.requestAnimationFrame(() => {
       caseButtonRefs.current.get(selectedId)?.scrollIntoView?.({
         block: "nearest",
         inline: "nearest",
       });
-      revealedCase.current = selectedId;
+      revealedCase.current = revealKey;
     });
     return () => window.cancelAnimationFrame(frame);
-  }, [selected?.id]);
+  }, [selected?.id, selectedCaseIndex]);
   useEffect(() => {
     setOpenSource(undefined);
     sourceTriggerRef.current = null;
@@ -311,7 +359,7 @@ export function EvidenceView({
   return (
     <section className="panel evidence" aria-label="Case evidence">
       {selected ? (
-        <div className="evidence-workspace">
+        <div className="evidence-workspace" ref={workspaceRef}>
           <nav className="case-list" aria-label="Cases">
             {cases.map((testCase) => {
               const itemRequirement = requirementMap.get(testCase.primary_requirement);
@@ -357,7 +405,7 @@ export function EvidenceView({
             })}
           </nav>
 
-          <article className="evidence-pane">
+          <article className="evidence-pane" ref={evidencePaneRef}>
             <header className="evidence-pane__header">
               <div>
                 <span className="section-label">

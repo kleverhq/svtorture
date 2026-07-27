@@ -32,7 +32,13 @@ This change does not alter URL parameters, campaign selection, filtering semanti
   Evidence: at 1840×1004 the last Case moved the list to `scrollTop=327` and occupied y=913..1004 inside the list; at 390×844 the same Case occupied y=753..844 with document scrolling and no nested list scroll.
 
 - Observation: Contained column scrolling prevents page movement even at scroll boundaries.
-  Evidence: at 1840×1004, scrolling the list from 327 to 67 and then to its zero boundary left `document.scrollY=108` and detail `scrollTop=0`. At 1100×620, scrolling details from 0 to its 52 px maximum left the list at 0 and document at 108.
+  Evidence: at 1840×1004, scrolling the list from 327 to 67 and then to its zero boundary left `document.scrollY=108` and detail `scrollTop=0`. At 1100×620, scrolling details to their maximum left the list and document unchanged.
+
+- Observation: A height based only on sticky-control height was wrong before the campaign and coverage sections had scrolled away.
+  Evidence: focused review found that the default first Case did not move the document, so the workspace started lower than `--content-sticky-top` and extended below the viewport while contained scrolling trapped the page. The workspace now measures its actual viewport top. At document y=0 it measured top347/height657/bottom1004; after document y=80 it updated to top267/height737/bottom1004.
+
+- Observation: Reusing the details element preserves native `scrollTop` across selected Cases unless reset explicitly.
+  Evidence: focused review identified the stale position. At 1100×620, browser validation scrolled details to 160, selected another Case, and observed detail `scrollTop=0`.
 
 ## Decision Log
 
@@ -48,9 +54,13 @@ This change does not alter URL parameters, campaign selection, filtering semanti
   Rationale: This gives the case list approximately one third of available width, never narrower than 320 px, while leaving two thirds for evidence details.
   Date/Author: 2026-07-27 / assistant
 
+- Decision: Measure the Cases workspace's actual viewport top and expose the exact remaining height as a local CSS property.
+  Rationale: The panel can sit below campaign and coverage content or beneath sticky controls depending on document scroll. A fixed subtraction cannot satisfy both. A requestAnimationFrame-coalesced measurement on initial layout, resize, document scroll, and observed control resize keeps the panel bottom at the viewport without moving the page.
+  Date/Author: 2026-07-27 / assistant
+
 ## Outcomes & Retrospective
 
-Implementation and initial browser proof are complete. A direct link to the last Requirement produced a visible selected row at y=852..906 in a 1004 px viewport while its inspector stayed at y=257. A direct link to the last Case produced a visible selected list item and simultaneous details, exact 586/1172 px one-third/two-thirds columns in a 1758 px workspace, independent contained scroll, and no horizontal overflow. The 390×844 fallback remained stacked with the selected Case visible and body width equal to the 375 px document viewport. Focused review and final gates remain.
+Implementation and focused-review fixes are complete. A direct link to the last Requirement produced a visible selected row at y=852..906 in a 1004 px viewport while its inspector stayed at y=257. A direct link to the last Case produced a visible selected list item and simultaneous details, exact 586/1172 px one-third/two-thirds columns in a 1758 px workspace, independent contained scroll, and no horizontal overflow. Default Cases now fits exactly from its actual y=347 to viewport bottom1004 without forcing global scroll. Details reset to top on Case change. The 390×844 fallback remained stacked with the selected Case visible and body width equal to the 375 px document viewport. Code and layout review lanes found four issues; all were fixed and both follow-ups returned no substantive findings. Fresh control review and final gates remain.
 
 ## Context and Orientation
 
@@ -137,3 +147,5 @@ No dataset, URL, or backend interface changes are permitted.
 Revision note (2026-07-27 10:08Z): Created the self-contained plan after the user confirmed independent scrolling for long Case details.
 
 Revision note (2026-07-27 10:24Z): Recorded implementation, focused tests, and initial wide/short/mobile Chrome evidence for selection reveal and independent scrolling.
+
+Revision note (2026-07-27 10:34Z): Recorded review findings and clean follow-ups, actual-top viewport sizing, stale reveal-key fixes, and detail scroll reset evidence.

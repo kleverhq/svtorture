@@ -14,6 +14,10 @@ const originalScrollIntoView = Object.getOwnPropertyDescriptor(
   HTMLElement.prototype,
   "scrollIntoView",
 );
+const originalScrollTo = Object.getOwnPropertyDescriptor(
+  HTMLElement.prototype,
+  "scrollTo",
+);
 
 afterEach(() => {
   cleanup();
@@ -26,6 +30,11 @@ afterEach(() => {
     );
   } else {
     Reflect.deleteProperty(HTMLElement.prototype, "scrollIntoView");
+  }
+  if (originalScrollTo) {
+    Object.defineProperty(HTMLElement.prototype, "scrollTo", originalScrollTo);
+  } else {
+    Reflect.deleteProperty(HTMLElement.prototype, "scrollTo");
   }
 });
 
@@ -41,9 +50,10 @@ describe("EvidenceView", () => {
     };
     dataset.cases.push(second);
     const scrollIntoView = vi.fn();
-    Object.defineProperty(HTMLElement.prototype, "scrollIntoView", {
-      configurable: true,
-      value: scrollIntoView,
+    const scrollTo = vi.fn();
+    Object.defineProperties(HTMLElement.prototype, {
+      scrollIntoView: { configurable: true, value: scrollIntoView },
+      scrollTo: { configurable: true, value: scrollTo },
     });
 
     const props = {
@@ -66,10 +76,21 @@ describe("EvidenceView", () => {
     expect(
       screen.getByRole("heading", { name: "Case selected from a deep link" }),
     ).toBeTruthy();
+    expect(scrollTo).toHaveBeenCalledWith({ top: 0 });
 
     scrollIntoView.mockReset();
+    scrollTo.mockReset();
+    view.rerender(
+      <EvidenceView {...props} cases={[second]} selectedCaseId={second.id} />,
+    );
+    await waitFor(() => expect(scrollIntoView).toHaveBeenCalledOnce());
+    expect(scrollTo).toHaveBeenCalledWith({ top: 0 });
+
+    scrollIntoView.mockReset();
+    scrollTo.mockReset();
     view.rerender(<EvidenceView {...props} selectedCaseId={first.id} />);
     await waitFor(() => expect(scrollIntoView).toHaveBeenCalledOnce());
+    expect(scrollTo).toHaveBeenCalledWith({ top: 0 });
   });
 
   it("copies the selected campaign in a case deep link", async () => {

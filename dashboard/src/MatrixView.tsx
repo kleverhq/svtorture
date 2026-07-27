@@ -126,7 +126,7 @@ export function MatrixView({
   const revealedRequirement = useRef("");
   useEffect(() => {
     if (selectedRowIndex < 0) {
-      if (!selectedRequirementId) revealedRequirement.current = "";
+      revealedRequirement.current = "";
       return;
     }
     const revealKey = `${selectedRequirementId}:${selectedRowIndex}`;

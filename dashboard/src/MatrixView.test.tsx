@@ -41,17 +41,17 @@ describe("MatrixView", () => {
     };
     dataset.requirements.push(selected);
 
-    render(
-      <MatrixView
-        requirements={dataset.requirements}
-        cases={dataset.cases}
-        campaign={dataset.campaigns[0]}
-        toolFilter=""
-        profileFilter=""
-        selectedRequirementId={selected.id}
-        onSelectRequirement={() => undefined}
-        onInspectCase={() => undefined}
-      />,
+    const props = {
+      cases: dataset.cases,
+      campaign: dataset.campaigns[0],
+      toolFilter: "",
+      profileFilter: "",
+      selectedRequirementId: selected.id,
+      onSelectRequirement: () => undefined,
+      onInspectCase: () => undefined,
+    };
+    const view = render(
+      <MatrixView requirements={dataset.requirements} {...props} />,
     );
 
     await waitFor(() => {
@@ -60,5 +60,15 @@ describe("MatrixView", () => {
       });
     });
     expect(screen.getByRole("complementary", { name: selected.id })).toBeTruthy();
+
+    view.rerender(<MatrixView requirements={[first]} {...props} />);
+    expect(screen.queryByRole("complementary", { name: selected.id })).toBeNull();
+    virtualizerMock.scrollToIndex.mockReset();
+    view.rerender(<MatrixView requirements={dataset.requirements} {...props} />);
+    await waitFor(() => {
+      expect(virtualizerMock.scrollToIndex).toHaveBeenCalledWith(1, {
+        align: "center",
+      });
+    });
   });
 });
