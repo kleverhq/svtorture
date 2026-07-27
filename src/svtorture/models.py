@@ -18,10 +18,13 @@ SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
 HEX_DIGEST_RE = re.compile(r"^sha256:[0-9a-f]{64}$")
 CAMPAIGN_ID_RE = re.compile(r"^[0-9]{8}T[0-9]{6}Z-[A-Za-z0-9](?:[A-Za-z0-9-]{0,126}[A-Za-z0-9])?$")
 STANDARD_PART_PATTERN = r"^(?:[1-9]|[1-3][0-9]|4[01]|[A-Q])$"
-STANDARD_LOCATION_PATTERN = r"^(?:(?:[1-9]|[1-3][0-9]|4[01])(?:\.[0-9]+)*|[A-Q](?:\.[0-9]+)*)$"
+STANDARD_LOCATION_PATTERN = (
+    r"^(?:(?:[1-9]|[1-3][0-9]|4[01])(?:\.[1-9][0-9]*)*|"
+    r"[A-Q](?:\.[1-9][0-9]*)*)$"
+)
 STANDARD_ANCHOR_PATTERN = (
-    r"^\[2023:(?:(?:[1-9]|[1-3][0-9]|4[01])(?:\.[0-9]+)*|"
-    r"[A-Q](?:\.[0-9]+)*):[A-Z][A-Z0-9]*(?:[-.][A-Z0-9]+)*:"
+    r"^\[2023:(?:(?:[1-9]|[1-3][0-9]|4[01])(?:\.[1-9][0-9]*)*|"
+    r"[A-Q](?:\.[1-9][0-9]*)*):[A-Z][A-Z0-9]*(?:[-.][A-Z0-9]+)*:"
     r"p[0-9]{3,4}(?:-[0-9]{3,4})?\]$"
 )
 SafeText = Annotated[str, Field(min_length=1, max_length=4096)]
@@ -263,7 +266,9 @@ class Requirement(StrictModel):
 class RequirementInventory(StrictModel):
     schema_version: RequirementSchemaVersion
     authority: StandardRevision
-    requirements: tuple[Requirement, ...]
+    requirements: tuple[Requirement, ...] = Field(
+        min_length=1, json_schema_extra={"uniqueItems": True}
+    )
 
     @model_validator(mode="after")
     def unique_and_active(self) -> Self:
@@ -291,7 +296,7 @@ def standard_location_sort_key(location: str) -> tuple[int, int, tuple[int, ...]
 class StandardsIndex(StrictModel):
     schema_version: RequirementSchemaVersion
     authority: StandardRevision
-    parts: tuple[StandardPart, ...]
+    parts: tuple[StandardPart, ...] = Field(min_length=1, json_schema_extra={"uniqueItems": True})
 
     @model_validator(mode="after")
     def valid_index(self) -> Self:
@@ -309,7 +314,9 @@ class StandardsIndex(StrictModel):
 class RequirementPart(StrictModel):
     schema_version: RequirementSchemaVersion
     part: StandardPart
-    requirements: tuple[Requirement, ...]
+    requirements: tuple[Requirement, ...] = Field(
+        min_length=1, json_schema_extra={"uniqueItems": True}
+    )
 
     @model_validator(mode="after")
     def valid_part(self) -> Self:

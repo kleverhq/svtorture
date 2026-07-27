@@ -593,6 +593,9 @@ def write_json_schema(root: Path, output: Path) -> None:
         "tools.schema.json": ToolRegistry.model_json_schema(),
     }
     output.mkdir(parents=True, exist_ok=True)
+    for path in output.glob("*.json"):
+        if path.name not in schemas:
+            path.unlink()
     for name, value in schemas.items():
         (output / name).write_text(
             json.dumps(value, indent=2, sort_keys=True) + "\n", encoding="utf-8"

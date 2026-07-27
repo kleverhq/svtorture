@@ -506,8 +506,8 @@ describe("App overview navigation", () => {
     fireEvent.click(chapters.getByLabelText(/Chapter 5/));
     fireEvent.click(chapters.getByLabelText(/Annex A/));
     await waitFor(() => {
-      expect(window.location.search).toContain("chapter=chapter%3A5");
-      expect(window.location.search).toContain("chapter=annex%3AA");
+      expect(window.location.search).toContain("trendPart=chapter%3A5");
+      expect(window.location.search).toContain("trendPart=annex%3AA");
     });
   });
 

@@ -234,6 +234,14 @@ def validate(
             generated = Path(temporary)
             write_json_schema(ROOT, generated)
             committed = ROOT / "schemas"
+            generated_names = {path.name for path in generated.glob("*.json")}
+            committed_names = {path.name for path in committed.glob("*.json")}
+            if generated_names != committed_names:
+                typer.echo(
+                    "schema filename mismatch; run svtorture schemas --write",
+                    err=True,
+                )
+                raise typer.Exit(2)
             for path in sorted(generated.glob("*.json")):
                 counterpart = committed / path.name
                 if not counterpart.exists() or counterpart.read_bytes() != path.read_bytes():

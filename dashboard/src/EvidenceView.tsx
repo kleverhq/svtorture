@@ -327,7 +327,9 @@ export function EvidenceView({
                   onClick={() => onSelectCase(testCase.id)}
                 >
                   <span className="case-list__clause">
-                    {itemRequirement?.clause ?? "—"} · {testCase.target_phase}
+                    {itemRequirement
+                      ? standardLocationLabel(itemRequirement.clause)
+                      : "—"} · {testCase.target_phase}
                   </span>
                   <strong>{testCase.title}</strong>
                   <code>{testCase.id}</code>

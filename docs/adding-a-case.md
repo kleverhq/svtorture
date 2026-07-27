@@ -10,16 +10,17 @@ path.
 Add or reuse one entry in `standards/requirements/chapter-NN.toml` or
 `standards/requirements/annex-X.toml`. Numeric chapters use a string `part` such
 as `"4"`; annexes use a letter such as `"A"` and requirement IDs such as
-`SV-2023-A-FORMAL-SYNTAX`. When adding
-or revising that requirement, configure the PDF path as described in
-`annotation.md`, run `just annotate`, and derive the expected rule from the
-matching generated `txt/NN.txt` blocks. The entry needs one stable ID, the 2023
-chapter/clause, a nonempty `anchors` list, related clauses, controlled tags, and
-a rule for every supported revision. Use complete values from
-`standards/ieee-1800-2023-anchors.json`, with the declared clause's main anchor
-first and any supporting blocks after it. If a cited block has a visual-review
-marker, inspect its PDF page before defining the oracle.
-Add a new chapter to `standards/index.toml`.
+`SV-2023-A-FORMAL-SYNTAX`. When adding or revising that requirement,
+configure the PDF path as described in `annotation.md`, run `just annotate`, and
+derive the expected rule from the matching generated `txt/<PART>.txt` blocks,
+such as `txt/04.txt` or `txt/A.txt`. The entry needs one stable ID, its 2023
+`part` and matching location, a nonempty `anchors` list, related locations,
+controlled tags, and a rule for every supported revision. Use complete values
+from `standards/ieee-1800-2023-anchors.json`, with the declared location's main
+anchor first and any supporting blocks after it. If a cited block has a
+visual-review marker, inspect its PDF page before defining the oracle. When
+creating a new requirement document, add its standard part to
+`standards/index.toml`.
 Requirements in this inventory are normative and testable in principle by
 definition. Coverage is derived from case mappings rather than stored.
 

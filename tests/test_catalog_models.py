@@ -12,7 +12,13 @@ from svtorture.campaign import (
     load_campaign,
     verify_campaign_against_catalog,
 )
-from svtorture.catalog import Catalog, CatalogError, load_catalog, mvp_audit
+from svtorture.catalog import (
+    Catalog,
+    CatalogError,
+    load_catalog,
+    mvp_audit,
+    write_json_schema,
+)
 from svtorture.evaluator import synthetic_result
 from svtorture.models import (
     Campaign,
@@ -102,9 +108,28 @@ def test_generated_schemas_use_the_controlled_tag_registry(catalog: Catalog) -> 
     assert "[A-Q]" in requirement_properties["part"]["pattern"]
     assert "[A-Q]" in requirement_properties["clause"]["pattern"]
     assert "[A-Q]" in requirement_properties["related_clauses"]["items"]["pattern"]
+    assert requirement_schema["properties"]["requirements"]["minItems"] == 1
+    assert requirement_schema["properties"]["requirements"]["uniqueItems"] is True
     revision_clause = requirement_schema["$defs"]["RevisionRule"]["properties"]["clause"]
     assert "[A-Q]" in revision_clause["anyOf"][0]["pattern"]
     assert "paragraph_anchor" not in requirement_properties
+
+
+def test_schema_generation_removes_retired_snapshots(catalog: Catalog, tmp_path: Path) -> None:
+    output = tmp_path / "schemas"
+    output.mkdir()
+    retired = output / "requirement-chapter.schema.json"
+    retired.write_text("{}\n", encoding="utf-8")
+
+    write_json_schema(catalog.root, output)
+
+    assert not retired.exists()
+    index_schema = json.loads((output / "standards-index.schema.json").read_text())
+    assert index_schema["properties"]["parts"]["minItems"] == 1
+    assert index_schema["properties"]["parts"]["uniqueItems"] is True
+    part_schema = json.loads((output / "requirement-part.schema.json").read_text())
+    assert part_schema["properties"]["requirements"]["minItems"] == 1
+    assert part_schema["properties"]["requirements"]["uniqueItems"] is True
 
 
 def test_tool_phase_ceiling_is_cumulative(catalog: Catalog) -> None:
@@ -168,7 +193,7 @@ def test_requirement_accepts_annex_locations(catalog: Catalog) -> None:
     assert requirement.related_clauses == ("B", "B.3.2")
 
 
-@pytest.mark.parametrize("location", ("04.9", "a.1", "R.1", "A.x"))
+@pytest.mark.parametrize("location", ("04.9", "a.1", "R.1", "A.x", "A.0", "A.01", "4.00"))
 def test_requirement_rejects_invalid_standard_locations(catalog: Catalog, location: str) -> None:
     value = catalog.inventory.requirements[0].model_dump(mode="json")
     value["related_clauses"] = [location]

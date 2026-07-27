@@ -56,8 +56,8 @@ describe("URL-backed filters", () => {
     expect(encoded).toContain("trend=density");
     expect(encoded).toContain("trendRange=six-months");
     expect(encoded).toContain("trendPoint=corpus%3Acampaign%3Acases");
-    expect(encoded).toContain("chapter=chapter%3A5");
-    expect(encoded).toContain("chapter=annex%3AA");
+    expect(encoded).toContain("trendPart=chapter%3A5");
+    expect(encoded).toContain("trendPart=annex%3AA");
     expect(filtersFromSearch(encoded).part).toBe("");
     expect(trendStateFromSearch(encoded)).toEqual({
       kind: "density",
@@ -67,7 +67,7 @@ describe("URL-backed filters", () => {
     });
     expect(
       trendStateFromSearch(
-        "?trend=unknown&trendRange=forever&chapter=invalid&chapter=annex:Z",
+        "?trend=unknown&trendRange=forever&trendPart=invalid&trendPart=annex:Z",
       ),
     ).toEqual({
       kind: "pass-rate",

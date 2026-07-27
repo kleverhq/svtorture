@@ -177,6 +177,7 @@ export const DEFAULT_TREND_STATE: TrendState = {
 
 const TREND_KINDS = new Set<TrendKind>(["pass-rate", "coverage", "density"]);
 const TREND_PART_KEY = /^(?:chapter:[1-9][0-9]*|annex:[A-Q])$/;
+const TREND_PART_PARAMETER = "trendPart";
 const TREND_RANGES = new Set<TrendRange>([
   "week",
   "month",
@@ -205,7 +206,7 @@ export function trendStateFromSearch(search: string): TrendState {
     parts: [
       ...new Set(
         parameters
-          .getAll("chapter")
+          .getAll(TREND_PART_PARAMETER)
           .filter((part) => TREND_PART_KEY.test(part)),
       ),
     ],
@@ -321,7 +322,7 @@ export function filtersToSearch(
       parameters.set("trendRange", trend.range);
     }
     if (trend.point) parameters.set("trendPoint", trend.point);
-    for (const part of trend.parts) parameters.append("chapter", part);
+    for (const part of trend.parts) parameters.append(TREND_PART_PARAMETER, part);
   }
   return `?${parameters.toString()}`;
 }

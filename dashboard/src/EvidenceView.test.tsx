@@ -39,6 +39,30 @@ afterEach(() => {
 });
 
 describe("EvidenceView", () => {
+  it("labels annex locations consistently in the list and detail", () => {
+    const dataset = makeTestDataset();
+    const testCase = dataset.cases[0];
+    const requirement = dataset.requirements[0];
+    if (!testCase || !requirement) throw new Error("incomplete test dataset");
+    requirement.part = "A";
+    requirement.clause = "A.1";
+
+    render(
+      <EvidenceView
+        cases={dataset.cases}
+        requirements={dataset.requirements}
+        campaign={dataset.campaigns[0]}
+        toolFilter=""
+        profileFilter=""
+        selectedCaseId={testCase.id}
+        onSelectCase={() => undefined}
+        onInspectRequirement={() => undefined}
+      />,
+    );
+
+    expect(screen.getAllByText(/Annex A\.1/)).toHaveLength(2);
+  });
+
   it("reveals the selected case initially and when selection changes", async () => {
     const dataset = makeTestDataset();
     const first = dataset.cases[0];
