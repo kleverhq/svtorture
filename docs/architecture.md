@@ -12,7 +12,7 @@ standards/ieee-1800-2023-annotate/annotate.py
 standards/ieee-1800-2023-anchors.json
           │ validates citations at runtime
           ▼
-standards/index.toml + requirements/chapter-NN.toml
+standards/index.toml + requirements/{chapter-NN,annex-X}.toml
           │
           ▼
 cases/<id>/case.toml + ordered sources

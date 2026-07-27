@@ -11,22 +11,27 @@ from typing import Annotated, Any, Self
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
 ID_RE = re.compile(r"^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$")
-REQUIREMENT_ID_RE = re.compile(r"^SV-(?:2012|2017|2023)-[0-9]{2}-[A-Z0-9-]+$")
+REQUIREMENT_ID_RE = re.compile(r"^SV-(?:2012|2017|2023)-(?:[0-9]{2}|[A-Q])-[A-Z0-9-]+$")
 TOP_RE = re.compile(r"^[A-Za-z_][A-Za-z0-9_$]*$")
 SHA_RE = re.compile(r"^[0-9a-f]{40}$")
 SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
 HEX_DIGEST_RE = re.compile(r"^sha256:[0-9a-f]{64}$")
 CAMPAIGN_ID_RE = re.compile(r"^[0-9]{8}T[0-9]{6}Z-[A-Za-z0-9](?:[A-Za-z0-9-]{0,126}[A-Za-z0-9])?$")
+STANDARD_PART_PATTERN = r"^(?:[1-9]|[1-3][0-9]|4[01]|[A-Q])$"
+STANDARD_LOCATION_PATTERN = r"^(?:(?:[1-9]|[1-3][0-9]|4[01])(?:\.[0-9]+)*|[A-Q](?:\.[0-9]+)*)$"
 STANDARD_ANCHOR_PATTERN = (
-    r"^\[2023:(?:[0-9]+(?:\.[0-9]+)*|[A-Q](?:\.[0-9]+)*):"
-    r"[A-Z][A-Z0-9]*(?:[-.][A-Z0-9]+)*:p[0-9]{3,4}(?:-[0-9]{3,4})?\]$"
+    r"^\[2023:(?:(?:[1-9]|[1-3][0-9]|4[01])(?:\.[0-9]+)*|"
+    r"[A-Q](?:\.[0-9]+)*):[A-Z][A-Z0-9]*(?:[-.][A-Z0-9]+)*:"
+    r"p[0-9]{3,4}(?:-[0-9]{3,4})?\]$"
 )
 SafeText = Annotated[str, Field(min_length=1, max_length=4096)]
+StandardPart = Annotated[str, Field(pattern=STANDARD_PART_PATTERN)]
+StandardLocation = Annotated[str, Field(pattern=STANDARD_LOCATION_PATTERN)]
 StandardAnchor = Annotated[str, Field(pattern=STANDARD_ANCHOR_PATTERN)]
 MetadataSchemaVersion = Annotated[int, Field(strict=True, ge=1, le=1)]
 ContractSchemaVersion = Annotated[int, Field(strict=True, ge=2, le=2)]
 CampaignSchemaVersion = Annotated[int, Field(strict=True, ge=4, le=4)]
-RequirementSchemaVersion = Annotated[int, Field(strict=True, ge=2, le=2)]
+RequirementSchemaVersion = Annotated[int, Field(strict=True, ge=3, le=3)]
 
 
 class StrictModel(BaseModel):
@@ -164,7 +169,7 @@ class ExitPolicy(StrEnum):
 
 class RevisionRule(StrictModel):
     status: Applicability
-    clause: str | None = Field(default=None, pattern=r"^[0-9]+(?:\.[0-9]+)*$")
+    clause: StandardLocation | None = None
     note: str | None = Field(default=None, max_length=500)
 
     @model_validator(mode="after")
@@ -196,13 +201,13 @@ def _check_revision_keys(value: dict[StandardRevision, Any]) -> dict[StandardRev
 class Requirement(StrictModel):
     id: str
     standard_revision: StandardRevision
-    chapter: int = Field(ge=1, le=41)
-    clause: str = Field(pattern=r"^[0-9]+(?:\.[0-9]+)*$")
+    part: StandardPart
+    clause: StandardLocation
     anchors: tuple[StandardAnchor, ...] = Field(
         min_length=1, json_schema_extra={"uniqueItems": True}
     )
     summary: SafeText
-    related_clauses: tuple[str, ...] = ()
+    related_clauses: tuple[StandardLocation, ...] = ()
     tags: tuple[str, ...] = ()
     revision_applicability: dict[StandardRevision, RevisionRule]
 
@@ -227,14 +232,6 @@ class Requirement(StrictModel):
             raise ValueError("duplicate requirement anchors")
         return value
 
-    @field_validator("related_clauses")
-    @classmethod
-    def valid_related_clauses(cls, value: tuple[str, ...]) -> tuple[str, ...]:
-        for clause in value:
-            if re.fullmatch(r"^[0-9]+(?:\.[0-9]+)*$", clause) is None:
-                raise ValueError(f"invalid related clause {clause!r}")
-        return value
-
     @field_validator("tags")
     @classmethod
     def valid_tags(cls, value: tuple[str, ...]) -> tuple[str, ...]:
@@ -255,8 +252,11 @@ class Requirement(StrictModel):
             raise ValueError("active revision must be applicable at the declared clause")
         if self.anchors[0].split(":", 2)[1] != self.clause:
             raise ValueError("first requirement anchor must cite the declared clause")
-        if not self.id.startswith(f"SV-2023-{self.chapter:02d}-"):
-            raise ValueError("requirement id chapter does not match chapter field")
+        if self.clause.split(".", 1)[0] != self.part:
+            raise ValueError("requirement clause does not match part field")
+        id_part = f"{int(self.part):02d}" if self.part.isdigit() else self.part
+        if not self.id.startswith(f"SV-2023-{id_part}-"):
+            raise ValueError("requirement id part does not match part field")
         return self
 
 
@@ -275,39 +275,51 @@ class RequirementInventory(StrictModel):
         return self
 
 
+def standard_part_sort_key(part: str) -> tuple[int, int]:
+    """Return the IEEE order for a numeric chapter or alphabetic annex."""
+
+    return (0, int(part)) if part.isdigit() else (1, ord(part))
+
+
+def standard_location_sort_key(location: str) -> tuple[int, int, tuple[int, ...]]:
+    """Return the IEEE part and subclause order for a standard location."""
+
+    part, *subclauses = location.split(".")
+    return (*standard_part_sort_key(part), tuple(int(value) for value in subclauses))
+
+
 class StandardsIndex(StrictModel):
     schema_version: RequirementSchemaVersion
     authority: StandardRevision
-    chapters: tuple[int, ...]
+    parts: tuple[StandardPart, ...]
 
     @model_validator(mode="after")
     def valid_index(self) -> Self:
         if self.authority is not StandardRevision.IEEE_1800_2023:
             raise ValueError("standards authority must be IEEE 1800-2023")
         if (
-            not self.chapters
-            or len(self.chapters) != len(set(self.chapters))
-            or tuple(sorted(self.chapters)) != self.chapters
-            or any(chapter < 1 or chapter > 41 for chapter in self.chapters)
+            not self.parts
+            or len(self.parts) != len(set(self.parts))
+            or tuple(sorted(self.parts, key=standard_part_sort_key)) != self.parts
         ):
-            raise ValueError("standards chapters must be unique, sorted, and in range 1-41")
+            raise ValueError("standards parts must be unique and canonically ordered")
         return self
 
 
-class RequirementChapter(StrictModel):
+class RequirementPart(StrictModel):
     schema_version: RequirementSchemaVersion
-    chapter: int = Field(ge=1, le=41)
+    part: StandardPart
     requirements: tuple[Requirement, ...]
 
     @model_validator(mode="after")
-    def valid_chapter(self) -> Self:
+    def valid_part(self) -> Self:
         if not self.requirements:
-            raise ValueError("requirement chapter must not be empty")
+            raise ValueError("requirement part must not be empty")
         ids = [requirement.id for requirement in self.requirements]
         if len(ids) != len(set(ids)):
-            raise ValueError("duplicate requirement ids in chapter")
-        if any(requirement.chapter != self.chapter for requirement in self.requirements):
-            raise ValueError("requirement chapter does not match chapter file")
+            raise ValueError("duplicate requirement ids in part")
+        if any(requirement.part != self.part for requirement in self.requirements):
+            raise ValueError("requirement part does not match part file")
         if ids != sorted(ids):
             raise ValueError("requirements must be sorted by id")
         return self

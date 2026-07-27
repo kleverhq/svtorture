@@ -7,6 +7,7 @@ import {
   resultsByKey,
   STATUS_GROUP_LABELS,
   STATUS_GROUP_SYMBOLS,
+  standardLocationLabel,
   statusGroup,
 } from "./model";
 import { StatusBadge } from "./StatusBadge";
@@ -204,7 +205,7 @@ export function RequirementsView({
                   onKeyDown={(event) => moveSelection(event, index)}
                 >
                   <span className="requirement-list__clause">
-                    Clause {requirement.clause}
+                    {standardLocationLabel(requirement.clause)}
                   </span>
                   <strong>{requirement.summary}</strong>
                   <code>{requirement.id}</code>
@@ -237,7 +238,9 @@ export function RequirementsView({
           >
             <header className="requirement-pane__header">
               <div>
-                <span className="section-label">Clause {selected.clause}</span>
+                <span className="section-label">
+                  {standardLocationLabel(selected.clause)}
+                </span>
                 <h3>{selected.summary}</h3>
                 <code>{selected.id}</code>
               </div>

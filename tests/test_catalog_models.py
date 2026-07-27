@@ -21,6 +21,7 @@ from svtorture.models import (
     NormalizedResult,
     Phase,
     ReasonCode,
+    Requirement,
     RequirementInventory,
     ResultStatus,
     ToolProfile,
@@ -44,7 +45,7 @@ def _copy_catalog_tree(catalog: Catalog, destination: Path) -> None:
 
 
 def test_seed_catalog_meets_mvp(catalog: Catalog) -> None:
-    assert catalog.inventory.schema_version == 2
+    assert catalog.inventory.schema_version == 3
     counts = mvp_audit(catalog)
     assert counts["cases"] == 12
     assert counts["chapters"] == 11
@@ -98,6 +99,11 @@ def test_generated_schemas_use_the_controlled_tag_registry(catalog: Catalog) -> 
     assert requirement_properties["tags"]["items"]["enum"] == expected
     assert requirement_properties["anchors"]["minItems"] == 1
     assert requirement_properties["anchors"]["uniqueItems"] is True
+    assert "[A-Q]" in requirement_properties["part"]["pattern"]
+    assert "[A-Q]" in requirement_properties["clause"]["pattern"]
+    assert "[A-Q]" in requirement_properties["related_clauses"]["items"]["pattern"]
+    revision_clause = requirement_schema["$defs"]["RevisionRule"]["properties"]["clause"]
+    assert "[A-Q]" in revision_clause["anyOf"][0]["pattern"]
     assert "paragraph_anchor" not in requirement_properties
 
 
@@ -135,11 +141,52 @@ def test_boolean_schema_version_is_rejected(catalog: Catalog) -> None:
         CaseDefinition.model_validate(value)
 
 
-def test_retired_requirement_schema_version_is_rejected(catalog: Catalog) -> None:
+@pytest.mark.parametrize("schema_version", (1, 2))
+def test_retired_requirement_schema_version_is_rejected(
+    catalog: Catalog, schema_version: int
+) -> None:
     value = catalog.inventory.model_dump(mode="json")
-    value["schema_version"] = 1
-    with pytest.raises(ValidationError, match="greater than or equal to 2"):
+    value["schema_version"] = schema_version
+    with pytest.raises(ValidationError, match="greater than or equal to 3"):
         RequirementInventory.model_validate(value)
+
+
+def test_requirement_accepts_annex_locations(catalog: Catalog) -> None:
+    value = catalog.inventory.requirements[0].model_dump(mode="json")
+    value.update(
+        id="SV-2023-A-FORMAL-SYNTAX",
+        part="A",
+        clause="A.1",
+        anchors=["[2023:A.1:P001:p1172]"],
+        related_clauses=["B", "B.3.2"],
+    )
+    value["revision_applicability"]["1800-2023"]["clause"] = "A.1"
+
+    requirement = Requirement.model_validate(value)
+
+    assert requirement.part == "A"
+    assert requirement.related_clauses == ("B", "B.3.2")
+
+
+@pytest.mark.parametrize("location", ("04.9", "a.1", "R.1", "A.x"))
+def test_requirement_rejects_invalid_standard_locations(catalog: Catalog, location: str) -> None:
+    value = catalog.inventory.requirements[0].model_dump(mode="json")
+    value["related_clauses"] = [location]
+    with pytest.raises(ValidationError, match="related_clauses"):
+        Requirement.model_validate(value)
+
+
+def test_requirement_part_must_match_clause_and_id(catalog: Catalog) -> None:
+    value = catalog.inventory.requirements[0].model_dump(mode="json")
+    value["part"] = "A"
+    with pytest.raises(ValidationError, match="clause does not match part"):
+        Requirement.model_validate(value)
+
+    value["clause"] = "A"
+    value["anchors"] = ["[2023:A:P001:p1172]"]
+    value["revision_applicability"]["1800-2023"]["clause"] = "A"
+    with pytest.raises(ValidationError, match="id part does not match part"):
+        Requirement.model_validate(value)
 
 
 @pytest.mark.parametrize(
@@ -250,16 +297,86 @@ def test_catalog_rejects_a_symlinked_case_source(catalog: Catalog, tmp_path: Pat
         load_catalog(root)
 
 
-def test_requirement_chapter_must_match_index(catalog: Catalog, tmp_path: Path) -> None:
+def test_requirement_part_must_match_index(catalog: Catalog, tmp_path: Path) -> None:
     root = tmp_path / "repo"
     _copy_catalog_tree(catalog, root)
     chapter = root / "standards" / "requirements" / "chapter-04.toml"
     chapter.write_text(
-        chapter.read_text(encoding="utf-8").replace("chapter = 4", "chapter = 5", 1),
+        chapter.read_text(encoding="utf-8").replace('part = "4"', 'part = "5"', 1),
         encoding="utf-8",
     )
-    with pytest.raises(CatalogError, match="chapter"):
+    with pytest.raises(CatalogError, match="part"):
         load_catalog(root)
+
+
+def test_catalog_loads_annex_requirement_and_counts_its_case(
+    catalog: Catalog, tmp_path: Path
+) -> None:
+    root = tmp_path / "repo"
+    _copy_catalog_tree(catalog, root)
+    index = root / "standards" / "index.toml"
+    index.write_text(
+        index.read_text(encoding="utf-8").replace('"27"]', '"27", "A"]'),
+        encoding="utf-8",
+    )
+    (root / "standards" / "requirements" / "annex-A.toml").write_text(
+        """schema_version = 3
+part = "A"
+
+[[requirements]]
+id = "SV-2023-A-FORMAL-SYNTAX"
+standard_revision = "1800-2023"
+part = "A"
+clause = "A"
+anchors = ["[2023:A:P001:p1172]"]
+summary = "Synthetic annex requirement for catalog integration testing."
+related_clauses = ["B"]
+tags = ["nba", "scheduling"]
+
+[requirements.revision_applicability."1800-2012"]
+status = "applicable"
+clause = "A"
+
+[requirements.revision_applicability."1800-2017"]
+status = "applicable"
+clause = "A"
+
+[requirements.revision_applicability."1800-2023"]
+status = "applicable"
+clause = "A"
+""",
+        encoding="utf-8",
+    )
+    case = root / "cases" / "ch04-nba-rhs-captured" / "case.toml"
+    case.write_text(
+        case.read_text(encoding="utf-8").replace(
+            'primary_requirement = "SV-2023-04-NBA-RHS-CAPTURE"',
+            'primary_requirement = "SV-2023-A-FORMAL-SYNTAX"',
+        ),
+        encoding="utf-8",
+    )
+    related_case = root / "cases" / "ch05-base-format-whitespace-rejected" / "case.toml"
+    related_case.write_text(
+        related_case.read_text(encoding="utf-8").replace(
+            "related_requirements = []",
+            'related_requirements = ["SV-2023-A-FORMAL-SYNTAX"]',
+        ),
+        encoding="utf-8",
+    )
+
+    loaded = load_catalog(root)
+    metrics = loaded.corpus_metrics()
+    requirement_annex = next(part for part in metrics.requirements.breakdown if part.id == "A")
+    case_annex = next(part for part in metrics.cases.breakdown if part.id == "A")
+
+    assert loaded.requirements["SV-2023-A-FORMAL-SYNTAX"].part == "A"
+    assert requirement_annex.coverage.numerator == 1
+    assert requirement_annex.density.numerator == 1
+    assert requirement_annex.density.denominator == 1
+    assert case_annex.coverage.numerator == 1
+    assert case_annex.coverage.denominator == 1
+    assert case_annex.density.numerator == 2
+    assert case_annex.density.denominator == 1
 
 
 def test_unknown_controlled_tag_is_rejected(catalog: Catalog, tmp_path: Path) -> None:

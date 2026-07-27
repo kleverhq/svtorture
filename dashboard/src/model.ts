@@ -20,6 +20,10 @@ export const STATUS_LABELS: Record<Status, string> = {
   "not-run": "Not evaluated · not run",
 };
 
+export function standardLocationLabel(location: string): string {
+  return /^[A-Q](?:\.|$)/.test(location) ? `Annex ${location}` : `Clause ${location}`;
+}
+
 export const STATUS_SYMBOLS: Record<Status, string> = {
   conforming: "✓",
   nonconforming: "×",
@@ -102,7 +106,7 @@ const STATUS_PRIORITY: Status[] = [
 export interface Filters {
   search: string;
   revision: string;
-  chapter: string;
+  part: string;
   clause: string;
   phase: string;
   expectation: string;
@@ -126,7 +130,7 @@ export interface Filters {
 export const EMPTY_FILTERS: Filters = {
   search: "",
   revision: "",
-  chapter: "",
+  part: "",
   clause: "",
   phase: "",
   expectation: "",
@@ -291,9 +295,6 @@ export function filtersFromSearch(search: string): Filters {
   for (const key of Object.keys(EMPTY_FILTERS) as (keyof Filters)[]) {
     if (key === "changed" || key === "disagreement") {
       result[key] = parameters.get(key) === "1";
-    } else if (key === "chapter") {
-      result[key] =
-        parameters.getAll(key).find((value) => /^[1-9][0-9]*$/.test(value)) ?? "";
     } else {
       result[key] = parameters.get(key) ?? "";
     }
@@ -611,10 +612,8 @@ export function filterCorpus(
         testCase.revision_applicability[filters.revision] === "applicable" ||
         testCase.revision_applicability[filters.revision] ===
           "same-rule-different-clause") &&
-      (!filters.chapter ||
-        contextRequirements.some(
-          (requirement) => String(requirement.chapter) === filters.chapter,
-        )) &&
+      (!filters.part ||
+        contextRequirements.some((requirement) => requirement.part === filters.part)) &&
       (!filters.clause ||
         contextRequirements.some((requirement) =>
           requirement.clause.startsWith(filters.clause),
@@ -690,7 +689,7 @@ export function filterCorpus(
       (!filters.revision ||
         rule?.status === "applicable" ||
         rule?.status === "same-rule-different-clause") &&
-      (!filters.chapter || String(requirement.chapter) === filters.chapter) &&
+      (!filters.part || requirement.part === filters.part) &&
       (!filters.clause || requirement.clause.startsWith(filters.clause)) &&
       (!filters.casePresence ||
         (filters.casePresence === "with-cases" ? hasCases : !hasCases)) &&

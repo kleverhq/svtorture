@@ -6,7 +6,7 @@ export function makeTestDataset(): Dataset {
   const requirement = {
     id: "SV-2023-13-OUTPUT-COPYOUT",
     standard_revision: "1800-2023",
-    chapter: 13,
+    part: "13",
     clause: "13.5",
     anchors: [
       "[2023:13.5:P005:p348]",
@@ -189,7 +189,7 @@ export function makeTestDataset(): Dataset {
     trust: { source: "local" },
   };
   return {
-    schema_version: 3,
+    schema_version: 4,
     generated_from: [campaign.id],
     visibility: "local",
     corpus_coverage: corpusMetrics,

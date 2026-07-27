@@ -26,6 +26,7 @@ from svtorture.models import (
     MetricBreakdown,
     ResultStatus,
     model_to_jsonable,
+    standard_location_sort_key,
 )
 
 
@@ -219,7 +220,7 @@ def build_dataset(
     requirements = [
         model_to_jsonable(requirement)
         for requirement in sorted(
-            catalog.inventory.requirements, key=lambda item: (item.chapter, item.clause)
+            catalog.inventory.requirements, key=lambda item: standard_location_sort_key(item.clause)
         )
     ]
     cases = []
@@ -267,7 +268,7 @@ def build_dataset(
                 )
                 metrics.append(point)
     dataset = {
-        "schema_version": 3,
+        "schema_version": 4,
         "generated_from": [item.id for item in selected_campaigns],
         "visibility": visibility,
         "corpus_coverage": model_to_jsonable(catalog.corpus_metrics()),
@@ -362,7 +363,7 @@ def _validate_metric_provenance(point: PublishedMetricPoint, campaign: Campaign)
 
 
 def _validate_merge_dataset(dataset: dict[str, Any]) -> dict[str, Any]:
-    if dataset.get("schema_version") != 3:
+    if dataset.get("schema_version") != 4:
         raise PublicationError("cannot merge incompatible dashboard datasets")
     required_sequences = ("generated_from", "requirements", "cases", "campaigns", "metrics")
     for key in required_sequences:

@@ -387,8 +387,12 @@ def test_dataset_embeds_campaign_corpus_metrics(catalog: Catalog) -> None:
     )
 
     dataset = publication.build_dataset(catalog, (campaign,), visibility="local")
-    assert dataset["schema_version"] == 3
+    assert dataset["schema_version"] == 4
     assert dataset["campaigns"][0]["schema_version"] == 4
+    assert all(
+        isinstance(requirement["part"], str) and "chapter" not in requirement
+        for requirement in dataset["requirements"]
+    )
     assert dataset["campaigns"][0]["corpus_metrics"] == dataset["corpus_coverage"]
     assert len(dataset["campaigns"][0]["corpus_metrics"]["requirements"]["breakdown"]) == 58
     assert len(dataset["campaigns"][0]["corpus_metrics"]["cases"]["breakdown"]) == 58
@@ -396,7 +400,7 @@ def test_dataset_embeds_campaign_corpus_metrics(catalog: Catalog) -> None:
 
 def test_dataset_reports_corpus_coverage_by_standard_part(catalog: Catalog) -> None:
     dataset = publication.build_dataset(catalog, (), visibility="local")
-    assert dataset["schema_version"] == 3
+    assert dataset["schema_version"] == 4
     coverage = dataset["corpus_coverage"]
 
     assert coverage["requirements"]["coverage"] == {
@@ -490,7 +494,7 @@ def test_dataset_merge_is_strict_append_only_and_detects_collision(
     new = publication.build_dataset(catalog, (second,), visibility="local")
 
     legacy = dict(old)
-    legacy["schema_version"] = 2
+    legacy["schema_version"] = 3
     with pytest.raises(PublicationError, match="incompatible dashboard datasets"):
         merge_datasets(legacy, new)
 
@@ -590,7 +594,7 @@ def test_dataset_merge_is_strict_append_only_and_detects_collision(
         merge_datasets(old, public)
 
     merged = merge_datasets(old, new)
-    assert merged["schema_version"] == 3
+    assert merged["schema_version"] == 4
     assert merged["corpus_coverage"] == new["corpus_coverage"]
     assert {item["id"] for item in merged["campaigns"]} == {first.id, second.id}
     assert merged["generated_from"] == sorted((first.id, second.id))

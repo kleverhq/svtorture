@@ -18,7 +18,7 @@ export interface RevisionRule {
 export interface Requirement {
   id: string;
   standard_revision: string;
-  chapter: number;
+  part: string;
   clause: string;
   anchors: string[];
   summary: string;
@@ -229,7 +229,7 @@ export interface MetricPoint {
 export type CorpusCoverage = CorpusMetrics;
 
 export interface Dataset {
-  schema_version: 3;
+  schema_version: 4;
   generated_from: string[];
   visibility: "local" | "public";
   corpus_coverage: CorpusCoverage;

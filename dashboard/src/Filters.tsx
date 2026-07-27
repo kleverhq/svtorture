@@ -34,6 +34,19 @@ function choices(values: Array<string | undefined>): string[] {
 
 const PROFILE_ORDER = ["preprocessor", "parser", "elaborator", "simulator"];
 
+function standardPartLabel(part: string): string {
+  return /^[A-Q]$/.test(part) ? `Annex ${part}` : `Chapter ${part}`;
+}
+
+function standardPartOrder(left: string, right: string): number {
+  if (/^[0-9]+$/.test(left) && /^[0-9]+$/.test(right)) {
+    return Number(left) - Number(right);
+  }
+  if (/^[0-9]+$/.test(left)) return -1;
+  if (/^[0-9]+$/.test(right)) return 1;
+  return left.localeCompare(right);
+}
+
 function displayFilterValue(value: string): string {
   return value
     .replaceAll(/[-_]+/g, " ")
@@ -254,7 +267,7 @@ export function Filters({
 
       {showPartFacet && (
         <div className="filters__part-row">
-          <span className="filters__quick-label">Chapter</span>
+          <span className="filters__quick-label">Standard part</span>
           <details className="part-multiselect" ref={partMultiselectRef}>
             <summary
               className="filter-chip"
@@ -262,7 +275,11 @@ export function Filters({
             >
               {partSelectionLabel}
             </summary>
-            <div className="part-multiselect__menu" role="group" aria-label="Chapters">
+            <div
+              className="part-multiselect__menu"
+              role="group"
+              aria-label="Standard parts"
+            >
               <label>
                 <input
                   type="checkbox"
@@ -366,24 +383,26 @@ export function Filters({
                 </select>
               </label>
               <label>
-                <span>Chapter</span>
+                <span>Standard part</span>
                 <select
-                  value={filters.chapter}
-                  onChange={(event) => update("chapter", event.target.value)}
+                  value={filters.part}
+                  onChange={(event) => update("part", event.target.value)}
                 >
                   <option value="">Any</option>
-                  {choices(dataset.requirements.map((item) => String(item.chapter))).map(
-                    (chapter) => (
-                      <option key={chapter}>{chapter}</option>
-                    ),
-                  )}
+                  {choices(dataset.requirements.map((item) => item.part))
+                    .sort(standardPartOrder)
+                    .map((part) => (
+                      <option value={part} key={part}>
+                        {standardPartLabel(part)}
+                      </option>
+                    ))}
                 </select>
               </label>
               <label>
-                <span>Clause prefix</span>
+                <span>Clause or annex prefix</span>
                 <input
                   value={filters.clause}
-                  placeholder="12.4"
+                  placeholder="12.4 or A.1"
                   onChange={(event) => update("clause", event.target.value)}
                 />
               </label>

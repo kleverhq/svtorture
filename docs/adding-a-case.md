@@ -7,7 +7,10 @@ path.
 
 ## 1. Map the requirement
 
-Add or reuse one entry in `standards/requirements/chapter-NN.toml`. When adding
+Add or reuse one entry in `standards/requirements/chapter-NN.toml` or
+`standards/requirements/annex-X.toml`. Numeric chapters use a string `part` such
+as `"4"`; annexes use a letter such as `"A"` and requirement IDs such as
+`SV-2023-A-FORMAL-SYNTAX`. When adding
 or revising that requirement, configure the PDF path as described in
 `annotation.md`, run `just annotate`, and derive the expected rule from the
 matching generated `txt/NN.txt` blocks. The entry needs one stable ID, the 2023

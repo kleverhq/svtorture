@@ -14,6 +14,7 @@ import {
   toolTrendPointKey,
   trendRangeBounds,
   trendStateFromSearch,
+  standardLocationLabel,
   statusGroup,
 } from "./model";
 import { makeTestDataset } from "./testDataset";
@@ -26,7 +27,7 @@ describe("URL-backed filters", () => {
     const value = {
       ...EMPTY_FILTERS,
       search: "copy-out",
-      chapter: "13",
+      part: "13",
       statusGroup: "fail",
       requirement: "SV-2023-13-OUTPUT-COPYOUT",
       tool: "fake",
@@ -57,7 +58,7 @@ describe("URL-backed filters", () => {
     expect(encoded).toContain("trendPoint=corpus%3Acampaign%3Acases");
     expect(encoded).toContain("chapter=chapter%3A5");
     expect(encoded).toContain("chapter=annex%3AA");
-    expect(filtersFromSearch(encoded).chapter).toBe("");
+    expect(filtersFromSearch(encoded).part).toBe("");
     expect(trendStateFromSearch(encoded)).toEqual({
       kind: "density",
       range: "six-months",
@@ -85,12 +86,13 @@ describe("URL-backed filters", () => {
     }
     expect(filtersToSearch(EMPTY_FILTERS, "trends")).toBe("?view=trends");
     expect(trendStateFromSearch("?view=trends").range).toBe("all");
+    expect(filtersFromSearch("?chapter=13").part).toBe("");
     const mixed = filtersToSearch(
-      { ...EMPTY_FILTERS, chapter: "13" },
+      { ...EMPTY_FILTERS, part: "13" },
       "trends",
       { kind: "coverage", range: "month", point: "", parts: ["annex:A"] },
     );
-    expect(filtersFromSearch(mixed).chapter).toBe("13");
+    expect(filtersFromSearch(mixed).part).toBe("13");
     expect(trendStateFromSearch(mixed).parts).toEqual(["annex:A"]);
     expect(
       filtersToSearch(EMPTY_FILTERS, "overview", {
@@ -179,11 +181,30 @@ describe("requirements model", () => {
     const campaign = selectedCampaign(dataset, "");
     const filtered = filterCorpus(
       dataset,
-      { ...EMPTY_FILTERS, chapter: "13" },
+      { ...EMPTY_FILTERS, part: "13" },
       campaign,
     );
     expect(filtered.requirements).toHaveLength(1);
     expect(filtered.cases[0]?.id).toBe("ch13-output-copyout-width");
+  });
+
+  it("filters and labels annex requirements", () => {
+    const annexDataset = makeTestDataset();
+    const requirement = annexDataset.requirements[0];
+    if (!requirement) throw new Error("test dataset has no requirement");
+    requirement.part = "A";
+    requirement.clause = "A.1";
+
+    const filtered = filterCorpus(
+      annexDataset,
+      { ...EMPTY_FILTERS, part: "A", clause: "A" },
+      selectedCampaign(annexDataset, ""),
+    );
+
+    expect(filtered.requirements).toEqual([requirement]);
+    expect(filtered.cases).toHaveLength(1);
+    expect(standardLocationLabel(requirement.clause)).toBe("Annex A.1");
+    expect(standardLocationLabel("13.5")).toBe("Clause 13.5");
   });
 
   it("searches exact annotated-standard anchors", () => {
@@ -208,7 +229,7 @@ describe("requirements model", () => {
     const related = {
       ...original,
       id: "SV-2023-05-RELATED-FILTER",
-      chapter: 5,
+      part: "5",
       clause: "5.4",
       summary: "Related-only filter target",
     };

@@ -27,8 +27,8 @@ from svtorture.models import (
     Phase,
     RepositoryIdentity,
     Requirement,
-    RequirementChapter,
     RequirementInventory,
+    RequirementPart,
     StandardPartKind,
     StandardsIndex,
     SuiteDefinition,
@@ -138,7 +138,7 @@ class Catalog:
             part_requirements = {
                 requirement.id
                 for requirement in self.inventory.requirements
-                if part.kind is StandardPartKind.CHAPTER and str(requirement.chapter) == part.id
+                if requirement.part == part.id
             }
             part_case_links = {link for link in case_links if link[1] in part_requirements}
             covered_requirements = {requirement_id for _, requirement_id in part_case_links}
@@ -270,23 +270,29 @@ def _load_requirements(root: Path, anchor_index: Path) -> RequirementInventory:
     standards = root / "standards"
     index = _parse(standards / "index.toml", StandardsIndex)
     requirements_directory = standards / "requirements"
-    expected_paths = {
-        requirements_directory / f"chapter-{chapter:02d}.toml" for chapter in index.chapters
+
+    def requirement_path(part: str) -> Path:
+        if part.isdigit():
+            return requirements_directory / f"chapter-{int(part):02d}.toml"
+        return requirements_directory / f"annex-{part}.toml"
+
+    expected_paths = {requirement_path(part) for part in index.parts}
+    actual_paths = {
+        *requirements_directory.glob("chapter-*.toml"),
+        *requirements_directory.glob("annex-*.toml"),
     }
-    actual_paths = set(requirements_directory.glob("chapter-*.toml"))
     if actual_paths != expected_paths:
         missing = sorted(path.name for path in expected_paths - actual_paths)
         extra = sorted(path.name for path in actual_paths - expected_paths)
         raise CatalogError(
-            f"{requirements_directory}: chapter index mismatch; missing={missing}, extra={extra}"
+            f"{requirements_directory}: part index mismatch; missing={missing}, extra={extra}"
         )
     requirements: list[Requirement] = []
-    for chapter, path in zip(index.chapters, sorted(expected_paths), strict=True):
-        document = _parse(path, RequirementChapter)
-        if document.chapter != chapter:
-            raise CatalogError(
-                f"{path}: declared chapter {document.chapter} does not match index {chapter}"
-            )
+    for part in index.parts:
+        path = requirement_path(part)
+        document = _parse(path, RequirementPart)
+        if document.part != part:
+            raise CatalogError(f"{path}: declared part {document.part} does not match index {part}")
         requirements.extend(document.requirements)
     try:
         inventory = RequirementInventory(
@@ -573,12 +579,12 @@ def write_json_schema(root: Path, output: Path) -> None:
     case_schema["properties"]["tags"]["items"]["enum"] = tag_values
     requirements_schema = RequirementInventory.model_json_schema()
     requirements_schema["$defs"]["Requirement"]["properties"]["tags"]["items"]["enum"] = tag_values
-    chapter_schema = RequirementChapter.model_json_schema()
-    chapter_schema["$defs"]["Requirement"]["properties"]["tags"]["items"]["enum"] = tag_values
+    part_schema = RequirementPart.model_json_schema()
+    part_schema["$defs"]["Requirement"]["properties"]["tags"]["items"]["enum"] = tag_values
     schemas = {
         "campaign.schema.json": Campaign.model_json_schema(),
         "case.schema.json": case_schema,
-        "requirement-chapter.schema.json": chapter_schema,
+        "requirement-part.schema.json": part_schema,
         "requirements.schema.json": requirements_schema,
         "result.schema.json": NormalizedResult.model_json_schema(),
         "standards-index.schema.json": StandardsIndex.model_json_schema(),
@@ -600,7 +606,11 @@ def mvp_audit(catalog: Catalog) -> dict[str, int]:
     counts = {
         "cases": len(definitions),
         "chapters": len(
-            {catalog.requirements[item.primary_requirement].chapter for item in definitions}
+            {
+                requirement.part
+                for item in definitions
+                if (requirement := catalog.requirements[item.primary_requirement]).part.isdigit()
+            }
         ),
         "simulation_acceptance": sum(
             item.target_phase is Phase.SIMULATE and item.expectation is Expectation.ACCEPT

@@ -15,16 +15,17 @@
     "authority": {
       "$ref": "#/$defs/StandardRevision"
     },
-    "chapters": {
+    "parts": {
       "items": {
-        "type": "integer"
+        "pattern": "^(?:[1-9]|[1-3][0-9]|4[01]|[A-Q])$",
+        "type": "string"
       },
-      "title": "Chapters",
+      "title": "Parts",
       "type": "array"
     },
     "schema_version": {
-      "maximum": 2,
-      "minimum": 2,
+      "maximum": 3,
+      "minimum": 3,
       "title": "Schema Version",
       "type": "integer"
     }
@@ -32,7 +33,7 @@
   "required": [
     "schema_version",
     "authority",
-    "chapters"
+    "parts"
   ],
   "title": "StandardsIndex",
   "type": "object"

@@ -110,7 +110,7 @@ describe("App overview navigation", () => {
     const related = {
       ...original,
       id: "SV-2023-05-RELATED-EVIDENCE",
-      chapter: 5,
+      part: "5",
       clause: "5.2",
       summary: "Requirement supported through a related case link",
     };
@@ -119,7 +119,7 @@ describe("App overview navigation", () => {
     window.history.replaceState(
       null,
       "",
-      `/?view=matrix&requirementId=${related.id}&chapter=5`,
+      `/?view=matrix&requirementId=${related.id}&part=5`,
     );
     mockDataset(dataset);
 
@@ -139,7 +139,7 @@ describe("App overview navigation", () => {
       const parameters = new URLSearchParams(window.location.search);
       expect(parameters.get("view")).toBe("evidence");
       expect(parameters.get("caseId")).toBe(testCase.id);
-      expect(parameters.has("chapter")).toBe(false);
+      expect(parameters.has("part")).toBe(false);
     });
   });
 
@@ -150,7 +150,7 @@ describe("App overview navigation", () => {
     const visible = {
       ...original,
       id: "SV-2023-05-FILTER-RECOVERY",
-      chapter: 5,
+      part: "5",
       clause: "5.1",
       summary: "First requirement left by the active filters",
     };
@@ -158,7 +158,7 @@ describe("App overview navigation", () => {
     window.history.replaceState(
       null,
       "",
-      `/?view=matrix&requirementId=${original.id}&chapter=5`,
+      `/?view=matrix&requirementId=${original.id}&part=5`,
     );
     mockDataset(dataset);
 
@@ -289,7 +289,7 @@ describe("App overview navigation", () => {
     const related = {
       ...original,
       id: "SV-2023-05-TOOL-EVIDENCE",
-      chapter: 5,
+      part: "5",
       clause: "5.3",
       summary: "Requirement reached through tool evidence",
     };
@@ -502,7 +502,7 @@ describe("App overview navigation", () => {
     expect(document.querySelectorAll(".trends-chart")).toHaveLength(1);
     expect(screen.queryByRole("group", { name: "Tools" })).toBeNull();
     fireEvent.click(screen.getByText("All 3"));
-    const chapters = within(screen.getByRole("group", { name: "Chapters" }));
+    const chapters = within(screen.getByRole("group", { name: "Standard parts" }));
     fireEvent.click(chapters.getByLabelText(/Chapter 5/));
     fireEvent.click(chapters.getByLabelText(/Annex A/));
     await waitFor(() => {

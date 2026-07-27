@@ -5,6 +5,7 @@ import {
   resultsByKey,
   STATUS_GROUP_LABELS,
   STATUS_GROUP_SYMBOLS,
+  standardLocationLabel,
   statusGroup,
 } from "./model";
 import { StatusBadge } from "./StatusBadge";
@@ -359,7 +360,8 @@ export function EvidenceView({
             <header className="evidence-pane__header">
               <div>
                 <span className="section-label">
-                  Clause {requirement?.clause} · {selected.target_phase} ·{" "}
+                  {requirement ? standardLocationLabel(requirement.clause) : "Unknown part"} ·{" "}
+                  {selected.target_phase} ·{" "}
                   {selected.expectation}
                 </span>
                 <h3>{selected.title}</h3>
