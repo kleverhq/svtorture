@@ -1,4 +1,4 @@
-import type { Dispatch, SetStateAction } from "react";
+import { useEffect, useRef, type Dispatch, type SetStateAction } from "react";
 
 import {
   STATUS_GROUP_LABELS,
@@ -150,6 +150,32 @@ export function Filters({
     showFacets && (mode !== "trends" || trendKind === "pass-rate");
   const showPartFacet =
     mode === "trends" && trendKind !== undefined && trendKind !== "pass-rate";
+  const partMultiselectRef = useRef<HTMLDetailsElement>(null);
+  useEffect(() => {
+    const closeOnOutsidePointer = (event: PointerEvent) => {
+      const multiselect = partMultiselectRef.current;
+      if (
+        multiselect?.open &&
+        event.target instanceof Node &&
+        !multiselect.contains(event.target)
+      ) {
+        multiselect.open = false;
+      }
+    };
+    const closeOnEscape = (event: KeyboardEvent) => {
+      const multiselect = partMultiselectRef.current;
+      if (event.key === "Escape" && multiselect?.open) {
+        multiselect.open = false;
+        multiselect.querySelector("summary")?.focus();
+      }
+    };
+    document.addEventListener("pointerdown", closeOnOutsidePointer);
+    document.addEventListener("keydown", closeOnEscape);
+    return () => {
+      document.removeEventListener("pointerdown", closeOnOutsidePointer);
+      document.removeEventListener("keydown", closeOnEscape);
+    };
+  }, []);
   const partSelectionLabel = selectedParts.length
     ? `${selectedParts.length} selected`
     : `All ${standardParts.length}`;
@@ -219,7 +245,7 @@ export function Filters({
       {showPartFacet && (
         <div className="filters__part-row">
           <span className="filters__quick-label">Chapter</span>
-          <details className="part-multiselect">
+          <details className="part-multiselect" ref={partMultiselectRef}>
             <summary
               className="filter-chip"
               aria-label={`Chapter and annex filter: ${partSelectionLabel}`}

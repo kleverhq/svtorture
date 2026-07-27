@@ -114,6 +114,18 @@ describe("Filters", () => {
       true,
     );
 
+    const multiselect = disclosure.closest("details") as HTMLDetailsElement;
+    expect(multiselect.open).toBe(true);
+    fireEvent.pointerDown(document.body);
+    expect(multiselect.open).toBe(false);
+
+    fireEvent.click(disclosure);
+    expect(multiselect.open).toBe(true);
+    fireEvent.keyDown(document, { key: "Escape" });
+    expect(multiselect.open).toBe(false);
+    expect(document.activeElement).toBe(disclosure);
+
+    fireEvent.click(disclosure);
     fireEvent.click(chapters.getByLabelText("All"));
     expect(screen.getByText("All 3")).toBeTruthy();
   });
