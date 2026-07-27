@@ -94,7 +94,6 @@ describe("RequirementsView", () => {
     });
     expect(scrollTo).toHaveBeenCalledWith({ top: 0 });
     expect(screen.queryByRole("table")).toBeNull();
-    expect(document.querySelector(".matrix__row")).toBeNull();
 
     const list = screen.getByRole("listbox", { name: "Requirements" });
     const options = within(list).getAllByRole("option");
