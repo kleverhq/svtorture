@@ -37,6 +37,12 @@ This work does not change dataset schemas, campaign evidence, filters, scoring, 
 - Observation: Six active profile identities fit the new composition without increasing page width.
   Evidence: a temporary six-tool dataset at 1840×1004 rendered six list verdicts and six vertical detail rows, zero Requirements tables, body width1825 for viewport1840, and no runtime errors. The workspace remained exactly 586/1172 px.
 
+- Observation: Requirement-scoped Case filtering cannot reuse the primary-only Case result unchanged.
+  Evidence: focused review showed a Case whose primary Requirement is Chapter13 and related Requirement is Chapter5 disappeared under `chapter=5`. `filterCorpus()` now applies one shared Case predicate to primary context for Cases and primary+related context for Requirements, returning separate collections.
+
+- Observation: A ref-backed layout effect does not initialize if an empty view later mounts its workspace.
+  Evidence: focused review found the original shared hook ran once with `ref.current=null`. It now uses a callback ref and state-backed node dependency; a test renders an empty Requirement result, rerenders one item, and observes `--split-workspace-height` being measured.
+
 ## Decision Log
 
 - Decision: Remove the Requirements table entirely and do not add a mode switch.
@@ -59,9 +65,19 @@ This work does not change dataset schemas, campaign evidence, filters, scoring, 
   Rationale: Both consumers need identical lifecycle and scroll-boundary handling. Broader generic list/detail components would add abstraction without a third layout or divergent need.
   Date/Author: 2026-07-27 / assistant
 
+- Decision: Give the Requirement list listbox/option semantics with roving tabindex and Arrow/Home/End navigation.
+  Rationale: Without roving focus, keyboard users would tab through every remaining Requirement before reaching details. One selected tab stop preserves fast access to details while arrow keys retain list navigation.
+  Date/Author: 2026-07-27 / assistant
+
+- Decision: Split `filterCorpus()` output into primary-context `cases` and all-link-context `requirementCases` while sharing one predicate implementation.
+  Rationale: Cases must retain primary Requirement chapter/search semantics, while Requirements must not lose evidence linked through `related_requirements`. Shared result/phase/revision logic avoids drift.
+  Date/Author: 2026-07-27 / assistant
+
 ## Outcomes & Retrospective
 
-Implementation and initial validation are complete. Existing `view=matrix` links select and reveal the requested Requirement, but the rendered view contains no table. At 1840×1004 the workspace is 586/1172 px with the last selected item visible and three vertical profile rows. At 1100×620 list and details independently scroll in a 273 px workspace while document y remains zero. A temporary six-tool dataset rendered six compact verdicts and six vertical evidence rows without horizontal overflow. At 390×844 the one-column global-flow fallback reveals the selected item and body width remains375. Focused review and final repository gates remain.
+Implementation, initial validation, and focused-review fixes are complete. Existing `view=matrix` links select and reveal the requested Requirement, but the rendered view contains no table. At 1840×1004 the workspace is 586/1172 px with the last selected item visible and three vertical profile rows. At 1100×620 list and details independently scroll in a 273 px workspace while document y remains zero. A temporary six-tool dataset rendered six compact verdicts and six vertical evidence rows without horizontal overflow. At 390×844 the one-column global-flow fallback reveals the selected item and body width remains375.
+
+Code and UX review found four issues: related-only evidence under requirement-context filters, stale selected IDs, workspace mounting after an empty result, and excessive keyboard tab stops. All are fixed with App-level regressions, callback-ref measurement, automatic first-visible recovery, and roving listbox focus. Both focused follow-ups returned no substantive findings. Fresh control review and final gates remain.
 
 ## Context and Orientation
 
@@ -173,3 +189,5 @@ No backend or public dataset interface changes.
 Revision note (2026-07-27 10:45Z): Created the self-contained plan after confirmation that the Requirements matrix should be removed completely in favor of the Cases-style layout.
 
 Revision note (2026-07-27 11:08Z): Recorded shared-hook extraction, complete table/dependency removal, focused tests, and wide/short/mobile/six-tool browser evidence.
+
+Revision note (2026-07-27 11:20Z): Recorded focused-review findings and clean follow-ups, requirement-context Case filtering, stale-selection recovery, callback-ref sizing, and roving keyboard navigation.

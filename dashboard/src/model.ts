@@ -537,7 +537,11 @@ export function filterCorpus(
   dataset: Dataset,
   filters: Filters,
   campaign: Campaign | undefined,
-): { requirements: Requirement[]; cases: CaseDefinition[] } {
+): {
+  requirements: Requirement[];
+  cases: CaseDefinition[];
+  requirementCases: CaseDefinition[];
+} {
   const changed = changedCaseKeys(dataset, campaign);
   const disagreement = disagreementCaseKeys(campaign);
   const resultMap = resultsByKey(campaign);
@@ -546,28 +550,42 @@ export function filterCorpus(
   );
   const allCasesByRequirement = new Map<string, CaseDefinition[]>();
   for (const testCase of dataset.cases) {
-    const linked = allCasesByRequirement.get(testCase.primary_requirement) ?? [];
-    linked.push(testCase);
-    allCasesByRequirement.set(testCase.primary_requirement, linked);
+    for (const requirementId of new Set([
+      testCase.primary_requirement,
+      ...testCase.related_requirements,
+    ])) {
+      const linked = allCasesByRequirement.get(requirementId) ?? [];
+      linked.push(testCase);
+      allCasesByRequirement.set(requirementId, linked);
+    }
   }
   const needle = filters.search.toLocaleLowerCase();
-  const cases = dataset.cases.filter((testCase) => {
-    const requirement = requirementMap.get(testCase.primary_requirement);
-    const candidateResults = [...resultMap.values()].filter(
-      (result) =>
-        result.case_id === testCase.id &&
-        (!filters.tool || result.tool_id === filters.tool) &&
-        (!filters.profile || result.profile_id === filters.profile),
-    );
+  const candidateResultsByCase = new Map<string, Result[]>();
+  for (const result of resultMap.values()) {
+    if (
+      (!filters.tool || result.tool_id === filters.tool) &&
+      (!filters.profile || result.profile_id === filters.profile)
+    ) {
+      const values = candidateResultsByCase.get(result.case_id) ?? [];
+      values.push(result);
+      candidateResultsByCase.set(result.case_id, values);
+    }
+  }
+  const matchesCase = (
+    testCase: CaseDefinition,
+    contextRequirements: Requirement[],
+  ) => {
+    const candidateResults = candidateResultsByCase.get(testCase.id) ?? [];
     const searchable = [
       testCase.id,
       testCase.title,
       testCase.description,
-      testCase.primary_requirement,
-      requirement?.summary ?? "",
-      requirement?.id ?? "",
-      requirement?.clause ?? "",
-      ...(requirement?.anchors ?? []),
+      ...contextRequirements.flatMap((requirement) => [
+        requirement.id,
+        requirement.summary,
+        requirement.clause,
+        ...requirement.anchors,
+      ]),
       ...testCase.tags,
       ...candidateResults.flatMap((result) => [
         result.status,
@@ -588,13 +606,21 @@ export function filterCorpus(
         testCase.revision_applicability[filters.revision] === "applicable" ||
         testCase.revision_applicability[filters.revision] ===
           "same-rule-different-clause") &&
-      (!filters.chapter || String(requirement?.chapter) === filters.chapter) &&
-      (!filters.clause || requirement?.clause.startsWith(filters.clause)) &&
+      (!filters.chapter ||
+        contextRequirements.some(
+          (requirement) => String(requirement.chapter) === filters.chapter,
+        )) &&
+      (!filters.clause ||
+        contextRequirements.some((requirement) =>
+          requirement.clause.startsWith(filters.clause),
+        )) &&
       (!filters.phase || testCase.target_phase === filters.phase) &&
       (!filters.expectation || testCase.expectation === filters.expectation) &&
       (!filters.tag ||
         testCase.tags.includes(filters.tag) ||
-        requirement?.tags.includes(filters.tag)) &&
+        contextRequirements.some((requirement) =>
+          requirement.tags.includes(filters.tag),
+        )) &&
       (!filters.statusGroup ||
         candidateResults.some(
           (result) => statusGroup(result.status) === filters.statusGroup,
@@ -606,8 +632,22 @@ export function filterCorpus(
       (!filters.changed || changed.has(testCase.id)) &&
       (!filters.disagreement || disagreement.has(testCase.id))
     );
+  };
+  const cases = dataset.cases.filter((testCase) => {
+    const primary = requirementMap.get(testCase.primary_requirement);
+    return matchesCase(testCase, primary ? [primary] : []);
   });
-  const matchedCaseIds = new Set(cases.map((testCase) => testCase.id));
+  const requirementCases = dataset.cases.filter((testCase) =>
+    matchesCase(
+      testCase,
+      [...new Set([testCase.primary_requirement, ...testCase.related_requirements])]
+        .map((id) => requirementMap.get(id))
+        .filter((requirement): requirement is Requirement => Boolean(requirement)),
+    ),
+  );
+  const matchedCaseIds = new Set(
+    requirementCases.map((testCase) => testCase.id),
+  );
   const caseSpecificFilter = Boolean(
     filters.phase ||
       filters.expectation ||
@@ -652,5 +692,10 @@ export function filterCorpus(
   return {
     requirements,
     cases: cases.filter((testCase) => requirementIds.has(testCase.primary_requirement)),
+    requirementCases: requirementCases.filter((testCase) =>
+      [testCase.primary_requirement, ...testCase.related_requirements].some((id) =>
+        requirementIds.has(id),
+      ),
+    ),
   };
 }

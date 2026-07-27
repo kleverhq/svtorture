@@ -96,8 +96,11 @@ describe("RequirementsView", () => {
     expect(screen.queryByRole("table")).toBeNull();
     expect(document.querySelector(".matrix__row")).toBeNull();
 
-    const list = screen.getByRole("navigation", { name: "Requirements" });
-    expect(within(list).getAllByRole("button")).toHaveLength(2);
+    const list = screen.getByRole("listbox", { name: "Requirements" });
+    const options = within(list).getAllByRole("option");
+    expect(options).toHaveLength(2);
+    expect(options[0]?.getAttribute("tabindex")).toBe("-1");
+    expect(options[1]?.getAttribute("tabindex")).toBe("0");
     expect(
       within(list).getAllByLabelText(/^fake\//, { selector: ".verdict-dot" }),
     ).toHaveLength(12);
@@ -114,7 +117,35 @@ describe("RequirementsView", () => {
 
     fireEvent.click(within(detail).getByText(testCase.title));
     expect(inspectCase).toHaveBeenCalledWith(testCase.id);
-    fireEvent.click(within(list).getAllByRole("button")[0] as HTMLElement);
+    fireEvent.keyDown(options[1] as HTMLElement, { key: "ArrowUp" });
     expect(selectRequirement).toHaveBeenCalledWith(first.id);
+  });
+
+  it("measures the split workspace when filters reveal requirements", async () => {
+    const dataset = makeTestDataset();
+    const requirement = dataset.requirements[0];
+    if (!requirement) throw new Error("incomplete test dataset");
+    const props = {
+      cases: dataset.cases,
+      campaign: dataset.campaigns[0],
+      toolFilter: "",
+      profileFilter: "",
+      selectedRequirementId: "",
+      onSelectRequirement: () => undefined,
+      onInspectCase: () => undefined,
+    };
+    const view = render(<RequirementsView {...props} requirements={[]} />);
+    expect(screen.getByText("No requirements match the current filters.")).toBeTruthy();
+
+    view.rerender(
+      <RequirementsView {...props} requirements={[requirement]} />,
+    );
+    await waitFor(() => {
+      expect(
+        document
+          .querySelector<HTMLElement>(".requirements-workspace")
+          ?.style.getPropertyValue("--split-workspace-height"),
+      ).not.toBe("");
+    });
   });
 });

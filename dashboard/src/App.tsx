@@ -424,7 +424,7 @@ export default function App() {
           {view === "matrix" && (
             <RequirementsView
               requirements={filtered.requirements}
-              cases={filtered.cases}
+              cases={filtered.requirementCases}
               campaign={campaign}
               toolFilter={filters.tool}
               profileFilter={filters.profile}

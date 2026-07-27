@@ -1,10 +1,17 @@
-import { useEffect, useLayoutEffect, useRef, type RefObject } from "react";
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+  type RefObject,
+} from "react";
 
 export function useViewportWorkspaceHeight<T extends HTMLElement>() {
-  const workspaceRef = useRef<T>(null);
+  const [workspace, setWorkspace] = useState<T | null>(null);
+  const workspaceRef = useCallback((node: T | null) => setWorkspace(node), []);
 
   useLayoutEffect(() => {
-    const workspace = workspaceRef.current;
     if (!workspace) return;
     let frame = 0;
     const updateHeight = () => {
@@ -36,7 +43,7 @@ export function useViewportWorkspaceHeight<T extends HTMLElement>() {
       window.removeEventListener("scroll", updateHeight);
       observer?.disconnect();
     };
-  }, []);
+  }, [workspace]);
 
   return workspaceRef;
 }

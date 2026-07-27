@@ -102,6 +102,66 @@ describe("App overview navigation", () => {
     expect(within(inspector).getByRole("button", { name: "Copy link" })).toBeTruthy();
   });
 
+  it("keeps related-case evidence under result filters", async () => {
+    const dataset = makeTestDataset();
+    const original = dataset.requirements[0];
+    const testCase = dataset.cases[0];
+    if (!original || !testCase) throw new Error("incomplete test dataset");
+    const related = {
+      ...original,
+      id: "SV-2023-05-RELATED-EVIDENCE",
+      chapter: 5,
+      clause: "5.2",
+      summary: "Requirement supported through a related case link",
+    };
+    dataset.requirements.push(related);
+    testCase.related_requirements = [related.id];
+    window.history.replaceState(
+      null,
+      "",
+      `/?view=matrix&requirementId=${related.id}&chapter=5`,
+    );
+    mockDataset(dataset);
+
+    render(<App />);
+
+    const detail = await screen.findByRole("article", {
+      name: `Requirement ${related.id}`,
+    });
+    expect(within(detail).getByText(testCase.title)).toBeTruthy();
+  });
+
+  it("recovers when filters hide the selected requirement", async () => {
+    const dataset = makeTestDataset();
+    const original = dataset.requirements[0];
+    if (!original) throw new Error("incomplete test dataset");
+    const visible = {
+      ...original,
+      id: "SV-2023-05-FILTER-RECOVERY",
+      chapter: 5,
+      clause: "5.1",
+      summary: "First requirement left by the active filters",
+    };
+    dataset.requirements.push(visible);
+    window.history.replaceState(
+      null,
+      "",
+      `/?view=matrix&requirementId=${original.id}&chapter=5`,
+    );
+    mockDataset(dataset);
+
+    render(<App />);
+
+    expect(
+      await screen.findByRole("heading", { name: visible.summary }),
+    ).toBeTruthy();
+    await waitFor(() =>
+      expect(new URLSearchParams(window.location.search).get("requirementId")).toBe(
+        visible.id,
+      ),
+    );
+  });
+
   it("opens case details from a direct link", async () => {
     const dataset = makeTestDataset();
     const original = dataset.cases[0];

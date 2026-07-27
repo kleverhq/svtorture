@@ -1,4 +1,4 @@
-import { useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, type KeyboardEvent } from "react";
 
 import { CopyLinkButton } from "./CopyLinkButton";
 import {
@@ -99,9 +99,18 @@ export function RequirementsView({
     }
     return evidence;
   }, [casesByRequirement, profiles, requirements, resultMap]);
-  const selected = selectedRequirementId
-    ? requirements.find((requirement) => requirement.id === selectedRequirementId)
-    : requirements[0];
+  const selected =
+    requirements.find((requirement) => requirement.id === selectedRequirementId) ??
+    requirements[0];
+  useEffect(() => {
+    if (
+      selectedRequirementId &&
+      selected &&
+      selected.id !== selectedRequirementId
+    ) {
+      onSelectRequirement(selected.id);
+    }
+  }, [onSelectRequirement, selected, selectedRequirementId]);
   const selectedIndex = selected
     ? requirements.findIndex((requirement) => requirement.id === selected.id)
     : -1;
@@ -115,25 +124,57 @@ export function RequirementsView({
   const selectedEvidence = selected
     ? (evidenceByRequirement.get(selected.id) ?? [])
     : [];
+  const moveSelection = (
+    event: KeyboardEvent<HTMLButtonElement>,
+    currentIndex: number,
+  ) => {
+    let nextIndex: number | undefined;
+    if (event.key === "ArrowDown" || event.key === "ArrowRight") {
+      nextIndex = Math.min(requirements.length - 1, currentIndex + 1);
+    } else if (event.key === "ArrowUp" || event.key === "ArrowLeft") {
+      nextIndex = Math.max(0, currentIndex - 1);
+    } else if (event.key === "Home") {
+      nextIndex = 0;
+    } else if (event.key === "End") {
+      nextIndex = requirements.length - 1;
+    }
+    if (nextIndex === undefined) return;
+    event.preventDefault();
+    if (nextIndex === currentIndex) return;
+    const requirement = requirements[nextIndex];
+    if (!requirement) return;
+    onSelectRequirement(requirement.id);
+    window.requestAnimationFrame(() =>
+      requirementButtonRefs.current.get(requirement.id)?.focus(),
+    );
+  };
 
   return (
     <section className="panel requirements" aria-label="Requirement evidence">
       {selected ? (
         <div className="requirements-workspace" ref={workspaceRef}>
-          <nav className="requirement-list" aria-label="Requirements">
-            {requirements.map((requirement) => {
+          <nav
+            className="requirement-list"
+            aria-label="Requirements"
+            role="listbox"
+          >
+            {requirements.map((requirement, index) => {
               const evidence = evidenceByRequirement.get(requirement.id) ?? [];
               return (
                 <button
                   type="button"
                   className={requirement.id === selected.id ? "is-selected" : ""}
+                  role="option"
+                  aria-selected={requirement.id === selected.id}
                   aria-current={requirement.id === selected.id ? "true" : undefined}
+                  tabIndex={requirement.id === selected.id ? 0 : -1}
                   key={requirement.id}
                   ref={(node) => {
                     if (node) requirementButtonRefs.current.set(requirement.id, node);
                     else requirementButtonRefs.current.delete(requirement.id);
                   }}
                   onClick={() => onSelectRequirement(requirement.id)}
+                  onKeyDown={(event) => moveSelection(event, index)}
                 >
                   <span className="requirement-list__clause">
                     Clause {requirement.clause}
