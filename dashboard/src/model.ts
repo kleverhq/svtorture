@@ -640,9 +640,13 @@ export function filterCorpus(
   };
   const cases = dataset.cases.filter((testCase) => {
     const context = filters.requirement
-      ? requirementMap.get(filters.requirement)
-      : requirementMap.get(testCase.primary_requirement);
-    return matchesCase(testCase, context ? [context] : []);
+      ? [...new Set([testCase.primary_requirement, ...testCase.related_requirements])]
+          .map((id) => requirementMap.get(id))
+          .filter((requirement): requirement is Requirement => Boolean(requirement))
+      : [requirementMap.get(testCase.primary_requirement)].filter(
+          (requirement): requirement is Requirement => Boolean(requirement),
+        );
+    return matchesCase(testCase, context);
   });
   const requirementCases = dataset.cases.filter((testCase) =>
     matchesCase(

@@ -118,7 +118,9 @@ describe("RequirementsView", () => {
 
     fireEvent.click(
       within(detail).getByRole("button", {
-        name: `View cases for ${selected.id} with fake/simulator`,
+        name: new RegExp(
+          `^View cases for ${selected.id} with fake/simulator —`,
+        ),
       }),
     );
     expect(inspectEvidence).toHaveBeenCalledWith(

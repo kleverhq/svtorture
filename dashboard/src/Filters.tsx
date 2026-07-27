@@ -178,10 +178,14 @@ export function Filters({
     };
   }, []);
   useEffect(() => {
-    if (filters.requirement && advancedFiltersRef.current) {
+    if (
+      mode === "corpus" &&
+      filters.requirement &&
+      advancedFiltersRef.current
+    ) {
       advancedFiltersRef.current.open = true;
     }
-  }, [filters.requirement]);
+  }, [filters.requirement, mode]);
   const partSelectionLabel = selectedParts.length
     ? `${selectedParts.length} selected`
     : `All ${standardParts.length}`;

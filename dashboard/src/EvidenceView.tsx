@@ -396,6 +396,27 @@ export function EvidenceView({
                   </button>
                 </dd>
               </div>
+              {selected.related_requirements.length > 0 && (
+                <div>
+                  <dt>Related requirements</dt>
+                  <dd className="relationship-list">
+                    {selected.related_requirements.map((requirementId) => {
+                      const related = requirementMap.get(requirementId);
+                      return (
+                        <button
+                          type="button"
+                          className="relationship-link"
+                          key={requirementId}
+                          onClick={() => onInspectRequirement(requirementId)}
+                        >
+                          <strong>{requirementId}</strong>
+                          <span>{related?.summary}</span>
+                        </button>
+                      );
+                    })}
+                  </dd>
+                </div>
+              )}
               <div>
                 <dt>Oracle</dt>
                 <dd>

@@ -91,12 +91,26 @@ describe("Filters", () => {
     const requirement = dataset.requirements[0];
     if (!requirement) throw new Error("incomplete test dataset");
 
-    render(
+    const view = render(
       <FilterHarness dataset={dataset} requirement={requirement.id} />,
     );
 
     const select = screen.getByLabelText("Requirement") as HTMLSelectElement;
     expect(select.value).toBe(requirement.id);
+    const summary = screen.getByText("Advanced filters");
+    expect(summary.closest("details")?.open).toBe(true);
+
+    fireEvent.click(summary);
+    view.rerender(
+      <FilterHarness
+        dataset={dataset}
+        requirement={requirement.id}
+        mode="overview"
+      />,
+    );
+    view.rerender(
+      <FilterHarness dataset={dataset} requirement={requirement.id} />,
+    );
     expect(screen.getByText("Advanced filters").closest("details")?.open).toBe(true);
   });
 

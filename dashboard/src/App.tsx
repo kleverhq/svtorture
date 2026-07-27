@@ -201,6 +201,24 @@ export default function App() {
     filters.dateTo,
   );
   const filtered = filterCorpus(dataset, filters, campaign);
+  const requirementEvidenceCases = new Map<string, typeof dataset.cases>();
+  for (const tool of campaign?.tools ?? []) {
+    for (const profile of tool.profile_ids) {
+      const key = `${tool.definition.id}/${profile}`;
+      requirementEvidenceCases.set(
+        key,
+        filterCorpus(
+          dataset,
+          {
+            ...filters,
+            tool: tool.definition.id,
+            profile,
+          },
+          campaign,
+        ).requirementCases,
+      );
+    }
+  }
   const campaignSelectValue = rangedCampaigns.some(
     (item) => item.id === filters.campaign,
   )
@@ -236,6 +254,21 @@ export default function App() {
       tool,
       profile,
       requirement,
+    }));
+    setView("evidence");
+  };
+  const inspectRequirementToolCases = (
+    tool: string,
+    profile: string,
+    requirement: string,
+  ) => {
+    setFilters((current) => ({
+      ...current,
+      tool,
+      profile,
+      requirement,
+      caseId: "",
+      requirementId: "",
     }));
     setView("evidence");
   };
@@ -456,6 +489,7 @@ export default function App() {
             <RequirementsView
               requirements={filtered.requirements}
               cases={filtered.requirementCases}
+              evidenceCasesByProfile={requirementEvidenceCases}
               campaign={campaign}
               toolFilter={filters.tool}
               profileFilter={filters.profile}
@@ -464,12 +498,12 @@ export default function App() {
                 setFilters((current) => ({ ...current, requirementId }))
               }
               onInspectCase={inspectCase}
-              onInspectEvidence={inspectToolCases}
+              onInspectEvidence={inspectRequirementToolCases}
             />
           )}
           {view === "evidence" && (
             <EvidenceView
-              requirements={filtered.requirements}
+              requirements={dataset.requirements}
               cases={filtered.cases}
               campaign={campaign}
               toolFilter={filters.tool}

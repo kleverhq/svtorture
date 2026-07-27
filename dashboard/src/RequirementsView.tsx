@@ -25,6 +25,7 @@ import {
 interface RequirementsProps {
   requirements: Requirement[];
   cases: CaseDefinition[];
+  evidenceCasesByProfile?: ReadonlyMap<string, CaseDefinition[]> | undefined;
   campaign?: Campaign | undefined;
   toolFilter: string;
   profileFilter: string;
@@ -47,6 +48,7 @@ interface ProfileEvidence {
 export function RequirementsView({
   requirements,
   cases,
+  evidenceCasesByProfile,
   campaign,
   toolFilter,
   profileFilter,
@@ -81,14 +83,33 @@ export function RequirementsView({
     }
     return result;
   }, [cases]);
+  const evidenceCasesByRequirement = useMemo(() => {
+    const result = new Map<string, Map<string, CaseDefinition[]>>();
+    for (const profileKey of profiles) {
+      const linkedCases = new Map<string, CaseDefinition[]>();
+      for (const testCase of evidenceCasesByProfile?.get(profileKey) ?? cases) {
+        for (const requirementId of new Set([
+          testCase.primary_requirement,
+          ...testCase.related_requirements,
+        ])) {
+          const values = linkedCases.get(requirementId) ?? [];
+          values.push(testCase);
+          linkedCases.set(requirementId, values);
+        }
+      }
+      result.set(profileKey, linkedCases);
+    }
+    return result;
+  }, [cases, evidenceCasesByProfile, profiles]);
   const evidenceByRequirement = useMemo(() => {
     const evidence = new Map<string, ProfileEvidence[]>();
     for (const requirement of requirements) {
-      const supporting = casesByRequirement.get(requirement.id) ?? [];
       evidence.set(
         requirement.id,
         profiles.map((profileKey) => {
           const [toolId = "", profileId = ""] = profileKey.split("/");
+          const supporting =
+            evidenceCasesByRequirement.get(profileKey)?.get(requirement.id) ?? [];
           const results = supporting.map((testCase) =>
             resultMap.get(`${testCase.id}:${toolId}:${profileId}`),
           );
@@ -104,7 +125,7 @@ export function RequirementsView({
       );
     }
     return evidence;
-  }, [casesByRequirement, profiles, requirements, resultMap]);
+  }, [evidenceCasesByRequirement, profiles, requirements, resultMap]);
   const selected =
     requirements.find((requirement) => requirement.id === selectedRequirementId) ??
     requirements[0];
@@ -252,7 +273,7 @@ export function RequirementsView({
                         type="button"
                         className="requirement-profile"
                         key={item.key}
-                        aria-label={`View cases for ${selected.id} with ${item.key}`}
+                        aria-label={`View cases for ${selected.id} with ${item.key} — ${STATUS_GROUP_LABELS[statusGroup(item.status)]}${item.reason ? `: ${item.reason}` : ""}`}
                         onClick={() =>
                           onInspectEvidence(toolId, profileId, selected.id)
                         }

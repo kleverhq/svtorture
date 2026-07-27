@@ -14,7 +14,8 @@ The new Requirement filter is visible inside Advanced filters, URL-backed as `re
 - [x] (2026-07-27 12:07Z) Added URL-backed exact linked-Requirement filtering to the model and Advanced filters, including automatic disclosure and related-only Case coverage.
 - [x] (2026-07-27 12:07Z) Routed Overview rows and native-button Requirement Tool evidence rows to Cases with canonical Campaign/date/Tool/Profile/Requirement state.
 - [x] (2026-07-27 12:07Z) Added model, filter, component, and App regressions for URL round-trip, related links, disclosure, callback payload, and both navigation paths; TypeScript and 64 frontend tests pass.
-- [ ] Run focused review, repository gates, browser validation, remove this completed plan, and commit the final state.
+- [x] (2026-07-27 12:20Z) Completed focused logic and UX reviews; fixed disclosure remounting, accessible verdict naming, complete primary/related Case context, and profile-specific filtered aggregation. Both follow-up reviews returned no substantive findings.
+- [ ] Rerun final production/smoke gates and browser validation after review fixes, perform completion audit, remove this completed plan, and commit the final state.
 
 ## Surprises & Discoveries
 
@@ -23,6 +24,12 @@ The new Requirement filter is visible inside Advanced filters, URL-backed as `re
 
 - Observation: The existing `requirementId` filter is an entity selection, not a corpus constraint.
   Evidence: it controls the selected Requirement and canonical Copy link. Reusing it in Cases would conflate navigation state and filtering, so this plan introduces `requirement` as a separate exact linked-Requirement filter.
+
+- Observation: A grouped Tool evidence row must scope result-dependent filters to that row's Tool/Profile before aggregation.
+  Evidence: focused review constructed profile A Pass/profile B Fail under `statusGroup=pass`. A shared any-profile Case set would show B as Fail, but clicking B re-evaluates the Pass filter and produces no Cases. App now derives a Case collection for every profile using the same filters as its destination; the regression expects B to be Not evaluated and A's drilldown to retain only its passing Cases.
+
+- Observation: Exact related-Requirement filtering left Case primary context unavailable when `EvidenceView` received only filtered Requirements.
+  Evidence: a related-only destination admitted the Case but rendered an empty primary clause/summary. `EvidenceView` now receives the full Requirement lookup and renders navigable primary and related Requirement context.
 
 ## Decision Log
 
@@ -34,8 +41,8 @@ The new Requirement filter is visible inside Advanced filters, URL-backed as `re
   Rationale: Tool evidence aggregates both link types; omitting related links would make the drilldown disagree with the verdict it is intended to explain.
   Date/Author: 2026-07-27 / assistant
 
-- Decision: Drilldown starts from `EMPTY_FILTERS`, preserving Campaign and date bounds, then sets Tool/Profile and, for Requirement evidence, the exact Requirement filter.
-  Rationale: Existing chapter, search, result, comparison, or selected-entity filters can hide the intended destination or be reinterpreted in Cases. A canonical explanatory drilldown must be predictable and shareable.
+- Decision: Overview drilldown starts from `EMPTY_FILTERS`, preserving Campaign/date and setting Tool/Profile; Requirement Tool evidence preserves active corpus filters, clears selected entity IDs, and sets Tool/Profile plus exact Requirement.
+  Rationale: Overview is an unfiltered entry point. A Requirement verdict, however, is computed under active phase/search/result/comparison filters; dropping them can expose Cases that did not contribute to the displayed verdict. Each evidence row is aggregated from a separately Tool/Profile-scoped Case collection so result-dependent filters have the same meaning before and after navigation.
   Date/Author: 2026-07-27 / assistant
 
 - Decision: Render Tool evidence rows as real buttons, not clickable generic containers.
@@ -44,7 +51,7 @@ The new Requirement filter is visible inside Advanced filters, URL-backed as `re
 
 ## Outcomes & Retrospective
 
-The two drilldown paths and exact Requirement filter are implemented. Unit and integration evidence covers a related-only Case from a Requirement Tool evidence button through the Cases detail and URL-backed opened Advanced filter. Review, production gates, and browser validation remain.
+The two drilldown paths and exact Requirement filter are implemented. Unit and integration evidence covers a related-only Case from a Requirement Tool evidence button through complete primary/related Case detail and the URL-backed opened Advanced filter. A multi-profile Pass/Fail regression proves each displayed row uses the same Tool/Profile and active result filters as its destination. Focused logic and UX follow-ups are clean. Final gates and post-fix browser validation remain.
 
 ## Context and Orientation
 
@@ -107,3 +114,5 @@ The stable view token remains `evidence` for Cases and `matrix` for Requirements
 Revision note (2026-07-27 11:38Z): Created the plan after tracing verdict aggregation and resolving the distinction between Requirement selection and exact linked-Requirement filtering.
 
 Revision note (2026-07-27 12:07Z): Recorded completed implementation, canonical reset behavior, related-link regression coverage, and 64 passing frontend tests.
+
+Revision note (2026-07-27 12:20Z): Recorded review findings and fixes: profile-specific aggregation, preserved Requirement drilldown filters, complete related Case context, disclosure remount behavior, accessible status naming, and clean follow-ups.

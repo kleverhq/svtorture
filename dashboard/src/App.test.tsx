@@ -279,7 +279,13 @@ describe("App overview navigation", () => {
     const dataset = makeTestDataset();
     const original = dataset.requirements[0];
     const testCase = dataset.cases[0];
-    if (!original || !testCase) throw new Error("incomplete test dataset");
+    const campaign = dataset.campaigns[0];
+    const tool = campaign?.tools[0];
+    const profile = tool?.definition.profiles[0];
+    const result = campaign?.results[0];
+    if (!original || !testCase || !campaign || !tool || !profile || !result) {
+      throw new Error("incomplete test dataset");
+    }
     const related = {
       ...original,
       id: "SV-2023-05-TOOL-EVIDENCE",
@@ -289,24 +295,59 @@ describe("App overview navigation", () => {
     };
     dataset.requirements.push(related);
     testCase.related_requirements = [related.id];
+    const failingCase = {
+      ...testCase,
+      id: "ch13-related-filtered-failure",
+      title: "Failure excluded from the displayed Pass verdict",
+    };
+    dataset.cases.push(failingCase);
+    campaign.results.push({
+      ...result,
+      case_id: failingCase.id,
+      status: "nonconforming",
+      reason: "wrong-value",
+    });
+    tool.profile_ids.push("alternate");
+    tool.definition.profiles.push({ ...profile, id: "alternate" });
+    campaign.results.push({
+      ...result,
+      profile_id: "alternate",
+      status: "nonconforming",
+      reason: "wrong-value",
+    });
     window.history.replaceState(
       null,
       "",
-      `/?view=matrix&requirementId=${related.id}`,
+      `/?view=matrix&requirementId=${related.id}&phase=simulate&statusGroup=pass`,
     );
     mockDataset(dataset);
 
     render(<App />);
-    fireEvent.click(
+    expect(
       await screen.findByRole("button", {
-        name: `View cases for ${related.id} with fake/simulator`,
+        name: new RegExp(
+          `^View cases for ${related.id} with fake/alternate — Not evaluated`,
+        ),
+      }),
+    ).toBeTruthy();
+    fireEvent.click(
+      screen.getByRole("button", {
+        name: new RegExp(
+          `^View cases for ${related.id} with fake/simulator —`,
+        ),
       }),
     );
 
     expect(
       screen.getByRole("tab", { name: "Cases" }).getAttribute("aria-selected"),
     ).toBe("true");
-    expect(screen.getByRole("heading", { name: testCase.title })).toBeTruthy();
+    const caseHeading = screen.getByRole("heading", { name: testCase.title });
+    const caseDetail = caseHeading.closest("article");
+    if (!caseDetail) throw new Error("missing Case detail");
+    expect(caseHeading).toBeTruthy();
+    expect(within(caseDetail).getByText(original.summary)).toBeTruthy();
+    expect(within(caseDetail).getByText(related.summary)).toBeTruthy();
+    expect(screen.queryByText(failingCase.title)).toBeNull();
     const requirementFilter = screen.getByLabelText(
       "Requirement",
     ) as HTMLSelectElement;
@@ -318,6 +359,8 @@ describe("App overview navigation", () => {
       expect(parameters.get("tool")).toBe("fake");
       expect(parameters.get("profile")).toBe("simulator");
       expect(parameters.get("requirement")).toBe(related.id);
+      expect(parameters.get("phase")).toBe("simulate");
+      expect(parameters.get("statusGroup")).toBe("pass");
     });
   });
 
