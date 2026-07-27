@@ -147,7 +147,13 @@ export const EMPTY_FILTERS: Filters = {
 
 export type TrendKind = "pass-rate" | "coverage" | "density";
 
-export type TrendRange = "week" | "month" | "six-months" | "year" | "all";
+export type TrendRange =
+  | "week"
+  | "month"
+  | "three-months"
+  | "six-months"
+  | "year"
+  | "all";
 
 export interface TrendState {
   kind: TrendKind;
@@ -158,7 +164,7 @@ export interface TrendState {
 
 export const DEFAULT_TREND_STATE: TrendState = {
   kind: "pass-rate",
-  range: "month",
+  range: "all",
   point: "",
   parts: [],
 };
@@ -168,6 +174,7 @@ const TREND_PART_KEY = /^(?:chapter:[1-9][0-9]*|annex:[A-Q])$/;
 const TREND_RANGES = new Set<TrendRange>([
   "week",
   "month",
+  "three-months",
   "six-months",
   "year",
   "all",
@@ -254,6 +261,9 @@ export function trendRangeBounds(
       break;
     case "month":
       requestedStart = subtractUtcMonths(today, 1);
+      break;
+    case "three-months":
+      requestedStart = subtractUtcMonths(today, 3);
       break;
     case "six-months":
       requestedStart = subtractUtcMonths(today, 6);

@@ -235,6 +235,20 @@ describe("TrendsView", () => {
     renderView(dataset, { onTrendChange });
 
     expect(screen.getByRole("radiogroup", { name: "Trend" })).toBeTruthy();
+    const ranges = document.querySelector(".trends__ranges");
+    expect(ranges).not.toBeNull();
+    expect(
+      within(ranges as HTMLElement)
+        .getAllByRole("button")
+        .map((button) => button.textContent),
+    ).toEqual([
+      "All time",
+      "Last year",
+      "Last 6 months",
+      "Last 3 months",
+      "Last month",
+      "Last week",
+    ]);
     const radios = screen.getAllByRole("radio");
     expect(radios).toHaveLength(3);
     expect(radios.filter((radio) => (radio as HTMLInputElement).checked)).toHaveLength(

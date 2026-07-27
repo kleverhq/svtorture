@@ -69,7 +69,7 @@ describe("URL-backed filters", () => {
       ),
     ).toEqual({
       kind: "pass-rate",
-      range: "month",
+      range: "all",
       point: "",
       parts: [],
     });
@@ -83,6 +83,7 @@ describe("URL-backed filters", () => {
       expect(trendStateFromSearch(search).kind).toBe(kind);
     }
     expect(filtersToSearch(EMPTY_FILTERS, "trends")).toBe("?view=trends");
+    expect(trendStateFromSearch("?view=trends").range).toBe("all");
     const mixed = filtersToSearch(
       { ...EMPTY_FILTERS, chapter: "13" },
       "trends",
@@ -116,6 +117,9 @@ describe("URL-backed filters", () => {
     });
     expect(trendRangeBounds([point], "month", now).rangeStart).toBe(
       Date.parse("2027-02-28T00:00:00Z"),
+    );
+    expect(trendRangeBounds([point], "three-months", now).rangeStart).toBe(
+      Date.parse("2026-12-31T00:00:00Z"),
     );
     expect(trendRangeBounds([point], "six-months", now).rangeStart).toBe(
       Date.parse("2026-09-30T00:00:00Z"),

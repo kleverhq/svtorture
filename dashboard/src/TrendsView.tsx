@@ -17,11 +17,12 @@ import type {
 
 const DAY_MS = 24 * 60 * 60 * 1000;
 const RANGE_OPTIONS: Array<{ value: TrendRange; label: string }> = [
-  { value: "week", label: "Last week" },
-  { value: "month", label: "Last month" },
-  { value: "six-months", label: "Last 6 months" },
-  { value: "year", label: "Last year" },
   { value: "all", label: "All time" },
+  { value: "year", label: "Last year" },
+  { value: "six-months", label: "Last 6 months" },
+  { value: "three-months", label: "Last 3 months" },
+  { value: "month", label: "Last month" },
+  { value: "week", label: "Last week" },
 ];
 
 interface TrendDefinition {
