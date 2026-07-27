@@ -136,7 +136,7 @@ export function HeadlineMetrics({
                       <button
                         type="button"
                         className="overview-table__tool"
-                        aria-label={`View requirements for ${metric.tool_id}/${metric.profile_id}`}
+                        aria-label={`View cases for ${metric.tool_id}/${metric.profile_id}`}
                       >
                         <strong>{metric.tool_id}</strong>
                         <span>{metric.profile_id}</span>

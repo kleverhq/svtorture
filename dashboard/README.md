@@ -10,9 +10,12 @@ server or live database.
 The interface provides five URL-filtered views. **Overview** is shown by default:
 
 - **Overview** — a compact sortable tool table with requirement-level Pass,
-  Fail, and Unclear totals, pass rate, and the reported tool version;
+  Fail, and Unclear totals, pass rate, and the reported tool version. Selecting
+  a Tool/Profile opens its filtered Cases;
 - **Requirements** — a master-detail requirement list with compact grouped
-  verdicts, standard anchors, supporting cases, and vertical tool evidence;
+  verdicts, standard anchors, supporting cases, and vertical tool evidence.
+  Selecting a Tool evidence row opens Cases filtered by that Tool/Profile and
+  the exact linked Requirement;
 - **Cases** — a master-detail case list with inline local source viewing,
   exact normalized results, diagnostics, output hashes/excerpts, reproduction
   commands, and a return path to the requirement inspector;
@@ -59,9 +62,9 @@ The frontend uses:
 `src/svtorture/publish.py` validates campaigns and creates the versioned dataset.
 The React model derives filters, comparable-campaign changes, and aggregate
 presentation from that immutable data. View, campaign, date range, trend, trend
-range, selected trend point, tool, profile, search, status, advanced filters, selected
-evidence case, and requirement are encoded in the URL so an investigation can be
-shared or revisited. Grouped requirement statuses are presentation categories only; evidence retains every
+range, selected trend point, tool, profile, search, status, advanced filters,
+selected evidence entities, and the exact linked-Requirement Case filter are
+encoded in the URL so an investigation can be shared or revisited. Grouped requirement statuses are presentation categories only; evidence retains every
 exact result status and reason together with the target phase, the phase the
 command attempted through, and whether attribution is direct, cumulative, or
 not observed. Synthetic unsupported, unavailable, and inapplicable results use

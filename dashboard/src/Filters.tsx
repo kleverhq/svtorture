@@ -151,6 +151,7 @@ export function Filters({
   const showPartFacet =
     mode === "trends" && trendKind !== undefined && trendKind !== "pass-rate";
   const partMultiselectRef = useRef<HTMLDetailsElement>(null);
+  const advancedFiltersRef = useRef<HTMLDetailsElement>(null);
   useEffect(() => {
     const closeOnOutsidePointer = (event: PointerEvent) => {
       const multiselect = partMultiselectRef.current;
@@ -176,6 +177,11 @@ export function Filters({
       document.removeEventListener("keydown", closeOnEscape);
     };
   }, []);
+  useEffect(() => {
+    if (filters.requirement && advancedFiltersRef.current) {
+      advancedFiltersRef.current.open = true;
+    }
+  }, [filters.requirement]);
   const partSelectionLabel = selectedParts.length
     ? `${selectedParts.length} selected`
     : `All ${standardParts.length}`;
@@ -329,7 +335,7 @@ export function Filters({
       )}
 
       {mode === "corpus" && (
-        <details className="filters__advanced">
+        <details className="filters__advanced" ref={advancedFiltersRef}>
           <summary>Advanced filters</summary>
         <div className="filters__grid">
           <label className="search">
@@ -423,6 +429,20 @@ export function Filters({
                   <option value="">Any</option>
                   {tags.map((tag) => (
                     <option key={tag}>{tag}</option>
+                  ))}
+                </select>
+              </label>
+              <label>
+                <span>Requirement</span>
+                <select
+                  value={filters.requirement}
+                  onChange={(event) => update("requirement", event.target.value)}
+                >
+                  <option value="">Any</option>
+                  {dataset.requirements.map((requirement) => (
+                    <option key={requirement.id} value={requirement.id}>
+                      {requirement.id} · {requirement.summary}
+                    </option>
                   ))}
                 </select>
               </label>

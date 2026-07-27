@@ -28,6 +28,7 @@ describe("URL-backed filters", () => {
       search: "copy-out",
       chapter: "13",
       statusGroup: "fail",
+      requirement: "SV-2023-13-OUTPUT-COPYOUT",
       tool: "fake",
       profile: "simulator",
       dateFrom: "2026-01-01",
@@ -196,6 +197,42 @@ describe("requirements model", () => {
     ]);
     expect(filtered.cases.map((testCase) => testCase.id)).toEqual([
       "ch13-output-copyout-width",
+    ]);
+  });
+
+  it("filters Cases by exact primary or related Requirement links", () => {
+    const extended = makeTestDataset();
+    const original = extended.requirements[0];
+    const linkedCase = extended.cases[0];
+    if (!original || !linkedCase) throw new Error("incomplete test dataset");
+    const related = {
+      ...original,
+      id: "SV-2023-05-RELATED-FILTER",
+      chapter: 5,
+      clause: "5.4",
+      summary: "Related-only filter target",
+    };
+    const unrelatedCase = {
+      ...linkedCase,
+      id: "ch13-unrelated-to-exact-filter",
+      title: "Unrelated case",
+      related_requirements: [],
+    };
+    linkedCase.related_requirements = [related.id];
+    extended.requirements.push(related);
+    extended.cases.push(unrelatedCase);
+
+    const filtered = filterCorpus(
+      extended,
+      { ...EMPTY_FILTERS, requirement: related.id },
+      selectedCampaign(extended, ""),
+    );
+
+    expect(filtered.requirements.map((requirement) => requirement.id)).toEqual([
+      related.id,
+    ]);
+    expect(filtered.cases.map((testCase) => testCase.id)).toEqual([
+      linkedCase.id,
     ]);
   });
 

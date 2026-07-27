@@ -11,9 +11,9 @@ The new Requirement filter is visible inside Advanced filters, URL-backed as `re
 ## Progress
 
 - [x] (2026-07-27 11:38Z) Read dashboard guidance and traced Overview, Requirement evidence aggregation, URL filters, and Case filtering.
-- [ ] Add the exact linked-Requirement filter to the model, URL state, filtering tests, and Advanced filters UI.
-- [ ] Route Overview rows and Requirement Tool evidence rows to Cases with canonical filter state.
-- [ ] Add component and App-level regressions for primary and related Requirement links, URL state, Advanced-filter disclosure, and keyboard activation.
+- [x] (2026-07-27 12:07Z) Added URL-backed exact linked-Requirement filtering to the model and Advanced filters, including automatic disclosure and related-only Case coverage.
+- [x] (2026-07-27 12:07Z) Routed Overview rows and native-button Requirement Tool evidence rows to Cases with canonical Campaign/date/Tool/Profile/Requirement state.
+- [x] (2026-07-27 12:07Z) Added model, filter, component, and App regressions for URL round-trip, related links, disclosure, callback payload, and both navigation paths; TypeScript and 64 frontend tests pass.
 - [ ] Run focused review, repository gates, browser validation, remove this completed plan, and commit the final state.
 
 ## Surprises & Discoveries
@@ -44,7 +44,7 @@ The new Requirement filter is visible inside Advanced filters, URL-backed as `re
 
 ## Outcomes & Retrospective
 
-Implementation has not started. Completion requires both drilldown paths, exact primary/related filtering, URL and disclosure behavior, tests, review, browser evidence, and repository gates.
+The two drilldown paths and exact Requirement filter are implemented. Unit and integration evidence covers a related-only Case from a Requirement Tool evidence button through the Cases detail and URL-backed opened Advanced filter. Review, production gates, and browser validation remain.
 
 ## Context and Orientation
 
@@ -105,3 +105,5 @@ All changes are ordinary source edits and test additions. Re-running tests, buil
 The stable view token remains `evidence` for Cases and `matrix` for Requirements. This feature does not rename those tokens because existing URLs are public investigation state.
 
 Revision note (2026-07-27 11:38Z): Created the plan after tracing verdict aggregation and resolving the distinction between Requirement selection and exact linked-Requirement filtering.
+
+Revision note (2026-07-27 12:07Z): Recorded completed implementation, canonical reset behavior, related-link regression coverage, and 64 passing frontend tests.

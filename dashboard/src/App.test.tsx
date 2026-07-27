@@ -214,7 +214,7 @@ describe("App overview navigation", () => {
     expect(screen.getByRole("button", { name: "Copy link" })).toBeTruthy();
   });
 
-  it("opens Requirements with the clicked tool profile selected", async () => {
+  it("opens Cases with the clicked Overview tool profile selected", async () => {
     const dataset = makeTestDataset();
     const campaign = dataset.campaigns[0];
     if (!campaign) throw new Error("incomplete test dataset");
@@ -255,12 +255,12 @@ describe("App overview navigation", () => {
     expect(screen.getByLabelText("To")).toBeTruthy();
     fireEvent.click(
       await screen.findByRole("button", {
-        name: "View requirements for fake/simulator",
+        name: "View cases for fake/simulator",
       }),
     );
 
     expect(
-      screen.getByRole("tab", { name: "Requirements" }).getAttribute("aria-selected"),
+      screen.getByRole("tab", { name: "Cases" }).getAttribute("aria-selected"),
     ).toBe("true");
     expect(
       within(screen.getByRole("group", { name: "Tools" }))
@@ -272,7 +272,53 @@ describe("App overview navigation", () => {
         .getByRole("button", { name: "Simulator 1" })
         .getAttribute("aria-pressed"),
     ).toBe("true");
-    expect(window.location.search).toBe("?view=matrix&tool=fake&profile=simulator");
+    expect(window.location.search).toBe("?view=evidence&tool=fake&profile=simulator");
+  });
+
+  it("opens related Requirement tool evidence in filtered Cases", async () => {
+    const dataset = makeTestDataset();
+    const original = dataset.requirements[0];
+    const testCase = dataset.cases[0];
+    if (!original || !testCase) throw new Error("incomplete test dataset");
+    const related = {
+      ...original,
+      id: "SV-2023-05-TOOL-EVIDENCE",
+      chapter: 5,
+      clause: "5.3",
+      summary: "Requirement reached through tool evidence",
+    };
+    dataset.requirements.push(related);
+    testCase.related_requirements = [related.id];
+    window.history.replaceState(
+      null,
+      "",
+      `/?view=matrix&requirementId=${related.id}`,
+    );
+    mockDataset(dataset);
+
+    render(<App />);
+    fireEvent.click(
+      await screen.findByRole("button", {
+        name: `View cases for ${related.id} with fake/simulator`,
+      }),
+    );
+
+    expect(
+      screen.getByRole("tab", { name: "Cases" }).getAttribute("aria-selected"),
+    ).toBe("true");
+    expect(screen.getByRole("heading", { name: testCase.title })).toBeTruthy();
+    const requirementFilter = screen.getByLabelText(
+      "Requirement",
+    ) as HTMLSelectElement;
+    expect(requirementFilter.value).toBe(related.id);
+    expect(screen.getByText("Advanced filters").closest("details")?.open).toBe(true);
+    await waitFor(() => {
+      const parameters = new URLSearchParams(window.location.search);
+      expect(parameters.get("view")).toBe("evidence");
+      expect(parameters.get("tool")).toBe("fake");
+      expect(parameters.get("profile")).toBe("simulator");
+      expect(parameters.get("requirement")).toBe(related.id);
+    });
   });
 
   it("normalizes stale campaign and non-headline Overview filters", async () => {

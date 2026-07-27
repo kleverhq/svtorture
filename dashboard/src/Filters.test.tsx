@@ -13,14 +13,17 @@ function FilterHarness({
   mode = "corpus",
   dataset = makeTestDataset(),
   trendKind = "pass-rate",
+  requirement = "",
 }: {
   mode?: FilterMode;
   dataset?: Dataset;
   trendKind?: TrendKind;
+  requirement?: string;
 }) {
   const [filters, setFilters] = useState({
     ...EMPTY_FILTERS,
     status: "conforming",
+    requirement,
   });
   const [selectedParts, setSelectedParts] = useState<string[]>([]);
   return (
@@ -81,6 +84,20 @@ describe("Filters", () => {
     expect(
       comparison.getByRole("button", { name: "Cross-tool disagreement" }),
     ).toBeTruthy();
+  });
+
+  it("opens Advanced filters for an exact Requirement", () => {
+    const dataset = makeTestDataset();
+    const requirement = dataset.requirements[0];
+    if (!requirement) throw new Error("incomplete test dataset");
+
+    render(
+      <FilterHarness dataset={dataset} requirement={requirement.id} />,
+    );
+
+    const select = screen.getByLabelText("Requirement") as HTMLSelectElement;
+    expect(select.value).toBe(requirement.id);
+    expect(screen.getByText("Advanced filters").closest("details")?.open).toBe(true);
   });
 
   it("shows quick trend facets without Advanced filters", () => {

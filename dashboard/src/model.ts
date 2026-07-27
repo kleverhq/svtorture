@@ -108,6 +108,7 @@ export interface Filters {
   expectation: string;
   casePresence: string;
   tag: string;
+  requirement: string;
   tool: string;
   profile: string;
   statusGroup: string;
@@ -131,6 +132,7 @@ export const EMPTY_FILTERS: Filters = {
   expectation: "",
   casePresence: "",
   tag: "",
+  requirement: "",
   tool: "",
   profile: "",
   statusGroup: "",
@@ -601,6 +603,9 @@ export function filterCorpus(
       .join(" ")
       .toLocaleLowerCase();
     return (
+      (!filters.requirement ||
+        testCase.primary_requirement === filters.requirement ||
+        testCase.related_requirements.includes(filters.requirement)) &&
       (!needle || searchable.includes(needle)) &&
       (!filters.revision ||
         testCase.revision_applicability[filters.revision] === "applicable" ||
@@ -634,8 +639,10 @@ export function filterCorpus(
     );
   };
   const cases = dataset.cases.filter((testCase) => {
-    const primary = requirementMap.get(testCase.primary_requirement);
-    return matchesCase(testCase, primary ? [primary] : []);
+    const context = filters.requirement
+      ? requirementMap.get(filters.requirement)
+      : requirementMap.get(testCase.primary_requirement);
+    return matchesCase(testCase, context ? [context] : []);
   });
   const requirementCases = dataset.cases.filter((testCase) =>
     matchesCase(
@@ -674,6 +681,7 @@ export function filterCorpus(
       .join(" ")
       .toLocaleLowerCase();
     return (
+      (!filters.requirement || requirement.id === filters.requirement) &&
       (!needle || searchable.includes(needle) || matchingCases.length > 0) &&
       (!filters.revision ||
         rule?.status === "applicable" ||
@@ -691,7 +699,13 @@ export function filterCorpus(
   const requirementIds = new Set(requirements.map((requirement) => requirement.id));
   return {
     requirements,
-    cases: cases.filter((testCase) => requirementIds.has(testCase.primary_requirement)),
+    cases: cases.filter((testCase) =>
+      filters.requirement
+        ? [testCase.primary_requirement, ...testCase.related_requirements].some(
+            (id) => requirementIds.has(id),
+          )
+        : requirementIds.has(testCase.primary_requirement),
+    ),
     requirementCases: requirementCases.filter((testCase) =>
       [testCase.primary_requirement, ...testCase.related_requirements].some((id) =>
         requirementIds.has(id),

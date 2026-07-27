@@ -31,6 +31,11 @@ interface RequirementsProps {
   selectedRequirementId: string;
   onSelectRequirement: (requirementId: string) => void;
   onInspectCase: (caseId: string) => void;
+  onInspectEvidence: (
+    toolId: string,
+    profileId: string,
+    requirementId: string,
+  ) => void;
 }
 
 interface ProfileEvidence {
@@ -48,6 +53,7 @@ export function RequirementsView({
   selectedRequirementId,
   onSelectRequirement,
   onInspectCase,
+  onInspectEvidence,
 }: RequirementsProps) {
   const workspaceRef = useViewportWorkspaceHeight<HTMLDivElement>();
   const requirementPaneRef = useRef<HTMLElement | null>(null);
@@ -239,17 +245,28 @@ export function RequirementsView({
               <h4>Tool evidence</h4>
               {selectedEvidence.length ? (
                 <div className="requirement-profile-list">
-                  {selectedEvidence.map((item) => (
-                    <div className="requirement-profile" key={item.key}>
-                      <code>{item.key}</code>
-                      <StatusBadge
-                        status={item.status}
-                        reason={item.reason}
-                        grouped
-                      />
-                      {item.reason && <small>{item.reason}</small>}
-                    </div>
-                  ))}
+                  {selectedEvidence.map((item) => {
+                    const [toolId = "", profileId = ""] = item.key.split("/");
+                    return (
+                      <button
+                        type="button"
+                        className="requirement-profile"
+                        key={item.key}
+                        aria-label={`View cases for ${selected.id} with ${item.key}`}
+                        onClick={() =>
+                          onInspectEvidence(toolId, profileId, selected.id)
+                        }
+                      >
+                        <code>{item.key}</code>
+                        <StatusBadge
+                          status={item.status}
+                          reason={item.reason}
+                          grouped
+                        />
+                        {item.reason && <small>{item.reason}</small>}
+                      </button>
+                    );
+                  })}
                 </div>
               ) : (
                 <p>No tool evidence matches the current filters.</p>

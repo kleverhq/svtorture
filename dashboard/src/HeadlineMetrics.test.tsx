@@ -117,7 +117,7 @@ describe("HeadlineMetrics", () => {
     );
     const toolOrder = () =>
       screen
-        .getAllByRole("button", { name: /View requirements for/ })
+        .getAllByRole("button", { name: /View cases for/ })
         .map((button) => button.querySelector("strong")?.textContent);
     const expectations = [
       ["Tool", ["alpha", "fake", "zeta"]],
@@ -197,7 +197,7 @@ describe("HeadlineMetrics", () => {
     );
 
     const button = screen.getByRole("button", {
-      name: "View requirements for fake/simulator",
+      name: "View cases for fake/simulator",
     });
     fireEvent.click(button);
     expect(onSelectTool).toHaveBeenCalledWith("fake", "simulator");
@@ -236,7 +236,7 @@ describe("HeadlineMetrics", () => {
     );
     expect(
       screen.queryByRole("button", {
-        name: "View requirements for fake/simulator",
+        name: "View cases for fake/simulator",
       }),
     ).toBeNull();
     expect(

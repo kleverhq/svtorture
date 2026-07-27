@@ -223,6 +223,22 @@ export default function App() {
       dateFrom: current.dateFrom,
       dateTo: current.dateTo,
     }));
+  const inspectToolCases = (
+    tool: string,
+    profile: string,
+    requirement = "",
+  ) => {
+    setFilters((current) => ({
+      ...EMPTY_FILTERS,
+      campaign: current.campaign,
+      dateFrom: current.dateFrom,
+      dateTo: current.dateTo,
+      tool,
+      profile,
+      requirement,
+    }));
+    setView("evidence");
+  };
   const inspectCase = (caseId: string) => {
     setFilters((current) => ({
       ...EMPTY_FILTERS,
@@ -431,10 +447,9 @@ export default function App() {
               campaign={campaign}
               toolFilter={filters.tool}
               profileFilter={filters.profile}
-              onSelectTool={(tool, profile) => {
-                setFilters((current) => ({ ...current, tool, profile }));
-                setView("matrix");
-              }}
+              onSelectTool={(tool, profile) =>
+                inspectToolCases(tool, profile)
+              }
             />
           )}
           {view === "matrix" && (
@@ -449,6 +464,7 @@ export default function App() {
                 setFilters((current) => ({ ...current, requirementId }))
               }
               onInspectCase={inspectCase}
+              onInspectEvidence={inspectToolCases}
             />
           )}
           {view === "evidence" && (

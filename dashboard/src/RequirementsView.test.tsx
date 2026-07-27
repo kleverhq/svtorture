@@ -72,6 +72,7 @@ describe("RequirementsView", () => {
     });
     const selectRequirement = vi.fn();
     const inspectCase = vi.fn();
+    const inspectEvidence = vi.fn();
 
     render(
       <RequirementsView
@@ -83,6 +84,7 @@ describe("RequirementsView", () => {
         selectedRequirementId={selected.id}
         onSelectRequirement={selectRequirement}
         onInspectCase={inspectCase}
+        onInspectEvidence={inspectEvidence}
       />,
     );
 
@@ -114,6 +116,16 @@ describe("RequirementsView", () => {
     expect(within(detail).getByText(testCase.title)).toBeTruthy();
     expect(within(detail).getByRole("button", { name: "Copy link" })).toBeTruthy();
 
+    fireEvent.click(
+      within(detail).getByRole("button", {
+        name: `View cases for ${selected.id} with fake/simulator`,
+      }),
+    );
+    expect(inspectEvidence).toHaveBeenCalledWith(
+      "fake",
+      "simulator",
+      selected.id,
+    );
     fireEvent.click(within(detail).getByText(testCase.title));
     expect(inspectCase).toHaveBeenCalledWith(testCase.id);
     fireEvent.keyDown(options[1] as HTMLElement, { key: "ArrowUp" });
@@ -132,6 +144,7 @@ describe("RequirementsView", () => {
       selectedRequirementId: "",
       onSelectRequirement: () => undefined,
       onInspectCase: () => undefined,
+      onInspectEvidence: () => undefined,
     };
     const view = render(<RequirementsView {...props} requirements={[]} />);
     expect(screen.getByText("No requirements match the current filters.")).toBeTruthy();
