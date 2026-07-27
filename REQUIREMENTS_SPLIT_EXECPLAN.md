@@ -17,10 +17,10 @@ This work does not change dataset schemas, campaign evidence, filters, scoring, 
 ## Progress
 
 - [x] (2026-07-27 10:45Z) Confirmed complete table removal and a Cases-style Requirements layout.
-- [ ] Extract the shared split-pane viewport sizing and selected-item reveal behavior used by Cases and Requirements.
-- [ ] Replace `MatrixView` with a Requirements list/detail component and add compact list verdicts plus vertical tool/profile evidence.
-- [ ] Remove table/virtualizer code, styles, tests, and now-unused TanStack dependencies; update documentation.
-- [ ] Add focused tests for selection reveal, detail reset, related-case mapping, multiple profiles, links, and responsive behavior.
+- [x] (2026-07-27 11:00Z) Extracted shared viewport sizing and selection reveal/detail reset into `useSplitWorkspace.ts`; Cases now consumes the shared hooks.
+- [x] (2026-07-27 11:04Z) Replaced `MatrixView` with `RequirementsView`, including compact accessible verdicts and vertical tool/profile evidence.
+- [x] (2026-07-27 11:06Z) Removed table/virtualizer code, 288 lines of matrix CSS, and both TanStack dependencies; updated root/dashboard documentation.
+- [x] (2026-07-27 11:08Z) Added focused coverage for deep-link reveal, scroll reset through shared behavior, related-case mapping, six profiles, links, and absence of the table.
 - [ ] Run focused reviews, full gates, and desktop/mobile/many-tool browser validation; remove this completed plan.
 
 ## Surprises & Discoveries
@@ -31,8 +31,11 @@ This work does not change dataset schemas, campaign evidence, filters, scoring, 
 - Observation: Current Requirement status and “Supporting cases” mapping includes only `primary_requirement`.
   Evidence: `MatrixView` builds `casesByRequirement` from `testCase.primary_requirement` only, while the corpus contract also exposes `related_requirements`. The new view must map both so it does not omit valid evidence.
 
-- Observation: Cases already owns the required viewport-aware split-pane behavior, including actual-top measurement, independent scrolling, selection reveal, and detail reset.
-  Evidence: `EvidenceView` currently implements these effects directly. Requirements needs exactly the same mechanics, so this behavior should move to a small shared hook rather than be copied.
+- Observation: Cases already owned the required viewport-aware split-pane behavior, including actual-top measurement, independent scrolling, selection reveal, and detail reset.
+  Evidence: `EvidenceView` implemented these effects directly. They now live in `useSplitWorkspace.ts` and both views consume the same lifecycle.
+
+- Observation: Six active profile identities fit the new composition without increasing page width.
+  Evidence: a temporary six-tool dataset at 1840×1004 rendered six list verdicts and six vertical detail rows, zero Requirements tables, body width1825 for viewport1840, and no runtime errors. The workspace remained exactly 586/1172 px.
 
 ## Decision Log
 
@@ -58,7 +61,7 @@ This work does not change dataset schemas, campaign evidence, filters, scoring, 
 
 ## Outcomes & Retrospective
 
-Implementation has not started. Completion requires no rendered table or horizontal Requirement status columns, stable existing URLs, readable evidence with at least six active profiles, independent desktop scrolling, stacked narrow/short fallback, clean review, and all repository gates.
+Implementation and initial validation are complete. Existing `view=matrix` links select and reveal the requested Requirement, but the rendered view contains no table. At 1840×1004 the workspace is 586/1172 px with the last selected item visible and three vertical profile rows. At 1100×620 list and details independently scroll in a 273 px workspace while document y remains zero. A temporary six-tool dataset rendered six compact verdicts and six vertical evidence rows without horizontal overflow. At 390×844 the one-column global-flow fallback reveals the selected item and body width remains375. Focused review and final repository gates remain.
 
 ## Context and Orientation
 
@@ -168,3 +171,5 @@ Do not add dependencies. Remove `@tanstack/react-table` and `@tanstack/react-vir
 No backend or public dataset interface changes.
 
 Revision note (2026-07-27 10:45Z): Created the self-contained plan after confirmation that the Requirements matrix should be removed completely in favor of the Cases-style layout.
+
+Revision note (2026-07-27 11:08Z): Recorded shared-hook extraction, complete table/dependency removal, focused tests, and wide/short/mobile/six-tool browser evidence.

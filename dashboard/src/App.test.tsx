@@ -95,7 +95,9 @@ describe("App overview navigation", () => {
         "aria-selected",
       ),
     ).toBe("true");
-    const inspector = screen.getByRole("complementary", { name: requirement.id });
+    const inspector = screen.getByRole("article", {
+      name: `Requirement ${requirement.id}`,
+    });
     expect(within(inspector).getByText(requirement.summary)).toBeTruthy();
     expect(within(inspector).getByRole("button", { name: "Copy link" })).toBeTruthy();
   });

@@ -14,7 +14,7 @@ import { EvidenceView } from "./EvidenceView";
 import { Filters } from "./Filters";
 import { HeadlineMetrics } from "./HeadlineMetrics";
 import { TrendsView } from "./TrendsView";
-import { MatrixView } from "./MatrixView";
+import { RequirementsView } from "./RequirementsView";
 import {
   EMPTY_FILTERS,
   campaignsInDateRange,
@@ -422,7 +422,7 @@ export default function App() {
             />
           )}
           {view === "matrix" && (
-            <MatrixView
+            <RequirementsView
               requirements={filtered.requirements}
               cases={filtered.cases}
               campaign={campaign}

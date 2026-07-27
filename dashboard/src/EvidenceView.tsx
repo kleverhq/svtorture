@@ -1,11 +1,4 @@
-import {
-  useEffect,
-  useId,
-  useLayoutEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import { useEffect, useId, useMemo, useRef, useState } from "react";
 
 import { CopyLinkButton } from "./CopyLinkButton";
 import {
@@ -22,6 +15,10 @@ import type {
   Requirement,
   Result,
 } from "./types";
+import {
+  useRevealSplitSelection,
+  useViewportWorkspaceHeight,
+} from "./useSplitWorkspace";
 
 interface SourceContent {
   name: string;
@@ -259,10 +256,9 @@ export function EvidenceView({
 }) {
   const [openSource, setOpenSource] = useState<OpenSource | undefined>();
   const sourceTriggerRef = useRef<HTMLButtonElement | null>(null);
-  const workspaceRef = useRef<HTMLDivElement | null>(null);
+  const workspaceRef = useViewportWorkspaceHeight<HTMLDivElement>();
   const evidencePaneRef = useRef<HTMLElement | null>(null);
   const caseButtonRefs = useRef(new Map<string, HTMLButtonElement>());
-  const revealedCase = useRef("");
   const sourceViewerId = useId();
   const resultMap = useMemo(() => resultsByKey(campaign), [campaign]);
   const profiles =
@@ -299,58 +295,12 @@ export function EvidenceView({
     sourceTriggerRef.current?.focus();
     setOpenSource(undefined);
   };
-  useLayoutEffect(() => {
-    const workspace = workspaceRef.current;
-    if (!workspace) return;
-    let frame = 0;
-    const updateHeight = () => {
-      window.cancelAnimationFrame(frame);
-      frame = window.requestAnimationFrame(() => {
-        const top = Math.max(0, workspace.getBoundingClientRect().top);
-        workspace.style.setProperty(
-          "--evidence-workspace-height",
-          `${Math.max(0, window.innerHeight - top)}px`,
-        );
-      });
-    };
-    updateHeight();
-    window.addEventListener("resize", updateHeight);
-    window.addEventListener("scroll", updateHeight, { passive: true });
-    const observer =
-      typeof ResizeObserver === "undefined" ? undefined : new ResizeObserver(updateHeight);
-    for (const selector of [
-      ".campaign-overview",
-      ".corpus-coverage",
-      ".workspace-bar",
-    ]) {
-      const element = document.querySelector(selector);
-      if (element) observer?.observe(element);
-    }
-    return () => {
-      window.cancelAnimationFrame(frame);
-      window.removeEventListener("resize", updateHeight);
-      window.removeEventListener("scroll", updateHeight);
-      observer?.disconnect();
-    };
-  }, []);
-  useEffect(() => {
-    if (!selected?.id || selectedCaseIndex < 0) {
-      revealedCase.current = "";
-      return;
-    }
-    const revealKey = `${selected.id}:${selectedCaseIndex}`;
-    if (revealedCase.current === revealKey) return;
-    const selectedId = selected.id;
-    evidencePaneRef.current?.scrollTo?.({ top: 0 });
-    const frame = window.requestAnimationFrame(() => {
-      caseButtonRefs.current.get(selectedId)?.scrollIntoView?.({
-        block: "nearest",
-        inline: "nearest",
-      });
-      revealedCase.current = revealKey;
-    });
-    return () => window.cancelAnimationFrame(frame);
-  }, [selected?.id, selectedCaseIndex]);
+  useRevealSplitSelection(
+    selected?.id,
+    selectedCaseIndex,
+    caseButtonRefs,
+    evidencePaneRef,
+  );
   useEffect(() => {
     setOpenSource(undefined);
     sourceTriggerRef.current = null;

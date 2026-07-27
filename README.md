@@ -121,8 +121,8 @@ Serve the static dashboard:
 just dashboard-serve
 ```
 
-Open <http://localhost:4173>. The dashboard provides a requirement matrix,
-case-level evidence, campaign provenance, and trend views. Generated
+Open <http://localhost:4173>. The dashboard provides requirement and case
+evidence browsers, campaign provenance, and trend views. Generated
 campaigns and dashboard data remain under ignored local directories.
 
 To run all current public upstream tools instead of only Verilator, use:
