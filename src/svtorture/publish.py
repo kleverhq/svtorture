@@ -65,8 +65,7 @@ class PublishedMetricPoint(MetricBreakdown):
 
 PRIVATE_PATTERN = re.compile(
     r"(?:/(?:home|Users|private|tmp|root)/|[A-Za-z]:\\\\|"
-    r"SVTORTURE_TOOL_CONFIG|SNPSLMD_LICENSE_FILE|LM_LICENSE_FILE|"
-    r"license[_-]?(?:file|server)|private[_-]?wrapper)",
+    r"SNPSLMD_LICENSE_FILE|LM_LICENSE_FILE|license[_-]?(?:file|server))",
     re.IGNORECASE,
 )
 SECRET_PATTERN = re.compile(
@@ -268,7 +267,7 @@ def build_dataset(
                 )
                 metrics.append(point)
     dataset = {
-        "schema_version": 4,
+        "schema_version": 5,
         "generated_from": [item.id for item in selected_campaigns],
         "visibility": visibility,
         "corpus_coverage": model_to_jsonable(catalog.corpus_metrics()),
@@ -363,7 +362,7 @@ def _validate_metric_provenance(point: PublishedMetricPoint, campaign: Campaign)
 
 
 def _validate_merge_dataset(dataset: dict[str, Any]) -> dict[str, Any]:
-    if dataset.get("schema_version") != 4:
+    if dataset.get("schema_version") != 5:
         raise PublicationError("cannot merge incompatible dashboard datasets")
     required_sequences = ("generated_from", "requirements", "cases", "campaigns", "metrics")
     for key in required_sequences:

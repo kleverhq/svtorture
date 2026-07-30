@@ -130,17 +130,22 @@ latest-verbose tool suite="all":
 pinned tool ref suite="all":
     uv run svtorture run --tool "{{tool}}@{{ref}}" --suite "{{suite}}" --exit-policy infra-only
 
-# Run all current public upstreams through the same Docker path.
-latest-all suite="all":
-    uv run svtorture run --tool slang@latest --tool icarus@latest --tool verilator@latest --suite "{{suite}}" --exit-policy infra-only
+# Run all current public upstreams in one campaign.
+public suite="all":
+    tool_args="$(uv run svtorture list tools | awk '$2 == "open-source" { printf "--tool %s@latest ", $1 }')"; uv run svtorture run $tool_args --suite "{{suite}}" --exit-policy infra-only
 
-# Optional user-owned licensed wrapper; unavailable wrappers are recorded as skipped.
+# Run all configured commercial tools in one campaign; unavailable wrappers are recorded as skipped.
 commercial suite="all":
-    uv run svtorture run --tool vcs@local --suite "{{suite}}" --exit-policy infra-only
+    tool_args="$(uv run svtorture list tools | awk '$2 == "commercial" { printf "--tool %s@local ", $1 }')"; uv run svtorture run $tool_args --suite "{{suite}}" --exit-policy infra-only
 
-# Create the gitignored private-wrapper configuration once.
-private-config:
-    test -e tools/private.toml || cp tools/private.example.toml tools/private.toml
+# Run every public and commercial tool in one local campaign.
+all suite="all":
+    tool_args="$(uv run svtorture list tools | awk '$2 == "open-source" { printf "--tool %s@latest ", $1 } $2 == "commercial" { printf "--tool %s@local ", $1 }')"; uv run svtorture run $tool_args --suite "{{suite}}" --exit-policy infra-only
+
+# Create one tool's ignored local runner configuration without overwriting it.
+runner-config tool:
+    test -f "tools/{{tool}}/runner.example.toml" || { echo "No runner example for {{tool}}." >&2; exit 1; }
+    test -e "tools/{{tool}}/runner.toml" || cp "tools/{{tool}}/runner.example.toml" "tools/{{tool}}/runner.toml"
 
 # Build a local dashboard dataset from one or more campaign paths.
 dashboard-build campaigns visibility="local":

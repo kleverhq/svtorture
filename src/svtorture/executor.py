@@ -1,4 +1,4 @@
-"""Execute typed plans in isolated Docker containers or private wrappers."""
+"""Execute typed plans in isolated Docker containers or local runners."""
 
 from __future__ import annotations
 
@@ -17,8 +17,8 @@ from svtorture.models import (
     ExecutionPlan,
     ExecutionStage,
     RawOutcome,
+    RunnerConfig,
     StageObservation,
-    WrapperDefinition,
 )
 from svtorture.process import ProcessResult, StreamCapture, run_process
 
@@ -117,7 +117,7 @@ def _docker_argv(
 
 
 def _wrapper_argv(
-    wrapper: WrapperDefinition,
+    wrapper: RunnerConfig,
     plan: ExecutionPlan,
     stage: ExecutionStage,
     case: LoadedCase,
@@ -252,7 +252,7 @@ def execute_plan(
     adapter: ToolAdapter,
     work_dir: Path,
     *,
-    wrapper: WrapperDefinition | None = None,
+    wrapper: RunnerConfig | None = None,
 ) -> tuple[StageObservation, ...]:
     """Execute stages in order, stopping whenever a prerequisite did not complete."""
 
@@ -266,7 +266,7 @@ def execute_plan(
             argv, portable = _docker_argv(plan, stage, case, work_dir)
         else:
             if wrapper is None:
-                raise ExecutionError("private wrapper is unavailable")
+                raise ExecutionError("local runner is unavailable")
             argv, portable, environment = _wrapper_argv(wrapper, plan, stage, case, work_dir)
         process_result = run_process(
             argv,

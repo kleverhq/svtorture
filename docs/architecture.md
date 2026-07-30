@@ -18,7 +18,7 @@ standards/index.toml + requirements/{chapter-NN,annex-X}.toml
 cases/<id>/case.toml + ordered sources
           │
           ▼
-tools/tools.toml ───────► adapter ──► typed ExecutionPlan
+tools/tools.toml ──► tools/*/tool.toml ──► adapter ──► typed ExecutionPlan
                                       │
                                       ▼
                               StageObservation[]
@@ -59,8 +59,10 @@ bounded evidence.
 Commercial execution uses the same version-2 `ExecutionPlan`,
 `StageObservation`, and `NormalizedResult` contracts. A plan records its target
 phase; each stage and observation records `attempted_through_phase`; and the
-result records `direct`, `cumulative`, or `not-observed` evidence. A private
-wrapper receives a versioned JSON request. Distribution, CI, and publication policy comes from tool metadata, so
+result records `direct`, `cumulative`, or `not-observed` evidence. An ignored
+per-tool `runner.toml` selects a local command that receives the versioned JSON
+wrapper request. Distribution, CI, and publication policy comes from the
+committed per-tool manifest, so
 publishers and workflows never infer it from an adapter name.
 
 Campaigns include a full result grid for every selected case and profile plus

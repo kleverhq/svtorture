@@ -355,6 +355,40 @@
       "title": "Diagnostic",
       "type": "object"
     },
+    "DiagnosticRule": {
+      "additionalProperties": false,
+      "properties": {
+        "case": {
+          "title": "Case",
+          "type": "string"
+        },
+        "contains": {
+          "maxLength": 4096,
+          "minLength": 1,
+          "title": "Contains",
+          "type": "string"
+        },
+        "severity": {
+          "anyOf": [
+            {
+              "pattern": "^(error|warning|fatal|note|info)$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Severity"
+        }
+      },
+      "required": [
+        "case",
+        "contains"
+      ],
+      "title": "DiagnosticRule",
+      "type": "object"
+    },
     "Distribution": {
       "enum": [
         "open-source",
@@ -815,6 +849,14 @@
           "default": null,
           "title": "Default Branch"
         },
+        "diagnostic_rules": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/DiagnosticRule"
+          },
+          "title": "Diagnostic Rules",
+          "type": "array"
+        },
         "display_name": {
           "maxLength": 4096,
           "minLength": 1,
@@ -874,6 +916,18 @@
           },
           "title": "Recipe Files",
           "type": "array"
+        },
+        "runner_config": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Runner Config"
         },
         "upstream_url": {
           "anyOf": [
@@ -1075,8 +1129,8 @@
       "type": "array"
     },
     "schema_version": {
-      "maximum": 4,
-      "minimum": 4,
+      "maximum": 5,
+      "minimum": 5,
       "title": "Schema Version",
       "type": "integer"
     },

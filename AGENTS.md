@@ -8,7 +8,7 @@
 - Regenerate schemas with `just schemas`; do not edit generated JSON by hand.
 - When adding or revising an 1800-2023 requirement, run the integrated annotator and ground the change in its locally materialized corpus and complete anchors.
 - Do not weaken an oracle or add an expected-failure shortcut to match current tool behavior.
-- Keep commits free of `.svtorture/`, full logs, binaries, simulator output, licensed images, private wrapper configuration, credentials, IEEE PDFs, and generated standard text.
+- Keep commits free of `.svtorture/`, full logs, binaries, simulator output, licensed images, local runner configuration, credentials, IEEE PDFs, and generated standard text.
 - Use Conventional Commits for repository commits.
 - Read the nearest applicable `AGENTS.md` before editing; local files add directory-specific guidance.
 
@@ -25,7 +25,7 @@
 - `standards/` — chapter-oriented requirement inventory and controlled tags.
 - `cases/` — strict case metadata and minimal SystemVerilog sources.
 - `suites/` — named glob selections over case IDs.
-- `tools/` — tool registry, policies, container recipes, and private-wrapper example.
+- `tools/` — tool manifest index, per-tool policies, container recipes, and runner examples.
 - `src/` — Python implementation of catalog, execution, evaluation, and publication.
 - `dashboard/` — React evidence browser.
 - `schemas/` — generated public JSON Schema snapshots.

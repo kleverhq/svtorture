@@ -1,4 +1,4 @@
-"""Initial VCS adapter carried by the generic private-wrapper backend."""
+"""Initial VCS adapter carried by the generic local-wrapper backend."""
 
 from __future__ import annotations
 

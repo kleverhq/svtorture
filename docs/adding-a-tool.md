@@ -1,8 +1,10 @@
 # Adding a tool
 
-Every tool is registered in `tools/tools.toml` and implements the adapter
-contract in `src/svtorture/adapters/`. Adapters construct typed stages and
-normalize diagnostics; they never decide conformance.
+Every tool has a `tools/<name>/tool.toml` manifest listed by the thin
+`tools/tools.toml` index and implements the adapter contract in
+`src/svtorture/adapters/`. Adapters construct typed stages and normalize
+diagnostics; they never decide conformance. Manifest paths such as `Dockerfile`,
+recipe files, and local runner configuration are relative to that tool directory.
 
 ## Registration and profiles
 
@@ -40,28 +42,44 @@ reproducible after CI credentials and artifacts expire.
 ## Commercial path
 
 Commercial tools use `distribution = "commercial"`,
-`execution = "local-wrapper"`, `ci = false`, and `publish = false`. Copy the
-gitignored example with `just private-config`, point
-`SVTORTURE_TOOL_CONFIG` at another private file if desired, and provide an argv
-wrapper plus an explicit environment allowlist.
+`execution = "local-wrapper"`, `ci = false`, and `publish = false`. Their
+committed manifest names `runner_config = "runner.toml"`. Copy the adjacent
+example with `just runner-config <tool>` and set its command plus an explicit
+environment allowlist. The resulting `runner.toml` remains ignored by Git.
 
-The wrapper accepts `--request <json>` and owns licensed-container setup. Each
-name in `environment_allowlist` is both the only host variable forwarded and a
-required readiness input, so an absent license endpoint is
-`skipped-unavailable`. The same request protocol uses `kind = "version"` with
-the adapter's version argv to capture the private tool version. A wrapper that
-discovers an unreachable license service after launch returns the protocol's
-reserved exit status 69 (`EX_UNAVAILABLE`), which is normalized to the same
-`skipped-unavailable` result. Wrapper configuration, license variables,
-commercial images, and private results cannot pass the public export policy.
-VCS is only the initial adapter; policy code must work unchanged for any
-differently named commercial simulator.
+The local runner command accepts `--request <json>` and owns licensed-container
+setup. Each name in `environment_allowlist` is both the only host variable
+forwarded and a required readiness input, so an absent license endpoint is
+`skipped-unavailable`.
+
+A version-2 version request contains `kind = "version"`, `tool`, and the
+adapter's `argv`. Execute that argv in the licensed environment and forward the
+tool's stdout, stderr, and exit status unchanged; the first nonempty output line
+becomes the reported version.
+
+A normal execution request contains `tool`, `case`, `profile`, one `stage`, a
+`mounts` object, and `execution_policy`. The stage provides its ID, target and
+attempted-through phases, argv, portable argv, and timeout. `mounts.case` and
+`mounts.work` are host paths corresponding to the `/case` read-only and `/work`
+writable aliases used in stage argv. The runner must make those paths available,
+translate the aliases when its environment uses host paths, run from the work
+directory without network access, and forward stdout, stderr, and exit status.
+Generated artifacts remain under the supplied work path for framework
+inspection. SVTORTURE enforces the timeout around the runner process, but the
+runner remains responsible for terminating its licensed child processes.
+
+A runner that discovers an unreachable license service after launch returns the
+protocol's reserved exit status 69 (`EX_UNAVAILABLE`), which is normalized to
+`skipped-unavailable`. Runner configuration, license variables, commercial
+images, and commercial results cannot pass the public export policy. VCS is only
+the initial adapter; policy code must work unchanged for any differently named
+commercial simulator.
 
 ## Diagnostics and tests
 
 Prefer source/line normalization. A locationless message/code rule belongs in
-`tools/diagnostic-rules.toml`, is scoped to adapter and case, and receives
-separate review.
+the owning `tool.toml` as `[[diagnostic_rules]]`, is scoped to one case by that
+manifest, and receives separate review.
 
 Add tests for:
 

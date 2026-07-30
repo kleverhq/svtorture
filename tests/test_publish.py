@@ -387,8 +387,8 @@ def test_dataset_embeds_campaign_corpus_metrics(catalog: Catalog) -> None:
     )
 
     dataset = publication.build_dataset(catalog, (campaign,), visibility="local")
-    assert dataset["schema_version"] == 4
-    assert dataset["campaigns"][0]["schema_version"] == 4
+    assert dataset["schema_version"] == 5
+    assert dataset["campaigns"][0]["schema_version"] == 5
     assert all(
         isinstance(requirement["part"], str) and "chapter" not in requirement
         for requirement in dataset["requirements"]
@@ -400,7 +400,7 @@ def test_dataset_embeds_campaign_corpus_metrics(catalog: Catalog) -> None:
 
 def test_dataset_reports_corpus_coverage_by_standard_part(catalog: Catalog) -> None:
     dataset = publication.build_dataset(catalog, (), visibility="local")
-    assert dataset["schema_version"] == 4
+    assert dataset["schema_version"] == 5
     coverage = dataset["corpus_coverage"]
 
     assert coverage["requirements"]["coverage"] == {
@@ -493,10 +493,10 @@ def test_dataset_merge_is_strict_append_only_and_detects_collision(
     old = publication.build_dataset(catalog, (first,), visibility="local")
     new = publication.build_dataset(catalog, (second,), visibility="local")
 
-    legacy = dict(old)
-    legacy["schema_version"] = 3
+    incompatible = dict(old)
+    incompatible["schema_version"] = 4
     with pytest.raises(PublicationError, match="incompatible dashboard datasets"):
-        merge_datasets(legacy, new)
+        merge_datasets(incompatible, new)
 
     relabelled = json.loads(json.dumps(old))
     relabelled["campaigns"][0]["schema_version"] = 2
@@ -594,7 +594,7 @@ def test_dataset_merge_is_strict_append_only_and_detects_collision(
         merge_datasets(old, public)
 
     merged = merge_datasets(old, new)
-    assert merged["schema_version"] == 4
+    assert merged["schema_version"] == 5
     assert merged["corpus_coverage"] == new["corpus_coverage"]
     assert {item["id"] for item in merged["campaigns"]} == {first.id, second.id}
     assert merged["generated_from"] == sorted((first.id, second.id))

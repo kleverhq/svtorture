@@ -129,7 +129,7 @@ export function makeTestDataset(): Dataset {
     },
   };
   const campaign = {
-    schema_version: 4 as const,
+    schema_version: 5 as const,
     id: "20260101T000000Z-test",
     started_at: "2026-01-01T00:00:00Z",
     finished_at: "2026-01-01T00:00:01Z",
@@ -189,7 +189,7 @@ export function makeTestDataset(): Dataset {
     trust: { source: "local" },
   };
   return {
-    schema_version: 4,
+    schema_version: 5,
     generated_from: [campaign.id],
     visibility: "local",
     corpus_coverage: corpusMetrics,

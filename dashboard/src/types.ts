@@ -176,7 +176,7 @@ export interface CampaignTool {
 }
 
 export interface Campaign {
-  schema_version: 4;
+  schema_version: 5;
   id: string;
   started_at: string;
   finished_at: string;
@@ -229,7 +229,7 @@ export interface MetricPoint {
 export type CorpusCoverage = CorpusMetrics;
 
 export interface Dataset {
-  schema_version: 4;
+  schema_version: 5;
   generated_from: string[];
   visibility: "local" | "public";
   corpus_coverage: CorpusCoverage;

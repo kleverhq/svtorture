@@ -24,9 +24,9 @@ from svtorture.models import (
     Phase,
     ReasonCode,
     ResultStatus,
+    RunnerConfig,
     StandardRevision,
     SuiteDefinition,
-    WrapperDefinition,
 )
 from tests.helpers import (
     campaign_tool,
@@ -151,8 +151,8 @@ def test_missing_allowlisted_license_environment_makes_wrapper_unavailable(
     monkeypatch,
 ) -> None:
     variable = "SVTORTURE_TEST_LICENSE_ENDPOINT"
-    wrapper = WrapperDefinition(
-        tool="licensed-simulator",
+    wrapper = RunnerConfig(
+        schema_version=1,
         command=("/bin/true",),
         environment_allowlist=(variable,),
     )
@@ -185,7 +185,7 @@ def test_campaign_corpus_metrics_are_strictly_verified(catalog: Catalog) -> None
         suite_id="smoke",
         expected_tool_ids=("slang",),
     )
-    assert campaign.schema_version == 4
+    assert campaign.schema_version == 5
     assert campaign.corpus_metrics == catalog.corpus_metrics()
     changed_requirements = campaign.corpus_metrics.requirements.model_copy(
         update={

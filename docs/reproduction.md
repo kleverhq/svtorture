@@ -33,8 +33,9 @@ public image reference, attempts to pull it, and only then rebuilds
 from the exact tool SHA, matching recipe hash, and recorded base-image digest.
 The normalized status/reason is compared and platform differences are reported.
 
-Private tools require the same local wrapper that their campaign used; no private
-configuration is embedded in the campaign.
+Commercial tools require a compatible local runner command configured by the
+current checkout's ignored per-tool `runner.toml`; no runner configuration is
+embedded in the campaign.
 
 Full stage logs and generated artifacts are transient under `.svtorture/work`.
 Public reproduction does not depend on them: the case, exact image/rebuild

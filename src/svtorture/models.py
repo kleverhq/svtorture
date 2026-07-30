@@ -33,7 +33,7 @@ StandardLocation = Annotated[str, Field(pattern=STANDARD_LOCATION_PATTERN)]
 StandardAnchor = Annotated[str, Field(pattern=STANDARD_ANCHOR_PATTERN)]
 MetadataSchemaVersion = Annotated[int, Field(strict=True, ge=1, le=1)]
 ContractSchemaVersion = Annotated[int, Field(strict=True, ge=2, le=2)]
-CampaignSchemaVersion = Annotated[int, Field(strict=True, ge=4, le=4)]
+CampaignSchemaVersion = Annotated[int, Field(strict=True, ge=5, le=5)]
 RequirementSchemaVersion = Annotated[int, Field(strict=True, ge=3, le=3)]
 
 
@@ -587,6 +587,26 @@ class ToolProfile(StrictModel):
         return phase_reaches(self.phase_ceiling, target)
 
 
+class DiagnosticRule(StrictModel):
+    case: str
+    contains: SafeText
+    severity: str | None = Field(default=None, pattern=r"^(error|warning|fatal|note|info)$")
+
+    @field_validator("case")
+    @classmethod
+    def valid_case(cls, value: str) -> str:
+        if ID_RE.fullmatch(value) is None:
+            raise ValueError("diagnostic rule case must use lowercase kebab-case")
+        return value
+
+    @field_validator("contains")
+    @classmethod
+    def valid_contains(cls, value: str) -> str:
+        if "\x00" in value:
+            raise ValueError("diagnostic rule text cannot contain NUL")
+        return value
+
+
 class ToolDefinition(StrictModel):
     id: str
     display_name: SafeText
@@ -600,6 +620,8 @@ class ToolDefinition(StrictModel):
     dockerfile: str | None = None
     recipe_files: tuple[str, ...] = ()
     image_repository: str | None = Field(default=None, max_length=500)
+    runner_config: str | None = None
+    diagnostic_rules: tuple[DiagnosticRule, ...] = ()
     profiles: tuple[ToolProfile, ...]
 
     @field_validator("id")
@@ -621,16 +643,26 @@ class ToolDefinition(StrictModel):
             raise ValueError("duplicate image recipe files")
         return tuple(safe_relative_path(item) for item in value)
 
+    @field_validator("runner_config")
+    @classmethod
+    def valid_runner_config(cls, value: str | None) -> str | None:
+        return None if value is None else safe_relative_path(value)
+
     @model_validator(mode="after")
     def policy_is_coherent(self) -> Self:
         profile_ids = [profile.id for profile in self.profiles]
         if not profile_ids or len(profile_ids) != len(set(profile_ids)):
             raise ValueError("tool profiles must be nonempty and unique")
+        diagnostic_rules = [
+            (rule.case, rule.contains, rule.severity) for rule in self.diagnostic_rules
+        ]
+        if len(diagnostic_rules) != len(set(diagnostic_rules)):
+            raise ValueError("duplicate diagnostic rules")
         if sum(profile.headline for profile in self.profiles) != 1:
             raise ValueError("each tool needs exactly one headline profile")
         if self.execution is ExecutionBackend.DOCKER:
             if self.distribution is Distribution.COMMERCIAL:
-                raise ValueError("commercial tools must use a private local wrapper")
+                raise ValueError("commercial tools must use a local runner")
             if not self.dockerfile or not self.image_repository:
                 raise ValueError("Docker tools require image build metadata")
             if self.distribution is Distribution.OPEN_SOURCE and not all(
@@ -639,6 +671,8 @@ class ToolDefinition(StrictModel):
                 raise ValueError("open-source Docker tools require upstream ref metadata")
         if self.execution is ExecutionBackend.LOCAL_WRAPPER and (self.ci or self.publish):
             raise ValueError("local-wrapper tools cannot be CI or publication eligible")
+        if self.execution is not ExecutionBackend.LOCAL_WRAPPER and self.runner_config is not None:
+            raise ValueError("only local-wrapper tools can name runner configuration")
         if self.publish and (not self.ci or self.distribution is not Distribution.OPEN_SOURCE):
             raise ValueError("published tools must be CI-eligible open source")
         return self
@@ -652,6 +686,37 @@ class ToolDefinition(StrictModel):
     @property
     def headline_profile(self) -> ToolProfile:
         return next(profile for profile in self.profiles if profile.headline)
+
+
+class ToolManifest(ToolDefinition):
+    schema_version: MetadataSchemaVersion
+
+    @model_validator(mode="after")
+    def local_runner_is_declared(self) -> Self:
+        if self.execution is ExecutionBackend.LOCAL_WRAPPER and self.runner_config is None:
+            raise ValueError("local-wrapper tool manifests require runner configuration")
+        return self
+
+
+class ToolIndex(StrictModel):
+    schema_version: MetadataSchemaVersion
+    manifests: tuple[str, ...]
+
+    @field_validator("manifests")
+    @classmethod
+    def valid_manifests(cls, value: tuple[str, ...]) -> tuple[str, ...]:
+        if not value or len(value) != len(set(value)):
+            raise ValueError("tool manifests must be nonempty and unique")
+        normalized = tuple(safe_relative_path(item) for item in value)
+        for item in normalized:
+            path = PurePosixPath(item)
+            if (
+                len(path.parts) != 2
+                or ID_RE.fullmatch(path.parts[0]) is None
+                or path.name != "tool.toml"
+            ):
+                raise ValueError("tool manifests must use <tool>/tool.toml")
+        return normalized
 
 
 class ToolRegistry(StrictModel):
@@ -672,36 +737,21 @@ class ToolRegistry(StrictModel):
         raise KeyError(f"unknown tool {tool_id}")
 
 
-class WrapperDefinition(StrictModel):
-    tool: str
+class RunnerConfig(StrictModel):
+    schema_version: MetadataSchemaVersion
     command: tuple[str, ...]
     environment_allowlist: tuple[str, ...] = ()
 
     @model_validator(mode="after")
-    def valid_wrapper(self) -> Self:
+    def valid_runner(self) -> Self:
         if not self.command or any(not part or "\x00" in part for part in self.command):
-            raise ValueError("wrapper command must be a nonempty argv array")
+            raise ValueError("runner command must be a nonempty argv array")
         if len(self.environment_allowlist) != len(set(self.environment_allowlist)):
-            raise ValueError("duplicate wrapper environment names")
+            raise ValueError("duplicate runner environment names")
         for name in self.environment_allowlist:
             if re.fullmatch(r"^[A-Z_][A-Z0-9_]*$", name) is None:
-                raise ValueError(f"invalid wrapper environment name {name!r}")
+                raise ValueError(f"invalid runner environment name {name!r}")
         return self
-
-
-class PrivateToolConfig(StrictModel):
-    schema_version: MetadataSchemaVersion
-    wrappers: tuple[WrapperDefinition, ...]
-
-    @model_validator(mode="after")
-    def unique_wrappers(self) -> Self:
-        tools = [wrapper.tool for wrapper in self.wrappers]
-        if len(tools) != len(set(tools)):
-            raise ValueError("duplicate private wrappers")
-        return self
-
-    def wrapper(self, tool_id: str) -> WrapperDefinition | None:
-        return next((item for item in self.wrappers if item.tool == tool_id), None)
 
 
 class ToolSelection(StrictModel):
@@ -1106,7 +1156,7 @@ class CampaignTool(StrictModel):
                 "a preparation failure cannot carry source, image, or version identity"
             )
         if self.definition.execution is ExecutionBackend.LOCAL_WRAPPER and self.image is not None:
-            raise ValueError("private wrapper campaign tools cannot expose an image")
+            raise ValueError("local-wrapper campaign tools cannot expose an image")
         return self
 
 

@@ -1,0 +1,16 @@
+schema_version = 1
+id = "verilator"
+display_name = "Verilator"
+adapter = "verilator"
+distribution = "open-source"
+execution = "docker"
+ci = true
+publish = true
+upstream_url = "https://github.com/verilator/verilator.git"
+default_branch = "master"
+dockerfile = "Dockerfile"
+image_repository = "svtorture/verilator"
+profiles = [
+  { id = "elaborator", phase_ceiling = "elaborate", direct_phases = ["preprocess", "elaborate"], headline = false, standard_revision = "1800-2023", effective_language = "IEEE 1800-2023 (--language 1800-2023)" },
+  { id = "simulator", phase_ceiling = "simulate", direct_phases = ["preprocess", "elaborate", "simulate"], headline = true, standard_revision = "1800-2023", effective_language = "IEEE 1800-2023 (--language 1800-2023)" },
+]

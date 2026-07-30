@@ -11,7 +11,8 @@ RUN git init /src \
     && git -C /src remote add origin https://github.com/MikePopoloski/slang.git \
     && git -C /src fetch --depth=1 origin "$TOOL_SHA" \
     && git -C /src checkout --detach FETCH_HEAD
-RUN cmake -S /src -B /src/build -G Ninja \
+RUN cd /src \
+    && cmake -S /src -B /src/build -G Ninja \
       -DCMAKE_BUILD_TYPE=Release \
       -DCMAKE_INSTALL_PREFIX=/opt/slang \
       -DSLANG_INCLUDE_TESTS=OFF \

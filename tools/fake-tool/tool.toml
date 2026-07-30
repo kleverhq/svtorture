@@ -1,0 +1,14 @@
+schema_version = 1
+id = "fake"
+display_name = "Deterministic Fake Tool"
+adapter = "fake"
+distribution = "internal"
+execution = "docker"
+ci = true
+publish = false
+dockerfile = "Dockerfile"
+recipe_files = ["fake_tool.py"]
+image_repository = "svtorture/fake-tool"
+profiles = [
+  { id = "simulator", phase_ceiling = "simulate", direct_phases = ["preprocess", "parse", "elaborate", "simulate"], headline = true, standard_revision = "1800-2023", effective_language = "deterministic test protocol v2" },
+]

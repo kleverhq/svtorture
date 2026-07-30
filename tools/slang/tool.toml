@@ -1,0 +1,16 @@
+schema_version = 1
+id = "slang"
+display_name = "Slang"
+adapter = "slang"
+distribution = "open-source"
+execution = "docker"
+ci = true
+publish = true
+upstream_url = "https://github.com/MikePopoloski/slang.git"
+default_branch = "master"
+dockerfile = "Dockerfile"
+image_repository = "svtorture/slang"
+profiles = [
+  { id = "parser", phase_ceiling = "parse", direct_phases = ["preprocess", "parse"], headline = false, standard_revision = "1800-2023", effective_language = "IEEE 1800-2023 (--std=1800-2023)" },
+  { id = "elaborator", phase_ceiling = "elaborate", direct_phases = ["preprocess", "parse", "elaborate"], headline = true, standard_revision = "1800-2023", effective_language = "IEEE 1800-2023 (--std=1800-2023)" },
+]

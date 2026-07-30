@@ -33,13 +33,12 @@ from svtorture.models import (
     ImageIdentity,
     ManifestHashes,
     NormalizedResult,
-    PrivateToolConfig,
     ReasonCode,
     ResultStatus,
+    RunnerConfig,
     ToolDefinition,
     ToolProfile,
     ToolSelection,
-    WrapperDefinition,
     model_to_jsonable,
     phase_reaches,
 )
@@ -50,7 +49,7 @@ class CampaignError(RuntimeError):
     pass
 
 
-AGGREGATION_CONTRACT_VERSION = 4
+AGGREGATION_CONTRACT_VERSION = 5
 
 
 @dataclass(frozen=True)
@@ -60,24 +59,35 @@ class PreparedTool:
     selection: ToolSelection | None
     image: ImageIdentity | None
     reported_version: str | None
-    wrapper: WrapperDefinition | None = None
+    wrapper: RunnerConfig | None = None
     fake_scenario: str = "conform"
 
 
-def load_private_config(root: Path) -> PrivateToolConfig | None:
-    configured = os.environ.get("SVTORTURE_TOOL_CONFIG")
-    path = Path(configured).expanduser() if configured else root / "tools" / "private.toml"
+def load_runner_config(root: Path, tool: ToolDefinition) -> RunnerConfig | None:
+    if tool.runner_config is None:
+        return None
+    root = root.resolve()
+    path = root / tool.runner_config
+    try:
+        path.resolve().relative_to(root)
+        current = root
+        for part in Path(tool.runner_config).parts:
+            current /= part
+            if current.is_symlink():
+                raise OSError("symbolic links are not allowed")
+    except (OSError, ValueError) as error:
+        raise CampaignError(f"invalid runner configuration path {path}: {error}") from error
     if not path.exists():
         return None
     try:
         with path.open("rb") as stream:
             value = tomllib.load(stream)
-        return PrivateToolConfig.model_validate(value)
+        return RunnerConfig.model_validate(value)
     except (OSError, tomllib.TOMLDecodeError, ValidationError) as error:
-        raise CampaignError(f"invalid private tool configuration {path}: {error}") from error
+        raise CampaignError(f"invalid runner configuration {path}: {error}") from error
 
 
-def wrapper_available(wrapper: WrapperDefinition | None) -> bool:
+def wrapper_available(wrapper: RunnerConfig | None) -> bool:
     if wrapper is None:
         return False
     executable = wrapper.command[0]
@@ -175,12 +185,12 @@ def _version_line(text: str) -> str:
 
 
 def report_wrapper_version(
-    wrapper: WrapperDefinition,
+    wrapper: RunnerConfig,
     tool_id: str,
     version_argv: tuple[str, ...],
     work_root: Path,
 ) -> str:
-    """Ask a private wrapper to execute the adapter's version argv."""
+    """Ask a local runner to execute the adapter's version argv."""
 
     work_root.mkdir(parents=True, exist_ok=True)
     request_path = work_root / "version-request.json"
@@ -342,7 +352,6 @@ def run_campaign(
     )
     campaign_id = f"{started:%Y%m%dT%H%M%SZ}-{identity_hash[:16]}"
     work_root = catalog.root / ".svtorture" / "work" / campaign_id
-    rules_path = catalog.root / "tools" / "diagnostic-rules.toml"
     results: list[NormalizedResult] = []
     total_cases = len(prepared) * len(selected)
     case_number = 0
@@ -351,7 +360,7 @@ def run_campaign(
         profile = prepared_tool.profile
         adapter = adapter_for(
             tool.adapter,
-            rules_path=rules_path,
+            diagnostic_rules=tool.diagnostic_rules,
             fake_scenario=prepared_tool.fake_scenario,
         )
         for loaded in selected:
@@ -415,7 +424,7 @@ def run_campaign(
                         profile.id,
                         ResultStatus.SKIPPED_UNAVAILABLE,
                         ReasonCode.TOOL_UNAVAILABLE,
-                        "The configured private wrapper is unavailable.",
+                        "The configured local runner is unavailable.",
                     )
                 )
                 continue
@@ -474,7 +483,7 @@ def run_campaign(
         for result in recorded_results
     )
     campaign = Campaign(
-        schema_version=4,
+        schema_version=5,
         id=campaign_id,
         started_at=started,
         finished_at=finished,
@@ -661,7 +670,7 @@ def verify_campaign_against_catalog(catalog: Catalog, campaign: Campaign) -> Non
 
         adapter = adapter_for(
             campaign_tool.definition.adapter,
-            rules_path=catalog.root / "tools" / "diagnostic-rules.toml",
+            diagnostic_rules=campaign_tool.definition.diagnostic_rules,
         )
         image_reference = campaign_tool.image.reference if campaign_tool.image is not None else None
         wrapper_reference = (
@@ -763,7 +772,7 @@ def create_missing_campaign(
         }
     )
     campaign = Campaign(
-        schema_version=4,
+        schema_version=5,
         id=f"{now:%Y%m%dT%H%M%SZ}-missing-{identity_hash[:12]}",
         started_at=now,
         finished_at=now,
@@ -889,7 +898,7 @@ def create_preparation_failure_campaign(
         }
     )
     campaign = Campaign(
-        schema_version=4,
+        schema_version=5,
         id=f"{now:%Y%m%dT%H%M%SZ}-preparation-{identity_hash[:12]}",
         started_at=now,
         finished_at=now,
@@ -1002,7 +1011,7 @@ def aggregate_campaigns(
     aggregate_id = f"{finished:%Y%m%dT%H%M%SZ}-aggregate-{identity_hash[:12]}"
     aggregate_results = _attach_reproduction(results, aggregate_id, trust)
     aggregate = Campaign(
-        schema_version=4,
+        schema_version=5,
         id=aggregate_id,
         started_at=min(item.started_at for item in campaigns),
         finished_at=finished,

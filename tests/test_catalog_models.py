@@ -142,7 +142,7 @@ def test_tool_phase_ceiling_is_cumulative(catalog: Catalog) -> None:
     assert Phase.PARSE not in simulator.direct_phases
 
 
-def test_legacy_tool_phase_list_is_rejected(catalog: Catalog) -> None:
+def test_obsolete_tool_phase_list_is_rejected(catalog: Catalog) -> None:
     profile = catalog.tools.tool("verilator").profile("simulator")
     value = profile.model_dump(mode="json")
     value["phases"] = ["elaborate", "simulate"]
@@ -491,7 +491,7 @@ def test_suite_glob_without_matches_is_rejected(catalog: Catalog, tmp_path: Path
         load_catalog(root)
 
 
-def test_version_three_campaign_is_rejected(catalog: Catalog, tmp_path: Path) -> None:
+def test_version_four_campaign_is_rejected(catalog: Catalog, tmp_path: Path) -> None:
     case = catalog.cases["ch04-nba-rhs-captured"]
     tool = campaign_tool(catalog.tools.tool("fake"), ("simulator",))
     campaign = make_campaign(
@@ -501,10 +501,10 @@ def test_version_three_campaign_is_rejected(catalog: Catalog, tmp_path: Path) ->
         results=(normalized(case, "fake", "simulator"),),
     )
     value = campaign.model_dump(mode="json")
-    value["schema_version"] = 3
+    value["schema_version"] = 4
     path = tmp_path / "campaign.json"
     path.write_text(json.dumps(value), encoding="utf-8")
-    with pytest.raises(CampaignError, match="greater than or equal to 4"):
+    with pytest.raises(CampaignError, match="greater than or equal to 5"):
         load_campaign(path)
 
 

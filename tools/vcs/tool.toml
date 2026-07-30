@@ -1,0 +1,24 @@
+schema_version = 1
+id = "vcs"
+display_name = "Synopsys VCS"
+adapter = "vcs"
+distribution = "commercial"
+execution = "local-wrapper"
+ci = false
+publish = false
+runner_config = "runner.toml"
+profiles = [
+  { id = "elaborator", phase_ceiling = "elaborate", direct_phases = ["elaborate"], headline = false, standard_revision = "1800-2017", effective_language = "SystemVerilog (-sverilog), runner-defined licensed image" },
+  { id = "simulator", phase_ceiling = "simulate", direct_phases = ["elaborate", "simulate"], headline = true, standard_revision = "1800-2017", effective_language = "SystemVerilog (-sverilog), runner-defined licensed image" },
+]
+
+# Adapter-maintained fallbacks used only when VCS omits source locations.
+[[diagnostic_rules]]
+case = "ch05-base-format-whitespace-rejected"
+contains = "syntax error"
+severity = "error"
+
+[[diagnostic_rules]]
+case = "ch23-mixed-port-style-rejected"
+contains = "port connection"
+severity = "error"

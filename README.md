@@ -66,10 +66,11 @@ Development and campaign runs require:
 
 Native Windows users need WSL or an equivalent POSIX environment.
 
-Compiler and simulator binaries do not need to be installed on the host.
+Public compiler and simulator binaries do not need to be installed on the host.
 SVTORTURE resolves their source revisions and runs project-controlled Docker
 images. Building a current upstream tool for the first time can take several
-minutes.
+minutes. Commercial tools require a separately installed licensed environment
+and an ignored per-tool local runner configuration.
 
 An IEEE 1800-2023 PDF and Poppler are optional. They are needed only when
 maintaining requirement annotations; ordinary validation, campaigns,
@@ -125,10 +126,26 @@ Open <http://localhost:4173>. The dashboard provides requirement and case
 evidence browsers, campaign provenance, and trend views. Generated
 campaigns and dashboard data remain under ignored local directories.
 
-To run all current public upstream tools instead of only Verilator, use:
+The recommended baseline runs all current public upstream tools in one campaign:
 
 ```bash
-just latest-all
+just public
+```
+
+Licensed tools use ignored per-tool local runner configuration. Create the VCS
+configuration once, edit its command, verify readiness, and run commercial tools:
+
+```bash
+just runner-config vcs
+$EDITOR tools/vcs/runner.toml
+uv run svtorture doctor
+just commercial
+```
+
+To run every public and locally configured commercial tool in one campaign, use:
+
+```bash
+just all
 ```
 
 ## Documentation

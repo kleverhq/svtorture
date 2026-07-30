@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from dataclasses import replace
-from pathlib import Path
 
 import pytest
 
@@ -282,14 +281,12 @@ def test_verilator_user_assertion_report_is_not_a_compiler_internal_error(
     assert diagnostics[-1].target_case_id == case.definition.id
 
 
-def test_locationless_adapter_rule_is_separate_from_case(catalog: Catalog, root: Path) -> None:
+def test_locationless_adapter_rule_is_owned_by_tool(catalog: Catalog) -> None:
     from svtorture.adapters.registry import adapter_for
 
     case: LoadedCase = catalog.cases["ch05-base-format-whitespace-rejected"]
-    adapter = adapter_for(
-        "vcs",
-        rules_path=root / "tools" / "diagnostic-rules.toml",
-    )
+    tool = catalog.tools.tool("vcs")
+    adapter = adapter_for("vcs", diagnostic_rules=tool.diagnostic_rules)
     diagnostics, _ = adapter.normalize_diagnostics(
         "",
         "Error-[SE] syntax error while reading based number",
@@ -298,22 +295,3 @@ def test_locationless_adapter_rule_is_separate_from_case(catalog: Catalog, root:
     assert diagnostics
     assert diagnostics[0].source is None
     assert diagnostics[0].target_case_id == case.definition.id
-
-
-@pytest.mark.parametrize(
-    "contents",
-    (
-        "schema_version = true\nrules = []\n",
-        (
-            'schema_version = 1\n[[rules]]\ntool = "vcs"\n'
-            'case = "ch05-base-format-whitespace-rejected"\ncontains = ""\n'
-        ),
-    ),
-)
-def test_diagnostic_fallback_metadata_is_strict(tmp_path: Path, contents: str) -> None:
-    from svtorture.adapters.registry import AdapterError, load_fallbacks
-
-    path = tmp_path / "rules.toml"
-    path.write_text(contents, encoding="utf-8")
-    with pytest.raises(AdapterError):
-        load_fallbacks(path)

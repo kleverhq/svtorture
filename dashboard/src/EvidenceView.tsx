@@ -164,7 +164,7 @@ function ObservationDetail({
               <dt>Tool source</dt>
               <dd>
                 <code title={tool.selection?.resolved_sha}>
-                  {tool.selection?.resolved_sha.slice(0, 12) ?? "local wrapper"}
+                  {tool.selection?.resolved_sha.slice(0, 12) ?? "local runner"}
                 </code>
               </dd>
             </div>
@@ -176,7 +176,7 @@ function ObservationDetail({
               <dt>Image digest</dt>
               <dd>
                 <code title={tool.image?.digest ?? undefined}>
-                  {tool.image?.digest?.slice(0, 24) ?? "private wrapper"}
+                  {tool.image?.digest?.slice(0, 24) ?? "local runner"}
                 </code>
               </dd>
             </div>

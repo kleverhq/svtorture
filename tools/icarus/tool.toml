@@ -1,0 +1,16 @@
+schema_version = 1
+id = "icarus"
+display_name = "Icarus Verilog"
+adapter = "icarus"
+distribution = "open-source"
+execution = "docker"
+ci = true
+publish = true
+upstream_url = "https://github.com/steveicarus/iverilog.git"
+default_branch = "master"
+dockerfile = "Dockerfile"
+image_repository = "svtorture/icarus"
+profiles = [
+  { id = "elaborator", phase_ceiling = "elaborate", direct_phases = ["preprocess", "elaborate"], headline = false, standard_revision = "1800-2012", effective_language = "IEEE 1800-2012 (-g2012)" },
+  { id = "simulator", phase_ceiling = "simulate", direct_phases = ["preprocess", "elaborate", "simulate"], headline = true, standard_revision = "1800-2012", effective_language = "IEEE 1800-2012 (-g2012)" },
+]

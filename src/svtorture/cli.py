@@ -21,7 +21,7 @@ from svtorture.campaign import (
     create_preparation_failure_campaign,
     load_campaign,
     load_campaign_location,
-    load_private_config,
+    load_runner_config,
     report_image_version,
     report_wrapper_version,
     run_campaign,
@@ -120,9 +120,8 @@ def _prepare(
         if requested_ref != "local":
             raise typer.BadParameter("local-wrapper tools use the explicit ref 'local'")
         if progress is not None:
-            progress(f"prepare: loading local wrapper for {tool.id}")
-        private = load_private_config(ROOT)
-        wrapper = private.wrapper(tool.id) if private else None
+            progress(f"prepare: loading local runner for {tool.id}")
+        wrapper = load_runner_config(ROOT, tool)
     elif tool.distribution is Distribution.INTERNAL:
         if requested_ref != "bundled":
             raise typer.BadParameter("internal fake tool uses the ref 'bundled'")
@@ -167,10 +166,7 @@ def _prepare(
                 selection.resolved_sha,
                 expected_source_sha=selection.resolved_sha,
             )
-    adapter = adapter_for(
-        tool.adapter,
-        rules_path=ROOT / "tools" / "diagnostic-rules.toml",
-    )
+    adapter = adapter_for(tool.adapter, diagnostic_rules=tool.diagnostic_rules)
     if tool.execution is ExecutionBackend.DOCKER:
         if image is None:
             raise ImageError(f"no prepared image is cached for {tool.id}")
@@ -297,7 +293,7 @@ def list_items(
 
 @app.command("doctor")
 def doctor() -> None:
-    _catalog()
+    catalog = _catalog()
     failures = 0
     locations: dict[str, str | None] = {}
     for command in ("git", "docker", "uv", "npm", "just"):
@@ -316,8 +312,12 @@ def doctor() -> None:
         docker_available = docker.returncode == 0
     typer.echo(f"docker-daemon: {'available' if docker_available else 'unavailable'}")
     failures += not docker_available
-    private = load_private_config(ROOT)
-    typer.echo(f"private-tool-config: {'configured' if private else 'not configured'}")
+    for tool in catalog.tools.tools:
+        if tool.execution is not ExecutionBackend.LOCAL_WRAPPER:
+            continue
+        runner = load_runner_config(ROOT, tool)
+        state = "available" if wrapper_available(runner) else "unavailable"
+        typer.echo(f"{tool.id}-runner: {state}")
     if failures:
         raise typer.Exit(1)
 

@@ -14,7 +14,16 @@ export function useDataset(): DatasetState {
     fetch("./data/dataset.json", { cache: "no-store" })
       .then(async (response) => {
         if (!response.ok) throw new Error(`dataset request failed: ${response.status}`);
-        return (await response.json()) as Dataset;
+        const value: unknown = await response.json();
+        if (
+          typeof value !== "object" ||
+          value === null ||
+          !("schema_version" in value) ||
+          value.schema_version !== 5
+        ) {
+          throw new Error("unsupported dataset schema");
+        }
+        return value as Dataset;
       })
       .then((dataset) => {
         if (active) setState({ dataset });

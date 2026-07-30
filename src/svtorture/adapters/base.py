@@ -31,7 +31,6 @@ class DiagnosticPattern:
 
 @dataclass(frozen=True)
 class DiagnosticFallback:
-    tool: str
     case: str
     contains: str
     severity: str | None = None
@@ -113,8 +112,7 @@ class ToolAdapter(ABC):
                 continue
             for fallback in self.fallbacks:
                 if (
-                    fallback.tool == self.id
-                    and fallback.case == case.definition.id
+                    fallback.case == case.definition.id
                     and fallback.contains.casefold() in diagnostic.message.casefold()
                     and (fallback.severity is None or fallback.severity == diagnostic.severity)
                 ):
@@ -128,8 +126,7 @@ class ToolAdapter(ABC):
         # adapter metadata and synthesize a diagnostic only for the named case.
         for fallback in self.fallbacks:
             if (
-                fallback.tool != self.id
-                or fallback.case != case.definition.id
+                fallback.case != case.definition.id
                 or fallback.contains.casefold() not in combined.casefold()
                 or any(
                     diagnostic.target_case_id == case.definition.id for diagnostic in diagnostics

@@ -1,6 +1,7 @@
 # Tools
 
-This directory is the complete integration surface for compilers and simulators:
-`tools.toml` is the public registry, `diagnostic-rules.toml` contains reviewed
-fallbacks, `private.example.toml` demonstrates local wrappers, and child
-directories contain tool-specific recipes.
+This directory is the complete integration surface for compilers and simulators.
+`tools.toml` is a thin index of child `tool.toml` manifests. Each tool directory
+owns its metadata, reviewed diagnostic fallbacks, recipes, and documentation.
+Commercial integrations also provide `runner.example.toml`; the sibling
+`runner.toml` is machine-local and ignored by Git.

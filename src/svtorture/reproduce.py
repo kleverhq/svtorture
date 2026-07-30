@@ -10,7 +10,7 @@ from pathlib import Path
 from svtorture.adapters.registry import adapter_for
 from svtorture.campaign import (
     CampaignError,
-    load_private_config,
+    load_runner_config,
     validate_plan_for_profile,
     verify_campaign_against_catalog,
     wrapper_available,
@@ -147,17 +147,16 @@ def reproduce_case(
     loaded = catalog.cases[case_id]
     adapter = adapter_for(
         campaign_tool.definition.adapter,
-        rules_path=checkout / "tools" / "diagnostic-rules.toml",
+        diagnostic_rules=campaign_tool.definition.diagnostic_rules,
     )
     wrapper = None
     image = None
     if campaign_tool.definition.execution.value == "docker":
         image = _ensure_image(checkout, campaign_tool)
     else:
-        private = load_private_config(checkout)
-        wrapper = private.wrapper(tool_id) if private else None
+        wrapper = load_runner_config(root, campaign_tool.definition)
         if not wrapper_available(wrapper):
-            raise ReproductionError("the required private wrapper is unavailable")
+            raise ReproductionError("the required local runner is unavailable")
     plan = adapter.build_plan(
         loaded,
         campaign_tool.definition,

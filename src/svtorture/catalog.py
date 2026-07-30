@@ -33,6 +33,9 @@ from svtorture.models import (
     StandardsIndex,
     SuiteDefinition,
     TagRegistry,
+    ToolDefinition,
+    ToolIndex,
+    ToolManifest,
     ToolRegistry,
     model_to_jsonable,
 )
@@ -517,29 +520,84 @@ def load_catalog(root: Path, *, anchor_index: Path | None = None) -> Catalog:
         missing = sorted(name for name, present in smoke_checks.items() if not present)
         raise CatalogError(f"smoke suite misses required paths: {', '.join(missing)}")
 
-    tools = _parse(root / "tools" / "tools.toml", ToolRegistry)
-    rules_path = root / "tools" / "diagnostic-rules.toml"
-    if not rules_path.is_file() or rules_path.is_symlink():
-        raise CatalogError("missing or unsafe adapter diagnostic rules")
+    tools_directory = root / "tools"
+    index_path = tools_directory / "tools.toml"
+
+    def contains_symlink(base: Path, candidate: Path) -> bool:
+        current = base
+        if current.is_symlink():
+            return True
+        for part in candidate.relative_to(base).parts:
+            current /= part
+            if current.is_symlink():
+                return True
+        return False
+
+    try:
+        index = ToolIndex.model_validate(_read_toml(index_path))
+    except ValidationError as error:
+        raise CatalogError(f"{index_path}: {error}") from error
+
+    def manifest_path(relative: str) -> Path:
+        candidate = tools_directory / relative
+        resolved = candidate.resolve()
+        try:
+            resolved.relative_to(tools_directory.resolve())
+        except ValueError as error:
+            raise CatalogError(f"tool manifest escapes tools directory: {relative}") from error
+        if contains_symlink(tools_directory, candidate) or not resolved.is_file():
+            raise CatalogError(f"missing or unsafe tool manifest: {relative}")
+        return resolved
+
+    def normalized_path(manifest: Path, relative: str, *, required: bool, tool_id: str) -> str:
+        candidate = manifest.parent / relative
+        resolved = candidate.resolve()
+        try:
+            resolved.relative_to(manifest.parent)
+            normalized = resolved.relative_to(root).as_posix()
+        except ValueError as error:
+            raise CatalogError(f"tool {tool_id}: referenced path escapes tool directory") from error
+        if contains_symlink(manifest.parent, candidate) or (required and not resolved.is_file()):
+            raise CatalogError(f"tool {tool_id}: missing or unsafe referenced file {relative}")
+        return normalized
+
+    definitions: list[ToolDefinition] = []
+    for relative in index.manifests:
+        path = manifest_path(relative)
+        manifest = _parse(path, ToolManifest)
+        dockerfile = (
+            normalized_path(path, manifest.dockerfile, required=True, tool_id=manifest.id)
+            if manifest.dockerfile is not None
+            else None
+        )
+        recipe_files = tuple(
+            normalized_path(path, item, required=True, tool_id=manifest.id)
+            for item in manifest.recipe_files
+        )
+        runner_config = (
+            normalized_path(path, manifest.runner_config, required=False, tool_id=manifest.id)
+            if manifest.runner_config is not None
+            else None
+        )
+        value = manifest.model_dump(exclude={"schema_version"})
+        value.update(
+            dockerfile=dockerfile,
+            recipe_files=recipe_files,
+            runner_config=runner_config,
+        )
+        definitions.append(ToolDefinition.model_validate(value))
+
+    try:
+        tools = ToolRegistry(schema_version=2, tools=tuple(definitions))
+    except ValidationError as error:
+        raise CatalogError(f"{index_path}: {error}") from error
     from svtorture.adapters.registry import AdapterError, adapter_for
 
     for tool in tools.tools:
         try:
-            adapter_for(tool.adapter, rules_path=rules_path)
+            adapter_for(tool.adapter, diagnostic_rules=tool.diagnostic_rules)
         except AdapterError as error:
             raise CatalogError(f"tool {tool.id}: {error}") from error
-        recipe_paths = (
-            *((tool.dockerfile,) if tool.dockerfile is not None else ()),
-            *tool.recipe_files,
-        )
-        for relative in recipe_paths:
-            recipe_path = (root / relative).resolve()
-            try:
-                recipe_path.relative_to(root)
-            except ValueError as error:
-                raise CatalogError(f"tool {tool.id}: image recipe escapes repository") from error
-            if not recipe_path.is_file() or recipe_path.is_symlink():
-                raise CatalogError(f"tool {tool.id}: missing or unsafe recipe file {relative}")
     return Catalog(
         root=root,
         anchor_index=anchor_index,
@@ -590,7 +648,8 @@ def write_json_schema(root: Path, output: Path) -> None:
         "standards-index.schema.json": StandardsIndex.model_json_schema(),
         "suite.schema.json": SuiteDefinition.model_json_schema(),
         "tags.schema.json": TagRegistry.model_json_schema(),
-        "tools.schema.json": ToolRegistry.model_json_schema(),
+        "tool.schema.json": ToolManifest.model_json_schema(),
+        "tools.schema.json": ToolIndex.model_json_schema(),
     }
     output.mkdir(parents=True, exist_ok=True)
     for path in output.glob("*.json"):
