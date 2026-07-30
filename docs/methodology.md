@@ -2,34 +2,34 @@
 
 ## Authority and revision
 
-IEEE Std 1800-2023 is the active authority. Requirement authors use the
-repository-owned annotator to materialize a local corpus from their PDF.
-Requirement records identify a numeric chapter or alphabetic annex in `part`, a
-matching clause or annex location, and a nonempty list of complete corpus
-anchors; the first anchor cites the declared location and later anchors support
-rules that span blocks. Catalog loading verifies every citation against the
-committed `standards/ieee-1800-2023-anchors.json` without requiring the PDF or
-generated corpus.
-Cases identify one primary normative requirement. Applicability to 1800-2012,
-1800-2017, and 1800-2023 is explicit and complete.
+IEEE Std 1800-2023 is the active authority. Requirement authors run the
+repository annotator against their local PDF. Each requirement record identifies
+a numeric chapter or alphabetic annex in `part`, a matching location, and at
+least one complete corpus anchor. The first anchor cites the declared location;
+additional anchors support rules that span several source blocks. Catalog
+loading checks every citation against
+`standards/ieee-1800-2023-anchors.json`, so it does not need the PDF or generated
+corpus.
 
-The expected result comes from the selected revision's rule. Tool behavior,
-documentation, `sv-tests`, and other simulators may corroborate or prioritize a
-case but never define its oracle.
+Each case names one primary normative requirement and states its applicability
+to 1800-2012, 1800-2017, and 1800-2023. The rule from the selected revision sets
+the expected result. Tool behavior, documentation, `sv-tests`, and other
+simulators can help prioritize or corroborate a case, but they do not set its
+oracle.
 
 ## Judgment
 
-The pipeline is cumulative: `simulate` reaches `elaborate`, which reaches
-`parse`, which reaches `preprocess`. A tool profile declares its latest reachable
-`phase_ceiling` and the phases for which its adapter has independently bounded
-`direct_phases`. The case oracle still names one exact target.
+The phase pipeline is cumulative. `simulate` includes `elaborate`, which
+includes `parse`, which includes `preprocess`. A tool profile declares its
+highest reachable `phase_ceiling` and the phases with independently bounded
+`direct_phases`. Each case oracle still names one target phase.
 
-Evidence is **direct** when the command stops at that target and **cumulative**
-when a later-capable command proves the target oracle. A successful later command
-proves earlier acceptance. A nonzero later command proves an earlier rejection or
-required diagnostic only when normalized evidence identifies the unique case
-anchor. An unrelated later failure is inconclusive because it does not establish
-which phase rejected the source.
+Evidence is **direct** when the command stops at that target. It is
+**cumulative** when a later command proves the target oracle. A successful later
+command proves earlier acceptance. A nonzero later command proves an earlier
+rejection or required diagnostic only when normalized evidence identifies the
+unique case anchor. Without that anchor, the result is inconclusive because the
+framework cannot tell which phase rejected the source.
 
 - Static acceptance requires a zero exit from a command that reaches the target.
 - Simulation acceptance requires a zero runtime exit and exactly one
@@ -41,12 +41,14 @@ which phase rejected the source.
 - A required diagnostic may be a warning or error, but must be tied to the
   intended construct; a successful warning path also needs its runtime marker.
 
-Timeouts, signals, crashes, internal errors, launch failures, container failures,
-missing artifacts, unrelated diagnostics, and marker mistakes never satisfy a
-negative oracle. Tool crashes/timeouts are inconclusive tool observations;
-backend/container launch failures are harness errors.
+A negative oracle requires evidence tied to the intended construct, either by a
+location anchor or a separately reviewed adapter fallback. Timeouts, signals,
+crashes, internal errors, launch failures, container failures, missing artifacts,
+unrelated diagnostics, and marker mistakes do not meet it. Tool
+crashes and timeouts are inconclusive tool observations. Backend or container
+launch failures are harness errors.
 
-Known-issue annotations add context only. They do not change a failure into a
+Known-issue annotations provide context. They do not change a failure into a
 pass.
 
 ## Headline metric
@@ -60,25 +62,27 @@ applicable requirements whose selected mandatory variants all conform
 applicable requirements with selected cases at or below the profile phase ceiling
 ```
 
-Requirement coverage is computed from current case mappings; it is not stored in
-the requirement catalog. Exploratory cases do not score. A requirement is
-counted once even with several variants. Nonconforming and inconclusive
-requirements remain in the denominator but do not enter the numerator;
-inconclusive evidence is neither Pass nor Fail and is presented as Unclear.
-Unsupported, absent, and not-applicable requirements do not become verified.
-Any harness error invalidates the profile metric.
+Current case mappings determine requirement coverage; the requirement catalog
+does not store it. Exploratory cases do not score. A requirement is counted once
+even when it has several variants. Nonconforming and inconclusive requirements
+stay in the denominator but not the numerator. The dashboard presents
+inconclusive evidence as Unclear rather than Pass or Fail. Unsupported, absent,
+and not-applicable requirements are not verified. Any harness error invalidates
+the profile metric.
 
 Every displayed point includes numerator, denominator, revision, profile,
 corpus manifest, completeness, exact tool commit/tags/version, image digest,
 timestamp, and campaign ID. Corpus changes are visibly marked in Trends.
 
-Each campaign also freezes four corpus-wide trend operands. Requirements
-Coverage is the number of unique referenced standard anchors divided by every
-anchor in the committed index; Requirements Density is unique
-requirement–anchor pairs divided by referenced anchors. Cases Coverage is the
-number of requirements linked as primary or related divided by all requirements;
-Cases Density is unique case–requirement pairs divided by linked requirements.
-Campaigns preserve the same operands for every chapter and annex, including
-zero rows. Selecting several standard parts sums their operands before applying
-the formula. These values describe the complete catalog and are independent of
-tool, profile, suite selection, and result filters.
+Each campaign stores four operands used for corpus trends. Requirements Coverage
+is the number of unique cited standard anchors divided by all anchors in the
+committed index. Requirements Density is the number of unique
+requirement-to-anchor pairs divided by cited anchors. Cases Coverage is the
+number of requirements linked as primary or related divided by all requirements.
+Cases Density is the number of unique case-to-requirement pairs divided by linked
+requirements.
+
+The campaign stores the same operands for every chapter and annex, including
+parts with zero values. When several parts are selected, the dashboard sums
+their operands before applying the formula. The values describe the full catalog
+and do not depend on tool, profile, suite, or result filters.

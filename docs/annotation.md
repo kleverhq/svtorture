@@ -1,9 +1,9 @@
 # IEEE 1800-2023 annotation
 
-SVTORTURE owns a deterministic annotator under
-`standards/ieee-1800-2023-annotate/`. It converts a user-supplied IEEE
-1800-2023 PDF into an ignored, searchable text corpus with stable citation
-anchors. Neither the licensed PDF nor generated standard text is committed.
+The deterministic annotator is in
+`standards/ieee-1800-2023-annotate/`. It converts a user-supplied IEEE 1800-2023
+PDF into an ignored, searchable text corpus with stable citation anchors. The
+licensed PDF and generated standard text are not committed.
 
 The committed `standards/ieee-1800-2023-anchors.json` is the only annotation
 artifact used by normal catalog validation, execution, replay, and publication.
@@ -35,9 +35,9 @@ The development reference is Poppler 24.02.0 and a PDF with SHA-256:
 203fbcccbbae90cef401a3acd31835c8cd1507e8f12b2e069046d4f316e317c9
 ```
 
-A different PDF hash or Poppler version produces a warning rather than an
-immediate failure. Always run complete verification before accepting output
-from a different source.
+The annotator warns when the PDF hash or Poppler version differs from the
+reference. Run the complete verification before accepting output produced by a
+different input or tool version.
 
 ## Local configuration
 
@@ -94,10 +94,10 @@ part a second time, requiring byte-for-byte stability:
 just annotate-verify
 ```
 
-Complete local verification runs both `just annotate-check` for committed-index
-identity and `just annotate-verify` for deterministic corpus regeneration.
+For complete local verification, run `just annotate-check` to compare the
+committed index and `just annotate-verify` to regenerate the corpus twice.
 
-Generated files are owned by
+Generated files live under
 `standards/ieee-1800-2023-annotate/generated/` and can be deleted at any time.
 
 ## Generated corpus
@@ -108,11 +108,11 @@ Complete annotation produces:
 - `generated/txt/A.txt` through `generated/txt/Q.txt` for annexes;
 - `generated/anchors.json` for the complete ordered anchor inventory.
 
-Every TXT file records the actual input path, source SHA-256, physical and
-printed page ranges, status, and anchor schema. The anchor index records the
-source SHA-256, titles, stable relative TXT paths, per-part counts, and all
-anchors in corpus order. It intentionally does not record the machine-local PDF
-path, so identical PDFs produce byte-identical indexes from different paths.
+Every TXT file records the input path, source SHA-256, physical and printed page
+ranges, status, and anchor schema. The anchor index records the source SHA-256,
+titles, stable relative TXT paths, per-part counts, and anchors in corpus order.
+The index omits the machine-local PDF path, so identical PDFs produce
+byte-identical indexes when read from different paths.
 
 ## Annotation model
 
@@ -178,27 +178,26 @@ depends on a marked block.
 - grammar adjacency for Syntax captions;
 - deterministic regeneration when `--check-generated` is requested.
 
-The reference corpus is expected to report 16,963 globally unique anchors, 146
-tables, 103 figures, 212 Syntax captions, and 686 visual-review markers.
-Structural verification establishes consistency and reproducibility for the
-selected PDF. It does not establish semantic fidelity for layouts explicitly
-marked for visual review.
+The reference corpus contains 16,963 globally unique anchors, 146 tables, 103
+figures, 212 Syntax captions, and 686 visual-review markers. Structural
+verification checks consistency and reproducibility for the selected PDF. It
+does not verify the semantics of layouts marked for visual review.
 
 ## CI verification
 
 The `annotation-index` CI job runs only for trusted pushes to `main` in the
-branch-restricted `ieee-1800-2023-annotation` GitHub environment; pull requests
-never receive the licensed URL. Configure `IEEE_1800_2023_PDF_URL` as an
-environment secret. Without it, the trusted job emits a visible warning and
-succeeds without installing Poppler or downloading anything.
+branch-restricted `ieee-1800-2023-annotation` GitHub environment. Pull requests
+do not receive the licensed URL. Configure `IEEE_1800_2023_PDF_URL` as an
+environment secret. If the secret is absent, the trusted job prints a warning
+and exits successfully without installing Poppler or downloading the PDF.
 
-When the secret is present, CI uses commit-pinned setup actions and Just 1.21.0,
-installs `poppler-utils`, and downloads the PDF into ignored `.svtorture/`. The
-URL is scoped only to that download step; the separate `just annotate-check`
-step receives only the local PDF path and byte-compares the generated index with
-`standards/ieee-1800-2023-anchors.json`. A mismatch fails with an
-instruction to run `just annotate-update-anchors` and commit the result. The URL
-and PDF must never be logged or uploaded as artifacts.
+With the secret available, CI uses commit-pinned setup actions and Just 1.21.0.
+It installs `poppler-utils` and downloads the PDF into ignored `.svtorture/`.
+Only the download step receives the URL. The separate `just annotate-check` step
+receives the local PDF path and byte-compares the generated index with
+`standards/ieee-1800-2023-anchors.json`. A mismatch fails the job and instructs
+the maintainer to run `just annotate-update-anchors` and commit the result. CI
+must not log the URL or PDF or upload either one as an artifact.
 
 ## Maintenance utilities
 
@@ -207,10 +206,10 @@ with a separately stored reviewed corpus. It ignores only input-specific source
 metadata; anchors and unmarked blocks must otherwise match. See its colocated
 README for usage.
 
-`utils/scan_copied_text/scan_copied_text.py` checks tracked source files for long
-normalized token sequences copied from a separately stored reviewed corpus. It
-is a conservative source-hygiene aid, not part of generation or runtime. See its
-colocated README for limitations.
+`utils/scan_copied_text/scan_copied_text.py` checks tracked files with supported
+text suffixes for long, normalized token sequences that also appear in a
+separately stored reviewed corpus. The scanner is a source-hygiene check, not
+part of generation or runtime. See its colocated README for limitations.
 
 When changing annotation behavior:
 

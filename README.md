@@ -25,31 +25,28 @@ The public dashboard is available at <https://kleverhq.github.io/svtorture>.
 ## How does SVTORTURE differ from sv-tests?
 
 SVTORTURE was inspired by
-[CHIPS Alliance sv-tests](https://github.com/chipsalliance/sv-tests) and its
-ability to run one SystemVerilog test collection across many tools. `sv-tests`
-provides useful broad compatibility data and distinguishes several test modes,
-but its feature- and test-oriented results do not preserve the complete evidence
-chain that SVTORTURE targets: from a normative requirement through a
-phase-specific oracle and observation to a reproducible conformance judgment.
+[CHIPS Alliance sv-tests](https://github.com/chipsalliance/sv-tests), which runs
+one SystemVerilog test collection across many tools. `sv-tests` reports broad
+compatibility data in several test modes. SVTORTURE organizes coverage and
+scoring around normative requirements. Each case links a requirement to a
+phase-specific oracle, and each result records the observation and reproducible
+conformance judgment.
 
-SVTORTURE goes deeper rather than broader:
+Coverage and scoring use IEEE requirements instead of feature tags. Each oracle
+names one target phase, while tool capabilities follow the cumulative
+preprocess → parse → elaborate → simulate pipeline. The evaluator distinguishes
+direct evidence from evidence collected by a later command. An unrelated
+later-phase failure cannot satisfy an earlier negative oracle, and negative
+cases need a diagnostic tied to the intended construct. Tool behavior does not
+set the expected result.
 
-- IEEE requirements, not feature tags, are the unit of coverage and scoring;
-- every oracle names an exact target phase while tool capability follows the
-  cumulative preprocess → parse → elaborate → simulate pipeline;
-- direct and cumulative evidence remain distinguishable, and an unrelated
-  later-phase failure never satisfies an earlier negative oracle;
-- negative tests require evidence tied to the intended construct;
-- tool behavior never defines the expected result;
-- campaigns retain exact tool revisions, container identities, portable
-  commands, bounded output excerpts, and full-stream hashes; full logs remain
-  transient local or CI artifacts;
-- known failures remain failures instead of being converted into expected
-  passes.
+Campaigns retain tool revisions, container identities, portable commands,
+bounded output excerpts, and full-stream hashes. Full logs stay in local or CI
+artifacts. A known failure remains a failure; the framework does not turn it into
+an expected pass.
 
-SVTORTURE is therefore not a fork or drop-in replacement for `sv-tests`. It is
-an attempt to build stricter evidence for the part of the language covered by
-its corpus.
+SVTORTURE is not a fork or drop-in replacement for `sv-tests`. Its corpus is
+narrower and records more evidence for each covered requirement.
 
 ## Requirements
 
@@ -161,8 +158,8 @@ uv run svtorture run --tool icarus@latest --suite all --jobs 4
 The Just signatures are `just all [suite] [jobs]` and
 `just commercial [suite] [jobs]`; the first `all` in each example is the suite
 argument. A job executes one case for one tool profile; dependent stages within
-that job remain sequential. `--jobs 0`, including the Just recipe default, selects the
-automatic CPU count.
+that job remain sequential. `--jobs 0`, including the Just recipe default,
+selects the automatic CPU count.
 
 ## Documentation
 

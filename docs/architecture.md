@@ -33,60 +33,63 @@ tools/tools.toml ──► tools/*/tool.toml ──► adapter ──► typed E
                           static dashboard dataset
 ```
 
-`models.py` defines strict, frozen, unknown-field-rejecting public models.
-`catalog.py` validates requirement citations against the committed anchor index,
-then validates cross-references, safe paths, diagnostic anchors, marker
-uniqueness, source hashes, and the seed-corpus composition. The source under
-`standards/ieee-1800-2023-annotate/` materializes that index from a user-supplied
-PDF, but neither the annotator nor its generated text is in this runtime data
-flow. Tool profiles declare a cumulative phase ceiling plus the command boundaries the
-adapter can assess directly. Adapters only declare commands, the furthest phase
-each command attempts, and diagnostic normalization. `executor.py` runs argv
-arrays in isolated work directories and records bounded excerpts plus full-stream
-hashes. `evaluator.py` alone compares observations to the exact case oracle and
-records whether the evidence is direct or cumulative.
+`models.py` defines strict, frozen public models that reject unknown fields.
+`catalog.py` checks requirement citations against the committed anchor index. It
+also checks cross-references, safe paths, diagnostic anchors, marker uniqueness,
+source hashes, and the seed corpus. The annotator under
+`standards/ieee-1800-2023-annotate/` builds the anchor index from a user-supplied
+PDF. Neither the annotator nor its generated text is part of runtime execution.
 
-If either bounded excerpt is truncated, the evaluator records an inconclusive
-`output-truncated` result; retained output can therefore never hide a second
-pass marker or an internal-error diagnostic and create a false pass.
+A tool profile declares a cumulative phase ceiling and the command boundaries
+that its adapter can assess directly. Adapters declare commands, the furthest
+phase attempted by each command, and diagnostic normalization. `executor.py`
+runs argv arrays in isolated work directories and records bounded excerpts with
+full-stream hashes. Only `evaluator.py` compares those observations with the
+case oracle and labels the evidence as direct or cumulative.
 
-Open-source execution is always Docker-backed. Runtime containers have no
-network, a read-only root filesystem, dropped capabilities, PID/memory bounds,
-read-only case input, and a per-case writable work mount. Full logs and generated
-artifacts remain under `.svtorture/work`; campaigns contain only sanitized,
-bounded evidence.
+When either excerpt is truncated, the evaluator returns the inconclusive reason
+`output-truncated`. It does not evaluate partial text that might omit a second
+pass marker or an internal-error diagnostic.
+
+Open-source tools always run in Docker. Runtime containers have no network,
+use a read-only root filesystem, drop capabilities, and enforce PID and memory
+bounds. Case input is read-only, while each case receives a writable work mount.
+Full logs and generated artifacts stay under `.svtorture/work`; campaigns keep
+only sanitized, bounded evidence.
 
 Commercial execution uses the same version-2 `ExecutionPlan`,
 `StageObservation`, and `NormalizedResult` contracts. A plan records its target
-phase; each stage and observation records `attempted_through_phase`; and the
+phase. Each stage and observation records `attempted_through_phase`, and the
 result records `direct`, `cumulative`, or `not-observed` evidence. An ignored
-per-tool `runner.toml` selects a local command that receives the versioned JSON
-wrapper request. Distribution, CI, and publication policy comes from the
-committed per-tool manifest, so
-publishers and workflows never infer it from an adapter name.
+per-tool `runner.toml` selects the local command that receives the versioned JSON
+request. The committed tool manifest defines distribution, CI, and publication
+policy; publishers and workflows do not infer policy from an adapter name.
 
-After sequential tool preparation, campaign execution flattens every selected
-tool/profile/case combination into one bounded thread pool. Threads coordinate
-external Docker or local-runner processes rather than CPU-bound Python work.
-Combinations can run concurrently, while stages within one combination remain
-sequential and use its isolated work directory. The worker count is one global
-limit; automatic mode uses the CPUs available to the process, and operators can
-lower it for aggregate memory or license-seat constraints.
+Tools are prepared sequentially. Campaign execution then sends every selected
+tool/profile/case combination to one bounded thread pool. The threads wait for
+Docker or local-runner processes; they do not perform CPU-bound Python work.
+Combinations can run concurrently, but stages within one combination run in
+order and share its isolated work directory. One worker count limits the whole
+campaign. Automatic mode uses the CPUs available to the process. Operators can
+lower the count when memory or license seats impose a tighter limit.
 
-Campaigns include a full result grid for every selected case and profile plus
-the exact aggregate and per-chapter/annex requirement/case Coverage and Density
-operands computed from the full catalog at collection time. Loading rejects duplicate/missing results,
-mismatched case or selection manifests, and corpus metrics that no longer match
-the catalog. Aggregation records expected and missing tools rather than quietly
-changing completeness. If nightly collection fails before an immutable source
-and image identity exists, its private artifact still contains a per-case grid
-with explicit `tool-preparation-failure` harness results (while preserving
-structural unsupported/not-applicable judgments). Aggregation removes that
-unpublishable placeholder identity and exposes the tool as missing, so no
-preparation failure can be mistaken for measured conformance.
+A campaign contains one result for every selected case and profile. It also
+stores the aggregate and per-part operands for Requirements Coverage,
+Requirements Density, Cases Coverage, and Cases Density. These operands come
+from the full catalog at collection time. Loading rejects duplicate or missing
+results, mismatched case or selection manifests, and corpus metrics that do not
+match the catalog.
 
-Public export additionally re-evaluates every recorded observation, requires a
-clean matching checkout inside the same GitHub Actions repository/run/SHA,
-checks tool definitions against the committed registry, requires pullable GHCR
-digests, and scans the complete compact dataset for private paths and common
-credential forms.
+Aggregation records both expected and missing tools. If nightly preparation
+fails before an immutable source and image identity exists, the private artifact
+still contains a per-case grid with `tool-preparation-failure` harness
+results. Structural `unsupported` and `not-applicable` judgments are preserved.
+Aggregation removes the placeholder identity from public data and reports the
+tool as missing, so preparation failures are not presented as conformance
+measurements.
+
+Before public export, the publisher re-evaluates every recorded observation. It
+requires a clean matching checkout from the same GitHub Actions
+repository/run/SHA, checks tool definitions against the committed registry,
+requires pullable GHCR digests, and scans the compact dataset for private paths
+and common credential forms.
