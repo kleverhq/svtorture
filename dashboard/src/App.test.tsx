@@ -1,4 +1,5 @@
 import {
+  act,
   cleanup,
   fireEvent,
   render,
@@ -559,6 +560,72 @@ describe("App overview navigation", () => {
     expect(within(records).getByText(otherId)).toBeTruthy();
     fireEvent.click(screen.getByRole("button", { name: "Parser 1" }));
     expect(within(records).getByText(otherId)).toBeTruthy();
+  });
+
+  it("opens About as the final URL-backed tab without campaign controls", async () => {
+    window.history.replaceState(null, "", "/?view=about#tools");
+    mockDataset(makeTestDataset());
+
+    render(<App />);
+
+    const tabs = await screen.findAllByRole("tab");
+    const aboutTab = screen.getByRole("tab", { name: "About" });
+    expect(tabs.at(-1)).toBe(aboutTab);
+    expect(aboutTab.getAttribute("aria-selected")).toBe("true");
+    expect(
+      screen.getByRole("heading", {
+        name: "From standard text to reproducible evidence",
+      }),
+    ).toBeTruthy();
+    expect(screen.queryByLabelText("Campaign")).toBeNull();
+    expect(screen.queryByRole("group", { name: "Tools" })).toBeNull();
+    expect(window.location.search).toBe("?view=about");
+    expect(window.location.hash).toBe("#tools");
+
+    const overviewTab = screen.getByRole("tab", { name: "Overview" });
+    overviewTab.focus();
+    fireEvent.keyDown(overviewTab, { key: "End" });
+    expect(document.activeElement).toBe(aboutTab);
+  });
+
+  it("renders About while campaign evidence is still loading", () => {
+    window.history.replaceState(null, "", "/?view=about");
+    vi.stubGlobal("fetch", vi.fn(() => new Promise<Response>(() => undefined)));
+
+    render(<App />);
+
+    expect(
+      screen.getByRole("heading", {
+        name: "From standard text to reproducible evidence",
+      }),
+    ).toBeTruthy();
+    expect(screen.queryByText("Loading campaign evidence…")).toBeNull();
+  });
+
+  it("keeps About available when campaign evidence fails to load", async () => {
+    window.history.replaceState(null, "", "/?view=about");
+    let resolveFetch: (response: Response) => void = () => undefined;
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(
+        () =>
+          new Promise<Response>((resolve) => {
+            resolveFetch = resolve;
+          }),
+      ),
+    );
+
+    render(<App />);
+    await act(async () => {
+      resolveFetch(new Response("unavailable", { status: 503 }));
+    });
+
+    expect(
+      screen.getByRole("heading", {
+        name: "From standard text to reproducible evidence",
+      }),
+    ).toBeTruthy();
+    expect(screen.queryByText("Evidence dataset unavailable")).toBeNull();
   });
 
   it("filters campaign choices by an inclusive date range", async () => {

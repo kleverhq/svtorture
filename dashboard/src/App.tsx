@@ -8,6 +8,7 @@ import {
   type KeyboardEvent,
 } from "react";
 
+import { AboutView } from "./AboutView";
 import { CampaignView } from "./CampaignView";
 import { CorpusCoverage } from "./CorpusCoverage";
 import { EvidenceView } from "./EvidenceView";
@@ -29,9 +30,10 @@ import {
   type TrendRange,
 } from "./model";
 import { ThemeControl } from "./ThemeControl";
+import type { Dataset } from "./types";
 import { useDataset } from "./useDataset";
 
-type View = "overview" | "matrix" | "evidence" | "trends" | "campaigns";
+type View = "overview" | "matrix" | "evidence" | "trends" | "campaigns" | "about";
 
 const VIEWS: Array<{ id: View; label: string }> = [
   { id: "overview", label: "Overview" },
@@ -39,6 +41,7 @@ const VIEWS: Array<{ id: View; label: string }> = [
   { id: "evidence", label: "Cases" },
   { id: "trends", label: "Trends" },
   { id: "campaigns", label: "Campaigns" },
+  { id: "about", label: "About" },
 ];
 
 function initialView(): View {
@@ -46,6 +49,86 @@ function initialView(): View {
   return VIEWS.some((view) => view.id === requested)
     ? (requested as View)
     : "overview";
+}
+
+function SiteHeader({ dataset }: { dataset: Dataset | undefined }) {
+  return (
+    <header className="site-header">
+      <a className="brand" href="?" aria-label="SVTORTURE dashboard home">
+        <span className="brand__mark">SV</span>
+        <span>
+          <strong>SVTORTURE</strong>
+          <small>SystemVerilog conformance framework for EDA tools</small>
+        </span>
+      </a>
+      <div className="site-header__meta">
+        {dataset && (
+          <>
+            <span className={`visibility visibility--${dataset.visibility}`}>
+              {dataset.visibility}
+            </span>
+            <span>{dataset.campaigns.length} campaigns</span>
+          </>
+        )}
+        <a
+          className="github-link"
+          href="https://github.com/kleverhq/svtorture"
+          target="_blank"
+          rel="noreferrer"
+        >
+          GitHub ↗
+        </a>
+        <ThemeControl />
+      </div>
+    </header>
+  );
+}
+
+function ViewTabs({
+  view,
+  onSelect,
+}: {
+  view: View;
+  onSelect: (view: View) => void;
+}) {
+  const moveFocus = (
+    event: KeyboardEvent<HTMLButtonElement>,
+    index: number,
+  ) => {
+    let nextIndex: number | undefined;
+    if (event.key === "ArrowRight") nextIndex = (index + 1) % VIEWS.length;
+    if (event.key === "ArrowLeft") nextIndex = (index - 1 + VIEWS.length) % VIEWS.length;
+    if (event.key === "Home") nextIndex = 0;
+    if (event.key === "End") nextIndex = VIEWS.length - 1;
+    if (nextIndex === undefined) return;
+    event.preventDefault();
+    event.currentTarget.parentElement
+      ?.querySelectorAll<HTMLButtonElement>("[role=tab]")
+      [nextIndex]?.focus();
+  };
+
+  return (
+    <div className="view-tabs" role="tablist" aria-label="Dashboard views">
+      {VIEWS.map((item, index) => {
+        const selected = view === item.id;
+        return (
+          <button
+            type="button"
+            role="tab"
+            id={`${item.id}-tab`}
+            key={item.id}
+            aria-selected={selected}
+            aria-controls="dashboard-view-panel"
+            tabIndex={selected ? 0 : -1}
+            onClick={() => onSelect(item.id)}
+            onKeyDown={(event) => moveFocus(event, index)}
+          >
+            {item.label}
+          </button>
+        );
+      })}
+    </div>
+  );
 }
 
 export default function App() {
@@ -58,7 +141,13 @@ export default function App() {
   const [workspaceHeight, setWorkspaceHeight] = useState(0);
   const workspaceRef = useRef<HTMLElement>(null);
   useEffect(() => {
-    window.history.replaceState(null, "", filtersToSearch(filters, view, trend));
+    const search = filtersToSearch(
+      view === "about" ? EMPTY_FILTERS : filters,
+      view,
+      trend,
+    );
+    const hash = view === "about" ? window.location.hash : "";
+    window.history.replaceState(null, "", `${search}${hash}`);
   }, [filters, trend, view]);
   useLayoutEffect(() => {
     const workspace = workspaceRef.current;
@@ -69,7 +158,7 @@ export default function App() {
     const observer = new ResizeObserver(measure);
     observer.observe(workspace);
     return () => observer.disconnect();
-  }, [state.dataset]);
+  }, [state.dataset, view]);
   useEffect(() => {
     const dataset = state.dataset;
     if (!dataset) return;
@@ -169,6 +258,38 @@ export default function App() {
       setTrend((current) => ({ ...current, parts, point: "" })),
     [],
   );
+
+  if (view === "about") {
+    return (
+      <>
+        <SiteHeader dataset={state.dataset} />
+        <main
+          className="dashboard dashboard--about"
+          style={{ "--workspace-height": `${workspaceHeight}px` } as CSSProperties}
+        >
+          <section
+            className="workspace-bar"
+            aria-label="Dashboard controls"
+            ref={workspaceRef}
+          >
+            <ViewTabs view={view} onSelect={setView} />
+          </section>
+          <div
+            className="view-panel"
+            role="tabpanel"
+            id="dashboard-view-panel"
+            aria-labelledby="about-tab"
+            tabIndex={0}
+          >
+            <AboutView />
+          </div>
+        </main>
+        <footer>
+          <span>SVTORTURE · Apache-2.0</span>
+        </footer>
+      </>
+    );
+  }
 
   if (state.error) {
     return (
@@ -296,60 +417,21 @@ export default function App() {
     }));
     setView("matrix");
   };
-  const moveTabFocus = (
-    event: KeyboardEvent<HTMLButtonElement>,
-    index: number,
-  ) => {
-    let nextIndex: number | undefined;
-    if (event.key === "ArrowRight") nextIndex = (index + 1) % VIEWS.length;
-    if (event.key === "ArrowLeft") nextIndex = (index - 1 + VIEWS.length) % VIEWS.length;
-    if (event.key === "Home") nextIndex = 0;
-    if (event.key === "End") nextIndex = VIEWS.length - 1;
-    if (nextIndex === undefined) return;
-    event.preventDefault();
-    event.currentTarget.parentElement
-      ?.querySelectorAll<HTMLButtonElement>("[role=tab]")
-      [nextIndex]?.focus();
-  };
-
   return (
     <>
-      <header className="site-header">
-        <a className="brand" href="?" aria-label="SVTORTURE dashboard home">
-          <span className="brand__mark">SV</span>
-          <span>
-            <strong>SVTORTURE</strong>
-            <small>SystemVerilog conformance framework for EDA tools</small>
-          </span>
-        </a>
-        <div className="site-header__meta">
-          <span className={`visibility visibility--${dataset.visibility}`}>
-            {dataset.visibility}
-          </span>
-          <span>{dataset.campaigns.length} campaigns</span>
-          <a
-            className="github-link"
-            href="https://github.com/kleverhq/svtorture"
-            target="_blank"
-            rel="noreferrer"
-          >
-            GitHub ↗
-          </a>
-          <ThemeControl />
-        </div>
-      </header>
+      <SiteHeader dataset={dataset} />
 
       <main
         className={`dashboard${view === "trends" ? " dashboard--trends" : ""}`}
         style={{ "--workspace-height": `${workspaceHeight}px` } as CSSProperties}
       >
         <section
-          className={`campaign-overview${
-            view === "trends" ? " campaign-overview--disabled" : ""
-          }`}
-          aria-label="Campaign selection"
-          aria-disabled={view === "trends"}
-        >
+            className={`campaign-overview${
+              view === "trends" ? " campaign-overview--disabled" : ""
+            }`}
+            aria-label="Campaign selection"
+            aria-disabled={view === "trends"}
+          >
             <label className="campaign-overview__campaign">
               <span>Campaign</span>
               <select
@@ -412,7 +494,7 @@ export default function App() {
                 }
               />
             </label>
-          </section>
+        </section>
 
         {view === "matrix" && (
           <CorpusCoverage
@@ -429,40 +511,21 @@ export default function App() {
           aria-label="Dashboard controls"
           ref={workspaceRef}
         >
-          <div className="view-tabs" role="tablist" aria-label="Dashboard views">
-            {VIEWS.map((item, index) => {
-              const selected = view === item.id;
-              return (
-                <button
-                  type="button"
-                  role="tab"
-                  id={`${item.id}-tab`}
-                  key={item.id}
-                  aria-selected={selected}
-                  aria-controls="dashboard-view-panel"
-                  tabIndex={selected ? 0 : -1}
-                  onClick={() => setView(item.id)}
-                  onKeyDown={(event) => moveTabFocus(event, index)}
-                >
-                  {item.label}
-                </button>
-              );
-            })}
-          </div>
+          <ViewTabs view={view} onSelect={setView} />
           <Filters
-            dataset={dataset}
-            campaign={campaign}
-            filters={filters}
-            setFilters={setFilters}
-            onReset={resetLocalFilters}
-            mode={
-              view === "matrix" || view === "evidence"
-                ? "corpus"
-                : view
-            }
-            trendKind={view === "trends" ? trend.kind : undefined}
-            standardParts={dataset.corpus_coverage.requirements.breakdown}
-            selectedParts={trend.parts}
+              dataset={dataset}
+              campaign={campaign}
+              filters={filters}
+              setFilters={setFilters}
+              onReset={resetLocalFilters}
+              mode={
+                view === "matrix" || view === "evidence"
+                  ? "corpus"
+                  : view
+              }
+              trendKind={view === "trends" ? trend.kind : undefined}
+              standardParts={dataset.corpus_coverage.requirements.breakdown}
+              selectedParts={trend.parts}
             onSelectedPartsChange={setTrendParts}
           />
         </section>

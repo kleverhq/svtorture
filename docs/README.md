@@ -3,4 +3,5 @@
 This directory explains the architecture, IEEE annotation pipeline, conformance
 methodology, case and tool workflows, and exact campaign reproduction. Start
 with `architecture.md` for the system map, `annotation.md` for anchor generation,
-or `methodology.md` for evidence and scoring semantics.
+or `methodology.md` for evidence and scoring semantics. For a short illustrated
+introduction, see [`about/README.md`](about/README.md).

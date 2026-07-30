@@ -7,7 +7,7 @@ server or live database.
 
 ## Views
 
-The interface provides five URL-filtered views. **Overview** is shown by default:
+The interface provides six URL-backed views. **Overview** is shown by default:
 
 - **Overview** — a compact sortable tool table with requirement-level Pass,
   Fail, and Unclear totals, pass rate, and the reported tool version. Selecting
@@ -23,7 +23,9 @@ The interface provides five URL-filtered views. **Overview** is shown by default
   Density. Coverage and Density each compare Requirements and Cases lines, with
   rolling UTC ranges, zoom, reference levels, and point provenance;
 - **Campaigns** — compact run records with expandable corpus, tool source,
-  image, platform, and trust provenance.
+  image, platform, and trust provenance;
+- **About** — an illustrated guide from IEEE anchors and requirements through
+  cases, tools, campaign evidence, reproduction, and publication.
 
 Requirements and Cases include a compact corpus summary that expands into all
 standard chapters and annexes. Requirements Coverage is unique referenced
