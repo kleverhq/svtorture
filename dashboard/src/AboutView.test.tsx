@@ -43,27 +43,27 @@ describe("AboutView", () => {
     }
     expect(
       screen.getByAltText(
-        "Flow from the IEEE standard through requirements and cases to campaign evidence",
+        "Diagram of the IEEE standard, requirements, cases, tool profiles, campaign, and dashboard",
       ),
     ).toBeTruthy();
     expect(
       screen.getByAltText(
-        "Traceable requirements linked to standard anchors and corpus metrics",
+        "Diagram linking standard anchors to a requirement and corpus metrics",
       ),
     ).toBeTruthy();
     expect(
       screen.getByAltText(
-        "Executable cases pairing source code with phase-specific oracles",
+        "Diagram linking case source and oracle to accepted and rejected outcomes",
       ),
     ).toBeTruthy();
     expect(
       screen.getByAltText(
-        "Cumulative tool phases and the checks that decide case applicability",
+        "Diagram of cumulative tool phases and case applicability checks",
       ),
     ).toBeTruthy();
     expect(
       screen.getByAltText(
-        "Campaign evidence flowing into dashboard investigation and reproduction",
+        "Diagram of campaign contents and dashboard uses",
       ),
     ).toBeTruthy();
   });

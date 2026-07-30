@@ -92,25 +92,25 @@ export function AboutView() {
             <div>
               <h2>Overview</h2>
               <p className="about-section__lead">
-                Broad compatibility suites are valuable. SVTORTURE goes deeper:
-                it preserves the chain from a normative rule to the evidence used
-                for one conformance judgment.
+                Compatibility suites such as <code>sv-tests</code> cover many
+                language features and tools. SVTORTURE focuses on the evidence
+                behind each result.
               </p>
               <p>
-                Inspired by <code>sv-tests</code>, it is neither a fork nor a
-                replacement. The corpus is built around exact phases, shared
-                oracles, and reproducible observations rather than tool behavior.
+                It is not a fork or replacement. Each case has an explicit target
+                phase and oracle, and every result can be traced back to a
+                requirement.
               </p>
             </div>
           </div>
           <GuideFigure
             id="standards-flow"
             src={standardsToEvidence}
-            alt="Flow from the IEEE standard through requirements and cases to campaign evidence"
+            alt="Diagram of the IEEE standard, requirements, cases, tool profiles, campaign, and dashboard"
             width={1342}
             height={578}
-            caption="The standard supplies the expectation; tools supply observations."
-            description="The IEEE source is annotated into stable anchors and falsifiable requirements. Cases and applicable tool profiles enter the runner; its normalized campaign evidence is then inspected in the dashboard."
+            caption="The standard defines expected behavior. Tools provide observations."
+            description="Annotation assigns stable anchors to IEEE source blocks, and requirements cite those anchors. Cases and compatible tool profiles go to the runner. It records campaign results for the dashboard."
           />
         </section>
 
@@ -120,25 +120,25 @@ export function AboutView() {
             <div>
               <h2>Requirements</h2>
               <p className="about-section__lead">
-                Annotation gives every paragraph, list item, table, figure, and
-                other source block a stable anchor. One or more anchors support a
-                concise, falsifiable requirement.
+                The annotator assigns a stable anchor to each source block,
+                including paragraphs, list items, tables, and figures. A
+                requirement cites one or more of these anchors.
               </p>
               <p>
-                IEEE 1800-2023 is the authority. Each requirement also records
-                whether its rule applies to 1800-2012 and 1800-2017, so older tool
-                modes are assessed instead of guessed.
+                IEEE 1800-2023 supplies the normative text. Each requirement also
+                records whether the rule applies to 1800-2012 and 1800-2017 tool
+                modes.
               </p>
             </div>
           </div>
           <GuideFigure
             id="requirements-flow"
             src={traceableRequirements}
-            alt="Traceable requirements linked to standard anchors and corpus metrics"
+            alt="Diagram linking standard anchors to a requirement and corpus metrics"
             width={1222}
             height={633}
-            caption="Traceability keeps every distilled rule connected to its normative basis."
-            description="Paragraph, list-item, table, and figure anchors support a central requirement. Related-clause references preserve context, while coverage and density measure anchor reach and link depth."
+            caption="Each requirement retains links to the standard text it came from."
+            description="Paragraph, list item, table, and figure anchors can support a requirement. Related clause references record its context. Coverage measures how many anchors are cited; density measures the number of links to cited anchors."
           />
           <dl className="about-formulas">
             <div>
@@ -147,7 +147,7 @@ export function AboutView() {
             </div>
             <div>
               <dt>Density</dt>
-              <dd>How many requirement–anchor links support each referenced anchor?</dd>
+              <dd>How many requirement-to-anchor links support each referenced anchor?</dd>
             </div>
           </dl>
         </section>
@@ -158,26 +158,26 @@ export function AboutView() {
             <div>
               <h2>Cases</h2>
               <p className="about-section__lead">
-                A case materializes one primary requirement as minimal,
-                tool-neutral source and a phase-specific oracle.
+                A case turns one primary requirement into minimal, tool-neutral
+                source and an oracle for a specific phase.
               </p>
               <p>
-                Source may need to preprocess, parse, elaborate, simulate, or be
-                rejected with a matching diagnostic at the exact case anchor. A
-                separate diagnostic oracle requires a matching message at that
-                exact anchor without requiring rejection. Related requirements retain context
-                without changing the primary scoring unit.
+                The source may need to preprocess, parse, elaborate, simulate, or
+                fail with a matching diagnostic at the exact case anchor. A
+                diagnostic oracle can require that message without requiring a
+                nonzero exit. Related requirements record additional context but
+                do not change which requirement is scored.
               </p>
             </div>
           </div>
           <GuideFigure
             id="cases-flow"
             src={executableCases}
-            alt="Executable cases pairing source code with phase-specific oracles"
+            alt="Diagram linking case source and oracle to accepted and rejected outcomes"
             width={1222}
             height={638}
-            caption="A negative test passes only when evidence identifies the intended rejection."
-            description="Primary and related requirements lead to minimal source and one exact oracle. The oracle distinguishes static acceptance, simulation with a PASS marker, a diagnostic at the exact case anchor, and nonzero rejection with an anchored diagnostic."
+            caption="A negative case passes only when the tool rejects the intended construct."
+            description="The case combines its primary requirement, related context, source files, and one oracle. The oracle can require static acceptance, a simulation PASS marker, a diagnostic at the exact case anchor, or a nonzero exit with that diagnostic."
           />
           <dl className="about-formulas">
             <div>
@@ -186,13 +186,13 @@ export function AboutView() {
             </div>
             <div>
               <dt>Cases Density</dt>
-              <dd>Case–requirement links ÷ linked requirements.</dd>
+              <dd>Case-to-requirement links ÷ linked requirements.</dd>
             </div>
           </dl>
           <p className="about-note">
-            Cases supply observations. The headline pass rate then counts
-            requirements whose selected mandatory variants all conform—not raw
-            case totals.
+            The dashboard does not calculate the headline pass rate from raw case
+            totals. It counts a requirement only when all selected mandatory
+            variants conform.
           </p>
         </section>
 
@@ -202,34 +202,42 @@ export function AboutView() {
             <div>
               <h2>Tools</h2>
               <p className="about-section__lead">
-                Preprocessing, parsing, elaboration, and simulation form one
-                cumulative pipeline. A profile declares the deepest phase it can
-                reach and the phases it can observe directly.
+                Tool phases are cumulative: parsing includes preprocessing,
+                elaboration includes parsing, and simulation includes elaboration.
+                A profile states its maximum phase and which phases it observes
+                directly.
               </p>
               <p>
-                SVTORTURE uses the deepest suitable command and records whether
-                the resulting evidence is direct, cumulative, or not observed. A
-                case runs only when its phase and standard revision apply.
+                The runner uses the deepest suitable command and marks the
+                evidence as direct, cumulative, or not observed. It skips a case
+                when the target phase or standard revision does not apply.
               </p>
             </div>
           </div>
           <GuideFigure
             id="tools-flow"
             src={toolApplicability}
-            alt="Cumulative tool phases and the checks that decide case applicability"
+            alt="Diagram of cumulative tool phases and case applicability checks"
             width={1222}
             height={652}
-            caption="Later phases include the earlier language-processing phases."
-            description="Preprocessing sits inside parsing, which sits inside elaboration and simulation. The case phase, selected standard revision, and integration availability decide whether a profile can run it."
+            caption="A later phase includes all earlier language-processing phases."
+            description="The nested boxes show the phase order. Before running a case, SVTORTURE checks the profile phase, selected standard revision, and whether the tool integration is available."
           />
           <div className="about-split-facts">
             <div>
               <b>Open source</b>
-              <p>A moving upstream reference is resolved to an immutable revision before the project-controlled Docker build; eligible public evidence.</p>
+              <p>
+                SVTORTURE resolves the upstream reference to an immutable
+                revision, then builds the project Docker image. These results can
+                be published.
+              </p>
             </div>
             <div>
               <b>Commercial</b>
-              <p>Ignored machine-local runner configuration; local evidence only.</p>
+              <p>
+                An ignored machine-local configuration invokes the commercial
+                runner. These results stay local.
+              </p>
             </div>
           </div>
         </section>
@@ -240,26 +248,27 @@ export function AboutView() {
             <div>
               <h2>Campaigns</h2>
               <p className="about-section__lead">
-                One campaign is the immutable evidence bundle for a selected grid
-                of tools, profiles, and cases.
+                A campaign contains the results for a selected set of tools,
+                profiles, and cases. Once written, the campaign record does not
+                change.
               </p>
               <p>
-                The launcher runs independent jobs, keeps stages within each job
-                sequential, and records normalized results. Runnable observations
-                retain versions, hashes, commands, diagnostics, bounded output,
-                and reproduction data; synthetic or incomplete statuses remain
-                explicit even when they cannot be replayed.
+                The runner schedules combinations independently but executes the
+                stages of each combination in order. Runnable results retain the
+                version, hashes, command, diagnostics, bounded output, and replay
+                data. Synthetic and incomplete results remain visible even when
+                they cannot be replayed.
               </p>
             </div>
           </div>
           <GuideFigure
             id="campaign-flow"
             src={campaignToDashboard}
-            alt="Campaign evidence flowing into dashboard investigation and reproduction"
+            alt="Diagram of campaign contents and dashboard uses"
             width={1302}
             height={643}
-            caption="Transient full logs stay local; compact evidence and full-stream hashes survive."
-            description="The run grid feeds one immutable campaign containing normalized evidence and explicit synthetic statuses. The static dashboard connects runnable observations to inspection, compact reproduction, and focused reporting."
+            caption="Campaigns store excerpts and full-stream hashes. Full logs stay local."
+            description="Each tool, profile, and case combination produces a normalized result or an explicit synthetic status. The dashboard reads the campaign record and links runnable results to their replay commands."
           />
         </section>
 
@@ -269,25 +278,40 @@ export function AboutView() {
             <div>
               <h2>Dashboard</h2>
               <p className="about-section__lead">
-                The dashboard is a static evidence browser—not a live database
-                and not a scoreboard detached from its corpus.
+                The dashboard reads static campaign exports. It has no application
+                server or live database, and every score stays linked to its
+                requirements and cases.
               </p>
               <p>
-                Periodic public campaigns can track resolved upstream mainline
-                revisions. Local exports may also include commercial evidence,
-                but public export policy excludes it.
+                Public campaigns can periodically test resolved upstream mainline
+                revisions. Local exports may include commercial results, but the
+                public export policy removes them.
               </p>
             </div>
           </div>
           <div className="about-actions" aria-label="Dashboard uses">
-            <div><span>01</span><b>Compare</b><p>Read pass rate, completeness, and trends with exact provenance.</p></div>
-            <div><span>02</span><b>Investigate</b><p>Move from a requirement to cases, source, diagnostics, and output.</p></div>
-            <div><span>03</span><b>Reproduce</b><p>Copy a compact command for one exact result and share it in a bug report.</p></div>
+            <div>
+              <span>01</span>
+              <b>Compare</b>
+              <p>Compare pass rate, completeness, and trends for the selected corpus.</p>
+            </div>
+            <div>
+              <span>02</span>
+              <b>Investigate</b>
+              <p>
+                Open a requirement, then inspect its cases, source, diagnostics,
+                and output.
+              </p>
+            </div>
+            <div>
+              <span>03</span>
+              <b>Reproduce</b>
+              <p>
+                Copy the replay command for a result and include the evidence in
+                a bug report.
+              </p>
+            </div>
           </div>
-          <p className="about-closing">
-            The useful unit is not a green cell. It is an expectation, an
-            observation, and the traceable evidence connecting them.
-          </p>
         </section>
       </article>
     </div>

@@ -1,109 +1,103 @@
 # About SVTORTURE
 
-SVTORTURE is a standards-driven SystemVerilog conformance framework. It turns
-normative language into traceable requirements, executable cases, normalized
-tool observations, and reproducible campaign evidence.
+SVTORTURE tests SystemVerilog tools against requirements derived from the
+standard. A campaign records the cases that ran, the tool observations, and the
+information needed to inspect or replay a result.
 
-This is a visual orientation, not a second specification of framework behavior.
-See [architecture](../architecture.md), [methodology](../methodology.md), and
-[reproduction](../reproduction.md) for the authoritative details.
+This page is a short visual guide. The detailed rules live in
+[architecture](../architecture.md), [methodology](../methodology.md), and
+[reproduction](../reproduction.md).
 
 ## Overview
 
-Broad compatibility suites are valuable. Inspired by `sv-tests`, SVTORTURE goes
-deeper by preserving the chain from one normative rule to one conformance
-judgment. It is neither a fork nor a replacement: its focus is exact phases,
-shared oracles, and reproducible evidence.
+Compatibility suites such as `sv-tests` cover many language features and tools.
+SVTORTURE focuses on the evidence behind each result. It is not a fork or
+replacement. Each case has an explicit target phase and oracle, and every result
+can be traced back to a requirement.
 
-![Flow from the IEEE standard through requirements and cases to campaign evidence](assets/standards-to-evidence.drawio.png)
+![Diagram of the IEEE standard, requirements, cases, tool profiles, campaign, and dashboard](assets/standards-to-evidence.drawio.png)
 
-The standard supplies the expectation; tools supply observations. IEEE
-1800-2023 is the authoritative corpus. Annotation assigns stable anchors to
+The standard defines expected behavior; tools provide observations. IEEE
+1800-2023 supplies the normative text. The annotator assigns stable anchors to
 source blocks before requirements or cases are written.
 
 ## Requirements
 
-A requirement is a concise, falsifiable statement distilled from one or more
-anchored paragraphs, list items, tables, figures, or other source blocks. It
-keeps its clause, tags, anchor links, related-clause references, and
-applicability to IEEE 1800-2012, 1800-2017, and 1800-2023.
+A requirement is a testable statement supported by one or more anchored source
+blocks, such as paragraphs, list items, tables, or figures. Its metadata includes
+the clause, tags, anchor links, related clauses, and applicability to IEEE
+1800-2012, 1800-2017, and 1800-2023.
 
-![Traceable requirements linked to standard anchors and corpus metrics](assets/traceable-requirements.drawio.png)
+![Diagram linking standard anchors to a requirement and corpus metrics](assets/traceable-requirements.drawio.png)
 
-- **Requirements Coverage** is unique referenced anchors divided by all
-  standard anchors.
-- **Requirements Density** is unique requirement–anchor links divided by
-  covered anchors.
+Requirements Coverage is the number of unique cited anchors divided by all
+standard anchors. Requirements Density is the number of unique
+requirement-to-anchor links divided by cited anchors.
 
 See [annotation](../annotation.md) for anchor construction and
-[methodology](../methodology.md) for metric semantics.
+[methodology](../methodology.md) for the metric definitions.
 
 ## Cases
 
-A case materializes one primary requirement as minimal, tool-neutral source and
-an exact oracle for one target phase. It can require successful preprocessing,
-parsing, elaboration, or simulation; a simulation PASS marker; or nonzero
-rejection with a matching diagnostic at the exact case anchor. A diagnostic
-oracle separately requires a matching diagnostic at that exact anchor without
-requiring rejection. Related requirements preserve context without changing the
-primary scoring unit.
+A case turns one primary requirement into minimal, tool-neutral source and an
+oracle for a specific phase. The source may need to preprocess, parse, elaborate,
+simulate, or fail with a matching diagnostic at the exact case anchor. A
+diagnostic oracle can require that message without requiring a nonzero exit.
+Related requirements record additional context but do not change which
+requirement is scored.
 
-![Executable cases pairing source code with phase-specific oracles](assets/executable-cases.drawio.png)
+![Diagram linking case source and oracle to accepted and rejected outcomes](assets/executable-cases.drawio.png)
 
-- **Cases Coverage** is unique requirements linked from cases divided by all
-  catalog requirements.
-- **Cases Density** is unique case–requirement links divided by covered
-  requirements.
+Cases Coverage is the number of unique requirements linked from cases divided by
+all catalog requirements. Cases Density is the number of unique
+case-to-requirement links divided by linked requirements.
 
-Cases provide observations. The headline pass rate counts requirements whose
-selected mandatory variants all conform; it is not a raw passed-case ratio. See
-[adding a case](../adding-a-case.md) for the complete metadata and source
-workflow.
+The dashboard does not calculate the headline pass rate from raw case totals. It
+counts a requirement only when all selected mandatory variants conform. See
+[adding a case](../adding-a-case.md) for the metadata and source workflow.
 
 ## Tools
 
-Preprocessing, parsing, elaboration, and simulation form a cumulative pipeline.
-A tool profile declares its deepest phase and which phases it observes directly.
-SVTORTURE uses the deepest suitable command and records evidence as direct,
-cumulative, or not observed. A case runs only when its target phase is within
-the profile ceiling and its selected language revision applies.
+Tool phases are cumulative: parsing includes preprocessing, elaboration includes
+parsing, and simulation includes elaboration. A profile states its maximum phase
+and which phases it observes directly. The runner uses the deepest suitable
+command and marks the evidence as direct, cumulative, or not observed. It skips
+a case when the target phase or selected language revision does not apply.
 
-![Cumulative tool phases and the checks that decide case applicability](assets/tool-applicability.drawio.png)
+![Diagram of cumulative tool phases and case applicability checks](assets/tool-applicability.drawio.png)
 
-Open-source integrations resolve a moving upstream reference to an immutable
-revision before the project-controlled Docker build and can contribute to public
-evidence. Commercial integrations use ignored machine-local runner configuration
-and remain local. See [adding a tool](../adding-a-tool.md) for the portable/private
-boundary.
+For an open-source integration, SVTORTURE resolves the upstream reference to an
+immutable revision and builds the project Docker image. These results can be
+published. An ignored machine-local configuration invokes a commercial runner,
+and those results stay local. See [adding a tool](../adding-a-tool.md) for the
+boundary between committed and local configuration.
 
 ## Campaigns
 
-A campaign is the immutable evidence bundle for one selected grid of tools,
-profiles, and cases. The launcher resolves tool identities and runs independent
-combinations while keeping stages within one combination sequential.
+A campaign contains the results for a selected set of tools, profiles, and cases.
+Once written, the campaign record does not change. The runner schedules
+combinations independently but executes the stages of each combination in order.
 
-![Campaign evidence flowing into dashboard investigation and reproduction](assets/campaign-to-dashboard.drawio.png)
+![Diagram of campaign contents and dashboard uses](assets/campaign-to-dashboard.drawio.png)
 
-For runnable observations, the bundle retains versions and source revisions,
-exact Docker image identity or the external compatible-runner path, commands and
-phases, diagnostics, bounded output excerpts, full-stream hashes, normalized
-judgments, and reproduction data. Synthetic statuses such as unsupported,
-inapplicable, unavailable, or preparation failure remain explicit but may not be
-replayable. Commercial runner contents and commands are never embedded. Full
-transient logs stay local.
+Runnable results retain the source revision, reported version, exact Docker image
+identity or external runner path, commands, diagnostics, bounded output excerpts,
+full-stream hashes, and replay data. Synthetic statuses such as unsupported,
+inapplicable, unavailable, or preparation failure remain visible even when they
+cannot be replayed. Commercial runner contents and commands are not embedded.
+Full logs stay local.
 
 ## Dashboard
 
-The dashboard is a static evidence browser, not a live database and not a
-scoreboard detached from its corpus. It connects pass rate and completeness to
-requirements, anchors, cases, source, diagnostics, outputs, campaign provenance,
-and historical trends. A compact reproduction command helps turn an observed
-difference into a focused bug report.
+The dashboard reads static campaign exports. It has no application server or
+live database, and every score stays linked to its requirements and cases. Users
+can inspect pass rate, completeness, source, diagnostics, output, campaign
+provenance, and historical trends. Runnable results include a replay command
+that can be attached to a bug report.
 
-Periodic public campaigns can track resolved upstream mainline revisions. Local
-exports may include commercial evidence, but the public export policy excludes
-it. The useful unit is not a green cell: it is an expectation, an observation,
-and the traceable evidence connecting them.
+Public campaigns can periodically test resolved upstream mainline revisions.
+Local exports may include commercial results, but the public export policy
+removes them.
 
-The `*.drawio.png` illustrations embed their Draw.io models and can be opened
-for editing directly in Draw.io Desktop.
+The `*.drawio.png` illustrations embed their Draw.io models and can be opened in
+Draw.io Desktop for editing.
