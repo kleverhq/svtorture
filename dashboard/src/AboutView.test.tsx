@@ -30,11 +30,7 @@ describe("AboutView", () => {
   it("presents the framework as a concise illustrated evidence flow", () => {
     render(<AboutView />);
 
-    expect(
-      screen.getByRole("heading", {
-        name: "From standard text to reproducible evidence",
-      }),
-    ).toBeTruthy();
+    expect(screen.getByRole("heading", { name: "Overview" })).toBeTruthy();
     const images = screen.getAllByRole("img");
     expect(images).toHaveLength(5);
     expect(

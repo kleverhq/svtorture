@@ -85,21 +85,7 @@ export function AboutView() {
         </a>
       </nav>
 
-      <article className="about-story" aria-labelledby="about-title">
-        <header className="about-hero">
-          <span className="section-label">About SVTORTURE</span>
-          <h1 id="about-title">From standard text to reproducible evidence</h1>
-          <p>
-            A standards-driven SystemVerilog conformance framework for asking a
-            precise question: does this tool implement this normative rule?
-          </p>
-          <div className="about-principles" aria-label="Framework principles">
-            <span><b>Normative</b>IEEE 1800 defines the oracle</span>
-            <span><b>Traceable</b>Every case leads back to anchors</span>
-            <span><b>Reproducible</b>Every result keeps its identity</span>
-          </div>
-        </header>
-
+      <article className="about-story" aria-label="About SVTORTURE">
         <section className="about-section" id="overview">
           <div className="about-section__copy">
             <span className="about-section__number">01</span>

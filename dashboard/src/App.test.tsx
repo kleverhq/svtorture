@@ -572,11 +572,7 @@ describe("App overview navigation", () => {
     const aboutTab = screen.getByRole("tab", { name: "About" });
     expect(tabs.at(-1)).toBe(aboutTab);
     expect(aboutTab.getAttribute("aria-selected")).toBe("true");
-    expect(
-      screen.getByRole("heading", {
-        name: "From standard text to reproducible evidence",
-      }),
-    ).toBeTruthy();
+    expect(screen.getByRole("heading", { name: "Overview" })).toBeTruthy();
     const campaignSelection = screen.getByLabelText("Campaign selection");
     expect(campaignSelection.getAttribute("aria-disabled")).toBe("true");
     expect(
@@ -598,11 +594,7 @@ describe("App overview navigation", () => {
 
     render(<App />);
 
-    expect(
-      screen.getByRole("heading", {
-        name: "From standard text to reproducible evidence",
-      }),
-    ).toBeTruthy();
+    expect(screen.getByRole("heading", { name: "Overview" })).toBeTruthy();
     expect(screen.queryByText("Loading campaign evidence…")).toBeNull();
     expect(
       (screen.getByLabelText("Campaign") as HTMLSelectElement).disabled,
@@ -627,11 +619,7 @@ describe("App overview navigation", () => {
       resolveFetch(new Response("unavailable", { status: 503 }));
     });
 
-    expect(
-      screen.getByRole("heading", {
-        name: "From standard text to reproducible evidence",
-      }),
-    ).toBeTruthy();
+    expect(screen.getByRole("heading", { name: "Overview" })).toBeTruthy();
     expect(screen.queryByText("Evidence dataset unavailable")).toBeNull();
   });
 
