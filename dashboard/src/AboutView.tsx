@@ -22,7 +22,6 @@ function GuideFigure({
   alt,
   width,
   height,
-  caption,
   description,
 }: {
   id: string;
@@ -30,7 +29,6 @@ function GuideFigure({
   alt: string;
   width: number;
   height: number;
-  caption: string;
   description: string;
 }) {
   const descriptionId = `${id}-description`;
@@ -52,10 +50,9 @@ function GuideFigure({
           decoding="async"
         />
       </div>
-      <figcaption id={descriptionId}>
-        <b>{caption}</b>
-        <span>{description}</span>
-      </figcaption>
+      <span id={descriptionId} className="visually-hidden">
+        {description}
+      </span>
     </figure>
   );
 }
@@ -109,8 +106,7 @@ export function AboutView() {
             alt="Diagram of the IEEE standard, requirements, cases, tool profiles, campaign, and dashboard"
             width={1342}
             height={578}
-            caption="The standard defines expected behavior. Tools provide observations."
-            description="Annotation assigns stable anchors to IEEE source blocks, and requirements cite those anchors. Cases and compatible tool profiles go to the runner. It records campaign results for the dashboard."
+            description="The standard defines expected behavior and tools provide observations. Annotation assigns stable anchors to IEEE source blocks, and requirements cite those anchors. Cases and compatible tool profiles go to the runner, which records campaign results for the dashboard."
           />
         </section>
 
@@ -125,9 +121,10 @@ export function AboutView() {
                 requirement cites one or more of these anchors.
               </p>
               <p>
-                IEEE 1800-2023 supplies the normative text. Each requirement also
-                records whether the rule applies to 1800-2012 and 1800-2017 tool
-                modes.
+                IEEE 1800-2023 supplies the normative text. Requirements also
+                record 1800-2012 and 1800-2017 applicability. Corpus coverage is
+                the share of anchors cited; density is the number of links per
+                cited anchor.
               </p>
             </div>
           </div>
@@ -137,19 +134,8 @@ export function AboutView() {
             alt="Diagram linking standard anchors to a requirement and corpus metrics"
             width={1222}
             height={633}
-            caption="Each requirement retains links to the standard text it came from."
-            description="Paragraph, list item, table, and figure anchors can support a requirement. Related clause references record its context. Coverage measures how many anchors are cited; density measures the number of links to cited anchors."
+            description="Each requirement retains links to the standard text it came from. Paragraph, list item, table, and figure anchors can support a requirement. Related clause references record its context. Coverage measures how many anchors are cited; density measures the number of links to cited anchors."
           />
-          <dl className="about-formulas">
-            <div>
-              <dt>Coverage</dt>
-              <dd>How much of the anchor inventory is referenced?</dd>
-            </div>
-            <div>
-              <dt>Density</dt>
-              <dd>How many requirement-to-anchor links support each referenced anchor?</dd>
-            </div>
-          </dl>
         </section>
 
         <section className="about-section" id="cases">
@@ -162,11 +148,12 @@ export function AboutView() {
                 source and an oracle for a specific phase.
               </p>
               <p>
-                The source may need to preprocess, parse, elaborate, simulate, or
-                fail with a matching diagnostic at the exact case anchor. A
-                diagnostic oracle can require that message without requiring a
-                nonzero exit. Related requirements record additional context but
-                do not change which requirement is scored.
+                An oracle can require static acceptance, a simulation PASS marker,
+                or rejection with a matching diagnostic at the exact case anchor.
+                Related requirements add context without affecting the score.
+                Coverage tracks linked catalog requirements; density tracks links
+                per linked requirement. The headline pass rate requires every
+                selected mandatory variant to conform.
               </p>
             </div>
           </div>
@@ -176,24 +163,8 @@ export function AboutView() {
             alt="Diagram linking case source and oracle to accepted and rejected outcomes"
             width={1222}
             height={638}
-            caption="A negative case passes only when the tool rejects the intended construct."
-            description="The case combines its primary requirement, related context, source files, and one oracle. The oracle can require static acceptance, a simulation PASS marker, a diagnostic at the exact case anchor, or a nonzero exit with that diagnostic."
+            description="A negative case passes only when the tool rejects the intended construct. The case combines its primary requirement, related context, source files, and one oracle. The oracle can require static acceptance, a simulation PASS marker, a diagnostic at the exact case anchor, or a nonzero exit with that diagnostic."
           />
-          <dl className="about-formulas">
-            <div>
-              <dt>Cases Coverage</dt>
-              <dd>Requirements linked from cases ÷ all catalog requirements.</dd>
-            </div>
-            <div>
-              <dt>Cases Density</dt>
-              <dd>Case-to-requirement links ÷ linked requirements.</dd>
-            </div>
-          </dl>
-          <p className="about-note">
-            The dashboard does not calculate the headline pass rate from raw case
-            totals. It counts a requirement only when all selected mandatory
-            variants conform.
-          </p>
         </section>
 
         <section className="about-section" id="tools">
@@ -208,9 +179,10 @@ export function AboutView() {
                 directly.
               </p>
               <p>
-                The runner uses the deepest suitable command and marks the
-                evidence as direct, cumulative, or not observed. It skips a case
-                when the target phase or standard revision does not apply.
+                The runner checks phase, revision, and availability, then labels
+                evidence as direct, cumulative, or not observed. Open-source
+                revisions are resolved before Docker builds and can be published;
+                commercial runners and their results remain local.
               </p>
             </div>
           </div>
@@ -220,26 +192,8 @@ export function AboutView() {
             alt="Diagram of cumulative tool phases and case applicability checks"
             width={1222}
             height={652}
-            caption="A later phase includes all earlier language-processing phases."
-            description="The nested boxes show the phase order. Before running a case, SVTORTURE checks the profile phase, selected standard revision, and whether the tool integration is available."
+            description="A later phase includes all earlier language-processing phases. The nested boxes show the phase order. Before running a case, SVTORTURE checks the profile phase, selected standard revision, and whether the tool integration is available."
           />
-          <div className="about-split-facts">
-            <div>
-              <b>Open source</b>
-              <p>
-                SVTORTURE resolves the upstream reference to an immutable
-                revision, then builds the project Docker image. These results can
-                be published.
-              </p>
-            </div>
-            <div>
-              <b>Commercial</b>
-              <p>
-                An ignored machine-local configuration invokes the commercial
-                runner. These results stay local.
-              </p>
-            </div>
-          </div>
         </section>
 
         <section className="about-section" id="campaigns">
@@ -267,8 +221,7 @@ export function AboutView() {
             alt="Diagram of campaign contents and dashboard uses"
             width={1302}
             height={643}
-            caption="Campaigns store excerpts and full-stream hashes. Full logs stay local."
-            description="Each tool, profile, and case combination produces a normalized result or an explicit synthetic status. The dashboard reads the campaign record and links runnable results to their replay commands."
+            description="Campaigns store excerpts and full-stream hashes while full logs stay local. Each tool, profile, and case combination produces a normalized result or an explicit synthetic status. The dashboard reads the campaign record and links runnable results to their replay commands."
           />
         </section>
 
