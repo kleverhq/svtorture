@@ -437,6 +437,15 @@ def run(
         str | None,
         typer.Option("--repository", help="Image repository override for a pushed run."),
     ] = None,
+    jobs: Annotated[
+        int,
+        typer.Option(
+            "--jobs",
+            "-j",
+            min=0,
+            help="Maximum concurrent tool/case jobs; 0 uses available CPUs.",
+        ),
+    ] = 0,
     verbose: Annotated[
         bool,
         typer.Option("--verbose", "-v", help="Stream Docker image preparation output."),
@@ -466,8 +475,9 @@ def run(
         catalog,
         prepared,
         suite_id=suite,
+        jobs=jobs,
         progress=lambda current, total, tool_id, profile_id, case_id: typer.echo(
-            f"run [{current}/{total}]: {tool_id}/{profile_id} {case_id}"
+            f"done [{current}/{total}]: {tool_id}/{profile_id} {case_id}"
         ),
     )
     counts: dict[str, int] = {}

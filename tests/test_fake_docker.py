@@ -91,6 +91,7 @@ def test_fake_container_exercises_executor_campaign_and_reproduction(
             ),
         ),
         suite_id="smoke",
+        jobs=2,
     )
     assert campaign.results
     assert {result.status for result in campaign.results} == {ResultStatus.CONFORMING}

@@ -1,10 +1,13 @@
 from __future__ import annotations
 
 import shutil
+import time
 from pathlib import Path
+from threading import Barrier, Lock, get_ident
 
 import pytest
 
+import svtorture.campaign as campaign_module
 from svtorture.campaign import (
     CampaignError,
     PreparedTool,
@@ -36,6 +39,127 @@ from tests.helpers import (
     normalized,
     observation,
 )
+
+
+def _parallel_prepared(catalog: Catalog) -> tuple[PreparedTool, PreparedTool]:
+    fake = catalog.tools.tool("fake")
+    profile = fake.headline_profile
+    return tuple(
+        PreparedTool(
+            definition=fake.model_copy(
+                update={"id": tool_id, "display_name": f"Parallel {tool_id}"}
+            ),
+            profile=profile,
+            selection=None,
+            image=image_identity(),
+            reported_version="parallel fake",
+            fake_scenario="conform",
+        )
+        for tool_id in ("fake-a", "fake-b")
+    )
+
+
+def _parallel_catalog(catalog: Catalog) -> Catalog:
+    case_ids = catalog.suite_cases["smoke"][:2]
+    return Catalog(
+        root=catalog.root,
+        anchor_index=catalog.anchor_index,
+        inventory=catalog.inventory,
+        tags=catalog.tags,
+        cases=dict(catalog.cases),
+        suites=dict(catalog.suites),
+        suite_cases={**catalog.suite_cases, "parallel-test": case_ids},
+        tools=catalog.tools,
+    )
+
+
+def test_campaign_jobs_share_one_global_pool_and_preserve_result_order(
+    catalog: Catalog, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    parallel_catalog = _parallel_catalog(catalog)
+    prepared = _parallel_prepared(catalog)
+    barrier = Barrier(2)
+    lock = Lock()
+    active = 0
+    maximum_active = 0
+    started: list[tuple[str, str]] = []
+    caller_thread = get_ident()
+    progress_events: list[tuple[int, int]] = []
+
+    def execute(plan, case, adapter, work_dir, *, wrapper=None, cancel_event=None):
+        del case, adapter, work_dir, wrapper, cancel_event
+        nonlocal active, maximum_active
+        with lock:
+            active += 1
+            maximum_active = max(maximum_active, active)
+            started.append((plan.tool_id, plan.case_id))
+        barrier.wait(timeout=1)
+        time.sleep(0.01 if plan.tool_id == "fake-a" else 0.02)
+        with lock:
+            active -= 1
+        return (observation(attempted_through_phase=plan.target_phase),)
+
+    monkeypatch.setattr(campaign_module, "execute_plan", execute)
+    monkeypatch.setattr(campaign_module, "save_campaign", lambda root, campaign: None)
+    campaign = run_campaign(
+        parallel_catalog,
+        prepared,
+        suite_id="parallel-test",
+        jobs=2,
+        progress=lambda current, total, tool_id, profile_id, case_id: progress_events.append(
+            (current, get_ident())
+        ),
+    )
+
+    assert maximum_active == 2
+    assert {tool_id for tool_id, _ in started[:2]} == {"fake-a", "fake-b"}
+    assert progress_events == [(index, caller_thread) for index in range(1, 5)]
+    assert [(result.tool_id, result.case_id) for result in campaign.results] == [
+        (prepared_tool.definition.id, case_id)
+        for prepared_tool in prepared
+        for case_id in campaign.case_ids
+    ]
+
+
+def test_campaign_jobs_one_remains_serial(
+    catalog: Catalog, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    parallel_catalog = _parallel_catalog(catalog)
+    active = 0
+    maximum_active = 0
+    lock = Lock()
+
+    def execute(plan, case, adapter, work_dir, *, wrapper=None, cancel_event=None):
+        del case, adapter, work_dir, wrapper, cancel_event
+        nonlocal active, maximum_active
+        with lock:
+            active += 1
+            maximum_active = max(maximum_active, active)
+        time.sleep(0.01)
+        with lock:
+            active -= 1
+        return (observation(attempted_through_phase=plan.target_phase),)
+
+    monkeypatch.setattr(campaign_module, "execute_plan", execute)
+    monkeypatch.setattr(campaign_module, "save_campaign", lambda root, campaign: None)
+    run_campaign(
+        parallel_catalog,
+        _parallel_prepared(catalog),
+        suite_id="parallel-test",
+        jobs=1,
+    )
+
+    assert maximum_active == 1
+
+
+def test_worker_count_uses_affinity_and_caps_to_work(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setattr(campaign_module.os, "sched_getaffinity", lambda pid: {0, 1, 2})
+    assert campaign_module._worker_count(0, 10) == 3
+    assert campaign_module._worker_count(20, 10) == 10
+    with pytest.raises(CampaignError, match="jobs must be nonnegative"):
+        campaign_module._worker_count(-1, 10)
 
 
 def test_unsupported_phase_is_recorded_without_execution(catalog: Catalog) -> None:

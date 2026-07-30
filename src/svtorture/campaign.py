@@ -12,9 +12,11 @@ import urllib.error
 import urllib.parse
 import urllib.request
 from collections.abc import Callable, Iterable
+from concurrent.futures import Future, ThreadPoolExecutor, as_completed
 from dataclasses import dataclass
 from datetime import UTC, datetime
 from pathlib import Path
+from threading import Event
 from typing import Any
 
 from pydantic import ValidationError
@@ -42,7 +44,7 @@ from svtorture.models import (
     model_to_jsonable,
     phase_reaches,
 )
-from svtorture.process import run_process
+from svtorture.process import ProcessCancelled, run_process
 
 
 class CampaignError(RuntimeError):
@@ -322,11 +324,123 @@ def validate_plan_for_profile(
         raise ValueError("execution plan contradicts the profile's direct phase metadata")
 
 
+def _worker_count(requested: int, work_count: int) -> int:
+    if requested < 0:
+        raise CampaignError("jobs must be nonnegative")
+    if work_count < 1:
+        raise CampaignError("a campaign needs at least one tool/case combination")
+    if requested:
+        available = requested
+    else:
+        try:
+            available = len(os.sched_getaffinity(0))
+        except (AttributeError, OSError):
+            available = os.cpu_count() or 1
+    return min(max(1, available), work_count)
+
+
+def _run_campaign_case(
+    prepared_tool: PreparedTool,
+    loaded: LoadedCase,
+    work_root: Path,
+    cancel_event: Event,
+) -> NormalizedResult:
+    if cancel_event.is_set():
+        raise ProcessCancelled("campaign execution was cancelled")
+    tool = prepared_tool.definition
+    profile = prepared_tool.profile
+    case = loaded.definition
+    if not profile.supports(case.target_phase):
+        return synthetic_result(
+            loaded,
+            tool.id,
+            profile.id,
+            ResultStatus.UNSUPPORTED_CAPABILITY,
+            ReasonCode.UNSUPPORTED_PHASE,
+            f"{tool.display_name}/{profile.id} cannot reach {case.target_phase.value}.",
+        )
+    applicability = case.revision_applicability[profile.standard_revision]
+    if applicability is Applicability.NOT_APPLICABLE:
+        return synthetic_result(
+            loaded,
+            tool.id,
+            profile.id,
+            ResultStatus.NOT_APPLICABLE,
+            ReasonCode.NOT_APPLICABLE,
+            f"The case is not applicable to {profile.standard_revision.value}.",
+        )
+    if applicability in {
+        Applicability.NOT_ASSESSED,
+        Applicability.CHANGED_EXPECTATION,
+    }:
+        return synthetic_result(
+            loaded,
+            tool.id,
+            profile.id,
+            ResultStatus.UNSUPPORTED_REVISION,
+            ReasonCode.UNSUPPORTED_REVISION,
+            (f"The 2023 source/oracle cannot be applied to {profile.standard_revision.value}."),
+        )
+    if tool.execution.value == "local-wrapper" and not wrapper_available(prepared_tool.wrapper):
+        return synthetic_result(
+            loaded,
+            tool.id,
+            profile.id,
+            ResultStatus.SKIPPED_UNAVAILABLE,
+            ReasonCode.TOOL_UNAVAILABLE,
+            "The configured local runner is unavailable.",
+        )
+    adapter = adapter_for(
+        tool.adapter,
+        diagnostic_rules=tool.diagnostic_rules,
+        fake_scenario=prepared_tool.fake_scenario,
+    )
+    image_reference = prepared_tool.image.reference if prepared_tool.image is not None else None
+    wrapper_reference = (
+        prepared_tool.wrapper.command[0] if prepared_tool.wrapper is not None else None
+    )
+    try:
+        plan = adapter.build_plan(
+            loaded,
+            tool,
+            profile,
+            image=image_reference,
+            wrapper=wrapper_reference,
+        )
+        validate_plan_for_profile(
+            plan,
+            loaded,
+            tool,
+            profile,
+            image=image_reference,
+            wrapper=wrapper_reference,
+        )
+        observations = execute_plan(
+            plan,
+            loaded,
+            adapter,
+            work_root / tool.id / profile.id / case.id,
+            wrapper=prepared_tool.wrapper,
+            cancel_event=cancel_event,
+        )
+        return evaluate(loaded, tool.id, profile.id, observations)
+    except (ValueError, ValidationError, ExecutionError) as error:
+        return synthetic_result(
+            loaded,
+            tool.id,
+            profile.id,
+            ResultStatus.HARNESS_ERROR,
+            ReasonCode.INVALID_EXECUTION_PLAN,
+            f"Invalid execution plan: {error}",
+        )
+
+
 def run_campaign(
     catalog: Catalog,
     prepared: tuple[PreparedTool, ...],
     *,
     suite_id: str,
+    jobs: int = 1,
     progress: Callable[[int, int, str, str, str], None] | None = None,
 ) -> Campaign:
     if not prepared:
@@ -352,123 +466,47 @@ def run_campaign(
     )
     campaign_id = f"{started:%Y%m%dT%H%M%SZ}-{identity_hash[:16]}"
     work_root = catalog.root / ".svtorture" / "work" / campaign_id
-    results: list[NormalizedResult] = []
     total_cases = len(prepared) * len(selected)
-    case_number = 0
-    for prepared_tool in prepared:
-        tool = prepared_tool.definition
-        profile = prepared_tool.profile
-        adapter = adapter_for(
-            tool.adapter,
-            diagnostic_rules=tool.diagnostic_rules,
-            fake_scenario=prepared_tool.fake_scenario,
+    worker_count = _worker_count(jobs, total_cases)
+    work_items = [
+        (
+            tool_index * len(selected) + case_index,
+            prepared_tool,
+            loaded,
         )
-        for loaded in selected:
-            case = loaded.definition
-            case_number += 1
+        for case_index, loaded in enumerate(selected)
+        for tool_index, prepared_tool in enumerate(prepared)
+    ]
+    cancel_event = Event()
+
+    def run_one(
+        item: tuple[int, PreparedTool, LoadedCase],
+    ) -> tuple[int, NormalizedResult]:
+        result_index, prepared_tool, loaded = item
+        return (
+            result_index,
+            _run_campaign_case(prepared_tool, loaded, work_root, cancel_event),
+        )
+
+    executor = ThreadPoolExecutor(max_workers=worker_count)
+    futures: list[Future[tuple[int, NormalizedResult]]] = []
+    indexed_results: list[tuple[int, NormalizedResult]] = []
+    try:
+        futures = [executor.submit(run_one, item) for item in work_items]
+        for current, future in enumerate(as_completed(futures), start=1):
+            result_index, result = future.result()
+            indexed_results.append((result_index, result))
             if progress is not None:
-                progress(case_number, total_cases, tool.id, profile.id, case.id)
-            if not profile.supports(case.target_phase):
-                results.append(
-                    synthetic_result(
-                        loaded,
-                        tool.id,
-                        profile.id,
-                        ResultStatus.UNSUPPORTED_CAPABILITY,
-                        ReasonCode.UNSUPPORTED_PHASE,
-                        (
-                            f"{tool.display_name}/{profile.id} cannot reach "
-                            f"{case.target_phase.value}."
-                        ),
-                    )
-                )
-                continue
-            applicability = case.revision_applicability[profile.standard_revision]
-            if applicability is Applicability.NOT_APPLICABLE:
-                results.append(
-                    synthetic_result(
-                        loaded,
-                        tool.id,
-                        profile.id,
-                        ResultStatus.NOT_APPLICABLE,
-                        ReasonCode.NOT_APPLICABLE,
-                        f"The case is not applicable to {profile.standard_revision.value}.",
-                    )
-                )
-                continue
-            if applicability in {
-                Applicability.NOT_ASSESSED,
-                Applicability.CHANGED_EXPECTATION,
-            }:
-                results.append(
-                    synthetic_result(
-                        loaded,
-                        tool.id,
-                        profile.id,
-                        ResultStatus.UNSUPPORTED_REVISION,
-                        ReasonCode.UNSUPPORTED_REVISION,
-                        (
-                            "The 2023 source/oracle cannot be applied to "
-                            f"{profile.standard_revision.value}."
-                        ),
-                    )
-                )
-                continue
-            if tool.execution.value == "local-wrapper" and not wrapper_available(
-                prepared_tool.wrapper
-            ):
-                results.append(
-                    synthetic_result(
-                        loaded,
-                        tool.id,
-                        profile.id,
-                        ResultStatus.SKIPPED_UNAVAILABLE,
-                        ReasonCode.TOOL_UNAVAILABLE,
-                        "The configured local runner is unavailable.",
-                    )
-                )
-                continue
-            image_reference = (
-                prepared_tool.image.reference if prepared_tool.image is not None else None
-            )
-            wrapper_reference = (
-                prepared_tool.wrapper.command[0] if prepared_tool.wrapper is not None else None
-            )
-            try:
-                plan = adapter.build_plan(
-                    loaded,
-                    tool,
-                    profile,
-                    image=image_reference,
-                    wrapper=wrapper_reference,
-                )
-                validate_plan_for_profile(
-                    plan,
-                    loaded,
-                    tool,
-                    profile,
-                    image=image_reference,
-                    wrapper=wrapper_reference,
-                )
-                observations = execute_plan(
-                    plan,
-                    loaded,
-                    adapter,
-                    work_root / tool.id / profile.id / case.id,
-                    wrapper=prepared_tool.wrapper,
-                )
-                results.append(evaluate(loaded, tool.id, profile.id, observations))
-            except (ValueError, ValidationError, ExecutionError) as error:
-                results.append(
-                    synthetic_result(
-                        loaded,
-                        tool.id,
-                        profile.id,
-                        ResultStatus.HARNESS_ERROR,
-                        ReasonCode.INVALID_EXECUTION_PLAN,
-                        f"Invalid execution plan: {error}",
-                    )
-                )
+                progress(current, total_cases, result.tool_id, result.profile_id, result.case_id)
+    except BaseException:
+        cancel_event.set()
+        for future in futures:
+            future.cancel()
+        executor.shutdown(cancel_futures=True)
+        raise
+    else:
+        executor.shutdown()
+    results = [result for _, result in sorted(indexed_results)]
     finished = datetime.now(UTC)
     case_hash = catalog.case_manifest_hash(selected)
     hashes = ManifestHashes(

@@ -65,6 +65,14 @@ wrapper request. Distribution, CI, and publication policy comes from the
 committed per-tool manifest, so
 publishers and workflows never infer it from an adapter name.
 
+After sequential tool preparation, campaign execution flattens every selected
+tool/profile/case combination into one bounded thread pool. Threads coordinate
+external Docker or local-runner processes rather than CPU-bound Python work.
+Combinations can run concurrently, while stages within one combination remain
+sequential and use its isolated work directory. The worker count is one global
+limit; automatic mode uses the CPUs available to the process, and operators can
+lower it for aggregate memory or license-seat constraints.
+
 Campaigns include a full result grid for every selected case and profile plus
 the exact aggregate and per-chapter/annex requirement/case Coverage and Density
 operands computed from the full catalog at collection time. Loading rejects duplicate/missing results,

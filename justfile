@@ -105,8 +105,8 @@ docker-fake:
     SVTORTURE_REQUIRE_DOCKER=1 uv run pytest -m docker
 
 # Miniature current-upstream Docker E2E; ordinary conformance failures exit zero.
-real-smoke tool_ref="icarus@latest":
-    uv run svtorture run --tool "{{tool_ref}}" --suite smoke --exit-policy infra-only
+real-smoke tool_ref="icarus@latest" jobs="0":
+    uv run svtorture run --tool "{{tool_ref}}" --suite smoke --jobs "{{jobs}}" --exit-policy infra-only
 
 # Full local equivalent of pull-request CI.
 ci: setup-ci
@@ -119,28 +119,28 @@ ci: setup-ci
     just real-smoke
 
 # Resolve, build, and run one current upstream over the complete corpus.
-latest tool suite="all":
-    uv run svtorture run --tool "{{tool}}@latest" --suite "{{suite}}" --exit-policy infra-only
+latest tool suite="all" jobs="0":
+    uv run svtorture run --tool "{{tool}}@latest" --suite "{{suite}}" --jobs "{{jobs}}" --exit-policy infra-only
 
 # Run one current upstream while streaming Docker image preparation output.
-latest-verbose tool suite="all":
-    uv run svtorture run --tool "{{tool}}@latest" --suite "{{suite}}" --exit-policy infra-only --verbose
+latest-verbose tool suite="all" jobs="0":
+    uv run svtorture run --tool "{{tool}}@latest" --suite "{{suite}}" --jobs "{{jobs}}" --exit-policy infra-only --verbose
 
 # Resolve an explicit tag, branch, or full SHA before building and running.
-pinned tool ref suite="all":
-    uv run svtorture run --tool "{{tool}}@{{ref}}" --suite "{{suite}}" --exit-policy infra-only
+pinned tool ref suite="all" jobs="0":
+    uv run svtorture run --tool "{{tool}}@{{ref}}" --suite "{{suite}}" --jobs "{{jobs}}" --exit-policy infra-only
 
 # Run all current public upstreams in one campaign.
-public suite="all":
-    tool_args="$(uv run svtorture list tools | awk '$2 == "open-source" { printf "--tool %s@latest ", $1 }')"; uv run svtorture run $tool_args --suite "{{suite}}" --exit-policy infra-only
+public suite="all" jobs="0":
+    tool_args="$(uv run svtorture list tools | awk '$2 == "open-source" { printf "--tool %s@latest ", $1 }')"; uv run svtorture run $tool_args --suite "{{suite}}" --jobs "{{jobs}}" --exit-policy infra-only
 
 # Run all configured commercial tools in one campaign; unavailable wrappers are recorded as skipped.
-commercial suite="all":
-    tool_args="$(uv run svtorture list tools | awk '$2 == "commercial" { printf "--tool %s@local ", $1 }')"; uv run svtorture run $tool_args --suite "{{suite}}" --exit-policy infra-only
+commercial suite="all" jobs="0":
+    tool_args="$(uv run svtorture list tools | awk '$2 == "commercial" { printf "--tool %s@local ", $1 }')"; uv run svtorture run $tool_args --suite "{{suite}}" --jobs "{{jobs}}" --exit-policy infra-only
 
 # Run every public and commercial tool in one local campaign.
-all suite="all":
-    tool_args="$(uv run svtorture list tools | awk '$2 == "open-source" { printf "--tool %s@latest ", $1 } $2 == "commercial" { printf "--tool %s@local ", $1 }')"; uv run svtorture run $tool_args --suite "{{suite}}" --exit-policy infra-only
+all suite="all" jobs="0":
+    tool_args="$(uv run svtorture list tools | awk '$2 == "open-source" { printf "--tool %s@latest ", $1 } $2 == "commercial" { printf "--tool %s@local ", $1 }')"; uv run svtorture run $tool_args --suite "{{suite}}" --jobs "{{jobs}}" --exit-policy infra-only
 
 # Create one tool's ignored local runner configuration without overwriting it.
 runner-config tool:
@@ -165,8 +165,8 @@ ci-matrix:
     uv run svtorture ci-matrix
 
 # Nightly exact resolution, immutable GHCR push, and full-corpus collection.
-nightly tool repository="":
-    repository="{{repository}}"; if test -z "$repository"; then repository="ghcr.io/${GITHUB_REPOSITORY,,}-{{tool}}"; fi; mkdir -p .svtorture/campaigns; before="$(find .svtorture/campaigns -name campaign.json | wc -l)"; status=0; uv run svtorture run --tool "{{tool}}@latest" --suite all --push --repository "$repository" --exit-policy infra-only || status=$?; after="$(find .svtorture/campaigns -name campaign.json | wc -l)"; if test "$status" -ne 0 && test "$before" = "$after"; then uv run svtorture record-missing --tool "{{tool}}" --suite all; fi; exit "$status"
+nightly tool repository="" jobs="0":
+    repository="{{repository}}"; if test -z "$repository"; then repository="ghcr.io/${GITHUB_REPOSITORY,,}-{{tool}}"; fi; mkdir -p .svtorture/campaigns; before="$(find .svtorture/campaigns -name campaign.json | wc -l)"; status=0; uv run svtorture run --tool "{{tool}}@latest" --suite all --jobs "{{jobs}}" --push --repository "$repository" --exit-policy infra-only || status=$?; after="$(find .svtorture/campaigns -name campaign.json | wc -l)"; if test "$status" -ne 0 && test "$before" = "$after"; then uv run svtorture record-missing --tool "{{tool}}" --suite all; fi; exit "$status"
 
 # Aggregate whatever nightly campaign artifacts arrived and mark missing tools.
 aggregate-artifacts artifacts:

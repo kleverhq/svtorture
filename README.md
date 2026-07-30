@@ -148,6 +148,22 @@ To run every public and locally configured commercial tool in one campaign, use:
 just all
 ```
 
+Campaign execution uses one global pool of all tool/profile/case combinations
+and, by default, as many workers as CPUs available to the process. Limit the
+pool when memory or commercial license seats are more restrictive than CPUs:
+
+```bash
+just all all 8
+just commercial all 2
+uv run svtorture run --tool icarus@latest --suite all --jobs 4
+```
+
+The Just signatures are `just all [suite] [jobs]` and
+`just commercial [suite] [jobs]`; the first `all` in each example is the suite
+argument. A job executes one case for one tool profile; dependent stages within
+that job remain sequential. `--jobs 0`, including the Just recipe default, selects the
+automatic CPU count.
+
 ## Documentation
 
 - [Architecture and data flow](docs/architecture.md)

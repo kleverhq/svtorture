@@ -8,6 +8,7 @@ import re
 import shutil
 from collections.abc import Mapping
 from pathlib import Path
+from threading import Event
 
 from svtorture.adapters.base import ToolAdapter
 from svtorture.catalog import LoadedCase
@@ -253,6 +254,7 @@ def execute_plan(
     work_dir: Path,
     *,
     wrapper: RunnerConfig | None = None,
+    cancel_event: Event | None = None,
 ) -> tuple[StageObservation, ...]:
     """Execute stages in order, stopping whenever a prerequisite did not complete."""
 
@@ -276,6 +278,7 @@ def execute_plan(
             environment=environment,
             stdout_path=work_dir / f"{stage.id}.stdout.log",
             stderr_path=work_dir / f"{stage.id}.stderr.log",
+            cancel_event=cancel_event,
         )
         if plan.backend is ExecutionBackend.DOCKER:
             process_result = _classify_container(process_result)

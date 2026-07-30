@@ -11,7 +11,7 @@ from collections.abc import Mapping, Sequence
 from contextlib import suppress
 from dataclasses import dataclass
 from pathlib import Path
-from threading import Thread
+from threading import Event, Thread
 from typing import BinaryIO
 
 from svtorture.models import RawOutcome
@@ -81,6 +81,10 @@ class ProcessResult:
     launch_error: str | None = None
 
 
+class ProcessCancelled(RuntimeError):
+    """An active process was terminated because its campaign was cancelled."""
+
+
 def _drain(stream: BinaryIO, collector: _Collector) -> None:
     try:
         while chunk := stream.read(16384):
@@ -98,6 +102,33 @@ def _empty_capture() -> StreamCapture:
     )
 
 
+def _process_group_exists(process_group: int) -> bool:
+    try:
+        os.killpg(process_group, 0)
+    except ProcessLookupError:
+        return False
+    except PermissionError:
+        return True
+    return True
+
+
+def _terminate_process_group(process: subprocess.Popen[bytes]) -> int:
+    process_group = process.pid
+    with suppress(ProcessLookupError):
+        os.killpg(process_group, signal.SIGTERM)
+    deadline = time.monotonic() + 2
+    while _process_group_exists(process_group) and time.monotonic() < deadline:
+        if process.poll() is None:
+            with suppress(subprocess.TimeoutExpired):
+                process.wait(timeout=0.05)
+        else:
+            time.sleep(0.05)
+    if _process_group_exists(process_group):
+        with suppress(ProcessLookupError):
+            os.killpg(process_group, signal.SIGKILL)
+    return process.wait()
+
+
 def run_process(
     argv: Sequence[str],
     *,
@@ -107,9 +138,12 @@ def run_process(
     environment: Mapping[str, str] | None = None,
     stdout_path: Path | None = None,
     stderr_path: Path | None = None,
+    cancel_event: Event | None = None,
 ) -> ProcessResult:
     """Run argv without a shell, terminate its process group, and bound retained output."""
 
+    if cancel_event is not None and cancel_event.is_set():
+        raise ProcessCancelled("process execution was cancelled")
     start = time.monotonic()
     try:
         process = subprocess.Popen(
@@ -142,24 +176,44 @@ def run_process(
     stderr_thread.start()
 
     timed_out = False
+    cancelled = False
+    deadline = start + timeout_seconds
     try:
-        return_code = process.wait(timeout=timeout_seconds)
-    except subprocess.TimeoutExpired:
-        timed_out = True
-        with suppress(ProcessLookupError):
-            os.killpg(process.pid, signal.SIGTERM)
-        try:
-            return_code = process.wait(timeout=2)
-        except subprocess.TimeoutExpired:
-            with suppress(ProcessLookupError):
-                os.killpg(process.pid, signal.SIGKILL)
-            return_code = process.wait()
+        while True:
+            if cancel_event is not None and cancel_event.is_set():
+                cancelled = True
+                return_code = _terminate_process_group(process)
+                break
+            remaining = deadline - time.monotonic()
+            if remaining <= 0:
+                timed_out = True
+                return_code = _terminate_process_group(process)
+                break
+            try:
+                return_code = process.wait(timeout=min(0.1, remaining))
+                break
+            except subprocess.TimeoutExpired:
+                continue
+    except BaseException:
+        _terminate_process_group(process)
+        stdout_thread.join()
+        stderr_thread.join()
+        stdout_collector.finish()
+        stderr_collector.finish()
+        raise
 
-    stdout_thread.join(timeout=5)
-    stderr_thread.join(timeout=5)
+    if not timed_out and not cancelled and _process_group_exists(process.pid):
+        _terminate_process_group(process)
+        cancelled = cancel_event is not None and cancel_event.is_set()
+
+    drain_timeout = None if timed_out or cancelled else 5
+    stdout_thread.join(timeout=drain_timeout)
+    stderr_thread.join(timeout=drain_timeout)
     duration = time.monotonic() - start
     stdout = stdout_collector.finish()
     stderr = stderr_collector.finish()
+    if cancelled:
+        raise ProcessCancelled("process execution was cancelled")
     if timed_out:
         return ProcessResult(
             outcome=RawOutcome.TIMEOUT,
