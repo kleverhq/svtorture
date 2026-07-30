@@ -577,7 +577,11 @@ describe("App overview navigation", () => {
         name: "From standard text to reproducible evidence",
       }),
     ).toBeTruthy();
-    expect(screen.queryByLabelText("Campaign")).toBeNull();
+    const campaignSelection = screen.getByLabelText("Campaign selection");
+    expect(campaignSelection.getAttribute("aria-disabled")).toBe("true");
+    expect(
+      (screen.getByLabelText("Campaign") as HTMLSelectElement).disabled,
+    ).toBe(true);
     expect(screen.queryByRole("group", { name: "Tools" })).toBeNull();
     expect(window.location.search).toBe("?view=about");
     expect(window.location.hash).toBe("#tools");
@@ -600,6 +604,9 @@ describe("App overview navigation", () => {
       }),
     ).toBeTruthy();
     expect(screen.queryByText("Loading campaign evidence…")).toBeNull();
+    expect(
+      (screen.getByLabelText("Campaign") as HTMLSelectElement).disabled,
+    ).toBe(true);
   });
 
   it("keeps About available when campaign evidence fails to load", async () => {

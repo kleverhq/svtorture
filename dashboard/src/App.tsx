@@ -84,6 +84,76 @@ function SiteHeader({ dataset }: { dataset: Dataset | undefined }) {
   );
 }
 
+function CampaignSelection({
+  campaigns,
+  campaignValue,
+  dateFrom,
+  dateTo,
+  disabled,
+  emptyLabel,
+  onCampaignChange,
+  onDateFromChange,
+  onDateToChange,
+}: {
+  campaigns: Dataset["campaigns"];
+  campaignValue: string;
+  dateFrom: string;
+  dateTo: string;
+  disabled: boolean;
+  emptyLabel: string;
+  onCampaignChange: (value: string) => void;
+  onDateFromChange: (value: string) => void;
+  onDateToChange: (value: string) => void;
+}) {
+  return (
+    <section
+      className={`campaign-overview${
+        disabled ? " campaign-overview--disabled" : ""
+      }`}
+      aria-label="Campaign selection"
+      aria-disabled={disabled}
+    >
+      <label className="campaign-overview__campaign">
+        <span>Campaign</span>
+        <select
+          value={campaignValue}
+          disabled={disabled}
+          onChange={(event) => onCampaignChange(event.target.value)}
+        >
+          <option value="">
+            {campaigns.length ? "Latest campaign" : emptyLabel}
+          </option>
+          {campaigns.map((item) => (
+            <option key={item.id} value={item.id}>
+              {item.finished_at.slice(0, 10)} · {item.id}
+            </option>
+          ))}
+        </select>
+      </label>
+      <label>
+        <span>From</span>
+        <input
+          type="date"
+          disabled={disabled}
+          max={dateTo || undefined}
+          value={dateFrom}
+          onChange={(event) => onDateFromChange(event.target.value)}
+        />
+      </label>
+      <label>
+        <span>To</span>
+        <input
+          type="date"
+          disabled={disabled}
+          min={dateFrom || undefined}
+          value={dateTo}
+          onChange={(event) => onDateToChange(event.target.value)}
+        />
+      </label>
+    </section>
+  );
+}
+
 function ViewTabs({
   view,
   onSelect,
@@ -258,6 +328,37 @@ export default function App() {
       setTrend((current) => ({ ...current, parts, point: "" })),
     [],
   );
+  const rangedCampaigns = state.dataset
+    ? campaignsInDateRange(state.dataset, filters.dateFrom, filters.dateTo)
+    : [];
+  const campaignSelectValue = rangedCampaigns.some(
+    (item) => item.id === filters.campaign,
+  )
+    ? filters.campaign
+    : "";
+  const changeCampaign = (campaign: string) =>
+    setFilters((current) => ({
+      ...current,
+      campaign,
+      tool: "",
+      profile: "",
+    }));
+  const changeDateFrom = (dateFrom: string) =>
+    setFilters((current) => ({
+      ...current,
+      campaign: "",
+      dateFrom,
+      tool: "",
+      profile: "",
+    }));
+  const changeDateTo = (dateTo: string) =>
+    setFilters((current) => ({
+      ...current,
+      campaign: "",
+      dateTo,
+      tool: "",
+      profile: "",
+    }));
 
   if (view === "about") {
     return (
@@ -265,8 +366,25 @@ export default function App() {
         <SiteHeader dataset={state.dataset} />
         <main
           className="dashboard dashboard--about"
-          style={{ "--workspace-height": `${workspaceHeight}px` } as CSSProperties}
+          style={
+            { "--workspace-height": `${workspaceHeight}px` } as CSSProperties
+          }
         >
+          <CampaignSelection
+            campaigns={rangedCampaigns}
+            campaignValue={campaignSelectValue}
+            dateFrom={filters.dateFrom}
+            dateTo={filters.dateTo}
+            disabled
+            emptyLabel={
+              state.dataset
+                ? "No campaigns in range"
+                : "Campaign evidence unavailable"
+            }
+            onCampaignChange={changeCampaign}
+            onDateFromChange={changeDateFrom}
+            onDateToChange={changeDateTo}
+          />
           <section
             className="workspace-bar"
             aria-label="Dashboard controls"
@@ -310,11 +428,6 @@ export default function App() {
   }
 
   const dataset = state.dataset;
-  const rangedCampaigns = campaignsInDateRange(
-    dataset,
-    filters.dateFrom,
-    filters.dateTo,
-  );
   const campaign = selectedCampaign(
     dataset,
     filters.campaign,
@@ -340,11 +453,6 @@ export default function App() {
       );
     }
   }
-  const campaignSelectValue = rangedCampaigns.some(
-    (item) => item.id === filters.campaign,
-  )
-    ? filters.campaign
-    : "";
   const visibleCampaigns = rangedCampaigns.filter(
     (item) =>
       (!campaignSelectValue || item.id === campaign?.id) &&
@@ -425,76 +533,17 @@ export default function App() {
         className={`dashboard${view === "trends" ? " dashboard--trends" : ""}`}
         style={{ "--workspace-height": `${workspaceHeight}px` } as CSSProperties}
       >
-        <section
-            className={`campaign-overview${
-              view === "trends" ? " campaign-overview--disabled" : ""
-            }`}
-            aria-label="Campaign selection"
-            aria-disabled={view === "trends"}
-          >
-            <label className="campaign-overview__campaign">
-              <span>Campaign</span>
-              <select
-                value={campaignSelectValue}
-                disabled={view === "trends"}
-                onChange={(event) =>
-                  setFilters((current) => ({
-                    ...current,
-                    campaign: event.target.value,
-                    tool: "",
-                    profile: "",
-                  }))
-                }
-              >
-                <option value="">
-                  {rangedCampaigns.length
-                    ? "Latest campaign"
-                    : "No campaigns in range"}
-                </option>
-                {rangedCampaigns.map((item) => (
-                  <option key={item.id} value={item.id}>
-                    {item.finished_at.slice(0, 10)} · {item.id}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <label>
-              <span>From</span>
-              <input
-                type="date"
-                disabled={view === "trends"}
-                max={filters.dateTo || undefined}
-                value={filters.dateFrom}
-                onChange={(event) =>
-                  setFilters((current) => ({
-                    ...current,
-                    campaign: "",
-                    dateFrom: event.target.value,
-                    tool: "",
-                    profile: "",
-                  }))
-                }
-              />
-            </label>
-            <label>
-              <span>To</span>
-              <input
-                type="date"
-                disabled={view === "trends"}
-                min={filters.dateFrom || undefined}
-                value={filters.dateTo}
-                onChange={(event) =>
-                  setFilters((current) => ({
-                    ...current,
-                    campaign: "",
-                    dateTo: event.target.value,
-                    tool: "",
-                    profile: "",
-                  }))
-                }
-              />
-            </label>
-        </section>
+        <CampaignSelection
+          campaigns={rangedCampaigns}
+          campaignValue={campaignSelectValue}
+          dateFrom={filters.dateFrom}
+          dateTo={filters.dateTo}
+          disabled={view === "trends"}
+          emptyLabel="No campaigns in range"
+          onCampaignChange={changeCampaign}
+          onDateFromChange={changeDateFrom}
+          onDateToChange={changeDateTo}
+        />
 
         {view === "matrix" && (
           <CorpusCoverage
