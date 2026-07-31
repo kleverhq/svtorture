@@ -3,22 +3,50 @@
 from __future__ import annotations
 
 from collections import defaultdict
+from typing import Protocol
 
-from svtorture.catalog import Catalog, LoadedCase
+from svtorture.catalog import LoadedCase
 from svtorture.models import (
     Applicability,
-    Campaign,
     EvidenceLevel,
+    ManifestHashes,
     MetricBreakdown,
+    NormalizedResult,
+    Requirement,
     ResultStatus,
     ToolDefinition,
     ToolProfile,
 )
 
 
+class MetricCatalog(Protocol):
+    @property
+    def cases(self) -> dict[str, LoadedCase]: ...
+
+    @property
+    def requirements(self) -> dict[str, Requirement]: ...
+
+
+class MetricCampaign(Protocol):
+    @property
+    def case_ids(self) -> tuple[str, ...]: ...
+
+    @property
+    def results(self) -> tuple[NormalizedResult, ...]: ...
+
+    @property
+    def expected_tool_ids(self) -> tuple[str, ...]: ...
+
+    @property
+    def missing_tool_ids(self) -> tuple[str, ...]: ...
+
+    @property
+    def hashes(self) -> ManifestHashes: ...
+
+
 def compute_metric(
-    catalog: Catalog,
-    campaign: Campaign,
+    catalog: MetricCatalog,
+    campaign: MetricCampaign,
     tool: ToolDefinition,
     profile: ToolProfile,
 ) -> MetricBreakdown:

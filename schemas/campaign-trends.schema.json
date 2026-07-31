@@ -1,0 +1,33 @@
+{
+  "$id": "campaign-trends.schema.json",
+  "additionalProperties": false,
+  "properties": {
+    "campaigns": {
+      "items": {
+        "$ref": "campaign-summary.schema.json"
+      },
+      "title": "Campaigns",
+      "type": "array"
+    },
+    "kind": {
+      "const": "campaign-trends",
+      "default": "campaign-trends",
+      "title": "Kind",
+      "type": "string"
+    },
+    "schema_version": {
+      "default": 6,
+      "maximum": 6,
+      "minimum": 6,
+      "title": "Schema Version",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "schema_version",
+    "kind",
+    "campaigns"
+  ],
+  "title": "CampaignTrends",
+  "type": "object"
+}

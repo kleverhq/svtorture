@@ -21,9 +21,9 @@ This work does not add a backend, database, object store, browser-side ZIP impor
 - [x] (2026-07-31 20:30Z) Read the accepted proposal, repository guidance, architecture, methodology, reproduction workflow, current backend/frontend/publication code, tests, and disabled workflows.
 - [x] (2026-07-31 20:35Z) Run the pre-change `just smoke` baseline: Python formatting/lint/type checks passed, metadata validated, 101 focused Python tests passed, 15 annotator utility tests passed, and 74 frontend tests passed.
 - [x] (2026-07-31 20:42Z) Record the clarified standalone `CampaignSummary`, reusable summary schema, publisher-owned tag lifecycle, resumable draft rule, manual-only initial trigger, and explicit v5 removal in `docs/dashboard-pages-releases-proposal.md`.
-- [ ] Commit this initial ExecPlan while keeping the user-owned proposal untracked.
-- [ ] Milestone 1: implement and test the strict v6 bundle format, generated schemas, deterministic compact resources and reproducible ZIP.
-- [ ] Review milestone 1 with focused read-only code, schema/architecture, and security/correctness reviewers; fix findings, run a clean control review, and commit the reviewed stage.
+- [x] (2026-07-31 20:55Z) Commit this initial ExecPlan as `3918587` while keeping the user-owned proposal untracked.
+- [x] (2026-07-31 21:50Z) Milestone 1 implemented: strict v6 models, seven generated schemas, deterministic compact resources, linearly packed case-centric shards, cross-resource validation, safe ZIP extraction, reproducible ZIP creation, reusable summaries, and 10,000-case/100,000-result scale tests.
+- [x] (2026-07-31 22:20Z) Review milestone 1 through code, schema/architecture, security, focused rechecks, and two fresh control passes. Fixed judgment/metric/selection recomputation, schema patterns, definition/source binding, quadratic projections, manifest case identity, symlink/ancestor escapes, pre-parse limits, aggregate/member limits, and ZIP aliases. The final findings were fixed and covered by the 88-test focused suite.
 - [ ] Milestone 2: migrate the frontend and local assembly to index/trends and lazy campaign/evidence resources, with N-bundle local selection/comparison.
 - [ ] Review milestone 2 with focused frontend correctness, architecture, and performance/loading reviewers; fix findings, run a clean control review, and commit the reviewed stage.
 - [ ] Milestone 3: implement immutable Release publication, rebuild history from unchanged summaries, assemble latest-only Pages, enforce the size gate, activate ordinary CI, and add one manual dashboard workflow.
@@ -47,6 +47,12 @@ This work does not add a backend, database, object store, browser-side ZIP impor
 - Observation: the current frontend search includes stdout/stderr because all evidence is loaded at startup. In v6 ordinary search must intentionally use only catalog and verdict metadata.
   Evidence: `dashboard/src/useDataset.ts` fetches one monolith and `dashboard/src/model.ts` searches observation streams.
 
+- Observation: the first sharding and verdict projection implementation repeatedly scanned or reserialized the complete result grid for each case, which would have defeated the 10,000-case target despite small fixtures passing.
+  Evidence: focused review found the quadratic loops; `pack_evidence_results` and `project_verdicts` now group one result scan, and the scale test packs and projects 100,000 results in the focused suite.
+
+- Observation: canonical `content_sha256` includes source bytes and case metadata, but a public bundle intentionally links source bytes at the recorded commit instead of duplicating them. A separate definition hash is therefore needed for offline metadata verification.
+  Evidence: `DashboardCase.definition_sha256` is recomputed for every catalog definition and repeated for selected cases in `DashboardCaseIdentity`; public source links are checked against repository/commit/case/path while local links must use the data form.
+
 ## Decision Log
 
 - Decision: preserve canonical `Campaign` schema version 5 and introduce dashboard transport models in `src/svtorture/dashboard_models.py` at schema version 6.
@@ -56,6 +62,10 @@ This work does not add a backend, database, object store, browser-side ZIP impor
 - Decision: use Python standard-library JSON, hashing, ZIP, filesystem, URL, and subprocess facilities plus the existing Pydantic and `gh` CLI; add no Python dependency.
   Rationale: all required deterministic serialization, safe extraction, HTTP loading, and GitHub orchestration can be implemented with existing platform tools. This is the smallest solution.
   Date/Author: 2026-07-31 / coding agent.
+
+- Decision: keep the existing public trust policy in `src/svtorture/publish.py` and place the new portable format implementation in `src/svtorture/bundle.py`.
+  Rationale: the old v5 publication code remains temporarily during staged migration; putting hundreds of format/ZIP lines beside it would create one giant transitional module. The bundle module has one concrete responsibility and imports the unchanged trust gate.
+  Date/Author: 2026-07-31 / coding agent during milestone 1.
 
 - Decision: use one `CampaignSummary` model for both `campaign-summary.json` and each `trends.json.campaigns[]`, including nested `schema_version: 6` and `kind: campaign-summary`.
   Rationale: standalone summaries remain self-describing and the Pages builder can append validated Release assets unchanged without a second projection path.
@@ -83,7 +93,7 @@ This work does not add a backend, database, object store, browser-side ZIP impor
 
 ## Outcomes & Retrospective
 
-No implementation milestone is complete yet. The accepted transport and Release lifecycle decisions have been incorporated into the proposal, the baseline is green, and repository exploration found no legacy public history to preserve. Update this section after every reviewed milestone with observable behavior, test evidence, remaining risk, and any deviation from the proposal.
+Milestone 1 is complete and reviewed. It exports byte-stable compact v6 resources and ZIPs, independently rechecks canonical selection identity, evaluator judgments, metrics, case definitions, source links, counts and hashes, and rejects hostile archive/directory forms before unbounded parsing. The focused bundle/campaign/schema suite reports 88 passes in 5.00 seconds, including 10,000 cases and 100,000 verdict/evidence results. The existing v5 publication path remains intentionally present until the later cutover milestone.
 
 ## Context and Orientation
 
@@ -249,6 +259,19 @@ Initial baseline on 2026-07-31:
     Test Files 12 passed (12)
     Tests 74 passed (74)
 
+Milestone 1 evidence:
+
+    just schemas
+    uv run pytest -q tests/test_bundle.py tests/test_catalog_models.py
+    88 passed in 5.00s
+
+    just smoke
+    All checks passed!
+    Success: no issues found in 22 source files
+    110 passed in 3.58s
+    Test Files 12 passed (12)
+    Tests 74 passed (74)
+
 Current repository state at plan creation:
 
     ## main...origin/main [ahead 1]
@@ -276,3 +299,5 @@ The frontend exports matching TypeScript interfaces and one resource loader/cach
 GitHub publication uses the already available `gh` executable and `GITHUB_TOKEN`. No Personal Access Token, backend, or third-party Release action is added. ZIP uses Python `zipfile`; HTTP replay uses the existing bounded credential-free standard-library loader pattern; hashing uses `hashlib`; file serving remains Python's ordinary HTTP server.
 
 Plan revision note (2026-07-31): initial self-contained plan created after repository exploration and incorporation of the user's summary/tag/legacy/manual-trigger decisions. The four milestones intentionally match the accepted proposal and add a blocking focused review plus control pass after each stage. The proposal remains an untracked user-owned artifact; only English implementation artifacts are committed.
+
+Plan revision note (2026-07-31): milestone 1 implementation and review evidence recorded. Review-driven changes added shared canonical recomputation, linear projections, explicit definition/source binding, and bounded hostile-input handling without adding dependencies.

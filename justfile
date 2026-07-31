@@ -37,7 +37,7 @@ hook-metadata:
 
 # Focused deterministic framework tests; never invokes Docker or the network.
 hook-tests:
-    uv run pytest -q -m "not docker" tests/test_evaluator.py tests/test_catalog_models.py tests/test_adapters.py
+    uv run pytest -q -m "not docker" tests/test_evaluator.py tests/test_catalog_models.py tests/test_adapters.py tests/test_bundle.py
     just annotator-tests
 
 # Lightweight frontend type and unit checks.

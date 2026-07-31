@@ -1,0 +1,490 @@
+{
+  "$defs": {
+    "ArchiveMetadata": {
+      "additionalProperties": false,
+      "properties": {
+        "asset_name": {
+          "pattern": "^[^/\\\\]+\\.zip$",
+          "title": "Asset Name",
+          "type": "string"
+        },
+        "bytes": {
+          "minimum": 0,
+          "title": "Bytes",
+          "type": "integer"
+        },
+        "download_url": {
+          "pattern": "^https://[^\\s]+$",
+          "title": "Download Url",
+          "type": "string"
+        },
+        "release_tag": {
+          "pattern": "^campaign-[^/\\\\]+$",
+          "title": "Release Tag",
+          "type": "string"
+        },
+        "release_url": {
+          "pattern": "^https://[^\\s]+$",
+          "title": "Release Url",
+          "type": "string"
+        },
+        "sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "release_tag",
+        "release_url",
+        "asset_name",
+        "download_url",
+        "sha256",
+        "bytes"
+      ],
+      "title": "ArchiveMetadata",
+      "type": "object"
+    },
+    "CampaignTrust": {
+      "additionalProperties": false,
+      "properties": {
+        "checkout_sha": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Checkout Sha"
+        },
+        "repository": {
+          "anyOf": [
+            {
+              "maxLength": 300,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Repository"
+        },
+        "source": {
+          "pattern": "^(local|github-actions)$",
+          "title": "Source",
+          "type": "string"
+        },
+        "workflow_run_id": {
+          "anyOf": [
+            {
+              "maxLength": 100,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Workflow Run Id"
+        }
+      },
+      "required": [
+        "source"
+      ],
+      "title": "CampaignTrust",
+      "type": "object"
+    },
+    "CorpusMetricSummary": {
+      "additionalProperties": false,
+      "properties": {
+        "breakdown": {
+          "items": {
+            "$ref": "#/$defs/CorpusPartMetric"
+          },
+          "maxItems": 58,
+          "minItems": 58,
+          "title": "Breakdown",
+          "type": "array"
+        },
+        "coverage": {
+          "$ref": "#/$defs/CorpusRatio"
+        },
+        "density": {
+          "$ref": "#/$defs/CorpusRatio"
+        }
+      },
+      "required": [
+        "coverage",
+        "density",
+        "breakdown"
+      ],
+      "title": "CorpusMetricSummary",
+      "type": "object"
+    },
+    "CorpusMetrics": {
+      "additionalProperties": false,
+      "properties": {
+        "cases": {
+          "$ref": "#/$defs/CorpusMetricSummary"
+        },
+        "requirements": {
+          "$ref": "#/$defs/CorpusMetricSummary"
+        }
+      },
+      "required": [
+        "requirements",
+        "cases"
+      ],
+      "title": "CorpusMetrics",
+      "type": "object"
+    },
+    "CorpusPartMetric": {
+      "additionalProperties": false,
+      "properties": {
+        "coverage": {
+          "$ref": "#/$defs/CorpusRatio"
+        },
+        "density": {
+          "$ref": "#/$defs/CorpusRatio"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "$ref": "#/$defs/StandardPartKind"
+        },
+        "title": {
+          "maxLength": 500,
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "coverage",
+        "density",
+        "id",
+        "kind",
+        "title"
+      ],
+      "title": "CorpusPartMetric",
+      "type": "object"
+    },
+    "CorpusRatio": {
+      "additionalProperties": false,
+      "properties": {
+        "denominator": {
+          "minimum": 0,
+          "title": "Denominator",
+          "type": "integer"
+        },
+        "numerator": {
+          "minimum": 0,
+          "title": "Numerator",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "numerator",
+        "denominator"
+      ],
+      "title": "CorpusRatio",
+      "type": "object"
+    },
+    "DashboardMetric": {
+      "additionalProperties": false,
+      "properties": {
+        "complete": {
+          "title": "Complete",
+          "type": "boolean"
+        },
+        "conforming": {
+          "minimum": 0,
+          "title": "Conforming",
+          "type": "integer"
+        },
+        "corpus_coverage": {
+          "minimum": 0,
+          "title": "Corpus Coverage",
+          "type": "integer"
+        },
+        "corpus_sha": {
+          "title": "Corpus Sha",
+          "type": "string"
+        },
+        "denominator": {
+          "minimum": 0,
+          "title": "Denominator",
+          "type": "integer"
+        },
+        "exact_tags": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Exact Tags",
+          "type": "array"
+        },
+        "execution_coverage": {
+          "minimum": 0,
+          "title": "Execution Coverage",
+          "type": "integer"
+        },
+        "image_digest": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Image Digest"
+        },
+        "inconclusive": {
+          "minimum": 0,
+          "title": "Inconclusive",
+          "type": "integer"
+        },
+        "infrastructure_state": {
+          "title": "Infrastructure State",
+          "type": "string"
+        },
+        "label": {
+          "title": "Label",
+          "type": "string"
+        },
+        "nearest_tag": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Nearest Tag"
+        },
+        "nonconforming": {
+          "minimum": 0,
+          "title": "Nonconforming",
+          "type": "integer"
+        },
+        "numerator": {
+          "minimum": 0,
+          "title": "Numerator",
+          "type": "integer"
+        },
+        "profile_id": {
+          "title": "Profile Id",
+          "type": "string"
+        },
+        "reported_version": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reported Version"
+        },
+        "revision": {
+          "$ref": "#/$defs/StandardRevision"
+        },
+        "tool_id": {
+          "title": "Tool Id",
+          "type": "string"
+        },
+        "tool_sha": {
+          "anyOf": [
+            {
+              "pattern": "^[0-9a-f]{40}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Tool Sha"
+        },
+        "unsupported": {
+          "minimum": 0,
+          "title": "Unsupported",
+          "type": "integer"
+        },
+        "valid": {
+          "title": "Valid",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "label",
+        "revision",
+        "tool_id",
+        "profile_id",
+        "numerator",
+        "denominator",
+        "corpus_sha",
+        "complete",
+        "valid",
+        "corpus_coverage",
+        "execution_coverage",
+        "conforming",
+        "nonconforming",
+        "inconclusive",
+        "unsupported",
+        "infrastructure_state"
+      ],
+      "title": "DashboardMetric",
+      "type": "object"
+    },
+    "ManifestHashes": {
+      "additionalProperties": false,
+      "properties": {
+        "cases": {
+          "title": "Cases",
+          "type": "string"
+        },
+        "requirements": {
+          "title": "Requirements",
+          "type": "string"
+        },
+        "selection": {
+          "title": "Selection",
+          "type": "string"
+        }
+      },
+      "required": [
+        "requirements",
+        "cases",
+        "selection"
+      ],
+      "title": "ManifestHashes",
+      "type": "object"
+    },
+    "StandardPartKind": {
+      "enum": [
+        "chapter",
+        "annex"
+      ],
+      "title": "StandardPartKind",
+      "type": "string"
+    },
+    "StandardRevision": {
+      "enum": [
+        "1800-2012",
+        "1800-2017",
+        "1800-2023"
+      ],
+      "title": "StandardRevision",
+      "type": "string"
+    },
+    "SummaryRepository": {
+      "additionalProperties": false,
+      "properties": {
+        "commit": {
+          "pattern": "^(?:unborn|[0-9a-f]{40})$",
+          "title": "Commit",
+          "type": "string"
+        }
+      },
+      "required": [
+        "commit"
+      ],
+      "title": "SummaryRepository",
+      "type": "object"
+    }
+  },
+  "$id": "campaign-summary.schema.json",
+  "additionalProperties": false,
+  "properties": {
+    "archive": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ArchiveMetadata"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "complete": {
+      "title": "Complete",
+      "type": "boolean"
+    },
+    "corpus_metrics": {
+      "$ref": "#/$defs/CorpusMetrics"
+    },
+    "finished_at": {
+      "format": "date-time",
+      "title": "Finished At",
+      "type": "string"
+    },
+    "hashes": {
+      "$ref": "#/$defs/ManifestHashes"
+    },
+    "id": {
+      "pattern": "^[0-9]{8}T[0-9]{6}Z-[A-Za-z0-9](?:[A-Za-z0-9-]{0,126}[A-Za-z0-9])?$",
+      "title": "Id",
+      "type": "string"
+    },
+    "kind": {
+      "const": "campaign-summary",
+      "default": "campaign-summary",
+      "title": "Kind",
+      "type": "string"
+    },
+    "repository": {
+      "$ref": "#/$defs/SummaryRepository"
+    },
+    "schema_version": {
+      "default": 6,
+      "maximum": 6,
+      "minimum": 6,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "started_at": {
+      "format": "date-time",
+      "title": "Started At",
+      "type": "string"
+    },
+    "tool_metrics": {
+      "items": {
+        "$ref": "#/$defs/DashboardMetric"
+      },
+      "title": "Tool Metrics",
+      "type": "array"
+    },
+    "trust": {
+      "$ref": "#/$defs/CampaignTrust"
+    }
+  },
+  "required": [
+    "schema_version",
+    "kind",
+    "id",
+    "started_at",
+    "finished_at",
+    "complete",
+    "repository",
+    "trust",
+    "hashes",
+    "corpus_metrics",
+    "tool_metrics"
+  ],
+  "title": "CampaignSummary",
+  "type": "object"
+}

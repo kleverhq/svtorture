@@ -258,6 +258,17 @@ def _selection_payload(
     }
 
 
+def campaign_selection_hash(
+    selection_name: str,
+    case_ids: Iterable[str],
+    tools: Iterable[CampaignTool],
+    expected_tool_ids: Iterable[str],
+) -> str:
+    """Hash the canonical campaign selection and tool identity payload."""
+
+    return hash_json(_selection_payload(selection_name, case_ids, tools, expected_tool_ids))
+
+
 def _campaign_tools(prepared: tuple[PreparedTool, ...]) -> tuple[CampaignTool, ...]:
     grouped: dict[str, list[PreparedTool]] = {}
     for item in prepared:
@@ -450,13 +461,12 @@ def run_campaign(
     repository = repository_identity(catalog.root)
     campaign_tools = _campaign_tools(prepared)
     expected_tool_ids = tuple(item.definition.id for item in campaign_tools)
-    selection_payload = _selection_payload(
+    selection_hash = campaign_selection_hash(
         suite_id,
         (item.definition.id for item in selected),
         campaign_tools,
         expected_tool_ids,
     )
-    selection_hash = hash_json(selection_payload)
     identity_hash = hash_json(
         {
             "started_at": started.isoformat(),
@@ -610,16 +620,142 @@ def _verify_loaded_campaign(campaign: Campaign) -> None:
     )
     if identity_hash != campaign.hashes.cases:
         raise CampaignError("campaign case manifest hash mismatch")
-    selection_hash = hash_json(
-        _selection_payload(
-            campaign.selection_name,
-            campaign.case_ids,
-            campaign.tools,
-            campaign.expected_tool_ids,
-        )
+    selection_hash = campaign_selection_hash(
+        campaign.selection_name,
+        campaign.case_ids,
+        campaign.tools,
+        campaign.expected_tool_ids,
     )
     if selection_hash != campaign.hashes.selection:
         raise CampaignError("campaign selection manifest hash mismatch")
+
+
+def verify_result_against_case(
+    loaded: LoadedCase,
+    campaign_tool: CampaignTool,
+    result: NormalizedResult,
+) -> None:
+    """Confirm one recorded result against its case, tool policy, plan, and oracle."""
+
+    requirement_id = loaded.definition.primary_requirement
+    if result.requirement_id != requirement_id:
+        raise CampaignError(f"campaign result {result.case_id} has a wrong requirement")
+    if result.evidence != loaded.definition.evidence:
+        raise CampaignError(f"campaign result {result.case_id} has a wrong evidence level")
+    if result.target_phase is not loaded.definition.target_phase:
+        raise CampaignError(f"campaign result {result.case_id} has a wrong target phase")
+    profile = campaign_tool.definition.profile(result.profile_id)
+    case = loaded.definition
+    structural_disposition: tuple[ResultStatus, ReasonCode] | None = None
+    if not profile.supports(case.target_phase):
+        structural_disposition = (
+            ResultStatus.UNSUPPORTED_CAPABILITY,
+            ReasonCode.UNSUPPORTED_PHASE,
+        )
+    else:
+        applicability = case.revision_applicability[profile.standard_revision]
+        if applicability is Applicability.NOT_APPLICABLE:
+            structural_disposition = (
+                ResultStatus.NOT_APPLICABLE,
+                ReasonCode.NOT_APPLICABLE,
+            )
+        elif applicability in {
+            Applicability.NOT_ASSESSED,
+            Applicability.CHANGED_EXPECTATION,
+        }:
+            structural_disposition = (
+                ResultStatus.UNSUPPORTED_REVISION,
+                ReasonCode.UNSUPPORTED_REVISION,
+            )
+        elif campaign_tool.preparation_error is not None:
+            structural_disposition = (
+                ResultStatus.HARNESS_ERROR,
+                ReasonCode.TOOL_PREPARATION_FAILURE,
+            )
+    if structural_disposition is not None:
+        if result.observations or (result.status, result.reason) != structural_disposition:
+            raise CampaignError(
+                f"campaign structural result is invalid for "
+                f"{result.tool_id}/{result.profile_id}/{result.case_id}"
+            )
+        return
+
+    if not result.observations:
+        unavailable_wrapper = (
+            campaign_tool.definition.execution.value == "local-wrapper"
+            and result.status is ResultStatus.SKIPPED_UNAVAILABLE
+            and result.reason is ReasonCode.TOOL_UNAVAILABLE
+        )
+        if unavailable_wrapper:
+            return
+        raise CampaignError(f"campaign result {result.case_id} lacks executable observations")
+
+    adapter = adapter_for(
+        campaign_tool.definition.adapter,
+        diagnostic_rules=campaign_tool.definition.diagnostic_rules,
+    )
+    image_reference = campaign_tool.image.reference if campaign_tool.image is not None else None
+    wrapper_reference = (
+        "$SVTORTURE_PRIVATE_WRAPPER"
+        if campaign_tool.definition.execution.value == "local-wrapper"
+        else None
+    )
+    try:
+        plan = adapter.build_plan(
+            loaded,
+            campaign_tool.definition,
+            profile,
+            image=image_reference,
+            wrapper=wrapper_reference,
+        )
+        validate_plan_for_profile(
+            plan,
+            loaded,
+            campaign_tool.definition,
+            profile,
+            image=image_reference,
+            wrapper=wrapper_reference,
+        )
+    except (ValueError, ValidationError) as error:
+        raise CampaignError(
+            f"campaign execution plan is invalid for "
+            f"{result.tool_id}/{result.profile_id}/{result.case_id}: {error}"
+        ) from error
+    expected_provenance = tuple(
+        (stage.id, stage.kind, stage.attempted_through_phase) for stage in plan.stages
+    )
+    recorded_provenance = tuple(
+        (item.stage_id, item.kind, item.attempted_through_phase) for item in result.observations
+    )
+    if recorded_provenance != expected_provenance[: len(recorded_provenance)]:
+        raise CampaignError(
+            f"campaign phase provenance does not match its execution plan for "
+            f"{result.tool_id}/{result.profile_id}/{result.case_id}"
+        )
+
+    reevaluated = evaluate(
+        loaded,
+        result.tool_id,
+        result.profile_id,
+        result.observations,
+    )
+    recorded = (
+        result.status,
+        result.reason,
+        result.target_phase,
+        result.evidence_mode,
+    )
+    expected = (
+        reevaluated.status,
+        reevaluated.reason,
+        reevaluated.target_phase,
+        reevaluated.evidence_mode,
+    )
+    if recorded != expected:
+        raise CampaignError(
+            f"campaign judgment does not match observations for "
+            f"{result.tool_id}/{result.profile_id}/{result.case_id}"
+        )
 
 
 def verify_campaign_against_catalog(catalog: Catalog, campaign: Campaign) -> None:
@@ -651,127 +787,11 @@ def verify_campaign_against_catalog(catalog: Catalog, campaign: Campaign) -> Non
             )
     campaign_tools = {tool.definition.id: tool for tool in campaign.tools}
     for result in campaign.results:
-        loaded = catalog.cases[result.case_id]
-        requirement_id = loaded.definition.primary_requirement
-        if result.requirement_id != requirement_id:
-            raise CampaignError(f"campaign result {result.case_id} has a wrong requirement")
-        if result.evidence != loaded.definition.evidence:
-            raise CampaignError(f"campaign result {result.case_id} has a wrong evidence level")
-        if result.target_phase is not loaded.definition.target_phase:
-            raise CampaignError(f"campaign result {result.case_id} has a wrong target phase")
-        campaign_tool = campaign_tools[result.tool_id]
-        profile = campaign_tool.definition.profile(result.profile_id)
-        case = loaded.definition
-        structural_disposition: tuple[ResultStatus, ReasonCode] | None = None
-        if not profile.supports(case.target_phase):
-            structural_disposition = (
-                ResultStatus.UNSUPPORTED_CAPABILITY,
-                ReasonCode.UNSUPPORTED_PHASE,
-            )
-        else:
-            applicability = case.revision_applicability[profile.standard_revision]
-            if applicability is Applicability.NOT_APPLICABLE:
-                structural_disposition = (
-                    ResultStatus.NOT_APPLICABLE,
-                    ReasonCode.NOT_APPLICABLE,
-                )
-            elif applicability in {
-                Applicability.NOT_ASSESSED,
-                Applicability.CHANGED_EXPECTATION,
-            }:
-                structural_disposition = (
-                    ResultStatus.UNSUPPORTED_REVISION,
-                    ReasonCode.UNSUPPORTED_REVISION,
-                )
-            elif campaign_tool.preparation_error is not None:
-                structural_disposition = (
-                    ResultStatus.HARNESS_ERROR,
-                    ReasonCode.TOOL_PREPARATION_FAILURE,
-                )
-        if structural_disposition is not None:
-            if result.observations or (result.status, result.reason) != structural_disposition:
-                raise CampaignError(
-                    f"campaign structural result is invalid for "
-                    f"{result.tool_id}/{result.profile_id}/{result.case_id}"
-                )
-            continue
-
-        if not result.observations:
-            unavailable_wrapper = (
-                campaign_tool.definition.execution.value == "local-wrapper"
-                and result.status is ResultStatus.SKIPPED_UNAVAILABLE
-                and result.reason is ReasonCode.TOOL_UNAVAILABLE
-            )
-            if unavailable_wrapper:
-                continue
-            raise CampaignError(f"campaign result {result.case_id} lacks executable observations")
-
-        adapter = adapter_for(
-            campaign_tool.definition.adapter,
-            diagnostic_rules=campaign_tool.definition.diagnostic_rules,
+        verify_result_against_case(
+            catalog.cases[result.case_id],
+            campaign_tools[result.tool_id],
+            result,
         )
-        image_reference = campaign_tool.image.reference if campaign_tool.image is not None else None
-        wrapper_reference = (
-            "$SVTORTURE_PRIVATE_WRAPPER"
-            if campaign_tool.definition.execution.value == "local-wrapper"
-            else None
-        )
-        try:
-            plan = adapter.build_plan(
-                loaded,
-                campaign_tool.definition,
-                profile,
-                image=image_reference,
-                wrapper=wrapper_reference,
-            )
-            validate_plan_for_profile(
-                plan,
-                loaded,
-                campaign_tool.definition,
-                profile,
-                image=image_reference,
-                wrapper=wrapper_reference,
-            )
-        except (ValueError, ValidationError) as error:
-            raise CampaignError(
-                f"campaign execution plan is invalid for "
-                f"{result.tool_id}/{result.profile_id}/{result.case_id}: {error}"
-            ) from error
-        expected_provenance = tuple(
-            (stage.id, stage.kind, stage.attempted_through_phase) for stage in plan.stages
-        )
-        recorded_provenance = tuple(
-            (item.stage_id, item.kind, item.attempted_through_phase) for item in result.observations
-        )
-        if recorded_provenance != expected_provenance[: len(recorded_provenance)]:
-            raise CampaignError(
-                f"campaign phase provenance does not match its execution plan for "
-                f"{result.tool_id}/{result.profile_id}/{result.case_id}"
-            )
-
-        reevaluated = evaluate(
-            loaded,
-            result.tool_id,
-            result.profile_id,
-            result.observations,
-        )
-        recorded = (
-            result.status,
-            result.reason,
-            result.target_phase,
-            result.evidence_mode,
-        )
-        expected = (
-            reevaluated.status,
-            reevaluated.reason,
-            reevaluated.target_phase,
-            reevaluated.evidence_mode,
-        )
-        if recorded != expected:
-            raise CampaignError(
-                f"campaign judgment does not match observations for "
-                f"{result.tool_id}/{result.profile_id}/{result.case_id}"
-            )
 
 
 def create_missing_campaign(
@@ -793,13 +813,11 @@ def create_missing_campaign(
     now = datetime.now(UTC)
     repository = repository_identity(catalog.root)
     expected = tuple(sorted(set(expected_tool_ids)))
-    selection_hash = hash_json(
-        _selection_payload(
-            suite_id,
-            (item.definition.id for item in selected),
-            (),
-            expected,
-        )
+    selection_hash = campaign_selection_hash(
+        suite_id,
+        (item.definition.id for item in selected),
+        (),
+        expected,
     )
     identity_hash = hash_json(
         {
@@ -919,13 +937,11 @@ def create_preparation_failure_campaign(
         )
     expected = (tool.id,)
     tools = (campaign_tool,)
-    selection_hash = hash_json(
-        _selection_payload(
-            suite_id,
-            (item.definition.id for item in selected),
-            tools,
-            expected,
-        )
+    selection_hash = campaign_selection_hash(
+        suite_id,
+        (item.definition.id for item in selected),
+        tools,
+        expected,
     )
     identity_hash = hash_json(
         {
@@ -1038,13 +1054,11 @@ def aggregate_campaigns(
     else:
         trust = CampaignTrust(source="local")
     aggregate_tools = tuple(sorted(tools, key=lambda item: item.definition.id))
-    selection_hash = hash_json(
-        _selection_payload(
-            first.selection_name,
-            first.case_ids,
-            aggregate_tools,
-            expected,
-        )
+    selection_hash = campaign_selection_hash(
+        first.selection_name,
+        first.case_ids,
+        aggregate_tools,
+        expected,
     )
     aggregate_id = f"{finished:%Y%m%dT%H%M%SZ}-aggregate-{identity_hash[:12]}"
     aggregate_results = _attach_reproduction(results, aggregate_id, trust)

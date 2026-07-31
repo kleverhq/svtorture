@@ -630,6 +630,15 @@ def repository_identity(root: Path) -> RepositoryIdentity:
 def write_json_schema(root: Path, output: Path) -> None:
     """Write externally consumable model schemas deterministically."""
 
+    from svtorture.dashboard_models import (
+        CampaignCatalog,
+        CampaignEvidenceShard,
+        CampaignManifest,
+        CampaignSummary,
+        CampaignTrends,
+        CampaignVerdicts,
+        DashboardIndex,
+    )
     from svtorture.models import Campaign, NormalizedResult  # local to avoid cycles
 
     tag_values = [tag.id for tag in _parse(root / "standards" / "tags.toml", TagRegistry).tags]
@@ -639,8 +648,25 @@ def write_json_schema(root: Path, output: Path) -> None:
     requirements_schema["$defs"]["Requirement"]["properties"]["tags"]["items"]["enum"] = tag_values
     part_schema = RequirementPart.model_json_schema()
     part_schema["$defs"]["Requirement"]["properties"]["tags"]["items"]["enum"] = tag_values
+    dashboard_schemas = {
+        "campaign-catalog.schema.json": CampaignCatalog.model_json_schema(),
+        "campaign-evidence.schema.json": CampaignEvidenceShard.model_json_schema(),
+        "campaign-manifest.schema.json": CampaignManifest.model_json_schema(),
+        "campaign-summary.schema.json": CampaignSummary.model_json_schema(),
+        "campaign-trends.schema.json": CampaignTrends.model_json_schema(),
+        "campaign-verdicts.schema.json": CampaignVerdicts.model_json_schema(),
+        "dashboard-index.schema.json": DashboardIndex.model_json_schema(),
+    }
+    for name, schema in dashboard_schemas.items():
+        schema["$id"] = name
+        required = schema.setdefault("required", [])
+        schema["required"] = ["schema_version", "kind", *required]
+    trends_schema = dashboard_schemas["campaign-trends.schema.json"]
+    trends_schema.pop("$defs", None)
+    trends_schema["properties"]["campaigns"]["items"] = {"$ref": "campaign-summary.schema.json"}
     schemas = {
         "campaign.schema.json": Campaign.model_json_schema(),
+        **dashboard_schemas,
         "case.schema.json": case_schema,
         "requirement-part.schema.json": part_schema,
         "requirements.schema.json": requirements_schema,

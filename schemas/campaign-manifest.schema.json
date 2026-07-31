@@ -1,0 +1,1045 @@
+{
+  "$defs": {
+    "CampaignResources": {
+      "additionalProperties": false,
+      "properties": {
+        "catalog": {
+          "$ref": "#/$defs/DashboardResource"
+        },
+        "evidence": {
+          "items": {
+            "$ref": "#/$defs/CountedDashboardResource"
+          },
+          "title": "Evidence",
+          "type": "array"
+        },
+        "verdicts": {
+          "$ref": "#/$defs/CountedDashboardResource"
+        }
+      },
+      "required": [
+        "catalog",
+        "verdicts",
+        "evidence"
+      ],
+      "title": "CampaignResources",
+      "type": "object"
+    },
+    "CampaignTool": {
+      "additionalProperties": false,
+      "properties": {
+        "definition": {
+          "$ref": "#/$defs/ToolDefinition"
+        },
+        "image": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ImageIdentity"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "preparation_error": {
+          "anyOf": [
+            {
+              "maxLength": 500,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Preparation Error"
+        },
+        "profile_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Profile Ids",
+          "type": "array"
+        },
+        "reported_version": {
+          "anyOf": [
+            {
+              "maxLength": 1000,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reported Version"
+        },
+        "selection": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ToolSelection"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "definition",
+        "profile_ids"
+      ],
+      "title": "CampaignTool",
+      "type": "object"
+    },
+    "CampaignTrust": {
+      "additionalProperties": false,
+      "properties": {
+        "checkout_sha": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Checkout Sha"
+        },
+        "repository": {
+          "anyOf": [
+            {
+              "maxLength": 300,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Repository"
+        },
+        "source": {
+          "pattern": "^(local|github-actions)$",
+          "title": "Source",
+          "type": "string"
+        },
+        "workflow_run_id": {
+          "anyOf": [
+            {
+              "maxLength": 100,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Workflow Run Id"
+        }
+      },
+      "required": [
+        "source"
+      ],
+      "title": "CampaignTrust",
+      "type": "object"
+    },
+    "CorpusMetricSummary": {
+      "additionalProperties": false,
+      "properties": {
+        "breakdown": {
+          "items": {
+            "$ref": "#/$defs/CorpusPartMetric"
+          },
+          "maxItems": 58,
+          "minItems": 58,
+          "title": "Breakdown",
+          "type": "array"
+        },
+        "coverage": {
+          "$ref": "#/$defs/CorpusRatio"
+        },
+        "density": {
+          "$ref": "#/$defs/CorpusRatio"
+        }
+      },
+      "required": [
+        "coverage",
+        "density",
+        "breakdown"
+      ],
+      "title": "CorpusMetricSummary",
+      "type": "object"
+    },
+    "CorpusMetrics": {
+      "additionalProperties": false,
+      "properties": {
+        "cases": {
+          "$ref": "#/$defs/CorpusMetricSummary"
+        },
+        "requirements": {
+          "$ref": "#/$defs/CorpusMetricSummary"
+        }
+      },
+      "required": [
+        "requirements",
+        "cases"
+      ],
+      "title": "CorpusMetrics",
+      "type": "object"
+    },
+    "CorpusPartMetric": {
+      "additionalProperties": false,
+      "properties": {
+        "coverage": {
+          "$ref": "#/$defs/CorpusRatio"
+        },
+        "density": {
+          "$ref": "#/$defs/CorpusRatio"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "$ref": "#/$defs/StandardPartKind"
+        },
+        "title": {
+          "maxLength": 500,
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "coverage",
+        "density",
+        "id",
+        "kind",
+        "title"
+      ],
+      "title": "CorpusPartMetric",
+      "type": "object"
+    },
+    "CorpusRatio": {
+      "additionalProperties": false,
+      "properties": {
+        "denominator": {
+          "minimum": 0,
+          "title": "Denominator",
+          "type": "integer"
+        },
+        "numerator": {
+          "minimum": 0,
+          "title": "Numerator",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "numerator",
+        "denominator"
+      ],
+      "title": "CorpusRatio",
+      "type": "object"
+    },
+    "CountedDashboardResource": {
+      "additionalProperties": false,
+      "properties": {
+        "bytes": {
+          "minimum": 0,
+          "title": "Bytes",
+          "type": "integer"
+        },
+        "case_count": {
+          "minimum": 0,
+          "title": "Case Count",
+          "type": "integer"
+        },
+        "href": {
+          "minLength": 1,
+          "pattern": "^[^/\\\\\\x00][^\\\\\\x00]*$",
+          "title": "Href",
+          "type": "string"
+        },
+        "result_count": {
+          "minimum": 0,
+          "title": "Result Count",
+          "type": "integer"
+        },
+        "sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "href",
+        "sha256",
+        "bytes",
+        "case_count",
+        "result_count"
+      ],
+      "title": "CountedDashboardResource",
+      "type": "object"
+    },
+    "DashboardCaseIdentity": {
+      "additionalProperties": false,
+      "properties": {
+        "content_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Content Sha256",
+          "type": "string"
+        },
+        "definition_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Definition Sha256",
+          "type": "string"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "content_sha256",
+        "definition_sha256"
+      ],
+      "title": "DashboardCaseIdentity",
+      "type": "object"
+    },
+    "DashboardMetric": {
+      "additionalProperties": false,
+      "properties": {
+        "complete": {
+          "title": "Complete",
+          "type": "boolean"
+        },
+        "conforming": {
+          "minimum": 0,
+          "title": "Conforming",
+          "type": "integer"
+        },
+        "corpus_coverage": {
+          "minimum": 0,
+          "title": "Corpus Coverage",
+          "type": "integer"
+        },
+        "corpus_sha": {
+          "title": "Corpus Sha",
+          "type": "string"
+        },
+        "denominator": {
+          "minimum": 0,
+          "title": "Denominator",
+          "type": "integer"
+        },
+        "exact_tags": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Exact Tags",
+          "type": "array"
+        },
+        "execution_coverage": {
+          "minimum": 0,
+          "title": "Execution Coverage",
+          "type": "integer"
+        },
+        "image_digest": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Image Digest"
+        },
+        "inconclusive": {
+          "minimum": 0,
+          "title": "Inconclusive",
+          "type": "integer"
+        },
+        "infrastructure_state": {
+          "title": "Infrastructure State",
+          "type": "string"
+        },
+        "label": {
+          "title": "Label",
+          "type": "string"
+        },
+        "nearest_tag": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Nearest Tag"
+        },
+        "nonconforming": {
+          "minimum": 0,
+          "title": "Nonconforming",
+          "type": "integer"
+        },
+        "numerator": {
+          "minimum": 0,
+          "title": "Numerator",
+          "type": "integer"
+        },
+        "profile_id": {
+          "title": "Profile Id",
+          "type": "string"
+        },
+        "reported_version": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reported Version"
+        },
+        "revision": {
+          "$ref": "#/$defs/StandardRevision"
+        },
+        "tool_id": {
+          "title": "Tool Id",
+          "type": "string"
+        },
+        "tool_sha": {
+          "anyOf": [
+            {
+              "pattern": "^[0-9a-f]{40}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Tool Sha"
+        },
+        "unsupported": {
+          "minimum": 0,
+          "title": "Unsupported",
+          "type": "integer"
+        },
+        "valid": {
+          "title": "Valid",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "label",
+        "revision",
+        "tool_id",
+        "profile_id",
+        "numerator",
+        "denominator",
+        "corpus_sha",
+        "complete",
+        "valid",
+        "corpus_coverage",
+        "execution_coverage",
+        "conforming",
+        "nonconforming",
+        "inconclusive",
+        "unsupported",
+        "infrastructure_state"
+      ],
+      "title": "DashboardMetric",
+      "type": "object"
+    },
+    "DashboardResource": {
+      "additionalProperties": false,
+      "properties": {
+        "bytes": {
+          "minimum": 0,
+          "title": "Bytes",
+          "type": "integer"
+        },
+        "href": {
+          "minLength": 1,
+          "pattern": "^[^/\\\\\\x00][^\\\\\\x00]*$",
+          "title": "Href",
+          "type": "string"
+        },
+        "sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "href",
+        "sha256",
+        "bytes"
+      ],
+      "title": "DashboardResource",
+      "type": "object"
+    },
+    "DiagnosticRule": {
+      "additionalProperties": false,
+      "properties": {
+        "case": {
+          "title": "Case",
+          "type": "string"
+        },
+        "contains": {
+          "maxLength": 4096,
+          "minLength": 1,
+          "title": "Contains",
+          "type": "string"
+        },
+        "severity": {
+          "anyOf": [
+            {
+              "pattern": "^(error|warning|fatal|note|info)$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Severity"
+        }
+      },
+      "required": [
+        "case",
+        "contains"
+      ],
+      "title": "DiagnosticRule",
+      "type": "object"
+    },
+    "Distribution": {
+      "enum": [
+        "open-source",
+        "commercial",
+        "internal"
+      ],
+      "title": "Distribution",
+      "type": "string"
+    },
+    "ExecutionBackend": {
+      "enum": [
+        "docker",
+        "local-wrapper"
+      ],
+      "title": "ExecutionBackend",
+      "type": "string"
+    },
+    "ImageIdentity": {
+      "additionalProperties": false,
+      "properties": {
+        "base_image": {
+          "maxLength": 4096,
+          "minLength": 1,
+          "title": "Base Image",
+          "type": "string"
+        },
+        "base_image_digest": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Base Image Digest"
+        },
+        "digest": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Digest"
+        },
+        "image_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Image Id"
+        },
+        "platform": {
+          "maxLength": 4096,
+          "minLength": 1,
+          "title": "Platform",
+          "type": "string"
+        },
+        "recipe_sha256": {
+          "title": "Recipe Sha256",
+          "type": "string"
+        },
+        "reference": {
+          "maxLength": 4096,
+          "minLength": 1,
+          "title": "Reference",
+          "type": "string"
+        }
+      },
+      "required": [
+        "reference",
+        "recipe_sha256",
+        "base_image",
+        "platform"
+      ],
+      "title": "ImageIdentity",
+      "type": "object"
+    },
+    "ManifestHashes": {
+      "additionalProperties": false,
+      "properties": {
+        "cases": {
+          "title": "Cases",
+          "type": "string"
+        },
+        "requirements": {
+          "title": "Requirements",
+          "type": "string"
+        },
+        "selection": {
+          "title": "Selection",
+          "type": "string"
+        }
+      },
+      "required": [
+        "requirements",
+        "cases",
+        "selection"
+      ],
+      "title": "ManifestHashes",
+      "type": "object"
+    },
+    "Phase": {
+      "enum": [
+        "preprocess",
+        "parse",
+        "elaborate",
+        "simulate"
+      ],
+      "title": "Phase",
+      "type": "string"
+    },
+    "RepositoryIdentity": {
+      "additionalProperties": false,
+      "properties": {
+        "commit": {
+          "title": "Commit",
+          "type": "string"
+        },
+        "dirty": {
+          "title": "Dirty",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "commit",
+        "dirty"
+      ],
+      "title": "RepositoryIdentity",
+      "type": "object"
+    },
+    "StandardPartKind": {
+      "enum": [
+        "chapter",
+        "annex"
+      ],
+      "title": "StandardPartKind",
+      "type": "string"
+    },
+    "StandardRevision": {
+      "enum": [
+        "1800-2012",
+        "1800-2017",
+        "1800-2023"
+      ],
+      "title": "StandardRevision",
+      "type": "string"
+    },
+    "ToolDefinition": {
+      "additionalProperties": false,
+      "properties": {
+        "adapter": {
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "title": "Adapter",
+          "type": "string"
+        },
+        "ci": {
+          "title": "Ci",
+          "type": "boolean"
+        },
+        "default_branch": {
+          "anyOf": [
+            {
+              "maxLength": 200,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Default Branch"
+        },
+        "diagnostic_rules": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/DiagnosticRule"
+          },
+          "title": "Diagnostic Rules",
+          "type": "array"
+        },
+        "display_name": {
+          "maxLength": 4096,
+          "minLength": 1,
+          "title": "Display Name",
+          "type": "string"
+        },
+        "distribution": {
+          "$ref": "#/$defs/Distribution"
+        },
+        "dockerfile": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Dockerfile"
+        },
+        "execution": {
+          "$ref": "#/$defs/ExecutionBackend"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "image_repository": {
+          "anyOf": [
+            {
+              "maxLength": 500,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Image Repository"
+        },
+        "profiles": {
+          "items": {
+            "$ref": "#/$defs/ToolProfile"
+          },
+          "title": "Profiles",
+          "type": "array"
+        },
+        "publish": {
+          "title": "Publish",
+          "type": "boolean"
+        },
+        "recipe_files": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Recipe Files",
+          "type": "array"
+        },
+        "runner_config": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Runner Config"
+        },
+        "upstream_url": {
+          "anyOf": [
+            {
+              "maxLength": 500,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Upstream Url"
+        }
+      },
+      "required": [
+        "id",
+        "display_name",
+        "adapter",
+        "distribution",
+        "execution",
+        "ci",
+        "publish",
+        "profiles"
+      ],
+      "title": "ToolDefinition",
+      "type": "object"
+    },
+    "ToolProfile": {
+      "additionalProperties": false,
+      "properties": {
+        "direct_phases": {
+          "items": {
+            "$ref": "#/$defs/Phase"
+          },
+          "title": "Direct Phases",
+          "type": "array"
+        },
+        "effective_language": {
+          "maxLength": 100,
+          "minLength": 1,
+          "title": "Effective Language",
+          "type": "string"
+        },
+        "headline": {
+          "default": false,
+          "title": "Headline",
+          "type": "boolean"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "phase_ceiling": {
+          "$ref": "#/$defs/Phase"
+        },
+        "standard_revision": {
+          "$ref": "#/$defs/StandardRevision"
+        }
+      },
+      "required": [
+        "id",
+        "phase_ceiling",
+        "direct_phases",
+        "standard_revision",
+        "effective_language"
+      ],
+      "title": "ToolProfile",
+      "type": "object"
+    },
+    "ToolSelection": {
+      "additionalProperties": false,
+      "properties": {
+        "default_branch": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Default Branch"
+        },
+        "exact_tags": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Exact Tags",
+          "type": "array"
+        },
+        "nearest_tag": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Nearest Tag"
+        },
+        "requested_ref": {
+          "title": "Requested Ref",
+          "type": "string"
+        },
+        "resolved_at": {
+          "format": "date-time",
+          "title": "Resolved At",
+          "type": "string"
+        },
+        "resolved_sha": {
+          "title": "Resolved Sha",
+          "type": "string"
+        },
+        "tool": {
+          "title": "Tool",
+          "type": "string"
+        }
+      },
+      "required": [
+        "tool",
+        "requested_ref",
+        "resolved_sha",
+        "resolved_at"
+      ],
+      "title": "ToolSelection",
+      "type": "object"
+    }
+  },
+  "$id": "campaign-manifest.schema.json",
+  "additionalProperties": false,
+  "properties": {
+    "cases": {
+      "items": {
+        "$ref": "#/$defs/DashboardCaseIdentity"
+      },
+      "title": "Cases",
+      "type": "array"
+    },
+    "complete": {
+      "title": "Complete",
+      "type": "boolean"
+    },
+    "corpus_metrics": {
+      "$ref": "#/$defs/CorpusMetrics"
+    },
+    "expected_tool_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Expected Tool Ids",
+      "type": "array"
+    },
+    "finished_at": {
+      "format": "date-time",
+      "title": "Finished At",
+      "type": "string"
+    },
+    "hashes": {
+      "$ref": "#/$defs/ManifestHashes"
+    },
+    "id": {
+      "pattern": "^[0-9]{8}T[0-9]{6}Z-[A-Za-z0-9](?:[A-Za-z0-9-]{0,126}[A-Za-z0-9])?$",
+      "title": "Id",
+      "type": "string"
+    },
+    "kind": {
+      "const": "campaign-manifest",
+      "default": "campaign-manifest",
+      "title": "Kind",
+      "type": "string"
+    },
+    "metrics": {
+      "items": {
+        "$ref": "#/$defs/DashboardMetric"
+      },
+      "title": "Metrics",
+      "type": "array"
+    },
+    "missing_tool_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Missing Tool Ids",
+      "type": "array"
+    },
+    "platform": {
+      "maxLength": 4096,
+      "minLength": 1,
+      "title": "Platform",
+      "type": "string"
+    },
+    "repository": {
+      "$ref": "#/$defs/RepositoryIdentity"
+    },
+    "resources": {
+      "$ref": "#/$defs/CampaignResources"
+    },
+    "schema_version": {
+      "default": 6,
+      "maximum": 6,
+      "minimum": 6,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "selection_name": {
+      "maxLength": 4096,
+      "minLength": 1,
+      "title": "Selection Name",
+      "type": "string"
+    },
+    "started_at": {
+      "format": "date-time",
+      "title": "Started At",
+      "type": "string"
+    },
+    "tools": {
+      "items": {
+        "$ref": "#/$defs/CampaignTool"
+      },
+      "title": "Tools",
+      "type": "array"
+    },
+    "trust": {
+      "$ref": "#/$defs/CampaignTrust"
+    }
+  },
+  "required": [
+    "schema_version",
+    "kind",
+    "id",
+    "started_at",
+    "finished_at",
+    "repository",
+    "platform",
+    "selection_name",
+    "cases",
+    "tools",
+    "expected_tool_ids",
+    "missing_tool_ids",
+    "hashes",
+    "corpus_metrics",
+    "metrics",
+    "complete",
+    "trust",
+    "resources"
+  ],
+  "title": "CampaignManifest",
+  "type": "object"
+}

@@ -1,0 +1,565 @@
+{
+  "$defs": {
+    "Applicability": {
+      "enum": [
+        "applicable",
+        "same-rule-different-clause",
+        "changed-expectation",
+        "not-applicable",
+        "not-assessed"
+      ],
+      "title": "Applicability",
+      "type": "string"
+    },
+    "CorpusMetricSummary": {
+      "additionalProperties": false,
+      "properties": {
+        "breakdown": {
+          "items": {
+            "$ref": "#/$defs/CorpusPartMetric"
+          },
+          "maxItems": 58,
+          "minItems": 58,
+          "title": "Breakdown",
+          "type": "array"
+        },
+        "coverage": {
+          "$ref": "#/$defs/CorpusRatio"
+        },
+        "density": {
+          "$ref": "#/$defs/CorpusRatio"
+        }
+      },
+      "required": [
+        "coverage",
+        "density",
+        "breakdown"
+      ],
+      "title": "CorpusMetricSummary",
+      "type": "object"
+    },
+    "CorpusMetrics": {
+      "additionalProperties": false,
+      "properties": {
+        "cases": {
+          "$ref": "#/$defs/CorpusMetricSummary"
+        },
+        "requirements": {
+          "$ref": "#/$defs/CorpusMetricSummary"
+        }
+      },
+      "required": [
+        "requirements",
+        "cases"
+      ],
+      "title": "CorpusMetrics",
+      "type": "object"
+    },
+    "CorpusPartMetric": {
+      "additionalProperties": false,
+      "properties": {
+        "coverage": {
+          "$ref": "#/$defs/CorpusRatio"
+        },
+        "density": {
+          "$ref": "#/$defs/CorpusRatio"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "$ref": "#/$defs/StandardPartKind"
+        },
+        "title": {
+          "maxLength": 500,
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "coverage",
+        "density",
+        "id",
+        "kind",
+        "title"
+      ],
+      "title": "CorpusPartMetric",
+      "type": "object"
+    },
+    "CorpusRatio": {
+      "additionalProperties": false,
+      "properties": {
+        "denominator": {
+          "minimum": 0,
+          "title": "Denominator",
+          "type": "integer"
+        },
+        "numerator": {
+          "minimum": 0,
+          "title": "Numerator",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "numerator",
+        "denominator"
+      ],
+      "title": "CorpusRatio",
+      "type": "object"
+    },
+    "DashboardCase": {
+      "additionalProperties": false,
+      "properties": {
+        "content_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Content Sha256",
+          "type": "string"
+        },
+        "defines": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Defines",
+          "type": "array"
+        },
+        "definition_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Definition Sha256",
+          "type": "string"
+        },
+        "description": {
+          "maxLength": 4096,
+          "minLength": 1,
+          "title": "Description",
+          "type": "string"
+        },
+        "evidence": {
+          "$ref": "#/$defs/EvidenceLevel"
+        },
+        "expectation": {
+          "$ref": "#/$defs/Expectation"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "include_dirs": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Include Dirs",
+          "type": "array"
+        },
+        "limits": {
+          "$ref": "#/$defs/ResourceLimits",
+          "default": {
+            "memory_mb": 2048,
+            "output_bytes": 65536,
+            "pids": 256,
+            "timeout_seconds": 30
+          }
+        },
+        "oracle": {
+          "$ref": "#/$defs/Oracle"
+        },
+        "primary_requirement": {
+          "title": "Primary Requirement",
+          "type": "string"
+        },
+        "related_requirements": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Related Requirements",
+          "type": "array"
+        },
+        "revision_applicability": {
+          "additionalProperties": {
+            "$ref": "#/$defs/Applicability"
+          },
+          "propertyNames": {
+            "$ref": "#/$defs/StandardRevision"
+          },
+          "title": "Revision Applicability",
+          "type": "object"
+        },
+        "runtime_args": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Runtime Args",
+          "type": "array"
+        },
+        "schema_version": {
+          "maximum": 1,
+          "minimum": 1,
+          "title": "Schema Version",
+          "type": "integer"
+        },
+        "source_links": {
+          "additionalProperties": {
+            "pattern": "^(?:https://[^\\s]+|data:text/plain;charset=utf-8,[^\\s]*)$",
+            "type": "string"
+          },
+          "title": "Source Links",
+          "type": "object"
+        },
+        "sources": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Sources",
+          "type": "array"
+        },
+        "standard_revision": {
+          "$ref": "#/$defs/StandardRevision"
+        },
+        "tags": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Tags",
+          "type": "array"
+        },
+        "target_phase": {
+          "$ref": "#/$defs/Phase"
+        },
+        "title": {
+          "maxLength": 4096,
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        },
+        "top": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Top"
+        }
+      },
+      "required": [
+        "schema_version",
+        "id",
+        "title",
+        "description",
+        "primary_requirement",
+        "standard_revision",
+        "revision_applicability",
+        "target_phase",
+        "expectation",
+        "evidence",
+        "sources",
+        "oracle",
+        "content_sha256",
+        "definition_sha256",
+        "source_links"
+      ],
+      "title": "DashboardCase",
+      "type": "object"
+    },
+    "EvidenceLevel": {
+      "enum": [
+        "mandatory",
+        "exploratory"
+      ],
+      "title": "EvidenceLevel",
+      "type": "string"
+    },
+    "Expectation": {
+      "enum": [
+        "accept",
+        "reject",
+        "diagnostic"
+      ],
+      "title": "Expectation",
+      "type": "string"
+    },
+    "Oracle": {
+      "additionalProperties": false,
+      "properties": {
+        "anchor": {
+          "anyOf": [
+            {
+              "maxLength": 256,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Anchor"
+        },
+        "kind": {
+          "$ref": "#/$defs/OracleKind"
+        },
+        "marker": {
+          "anyOf": [
+            {
+              "maxLength": 256,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Marker"
+        }
+      },
+      "required": [
+        "kind"
+      ],
+      "title": "Oracle",
+      "type": "object"
+    },
+    "OracleKind": {
+      "enum": [
+        "phase-exit",
+        "runtime-pass-marker",
+        "diagnostic-at-anchor"
+      ],
+      "title": "OracleKind",
+      "type": "string"
+    },
+    "Phase": {
+      "enum": [
+        "preprocess",
+        "parse",
+        "elaborate",
+        "simulate"
+      ],
+      "title": "Phase",
+      "type": "string"
+    },
+    "Requirement": {
+      "additionalProperties": false,
+      "properties": {
+        "anchors": {
+          "items": {
+            "pattern": "^\\[2023:(?:(?:[1-9]|[1-3][0-9]|4[01])(?:\\.[1-9][0-9]*)*|[A-Q](?:\\.[1-9][0-9]*)*):[A-Z][A-Z0-9]*(?:[-.][A-Z0-9]+)*:p[0-9]{3,4}(?:-[0-9]{3,4})?\\]$",
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Anchors",
+          "type": "array",
+          "uniqueItems": true
+        },
+        "clause": {
+          "pattern": "^(?:(?:[1-9]|[1-3][0-9]|4[01])(?:\\.[1-9][0-9]*)*|[A-Q](?:\\.[1-9][0-9]*)*)$",
+          "title": "Clause",
+          "type": "string"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "part": {
+          "pattern": "^(?:[1-9]|[1-3][0-9]|4[01]|[A-Q])$",
+          "title": "Part",
+          "type": "string"
+        },
+        "related_clauses": {
+          "default": [],
+          "items": {
+            "pattern": "^(?:(?:[1-9]|[1-3][0-9]|4[01])(?:\\.[1-9][0-9]*)*|[A-Q](?:\\.[1-9][0-9]*)*)$",
+            "type": "string"
+          },
+          "title": "Related Clauses",
+          "type": "array"
+        },
+        "revision_applicability": {
+          "additionalProperties": {
+            "$ref": "#/$defs/RevisionRule"
+          },
+          "propertyNames": {
+            "$ref": "#/$defs/StandardRevision"
+          },
+          "title": "Revision Applicability",
+          "type": "object"
+        },
+        "standard_revision": {
+          "$ref": "#/$defs/StandardRevision"
+        },
+        "summary": {
+          "maxLength": 4096,
+          "minLength": 1,
+          "title": "Summary",
+          "type": "string"
+        },
+        "tags": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Tags",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "standard_revision",
+        "part",
+        "clause",
+        "anchors",
+        "summary",
+        "revision_applicability"
+      ],
+      "title": "Requirement",
+      "type": "object"
+    },
+    "ResourceLimits": {
+      "additionalProperties": false,
+      "properties": {
+        "memory_mb": {
+          "default": 2048,
+          "maximum": 32768,
+          "minimum": 128,
+          "title": "Memory Mb",
+          "type": "integer"
+        },
+        "output_bytes": {
+          "default": 65536,
+          "maximum": 1048576,
+          "minimum": 1024,
+          "title": "Output Bytes",
+          "type": "integer"
+        },
+        "pids": {
+          "default": 256,
+          "maximum": 4096,
+          "minimum": 16,
+          "title": "Pids",
+          "type": "integer"
+        },
+        "timeout_seconds": {
+          "default": 30,
+          "maximum": 300,
+          "minimum": 1,
+          "title": "Timeout Seconds",
+          "type": "integer"
+        }
+      },
+      "title": "ResourceLimits",
+      "type": "object"
+    },
+    "RevisionRule": {
+      "additionalProperties": false,
+      "properties": {
+        "clause": {
+          "anyOf": [
+            {
+              "pattern": "^(?:(?:[1-9]|[1-3][0-9]|4[01])(?:\\.[1-9][0-9]*)*|[A-Q](?:\\.[1-9][0-9]*)*)$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Clause"
+        },
+        "note": {
+          "anyOf": [
+            {
+              "maxLength": 500,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Note"
+        },
+        "status": {
+          "$ref": "#/$defs/Applicability"
+        }
+      },
+      "required": [
+        "status"
+      ],
+      "title": "RevisionRule",
+      "type": "object"
+    },
+    "StandardPartKind": {
+      "enum": [
+        "chapter",
+        "annex"
+      ],
+      "title": "StandardPartKind",
+      "type": "string"
+    },
+    "StandardRevision": {
+      "enum": [
+        "1800-2012",
+        "1800-2017",
+        "1800-2023"
+      ],
+      "title": "StandardRevision",
+      "type": "string"
+    }
+  },
+  "$id": "campaign-catalog.schema.json",
+  "additionalProperties": false,
+  "properties": {
+    "campaign_id": {
+      "pattern": "^[0-9]{8}T[0-9]{6}Z-[A-Za-z0-9](?:[A-Za-z0-9-]{0,126}[A-Za-z0-9])?$",
+      "title": "Campaign Id",
+      "type": "string"
+    },
+    "cases": {
+      "items": {
+        "$ref": "#/$defs/DashboardCase"
+      },
+      "title": "Cases",
+      "type": "array"
+    },
+    "corpus_metrics": {
+      "$ref": "#/$defs/CorpusMetrics"
+    },
+    "kind": {
+      "const": "campaign-catalog",
+      "default": "campaign-catalog",
+      "title": "Kind",
+      "type": "string"
+    },
+    "requirements": {
+      "items": {
+        "$ref": "#/$defs/Requirement"
+      },
+      "title": "Requirements",
+      "type": "array"
+    },
+    "schema_version": {
+      "default": 6,
+      "maximum": 6,
+      "minimum": 6,
+      "title": "Schema Version",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "schema_version",
+    "kind",
+    "campaign_id",
+    "requirements",
+    "cases",
+    "corpus_metrics"
+  ],
+  "title": "CampaignCatalog",
+  "type": "object"
+}
