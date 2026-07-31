@@ -45,13 +45,13 @@ pass/fail percentage.
 ## Architecture and stack
 
 ```text
-campaign.json files
-        ↓
-Python validation and dataset export
-        ↓
-dashboard/dist/data/dataset.json
-        ↓
-static React application
+canonical campaign.json files
+        ↓ validate and export
+portable campaign bundles
+        ↓ assemble
+index + trends + selected manifest/catalog/verdicts
+        ↓ open one case
+one case-centric evidence shard
 ```
 
 The frontend uses:
@@ -61,9 +61,13 @@ The frontend uses:
 - ECharts for trend visualization;
 - Vitest, Testing Library, and jsdom for unit tests.
 
-`src/svtorture/publish.py` validates campaigns and creates the versioned dataset.
+`src/svtorture/publish.py` owns the public trust gate, while
+`src/svtorture/bundle.py` creates and validates the strict version-6 portable
+resources. The browser loads `data/index.json` and `data/trends.json` first,
+then the selected campaign's manifest, catalog, and compact verdicts. Full
+observations remain unloaded until a case detail requests its evidence shard.
 The React model derives filters, comparable-campaign changes, and aggregate
-presentation from that immutable data. View, campaign, date range, trend, trend
+presentation from those immutable resources. View, campaign, date range, trend, trend
 range, selected trend point, tool, profile, search, status, advanced filters,
 selected evidence entities, and the exact linked-Requirement Case filter are
 encoded in the URL so an investigation can be shared or revisited. Grouped requirement statuses are presentation categories only; evidence retains every
@@ -103,9 +107,10 @@ is saved in local storage for this dashboard origin; it does not alter datasets
 or shared URLs.
 
 A plain `npm run build` creates only the application assets; it does not embed
-campaign evidence. `just dashboard-build` first builds those assets and then
-exports selected campaigns to the ignored `dashboard/dist/data/dataset.json`.
-Local exports may include local campaign evidence. Public Pages exports pass
+campaign evidence. `just dashboard-build` builds those assets, exports each
+selected canonical campaign through a temporary portable bundle, and assembles
+ignored `dashboard/dist/data/` resources. There is no `dataset.json`. Local
+exports may include embedded local source links. Public Release exports pass
 additional provenance, image, repository-state, and private-material checks.
 See [the architecture overview](../docs/architecture.md) for the complete data
 flow.
@@ -130,7 +135,7 @@ The run prints a campaign path such as:
 .svtorture/campaigns/<campaign-id>/campaign.json
 ```
 
-Build the frontend and export that campaign as a local dataset:
+Build the frontend and export that campaign as local version-6 resources:
 
 ```bash
 just dashboard-build ".svtorture/campaigns/<campaign-id>/campaign.json"
@@ -144,16 +149,23 @@ just dashboard-serve
 
 Open <http://localhost:4173>. Stop the server with `Ctrl-C`.
 
-To compare several campaigns, pass their paths as one quoted argument:
+To compare several canonical campaigns, pass each path as a separate argument:
 
 ```bash
-just dashboard-build ".svtorture/campaigns/<first>/campaign.json .svtorture/campaigns/<second>/campaign.json"
+just dashboard-build ".svtorture/campaigns/<first>/campaign.json" ".svtorture/campaigns/<second>/campaign.json"
 just dashboard-serve
 ```
 
-Re-run `just dashboard-build` after changing the campaign selection. The
-campaigns, generated application, and local dataset remain in ignored
-`.svtorture/` and `dashboard/dist/` directories.
+Portable ZIPs and unpacked bundle directories use the same local path:
+
+```bash
+just dashboard-local "/path/to/first.zip" "/path/to/unpacked-second"
+```
+
+`dashboard-local` assembles all inputs and starts the server. Re-run
+`just dashboard-build` after changing canonical campaign inputs. Generated
+application and local data remain in ignored `.svtorture/` and
+`dashboard/dist/` directories.
 
 ## Development checks
 
@@ -163,7 +175,7 @@ npm --prefix dashboard test
 npm --prefix dashboard run build
 ```
 
-The root `just frontend` target runs all three checks. Dataset construction and
-public export policy are implemented in `src/svtorture/publish.py`; conformance
-terminology is authoritative in
+The root `just frontend` target runs all three checks. Bundle construction is
+implemented in `src/svtorture/bundle.py`, while public trust policy remains in
+`src/svtorture/publish.py`; conformance terminology is authoritative in
 [docs/methodology.md](../docs/methodology.md).

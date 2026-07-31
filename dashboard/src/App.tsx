@@ -18,20 +18,18 @@ import { TrendsView } from "./TrendsView";
 import { RequirementsView } from "./RequirementsView";
 import {
   EMPTY_FILTERS,
-  campaignsInDateRange,
   filterCorpus,
   filtersFromSearch,
   filtersToSearch,
   corpusTrendPointKey,
-  selectedCampaign,
   toolTrendPointKey,
   trendStateFromSearch,
   type TrendKind,
   type TrendRange,
 } from "./model";
 import { ThemeControl } from "./ThemeControl";
-import type { Dataset } from "./types";
-import { useDataset } from "./useDataset";
+import type { CampaignSummary, DashboardIndex } from "./types";
+import { useDashboard } from "./useDashboard";
 
 type View = "overview" | "matrix" | "evidence" | "trends" | "campaigns" | "about";
 
@@ -51,7 +49,13 @@ function initialView(): View {
     : "overview";
 }
 
-function SiteHeader({ dataset }: { dataset: Dataset | undefined }) {
+function SiteHeader({
+  index,
+  historyCount,
+}: {
+  index: DashboardIndex | undefined;
+  historyCount: number;
+}) {
   return (
     <header className="site-header">
       <a className="brand" href="?" aria-label="SVTORTURE dashboard home">
@@ -62,13 +66,10 @@ function SiteHeader({ dataset }: { dataset: Dataset | undefined }) {
         </span>
       </a>
       <div className="site-header__meta">
-        {dataset && (
-          <>
-            <span className={`visibility visibility--${dataset.visibility}`}>
-              {dataset.visibility}
-            </span>
-            <span>{dataset.campaigns.length} campaigns</span>
-          </>
+        {index && (
+          <span>
+            {index.campaigns.length} available · {historyCount} archived
+          </span>
         )}
         <a
           className="github-link"
@@ -95,7 +96,7 @@ function CampaignSelection({
   onDateFromChange,
   onDateToChange,
 }: {
-  campaigns: Dataset["campaigns"];
+  campaigns: CampaignSummary[];
   campaignValue: string;
   dateFrom: string;
   dateTo: string;
@@ -202,14 +203,36 @@ function ViewTabs({
 }
 
 export default function App() {
-  const state = useDataset();
   const [view, setView] = useState<View>(initialView);
   const [filters, setFilters] = useState(() => filtersFromSearch(window.location.search));
+  const state = useDashboard(
+    filters.campaign,
+    filters.dateFrom,
+    filters.dateTo,
+    view === "trends" || view === "about",
+    view !== "trends" && view !== "about",
+    filters.changed,
+  );
   const [trend, setTrend] = useState(() =>
     trendStateFromSearch(window.location.search),
   );
   const [workspaceHeight, setWorkspaceHeight] = useState(0);
   const workspaceRef = useRef<HTMLElement>(null);
+  const availableIds = new Set(state.index?.campaigns.map((campaign) => campaign.id) ?? []);
+  const rangedCampaigns = (state.trends?.campaigns ?? [])
+    .filter((campaign) => {
+      const date = campaign.finished_at.slice(0, 10);
+      return (
+        availableIds.has(campaign.id) &&
+        (!filters.dateFrom || date >= filters.dateFrom) &&
+        (!filters.dateTo || date <= filters.dateTo)
+      );
+    })
+    .sort(
+      (left, right) =>
+        right.finished_at.localeCompare(left.finished_at) ||
+        right.id.localeCompare(left.id),
+    );
   useEffect(() => {
     const search = filtersToSearch(
       view === "about" ? EMPTY_FILTERS : filters,
@@ -228,24 +251,27 @@ export default function App() {
     const observer = new ResizeObserver(measure);
     observer.observe(workspace);
     return () => observer.disconnect();
-  }, [state.dataset, view]);
+  }, [state.dataset, state.index, view]);
   useEffect(() => {
-    const dataset = state.dataset;
-    if (!dataset) return;
+    const history = state.trends;
+    if (!history) return;
     setTrend((current) => {
+      const latest = history.campaigns.at(-1);
       const availableParts = new Set(
-        dataset.corpus_coverage.requirements.breakdown.map(
+        latest?.corpus_metrics.requirements.breakdown.map(
           (part) => `${part.kind}:${part.id}`,
-        ),
+        ) ?? [],
       );
       const parts = current.parts.filter((part) => availableParts.has(part));
       const pointIsValid =
         !current.point ||
         (current.kind === "pass-rate"
-          ? dataset.metrics.some(
-              (point) => toolTrendPointKey(point) === current.point,
+          ? history.campaigns.some((campaign) =>
+              campaign.tool_metrics.some(
+                (point) => toolTrendPointKey(point, campaign.id) === current.point,
+              ),
             )
-          : dataset.campaigns.some(
+          : history.campaigns.some(
               (campaign) =>
                 corpusTrendPointKey(campaign, "requirements") === current.point ||
                 corpusTrendPointKey(campaign, "cases") === current.point,
@@ -253,24 +279,15 @@ export default function App() {
       if (pointIsValid && parts.length === current.parts.length) return current;
       return { ...current, parts, point: pointIsValid ? current.point : "" };
     });
-  }, [state.dataset]);
+  }, [state.trends]);
   useEffect(() => {
     const dataset = state.dataset;
     if (!dataset) return;
     setFilters((current) => {
-      const ranged = campaignsInDateRange(dataset, current.dateFrom, current.dateTo);
-      const campaignIsValid =
-        !current.campaign || ranged.some((item) => item.id === current.campaign);
-      const campaignId = campaignIsValid ? current.campaign : "";
       let tool = current.tool;
       let profile = current.profile;
       if (view === "overview") {
-        const selected = selectedCampaign(
-          dataset,
-          campaignId,
-          current.dateFrom,
-          current.dateTo,
-        );
+        const selected = dataset.campaigns[0];
         const headlineProfiles =
           selected?.tools.flatMap((item) =>
             item.definition.profiles
@@ -297,10 +314,8 @@ export default function App() {
           profile = "";
         }
       }
-      if (campaignId === current.campaign && tool === current.tool && profile === current.profile) {
-        return current;
-      }
-      return { ...current, campaign: campaignId, tool, profile };
+      if (tool === current.tool && profile === current.profile) return current;
+      return { ...current, tool, profile };
     });
   }, [
     filters.campaign,
@@ -328,10 +343,11 @@ export default function App() {
       setTrend((current) => ({ ...current, parts, point: "" })),
     [],
   );
-  const rangedCampaigns = state.dataset
-    ? campaignsInDateRange(state.dataset, filters.dateFrom, filters.dateTo)
-    : [];
-  const campaignSelectValue = rangedCampaigns.some(
+  const selectableCampaigns =
+    view === "trends" || view === "about"
+      ? (state.trends?.campaigns ?? []).filter((campaign) => availableIds.has(campaign.id))
+      : rangedCampaigns;
+  const campaignSelectValue = selectableCampaigns.some(
     (item) => item.id === filters.campaign,
   )
     ? filters.campaign
@@ -363,7 +379,10 @@ export default function App() {
   if (view === "about") {
     return (
       <>
-        <SiteHeader dataset={state.dataset} />
+        <SiteHeader
+          index={state.index}
+          historyCount={state.trends?.campaigns.length ?? 0}
+        />
         <main
           className="dashboard dashboard--about"
           style={
@@ -371,7 +390,7 @@ export default function App() {
           }
         >
           <CampaignSelection
-            campaigns={rangedCampaigns}
+            campaigns={selectableCampaigns}
             campaignValue={campaignSelectValue}
             dateFrom={filters.dateFrom}
             dateTo={filters.dateTo}
@@ -385,6 +404,11 @@ export default function App() {
             onDateFromChange={changeDateFrom}
             onDateToChange={changeDateTo}
           />
+          {state.error && (
+            <p className="empty-state" role="status">
+              Campaign data unavailable: {state.error}
+            </p>
+          )}
           <section
             className="workspace-bar"
             aria-label="Dashboard controls"
@@ -409,6 +433,69 @@ export default function App() {
     );
   }
 
+  if (view === "trends" && state.index && state.trends) {
+    const latest = state.trends.campaigns.at(-1);
+    return (
+      <>
+        <SiteHeader index={state.index} historyCount={state.trends.campaigns.length} />
+        <main
+          className="dashboard dashboard--trends"
+          style={{ "--workspace-height": `${workspaceHeight}px` } as CSSProperties}
+        >
+          <CampaignSelection
+            campaigns={selectableCampaigns}
+            campaignValue={campaignSelectValue}
+            dateFrom={filters.dateFrom}
+            dateTo={filters.dateTo}
+            disabled
+            emptyLabel="Campaign detail unavailable"
+            onCampaignChange={changeCampaign}
+            onDateFromChange={changeDateFrom}
+            onDateToChange={changeDateTo}
+          />
+          <section
+            className="workspace-bar"
+            aria-label="Dashboard controls"
+            ref={workspaceRef}
+          >
+            <ViewTabs view={view} onSelect={setView} />
+            <Filters
+              history={state.trends}
+              filters={filters}
+              setFilters={setFilters}
+              onReset={() => undefined}
+              mode="trends"
+              trendKind={trend.kind}
+              standardParts={latest?.corpus_metrics.requirements.breakdown ?? []}
+              selectedParts={trend.parts}
+              onSelectedPartsChange={setTrendParts}
+            />
+          </section>
+          <div
+            className="view-panel view-panel--trends"
+            role="tabpanel"
+            id="dashboard-view-panel"
+            aria-labelledby="trends-tab"
+            tabIndex={0}
+          >
+            <TrendsView
+              history={state.trends}
+              toolFilter={filters.tool}
+              profileFilter={filters.profile}
+              trend={trend.kind}
+              range={trend.range}
+              selectedPointKey={trend.point}
+              selectedParts={trend.parts}
+              onTrendChange={setTrendKind}
+              onRangeChange={setTrendRange}
+              onSelectPoint={selectTrendPoint}
+            />
+          </div>
+        </main>
+      </>
+    );
+  }
+
   if (state.error) {
     return (
       <main className="loading">
@@ -418,22 +505,29 @@ export default function App() {
       </main>
     );
   }
+  if (state.unavailable) {
+    return (
+      <main className="loading">
+        <span className="brand__mark">SV</span>
+        <h1>Campaign detail is not available on this site</h1>
+        <p><code>{state.unavailable.id}</code> remains in immutable history.</p>
+        {state.unavailable.archive && (
+          <a href={state.unavailable.archive.release_url}>Open campaign Release ↗</a>
+        )}
+      </main>
+    );
+  }
   if (!state.dataset) {
     return (
       <main className="loading">
         <span className="brand__mark">SV</span>
-        <p>Loading campaign evidence…</p>
+        <p>{state.loading ? "Loading campaign evidence…" : "No campaigns match this date range."}</p>
       </main>
     );
   }
 
   const dataset = state.dataset;
-  const campaign = selectedCampaign(
-    dataset,
-    filters.campaign,
-    filters.dateFrom,
-    filters.dateTo,
-  );
+  const campaign = dataset.campaigns.find((item) => item.id === state.selectedId);
   const filtered = filterCorpus(dataset, filters, campaign);
   const requirementEvidenceCases = new Map<string, typeof dataset.cases>();
   for (const tool of campaign?.tools ?? []) {
@@ -453,16 +547,17 @@ export default function App() {
       );
     }
   }
-  const visibleCampaigns = rangedCampaigns.filter(
-    (item) =>
-      (!campaignSelectValue || item.id === campaign?.id) &&
-      ((!filters.tool && !filters.profile) ||
-        item.tools.some(
-          (tool) =>
-            (!filters.tool || tool.definition.id === filters.tool) &&
-            (!filters.profile || tool.profile_ids.includes(filters.profile)),
-        )),
-  );
+  const visibleCampaigns = campaign
+    ? [campaign].filter(
+        (item) =>
+          (!filters.tool && !filters.profile) ||
+          item.tools.some(
+            (tool) =>
+              (!filters.tool || tool.definition.id === filters.tool) &&
+              (!filters.profile || tool.profile_ids.includes(filters.profile)),
+          ),
+      )
+    : [];
   const resetLocalFilters = () =>
     setFilters((current) => ({
       ...EMPTY_FILTERS,
@@ -527,14 +622,17 @@ export default function App() {
   };
   return (
     <>
-      <SiteHeader dataset={dataset} />
+      <SiteHeader
+        index={state.index}
+        historyCount={state.trends?.campaigns.length ?? 0}
+      />
 
       <main
         className={`dashboard${view === "trends" ? " dashboard--trends" : ""}`}
         style={{ "--workspace-height": `${workspaceHeight}px` } as CSSProperties}
       >
         <CampaignSelection
-          campaigns={rangedCampaigns}
+          campaigns={selectableCampaigns}
           campaignValue={campaignSelectValue}
           dateFrom={filters.dateFrom}
           dateTo={filters.dateTo}
@@ -564,6 +662,7 @@ export default function App() {
           <Filters
               dataset={dataset}
               campaign={campaign}
+              history={state.trends}
               filters={filters}
               setFilters={setFilters}
               onReset={resetLocalFilters}
@@ -625,11 +724,12 @@ export default function App() {
                 setFilters((current) => ({ ...current, caseId }))
               }
               onInspectRequirement={inspectRequirement}
+              loadCaseEvidence={state.loadCaseEvidence}
             />
           )}
           {view === "trends" && (
             <TrendsView
-              dataset={dataset}
+              history={state.trends!}
               toolFilter={filters.tool}
               profileFilter={filters.profile}
               trend={trend.kind}

@@ -12,7 +12,75 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import App from "./App";
 import { toolTrendPointKey } from "./model";
 import { makeTestDataset } from "./testDataset";
-import type { Dataset, MetricPoint } from "./types";
+import type { CampaignSummary, Dataset, MetricPoint } from "./types";
+
+const dashboardMock = vi.hoisted(() => ({
+  dataset: undefined as Dataset | undefined,
+  historical: undefined as CampaignSummary | undefined,
+}));
+
+vi.mock("./useDashboard", () => ({
+  useDashboard: (requestedCampaignId: string) => {
+    const dataset = dashboardMock.dataset;
+    if (!dataset) return { loading: true };
+    const selectedId = requestedCampaignId || dataset.campaigns[0]?.id;
+    const trends = {
+      schema_version: 6 as const,
+      kind: "campaign-trends" as const,
+      campaigns: [
+        ...(dashboardMock.historical ? [dashboardMock.historical] : []),
+        ...dataset.campaigns.map((campaign) => ({
+          schema_version: 6 as const,
+          kind: "campaign-summary" as const,
+          id: campaign.id,
+          started_at: campaign.started_at,
+          finished_at: campaign.finished_at,
+          complete: campaign.complete,
+          repository: { commit: campaign.repository.commit },
+          trust: campaign.trust,
+          hashes: campaign.hashes,
+          corpus_metrics: campaign.corpus_metrics,
+          tool_metrics: dataset.metrics
+            .filter((metric) => metric.campaign_id === campaign.id)
+            .map(({ campaign_id: _campaign, timestamp: _time, repository_commit: _commit, ...metric }) => metric),
+        })),
+      ],
+    };
+    const index = {
+      schema_version: 6 as const,
+      kind: "dashboard-index" as const,
+      default_campaign_id: dataset.campaigns[0]?.id ?? "missing",
+      campaigns: dataset.campaigns.map((campaign) => ({
+        id: campaign.id,
+        manifest: `campaigns/${campaign.id}/manifest.json`,
+      })),
+      trends: "trends.json",
+      schemas: {
+        summary: "schemas/campaign-summary.schema.json",
+        trends: "schemas/campaign-trends.schema.json",
+        campaign: "schemas/campaign-manifest.schema.json",
+        catalog: "schemas/campaign-catalog.schema.json",
+        verdicts: "schemas/campaign-verdicts.schema.json",
+        evidence: "schemas/campaign-evidence.schema.json",
+      },
+    };
+    const unavailable = requestedCampaignId && !index.campaigns.some((item) => item.id === requestedCampaignId)
+      ? trends.campaigns.find((item) => item.id === requestedCampaignId)
+      : undefined;
+    return {
+      index,
+      trends,
+      ...(unavailable ? {} : { dataset }),
+      selectedId,
+      ...(unavailable ? { unavailable } : {}),
+      loading: false,
+      loadCaseEvidence: async (caseId: string) =>
+        dataset.campaigns
+          .find((campaign) => campaign.id === selectedId)
+          ?.results.filter((result) => result.case_id === caseId) ?? [],
+    };
+  },
+}));
 
 vi.mock("echarts/core", () => ({
   use: vi.fn(),
@@ -35,19 +103,13 @@ vi.mock("echarts/components", () => ({
 vi.mock("echarts/renderers", () => ({ SVGRenderer: {} }));
 
 function mockDataset(dataset: Dataset) {
-  vi.stubGlobal(
-    "fetch",
-    vi.fn().mockResolvedValue(
-      new Response(JSON.stringify(dataset), {
-        status: 200,
-        headers: { "Content-Type": "application/json" },
-      }),
-    ),
-  );
+  dashboardMock.dataset = dataset;
 }
 
 afterEach(() => {
   cleanup();
+  dashboardMock.dataset = undefined;
+  dashboardMock.historical = undefined;
   vi.unstubAllGlobals();
 });
 
@@ -365,7 +427,7 @@ describe("App overview navigation", () => {
     });
   });
 
-  it("normalizes stale campaign and non-headline Overview filters", async () => {
+  it("normalizes non-headline Overview filters without changing campaign history", async () => {
     const dataset = makeTestDataset();
     const campaign = dataset.campaigns[0];
     const tool = campaign?.tools[0];
@@ -376,7 +438,7 @@ describe("App overview navigation", () => {
     window.history.replaceState(
       null,
       "",
-      "/?view=overview&campaign=missing&profile=parser",
+      "/?view=overview&profile=parser",
     );
     mockDataset(dataset);
 
@@ -389,6 +451,46 @@ describe("App overview navigation", () => {
     });
     expect(campaignSelect.value).toBe("");
     expect(screen.queryByRole("button", { name: "Parser 1" })).toBeNull();
+  });
+
+  it("keeps a trend-only campaign deep link and offers its immutable Release", async () => {
+    const dataset = makeTestDataset();
+    const campaign = dataset.campaigns[0]!;
+    const historicalId = "20250101T000000Z-historical";
+    dashboardMock.historical = {
+      schema_version: 6,
+      kind: "campaign-summary",
+      id: historicalId,
+      started_at: "2025-01-01T00:00:00Z",
+      finished_at: "2025-01-01T01:00:00Z",
+      complete: true,
+      repository: { commit: campaign.repository.commit },
+      trust: campaign.trust,
+      hashes: campaign.hashes,
+      corpus_metrics: campaign.corpus_metrics,
+      tool_metrics: [],
+      archive: {
+        release_tag: `campaign-${historicalId}`,
+        release_url: `https://github.com/example/repo/releases/tag/campaign-${historicalId}`,
+        asset_name: `svtorture-campaign-${historicalId}.zip`,
+        download_url: `https://github.com/example/repo/releases/download/campaign-${historicalId}/archive.zip`,
+        sha256: "1".repeat(64),
+        bytes: 123,
+      },
+    };
+    window.history.replaceState(null, "", `/?view=evidence&campaign=${historicalId}`);
+    mockDataset(dataset);
+
+    render(<App />);
+    expect(
+      await screen.findByRole("heading", {
+        name: "Campaign detail is not available on this site",
+      }),
+    ).toBeTruthy();
+    expect(
+      screen.getByRole("link", { name: /Open campaign Release/ }).getAttribute("href"),
+    ).toBe(dashboardMock.historical.archive?.release_url);
+    expect(window.location.search).toContain(`campaign=${historicalId}`);
   });
 
   it("normalizes an impossible headline tool/profile pair", async () => {
@@ -550,13 +652,16 @@ describe("App overview navigation", () => {
     render(<App />);
     const records = await screen.findByRole("region", { name: "Campaign records" });
     expect(within(records).getByText(campaign.id)).toBeTruthy();
-    expect(within(records).getByText(otherId)).toBeTruthy();
-    expect(within(records).getByText(unavailableId)).toBeTruthy();
+    expect(within(records).queryByText(otherId)).toBeNull();
+    expect(within(records).queryByText(unavailableId)).toBeNull();
     expect(screen.queryByText("Advanced filters")).toBeNull();
 
-    fireEvent.click(screen.getByRole("button", { name: "Other 1" }));
+    fireEvent.change(screen.getByLabelText("Campaign"), {
+      target: { value: otherId },
+    });
+    await waitFor(() => expect(within(records).getByText(otherId)).toBeTruthy());
     expect(within(records).queryByText(campaign.id)).toBeNull();
-    expect(within(records).queryByText(unavailableId)).toBeNull();
+    fireEvent.click(screen.getByRole("button", { name: "Other 1" }));
     expect(within(records).getByText(otherId)).toBeTruthy();
     fireEvent.click(screen.getByRole("button", { name: "Parser 1" }));
     expect(within(records).getByText(otherId)).toBeTruthy();

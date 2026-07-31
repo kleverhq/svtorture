@@ -11,13 +11,20 @@ import type {
   StatusGroup,
   TrendKind,
 } from "./model";
-import type { Campaign, CorpusPartMetric, Dataset, Status } from "./types";
+import type {
+  Campaign,
+  CampaignTrends,
+  CorpusPartMetric,
+  Dataset,
+  Status,
+} from "./types";
 
 export type FilterMode = "overview" | "corpus" | "trends" | "campaigns";
 
 interface FilterProps {
-  dataset: Dataset;
+  dataset?: Dataset | undefined;
   campaign?: Campaign | undefined;
+  history?: CampaignTrends | undefined;
   filters: FilterValues;
   setFilters: Dispatch<SetStateAction<FilterValues>>;
   onReset: () => void;
@@ -56,6 +63,7 @@ function displayFilterValue(value: string): string {
 export function Filters({
   dataset,
   campaign,
+  history,
   filters,
   setFilters,
   onReset,
@@ -77,18 +85,12 @@ export function Filters({
     });
   };
   const statuses = choices(
-    dataset.campaigns.flatMap((item) =>
-      item.results.map((result) => result.status),
-    ),
+    campaign?.results.map((result) => result.status) ?? [],
   ) as Status[];
-  const reasons = choices(
-    dataset.campaigns.flatMap((item) =>
-      item.results.map((result) => result.reason),
-    ),
-  );
+  const reasons = choices(campaign?.results.map((result) => result.reason) ?? []);
   const tags = choices([
-    ...dataset.requirements.flatMap((requirement) => requirement.tags),
-    ...dataset.cases.flatMap((testCase) => testCase.tags),
+    ...(dataset?.requirements ?? []).flatMap((requirement) => requirement.tags),
+    ...(dataset?.cases ?? []).flatMap((testCase) => testCase.tags),
   ]);
   const scopedResults =
     campaign?.results.filter(
@@ -104,7 +106,7 @@ export function Filters({
   ) as Record<StatusGroup, number>;
   const trendPairs = [
     ...new Map(
-      dataset.metrics.map((point) => [
+      (history?.campaigns.flatMap((item) => item.tool_metrics) ?? dataset?.metrics ?? []).map((point) => [
         `${point.tool_id}\u0000${point.profile_id}`,
         { toolId: point.tool_id, profileId: point.profile_id },
       ]),
@@ -112,7 +114,7 @@ export function Filters({
   ];
   const campaignPairs = [
     ...new Map(
-      dataset.campaigns.flatMap((item) =>
+      (dataset?.campaigns ?? []).flatMap((item) =>
         item.tools.flatMap((tool) =>
           tool.profile_ids.map((profileId) => [
             `${tool.definition.id}\u0000${profileId}`,
@@ -389,7 +391,7 @@ export function Filters({
                   onChange={(event) => update("part", event.target.value)}
                 >
                   <option value="">Any</option>
-                  {choices(dataset.requirements.map((item) => item.part))
+                  {choices((dataset?.requirements ?? []).map((item) => item.part))
                     .sort(standardPartOrder)
                     .map((part) => (
                       <option value={part} key={part}>
@@ -413,7 +415,7 @@ export function Filters({
                   onChange={(event) => update("phase", event.target.value)}
                 >
                   <option value="">Any</option>
-                  {choices(dataset.cases.map((item) => item.target_phase)).map((phase) => (
+                  {choices((dataset?.cases ?? []).map((item) => item.target_phase)).map((phase) => (
                     <option key={phase}>{phase}</option>
                   ))}
                 </select>
@@ -425,7 +427,7 @@ export function Filters({
                   onChange={(event) => update("expectation", event.target.value)}
                 >
                   <option value="">Any</option>
-                  {choices(dataset.cases.map((item) => item.expectation)).map(
+                  {choices((dataset?.cases ?? []).map((item) => item.expectation)).map(
                     (expectation) => (
                       <option key={expectation}>{expectation}</option>
                     ),
@@ -462,7 +464,7 @@ export function Filters({
                   onChange={(event) => update("requirement", event.target.value)}
                 >
                   <option value="">Any</option>
-                  {dataset.requirements.map((requirement) => (
+                  {(dataset?.requirements ?? []).map((requirement) => (
                     <option key={requirement.id} value={requirement.id}>
                       {requirement.id} · {requirement.summary}
                     </option>

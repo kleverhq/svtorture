@@ -24,8 +24,8 @@ This work does not add a backend, database, object store, browser-side ZIP impor
 - [x] (2026-07-31 20:55Z) Commit this initial ExecPlan as `3918587` while keeping the user-owned proposal untracked.
 - [x] (2026-07-31 21:50Z) Milestone 1 implemented: strict v6 models, seven generated schemas, deterministic compact resources, linearly packed case-centric shards, cross-resource validation, safe ZIP extraction, reproducible ZIP creation, reusable summaries, and 10,000-case/100,000-result scale tests.
 - [x] (2026-07-31 22:20Z) Review milestone 1 through code, schema/architecture, security, focused rechecks, and two fresh control passes. Fixed judgment/metric/selection recomputation, schema patterns, definition/source binding, quadratic projections, manifest case identity, symlink/ancestor escapes, pre-parse limits, aggregate/member limits, and ZIP aliases. The final findings were fixed and covered by the 88-test focused suite.
-- [ ] Milestone 2: migrate the frontend and local assembly to index/trends and lazy campaign/evidence resources, with N-bundle local selection/comparison.
-- [ ] Review milestone 2 with focused frontend correctness, architecture, and performance/loading reviewers; fix findings, run a clean control review, and commit the reviewed stage.
+- [x] (2026-08-01 00:25Z) Milestone 2 implemented: atomic N-bundle local assembly, canonical-campaign compatibility export, variadic local just recipes, summary-only index/trends startup, selected manifest/catalog/verdict loading, one-shard lazy evidence, generated-schema/hash/path validation, trend-only history links, bounded comparison loading, and updated frontend/local documentation.
+- [x] (2026-08-01 00:50Z) Review milestone 2 through frontend correctness, architecture, loading/performance, focused rechecks, and two independent control passes. Fixed summary-only view blocking, stale campaign races, strict nested validation, digest-aware caches, bounded streaming/cache memory, compatible comparison selection, concurrent atomic replacement, lock symlink safety, relative-path traversal, and variadic recipes. Final control review reported no substantive findings.
 - [ ] Milestone 3: implement immutable Release publication, rebuild history from unchanged summaries, assemble latest-only Pages, enforce the size gate, activate ordinary CI, and add one manual dashboard workflow.
 - [ ] Review milestone 3 with focused CI/security, release idempotency, and operational reviewers; fix findings, run a clean control review, and commit the reviewed stage.
 - [ ] Milestone 4: support replay from a v6 ZIP or local/HTTPS manifest, remove every v5 dataset/history/worktree path, and update durable documentation.
@@ -87,13 +87,19 @@ This work does not add a backend, database, object store, browser-side ZIP impor
   Rationale: this recovers safely from network interruption without introducing deletion, clobber, or mutable published identity.
   Date/Author: 2026-07-31 / coding agent resolution of the remaining operational edge case.
 
+- Decision: retain the mature `Campaign`/`Dataset` TypeScript shapes only as an internal selected-campaign view model assembled from v6 resources; they are no longer a transport or fetched document.
+  Rationale: the existing views and filter semantics can consume compact verdicts without a broad UI rewrite. Startup and transport behavior still follow v6: historical trends are summaries, selected detail is manifest/catalog/verdicts, and observations arrive only through one evidence shard.
+  Date/Author: 2026-08-01 / coding agent during milestone 2.
+
 - Decision: activate normal push/pull-request CI separately, but make the campaign collection/release/Pages workflow manual-only with no `schedule` or publication-on-push trigger.
   Rationale: the user explicitly wants working CI and GitHub Actions while deferring regular dashboard updates.
   Date/Author: 2026-07-31 / user objective.
 
 ## Outcomes & Retrospective
 
-Milestone 1 is complete and reviewed. It exports byte-stable compact v6 resources and ZIPs, independently rechecks canonical selection identity, evaluator judgments, metrics, case definitions, source links, counts and hashes, and rejects hostile archive/directory forms before unbounded parsing. The focused bundle/campaign/schema suite reports 88 passes in 5.00 seconds, including 10,000 cases and 100,000 verdict/evidence results. The existing v5 publication path remains intentionally present until the later cutover milestone.
+Milestone 1 is complete and reviewed. It exports byte-stable compact v6 resources and ZIPs, independently rechecks canonical selection identity, evaluator judgments, metrics, case definitions, source links, counts and hashes, and rejects hostile archive/directory forms before unbounded parsing. The focused bundle/campaign/schema suite reports 88 passes in 5.00 seconds, including 10,000 cases and 100,000 verdict/evidence results.
+
+Milestone 2 is complete and reviewed. Local assembly accepts direct campaign directories and ZIPs, serializes concurrent atomic replacement, and writes one index/trends tree without `dataset.json`. The browser validates the generated schemas directly with Ajv, bounds streamed response/cache memory, keeps Trends/About summary-only, and proves no evidence request occurs before case detail and one shard is cached thereafter. A real two-campaign build exercised variadic recipes, while a preparation-failure campaign proved zero-result bundles need no placeholder shard. Frontend tests report 81 passes and the final control review was clean. The old v5 public publication path remains intentionally present until the publication cutover.
 
 ## Context and Orientation
 
@@ -272,6 +278,23 @@ Milestone 1 evidence:
     Test Files 12 passed (12)
     Tests 74 passed (74)
 
+Milestone 2 pre-review evidence:
+
+    just smoke
+    Success: no issues found in 22 source files
+    111 passed in 4.96s
+    Test Files 12 passed (12)
+    Tests 81 passed (81)
+
+    just dashboard-build ".svtorture/campaigns/20260731T210658Z-preparation-92fe4c07ad2e/campaign.json"
+    dashboard/dist/data
+    curl http://127.0.0.1:4173/data/index.json
+    20260731T210658Z-preparation-92fe4c07ad2e
+    curl http://127.0.0.1:4173/data/trends.json
+    1
+
+The plain Vite build was checked before export and contained no `data/` directory. The assembled tree contained no `dataset.json`.
+
 Current repository state at plan creation:
 
     ## main...origin/main [ahead 1]
@@ -301,3 +324,7 @@ GitHub publication uses the already available `gh` executable and `GITHUB_TOKEN`
 Plan revision note (2026-07-31): initial self-contained plan created after repository exploration and incorporation of the user's summary/tag/legacy/manual-trigger decisions. The four milestones intentionally match the accepted proposal and add a blocking focused review plus control pass after each stage. The proposal remains an untracked user-owned artifact; only English implementation artifacts are committed.
 
 Plan revision note (2026-07-31): milestone 1 implementation and review evidence recorded. Review-driven changes added shared canonical recomputation, linear projections, explicit definition/source binding, and bounded hostile-input handling without adding dependencies.
+
+Plan revision note (2026-08-01): milestone 2 implementation and pre-review evidence recorded. The frontend uses a small URL/promise cache and a private compatibility view model rather than a new state library or duplicated transport.
+
+Plan revision note (2026-08-01): milestone 2 review completed. Review fixes made Trends/About truly summary-only, compiled generated schemas into browser validation, bounded caches and comparisons, hardened URL/lock handling, and preserved atomic assembly; the final control pass was clean.

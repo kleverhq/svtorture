@@ -29,8 +29,11 @@ tools/tools.toml ──► tools/*/tool.toml ──► adapter ──► typed E
                                       ▼
                          immutable Campaign JSON
                                       │
-                                      ▼
-                          static dashboard dataset
+                                      ▼ derived projection
+                    version-6 portable campaign bundle
+                                      │
+                                      ▼ lazy static resources
+                           React evidence dashboard
 ```
 
 `models.py` defines strict, frozen public models that reject unknown fields.
@@ -91,5 +94,13 @@ measurements.
 Before public export, the publisher re-evaluates every recorded observation. It
 requires a clean matching checkout from the same GitHub Actions
 repository/run/SHA, checks tool definitions against the committed registry,
-requires pullable GHCR digests, and scans the compact dataset for private paths
-and common credential forms.
+requires pullable GHCR digests, and scans the compact bundle projection for
+private paths and common credential forms.
+
+The canonical schema-version-5 `Campaign` remains the complete local evidence
+record. `bundle.py` derives strict schema-version-6 manifest, catalog, compact
+verdict, and case-centric evidence resources without changing evaluator or
+metric semantics. Local assembly writes `index.json` and `trends.json` for any
+number of validated bundle directories or ZIPs. The browser loads those small
+entry resources first, then one selected manifest/catalog/verdict set, and only
+loads an evidence shard when a case detail is opened.

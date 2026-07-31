@@ -14,6 +14,7 @@ import typer
 
 from svtorture import __version__
 from svtorture.adapters.registry import adapter_for
+from svtorture.bundle import assemble_dashboard_data, export_campaign_bundle
 from svtorture.campaign import (
     CampaignError,
     PreparedTool,
@@ -43,11 +44,7 @@ from svtorture.models import (
     ToolSelection,
     model_to_jsonable,
 )
-from svtorture.publish import (
-    PublicationError,
-    publish_pages_tree,
-    write_dataset,
-)
+from svtorture.publish import PublicationError, publish_pages_tree
 from svtorture.reproduce import ReproductionError, reproduce_case
 from svtorture.resolver import ResolutionError, parse_requested_tool, resolve_tool_ref
 
@@ -550,16 +547,57 @@ def reproduce(
 
 @dashboard_app.command("export")
 def dashboard_export(
-    campaigns: Annotated[list[Path], typer.Argument(help="Campaign JSON paths.")],
+    campaigns: Annotated[list[Path], typer.Argument(help="Canonical campaign JSON paths.")],
     output: Annotated[
         Path,
-        typer.Option("--output", help="Dataset output path."),
-    ] = ROOT / ".svtorture" / "dashboard" / "data" / "dataset.json",
+        typer.Option("--output", help="Dashboard data directory."),
+    ] = ROOT / "dashboard" / "dist" / "data",
     visibility: Annotated[str, typer.Option("--visibility")] = "local",
 ) -> None:
+    """Build local v6 dashboard data through temporary portable bundles."""
+
+    if visibility != "local":
+        raise typer.BadParameter("canonical campaign export supports local visibility only")
     catalog = _catalog()
     loaded = tuple(load_campaign(path) for path in campaigns)
-    write_dataset(catalog, loaded, output, visibility=visibility)
+    with tempfile.TemporaryDirectory(prefix="svtorture-dashboard-") as temporary:
+        bundle_root = Path(temporary)
+        bundles = tuple(
+            export_campaign_bundle(catalog, campaign, bundle_root) for campaign in loaded
+        )
+        assemble_dashboard_data(bundles, output, ROOT / "schemas")
+    typer.echo(str(output))
+
+
+@dashboard_app.command("bundle")
+def dashboard_bundle(
+    campaigns: Annotated[list[Path], typer.Argument(help="Canonical campaign JSON paths.")],
+    output: Annotated[
+        Path,
+        typer.Option("--output", help="Portable bundle root."),
+    ] = ROOT / ".svtorture" / "bundles",
+) -> None:
+    """Export canonical campaigns as validated portable bundle directories."""
+
+    catalog = _catalog()
+    for path in campaigns:
+        typer.echo(str(export_campaign_bundle(catalog, load_campaign(path), output)))
+
+
+@dashboard_app.command("assemble")
+def dashboard_assemble(
+    bundles: Annotated[
+        list[Path],
+        typer.Argument(help="Campaign ZIP files or unpacked bundle directories."),
+    ],
+    output: Annotated[
+        Path,
+        typer.Option("--output", help="Dashboard data directory."),
+    ] = ROOT / "dashboard" / "dist" / "data",
+) -> None:
+    """Assemble one or more portable bundles into local dashboard data."""
+
+    assemble_dashboard_data(bundles, output, ROOT / "schemas")
     typer.echo(str(output))
 
 

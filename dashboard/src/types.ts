@@ -53,6 +53,7 @@ export interface CaseDefinition {
   oracle: Oracle;
   tags: string[];
   content_sha256: string;
+  definition_sha256?: string;
 }
 
 export interface CapturedStream {
@@ -237,4 +238,135 @@ export interface Dataset {
   cases: CaseDefinition[];
   campaigns: Campaign[];
   metrics: MetricPoint[];
+}
+
+export interface ResourceReference {
+  href: string;
+  sha256: string;
+  bytes: number;
+}
+
+export interface CountedResourceReference extends ResourceReference {
+  case_count: number;
+  result_count: number;
+}
+
+export type DashboardMetric = Omit<
+  MetricPoint,
+  "campaign_id" | "timestamp" | "repository_commit"
+>;
+
+export interface CampaignManifest {
+  schema_version: 6;
+  kind: "campaign-manifest";
+  id: string;
+  started_at: string;
+  finished_at: string;
+  repository: { commit: string; dirty: boolean };
+  platform: string;
+  selection_name: string;
+  cases: Array<{
+    id: string;
+    content_sha256: string;
+    definition_sha256: string;
+  }>;
+  tools: CampaignTool[];
+  expected_tool_ids: string[];
+  missing_tool_ids: string[];
+  hashes: Campaign["hashes"];
+  corpus_metrics: CorpusMetrics;
+  metrics: DashboardMetric[];
+  complete: boolean;
+  trust: Campaign["trust"];
+  resources: {
+    catalog: ResourceReference;
+    verdicts: CountedResourceReference;
+    evidence: CountedResourceReference[];
+  };
+}
+
+export interface CampaignCatalog {
+  schema_version: 6;
+  kind: "campaign-catalog";
+  campaign_id: string;
+  requirements: Requirement[];
+  cases: CaseDefinition[];
+  corpus_metrics: CorpusMetrics;
+}
+
+export interface CampaignVerdict {
+  tool_id: string;
+  profile_id: string;
+  status: Status;
+  reason: string;
+  evidence_mode: Result["evidence_mode"];
+  summary: string;
+  known_issue?: string | null;
+}
+
+export interface CampaignVerdicts {
+  schema_version: 6;
+  kind: "campaign-verdicts";
+  campaign_id: string;
+  case_count: number;
+  result_count: number;
+  cases: Array<{
+    case_id: string;
+    evidence_href: string;
+    results: CampaignVerdict[];
+  }>;
+}
+
+export interface CampaignEvidence {
+  schema_version: 6;
+  kind: "campaign-evidence";
+  campaign_id: string;
+  case_ids: string[];
+  results: Result[];
+}
+
+export interface ArchiveMetadata {
+  release_tag: string;
+  release_url: string;
+  asset_name: string;
+  download_url: string;
+  sha256: string;
+  bytes: number;
+}
+
+export interface CampaignSummary {
+  schema_version: 6;
+  kind: "campaign-summary";
+  id: string;
+  started_at: string;
+  finished_at: string;
+  complete: boolean;
+  repository: { commit: string };
+  trust: Campaign["trust"];
+  hashes: Campaign["hashes"];
+  corpus_metrics: CorpusMetrics;
+  tool_metrics: DashboardMetric[];
+  archive?: ArchiveMetadata;
+}
+
+export interface CampaignTrends {
+  schema_version: 6;
+  kind: "campaign-trends";
+  campaigns: CampaignSummary[];
+}
+
+export interface DashboardIndex {
+  schema_version: 6;
+  kind: "dashboard-index";
+  default_campaign_id: string;
+  campaigns: Array<{ id: string; manifest: string }>;
+  trends: string;
+  schemas: {
+    summary: string;
+    trends: string;
+    campaign: string;
+    catalog: string;
+    verdicts: string;
+    evidence: string;
+  };
 }

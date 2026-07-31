@@ -19,7 +19,7 @@ import {
 } from "./TrendsView";
 import { corpusTrendPointKey, toolTrendPointKey } from "./model";
 import { makeTestDataset } from "./testDataset";
-import type { Campaign, Dataset, MetricPoint } from "./types";
+import type { Campaign, CampaignTrends, Dataset, MetricPoint } from "./types";
 
 const chartMock = vi.hoisted(() => ({
   option: undefined as Record<string, unknown> | undefined,
@@ -147,12 +147,34 @@ function secondCampaign(dataset: Dataset): Campaign {
   return second;
 }
 
+function historyFromDataset(dataset: Dataset): CampaignTrends {
+  return {
+    schema_version: 6,
+    kind: "campaign-trends",
+    campaigns: dataset.campaigns.map((campaign) => ({
+      schema_version: 6,
+      kind: "campaign-summary",
+      id: campaign.id,
+      started_at: campaign.started_at,
+      finished_at: campaign.finished_at,
+      complete: campaign.complete,
+      repository: { commit: campaign.repository.commit },
+      trust: campaign.trust,
+      hashes: campaign.hashes,
+      corpus_metrics: campaign.corpus_metrics,
+      tool_metrics: dataset.metrics
+        .filter((metric) => metric.campaign_id === campaign.id)
+        .map(({ campaign_id: _campaign, timestamp: _timestamp, repository_commit: _commit, ...metric }) => metric),
+    })),
+  };
+}
+
 function renderView(
   dataset: Dataset,
   overrides: Partial<ComponentProps<typeof TrendsView>> = {},
 ) {
   const props: ComponentProps<typeof TrendsView> = {
-    dataset,
+    history: historyFromDataset(dataset),
     toolFilter: "",
     profileFilter: "",
     trend: "pass-rate",
@@ -176,15 +198,15 @@ describe("TrendsView", () => {
     expect(ratioValue({ numerator: 3, denominator: 4 }, "percent")).toBe(75);
     expect(ratioValue({ numerator: 3, denominator: 2 }, "density")).toBe(1.5);
     expect(ratioValue({ numerator: 0, denominator: 0 }, "density")).toBeNull();
-    expect(trendPoints(dataset, "pass-rate", "other", "")).toEqual([]);
+    expect(trendPoints(historyFromDataset(dataset), "pass-rate", "other", "")).toEqual([]);
 
-    const coverage = trendPoints(dataset, "coverage", "other", "parser");
+    const coverage = trendPoints(historyFromDataset(dataset), "coverage", "other", "parser");
     expect(coverage).toHaveLength(2);
     expect(coverage.find((item) => item.seriesName === "Requirements")?.value).toBeCloseTo(
       (100 * 3) / 16963,
     );
     expect(coverage.find((item) => item.seriesName === "Cases")?.value).toBe(100);
-    const selected = trendPoints(dataset, "coverage", "", "", [
+    const selected = trendPoints(historyFromDataset(dataset), "coverage", "", "", [
       "chapter:13",
       "annex:A",
     ]);
@@ -193,7 +215,7 @@ describe("TrendsView", () => {
     );
     expect(selected.find((item) => item.seriesName === "Cases")?.value).toBe(100);
     expect(
-      trendPoints(dataset, "density", "", "", ["chapter:5"]).find(
+      trendPoints(historyFromDataset(dataset), "density", "", "", ["chapter:5"]).find(
         (item) => item.seriesName === "Cases",
       )?.value,
     ).toBeNull();
@@ -211,7 +233,7 @@ describe("TrendsView", () => {
       },
     } satisfies Campaign;
     dataset.campaigns.push(hashOnly);
-    const unchangedOperands = trendPoints(dataset, "coverage", "", "").filter(
+    const unchangedOperands = trendPoints(historyFromDataset(dataset), "coverage", "", "").filter(
       (item) => item.seriesName === "Requirements",
     );
     expect(unchangedOperands[0]?.boundaryKey).toBe(
@@ -219,7 +241,7 @@ describe("TrendsView", () => {
     );
     const changedOperands = secondCampaign(dataset);
     expect(
-      trendPoints(dataset, "coverage", "", "").find(
+      trendPoints(historyFromDataset(dataset), "coverage", "", "").find(
         (item) =>
           item.campaignId === changedOperands.id &&
           item.seriesName === "Requirements",
@@ -272,6 +294,21 @@ describe("TrendsView", () => {
 
   it("preserves tool zoom, boundaries, unavailable points, and 100% headroom", async () => {
     const { dataset, point } = makeMetric();
+    const baseCampaign = dataset.campaigns[0]!;
+    dataset.campaigns.push(
+      {
+        ...baseCampaign,
+        id: "boundary-campaign",
+        started_at: "2026-07-22T11:57:19Z",
+        finished_at: "2026-07-22T11:58:19Z",
+      },
+      {
+        ...baseCampaign,
+        id: "invalid-campaign",
+        started_at: "2026-07-22T12:57:19Z",
+        finished_at: "2026-07-22T12:58:19Z",
+      },
+    );
     dataset.metrics.push(
       {
         ...point,
@@ -311,7 +348,7 @@ describe("TrendsView", () => {
       data: [{ yAxis: 100, label: { formatter: "100%" } }],
     });
     expect(option.tooltip.formatter({ data: lineData[0] })).toBe(
-      "<strong>75%</strong><br/>fake/simulator<br/>3/4<br/>2026-07-22 10:58 UTC",
+      "<strong>75%</strong><br/>fake/simulator<br/>3/4<br/>2026-01-01 00:00 UTC",
     );
   });
 

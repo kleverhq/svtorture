@@ -147,10 +147,20 @@ runner-config tool:
     test -f "tools/{{tool}}/runner.example.toml" || { echo "No runner example for {{tool}}." >&2; exit 1; }
     test -e "tools/{{tool}}/runner.toml" || cp "tools/{{tool}}/runner.example.toml" "tools/{{tool}}/runner.toml"
 
-# Build a local dashboard dataset from one or more campaign paths.
-dashboard-build campaigns visibility="local":
+# Build local dashboard v6 data from one or more canonical campaign paths.
+dashboard-build *campaigns:
     npm --prefix dashboard run build
-    uv run svtorture dashboard export {{campaigns}} --visibility "{{visibility}}" --output dashboard/dist/data/dataset.json
+    uv run svtorture dashboard export {{campaigns}} --output dashboard/dist/data
+
+# Export canonical campaigns as portable bundle directories.
+dashboard-bundle *campaigns:
+    uv run svtorture dashboard bundle {{campaigns}} --output .svtorture/bundles
+
+# Build and serve a dashboard from one or more ZIPs or unpacked bundles.
+dashboard-local *bundles:
+    npm --prefix dashboard run build
+    uv run svtorture dashboard assemble {{bundles}} --output dashboard/dist/data
+    uv run svtorture dashboard serve --directory dashboard/dist --port 4173
 
 # Serve an already built local dashboard.
 dashboard-serve port="4173":

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import fcntl
 import json
 import os
 import shutil
@@ -32,14 +33,18 @@ from svtorture.dashboard_models import (
     CampaignManifest,
     CampaignResources,
     CampaignSummary,
+    CampaignTrends,
     CampaignVerdict,
     CampaignVerdicts,
     CountedDashboardResource,
     DashboardCase,
     DashboardCaseIdentity,
     DashboardEvidenceResult,
+    DashboardIndex,
+    DashboardIndexCampaign,
     DashboardMetric,
     DashboardResource,
+    DashboardSchemas,
     SummaryRepository,
 )
 from svtorture.hashing import canonical_json_bytes, hash_json, sha256_bytes
@@ -808,6 +813,120 @@ def write_campaign_archive(bundle: Path, output: Path) -> Path:
     finally:
         temporary.unlink(missing_ok=True)
     return output
+
+
+def _materialize_bundle(bundle: Path, output: Path) -> Path:
+    if bundle.is_file():
+        return extract_campaign_archive(bundle, output)
+    campaign_root = _campaign_root(bundle)
+    manifest = validate_campaign_bundle(campaign_root)
+    destination = output / "campaigns" / manifest.id
+    if destination.exists():
+        if not _same_tree(campaign_root, destination):
+            raise PublicationError(f"campaign bundle collision for {manifest.id}")
+        return destination
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copytree(campaign_root, destination, symlinks=False)
+    return destination
+
+
+def assemble_dashboard_data(
+    bundles: Iterable[Path],
+    output: Path,
+    schema_directory: Path,
+) -> DashboardIndex:
+    """Assemble validated local bundles into one bounded dashboard data tree."""
+
+    inputs = tuple(bundles)
+    if not inputs:
+        raise PublicationError("at least one campaign bundle is required")
+    output.parent.mkdir(parents=True, exist_ok=True)
+    temporary = Path(tempfile.mkdtemp(prefix=".dashboard-data-", dir=output.parent))
+    backup = Path(tempfile.mkdtemp(prefix=f".{output.name}.backup-", dir=output.parent))
+    backup.rmdir()
+    try:
+        manifests: list[CampaignManifest] = []
+        seen: dict[str, Path] = {}
+        for bundle in inputs:
+            campaign_root = _materialize_bundle(bundle, temporary)
+            manifest = validate_campaign_bundle(campaign_root)
+            existing = seen.get(manifest.id)
+            if existing is not None:
+                if not _same_tree(existing, campaign_root):
+                    raise PublicationError(f"campaign bundle collision for {manifest.id}")
+                continue
+            seen[manifest.id] = campaign_root
+            manifests.append(manifest)
+        manifests.sort(key=lambda manifest: (manifest.finished_at, manifest.id))
+        latest = manifests[-1]
+        trends = CampaignTrends(
+            campaigns=tuple(project_campaign_summary(manifest) for manifest in manifests)
+        )
+        _write_model(temporary / "trends.json", trends)
+
+        schema_names = {
+            "summary": "campaign-summary.schema.json",
+            "trends": "campaign-trends.schema.json",
+            "campaign": "campaign-manifest.schema.json",
+            "catalog": "campaign-catalog.schema.json",
+            "verdicts": "campaign-verdicts.schema.json",
+            "evidence": "campaign-evidence.schema.json",
+        }
+        schema_output = temporary / "schemas"
+        schema_output.mkdir()
+        for name in (*schema_names.values(), "dashboard-index.schema.json"):
+            source = schema_directory / name
+            if not source.is_file():
+                raise PublicationError(f"dashboard schema is missing: {source}")
+            shutil.copyfile(source, schema_output / name)
+        index = DashboardIndex(
+            default_campaign_id=latest.id,
+            campaigns=tuple(
+                DashboardIndexCampaign(
+                    id=manifest.id,
+                    manifest=f"campaigns/{manifest.id}/manifest.json",
+                )
+                for manifest in manifests
+            ),
+            trends="trends.json",
+            schemas=DashboardSchemas(
+                **{key: f"schemas/{value}" for key, value in schema_names.items()}
+            ),
+        )
+        _write_model(temporary / "index.json", index)
+
+        lock_path = output.with_name(f".{output.name}.lock")
+        try:
+            lock_fd = os.open(
+                lock_path,
+                os.O_RDWR | os.O_CREAT | os.O_CLOEXEC | os.O_NOFOLLOW,
+                0o600,
+            )
+            if not stat.S_ISREG(os.fstat(lock_fd).st_mode):
+                os.close(lock_fd)
+                raise PublicationError("dashboard data lock must be a regular file")
+        except OSError as error:
+            raise PublicationError("cannot safely open the dashboard data lock") from error
+        with os.fdopen(lock_fd, "r+", encoding="utf-8") as lock:
+            fcntl.flock(lock, fcntl.LOCK_EX)
+            backup_exists = False
+            if output.exists():
+                if not output.is_dir():
+                    raise PublicationError("dashboard data output must be a directory")
+                os.replace(output, backup)
+                backup_exists = True
+            try:
+                os.replace(temporary, output)
+            except Exception:
+                if backup_exists and not output.exists():
+                    os.replace(backup, output)
+                raise
+            if backup_exists:
+                shutil.rmtree(backup)
+        return index
+    finally:
+        shutil.rmtree(temporary, ignore_errors=True)
+        shutil.rmtree(backup, ignore_errors=True)
 
 
 def _zip_member_count(archive_path: Path) -> int:

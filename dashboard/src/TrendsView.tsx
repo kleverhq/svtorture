@@ -8,11 +8,11 @@ import {
   type TrendRange,
 } from "./model";
 import type {
-  Campaign,
+  CampaignSummary,
+  CampaignTrends,
   CorpusMetricSummary,
   CorpusRatio,
-  Dataset,
-  MetricPoint,
+  DashboardMetric,
 } from "./types";
 
 const DAY_MS = 24 * 60 * 60 * 1000;
@@ -69,8 +69,8 @@ export interface TrendPoint {
   denominator: number;
   value: number | null;
   boundaryKey: string;
-  campaign?: Campaign;
-  metric?: MetricPoint;
+  campaign?: CampaignSummary;
+  metric?: DashboardMetric;
 }
 
 interface ChartDatum {
@@ -105,7 +105,7 @@ export function ratioValue(
   return unit === "percent" ? value * 100 : value;
 }
 
-export function toolPassRate(point: MetricPoint): number | null {
+export function toolPassRate(point: DashboardMetric): number | null {
   if (!point.valid || !point.denominator) return null;
   return (100 * point.numerator) / point.denominator;
 }
@@ -129,39 +129,37 @@ function corpusRatio(
 }
 
 export function trendPoints(
-  dataset: Dataset,
+  history: CampaignTrends,
   kind: TrendKind,
   toolFilter: string,
   profileFilter: string,
   selectedParts: string[] = [],
 ): TrendPoint[] {
   if (kind === "pass-rate") {
-    const campaigns = new Map(dataset.campaigns.map((campaign) => [campaign.id, campaign]));
-    return dataset.metrics
-      .filter(
-        (point) =>
-          (!toolFilter || point.tool_id === toolFilter) &&
-          (!profileFilter || point.profile_id === profileFilter),
-      )
-      .map((point) => {
-        const campaign = campaigns.get(point.campaign_id);
-        return {
-          pointKey: toolTrendPointKey(point),
-          campaignId: point.campaign_id,
-          timestamp: point.timestamp,
+    return history.campaigns.flatMap((campaign) =>
+      campaign.tool_metrics
+        .filter(
+          (point) =>
+            (!toolFilter || point.tool_id === toolFilter) &&
+            (!profileFilter || point.profile_id === profileFilter),
+        )
+        .map((point) => ({
+          pointKey: toolTrendPointKey(point, campaign.id),
+          campaignId: campaign.id,
+          timestamp: campaign.finished_at,
           seriesName: `${point.tool_id}/${point.profile_id}`,
           numerator: point.numerator,
           denominator: point.denominator,
           value: toolPassRate(point),
           boundaryKey: `${point.corpus_sha}:${point.denominator}`,
-          ...(campaign ? { campaign } : {}),
+          campaign,
           metric: point,
-        };
-      });
+        })),
+    );
   }
 
   const definition = definitionFor(kind);
-  return dataset.campaigns.flatMap((campaign) =>
+  return history.campaigns.flatMap((campaign) =>
     (["requirements", "cases"] as const).map((scope) => {
       const ratio = corpusRatio(
         campaign.corpus_metrics[scope],
@@ -687,7 +685,7 @@ function TrendsInspector({
         <dl className="trends-inspector__facts trends-inspector__facts--stacked">
           <div>
             <dt>Repository commit</dt>
-            <dd><code>{formatOptional(metric?.repository_commit ?? campaign?.repository.commit)}</code></dd>
+            <dd><code>{formatOptional(campaign?.repository.commit)}</code></dd>
           </div>
           <div>
             <dt>Requirements manifest</dt>
@@ -703,12 +701,23 @@ function TrendsInspector({
           </div>
         </dl>
       </section>
+
+      {campaign?.archive && (
+        <section>
+          <h3>Archive</h3>
+          <p>
+            <a href={campaign.archive.release_url} target="_blank" rel="noreferrer">
+              Open immutable campaign Release ↗
+            </a>
+          </p>
+        </section>
+      )}
     </aside>
   );
 }
 
 export function TrendsView({
-  dataset,
+  history,
   toolFilter,
   profileFilter,
   trend,
@@ -719,7 +728,7 @@ export function TrendsView({
   onRangeChange,
   onSelectPoint,
 }: {
-  dataset: Dataset;
+  history: CampaignTrends;
   toolFilter: string;
   profileFilter: string;
   trend: TrendKind;
@@ -734,15 +743,17 @@ export function TrendsView({
   const [resetKey, setResetKey] = useState(0);
   const definition = definitionFor(trend);
   const visible = useMemo(
-    () => trendPoints(dataset, trend, toolFilter, profileFilter, selectedParts),
-    [dataset, profileFilter, selectedParts, toolFilter, trend],
+    () => trendPoints(history, trend, toolFilter, profileFilter, selectedParts),
+    [history, profileFilter, selectedParts, toolFilter, trend],
   );
   const timeline = useMemo(
     () =>
       trend === "pass-rate"
-        ? dataset.metrics.map((point) => ({ timestamp: point.timestamp }))
-        : dataset.campaigns.map((campaign) => ({ timestamp: campaign.finished_at })),
-    [dataset.campaigns, dataset.metrics, trend],
+        ? history.campaigns.flatMap((campaign) =>
+            campaign.tool_metrics.map(() => ({ timestamp: campaign.finished_at })),
+          )
+        : history.campaigns.map((campaign) => ({ timestamp: campaign.finished_at })),
+    [history, trend],
   );
   const bounds = useMemo(
     () => trendRangeBounds(timeline, range, now),

@@ -245,6 +245,7 @@ export function EvidenceView({
   selectedCaseId,
   onSelectCase,
   onInspectRequirement,
+  loadCaseEvidence,
 }: {
   cases: CaseDefinition[];
   requirements: Requirement[];
@@ -254,6 +255,7 @@ export function EvidenceView({
   selectedCaseId: string;
   onSelectCase: (caseId: string) => void;
   onInspectRequirement: (requirementId: string) => void;
+  loadCaseEvidence?: ((caseId: string) => Promise<Result[]>) | undefined;
 }) {
   const [openSource, setOpenSource] = useState<OpenSource | undefined>();
   const sourceTriggerRef = useRef<HTMLButtonElement | null>(null);
@@ -262,6 +264,11 @@ export function EvidenceView({
   const caseButtonRefs = useRef(new Map<string, HTMLButtonElement>());
   const sourceViewerId = useId();
   const resultMap = useMemo(() => resultsByKey(campaign), [campaign]);
+  const [detail, setDetail] = useState<{
+    caseId: string;
+    results?: Result[];
+    error?: string;
+  }>();
   const profiles =
     campaign?.tools.flatMap((tool) =>
       tool.profile_ids.map((profile) => ({
@@ -306,6 +313,43 @@ export function EvidenceView({
     setOpenSource(undefined);
     sourceTriggerRef.current = null;
   }, [campaignId, selected?.id]);
+  useEffect(() => {
+    if (!selected || !loadCaseEvidence) {
+      setDetail(undefined);
+      return;
+    }
+    let active = true;
+    setDetail({ caseId: selected.id });
+    loadCaseEvidence(selected.id)
+      .then((results) => {
+        if (active) setDetail({ caseId: selected.id, results });
+      })
+      .catch((error: unknown) => {
+        if (active) {
+          setDetail({
+            caseId: selected.id,
+            error: error instanceof Error ? error.message : String(error),
+          });
+        }
+      });
+    return () => {
+      active = false;
+    };
+  }, [loadCaseEvidence, selected]);
+  const detailResults = useMemo(
+    () =>
+      loadCaseEvidence
+        ? new Map(
+            (detail?.caseId === selected?.id ? detail?.results ?? [] : []).map(
+              (result) => [
+                `${result.case_id}:${result.tool_id}:${result.profile_id}`,
+                result,
+              ],
+            ),
+          )
+        : resultMap,
+    [detail, loadCaseEvidence, resultMap, selected?.id],
+  );
 
   return (
     <section className="panel evidence" aria-label="Case evidence">
@@ -483,7 +527,10 @@ export function EvidenceView({
             )}
             <div className="tool-judgments">
               {visibleProfiles.map((profile) => {
-                const result = resultMap.get(
+                const compactResult = resultMap.get(
+                  `${selected.id}:${profile.toolId}:${profile.profileId}`,
+                );
+                const result = detailResults.get(
                   `${selected.id}:${profile.toolId}:${profile.profileId}`,
                 );
                 const tool = campaign?.tools.find(
@@ -494,18 +541,22 @@ export function EvidenceView({
                     <summary>
                       <strong>{profile.key}</strong>
                       <StatusBadge
-                        status={result?.status ?? "not-run"}
-                        reason={result?.reason}
-                        knownIssue={result?.known_issue}
+                        status={compactResult?.status ?? "not-run"}
+                        reason={compactResult?.reason}
+                        knownIssue={compactResult?.known_issue}
                       />
-                      <span>{result?.reason ?? "no observation"}</span>
+                      <span>{compactResult?.reason ?? "no observation"}</span>
                     </summary>
-                    {result ? (
+                    {detail?.caseId === selected.id && detail.error ? (
+                      <p className="empty-state">Evidence unavailable: {detail.error}</p>
+                    ) : result ? (
                       <ObservationDetail
                         key={`${result.case_id}:${profile.key}`}
                         result={result}
                         tool={tool}
                       />
+                    ) : compactResult ? (
+                      <p className="empty-state">Loading detailed evidence…</p>
                     ) : (
                       <p className="empty-state">No result was recorded.</p>
                     )}

@@ -3,12 +3,15 @@ from __future__ import annotations
 import json
 import struct
 import zipfile
+from concurrent.futures import ThreadPoolExecutor
+from datetime import timedelta
 from pathlib import Path
 
 import pytest
 from pydantic import ValidationError
 
 from svtorture.bundle import (
+    assemble_dashboard_data,
     export_campaign_bundle,
     extract_campaign_archive,
     pack_evidence,
@@ -303,6 +306,71 @@ def test_archive_extraction_rejects_unsafe_members_and_validates_bundle(
     )
     with pytest.raises(PublicationError, match="unsafe member count"):
         extract_campaign_archive(too_many, tmp_path / "too-many-output")
+
+
+def test_local_assembler_combines_directories_and_zips(catalog: Catalog, tmp_path: Path) -> None:
+    first_campaign = _campaign(catalog)
+    second_campaign = first_campaign.model_copy(
+        update={
+            "id": "20260102T000000Z-second-campaign",
+            "started_at": first_campaign.started_at + timedelta(days=1),
+            "finished_at": first_campaign.finished_at + timedelta(days=1),
+        }
+    )
+    first = export_campaign_bundle(catalog, first_campaign, tmp_path / "first")
+    second = export_campaign_bundle(catalog, second_campaign, tmp_path / "second")
+    second_zip = write_campaign_archive(second, tmp_path / "second.zip")
+
+    output = tmp_path / "data"
+    index = assemble_dashboard_data(
+        (first, second_zip),
+        output,
+        Path(__file__).resolve().parents[1] / "schemas",
+    )
+    assert [campaign.id for campaign in index.campaigns] == [
+        first_campaign.id,
+        second_campaign.id,
+    ]
+    assert index.default_campaign_id == second_campaign.id
+    trends = json.loads((output / "trends.json").read_text(encoding="utf-8"))
+    assert [campaign["id"] for campaign in trends["campaigns"]] == [
+        first_campaign.id,
+        second_campaign.id,
+    ]
+    assert all("archive" not in campaign for campaign in trends["campaigns"])
+    assert (output / "campaigns" / first_campaign.id / "manifest.json").is_file()
+    assert (output / "campaigns" / second_campaign.id / "manifest.json").is_file()
+    assert (output / "schemas" / "campaign-summary.schema.json").is_file()
+    assert not (output / "dataset.json").exists()
+
+    with ThreadPoolExecutor(max_workers=2) as executor:
+        concurrent = tuple(
+            executor.map(
+                lambda _: assemble_dashboard_data(
+                    (first, second_zip),
+                    output,
+                    Path(__file__).resolve().parents[1] / "schemas",
+                ),
+                range(2),
+            )
+        )
+    assert all(item.default_campaign_id == second_campaign.id for item in concurrent)
+    assert (
+        json.loads((output / "index.json").read_text(encoding="utf-8"))["default_campaign_id"]
+        == second_campaign.id
+    )
+
+    unsafe_output = tmp_path / "unsafe-data"
+    lock_target = tmp_path / "lock-target"
+    lock_target.write_text("do not truncate", encoding="utf-8")
+    unsafe_output.with_name(".unsafe-data.lock").symlink_to(lock_target)
+    with pytest.raises(PublicationError, match="safely open"):
+        assemble_dashboard_data(
+            (first,),
+            unsafe_output,
+            Path(__file__).resolve().parents[1] / "schemas",
+        )
+    assert lock_target.read_text(encoding="utf-8") == "do not truncate"
 
 
 def test_summary_is_one_reusable_strict_projection(catalog: Catalog, tmp_path: Path) -> None:

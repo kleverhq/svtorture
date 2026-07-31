@@ -213,12 +213,15 @@ export function trendStateFromSearch(search: string): TrendState {
   };
 }
 
-export function toolTrendPointKey(point: MetricPoint): string {
-  return `tool:${point.campaign_id}:${point.tool_id}:${point.profile_id}`;
+export function toolTrendPointKey(
+  point: Pick<MetricPoint, "tool_id" | "profile_id">,
+  campaignId = "campaign_id" in point ? String(point.campaign_id) : "",
+): string {
+  return `tool:${campaignId}:${point.tool_id}:${point.profile_id}`;
 }
 
 export function corpusTrendPointKey(
-  campaign: Campaign,
+  campaign: Pick<Campaign, "id">,
   scope: "requirements" | "cases",
 ): string {
   return `corpus:${campaign.id}:${scope}`;
@@ -402,7 +405,8 @@ export function previousComparableCampaign(
   return dataset.campaigns
     .filter(
       (campaign) =>
-        campaign.finished_at < selected.finished_at &&
+        (campaign.finished_at < selected.finished_at ||
+          (campaign.finished_at === selected.finished_at && campaign.id < selected.id)) &&
         campaignProfileSignature(campaign) === signature,
     )
     .sort((left, right) => right.finished_at.localeCompare(left.finished_at))[0];
@@ -595,11 +599,6 @@ export function filterCorpus(
         result.status,
         result.reason,
         result.summary,
-        ...result.observations.flatMap((observation) => [
-          observation.stdout.excerpt,
-          observation.stderr.excerpt,
-          ...observation.diagnostics.map((diagnostic) => diagnostic.message),
-        ]),
       ]),
     ]
       .join(" ")
