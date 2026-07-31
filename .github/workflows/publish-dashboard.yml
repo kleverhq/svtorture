@@ -1,0 +1,127 @@
+name: Publish conformance dashboard
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: publish-conformance-dashboard
+  cancel-in-progress: false
+
+jobs:
+  policy:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      matrix: ${{ steps.matrix.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - uses: astral-sh/setup-uv@11f9893b081a58869d3b5fccaea48c9e9e46f990 # v8.3.2
+        with:
+          enable-cache: false
+      - uses: extractions/setup-just@53165ef7e734c5c07cb06b3c8e7b647c5aa16db3 # v4
+      - run: just setup-python
+      - id: matrix
+        name: Select tools from publication policy
+        run: echo "matrix=$(just --quiet ci-matrix)" >> "$GITHUB_OUTPUT"
+
+  collect:
+    needs: policy
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.policy.outputs.matrix) }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - uses: astral-sh/setup-uv@11f9893b081a58869d3b5fccaea48c9e9e46f990 # v8.3.2
+        with:
+          enable-cache: false
+      - uses: extractions/setup-just@53165ef7e734c5c07cb06b3c8e7b647c5aa16db3 # v4
+      - uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f # v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - run: just setup-python
+      - name: Resolve, build, push, and collect
+        id: collect
+        continue-on-error: true
+        env:
+          TOOL: ${{ matrix.tool }}
+        run: just collect-public "$TOOL"
+      - name: Retain normalized and full evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: campaign-${{ matrix.tool }}
+          path: |
+            .svtorture/campaigns/**/campaign.json
+            .svtorture/work/**/*.log
+          if-no-files-found: warn
+          include-hidden-files: true
+          retention-days: 7
+      - name: Report collection infrastructure failure
+        if: steps.collect.outcome == 'failure'
+        run: exit 1
+
+  publish:
+    if: always() && github.ref == 'refs/heads/main' && needs.policy.result == 'success'
+    needs: [policy, collect]
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    permissions:
+      contents: write
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          fetch-depth: 0
+      - uses: astral-sh/setup-uv@11f9893b081a58869d3b5fccaea48c9e9e46f990 # v8.3.2
+        with:
+          enable-cache: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: "24"
+      - uses: extractions/setup-just@53165ef7e734c5c07cb06b3c8e7b647c5aa16db3 # v4
+      - run: just setup-ci
+      - name: Download available matrix evidence
+        continue-on-error: true
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
+        with:
+          pattern: campaign-*
+          path: .nightly-artifacts
+          merge-multiple: true
+      - name: Aggregate available tools
+        run: just aggregate-artifacts .nightly-artifacts
+      - name: Publish Releases and assemble latest-only Pages
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: just dashboard-publish "$(cat .svtorture/nightly-aggregate-path)"
+      - uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5
+      - name: Upload bounded Pages artifact
+        uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v4
+        with:
+          path: .svtorture/pages
+      - name: Deploy GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4
+      - name: Retain aggregate campaign on failure
+        if: failure()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: aggregate-${{ github.run_id }}
+          path: |
+            .svtorture/campaigns/**/campaign.json
+            .svtorture/work/**/*.log
+          if-no-files-found: warn
+          include-hidden-files: true
+          retention-days: 7

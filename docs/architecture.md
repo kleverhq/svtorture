@@ -104,3 +104,11 @@ metric semantics. Local assembly writes `index.json` and `trends.json` for any
 number of validated bundle directories or ZIPs. The browser loads those small
 entry resources first, then one selected manifest/catalog/verdict set, and only
 loads an evidence shard when a case detail is opened.
+
+Public campaign publication uses immutable `campaign-<id>` GitHub Releases.
+Each Release contains one deterministic bundle ZIP and the standalone
+`CampaignSummary` used unchanged in trend history. The manual publication
+workflow rebuilds all trends from published summary assets, selects latest by
+`(finished_at, id)`, downloads and verifies that ZIP, and uploads a bounded
+Pages artifact containing complete detail for only that campaign. GitHub's
+mutable Latest flag and a `gh-pages` branch are not part of this data flow.

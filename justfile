@@ -37,7 +37,7 @@ hook-metadata:
 
 # Focused deterministic framework tests; never invokes Docker or the network.
 hook-tests:
-    uv run pytest -q -m "not docker" tests/test_evaluator.py tests/test_catalog_models.py tests/test_adapters.py tests/test_bundle.py
+    uv run pytest -q -m "not docker" tests/test_evaluator.py tests/test_catalog_models.py tests/test_adapters.py tests/test_bundle.py tests/test_github_publish.py tests/test_workflows.py
     just annotator-tests
 
 # Lightweight frontend type and unit checks.
@@ -174,18 +174,18 @@ reproduce campaign tool profile case_id:
 ci-matrix:
     uv run svtorture ci-matrix
 
-# Nightly exact resolution, immutable GHCR push, and full-corpus collection.
-nightly tool repository="" jobs="0":
+# Exact resolution, immutable GHCR push, and full-corpus public collection.
+collect-public tool repository="" jobs="0":
     repository="{{repository}}"; if test -z "$repository"; then repository="ghcr.io/${GITHUB_REPOSITORY,,}-{{tool}}"; fi; mkdir -p .svtorture/campaigns; before="$(find .svtorture/campaigns -name campaign.json | wc -l)"; status=0; uv run svtorture run --tool "{{tool}}@latest" --suite all --jobs "{{jobs}}" --push --repository "$repository" --exit-policy infra-only || status=$?; after="$(find .svtorture/campaigns -name campaign.json | wc -l)"; if test "$status" -ne 0 && test "$before" = "$after"; then uv run svtorture record-missing --tool "{{tool}}" --suite all; fi; exit "$status"
 
 # Aggregate whatever nightly campaign artifacts arrived and mark missing tools.
 aggregate-artifacts artifacts:
     uv run python scripts/aggregate_artifacts.py "{{artifacts}}"
 
-# Append a trusted aggregate to gh-pages without force-pushing.
-pages-publish campaign:
+# Publish immutable campaign Releases and derive the latest-only Pages tree.
+dashboard-publish *campaigns:
     npm --prefix dashboard run build
-    uv run python scripts/publish_pages.py "{{campaign}}"
+    uv run python scripts/publish_dashboard.py --campaign-list {{quote(campaigns)}}
 
 schemas:
     uv run svtorture schemas --write

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import fcntl
+import hashlib
 import json
 import os
 import shutil
@@ -71,6 +72,21 @@ MAX_ARCHIVE_MEMBERS = 20_000
 MAX_MANIFEST_BYTES = 16 * 1024 * 1024
 MAX_RESOURCE_BYTES = 128 * 1024 * 1024
 ZIP_TIMESTAMP = (1980, 1, 1, 0, 0, 0)
+
+
+@dataclass(frozen=True)
+class PagesBuildReport:
+    total_bytes: int
+    frontend_bytes: int
+    schema_bytes: int
+    index_bytes: int
+    trends_bytes: int
+    campaign_bytes: int
+    manifest_bytes: int
+    catalog_bytes: int
+    verdicts_bytes: int
+    evidence_bytes: int
+    largest_evidence_shard_bytes: int
 
 
 @dataclass(frozen=True)
@@ -927,6 +943,98 @@ def assemble_dashboard_data(
     finally:
         shutil.rmtree(temporary, ignore_errors=True)
         shutil.rmtree(backup, ignore_errors=True)
+
+
+def sha256_file(path: Path) -> str:
+    """Hash a file without buffering an archive-sized payload."""
+
+    digest = hashlib.sha256()
+    with path.open("rb") as source:
+        for chunk in iter(lambda: source.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def _tree_size(root: Path) -> int:
+    return sum(path.stat().st_size for path in root.rglob("*") if path.is_file())
+
+
+def assemble_public_pages(
+    built_site: Path,
+    summaries: Iterable[CampaignSummary],
+    latest_archive: Path,
+    output: Path,
+    schema_directory: Path,
+    *,
+    size_limit: int = 650 * 1024 * 1024,
+) -> PagesBuildReport:
+    """Build a clean latest-only Pages tree from immutable Release artifacts."""
+
+    if not (built_site / "index.html").is_file():
+        raise PublicationError("built dashboard site has no index.html")
+    ordered = tuple(sorted(summaries, key=lambda item: (item.finished_at, item.id)))
+    trends = CampaignTrends(campaigns=ordered)
+    if not ordered or any(summary.archive is None for summary in ordered):
+        raise PublicationError("public Pages history requires archived campaign summaries")
+    latest = ordered[-1]
+    assert latest.archive is not None
+    archive_bytes = latest_archive.stat().st_size
+    if archive_bytes != latest.archive.bytes or sha256_file(latest_archive) != (
+        latest.archive.sha256
+    ):
+        raise PublicationError("latest campaign archive does not match its summary")
+
+    output.parent.mkdir(parents=True, exist_ok=True)
+    temporary = Path(tempfile.mkdtemp(prefix=".public-pages-", dir=output.parent))
+    site = temporary / "site"
+    try:
+        shutil.copytree(built_site, site)
+        shutil.rmtree(site / "data", ignore_errors=True)
+        index = assemble_dashboard_data((latest_archive,), site / "data", schema_directory)
+        if index.default_campaign_id != latest.id or len(index.campaigns) != 1:
+            raise PublicationError("latest campaign archive does not match public history")
+        _write_model(site / "data" / "trends.json", trends)
+        (site / ".data.lock").unlink(missing_ok=True)
+
+        evidence_files = tuple(
+            (site / "data" / "campaigns" / latest.id / "evidence").glob("*.json")
+        )
+        report = PagesBuildReport(
+            total_bytes=_tree_size(site),
+            frontend_bytes=sum(
+                path.stat().st_size
+                for path in site.rglob("*")
+                if path.is_file() and "data" not in path.relative_to(site).parts
+            ),
+            schema_bytes=_tree_size(site / "data" / "schemas"),
+            index_bytes=(site / "data" / "index.json").stat().st_size,
+            trends_bytes=(site / "data" / "trends.json").stat().st_size,
+            campaign_bytes=_tree_size(site / "data" / "campaigns" / latest.id),
+            manifest_bytes=(site / "data" / "campaigns" / latest.id / "manifest.json")
+            .stat()
+            .st_size,
+            catalog_bytes=(site / "data" / "campaigns" / latest.id / "catalog.json").stat().st_size,
+            verdicts_bytes=(site / "data" / "campaigns" / latest.id / "verdicts.json")
+            .stat()
+            .st_size,
+            evidence_bytes=sum(path.stat().st_size for path in evidence_files),
+            largest_evidence_shard_bytes=max(
+                (path.stat().st_size for path in evidence_files),
+                default=0,
+            ),
+        )
+        if report.total_bytes > size_limit:
+            raise PublicationError(
+                f"public Pages tree is {report.total_bytes} bytes; limit is {size_limit}"
+            )
+        if output.exists():
+            if not output.is_dir() or output.is_symlink():
+                raise PublicationError("public Pages output must be a regular directory")
+            shutil.rmtree(output)
+        os.replace(site, output)
+        return report
+    finally:
+        shutil.rmtree(temporary, ignore_errors=True)
 
 
 def _zip_member_count(archive_path: Path) -> int:

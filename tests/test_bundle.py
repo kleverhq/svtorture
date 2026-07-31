@@ -12,12 +12,14 @@ from pydantic import ValidationError
 
 from svtorture.bundle import (
     assemble_dashboard_data,
+    assemble_public_pages,
     export_campaign_bundle,
     extract_campaign_archive,
     pack_evidence,
     pack_evidence_results,
     project_campaign_summary,
     project_verdicts,
+    sha256_file,
     validate_campaign_bundle,
     write_campaign_archive,
 )
@@ -371,6 +373,86 @@ def test_local_assembler_combines_directories_and_zips(catalog: Catalog, tmp_pat
             Path(__file__).resolve().parents[1] / "schemas",
         )
     assert lock_target.read_text(encoding="utf-8") == "do not truncate"
+
+
+def test_public_pages_contains_all_summaries_and_only_latest_detail(
+    catalog: Catalog, tmp_path: Path
+) -> None:
+    first_campaign = _campaign(catalog)
+    second_campaign = first_campaign.model_copy(
+        update={
+            "id": "20260102T000000Z-public-latest",
+            "started_at": first_campaign.started_at + timedelta(days=1),
+            "finished_at": first_campaign.finished_at + timedelta(days=1),
+        }
+    )
+    first_manifest = validate_campaign_bundle(
+        export_campaign_bundle(catalog, first_campaign, tmp_path / "first")
+    )
+    second_root = export_campaign_bundle(catalog, second_campaign, tmp_path / "second")
+    second_manifest = validate_campaign_bundle(second_root)
+    archive_path = write_campaign_archive(second_root, tmp_path / "latest.zip")
+
+    def archive(campaign_id: str, *, sha256: str, size: int) -> ArchiveMetadata:
+        asset = f"svtorture-campaign-{campaign_id}.zip"
+        tag = f"campaign-{campaign_id}"
+        return ArchiveMetadata(
+            release_tag=tag,
+            release_url=f"https://github.com/example/repo/releases/tag/{tag}",
+            asset_name=asset,
+            download_url=f"https://github.com/example/repo/releases/download/{tag}/{asset}",
+            sha256=sha256,
+            bytes=size,
+        )
+
+    summaries = (
+        project_campaign_summary(
+            first_manifest, archive(first_manifest.id, sha256="1" * 64, size=1)
+        ),
+        project_campaign_summary(
+            second_manifest,
+            archive(
+                second_manifest.id,
+                sha256=sha256_file(archive_path),
+                size=archive_path.stat().st_size,
+            ),
+        ),
+    )
+    built_site = tmp_path / "built"
+    built_site.mkdir()
+    (built_site / "index.html").write_text("<html></html>", encoding="utf-8")
+    output = tmp_path / "pages"
+    report = assemble_public_pages(
+        built_site,
+        summaries,
+        archive_path,
+        output,
+        Path(__file__).resolve().parents[1] / "schemas",
+    )
+    index = json.loads((output / "data" / "index.json").read_text(encoding="utf-8"))
+    trends = json.loads((output / "data" / "trends.json").read_text(encoding="utf-8"))
+    assert [item["id"] for item in index["campaigns"]] == [second_manifest.id]
+    assert trends == {
+        "schema_version": 6,
+        "kind": "campaign-trends",
+        "campaigns": [summary.model_dump(mode="json", exclude_none=True) for summary in summaries],
+    }
+    assert not (output / "data" / "campaigns" / first_manifest.id).exists()
+    assert report.total_bytes == sum(
+        path.stat().st_size for path in output.rglob("*") if path.is_file()
+    )
+    assert report.campaign_bytes == (
+        report.manifest_bytes + report.catalog_bytes + report.verdicts_bytes + report.evidence_bytes
+    )
+    with pytest.raises(PublicationError, match="limit is 1"):
+        assemble_public_pages(
+            built_site,
+            summaries,
+            archive_path,
+            tmp_path / "too-large",
+            Path(__file__).resolve().parents[1] / "schemas",
+            size_limit=1,
+        )
 
 
 def test_summary_is_one_reusable_strict_projection(catalog: Catalog, tmp_path: Path) -> None:
