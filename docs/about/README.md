@@ -13,13 +13,13 @@ Draw.io Desktop for editing.
 
 ## Overview
 
-Compatibility suites such as `sv-tests` cover many language features and tools.
-SVTORTURE focuses on the evidence behind each result.
+SVTORTURE tests SystemVerilog tools against requirements derived from the
+standard. A campaign records the cases that ran, the tool observations, and the
+information needed to inspect or replay a result.
 
-It is not a fork or replacement. Each case has an explicit target phase and
-oracle, and every result can be traced back to a requirement. IEEE 1800-2023
-supplies the normative text, and the annotator assigns stable anchors before
-requirements or cases are written.
+Each case has an explicit target phase and oracle,
+and every result can be traced back to a requirement. IEEE 1800-2023
+supplies the normative text, and the framework does the rest.
 
 ![Diagram of the IEEE standard, requirements, cases, tool profiles, campaign, and dashboard](assets/standards-to-evidence.drawio.png "The standard defines expected behavior and tools provide observations. Annotation assigns stable anchors to IEEE source blocks, and requirements cite those anchors. Cases and compatible tool profiles go to the runner, which records campaign results for the dashboard.")
 
@@ -42,11 +42,7 @@ A case turns one primary requirement into minimal, tool-neutral source and an
 oracle for a specific phase.
 
 An oracle can require static acceptance, a simulation `PASS` marker, or rejection
-with a matching diagnostic at the exact case anchor. Related requirements add
-context without affecting the score. Coverage tracks linked catalog
-requirements; density tracks links per linked
-requirement. The headline pass rate requires every selected mandatory variant
-to conform. See [adding a case](../adding-a-case.md) for the full workflow.
+with a matching diagnostic at the exact case anchor. The headline pass rate requires every selected mandatory variant to conform. See [adding a case](../adding-a-case.md) for the full workflow.
 
 ![Diagram linking case source and oracle to accepted and rejected outcomes](assets/executable-cases.drawio.png "A negative case passes only when the tool rejects the intended construct. The case combines its primary requirement, related context, source files, and one oracle. The oracle can require static acceptance, a simulation PASS marker, a diagnostic at the exact case anchor, or a nonzero exit with that diagnostic.")
 

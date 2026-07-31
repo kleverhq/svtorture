@@ -16,11 +16,11 @@ const ABOUT_ASSETS = import.meta.glob<string>(
 );
 
 const IMAGE_DIMENSIONS: Record<string, readonly [number, number]> = {
-  "assets/campaign-to-dashboard.drawio.png": [1302, 643],
-  "assets/executable-cases.drawio.png": [1222, 638],
-  "assets/standards-to-evidence.drawio.png": [1342, 578],
-  "assets/tool-applicability.drawio.png": [1222, 652],
-  "assets/traceable-requirements.drawio.png": [1222, 633],
+  "assets/campaign-to-dashboard.drawio.png": [1280, 646],
+  "assets/executable-cases.drawio.png": [1200, 601],
+  "assets/standards-to-evidence.drawio.png": [1261, 561],
+  "assets/tool-applicability.drawio.png": [1221, 666],
+  "assets/traceable-requirements.drawio.png": [1200, 611],
 };
 
 type AboutSection = {
