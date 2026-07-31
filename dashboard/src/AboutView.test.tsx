@@ -1,70 +1,71 @@
 import { cleanup, render, screen, within } from "@testing-library/react";
 import { afterEach, describe, expect, it } from "vitest";
 
-import { AboutView } from "./AboutView";
+import aboutMarkdown from "../../docs/about/README.md?raw";
+import { AboutView, resolveLink, sectionsFromMarkdown } from "./AboutView";
 
-const SECTIONS = [
-  ["overview", "Overview"],
-  ["requirements", "Requirements"],
-  ["cases", "Cases"],
-  ["tools", "Tools"],
-  ["campaigns", "Campaigns"],
-  ["dashboard", "Dashboard"],
-] as const;
+const SECTIONS = sectionsFromMarkdown(aboutMarkdown);
 
 afterEach(cleanup);
 
 describe("AboutView", () => {
-  it("links its table of contents to every guide section", () => {
+  it("builds its sections and contents from the canonical Markdown", () => {
     render(<AboutView />);
 
     const contents = screen.getByRole("navigation", { name: "About contents" });
-    for (const [id, label] of SECTIONS) {
-      expect(within(contents).getByRole("link", { name: label }).getAttribute("href"))
+    for (const { id, title } of SECTIONS) {
+      expect(within(contents).getByRole("link", { name: title }).getAttribute("href"))
         .toBe(`#${id}`);
       expect(document.getElementById(id)).toBeTruthy();
-      expect(screen.getByRole("heading", { name: label })).toBeTruthy();
+      expect(screen.getByRole("heading", { name: title })).toBeTruthy();
     }
   });
 
-  it("presents the framework as a concise illustrated evidence flow", () => {
+  it("recognizes Markdown headings without treating fenced text as a section", () => {
+    const sections = sectionsFromMarkdown(`
+# Preamble
+
+## First section ##
+
+\`\`\`
+## Not a section
+\`\`\`
+
+## First section
+
+Body.
+`);
+
+    expect(sections.map(({ id, title }) => [id, title])).toEqual([
+      ["first-section", "First section"],
+      ["first-section-2", "First section"],
+    ]);
+    expect(sections[0]?.markdown).toContain("## Not a section");
+  });
+
+  it("resolves relative documentation links without dropping suffixes", () => {
+    expect(resolveLink("../methodology.md?plain=1#metrics")).toBe(
+      "https://github.com/kleverhq/svtorture/blob/main/docs/methodology.md?plain=1#metrics",
+    );
+    expect(resolveLink("#campaigns")).toBe("#campaigns");
+    expect(resolveLink("https://example.com/guide")).toBe("https://example.com/guide");
+  });
+
+  it("presents each Markdown illustration as an accessible diagram", () => {
     render(<AboutView />);
 
-    expect(screen.getByRole("heading", { name: "Overview" })).toBeTruthy();
     const images = screen.getAllByRole("img");
-    expect(images).toHaveLength(5);
-    expect(
-      screen.getAllByRole("region", { name: /Scrollable diagram:/ }),
-    ).toHaveLength(5);
+    const regions = screen.getAllByRole("region", { name: /Scrollable diagram:/ });
+    expect(images.length).toBeGreaterThan(0);
+    expect(regions).toHaveLength(images.length);
     for (const image of images) {
+      expect(image.getAttribute("alt")).toBeTruthy();
+      expect(image.getAttribute("width")).toBeTruthy();
+      expect(image.getAttribute("height")).toBeTruthy();
       const descriptionId = image.getAttribute("aria-describedby");
       expect(descriptionId).toBeTruthy();
-      expect(document.getElementById(descriptionId ?? "")?.textContent?.length).toBeGreaterThan(80);
+      expect(document.getElementById(descriptionId ?? "")?.textContent?.length)
+        .toBeGreaterThan(80);
     }
-    expect(
-      screen.getByAltText(
-        "Diagram of the IEEE standard, requirements, cases, tool profiles, campaign, and dashboard",
-      ),
-    ).toBeTruthy();
-    expect(
-      screen.getByAltText(
-        "Diagram linking standard anchors to a requirement and corpus metrics",
-      ),
-    ).toBeTruthy();
-    expect(
-      screen.getByAltText(
-        "Diagram linking case source and oracle to accepted and rejected outcomes",
-      ),
-    ).toBeTruthy();
-    expect(
-      screen.getByAltText(
-        "Diagram of cumulative tool phases and case applicability checks",
-      ),
-    ).toBeTruthy();
-    expect(
-      screen.getByAltText(
-        "Diagram of campaign contents and dashboard uses",
-      ),
-    ).toBeTruthy();
   });
 });

@@ -5,6 +5,11 @@ export default defineConfig({
   base: "./",
   plugins: [react()],
   publicDir: false,
+  server: {
+    fs: {
+      allow: [".."],
+    },
+  },
   test: {
     environment: "jsdom",
     include: ["src/**/*.test.ts", "src/**/*.test.tsx"],
