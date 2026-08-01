@@ -110,7 +110,10 @@ describe("useDashboard", () => {
 
     let results = await result.current.loadCaseEvidence!(data.catalog.cases[0]!.id);
     expect(results[0]?.observations.length).toBeGreaterThan(0);
-    expect(results[0]?.reproduction_command).toContain("just reproduce");
+    const evidence = data.evidence.results[0]!;
+    expect(results[0]?.reproduction_command).toBe(
+      `just reproduce 'http://localhost:3000/data/campaigns/${data.manifest.id}/manifest.json' '${evidence.tool_id}' '${evidence.profile_id}' '${data.catalog.cases[0]!.id}'`,
+    );
     results = await result.current.loadCaseEvidence!(data.catalog.cases[0]!.id);
     expect(results.length).toBeGreaterThan(0);
     expect(

@@ -650,7 +650,7 @@ export function useDashboard(
         .filter((result) => result.case_id === caseId)
         .map((result) => ({
           ...result,
-          reproduction_command: `just reproduce '${loaded.manifestUrl.toString()}' --tool '${result.tool_id}' --profile '${result.profile_id}' --case '${caseId}'`,
+          reproduction_command: `just reproduce '${loaded.manifestUrl.toString()}' '${result.tool_id}' '${result.profile_id}' '${caseId}'`,
         }));
     },
     [selectedId, selection],
