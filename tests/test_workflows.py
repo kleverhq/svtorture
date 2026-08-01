@@ -35,6 +35,9 @@ def test_enabled_ci_and_manual_dashboard_workflows_have_bounded_triggers() -> No
 
 def test_publication_uses_stable_just_and_script_interfaces() -> None:
     publication = (WORKFLOWS / "publish-dashboard.yml").read_text(encoding="utf-8")
+    assert 'matrix="$(just ci-matrix)"' in publication
+    assert 'echo "matrix=$matrix" >> "$GITHUB_OUTPUT"' in publication
+    assert "just --quiet ci-matrix" not in publication
     assert "TOOL: ${{ matrix.tool }}" in publication
     assert 'run: just collect-public "$TOOL"' in publication
     assert "run: just aggregate-artifacts .nightly-artifacts" in publication
@@ -45,3 +48,4 @@ def test_publication_uses_stable_just_and_script_interfaces() -> None:
     assert "publish_dashboard(" in script
     justfile = (ROOT / "justfile").read_text(encoding="utf-8")
     assert "--campaign-list {{quote(campaigns)}}" in justfile
+    assert "ci-matrix:\n    @uv run svtorture ci-matrix" in justfile

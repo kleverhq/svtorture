@@ -172,7 +172,7 @@ reproduce campaign tool profile case_id:
 
 # Publication-eligible tools as a GitHub matrix, selected only from metadata policy.
 ci-matrix:
-    uv run svtorture ci-matrix
+    @uv run svtorture ci-matrix
 
 # Exact resolution, immutable GHCR push, and full-corpus public collection.
 collect-public tool repository="" jobs="0":

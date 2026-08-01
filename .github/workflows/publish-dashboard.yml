@@ -24,7 +24,9 @@ jobs:
       - run: just setup-python
       - id: matrix
         name: Select tools from publication policy
-        run: echo "matrix=$(just --quiet ci-matrix)" >> "$GITHUB_OUTPUT"
+        run: |
+          matrix="$(just ci-matrix)"
+          echo "matrix=$matrix" >> "$GITHUB_OUTPUT"
 
   collect:
     needs: policy
