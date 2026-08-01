@@ -120,10 +120,9 @@ def _campaign_trust() -> CampaignTrust:
 def _reproduction_location(campaign_id: str, trust: CampaignTrust) -> str:
     if trust.source == "github-actions":
         assert trust.repository is not None
-        return (
-            f"https://raw.githubusercontent.com/{trust.repository}/gh-pages/"
-            f"history/campaigns/{campaign_id}.json"
-        )
+        tag = f"campaign-{campaign_id}"
+        asset = f"svtorture-campaign-{campaign_id}.zip"
+        return f"https://github.com/{trust.repository}/releases/download/{tag}/{asset}"
     return f".svtorture/campaigns/{campaign_id}/campaign.json"
 
 

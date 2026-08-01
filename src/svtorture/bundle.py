@@ -1066,6 +1066,57 @@ def _zip_member_count(archive_path: Path) -> int:
     raise PublicationError("campaign archive has no valid end record")
 
 
+def _inspect_open_campaign_archive(
+    archive: zipfile.ZipFile, member_count: int
+) -> tuple[str, tuple[str, ...]]:
+    infos = archive.infolist()
+    names = [info.filename for info in infos]
+    if len(infos) != member_count or len(names) != len(set(names)):
+        raise PublicationError("campaign archive has duplicate or inconsistent members")
+    if sum(info.file_size for info in infos) > MAX_ARCHIVE_UNCOMPRESSED_BYTES:
+        raise PublicationError("campaign archive exceeds the uncompressed size limit")
+    campaign_ids: set[str] = set()
+    normalized_names: set[str] = set()
+    for info in infos:
+        path = PurePosixPath(info.filename)
+        normalized_name = path.as_posix()
+        mode = info.external_attr >> 16
+        maximum = MAX_MANIFEST_BYTES if path.name == "manifest.json" else MAX_RESOURCE_BYTES
+        if (
+            info.is_dir()
+            or info.file_size > maximum
+            or info.flag_bits & 0x1
+            or path.is_absolute()
+            or ".." in path.parts
+            or "\\" in info.filename
+            or info.filename != normalized_name
+            or normalized_name in normalized_names
+            or len(path.parts) < 3
+            or path.parts[0] != "campaigns"
+            or stat.S_ISLNK(mode)
+            or (mode and not stat.S_ISREG(mode))
+        ):
+            raise PublicationError(f"unsafe campaign archive member {info.filename!r}")
+        normalized_names.add(normalized_name)
+        campaign_ids.add(path.parts[1])
+    if len(campaign_ids) != 1:
+        raise PublicationError("campaign archive must contain exactly one campaign")
+    return campaign_ids.pop(), tuple(names)
+
+
+def inspect_campaign_archive(archive_path: Path) -> tuple[str, tuple[str, ...]]:
+    """Validate archive structure without reading campaign resource payloads."""
+
+    member_count = _zip_member_count(archive_path)
+    if member_count == 0 or member_count > MAX_ARCHIVE_MEMBERS:
+        raise PublicationError("campaign archive has an unsafe member count")
+    try:
+        with zipfile.ZipFile(archive_path) as archive:
+            return _inspect_open_campaign_archive(archive, member_count)
+    except (OSError, zipfile.BadZipFile) as error:
+        raise PublicationError("cannot read campaign archive") from error
+
+
 def extract_campaign_archive(archive_path: Path, output: Path) -> Path:
     """Safely extract and validate one Release bundle ZIP."""
 
@@ -1076,43 +1127,14 @@ def extract_campaign_archive(archive_path: Path, output: Path) -> Path:
     temporary = Path(tempfile.mkdtemp(prefix=".extract-", dir=output.parent))
     try:
         with zipfile.ZipFile(archive_path) as archive:
-            infos = archive.infolist()
-            names = [info.filename for info in infos]
-            if len(infos) != member_count or len(names) != len(set(names)):
-                raise PublicationError("campaign archive has duplicate or inconsistent members")
-            if sum(info.file_size for info in infos) > MAX_ARCHIVE_UNCOMPRESSED_BYTES:
-                raise PublicationError("campaign archive exceeds the uncompressed size limit")
-            campaign_ids: set[str] = set()
-            normalized_names: set[str] = set()
-            for info in infos:
-                path = PurePosixPath(info.filename)
-                normalized_name = path.as_posix()
-                mode = info.external_attr >> 16
-                maximum = MAX_MANIFEST_BYTES if path.name == "manifest.json" else MAX_RESOURCE_BYTES
-                if (
-                    info.is_dir()
-                    or info.file_size > maximum
-                    or info.flag_bits & 0x1
-                    or path.is_absolute()
-                    or ".." in path.parts
-                    or "\\" in info.filename
-                    or info.filename != normalized_name
-                    or normalized_name in normalized_names
-                    or len(path.parts) < 3
-                    or path.parts[0] != "campaigns"
-                    or stat.S_ISLNK(mode)
-                    or (mode and not stat.S_ISREG(mode))
-                ):
-                    raise PublicationError(f"unsafe campaign archive member {info.filename!r}")
-                normalized_names.add(normalized_name)
-                campaign_ids.add(path.parts[1])
+            campaign_id, names = _inspect_open_campaign_archive(archive, member_count)
+            for name in names:
+                path = PurePosixPath(name)
                 destination = temporary.joinpath(*path.parts)
                 destination.parent.mkdir(parents=True, exist_ok=True)
-                with archive.open(info) as source, destination.open("wb") as target:
+                with archive.open(name) as source, destination.open("wb") as target:
                     shutil.copyfileobj(source, target)
-            if len(campaign_ids) != 1:
-                raise PublicationError("campaign archive must contain exactly one campaign")
-        campaign_root = temporary / "campaigns" / campaign_ids.pop()
+        campaign_root = temporary / "campaigns" / campaign_id
         validate_campaign_bundle(campaign_root)
         destination = output / "campaigns" / campaign_root.name
         if destination.exists():

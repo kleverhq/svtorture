@@ -21,7 +21,6 @@ from svtorture.campaign import (
     aggregate_campaigns,
     create_preparation_failure_campaign,
     load_campaign,
-    load_campaign_location,
     load_runner_config,
     report_image_version,
     report_wrapper_version,
@@ -44,8 +43,8 @@ from svtorture.models import (
     ToolSelection,
     model_to_jsonable,
 )
-from svtorture.publish import PublicationError, publish_pages_tree
-from svtorture.reproduce import ReproductionError, reproduce_case
+from svtorture.publish import PublicationError
+from svtorture.reproduce import ReproductionError, load_replay_location, reproduce_case
 from svtorture.resolver import ResolutionError, parse_requested_tool, resolve_tool_ref
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -526,14 +525,24 @@ def record_missing(
 def reproduce(
     campaign_path: Annotated[
         str,
-        typer.Argument(help="Recorded campaign path or trusted public HTTPS URL."),
+        typer.Argument(
+            help=(
+                "Canonical campaign, bundle ZIP/directory/manifest, or "
+                "credential-free HTTPS manifest or Release ZIP URL."
+            )
+        ),
     ],
     tool: Annotated[str, typer.Option("--tool")],
     profile: Annotated[str, typer.Option("--profile")],
     case: Annotated[str, typer.Option("--case")],
 ) -> None:
-    campaign = load_campaign_location(campaign_path)
-    report = reproduce_case(ROOT, campaign, tool_id=tool, profile_id=profile, case_id=case)
+    source = load_replay_location(
+        campaign_path,
+        tool_id=tool,
+        profile_id=profile,
+        case_id=case,
+    )
+    report = reproduce_case(ROOT, source, tool_id=tool, profile_id=profile, case_id=case)
     typer.echo(
         f"recorded={report.recorded.status.value}/{report.recorded.reason.value} "
         f"replayed={report.replayed.status.value}/{report.replayed.reason.value}"
@@ -616,18 +625,6 @@ def dashboard_serve(
             check=False,
         ).returncode
     )
-
-
-@dashboard_app.command("publish-tree")
-def dashboard_publish_tree(
-    campaigns: Annotated[list[Path], typer.Argument(help="Trusted campaign JSON paths.")],
-    pages_tree: Annotated[Path, typer.Option("--pages-tree")],
-    built_site: Annotated[Path, typer.Option("--built-site")] = ROOT / "dashboard" / "dist",
-) -> None:
-    catalog = _catalog()
-    loaded = tuple(load_campaign(path) for path in campaigns)
-    publish_pages_tree(catalog, loaded, built_site, pages_tree)
-    typer.echo(str(pages_tree))
 
 
 def entrypoint() -> None:

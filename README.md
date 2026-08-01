@@ -107,7 +107,7 @@ campaign: .svtorture/campaigns/<campaign-id>/campaign.json
 summary: conforming=… nonconforming=…
 ```
 
-Build a local dashboard dataset from the printed path:
+Build local dashboard site data from the printed path:
 
 ```bash
 just dashboard-build ".svtorture/campaigns/<campaign-id>/campaign.json"

@@ -16,21 +16,24 @@ Replay one result:
 just reproduce ".svtorture/campaigns/<id>/campaign.json" verilator simulator ch11-addition-context-width
 ```
 
-The first argument can also be the credential-free HTTPS URL copied from a
-public result. SVTORTURE limits the download, validates the campaign schema and
-manifests, and recalculates the recorded judgment from its observations before
-replay. Public result cards link to the campaign document on the `gh-pages`
-branch, for example:
+The first argument may instead be a local portable campaign ZIP, an unpacked
+bundle or `manifest.json`, or a credential-free HTTPS manifest URL. Public
+results use the immutable campaign ZIP attached to their GitHub Release:
 
 ```text
-just reproduce "https://raw.githubusercontent.com/<owner>/<repo>/gh-pages/history/campaigns/<id>.json" verilator simulator ch11-addition-context-width
+just reproduce "https://github.com/<owner>/<repo>/releases/download/campaign-<id>/svtorture-campaign-<id>.zip" verilator simulator ch11-addition-context-width
 ```
 
-Replay first verifies the campaign and current corpus. If the recorded corpus
-commit differs from the checkout, SVTORTURE creates a detached Git worktree. It
-checks requirement anchors from that worktree against the committed anchor index
-in the current checkout; replay does not need the PDF or generated annotation
-text.
+SVTORTURE bounds remote downloads and archive members, rejects unsafe ZIP paths,
+and verifies the manifest plus the selected catalog, verdict, and evidence
+resources before replay. It reads only the evidence shard containing the
+requested result and recalculates the recorded judgment from its observations.
+
+Replay then verifies the selected bundle identities against the current corpus.
+If the recorded corpus commit differs from the checkout, SVTORTURE creates a
+detached Git worktree. It checks requirement anchors from that worktree against
+the committed anchor index in the current checkout; replay does not need the PDF
+or generated annotation text.
 
 SVTORTURE first checks for the recorded immutable public image locally. If it is
 absent, the framework tries to pull it. If the pull fails, it rebuilds from the
