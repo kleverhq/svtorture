@@ -22,7 +22,7 @@ This work does not make waivers part of runtime catalog models, campaign coverag
 - [x] (2026-08-03 08:02Z) Expanded the requirement part index, documented the sidecars, remapped all 12 cases, and adjusted the affected catalog test fixture; no tag or schema-model change was needed.
 - [x] (2026-08-03 08:16Z) Validated catalog loading, exact source copies, counts, unique IDs, case references, schema regeneration, and the full 16,963-anchor annotation index; `just smoke` and `just precommit` passed.
 - [x] (2026-08-03 08:16Z) Ran `just ci`: 185 non-Docker Python tests, 81 dashboard tests, 11 fake-Docker tests, and the production dashboard build passed; only the final real-tool smoke was blocked by a Docker Hub DNS timeout while pulling `ubuntu:24.04`.
-- [ ] Review, commit, push, and open a pull request (completed: two focused lanes and one fresh control review found no substantive implementation issue; the stale-plan note was fixed; implementation is committed as `4400591`; remaining: final plan commit, push, PR).
+- [x] (2026-08-03 08:26Z) Completed two focused review lanes and a fresh clean control review, committed the implementation and plan, pushed `feat/import-complete-requirement-corpus`, and opened pull request `https://github.com/kleverhq/svtorture/pull/1`.
 
 ## Surprises & Discoveries
 
@@ -69,7 +69,7 @@ The implementation is complete and locally validated. SVTORTURE now loads 6,719 
 
 The larger corpus exposed and fixed one latent ordering defect: requirement manifest hashes now use the same standard clause order already required by campaign catalogs. `just annotate-check`, `just smoke`, and `just precommit` pass. The internally controlled portions of `just ci` pass: 185 non-Docker Python tests, 81 dashboard tests, 11 fake-Docker tests, and a production dashboard build. The final real-tool smoke could not pull `ubuntu:24.04` because Docker Hub DNS resolution timed out; this is an external network limitation, not a test or implementation failure.
 
-Only publication work remains: commit this final plan update, push the branch, and open the requested pull request.
+The branch is pushed and the requested pull request is open at `https://github.com/kleverhq/svtorture/pull/1`. No implementation work remains.
 
 ## Context and Orientation
 
@@ -169,4 +169,6 @@ Revision note (2026-08-03 08:08Z): Recorded the manifest-hash ordering defect ex
 
 Revision note (2026-08-03 08:20Z): Updated validation and outcomes after smoke, precommit, partial CI, and focused review. Recorded the external Docker Hub DNS timeout and narrowed remaining work to control review and publication.
 
-Revision note (2026-08-03 08:24Z): Recorded the clean fresh control review. Only the final plan commit, branch push, and pull request remain.
+Revision note (2026-08-03 08:24Z): Recorded the clean fresh control review. Only the final plan commit, branch push, and pull request remained.
+
+Revision note (2026-08-03 08:26Z): Marked the ExecPlan complete after the branch push and creation of pull request #1.
