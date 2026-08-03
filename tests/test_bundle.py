@@ -93,6 +93,11 @@ def test_bundle_export_is_compact_complete_and_deterministic(
     del historical_catalog["standard_sections"]
     assert CampaignCatalog.model_validate(historical_catalog).standard_sections == ()
 
+    empty_catalog = exported_catalog.model_dump(mode="json")
+    empty_catalog["standard_sections"] = []
+    with pytest.raises(ValidationError, match="at least 1740 items"):
+        CampaignCatalog.model_validate(empty_catalog)
+
     malformed_catalog = exported_catalog.model_dump(mode="json")
     malformed_catalog["standard_sections"][0], malformed_catalog["standard_sections"][1] = (
         malformed_catalog["standard_sections"][1],
@@ -150,6 +155,31 @@ def _write_compact(path: Path, value: object) -> bytes:
     data = canonical_json_bytes(value)
     path.write_bytes(data)
     return data
+
+
+def test_historical_bundle_without_standard_sections_still_validates_and_assembles(
+    catalog: Catalog, tmp_path: Path
+) -> None:
+    root = export_campaign_bundle(catalog, _campaign(catalog), tmp_path / "historical")
+    catalog_path = root / "catalog.json"
+    historical_catalog = json.loads(catalog_path.read_text(encoding="utf-8"))
+    del historical_catalog["standard_sections"]
+    catalog_bytes = canonical_json_bytes(historical_catalog)
+    catalog_path.write_bytes(catalog_bytes)
+
+    manifest_path = root / "manifest.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    manifest["resources"]["catalog"]["bytes"] = len(catalog_bytes)
+    manifest["resources"]["catalog"]["sha256"] = sha256_bytes(catalog_bytes)
+    manifest_path.write_bytes(canonical_json_bytes(manifest))
+
+    assert validate_campaign_bundle(root).id == manifest["id"]
+    index = assemble_dashboard_data(
+        (root,),
+        tmp_path / "data",
+        Path(__file__).resolve().parents[1] / "schemas",
+    )
+    assert index.default_campaign_id == manifest["id"]
 
 
 def test_bundle_validation_recomputes_selection_judgments_and_metrics(

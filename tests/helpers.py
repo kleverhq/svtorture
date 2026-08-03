@@ -237,4 +237,5 @@ def copy_catalog(
         suites=dict(catalog.suites),
         suite_cases=dict(catalog.suite_cases),
         tools=catalog.tools,
+        standard_sections=catalog.standard_sections,
     )

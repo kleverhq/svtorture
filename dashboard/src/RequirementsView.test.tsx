@@ -17,6 +17,7 @@ const originalScrollIntoView = Object.getOwnPropertyDescriptor(
   HTMLElement.prototype,
   "scrollIntoView",
 );
+const originalMatchMedia = Object.getOwnPropertyDescriptor(window, "matchMedia");
 
 afterEach(() => {
   cleanup();
@@ -28,6 +29,11 @@ afterEach(() => {
     );
   } else {
     Reflect.deleteProperty(HTMLElement.prototype, "scrollIntoView");
+  }
+  if (originalMatchMedia) {
+    Object.defineProperty(window, "matchMedia", originalMatchMedia);
+  } else {
+    Reflect.deleteProperty(window, "matchMedia");
   }
 });
 
@@ -241,6 +247,10 @@ describe("RequirementsView", () => {
       value: scrollIntoView,
     });
     const onSelectRequirement = vi.fn();
+    Object.defineProperty(window, "matchMedia", {
+      configurable: true,
+      value: vi.fn(() => ({ matches: true })),
+    });
 
     const view = render(
       <RequirementsView
@@ -271,7 +281,7 @@ describe("RequirementsView", () => {
     expect(onSelectRequirement).toHaveBeenCalledWith(first.id);
     expect(scrollIntoView).toHaveBeenCalledWith({
       block: "start",
-      behavior: "smooth",
+      behavior: "auto",
     });
 
     view.rerender(
@@ -354,7 +364,7 @@ describe("RequirementsView", () => {
       />,
     );
 
-    expect(screen.getByRole("tree", { name: "Standard sections" })).toBeTruthy();
+    expect(screen.getByRole("list", { name: "Standard sections" })).toBeTruthy();
     expect(screen.getByText("No requirements match the current quick filters.")).toBeTruthy();
   });
 });

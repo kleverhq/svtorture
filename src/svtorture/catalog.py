@@ -81,7 +81,7 @@ class Catalog:
     suites: dict[str, SuiteDefinition]
     suite_cases: dict[str, tuple[str, ...]]
     tools: ToolRegistry
-    standard_sections: tuple[StandardSection, ...] = ()
+    standard_sections: tuple[StandardSection, ...]
 
     @property
     def requirements(self) -> dict[str, Requirement]:

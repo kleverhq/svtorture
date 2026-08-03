@@ -1,4 +1,5 @@
 import {
+  memo,
   useEffect,
   useMemo,
   useRef,
@@ -62,6 +63,9 @@ interface ProfileEvidence {
 }
 
 type TreeTone = "red" | "yellow" | "green" | "gray";
+
+const EMPTY_CASES: CaseDefinition[] = [];
+const EMPTY_EVIDENCE: ProfileEvidence[] = [];
 
 const TREE_TONE_LABELS: Record<TreeTone, string> = {
   red: "Failing or infrastructure error",
@@ -164,11 +168,7 @@ function SectionTreeItem({
   const total = totalCounts.get(node.clause) ?? 0;
   const tone = tones.get(node.clause);
   return (
-    <li
-      role="treeitem"
-      aria-expanded={hasChildren ? isExpanded : undefined}
-      className="requirement-toc__item"
-    >
+    <li className="requirement-toc__item">
       <div
         className={`requirement-toc__row${tone ? ` requirement-toc__row--${tone}` : ""}${visible === 0 ? " is-empty" : ""}`}
       >
@@ -177,6 +177,7 @@ function SectionTreeItem({
             type="button"
             className="requirement-toc__toggle"
             aria-label={`${isExpanded ? "Collapse" : "Expand"} ${node.clause} ${node.title}`}
+            aria-expanded={isExpanded}
             onClick={() => onToggleExpanded(node.clause)}
           >
             {isExpanded ? "▾" : "▸"}
@@ -221,7 +222,7 @@ function SectionTreeItem({
         </span>
       </div>
       {hasChildren && isExpanded && (
-        <ul role="group">
+        <ul>
           {node.children.map((child) => (
             <SectionTreeItem
               key={child.clause}
@@ -279,7 +280,7 @@ interface RequirementCardProps {
   ) => void;
 }
 
-function RequirementCard({
+const RequirementCard = memo(function RequirementCard({
   requirement,
   evidence,
   supporting,
@@ -425,7 +426,7 @@ function RequirementCard({
       />
     </article>
   );
-}
+});
 
 export function RequirementsView({
   requirements,
@@ -445,6 +446,7 @@ export function RequirementsView({
 }: RequirementsProps) {
   const [expanded, setExpanded] = useState<Set<string>>(() => new Set());
   const cardRefs = useRef(new Map<string, HTMLElement>());
+  const navigationScrollId = useRef("");
   const sections = useMemo(
     () =>
       standardSections.length
@@ -570,34 +572,51 @@ export function RequirementsView({
     [requirements, selected],
   );
 
+  const selectedRequirement = useMemo(
+    () =>
+      visibleRequirements.find((item) => item.id === selectedRequirementId),
+    [selectedRequirementId, visibleRequirements],
+  );
+
   useEffect(() => {
-    if (!selectedRequirementId) return;
-    const requirement = visibleRequirements.find(
-      (item) => item.id === selectedRequirementId,
-    );
-    if (!requirement) return;
-    const ancestors = requirement.clause.split(".");
+    if (!selectedRequirement) return;
+    const ancestors = selectedRequirement.clause.split(".");
     setExpanded((current) => {
+      let changed = false;
       const next = new Set(current);
       for (let length = 1; length < ancestors.length; length += 1) {
-        next.add(ancestors.slice(0, length).join("."));
+        const ancestor = ancestors.slice(0, length).join(".");
+        if (!next.has(ancestor)) {
+          next.add(ancestor);
+          changed = true;
+        }
       }
-      return next;
+      return changed ? next : current;
     });
+    if (navigationScrollId.current === selectedRequirement.id) {
+      navigationScrollId.current = "";
+      return;
+    }
     window.requestAnimationFrame(() => {
-      cardRefs.current.get(requirement.id)?.scrollIntoView?.({ block: "start" });
+      cardRefs.current
+        .get(selectedRequirement.id)
+        ?.scrollIntoView?.({ block: "start" });
     });
-  }, [selectedRequirementId, visibleRequirements]);
+  }, [selectedRequirement]);
 
   const navigateToSection = (clause: string) => {
     const requirement = visibleRequirements.find((item) =>
       sectionContains(clause, item.clause),
     );
     if (!requirement) return;
+    navigationScrollId.current =
+      requirement.id === selectedRequirementId ? "" : requirement.id;
     onSelectRequirement(requirement.id);
+    const reduceMotion =
+      window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
     cardRefs.current.get(requirement.id)?.scrollIntoView?.({
       block: "start",
-      behavior: "smooth",
+      behavior: reduceMotion ? "auto" : "smooth",
     });
   };
   const toggleExpanded = (clause: string) => {
@@ -636,7 +655,7 @@ export function RequirementsView({
               {requirements.length}/{allRequirements.length}
             </span>
           </label>
-          <ul role="tree" aria-label="Standard sections">
+          <ul aria-label="Standard sections">
             {tree.map((node) => (
               <SectionTreeItem
                 key={node.clause}
@@ -654,11 +673,11 @@ export function RequirementsView({
           </ul>
         </nav>
 
-        <div className="requirement-cards" aria-live="polite">
+        <div className="requirement-cards">
           <header className="requirement-cards__header">
             <div>
               <span className="section-label">Requirement evidence</span>
-              <h2>
+              <h2 aria-live="polite" aria-atomic="true">
                 {visibleRequirements.length} requirement
                 {visibleRequirements.length === 1 ? "" : "s"}
               </h2>
@@ -672,6 +691,7 @@ export function RequirementsView({
           {visibleRequirements.length ? (
             visibleRequirements.map((requirement) => (
               <div
+                className="requirement-card-anchor"
                 key={requirement.id}
                 ref={(element) => {
                   if (element) cardRefs.current.set(requirement.id, element);
@@ -680,8 +700,12 @@ export function RequirementsView({
               >
                 <RequirementCard
                   requirement={requirement}
-                  evidence={evidenceByRequirement.get(requirement.id) ?? []}
-                  supporting={casesByRequirement.get(requirement.id) ?? []}
+                  evidence={
+                    evidenceByRequirement.get(requirement.id) ?? EMPTY_EVIDENCE
+                  }
+                  supporting={
+                    casesByRequirement.get(requirement.id) ?? EMPTY_CASES
+                  }
                   campaign={campaign}
                   onInspectCase={onInspectCase}
                   onInspectEvidence={onInspectEvidence}

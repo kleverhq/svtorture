@@ -265,7 +265,9 @@ class CampaignCatalog(StrictModel):
     requirements: tuple[Requirement, ...]
     cases: tuple[DashboardCase, ...]
     corpus_metrics: CorpusMetrics
-    standard_sections: tuple[StandardSection, ...] = ()
+    standard_sections: Annotated[
+        tuple[StandardSection, ...], Field(min_length=1740, max_length=1740)
+    ] = ()
 
     @model_validator(mode="after")
     def unique_and_sorted_definitions(self) -> Self:

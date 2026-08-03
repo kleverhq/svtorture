@@ -22,7 +22,7 @@ This work does not redesign the Cases tab, remove its Advanced filters, change c
 - [x] (2026-08-03 17:59Z) Milestone 1: materialized 1,740 named standard sections in anchor-index schema version 2, carried them through version-6 campaign catalogs and frontend datasets, regenerated the catalog schema and fixture, and passed focused annotator, Python, and loader tests.
 - [x] (2026-08-03 18:04Z) Milestone 2: removed Advanced filters only from Requirements, made Requirements ignore stale Cases-only advanced URL values, retained all quick filters, and added the coverage context label and exact threshold row tones; 46 focused frontend tests and type checking passed.
 - [x] (2026-08-03 18:19Z) Milestone 3: replaced the one-item selector with the complete expandable hierarchy and all-card scroller, added URL-backed tri-state subtree filtering, one-tool worst-status tones, applicability and tags, lazy collapsed evidence, responsive layout, and focused tests; all 91 frontend tests, type checking, production build, and desktop/mobile headless visual checks passed.
-- [x] (2026-08-03 18:52Z) Milestone 4: passed authoritative annotation regeneration, `just smoke`, full Docker/network `just ci`, final production build, visual checks, and two read-only control review passes; fixed all four substantive review findings and audited every acceptance criterion.
+- [x] (2026-08-03 19:04Z) Milestone 4: passed authoritative annotation regeneration, `just smoke`, full Docker/network `just ci`, final production build, visual checks, and all delayed read-only review lanes; fixed every substantive correctness, accessibility, contract, and scaling finding and audited every acceptance criterion.
 
 ## Surprises & Discoveries
 
@@ -55,6 +55,12 @@ This work does not redesign the Cases tab, remove its Advanced filters, change c
 
 - Observation: Background color plus one common dot was not a sufficient non-color status cue.
   Evidence: Accessibility review required each tone to be distinguishable without color. Rows now show `✕`, `!`, `✓`, or `–` and expose a full `Section result:` accessible label.
+
+- Observation: The independent performance and accessibility lanes completed after the first control handoff and exposed work that small fixtures could not show.
+  Evidence: Filtering and per-profile evidence are now memoized independently of hierarchy navigation; cards are memoized with stable empty arrays and callbacks and use offscreen CSS containment; scroll effects avoid redundant updates; nested lists use native semantics and preserve indentation; live announcements are limited to the result count; and programmatic scrolling honors reduced motion.
+
+- Observation: Historical omission compatibility must not permit newly exported incomplete section arrays.
+  Evidence: `Catalog.standard_sections` is required for exporters, while `CampaignCatalog` accepts an omitted field only for old version-6 resources and rejects a present array unless it contains all 1,740 sections. A bundle-level regression removes the field, updates integrity metadata, and proves validation and assembly remain compatible.
 
 ## Decision Log
 
@@ -106,7 +112,7 @@ This work does not redesign the Cases tab, remove its Advanced filters, change c
 
 All milestones are complete. The committed runtime index contains 1,740 source-derived section names and strict validation proves a one-to-one canonical match with every heading anchor. New campaign catalogs publish the hierarchy, old version-6 catalogs remain readable, the generated public schema describes the projection, and the dashboard loader carries it into `Dataset.standard_sections`. Requirements has only the accepted quick filters and ignores hidden Cases-only values; Cases retains Advanced filters. Requirements Coverage has the explanatory context and exact neutral/red/yellow/green boundaries. The Requirements browser presents the full expandable standard tree beside every matching compact card, with URL-backed subtree selection, one-tool raw-result status grouping, non-color status symbols, applicability, tags, and lazily mounted detail disclosures.
 
-Final evidence is complete: `just annotate-check` regenerated 58 parts and 16,963 unique anchors and found the committed hierarchy byte-identical; `just ci` passed 187 non-Docker Python tests, 11 Docker tests, all metadata/type/lint gates, 91 frontend tests, a production build, and a real five-case Icarus campaign; after review fixes, `just smoke` passed 120 focused Python tests, all annotator checks, and 92 frontend tests, and a final production build passed. Desktop 1440×1000 and narrow 430×932 headless screenshots confirmed the two-column and normal-flow layouts. A consolidated read-only control review found three medium issues, an impacted-lane recheck found one accessibility issue, and all four were fixed with regression coverage. No required work remains.
+Final evidence is complete: `just annotate-check` regenerated 58 parts and 16,963 unique anchors and found the committed hierarchy byte-identical; `just ci` passed 187 non-Docker Python tests, 11 Docker tests, all metadata/type/lint gates, 91 frontend tests, a production build, and a real five-case Icarus campaign. After every early and delayed review fix, final `just smoke` passed 121 focused Python tests, all annotator checks, and 92 frontend tests, and a final production build passed. Desktop 1440×1000 and narrow 430×932 headless screenshots confirmed the two-column and normal-flow layouts. Correctness, performance, data-contract, accessibility, impacted-lane, and final control reviewers were run; every substantive finding was fixed and retested. No required work remains.
 
 ## Context and Orientation
 
@@ -226,4 +232,6 @@ Revision note (2026-08-03 18:04Z): Updated after Milestone 2 to record Requireme
 
 Revision note (2026-08-03 18:19Z): Updated after Milestone 3 to record the completed hierarchy and card browser, exact-node URL encoding, lazy disclosure rendering, responsive visual evidence, and full frontend results.
 
-Revision note (2026-08-03 18:52Z): Completed Milestone 4 after full local CI, authoritative annotation comparison, acceptance audit, and two control review passes. Recorded and resolved raw-status aggregation, unknown URL tokens, accessible status naming, and non-color status-symbol findings.
+Revision note (2026-08-03 18:52Z): Completed the initial Milestone 4 audit after full local CI, authoritative annotation comparison, and two control review passes. Recorded and resolved raw-status aggregation, unknown URL tokens, accessible status naming, and non-color status-symbol findings.
+
+Revision note (2026-08-03 19:04Z): Reopened and completed Milestone 4 when delayed independent review lanes returned. Recorded and resolved repeated corpus filtering, large-card rerenders, offscreen rendering, scroll targeting/effects, native list semantics, live-region scope, reduced motion, nested indentation, complete-present catalog enforcement, and historical bundle integration coverage.
