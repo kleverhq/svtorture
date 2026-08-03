@@ -127,6 +127,23 @@ export interface Filters {
   disagreement: boolean;
 }
 
+export function requirementsQuickFilters(filters: Filters): Filters {
+  return {
+    ...filters,
+    search: "",
+    revision: "",
+    part: "",
+    clause: "",
+    phase: "",
+    expectation: "",
+    casePresence: "",
+    tag: "",
+    requirement: "",
+    status: "",
+    reason: "",
+  };
+}
+
 export const EMPTY_FILTERS: Filters = {
   search: "",
   revision: "",

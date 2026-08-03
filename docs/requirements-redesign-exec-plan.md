@@ -20,7 +20,7 @@ This work does not redesign the Cases tab, remove its Advanced filters, change c
 - [x] (2026-08-03 14:58Z) Confirmed that the annotator already retains every heading title while rendering `:H:` blocks and that the bundled local IEEE Std 1800-2023 PDF reproduces the committed anchor index.
 - [x] (2026-08-03 15:02Z) Wrote this self-contained implementation plan and recorded the accepted interaction and status rules.
 - [x] (2026-08-03 17:59Z) Milestone 1: materialized 1,740 named standard sections in anchor-index schema version 2, carried them through version-6 campaign catalogs and frontend datasets, regenerated the catalog schema and fixture, and passed focused annotator, Python, and loader tests.
-- [ ] Milestone 2: update Requirements-only controls and Requirements Coverage presentation without changing Cases behavior.
+- [x] (2026-08-03 18:04Z) Milestone 2: removed Advanced filters only from Requirements, made Requirements ignore stale Cases-only advanced URL values, retained all quick filters, and added the coverage context label and exact threshold row tones; 46 focused frontend tests and type checking passed.
 - [ ] Milestone 3: replace the Requirements split selector with the hierarchy and scrolling compact cards.
 - [ ] Milestone 4: run deterministic validation, audit every acceptance criterion, update this plan, and commit the completed implementation.
 
@@ -85,7 +85,7 @@ This work does not redesign the Cases tab, remove its Advanced filters, change c
 
 ## Outcomes & Retrospective
 
-Milestone 1 is complete. The committed runtime index now contains 1,740 source-derived section names and strict validation proves a one-to-one canonical match with every heading anchor. New campaign catalogs publish the hierarchy, old version-6 catalogs remain readable, the generated public schema describes the projection, and the dashboard loader carries it into `Dataset.standard_sections`. Focused evidence: 84 Python catalog/bundle/replay tests, 10 annotator tests, 7 dashboard loader tests, and frontend type checking passed. Requirements UI work remains in Milestones 2 and 3.
+Milestones 1 and 2 are complete. The committed runtime index now contains 1,740 source-derived section names and strict validation proves a one-to-one canonical match with every heading anchor. New campaign catalogs publish the hierarchy, old version-6 catalogs remain readable, the generated public schema describes the projection, and the dashboard loader carries it into `Dataset.standard_sections`. Requirements now has only the accepted quick filters and ignores hidden Cases-only filter values; Cases retains Advanced filters. Requirements Coverage has the explanatory context and exact neutral/red/yellow/green boundaries. Focused evidence includes 84 Python catalog/bundle/replay tests, 10 annotator tests, 7 dashboard loader tests, 46 coverage/filter/App/model tests, and frontend type checking. The hierarchy and card UI remain in Milestone 3.
 
 ## Context and Orientation
 
@@ -200,3 +200,5 @@ At the end of Milestone 3, hierarchy helpers must compare standard locations on 
 Revision note (2026-08-03): Initial plan created after repository and annotator research. It resolves storage location, compatibility, hierarchy interaction, filtering, status aggregation, card density, and validation from the user's accepted design before implementation begins.
 
 Revision note (2026-08-03 17:59Z): Updated after Milestone 1 to record the completed hierarchy contract, validation evidence, and the discovered need to remove authoring-only visual-review markers from display titles.
+
+Revision note (2026-08-03 18:04Z): Updated after Milestone 2 to record Requirements-only filter separation, hidden-filter semantics, coverage presentation, and focused frontend evidence.

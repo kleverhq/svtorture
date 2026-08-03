@@ -1,8 +1,17 @@
-import { fireEvent, render, screen, within } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import {
+  cleanup,
+  fireEvent,
+  render,
+  screen,
+  within,
+} from "@testing-library/react";
+import { afterEach, describe, expect, it } from "vitest";
+
 
 import { CorpusCoverage } from "./CorpusCoverage";
 import { makeTestDataset } from "./testDataset";
+
+afterEach(cleanup);
 
 describe("CorpusCoverage", () => {
   it("shows compact requirement metrics and an expandable part breakdown", () => {
@@ -24,6 +33,9 @@ describe("CorpusCoverage", () => {
     expect(formula?.textContent).toContain(
       "unique referenced anchors / all standard anchors",
     );
+    expect(
+      within(summary).getByText("Standard anchors vs requirements:"),
+    ).toBeTruthy();
     expect(within(summary).getByText("0.02%")).toBeTruthy();
     expect(within(summary).getByText("1")).toBeTruthy();
     expect(
@@ -49,6 +61,45 @@ describe("CorpusCoverage", () => {
     expect(within(annex).getByText("—")).toBeTruthy();
   });
 
+  it("colors requirement breakdown rows at the exact coverage boundaries", () => {
+    const base = makeTestDataset().corpus_coverage.requirements;
+    const coverage = [
+      { id: "1", numerator: 0, denominator: 100, tone: "zero" },
+      { id: "2", numerator: 29, denominator: 100, tone: "low" },
+      { id: "3", numerator: 30, denominator: 100, tone: "medium" },
+      { id: "4", numerator: 79, denominator: 100, tone: "medium" },
+      { id: "5", numerator: 80, denominator: 100, tone: "high" },
+      { id: "6", numerator: 0, denominator: 0, tone: "zero" },
+    ];
+    render(
+      <CorpusCoverage
+        kind="requirements"
+        metric={{
+          ...base,
+          breakdown: coverage.map((item) => ({
+            id: item.id,
+            kind: "chapter",
+            title: `Boundary ${item.id}`,
+            coverage: {
+              numerator: item.numerator,
+              denominator: item.denominator,
+            },
+            density: { numerator: 0, denominator: 0 },
+          })),
+        }}
+      />,
+    );
+
+    fireEvent.click(screen.getByText("Breakdown"));
+    for (const item of coverage) {
+      expect(
+        screen
+          .getByRole("row", { name: new RegExp(`Chapter ${item.id}:`) })
+          .classList.contains(`corpus-coverage__row--${item.tone}`),
+      ).toBe(true);
+    }
+  });
+
   it("explains case coverage and renders zero denominators safely", () => {
     const metric = makeTestDataset().corpus_coverage.cases;
     render(<CorpusCoverage kind="cases" metric={metric} />);
@@ -58,6 +109,9 @@ describe("CorpusCoverage", () => {
     if (!summary) throw new Error("coverage disclosure is missing");
 
     expect(within(summary).getByText("100%")).toBeTruthy();
+    expect(
+      within(summary).queryByText("Standard anchors vs requirements:"),
+    ).toBeNull();
     expect(
       within(summary).getByText("Coverage").parentElement?.getAttribute("title"),
     ).toContain("unique requirements linked from cases / all catalog requirements");

@@ -21,6 +21,7 @@ import {
   filterCorpus,
   filtersFromSearch,
   filtersToSearch,
+  requirementsQuickFilters,
   corpusTrendPointKey,
   toolTrendPointKey,
   trendStateFromSearch,
@@ -528,7 +529,9 @@ export default function App() {
 
   const dataset = state.dataset;
   const campaign = dataset.campaigns.find((item) => item.id === state.selectedId);
-  const filtered = filterCorpus(dataset, filters, campaign);
+  const corpusFilters =
+    view === "matrix" ? requirementsQuickFilters(filters) : filters;
+  const filtered = filterCorpus(dataset, corpusFilters, campaign);
   const requirementEvidenceCases = new Map<string, typeof dataset.cases>();
   for (const tool of campaign?.tools ?? []) {
     for (const profile of tool.profile_ids) {
@@ -538,7 +541,7 @@ export default function App() {
         filterCorpus(
           dataset,
           {
-            ...filters,
+            ...corpusFilters,
             tool: tool.definition.id,
             profile,
           },
@@ -667,9 +670,11 @@ export default function App() {
               setFilters={setFilters}
               onReset={resetLocalFilters}
               mode={
-                view === "matrix" || view === "evidence"
-                  ? "corpus"
-                  : view
+                view === "matrix"
+                  ? "requirements"
+                  : view === "evidence"
+                    ? "cases"
+                    : view
               }
               trendKind={view === "trends" ? trend.kind : undefined}
               standardParts={dataset.corpus_coverage.requirements.breakdown}

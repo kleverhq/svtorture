@@ -206,35 +206,23 @@ describe("App overview navigation", () => {
     });
   });
 
-  it("recovers when filters hide the selected requirement", async () => {
+  it("ignores stale Cases-only advanced filters on Requirements", async () => {
     const dataset = makeTestDataset();
-    const original = dataset.requirements[0];
-    if (!original) throw new Error("incomplete test dataset");
-    const visible = {
-      ...original,
-      id: "SV-2023-05-FILTER-RECOVERY",
-      part: "5",
-      clause: "5.1",
-      summary: "First requirement left by the active filters",
-    };
-    dataset.requirements.push(visible);
+    const requirement = dataset.requirements[0];
+    if (!requirement) throw new Error("incomplete test dataset");
     window.history.replaceState(
       null,
       "",
-      `/?view=matrix&requirementId=${original.id}&part=5`,
+      `/?view=matrix&requirementId=${requirement.id}&part=5&search=hidden`,
     );
     mockDataset(dataset);
 
     render(<App />);
 
     expect(
-      await screen.findByRole("heading", { name: visible.summary }),
+      await screen.findByRole("heading", { name: requirement.summary }),
     ).toBeTruthy();
-    await waitFor(() =>
-      expect(new URLSearchParams(window.location.search).get("requirementId")).toBe(
-        visible.id,
-      ),
-    );
+    expect(screen.queryByText("Advanced filters")).toBeNull();
   });
 
   it("opens case details from a direct link", async () => {

@@ -10,7 +10,7 @@ import type { Dataset } from "./types";
 afterEach(cleanup);
 
 function FilterHarness({
-  mode = "corpus",
+  mode = "cases",
   dataset = makeTestDataset(),
   trendKind = "pass-rate",
   requirement = "",
@@ -86,7 +86,18 @@ describe("Filters", () => {
     ).toBeTruthy();
   });
 
-  it("opens Advanced filters for an exact Requirement", () => {
+  it("keeps quick filters but removes Advanced filters from Requirements", () => {
+    render(<FilterHarness mode="requirements" />);
+
+    expect(screen.getByRole("group", { name: "Tools" })).toBeTruthy();
+    expect(screen.getByRole("group", { name: "Profiles" })).toBeTruthy();
+    expect(screen.getByRole("group", { name: "Results" })).toBeTruthy();
+    expect(screen.getByRole("group", { name: "Comparison" })).toBeTruthy();
+    expect(screen.queryByText("Advanced filters")).toBeNull();
+    expect(screen.queryByLabelText("Search")).toBeNull();
+  });
+
+  it("opens Advanced filters for an exact Requirement on Cases", () => {
     const dataset = makeTestDataset();
     const requirement = dataset.requirements[0];
     if (!requirement) throw new Error("incomplete test dataset");

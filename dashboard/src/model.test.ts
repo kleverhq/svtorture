@@ -10,6 +10,7 @@ import {
   filterCorpus,
   filtersFromSearch,
   filtersToSearch,
+  requirementsQuickFilters,
   selectedCampaign,
   toolTrendPointKey,
   trendRangeBounds,
@@ -21,6 +22,41 @@ import { makeTestDataset } from "./testDataset";
 import type { Campaign, MetricPoint, Result } from "./types";
 
 const dataset = makeTestDataset();
+
+describe("Requirements filters", () => {
+  it("keeps quick facets and ignores Cases-only advanced values", () => {
+    const projected = requirementsQuickFilters({
+      ...EMPTY_FILTERS,
+      search: "hidden",
+      revision: "1800-2017",
+      clause: "13.5",
+      phase: "simulate",
+      tag: "copy-out",
+      status: "conforming",
+      reason: "expectation-met",
+      tool: "fake",
+      profile: "simulator",
+      statusGroup: "pass",
+      changed: true,
+      disagreement: true,
+    });
+
+    expect(projected).toMatchObject({
+      search: "",
+      revision: "",
+      clause: "",
+      phase: "",
+      tag: "",
+      status: "",
+      reason: "",
+      tool: "fake",
+      profile: "simulator",
+      statusGroup: "pass",
+      changed: true,
+      disagreement: true,
+    });
+  });
+});
 
 describe("URL-backed filters", () => {
   it("round-trips meaningful filter state", () => {

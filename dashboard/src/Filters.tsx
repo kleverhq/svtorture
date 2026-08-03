@@ -19,7 +19,12 @@ import type {
   Status,
 } from "./types";
 
-export type FilterMode = "overview" | "corpus" | "trends" | "campaigns";
+export type FilterMode =
+  | "overview"
+  | "requirements"
+  | "cases"
+  | "trends"
+  | "campaigns";
 
 interface FilterProps {
   dataset?: Dataset | undefined;
@@ -158,7 +163,8 @@ export function Filters({
     ).length;
   const showFacets =
     mode === "overview" ||
-    mode === "corpus" ||
+    mode === "requirements" ||
+    mode === "cases" ||
     mode === "trends" ||
     mode === "campaigns";
   const showToolFacets =
@@ -194,7 +200,7 @@ export function Filters({
   }, []);
   useEffect(() => {
     if (
-      mode === "corpus" &&
+      mode === "cases" &&
       filters.requirement &&
       advancedFiltersRef.current
     ) {
@@ -311,7 +317,7 @@ export function Filters({
         </div>
       )}
 
-      {mode === "corpus" && (
+      {(mode === "requirements" || mode === "cases") && (
         <div className="filters__pair-grid">
           <div className="filters__quick" role="group" aria-label="Results">
             <span className="filters__quick-label">Result</span>
@@ -357,7 +363,7 @@ export function Filters({
         </div>
       )}
 
-      {mode === "corpus" && (
+      {mode === "cases" && (
         <details className="filters__advanced" ref={advancedFiltersRef}>
           <summary>Advanced filters</summary>
         <div className="filters__grid">
@@ -370,7 +376,7 @@ export function Filters({
               onChange={(event) => update("search", event.target.value)}
             />
           </label>
-          {mode === "corpus" && (
+          {mode === "cases" && (
             <>
               <label>
                 <span>Revision</span>
