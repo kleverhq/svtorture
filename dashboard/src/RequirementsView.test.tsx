@@ -6,18 +6,16 @@ import {
   waitFor,
   within,
 } from "@testing-library/react";
+import { useState } from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-import { RequirementsView } from "./RequirementsView";
+import { RequirementsView, requirementTreeTone } from "./RequirementsView";
 import { makeTestDataset } from "./testDataset";
+import type { Requirement } from "./types";
 
 const originalScrollIntoView = Object.getOwnPropertyDescriptor(
   HTMLElement.prototype,
   "scrollIntoView",
-);
-const originalScrollTo = Object.getOwnPropertyDescriptor(
-  HTMLElement.prototype,
-  "scrollTo",
 );
 
 afterEach(() => {
@@ -31,135 +29,284 @@ afterEach(() => {
   } else {
     Reflect.deleteProperty(HTMLElement.prototype, "scrollIntoView");
   }
-  if (originalScrollTo) {
-    Object.defineProperty(HTMLElement.prototype, "scrollTo", originalScrollTo);
-  } else {
-    Reflect.deleteProperty(HTMLElement.prototype, "scrollTo");
-  }
 });
 
+function SelectionHarness({ requirements }: { requirements: Requirement[] }) {
+  const dataset = makeTestDataset();
+  const [sections, setSections] = useState<string[]>([]);
+  return (
+    <RequirementsView
+      requirements={requirements}
+      allRequirements={requirements}
+      standardSections={[
+        { clause: "13", title: "Tasks and functions" },
+        { clause: "13.5", title: "Subroutine arguments" },
+        { clause: "13.5.1", title: "Arguments by value" },
+        { clause: "13.5.2", title: "Arguments by reference" },
+        { clause: "14", title: "Clocking blocks" },
+      ]}
+      selectedSections={sections}
+      onSelectedSectionsChange={setSections}
+      cases={dataset.cases}
+      campaign={dataset.campaigns[0]}
+      toolFilter=""
+      profileFilter=""
+      selectedRequirementId=""
+      onSelectRequirement={() => undefined}
+      onInspectCase={() => undefined}
+      onInspectEvidence={() => undefined}
+    />
+  );
+}
+
 describe("RequirementsView", () => {
-  it("renders a scalable list and details for primary and related evidence", async () => {
+  it("uses the accepted worst-status hierarchy", () => {
+    expect(requirementTreeTone(["conforming", "not-run"])).toBe("green");
+    expect(requirementTreeTone(["not-applicable", "not-run"])).toBe("gray");
+    expect(requirementTreeTone(["conforming", "inconclusive"])).toBe("yellow");
+    expect(requirementTreeTone(["conforming", "nonconforming"])).toBe("red");
+    expect(requirementTreeTone(["harness-error"])).toBe("red");
+  });
+
+  it("renders every compact card with applicability and expandable evidence", async () => {
     const dataset = makeTestDataset();
     const first = dataset.requirements[0];
     const testCase = dataset.cases[0];
     const campaign = dataset.campaigns[0];
-    const tool = campaign?.tools[0];
-    if (!first || !testCase || !campaign || !tool) {
+    if (!first || !testCase || !campaign) {
       throw new Error("incomplete test dataset");
     }
-    const selected = {
+    const second = {
       ...first,
-      id: "SV-2023-41-DEEP-LINK",
-      clause: "41.9",
-      summary: "Requirement selected from a deep link",
+      id: "SV-2023-14-SECOND",
+      clause: "14",
+      part: "14",
+      summary: "Second visible requirement card",
+      tags: ["clocking", "scheduling"],
     };
-    dataset.requirements.push(selected);
-    testCase.related_requirements = [selected.id];
-    tool.profile_ids = [
-      "simulator",
-      "profile-2",
-      "profile-3",
-      "profile-4",
-      "profile-5",
-      "profile-6",
-    ];
+    const requirements = [first, second];
     const scrollIntoView = vi.fn();
-    const scrollTo = vi.fn();
-    Object.defineProperties(HTMLElement.prototype, {
-      scrollIntoView: { configurable: true, value: scrollIntoView },
-      scrollTo: { configurable: true, value: scrollTo },
+    Object.defineProperty(HTMLElement.prototype, "scrollIntoView", {
+      configurable: true,
+      value: scrollIntoView,
     });
-    const selectRequirement = vi.fn();
     const inspectCase = vi.fn();
     const inspectEvidence = vi.fn();
 
     render(
       <RequirementsView
-        requirements={dataset.requirements}
+        requirements={requirements}
+        allRequirements={requirements}
+        standardSections={dataset.standard_sections}
+        selectedSections={[]}
+        onSelectedSectionsChange={() => undefined}
         cases={dataset.cases}
         campaign={campaign}
         toolFilter=""
         profileFilter=""
-        selectedRequirementId={selected.id}
-        onSelectRequirement={selectRequirement}
+        selectedRequirementId={second.id}
+        onSelectRequirement={() => undefined}
         onInspectCase={inspectCase}
         onInspectEvidence={inspectEvidence}
       />,
     );
 
-    await waitFor(() => {
-      expect(scrollIntoView).toHaveBeenCalledWith({
-        block: "nearest",
-        inline: "nearest",
-      });
-    });
-    expect(scrollTo).toHaveBeenCalledWith({ top: 0 });
-    expect(screen.queryByRole("table")).toBeNull();
-
-    const list = screen.getByRole("listbox", { name: "Requirements" });
-    const options = within(list).getAllByRole("option");
-    expect(options).toHaveLength(2);
-    expect(options[0]?.getAttribute("tabindex")).toBe("-1");
-    expect(options[1]?.getAttribute("tabindex")).toBe("0");
+    expect(screen.getAllByRole("article")).toHaveLength(2);
+    const card = screen.getByRole("article", { name: `Requirement ${second.id}` });
     expect(
-      within(list).getAllByLabelText(/^fake\//, { selector: ".verdict-dot" }),
-    ).toHaveLength(12);
-
-    const detail = screen.getByRole("article");
-    expect(
-      within(detail).getByRole("heading", {
-        name: "Requirement selected from a deep link",
-      }),
+      within(card).getByRole("heading", { name: second.summary }),
     ).toBeTruthy();
-    expect(detail.querySelectorAll(".requirement-profile")).toHaveLength(6);
-    expect(within(detail).getByText(testCase.title)).toBeTruthy();
-    expect(within(detail).getByRole("button", { name: "Copy link" })).toBeTruthy();
+    const applicability = within(card).getByRole("table");
+    expect(within(applicability).getByText("1800-2012")).toBeTruthy();
+    expect(within(applicability).getByText("1800-2017")).toBeTruthy();
+    expect(within(applicability).getByText("1800-2023")).toBeTruthy();
+    expect(within(card).getByText("clocking")).toBeTruthy();
+    expect(within(card).getByText("scheduling")).toBeTruthy();
+    expect(within(card).getByRole("button", { name: "Copy link" })).toBeTruthy();
 
-    fireEvent.click(
-      within(detail).getByRole("button", {
-        name: new RegExp(
-          `^View cases for ${selected.id} with fake/simulator —`,
-        ),
-      }),
-    );
-    expect(inspectEvidence).toHaveBeenCalledWith(
-      "fake",
-      "simulator",
-      selected.id,
-    );
-    fireEvent.click(within(detail).getByText(testCase.title));
+    const details = card.querySelectorAll("details");
+    expect(details).toHaveLength(3);
+    expect([...details].every((item) => !item.open)).toBe(true);
+    fireEvent.click(within(card).getByText(/Tool evidence/));
+    const evidence = await within(card).findByRole("button", {
+      name: new RegExp(`^View cases for ${second.id} with fake/simulator`),
+    });
+    fireEvent.click(evidence);
+    expect(inspectEvidence).toHaveBeenCalledWith("fake", "simulator", second.id);
+
+    const firstCard = screen.getByRole("article", {
+      name: `Requirement ${first.id}`,
+    });
+    fireEvent.click(within(firstCard).getByText(/Supporting cases/));
+    fireEvent.click(await within(firstCard).findByText(testCase.title));
     expect(inspectCase).toHaveBeenCalledWith(testCase.id);
-    fireEvent.keyDown(options[1] as HTMLElement, { key: "ArrowUp" });
-    expect(selectRequirement).toHaveBeenCalledWith(first.id);
+    await waitFor(() =>
+      expect(scrollIntoView).toHaveBeenCalledWith({ block: "start" }),
+    );
   });
 
-  it("measures the split workspace when filters reveal requirements", async () => {
+  it("filters by checked subtrees and exposes parent indeterminate state", () => {
     const dataset = makeTestDataset();
-    const requirement = dataset.requirements[0];
-    if (!requirement) throw new Error("incomplete test dataset");
-    const props = {
-      cases: dataset.cases,
-      campaign: dataset.campaigns[0],
-      toolFilter: "",
-      profileFilter: "",
-      selectedRequirementId: "",
-      onSelectRequirement: () => undefined,
-      onInspectCase: () => undefined,
-      onInspectEvidence: () => undefined,
+    const first = dataset.requirements[0];
+    if (!first) throw new Error("incomplete test dataset");
+    const byValue = { ...first, clause: "13.5.1", id: "SV-2023-13-BY-VALUE" };
+    const byReference = {
+      ...first,
+      clause: "13.5.2",
+      id: "SV-2023-13-BY-REFERENCE",
     };
-    const view = render(<RequirementsView {...props} requirements={[]} />);
-    expect(screen.getByText("No requirements match the current filters.")).toBeTruthy();
+    const clocking = {
+      ...first,
+      clause: "14",
+      part: "14",
+      id: "SV-2023-14-CLOCKING",
+    };
+    render(
+      <SelectionHarness requirements={[byValue, byReference, clocking]} />,
+    );
+
+    expect(
+      (screen.getByRole("checkbox", { name: /^All/ }) as HTMLInputElement).checked,
+    ).toBe(true);
+    fireEvent.click(
+      screen.getByRole("button", {
+        name: "Expand 13 Tasks and functions",
+      }),
+    );
+    fireEvent.click(
+      screen.getByRole("button", {
+        name: "Expand 13.5 Subroutine arguments",
+      }),
+    );
+    fireEvent.click(screen.getByLabelText("Select 13 Tasks and functions"));
+    expect(screen.getAllByRole("article")).toHaveLength(2);
+    expect(
+      (screen.getByLabelText("Select 13.5.1 Arguments by value") as HTMLInputElement)
+        .checked,
+    ).toBe(true);
+
+    fireEvent.click(
+      screen.getByLabelText("Select 13.5.1 Arguments by value"),
+    );
+    const chapter = screen.getByLabelText(
+      "Select 13 Tasks and functions",
+    ) as HTMLInputElement;
+    expect(chapter.checked).toBe(false);
+    expect(chapter.indeterminate).toBe(true);
+    expect(screen.getAllByRole("article")).toHaveLength(1);
+    expect(
+      screen.getByRole("article", { name: `Requirement ${byReference.id}` }),
+    ).toBeTruthy();
+
+    fireEvent.click(screen.getByRole("checkbox", { name: /^All/ }));
+    expect(screen.getAllByRole("article")).toHaveLength(3);
+  });
+
+  it("navigates by section title and colors only a selected tool", () => {
+    const dataset = makeTestDataset();
+    const first = dataset.requirements[0];
+    const campaign = dataset.campaigns[0];
+    if (!first || !campaign) throw new Error("incomplete test dataset");
+    const clocking = {
+      ...first,
+      clause: "14",
+      part: "14",
+      id: "SV-2023-14-CLOCKING",
+      summary: "Clocking requirement",
+    };
+    const scrollIntoView = vi.fn();
+    Object.defineProperty(HTMLElement.prototype, "scrollIntoView", {
+      configurable: true,
+      value: scrollIntoView,
+    });
+    const onSelectRequirement = vi.fn();
+
+    const view = render(
+      <RequirementsView
+        requirements={[first, clocking]}
+        allRequirements={[first, clocking]}
+        standardSections={dataset.standard_sections}
+        selectedSections={[]}
+        onSelectedSectionsChange={() => undefined}
+        cases={dataset.cases}
+        campaign={campaign}
+        toolFilter=""
+        profileFilter=""
+        selectedRequirementId=""
+        onSelectRequirement={onSelectRequirement}
+        onInspectCase={() => undefined}
+        onInspectEvidence={() => undefined}
+      />,
+    );
+
+    const chapter13 = screen
+      .getByText("Tasks and functions (subroutines)")
+      .closest("button");
+    if (!chapter13) throw new Error("chapter navigation is missing");
+    expect(chapter13.closest(".requirement-toc__row")?.className).not.toMatch(
+      /--(?:red|yellow|green|gray)/,
+    );
+    fireEvent.click(chapter13);
+    expect(onSelectRequirement).toHaveBeenCalledWith(first.id);
+    expect(scrollIntoView).toHaveBeenCalledWith({
+      block: "start",
+      behavior: "smooth",
+    });
 
     view.rerender(
-      <RequirementsView {...props} requirements={[requirement]} />,
+      <RequirementsView
+        requirements={[first, clocking]}
+        allRequirements={[first, clocking]}
+        standardSections={dataset.standard_sections}
+        selectedSections={[]}
+        onSelectedSectionsChange={() => undefined}
+        cases={dataset.cases}
+        campaign={campaign}
+        toolFilter="fake"
+        profileFilter=""
+        selectedRequirementId=""
+        onSelectRequirement={onSelectRequirement}
+        onInspectCase={() => undefined}
+        onInspectEvidence={() => undefined}
+      />,
     );
-    await waitFor(() => {
-      expect(
-        document
-          .querySelector<HTMLElement>(".requirements-workspace")
-          ?.style.getPropertyValue("--split-workspace-height"),
-      ).not.toBe("");
-    });
+    expect(
+      screen
+        .getByText("Tasks and functions (subroutines)")
+        .closest(".requirement-toc__row")?.classList.contains(
+          "requirement-toc__row--green",
+        ),
+    ).toBe(true);
+    expect(
+      screen
+        .getByText("Clocking blocks")
+        .closest(".requirement-toc__row")?.classList.contains(
+          "requirement-toc__row--gray",
+        ),
+    ).toBe(true);
+  });
+
+  it("keeps the complete tree when quick filters match no requirements", () => {
+    const dataset = makeTestDataset();
+    render(
+      <RequirementsView
+        requirements={[]}
+        allRequirements={dataset.requirements}
+        standardSections={dataset.standard_sections}
+        selectedSections={[]}
+        onSelectedSectionsChange={() => undefined}
+        cases={dataset.cases}
+        campaign={dataset.campaigns[0]}
+        toolFilter=""
+        profileFilter=""
+        selectedRequirementId=""
+        onSelectRequirement={() => undefined}
+        onInspectCase={() => undefined}
+        onInspectEvidence={() => undefined}
+      />,
+    );
+
+    expect(screen.getByRole("tree", { name: "Standard sections" })).toBeTruthy();
+    expect(screen.getByText("No requirements match the current quick filters.")).toBeTruthy();
   });
 });

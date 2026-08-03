@@ -191,7 +191,8 @@ describe("App overview navigation", () => {
     const detail = await screen.findByRole("article", {
       name: `Requirement ${related.id}`,
     });
-    const supportingCase = within(detail).getByText(testCase.title);
+    fireEvent.click(within(detail).getByText(/Supporting cases/));
+    const supportingCase = await within(detail).findByText(testCase.title);
     expect(supportingCase).toBeTruthy();
 
     fireEvent.click(supportingCase);
@@ -223,6 +224,37 @@ describe("App overview navigation", () => {
       await screen.findByRole("heading", { name: requirement.summary }),
     ).toBeTruthy();
     expect(screen.queryByText("Advanced filters")).toBeNull();
+  });
+
+  it("stores Requirements tree selection in the URL", async () => {
+    const dataset = makeTestDataset();
+    const original = dataset.requirements[0];
+    if (!original) throw new Error("incomplete test dataset");
+    const clocking = {
+      ...original,
+      id: "SV-2023-14-CLOCKING",
+      part: "14",
+      clause: "14",
+      summary: "Clocking requirement",
+    };
+    dataset.requirements.push(clocking);
+    window.history.replaceState(null, "", "/?view=matrix");
+    mockDataset(dataset);
+
+    render(<App />);
+    fireEvent.click(
+      await screen.findByLabelText("Select 14 Clocking blocks"),
+    );
+
+    await waitFor(() => {
+      expect(new URLSearchParams(window.location.search).get("sections")).toBe(
+        "14",
+      );
+    });
+    expect(screen.getAllByRole("article")).toHaveLength(1);
+    expect(
+      screen.getByRole("article", { name: `Requirement ${clocking.id}` }),
+    ).toBeTruthy();
   });
 
   it("opens case details from a direct link", async () => {
@@ -374,15 +406,19 @@ describe("App overview navigation", () => {
     mockDataset(dataset);
 
     render(<App />);
+    const relatedCard = await screen.findByRole("article", {
+      name: `Requirement ${related.id}`,
+    });
+    fireEvent.click(within(relatedCard).getByText(/Tool evidence/));
     expect(
-      await screen.findByRole("button", {
+      await within(relatedCard).findByRole("button", {
         name: new RegExp(
           `^View cases for ${related.id} with fake/alternate — Not evaluated`,
         ),
       }),
     ).toBeTruthy();
     fireEvent.click(
-      screen.getByRole("button", {
+      within(relatedCard).getByRole("button", {
         name: new RegExp(
           `^View cases for ${related.id} with fake/simulator —`,
         ),

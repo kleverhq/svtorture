@@ -1,4 +1,10 @@
-import { useEffect, useMemo, useRef, type KeyboardEvent } from "react";
+import {
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type ReactNode,
+} from "react";
 
 import { CopyLinkButton } from "./CopyLinkButton";
 import {
@@ -6,25 +12,33 @@ import {
   profileKeys,
   resultsByKey,
   STATUS_GROUP_LABELS,
-  STATUS_GROUP_SYMBOLS,
   standardLocationLabel,
   statusGroup,
 } from "./model";
+import {
+  buildSectionTree,
+  decodeSectionSelection,
+  sectionContains,
+  sectionSelectionState,
+  toggleSectionSelection,
+  type RequirementSectionNode,
+} from "./requirementHierarchy";
 import { StatusBadge } from "./StatusBadge";
 import type {
   Campaign,
   CaseDefinition,
   Requirement,
   Result,
+  StandardSection,
   Status,
 } from "./types";
-import {
-  useRevealSplitSelection,
-  useViewportWorkspaceHeight,
-} from "./useSplitWorkspace";
 
 interface RequirementsProps {
   requirements: Requirement[];
+  allRequirements: Requirement[];
+  standardSections: StandardSection[];
+  selectedSections: string[];
+  onSelectedSectionsChange: (sections: string[]) => void;
   cases: CaseDefinition[];
   evidenceCasesByProfile?: ReadonlyMap<string, CaseDefinition[]> | undefined;
   campaign?: Campaign | undefined;
@@ -46,8 +60,353 @@ interface ProfileEvidence {
   reason: string;
 }
 
+type TreeTone = "red" | "yellow" | "green" | "gray";
+
+const TREE_TONE_PRIORITY: Record<TreeTone, number> = {
+  gray: 0,
+  green: 1,
+  yellow: 2,
+  red: 3,
+};
+
+function mergeTreeTone(left: TreeTone | undefined, right: TreeTone): TreeTone {
+  if (!left || TREE_TONE_PRIORITY[right] > TREE_TONE_PRIORITY[left]) return right;
+  return left;
+}
+
+export function requirementTreeTone(statuses: Status[]): TreeTone {
+  let tone: TreeTone = "gray";
+  for (const status of statuses) {
+    const group = statusGroup(status);
+    if (group === "fail" || group === "infra") return "red";
+    if (group === "unclear") tone = mergeTreeTone(tone, "yellow");
+    else if (group === "pass") tone = mergeTreeTone(tone, "green");
+  }
+  return tone;
+}
+
+function fallbackSections(requirements: Requirement[]): StandardSection[] {
+  const sections = new Map<string, StandardSection>();
+  for (const requirement of requirements) {
+    const parts = requirement.clause.split(".");
+    for (let length = 1; length <= parts.length; length += 1) {
+      const clause = parts.slice(0, length).join(".");
+      if (!sections.has(clause)) sections.set(clause, { clause, title: clause });
+    }
+  }
+  return [...sections.values()];
+}
+
+function countsBySection(
+  requirements: Requirement[],
+  sections: ReadonlySet<string>,
+): Map<string, number> {
+  const counts = new Map<string, number>();
+  for (const requirement of requirements) {
+    const parts = requirement.clause.split(".");
+    for (let length = 1; length <= parts.length; length += 1) {
+      const clause = parts.slice(0, length).join(".");
+      if (sections.has(clause)) counts.set(clause, (counts.get(clause) ?? 0) + 1);
+    }
+  }
+  return counts;
+}
+
+function applicabilityLabel(status: string): string {
+  return status
+    .split("-")
+    .map((part) => `${part.slice(0, 1).toUpperCase()}${part.slice(1)}`)
+    .join(" ");
+}
+
+interface SectionTreeItemProps {
+  node: RequirementSectionNode;
+  expanded: ReadonlySet<string>;
+  selected: ReadonlySet<string>;
+  totalCounts: ReadonlyMap<string, number>;
+  visibleCounts: ReadonlyMap<string, number>;
+  tones: ReadonlyMap<string, TreeTone>;
+  onToggleExpanded: (clause: string) => void;
+  onToggleSelected: (clause: string, checked: boolean) => void;
+  onNavigate: (clause: string) => void;
+}
+
+function SectionTreeItem({
+  node,
+  expanded,
+  selected,
+  totalCounts,
+  visibleCounts,
+  tones,
+  onToggleExpanded,
+  onToggleSelected,
+  onNavigate,
+}: SectionTreeItemProps) {
+  const hasChildren = node.children.length > 0;
+  const isExpanded = expanded.has(node.clause);
+  const state = sectionSelectionState(node, selected);
+  const visible = visibleCounts.get(node.clause) ?? 0;
+  const total = totalCounts.get(node.clause) ?? 0;
+  const tone = tones.get(node.clause);
+  return (
+    <li
+      role="treeitem"
+      aria-expanded={hasChildren ? isExpanded : undefined}
+      className="requirement-toc__item"
+    >
+      <div
+        className={`requirement-toc__row${tone ? ` requirement-toc__row--${tone}` : ""}${visible === 0 ? " is-empty" : ""}`}
+      >
+        {hasChildren ? (
+          <button
+            type="button"
+            className="requirement-toc__toggle"
+            aria-label={`${isExpanded ? "Collapse" : "Expand"} ${node.clause} ${node.title}`}
+            onClick={() => onToggleExpanded(node.clause)}
+          >
+            {isExpanded ? "▾" : "▸"}
+          </button>
+        ) : (
+          <span className="requirement-toc__toggle" aria-hidden="true" />
+        )}
+        <input
+          type="checkbox"
+          aria-label={`Select ${node.clause} ${node.title}`}
+          checked={state.checked}
+          ref={(element) => {
+            if (element) element.indeterminate = state.indeterminate;
+          }}
+          onChange={(event) => onToggleSelected(node.clause, event.target.checked)}
+        />
+        <button
+          type="button"
+          className="requirement-toc__link"
+          onClick={() => onNavigate(node.clause)}
+          disabled={visible === 0}
+        >
+          <code>{node.clause}</code>
+          <span>{node.title}</span>
+        </button>
+        <span
+          className="requirement-toc__count"
+          aria-label={`${visible} of ${total} requirements`}
+        >
+          {visible}/{total}
+        </span>
+      </div>
+      {hasChildren && isExpanded && (
+        <ul role="group">
+          {node.children.map((child) => (
+            <SectionTreeItem
+              key={child.clause}
+              node={child}
+              expanded={expanded}
+              selected={selected}
+              totalCounts={totalCounts}
+              visibleCounts={visibleCounts}
+              tones={tones}
+              onToggleExpanded={onToggleExpanded}
+              onToggleSelected={onToggleSelected}
+              onNavigate={onNavigate}
+            />
+          ))}
+        </ul>
+      )}
+    </li>
+  );
+}
+
+function LazyDetails({
+  label,
+  count,
+  renderContent,
+}: {
+  label: string;
+  count: number;
+  renderContent: () => ReactNode;
+}) {
+  const [open, setOpen] = useState(false);
+  return (
+    <details
+      className="requirement-card__details"
+      open={open}
+      onToggle={(event) => setOpen(event.currentTarget.open)}
+    >
+      <summary>
+        {label} <span>{count}</span>
+      </summary>
+      {open && renderContent()}
+    </details>
+  );
+}
+
+interface RequirementCardProps {
+  requirement: Requirement;
+  evidence: ProfileEvidence[];
+  supporting: CaseDefinition[];
+  campaign?: Campaign | undefined;
+  onInspectCase: (caseId: string) => void;
+  onInspectEvidence: (
+    toolId: string,
+    profileId: string,
+    requirementId: string,
+  ) => void;
+}
+
+function RequirementCard({
+  requirement,
+  evidence,
+  supporting,
+  campaign,
+  onInspectCase,
+  onInspectEvidence,
+}: RequirementCardProps) {
+  return (
+    <article
+      className="requirement-card"
+      aria-label={`Requirement ${requirement.id}`}
+    >
+      <header className="requirement-card__header">
+        <div>
+          <span className="section-label">
+            {standardLocationLabel(requirement.clause)}
+          </span>
+          <h3>{requirement.summary}</h3>
+          <code>{requirement.id}</code>
+        </div>
+        <CopyLinkButton
+          target={{
+            view: "matrix",
+            parameter: "requirementId",
+            id: requirement.id,
+            campaignId: campaign?.id,
+          }}
+        />
+      </header>
+
+      <section className="requirement-card__applicability">
+        <h4>Revision applicability</h4>
+        <div className="requirement-card__table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Revision</th>
+                <th scope="col">Status</th>
+                <th scope="col">Clause</th>
+                <th scope="col">Note</th>
+              </tr>
+            </thead>
+            <tbody>
+              {Object.entries(requirement.revision_applicability).map(
+                ([revision, rule]) => (
+                  <tr key={revision}>
+                    <th scope="row">{revision}</th>
+                    <td>{applicabilityLabel(rule.status)}</td>
+                    <td>{rule.clause ?? "—"}</td>
+                    <td>{rule.note ?? "—"}</td>
+                  </tr>
+                ),
+              )}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section className="requirement-card__tags" aria-label="Requirement tags">
+        <h4>Tags</h4>
+        <div>
+          {requirement.tags.length ? (
+            requirement.tags.map((tag) => <span key={tag}>{tag}</span>)
+          ) : (
+            <span className="requirement-card__empty">No tags</span>
+          )}
+        </div>
+      </section>
+
+      <LazyDetails
+        label="Standard anchors"
+        count={requirement.anchors.length}
+        renderContent={() => (
+          <ul className="anchor-list">
+            {requirement.anchors.map((anchor) => (
+              <li key={anchor}>
+                <code>{anchor}</code>
+              </li>
+            ))}
+          </ul>
+        )}
+      />
+
+      <LazyDetails
+        label="Tool evidence"
+        count={evidence.length}
+        renderContent={() =>
+          evidence.length ? (
+            <div className="requirement-profile-list">
+              {evidence.map((item) => {
+                const [toolId = "", profileId = ""] = item.key.split("/");
+                return (
+                  <button
+                    type="button"
+                    className="requirement-profile"
+                    key={item.key}
+                    aria-label={`View cases for ${requirement.id} with ${item.key} — ${STATUS_GROUP_LABELS[statusGroup(item.status)]}${item.reason ? `: ${item.reason}` : ""}`}
+                    onClick={() =>
+                      onInspectEvidence(toolId, profileId, requirement.id)
+                    }
+                  >
+                    <code>{item.key}</code>
+                    <StatusBadge
+                      status={item.status}
+                      reason={item.reason}
+                      grouped
+                    />
+                    {item.reason && <small>{item.reason}</small>}
+                  </button>
+                );
+              })}
+            </div>
+          ) : (
+            <p>No tool evidence matches the current filters.</p>
+          )
+        }
+      />
+
+      <LazyDetails
+        label="Supporting cases"
+        count={supporting.length}
+        renderContent={() => (
+          <div className="supporting-case-list">
+            {supporting.length ? (
+              supporting.map((testCase) => (
+                <button
+                  type="button"
+                  key={testCase.id}
+                  onClick={() => onInspectCase(testCase.id)}
+                >
+                  <span>
+                    {testCase.target_phase} · {testCase.expectation}
+                  </span>
+                  <strong>{testCase.title}</strong>
+                  <code>{testCase.id}</code>
+                </button>
+              ))
+            ) : (
+              <p>No case currently maps to this requirement.</p>
+            )}
+          </div>
+        )}
+      />
+    </article>
+  );
+}
+
 export function RequirementsView({
   requirements,
+  allRequirements,
+  standardSections,
+  selectedSections,
+  onSelectedSectionsChange,
   cases,
   evidenceCasesByProfile,
   campaign,
@@ -58,17 +417,36 @@ export function RequirementsView({
   onInspectCase,
   onInspectEvidence,
 }: RequirementsProps) {
-  const workspaceRef = useViewportWorkspaceHeight<HTMLDivElement>();
-  const requirementPaneRef = useRef<HTMLElement | null>(null);
-  const requirementButtonRefs = useRef(new Map<string, HTMLButtonElement>());
+  const [expanded, setExpanded] = useState<Set<string>>(() => new Set());
+  const cardRefs = useRef(new Map<string, HTMLElement>());
+  const sections = useMemo(
+    () =>
+      standardSections.length
+        ? standardSections
+        : fallbackSections(allRequirements),
+    [allRequirements, standardSections],
+  );
+  const sectionClauses = useMemo(
+    () => new Set(sections.map((section) => section.clause)),
+    [sections],
+  );
+  const tree = useMemo(() => buildSectionTree(sections), [sections]);
+  const selected = useMemo(
+    () => decodeSectionSelection(selectedSections, tree),
+    [selectedSections, tree],
+  );
+  const profiles = useMemo(
+    () =>
+      profileKeys(campaign).filter((key) => {
+        const [toolId, profileId] = key.split("/");
+        return (
+          (!toolFilter || toolId === toolFilter) &&
+          (!profileFilter || profileId === profileFilter)
+        );
+      }),
+    [campaign, profileFilter, toolFilter],
+  );
   const resultMap = useMemo(() => resultsByKey(campaign), [campaign]);
-  const profiles = profileKeys(campaign).filter((key) => {
-    const [toolId, profileId] = key.split("/");
-    return (
-      (!toolFilter || toolId === toolFilter) &&
-      (!profileFilter || profileId === profileFilter)
-    );
-  });
   const casesByRequirement = useMemo(() => {
     const result = new Map<string, CaseDefinition[]>();
     for (const testCase of cases) {
@@ -127,203 +505,168 @@ export function RequirementsView({
     }
     return evidence;
   }, [evidenceCasesByRequirement, profiles, requirements, resultMap]);
-  const selected =
-    requirements.find((requirement) => requirement.id === selectedRequirementId) ??
-    requirements[0];
-  useEffect(() => {
-    if (
-      selectedRequirementId &&
-      selected &&
-      selected.id !== selectedRequirementId
-    ) {
-      onSelectRequirement(selected.id);
-    }
-  }, [onSelectRequirement, selected, selectedRequirementId]);
-  const selectedIndex = selected
-    ? requirements.findIndex((requirement) => requirement.id === selected.id)
-    : -1;
-  useRevealSplitSelection(
-    selected?.id,
-    selectedIndex,
-    requirementButtonRefs,
-    requirementPaneRef,
+  const totalCounts = useMemo(
+    () => countsBySection(allRequirements, sectionClauses),
+    [allRequirements, sectionClauses],
   );
-  const supporting = selected ? (casesByRequirement.get(selected.id) ?? []) : [];
-  const selectedEvidence = selected
-    ? (evidenceByRequirement.get(selected.id) ?? [])
-    : [];
-  const moveSelection = (
-    event: KeyboardEvent<HTMLButtonElement>,
-    currentIndex: number,
-  ) => {
-    let nextIndex: number | undefined;
-    if (event.key === "ArrowDown" || event.key === "ArrowRight") {
-      nextIndex = Math.min(requirements.length - 1, currentIndex + 1);
-    } else if (event.key === "ArrowUp" || event.key === "ArrowLeft") {
-      nextIndex = Math.max(0, currentIndex - 1);
-    } else if (event.key === "Home") {
-      nextIndex = 0;
-    } else if (event.key === "End") {
-      nextIndex = requirements.length - 1;
+  const visibleCounts = useMemo(
+    () => countsBySection(requirements, sectionClauses),
+    [requirements, sectionClauses],
+  );
+  const tones = useMemo(() => {
+    const values = new Map<string, TreeTone>();
+    if (!toolFilter) return values;
+    for (const requirement of requirements) {
+      const tone = requirementTreeTone(
+        (evidenceByRequirement.get(requirement.id) ?? []).map(
+          (item) => item.status,
+        ),
+      );
+      const parts = requirement.clause.split(".");
+      for (let length = 1; length <= parts.length; length += 1) {
+        const clause = parts.slice(0, length).join(".");
+        if (sectionClauses.has(clause)) {
+          values.set(clause, mergeTreeTone(values.get(clause), tone));
+        }
+      }
     }
-    if (nextIndex === undefined) return;
-    event.preventDefault();
-    if (nextIndex === currentIndex) return;
-    const requirement = requirements[nextIndex];
+    return values;
+  }, [evidenceByRequirement, requirements, sectionClauses, toolFilter]);
+  const visibleRequirements = useMemo(
+    () =>
+      selectedSections.length === 0
+        ? requirements
+        : requirements.filter((requirement) => selected.has(requirement.clause)),
+    [requirements, selected, selectedSections.length],
+  );
+
+  useEffect(() => {
+    if (!selectedRequirementId) return;
+    const requirement = visibleRequirements.find(
+      (item) => item.id === selectedRequirementId,
+    );
+    if (!requirement) return;
+    const ancestors = requirement.clause.split(".");
+    setExpanded((current) => {
+      const next = new Set(current);
+      for (let length = 1; length < ancestors.length; length += 1) {
+        next.add(ancestors.slice(0, length).join("."));
+      }
+      return next;
+    });
+    window.requestAnimationFrame(() => {
+      cardRefs.current.get(requirement.id)?.scrollIntoView?.({ block: "start" });
+    });
+  }, [selectedRequirementId, visibleRequirements]);
+
+  const navigateToSection = (clause: string) => {
+    const requirement = visibleRequirements.find((item) =>
+      sectionContains(clause, item.clause),
+    );
     if (!requirement) return;
     onSelectRequirement(requirement.id);
-    window.requestAnimationFrame(() =>
-      requirementButtonRefs.current.get(requirement.id)?.focus(),
+    cardRefs.current.get(requirement.id)?.scrollIntoView?.({
+      block: "start",
+      behavior: "smooth",
+    });
+  };
+  const toggleExpanded = (clause: string) => {
+    setExpanded((current) => {
+      const next = new Set(current);
+      if (next.has(clause)) next.delete(clause);
+      else next.add(clause);
+      return next;
+    });
+  };
+  const toggleSelected = (clause: string, checked: boolean) => {
+    onSelectedSectionsChange(
+      toggleSectionSelection(selectedSections, clause, checked, tree),
     );
   };
 
   return (
     <section className="panel requirements" aria-label="Requirement evidence">
-      {selected ? (
-        <div className="requirements-workspace" ref={workspaceRef}>
-          <nav
-            className="requirement-list"
-            aria-label="Requirements"
-            role="listbox"
-          >
-            {requirements.map((requirement, index) => {
-              const evidence = evidenceByRequirement.get(requirement.id) ?? [];
-              return (
-                <button
-                  type="button"
-                  className={requirement.id === selected.id ? "is-selected" : ""}
-                  role="option"
-                  aria-selected={requirement.id === selected.id}
-                  aria-current={requirement.id === selected.id ? "true" : undefined}
-                  tabIndex={requirement.id === selected.id ? 0 : -1}
-                  key={requirement.id}
-                  ref={(node) => {
-                    if (node) requirementButtonRefs.current.set(requirement.id, node);
-                    else requirementButtonRefs.current.delete(requirement.id);
-                  }}
-                  onClick={() => onSelectRequirement(requirement.id)}
-                  onKeyDown={(event) => moveSelection(event, index)}
-                >
-                  <span className="requirement-list__clause">
-                    {standardLocationLabel(requirement.clause)}
-                  </span>
-                  <strong>{requirement.summary}</strong>
-                  <code>{requirement.id}</code>
-                  <span className="requirement-list__verdicts">
-                    {evidence.map((item) => {
-                      const group = statusGroup(item.status);
-                      return (
-                        <span
-                          className={`verdict-dot status--${group}`}
-                          title={`${item.key}: ${STATUS_GROUP_LABELS[group]}${
-                            item.reason ? ` — ${item.reason}` : ""
-                          }`}
-                          aria-label={`${item.key}: ${STATUS_GROUP_LABELS[group]}`}
-                          key={item.key}
-                        >
-                          {STATUS_GROUP_SYMBOLS[group]}
-                        </span>
-                      );
-                    })}
-                  </span>
-                </button>
-              );
-            })}
-          </nav>
-
-          <article
-            className="requirement-pane"
-            ref={requirementPaneRef}
-            aria-label={`Requirement ${selected.id}`}
-          >
-            <header className="requirement-pane__header">
-              <div>
-                <span className="section-label">
-                  {standardLocationLabel(selected.clause)}
-                </span>
-                <h3>{selected.summary}</h3>
-                <code>{selected.id}</code>
-              </div>
-              <CopyLinkButton
-                target={{
-                  view: "matrix",
-                  parameter: "requirementId",
-                  id: selected.id,
-                  campaignId: campaign?.id,
-                }}
+      <div className="requirements-workspace">
+        <nav className="requirement-toc" aria-label="Standard table of contents">
+          <header className="requirement-toc__header">
+            <div>
+              <span className="section-label">IEEE Std 1800-2023</span>
+              <h3>Table of contents</h3>
+            </div>
+            <span>{requirements.length} matching</span>
+          </header>
+          <label className="requirement-toc__all">
+            <input
+              type="checkbox"
+              checked={selectedSections.length === 0}
+              onChange={() => onSelectedSectionsChange([])}
+            />
+            <strong>All</strong>
+            <span>
+              {requirements.length}/{allRequirements.length}
+            </span>
+          </label>
+          <ul role="tree" aria-label="Standard sections">
+            {tree.map((node) => (
+              <SectionTreeItem
+                key={node.clause}
+                node={node}
+                expanded={expanded}
+                selected={selected}
+                totalCounts={totalCounts}
+                visibleCounts={visibleCounts}
+                tones={tones}
+                onToggleExpanded={toggleExpanded}
+                onToggleSelected={toggleSelected}
+                onNavigate={navigateToSection}
               />
-            </header>
+            ))}
+          </ul>
+        </nav>
 
-            <section className="requirement-pane__section">
-              <h4>Standard anchors</h4>
-              <ul className="anchor-list">
-                {selected.anchors.map((anchor) => (
-                  <li key={anchor}>
-                    <code>{anchor}</code>
-                  </li>
-                ))}
-              </ul>
-            </section>
-
-            <section className="requirement-pane__section">
-              <h4>Tool evidence</h4>
-              {selectedEvidence.length ? (
-                <div className="requirement-profile-list">
-                  {selectedEvidence.map((item) => {
-                    const [toolId = "", profileId = ""] = item.key.split("/");
-                    return (
-                      <button
-                        type="button"
-                        className="requirement-profile"
-                        key={item.key}
-                        aria-label={`View cases for ${selected.id} with ${item.key} — ${STATUS_GROUP_LABELS[statusGroup(item.status)]}${item.reason ? `: ${item.reason}` : ""}`}
-                        onClick={() =>
-                          onInspectEvidence(toolId, profileId, selected.id)
-                        }
-                      >
-                        <code>{item.key}</code>
-                        <StatusBadge
-                          status={item.status}
-                          reason={item.reason}
-                          grouped
-                        />
-                        {item.reason && <small>{item.reason}</small>}
-                      </button>
-                    );
-                  })}
-                </div>
-              ) : (
-                <p>No tool evidence matches the current filters.</p>
-              )}
-            </section>
-
-            <section className="requirement-pane__section">
-              <h4>Supporting cases</h4>
-              <div className="supporting-case-list">
-                {supporting.length ? (
-                  supporting.map((testCase) => (
-                    <button
-                      type="button"
-                      key={testCase.id}
-                      onClick={() => onInspectCase(testCase.id)}
-                    >
-                      <span>
-                        {testCase.target_phase} · {testCase.expectation}
-                      </span>
-                      <strong>{testCase.title}</strong>
-                      <code>{testCase.id}</code>
-                    </button>
-                  ))
-                ) : (
-                  <p>No case currently maps to this requirement.</p>
-                )}
+        <div className="requirement-cards" aria-live="polite">
+          <header className="requirement-cards__header">
+            <div>
+              <span className="section-label">Requirement evidence</span>
+              <h2>
+                {visibleRequirements.length} requirement
+                {visibleRequirements.length === 1 ? "" : "s"}
+              </h2>
+            </div>
+            {selectedSections.length > 0 && (
+              <button type="button" onClick={() => onSelectedSectionsChange([])}>
+                Show all sections
+              </button>
+            )}
+          </header>
+          {visibleRequirements.length ? (
+            visibleRequirements.map((requirement) => (
+              <div
+                key={requirement.id}
+                ref={(element) => {
+                  if (element) cardRefs.current.set(requirement.id, element);
+                  else cardRefs.current.delete(requirement.id);
+                }}
+              >
+                <RequirementCard
+                  requirement={requirement}
+                  evidence={evidenceByRequirement.get(requirement.id) ?? []}
+                  supporting={casesByRequirement.get(requirement.id) ?? []}
+                  campaign={campaign}
+                  onInspectCase={onInspectCase}
+                  onInspectEvidence={onInspectEvidence}
+                />
               </div>
-            </section>
-          </article>
+            ))
+          ) : (
+            <div className="empty-state">
+              {requirements.length
+                ? "No requirements belong to the selected standard sections."
+                : "No requirements match the current quick filters."}
+            </div>
+          )}
         </div>
-      ) : (
-        <div className="empty-state">No requirements match the current filters.</div>
-      )}
+      </div>
     </section>
   );
 }

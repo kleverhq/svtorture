@@ -72,6 +72,7 @@ describe("URL-backed filters", () => {
       dateTo: "2026-12-31",
       caseId: "ch13-output-copyout-width",
       requirementId: "SV-2023-13-OUTPUT-COPYOUT",
+      sections: "13.5,=14",
       changed: true,
       disagreement: true,
     };

@@ -21,7 +21,7 @@ This work does not redesign the Cases tab, remove its Advanced filters, change c
 - [x] (2026-08-03 15:02Z) Wrote this self-contained implementation plan and recorded the accepted interaction and status rules.
 - [x] (2026-08-03 17:59Z) Milestone 1: materialized 1,740 named standard sections in anchor-index schema version 2, carried them through version-6 campaign catalogs and frontend datasets, regenerated the catalog schema and fixture, and passed focused annotator, Python, and loader tests.
 - [x] (2026-08-03 18:04Z) Milestone 2: removed Advanced filters only from Requirements, made Requirements ignore stale Cases-only advanced URL values, retained all quick filters, and added the coverage context label and exact threshold row tones; 46 focused frontend tests and type checking passed.
-- [ ] Milestone 3: replace the Requirements split selector with the hierarchy and scrolling compact cards.
+- [x] (2026-08-03 18:19Z) Milestone 3: replaced the one-item selector with the complete expandable hierarchy and all-card scroller, added URL-backed tri-state subtree filtering, one-tool worst-status tones, applicability and tags, lazy collapsed evidence, responsive layout, and focused tests; all 91 frontend tests, type checking, production build, and desktop/mobile headless visual checks passed.
 - [ ] Milestone 4: run deterministic validation, audit every acceptance criterion, update this plan, and commit the completed implementation.
 
 ## Surprises & Discoveries
@@ -40,6 +40,12 @@ This work does not redesign the Cases tab, remove its Advanced filters, change c
 
 - Observation: Fifteen generated heading blocks carried visual-review marker lines that are useful to annotators but unsuitable as UI titles.
   Evidence: The first generated hierarchy projection contained `[FORMALISM_REQUIRES_VISUAL_REVIEW]`, `[LAYOUT_REQUIRES_VISUAL_REVIEW]`, or `[TEXT_ANNOTATION_REQUIRES_VISUAL_REVIEW]` in 15 titles. `heading_title()` now omits exact marker lines while retaining the source-owned heading text, and the regenerated hierarchy contains no marker suffixes.
+
+- Observation: Native closed `<details>` elements hide content visually but React still constructs every child element, which scales poorly when thousands of cards each have profile and case lists.
+  Evidence: The first compact-card implementation passed behavior tests but eagerly evaluated all evidence and supporting-case maps. `LazyDetails` now accepts a render callback and invokes it only after the disclosure opens.
+
+- Observation: Compact parent-prefix selection alone cannot represent unchecking one child while preserving the parent's own requirement and selected sibling branches.
+  Evidence: A checked `13` token means every descendant, so removing `13.5.1` requires representing the exact `13` node separately from full sibling subtrees. The URL codec now uses ordinary tokens for complete subtrees and an internal `=` prefix for an exact node.
 
 ## Decision Log
 
@@ -61,6 +67,10 @@ This work does not redesign the Cases tab, remove its Advanced filters, change c
 
 - Decision: A section checkbox filters by that location and all descendants; redundant descendants are removed when a parent is selected. Selecting multiple unrelated branches uses OR semantics. Removing the final explicit selection returns to All.
   Rationale: This implements ordinary table-of-contents selection while keeping URLs canonical and compact.
+  Date/Author: 2026-08-03 / pi
+
+- Decision: Encode a completely selected subtree as its root location and a selected exact internal node as `=<location>` when a descendant has been unchecked.
+  Rationale: This preserves ordinary tri-state checkbox behavior, including parent-owned requirements, without expanding a chapter selection into hundreds of URL values. The syntax is private to the URL-backed frontend state and unknown values are ignored safely.
   Date/Author: 2026-08-03 / pi
 
 - Decision: A section title scrolls to the first currently rendered requirement in its subtree, a checkbox changes filtering, and a separate chevron expands or collapses children.
@@ -85,7 +95,7 @@ This work does not redesign the Cases tab, remove its Advanced filters, change c
 
 ## Outcomes & Retrospective
 
-Milestones 1 and 2 are complete. The committed runtime index now contains 1,740 source-derived section names and strict validation proves a one-to-one canonical match with every heading anchor. New campaign catalogs publish the hierarchy, old version-6 catalogs remain readable, the generated public schema describes the projection, and the dashboard loader carries it into `Dataset.standard_sections`. Requirements now has only the accepted quick filters and ignores hidden Cases-only filter values; Cases retains Advanced filters. Requirements Coverage has the explanatory context and exact neutral/red/yellow/green boundaries. Focused evidence includes 84 Python catalog/bundle/replay tests, 10 annotator tests, 7 dashboard loader tests, 46 coverage/filter/App/model tests, and frontend type checking. The hierarchy and card UI remain in Milestone 3.
+Milestones 1 through 3 are complete. The committed runtime index contains 1,740 source-derived section names and strict validation proves a one-to-one canonical match with every heading anchor. New campaign catalogs publish the hierarchy, old version-6 catalogs remain readable, the generated public schema describes the projection, and the dashboard loader carries it into `Dataset.standard_sections`. Requirements has only the accepted quick filters and ignores hidden Cases-only values; Cases retains Advanced filters. Requirements Coverage has the explanatory context and exact neutral/red/yellow/green boundaries. The Requirements browser now presents the full expandable standard tree beside every matching compact card, with URL-backed subtree selection, one-tool status coloring, applicability, tags, and lazily mounted detail disclosures. All 91 frontend tests, type checking, and a production build passed; 1440×1000 and 430×932 headless screenshots confirmed the desktop two-column and narrow normal-flow layouts. Final repository-wide validation remains in Milestone 4.
 
 ## Context and Orientation
 
@@ -202,3 +212,5 @@ Revision note (2026-08-03): Initial plan created after repository and annotator 
 Revision note (2026-08-03 17:59Z): Updated after Milestone 1 to record the completed hierarchy contract, validation evidence, and the discovered need to remove authoring-only visual-review markers from display titles.
 
 Revision note (2026-08-03 18:04Z): Updated after Milestone 2 to record Requirements-only filter separation, hidden-filter semantics, coverage presentation, and focused frontend evidence.
+
+Revision note (2026-08-03 18:19Z): Updated after Milestone 3 to record the completed hierarchy and card browser, exact-node URL encoding, lazy disclosure rendering, responsive visual evidence, and full frontend results.

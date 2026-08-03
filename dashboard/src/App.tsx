@@ -704,6 +704,18 @@ export default function App() {
           {view === "matrix" && (
             <RequirementsView
               requirements={filtered.requirements}
+              allRequirements={dataset.requirements}
+              standardSections={dataset.standard_sections}
+              selectedSections={filters.sections
+                .split(",")
+                .filter(Boolean)}
+              onSelectedSectionsChange={(sections) =>
+                setFilters((current) => ({
+                  ...current,
+                  sections: sections.join(","),
+                  requirementId: "",
+                }))
+              }
               cases={filtered.requirementCases}
               evidenceCasesByProfile={requirementEvidenceCases}
               campaign={campaign}

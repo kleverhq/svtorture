@@ -123,6 +123,7 @@ export interface Filters {
   dateTo: string;
   caseId: string;
   requirementId: string;
+  sections: string;
   changed: boolean;
   disagreement: boolean;
 }
@@ -164,6 +165,7 @@ export const EMPTY_FILTERS: Filters = {
   dateTo: "",
   caseId: "",
   requirementId: "",
+  sections: "",
   changed: false,
   disagreement: false,
 };
