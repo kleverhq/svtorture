@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import json
 import os
 import sys
 import tempfile
@@ -19,6 +20,7 @@ from annotate import (
     apply_recipes,
     parse_rendered_text,
     render_anchored_text,
+    render_anchors_index,
     resolve_pdf_path,
     validate_recipe_payload,
     warn_if_reference_source_differs,
@@ -87,6 +89,55 @@ class RecipeTests(unittest.TestCase):
         self.assertIn("Source-owned fixture content.", records[1].content)
         self.assertTrue(records[1].content.endswith(MARKER))
         self.assertEqual(records[2].content, MARKER)
+
+    def test_anchor_index_includes_ordered_multiline_heading_titles(self) -> None:
+        parts = {
+            "1": DocumentPart("1", 1, 1),
+            "A": DocumentPart("A", 2, 2, annex=True),
+        }
+        part_texts = {
+            "1": rendered(
+                ("[2023:1:H:p001]", "1. Authored fixture"),
+                (
+                    "[2023:1.1:H:p001]",
+                    f"1.1 First multiline\nheading\n{MARKER}",
+                ),
+                ("[2023:1.1:P001:p001]", "Fixture content."),
+            ),
+            "A": rendered(
+                ("[2023:A:H:p002]", "Annex A\n(normative)\nFixture annex"),
+                ("[2023:A.1:H:p002]", "A.1 Annex scope"),
+            ),
+        }
+
+        with patch.object(annotate, "PARTS", parts):
+            index = json.loads(render_anchors_index(part_texts, "0" * 64))
+
+        self.assertEqual(index["schema_version"], 2)
+        self.assertEqual(
+            index["sections"],
+            [
+                {"clause": "1", "title": "Authored fixture"},
+                {"clause": "1.1", "title": "First multiline heading"},
+                {"clause": "A", "title": "Fixture annex"},
+                {"clause": "A.1", "title": "Annex scope"},
+            ],
+        )
+
+    def test_anchor_index_rejects_duplicate_heading_locations(self) -> None:
+        parts = {"1": DocumentPart("1", 1, 1)}
+        part_texts = {
+            "1": rendered(
+                ("[2023:1:H:p001]", "1. Authored fixture"),
+                ("[2023:1:H:p002]", "1. Duplicate heading"),
+            )
+        }
+
+        with (
+            patch.object(annotate, "PARTS", parts),
+            self.assertRaisesRegex(RuntimeError, "duplicate heading locations"),
+        ):
+            render_anchors_index(part_texts, "0" * 64)
 
     def test_region_recipe_preserves_unmatched_source_under_marked_anchor(self) -> None:
         start = "[2023:1:P001:p001]"

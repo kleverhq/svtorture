@@ -193,6 +193,11 @@ export function makeTestDataset(): Dataset {
     generated_from: [campaign.id],
     visibility: "local",
     corpus_coverage: corpusMetrics,
+    standard_sections: [
+      { clause: "13", title: "Tasks and functions (subroutines)" },
+      { clause: "13.5", title: "Subroutine arguments" },
+      { clause: "14", title: "Clocking blocks" },
+    ],
     requirements: [requirement],
     cases: [testCase],
     campaigns: [campaign],

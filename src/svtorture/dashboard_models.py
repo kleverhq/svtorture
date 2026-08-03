@@ -26,6 +26,7 @@ from svtorture.models import (
     ResultStatus,
     SafeText,
     StageObservation,
+    StandardSection,
     StrictModel,
     standard_location_sort_key,
 )
@@ -264,6 +265,7 @@ class CampaignCatalog(StrictModel):
     requirements: tuple[Requirement, ...]
     cases: tuple[DashboardCase, ...]
     corpus_metrics: CorpusMetrics
+    standard_sections: tuple[StandardSection, ...] = ()
 
     @model_validator(mode="after")
     def unique_and_sorted_definitions(self) -> Self:
@@ -278,6 +280,11 @@ class CampaignCatalog(StrictModel):
         case_ids = [case.id for case in self.cases]
         if case_ids != sorted(case_ids) or len(case_ids) != len(set(case_ids)):
             raise ValueError("catalog cases must be unique and sorted")
+        section_locations = [section.clause for section in self.standard_sections]
+        if section_locations != sorted(section_locations, key=standard_location_sort_key) or len(
+            section_locations
+        ) != len(set(section_locations)):
+            raise ValueError("standard sections must be unique and canonically sorted")
         return self
 
 

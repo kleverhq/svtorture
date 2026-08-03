@@ -190,6 +190,9 @@ function validateCatalog(value: unknown): asserts value is CampaignCatalog {
   requireArray(item.requirements, "campaign-catalog.requirements");
   requireArray(item.cases, "campaign-catalog.cases");
   requireRecord(item.corpus_metrics, "campaign-catalog.corpus_metrics");
+  if (item.standard_sections !== undefined) {
+    requireArray(item.standard_sections, "campaign-catalog.standard_sections");
+  }
 }
 
 function validateVerdicts(value: unknown): asserts value is CampaignVerdicts {
@@ -527,6 +530,7 @@ function datasetFrom(
       ? "public"
       : "local",
     corpus_coverage: selected.catalog.corpus_metrics,
+    standard_sections: selected.catalog.standard_sections ?? [],
     requirements: selected.catalog.requirements,
     cases: selected.catalog.cases,
     campaigns: loaded.map((item) => item.campaign),

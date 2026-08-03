@@ -511,6 +511,28 @@
       ],
       "title": "StandardRevision",
       "type": "string"
+    },
+    "StandardSection": {
+      "additionalProperties": false,
+      "properties": {
+        "clause": {
+          "pattern": "^(?:(?:[1-9]|[1-3][0-9]|4[01])(?:\\.[1-9][0-9]*)*|[A-Q](?:\\.[1-9][0-9]*)*)$",
+          "title": "Clause",
+          "type": "string"
+        },
+        "title": {
+          "maxLength": 500,
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "clause",
+        "title"
+      ],
+      "title": "StandardSection",
+      "type": "object"
     }
   },
   "$id": "campaign-catalog.schema.json",
@@ -550,6 +572,14 @@
       "minimum": 6,
       "title": "Schema Version",
       "type": "integer"
+    },
+    "standard_sections": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/StandardSection"
+      },
+      "title": "Standard Sections",
+      "type": "array"
     }
   },
   "required": [

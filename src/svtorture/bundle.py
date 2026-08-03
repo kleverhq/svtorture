@@ -319,6 +319,7 @@ def _catalog(catalog: Catalog, campaign: Campaign) -> CampaignCatalog:
         requirements=requirements,
         cases=tuple(cases),
         corpus_metrics=campaign.corpus_metrics,
+        standard_sections=catalog.standard_sections,
     )
 
 

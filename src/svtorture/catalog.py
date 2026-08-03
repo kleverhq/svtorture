@@ -30,6 +30,7 @@ from svtorture.models import (
     RequirementInventory,
     RequirementPart,
     StandardPartKind,
+    StandardSection,
     StandardsIndex,
     SuiteDefinition,
     TagRegistry,
@@ -38,6 +39,7 @@ from svtorture.models import (
     ToolManifest,
     ToolRegistry,
     model_to_jsonable,
+    standard_location_sort_key,
 )
 
 
@@ -51,6 +53,12 @@ class _StandardPart:
     kind: StandardPartKind
     title: str
     anchors: tuple[str, ...]
+
+
+@dataclass(frozen=True)
+class _StandardIndex:
+    parts: tuple[_StandardPart, ...]
+    sections: tuple[StandardSection, ...]
 
 
 @dataclass(frozen=True)
@@ -73,6 +81,7 @@ class Catalog:
     suites: dict[str, SuiteDefinition]
     suite_cases: dict[str, tuple[str, ...]]
     tools: ToolRegistry
+    standard_sections: tuple[StandardSection, ...] = ()
 
     @property
     def requirements(self) -> dict[str, Requirement]:
@@ -207,9 +216,9 @@ def _read_json(path: Path) -> dict[str, Any]:
     return value
 
 
-def _standard_parts(path: Path) -> tuple[_StandardPart, ...]:
+def _standard_index(path: Path) -> _StandardIndex:
     value = _read_json(path)
-    if type(value.get("schema_version")) is not int or value["schema_version"] != 1:
+    if type(value.get("schema_version")) is not int or value["schema_version"] != 2:
         raise CatalogError(f"{path}: unsupported anchor index schema version")
     if value.get("edition") != "2023":
         raise CatalogError(f"{path}: anchor index must describe edition 2023")
@@ -255,7 +264,32 @@ def _standard_parts(path: Path) -> tuple[_StandardPart, ...]:
         raise CatalogError(f"{path}: duplicate anchors")
     if type(value.get("anchor_count")) is not int or value["anchor_count"] != len(anchors):
         raise CatalogError(f"{path}: inconsistent total anchor count")
-    return tuple(parts)
+
+    raw_sections = value.get("sections")
+    if not isinstance(raw_sections, list):
+        raise CatalogError(f"{path}: sections must be an array")
+    try:
+        standard_sections = tuple(
+            StandardSection.model_validate(section) for section in raw_sections
+        )
+    except ValidationError as error:
+        raise CatalogError(f"{path}: malformed standard section: {error}") from error
+    section_locations = [section.clause for section in standard_sections]
+    if len(section_locations) != len(set(section_locations)):
+        raise CatalogError(f"{path}: duplicate standard sections")
+    if section_locations != sorted(section_locations, key=standard_location_sort_key):
+        raise CatalogError(f"{path}: standard sections are not in canonical order")
+    heading_locations = [anchor[1:-1].split(":", 3)[1] for anchor in anchors if ":H:" in anchor]
+    if section_locations != heading_locations:
+        raise CatalogError(f"{path}: standard sections do not match heading anchors")
+    titles_by_clause = {section.clause: section.title for section in standard_sections}
+    if any(titles_by_clause.get(part.id) != part.title for part in parts):
+        raise CatalogError(f"{path}: standard part and section titles differ")
+    return _StandardIndex(parts=tuple(parts), sections=standard_sections)
+
+
+def _standard_parts(path: Path) -> tuple[_StandardPart, ...]:
+    return _standard_index(path).parts
 
 
 def _standard_anchors(path: Path) -> frozenset[str]:
@@ -607,6 +641,7 @@ def load_catalog(root: Path, *, anchor_index: Path | None = None) -> Catalog:
         suites=suites,
         suite_cases=suite_cases,
         tools=tools,
+        standard_sections=_standard_index(anchor_index).sections,
     )
 
 

@@ -19,7 +19,7 @@ This work does not redesign the Cases tab, remove its Advanced filters, change c
 - [x] (2026-08-03 14:35Z) Inspected the Requirements rendering path, URL-backed filters, corpus metric UI, strict catalog and bundle models, annotator pipeline, schemas, fixtures, and relevant tests.
 - [x] (2026-08-03 14:58Z) Confirmed that the annotator already retains every heading title while rendering `:H:` blocks and that the bundled local IEEE Std 1800-2023 PDF reproduces the committed anchor index.
 - [x] (2026-08-03 15:02Z) Wrote this self-contained implementation plan and recorded the accepted interaction and status rules.
-- [ ] Milestone 1: materialize the complete named standard hierarchy in the committed runtime index and carry it through the campaign catalog.
+- [x] (2026-08-03 17:59Z) Milestone 1: materialized 1,740 named standard sections in anchor-index schema version 2, carried them through version-6 campaign catalogs and frontend datasets, regenerated the catalog schema and fixture, and passed focused annotator, Python, and loader tests.
 - [ ] Milestone 2: update Requirements-only controls and Requirements Coverage presentation without changing Cases behavior.
 - [ ] Milestone 3: replace the Requirements split selector with the hierarchy and scrolling compact cards.
 - [ ] Milestone 4: run deterministic validation, audit every acceptance criterion, update this plan, and commit the completed implementation.
@@ -37,6 +37,9 @@ This work does not redesign the Cases tab, remove its Advanced filters, change c
 
 - Observation: Advanced filters are shared today because both Requirements and Cases pass `mode="corpus"` to `dashboard/src/Filters.tsx`.
   Evidence: `dashboard/src/App.tsx` maps both `matrix` and `evidence` views to the same filter mode.
+
+- Observation: Fifteen generated heading blocks carried visual-review marker lines that are useful to annotators but unsuitable as UI titles.
+  Evidence: The first generated hierarchy projection contained `[FORMALISM_REQUIRES_VISUAL_REVIEW]`, `[LAYOUT_REQUIRES_VISUAL_REVIEW]`, or `[TEXT_ANNOTATION_REQUIRES_VISUAL_REVIEW]` in 15 titles. `heading_title()` now omits exact marker lines while retaining the source-owned heading text, and the regenerated hierarchy contains no marker suffixes.
 
 ## Decision Log
 
@@ -82,7 +85,7 @@ This work does not redesign the Cases tab, remove its Advanced filters, change c
 
 ## Outcomes & Retrospective
 
-Implementation has not started. The design and source path are confirmed, including a local authoritative PDF source that can regenerate the hierarchy without committing licensed material.
+Milestone 1 is complete. The committed runtime index now contains 1,740 source-derived section names and strict validation proves a one-to-one canonical match with every heading anchor. New campaign catalogs publish the hierarchy, old version-6 catalogs remain readable, the generated public schema describes the projection, and the dashboard loader carries it into `Dataset.standard_sections`. Focused evidence: 84 Python catalog/bundle/replay tests, 10 annotator tests, 7 dashboard loader tests, and frontend type checking passed. Requirements UI work remains in Milestones 2 and 3.
 
 ## Context and Orientation
 
@@ -195,3 +198,5 @@ At the end of Milestone 1, `src/svtorture/models.py` must define a strict standa
 At the end of Milestone 3, hierarchy helpers must compare standard locations on dot boundaries rather than raw string prefixes, so `7.2` includes `7.2.1` but not `7.20`. Selection normalization must remove descendants already covered by a selected ancestor and sort locations in canonical IEEE order. Status aggregation must operate on displayed status groups and implement the accepted red, yellow, green, gray priority independently of the existing exact-status priority.
 
 Revision note (2026-08-03): Initial plan created after repository and annotator research. It resolves storage location, compatibility, hierarchy interaction, filtering, status aggregation, card density, and validation from the user's accepted design before implementation begins.
+
+Revision note (2026-08-03 17:59Z): Updated after Milestone 1 to record the completed hierarchy contract, validation evidence, and the discovered need to remove authoring-only visual-review markers from display titles.

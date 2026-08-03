@@ -27,6 +27,7 @@ from svtorture.catalog import Catalog
 from svtorture.dashboard_models import (
     ArchiveMetadata,
     CampaignCaseVerdicts,
+    CampaignCatalog,
     CampaignSummary,
     CampaignVerdict,
     CampaignVerdicts,
@@ -82,6 +83,23 @@ def test_bundle_export_is_compact_complete_and_deterministic(
     assert first_manifest.resources.verdicts.case_count == 2
     assert first_manifest.resources.verdicts.result_count == 2
     assert first_manifest.metrics[0].corpus_sha == campaign.hashes.cases
+    exported_catalog = CampaignCatalog.model_validate_json(
+        (first / "catalog.json").read_text(encoding="utf-8")
+    )
+    assert exported_catalog.standard_sections == catalog.standard_sections
+    assert len(exported_catalog.standard_sections) == 1740
+
+    historical_catalog = exported_catalog.model_dump(mode="json")
+    del historical_catalog["standard_sections"]
+    assert CampaignCatalog.model_validate(historical_catalog).standard_sections == ()
+
+    malformed_catalog = exported_catalog.model_dump(mode="json")
+    malformed_catalog["standard_sections"][0], malformed_catalog["standard_sections"][1] = (
+        malformed_catalog["standard_sections"][1],
+        malformed_catalog["standard_sections"][0],
+    )
+    with pytest.raises(ValidationError, match="canonically sorted"):
+        CampaignCatalog.model_validate(malformed_catalog)
 
     first_files = {
         path.relative_to(first).as_posix(): path.read_bytes()
@@ -503,6 +521,9 @@ def test_dashboard_schema_snapshots_require_discriminants_and_reuse_summary_sche
     catalog = json.loads((root / "campaign-catalog.schema.json").read_text(encoding="utf-8"))
     source_links = catalog["$defs"]["DashboardCase"]["properties"]["source_links"]
     assert source_links["additionalProperties"]["pattern"].startswith("^(?:https://")
+    assert catalog["properties"]["standard_sections"]["items"] == {
+        "$ref": "#/$defs/StandardSection"
+    }
 
 
 def test_compact_verdict_and_evidence_packing_scale_to_ten_thousand_cases() -> None:
