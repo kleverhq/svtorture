@@ -20,8 +20,9 @@ This work does not make waivers part of runtime catalog models, campaign coverag
 - [x] (2026-08-03 08:02Z) Selected `standards/{waivers,materialization-hints,historical-evidence}` as archival sidecar locations with no runtime loader or metric integration.
 - [x] (2026-08-03 08:02Z) Imported 49 requirement files and all 168 approved sidecar files byte-for-byte; no session manifest was imported.
 - [x] (2026-08-03 08:02Z) Expanded the requirement part index, documented the sidecars, remapped all 12 cases, and adjusted the affected catalog test fixture; no tag or schema-model change was needed.
-- [ ] Validate catalog loading, corpus counts, sidecar inventory, manifest exclusion, schemas, annotation anchors, and the repository smoke/precommit gates (completed: metadata load, source byte comparison, schema regeneration, annotation index, 118 focused tests; remaining: smoke, precommit, complete CI).
-- [ ] Review the final diff, commit it with a Conventional Commit message, push the branch, and open a pull request.
+- [x] (2026-08-03 08:16Z) Validated catalog loading, exact source copies, counts, unique IDs, case references, schema regeneration, and the full 16,963-anchor annotation index; `just smoke` and `just precommit` passed.
+- [x] (2026-08-03 08:16Z) Ran `just ci`: 185 non-Docker Python tests, 81 dashboard tests, 11 fake-Docker tests, and the production dashboard build passed; only the final real-tool smoke was blocked by a Docker Hub DNS timeout while pulling `ubuntu:24.04`.
+- [ ] Review, commit, push, and open a pull request (completed: two focused lanes and one fresh control review found no substantive implementation issue; the stale-plan note was fixed; implementation is committed as `4400591`; remaining: final plan commit, push, PR).
 
 ## Surprises & Discoveries
 
@@ -64,7 +65,11 @@ This work does not make waivers part of runtime catalog models, campaign coverag
 
 ## Outcomes & Retrospective
 
-Implementation is in progress. No outcome is claimed until the merged catalog passes repository validation, the source-to-destination inventory is audited, and the branch and pull request exist remotely.
+The implementation is complete and locally validated. SVTORTURE now loads 6,719 unique consolidated requirements across 49 nonempty parts. All 12 pre-existing cases retain their original sources and oracles while referring to consolidated primary and related requirements; the 12 old semantic duplicates are gone. The repository retains 56 files apiece of waiver, materialization-hint, and historical-evidence sidecars, byte-identical to the publication, with no session manifests or machine-local paths. Sidecars remain outside runtime coverage, scoring, bundle, and dashboard paths.
+
+The larger corpus exposed and fixed one latent ordering defect: requirement manifest hashes now use the same standard clause order already required by campaign catalogs. `just annotate-check`, `just smoke`, and `just precommit` pass. The internally controlled portions of `just ci` pass: 185 non-Docker Python tests, 81 dashboard tests, 11 fake-Docker tests, and a production dashboard build. The final real-tool smoke could not pull `ubuntu:24.04` because Docker Hub DNS resolution timed out; this is an external network limitation, not a test or implementation failure.
+
+Only publication work remains: commit this final plan update, push the branch, and open the requested pull request.
 
 ## Context and Orientation
 
@@ -161,3 +166,7 @@ Revision note (2026-08-03): Created the initial plan after branch creation and r
 Revision note (2026-08-03 08:02Z): Updated the living plan after the semantic audit and import. Recorded the 6,719-record deduplicated outcome, case-remapping strategy, sidecar boundary, observed source facts, and remaining validation work.
 
 Revision note (2026-08-03 08:08Z): Recorded the manifest-hash ordering defect exposed by the complete corpus, its root-cause fix, and the passing focused test gate.
+
+Revision note (2026-08-03 08:20Z): Updated validation and outcomes after smoke, precommit, partial CI, and focused review. Recorded the external Docker Hub DNS timeout and narrowed remaining work to control review and publication.
+
+Revision note (2026-08-03 08:24Z): Recorded the clean fresh control review. Only the final plan commit, branch push, and pull request remain.
