@@ -62,6 +62,9 @@ function SelectionHarness({ requirements }: { requirements: Requirement[] }) {
 describe("RequirementsView", () => {
   it("uses the accepted worst-status hierarchy", () => {
     expect(requirementTreeTone(["conforming", "not-run"])).toBe("green");
+    expect(requirementTreeTone(["conforming", "unsupported-capability"])).toBe(
+      "green",
+    );
     expect(requirementTreeTone(["not-applicable", "not-run"])).toBe("gray");
     expect(requirementTreeTone(["conforming", "inconclusive"])).toBe("yellow");
     expect(requirementTreeTone(["conforming", "nonconforming"])).toBe("red");
@@ -214,6 +217,24 @@ describe("RequirementsView", () => {
       id: "SV-2023-14-CLOCKING",
       summary: "Clocking requirement",
     };
+    const grayCase = {
+      ...dataset.cases[0]!,
+      id: "ch13-gray-evidence",
+      primary_requirement: first.id,
+    };
+    const campaignWithGray = {
+      ...campaign,
+      case_ids: [...campaign.case_ids, grayCase.id],
+      results: [
+        ...campaign.results,
+        {
+          ...campaign.results[0]!,
+          case_id: grayCase.id,
+          status: "unsupported-capability" as const,
+          reason: "unsupported-by-profile",
+        },
+      ],
+    };
     const scrollIntoView = vi.fn();
     Object.defineProperty(HTMLElement.prototype, "scrollIntoView", {
       configurable: true,
@@ -228,8 +249,8 @@ describe("RequirementsView", () => {
         standardSections={dataset.standard_sections}
         selectedSections={[]}
         onSelectedSectionsChange={() => undefined}
-        cases={dataset.cases}
-        campaign={campaign}
+        cases={[...dataset.cases, grayCase]}
+        campaign={campaignWithGray}
         toolFilter=""
         profileFilter=""
         selectedRequirementId=""
@@ -260,8 +281,8 @@ describe("RequirementsView", () => {
         standardSections={dataset.standard_sections}
         selectedSections={[]}
         onSelectedSectionsChange={() => undefined}
-        cases={dataset.cases}
-        campaign={campaign}
+        cases={[...dataset.cases, grayCase]}
+        campaign={campaignWithGray}
         toolFilter="fake"
         profileFilter=""
         selectedRequirementId=""
@@ -277,12 +298,39 @@ describe("RequirementsView", () => {
           "requirement-toc__row--green",
         ),
     ).toBe(true);
+    expect(screen.getByLabelText("Section result: Passing").textContent).toBe("✓");
     expect(
       screen
         .getByText("Clocking blocks")
         .closest(".requirement-toc__row")?.classList.contains(
           "requirement-toc__row--gray",
         ),
+    ).toBe(true);
+  });
+
+  it("ignores unknown section tokens instead of hiding requirements", () => {
+    const dataset = makeTestDataset();
+    render(
+      <RequirementsView
+        requirements={dataset.requirements}
+        allRequirements={dataset.requirements}
+        standardSections={dataset.standard_sections}
+        selectedSections={["missing", "=also-missing"]}
+        onSelectedSectionsChange={() => undefined}
+        cases={dataset.cases}
+        campaign={dataset.campaigns[0]}
+        toolFilter=""
+        profileFilter=""
+        selectedRequirementId=""
+        onSelectRequirement={() => undefined}
+        onInspectCase={() => undefined}
+        onInspectEvidence={() => undefined}
+      />,
+    );
+
+    expect(screen.getAllByRole("article")).toHaveLength(1);
+    expect(
+      (screen.getByRole("checkbox", { name: /^All/ }) as HTMLInputElement).checked,
     ).toBe(true);
   });
 

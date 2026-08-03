@@ -22,7 +22,7 @@ This work does not redesign the Cases tab, remove its Advanced filters, change c
 - [x] (2026-08-03 17:59Z) Milestone 1: materialized 1,740 named standard sections in anchor-index schema version 2, carried them through version-6 campaign catalogs and frontend datasets, regenerated the catalog schema and fixture, and passed focused annotator, Python, and loader tests.
 - [x] (2026-08-03 18:04Z) Milestone 2: removed Advanced filters only from Requirements, made Requirements ignore stale Cases-only advanced URL values, retained all quick filters, and added the coverage context label and exact threshold row tones; 46 focused frontend tests and type checking passed.
 - [x] (2026-08-03 18:19Z) Milestone 3: replaced the one-item selector with the complete expandable hierarchy and all-card scroller, added URL-backed tri-state subtree filtering, one-tool worst-status tones, applicability and tags, lazy collapsed evidence, responsive layout, and focused tests; all 91 frontend tests, type checking, production build, and desktop/mobile headless visual checks passed.
-- [ ] Milestone 4: run deterministic validation, audit every acceptance criterion, update this plan, and commit the completed implementation.
+- [x] (2026-08-03 18:52Z) Milestone 4: passed authoritative annotation regeneration, `just smoke`, full Docker/network `just ci`, final production build, visual checks, and two read-only control review passes; fixed all four substantive review findings and audited every acceptance criterion.
 
 ## Surprises & Discoveries
 
@@ -46,6 +46,15 @@ This work does not redesign the Cases tab, remove its Advanced filters, change c
 
 - Observation: Compact parent-prefix selection alone cannot represent unchecking one child while preserving the parent's own requirement and selected sibling branches.
   Evidence: A checked `13` token means every descendant, so removing `13.5.1` requires representing the exact `13` node separately from full sibling subtrees. The URL codec now uses ordinary tokens for complete subtrees and an internal `=` prefix for an exact node.
+
+- Observation: The existing exact-status aggregate is valid for evidence badges but not for the accepted tree grouping when one profile has both passing and gray case results.
+  Evidence: Read-only control review found that `aggregateStatus()` ranks unsupported statuses above conforming. Tree tones now consume every underlying result status directly, and an integration test proves conforming plus unsupported-capability remains visibly and accessibly green.
+
+- Observation: URL state can contain unknown section tokens from manual edits or older links.
+  Evidence: Control review found that checking raw token count produced an empty card list even though decoding safely ignored all tokens. All/filtering state now uses the decoded selection size, and a regression test proves unknown-only selections show All and retain cards.
+
+- Observation: Background color plus one common dot was not a sufficient non-color status cue.
+  Evidence: Accessibility review required each tone to be distinguishable without color. Rows now show `✕`, `!`, `✓`, or `–` and expose a full `Section result:` accessible label.
 
 ## Decision Log
 
@@ -95,7 +104,9 @@ This work does not redesign the Cases tab, remove its Advanced filters, change c
 
 ## Outcomes & Retrospective
 
-Milestones 1 through 3 are complete. The committed runtime index contains 1,740 source-derived section names and strict validation proves a one-to-one canonical match with every heading anchor. New campaign catalogs publish the hierarchy, old version-6 catalogs remain readable, the generated public schema describes the projection, and the dashboard loader carries it into `Dataset.standard_sections`. Requirements has only the accepted quick filters and ignores hidden Cases-only values; Cases retains Advanced filters. Requirements Coverage has the explanatory context and exact neutral/red/yellow/green boundaries. The Requirements browser now presents the full expandable standard tree beside every matching compact card, with URL-backed subtree selection, one-tool status coloring, applicability, tags, and lazily mounted detail disclosures. All 91 frontend tests, type checking, and a production build passed; 1440×1000 and 430×932 headless screenshots confirmed the desktop two-column and narrow normal-flow layouts. Final repository-wide validation remains in Milestone 4.
+All milestones are complete. The committed runtime index contains 1,740 source-derived section names and strict validation proves a one-to-one canonical match with every heading anchor. New campaign catalogs publish the hierarchy, old version-6 catalogs remain readable, the generated public schema describes the projection, and the dashboard loader carries it into `Dataset.standard_sections`. Requirements has only the accepted quick filters and ignores hidden Cases-only values; Cases retains Advanced filters. Requirements Coverage has the explanatory context and exact neutral/red/yellow/green boundaries. The Requirements browser presents the full expandable standard tree beside every matching compact card, with URL-backed subtree selection, one-tool raw-result status grouping, non-color status symbols, applicability, tags, and lazily mounted detail disclosures.
+
+Final evidence is complete: `just annotate-check` regenerated 58 parts and 16,963 unique anchors and found the committed hierarchy byte-identical; `just ci` passed 187 non-Docker Python tests, 11 Docker tests, all metadata/type/lint gates, 91 frontend tests, a production build, and a real five-case Icarus campaign; after review fixes, `just smoke` passed 120 focused Python tests, all annotator checks, and 92 frontend tests, and a final production build passed. Desktop 1440×1000 and narrow 430×932 headless screenshots confirmed the two-column and normal-flow layouts. A consolidated read-only control review found three medium issues, an impacted-lane recheck found one accessibility issue, and all four were fixed with regression coverage. No required work remains.
 
 ## Context and Orientation
 
@@ -214,3 +225,5 @@ Revision note (2026-08-03 17:59Z): Updated after Milestone 1 to record the compl
 Revision note (2026-08-03 18:04Z): Updated after Milestone 2 to record Requirements-only filter separation, hidden-filter semantics, coverage presentation, and focused frontend evidence.
 
 Revision note (2026-08-03 18:19Z): Updated after Milestone 3 to record the completed hierarchy and card browser, exact-node URL encoding, lazy disclosure rendering, responsive visual evidence, and full frontend results.
+
+Revision note (2026-08-03 18:52Z): Completed Milestone 4 after full local CI, authoritative annotation comparison, acceptance audit, and two control review passes. Recorded and resolved raw-status aggregation, unknown URL tokens, accessible status naming, and non-color status-symbol findings.

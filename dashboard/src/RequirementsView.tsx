@@ -57,10 +57,25 @@ interface RequirementsProps {
 interface ProfileEvidence {
   key: string;
   status: Status;
+  statuses: Status[];
   reason: string;
 }
 
 type TreeTone = "red" | "yellow" | "green" | "gray";
+
+const TREE_TONE_LABELS: Record<TreeTone, string> = {
+  red: "Failing or infrastructure error",
+  yellow: "Unclear",
+  green: "Passing",
+  gray: "Not evaluated or not applicable",
+};
+
+const TREE_TONE_SYMBOLS: Record<TreeTone, string> = {
+  red: "✕",
+  yellow: "!",
+  green: "✓",
+  gray: "–",
+};
 
 const TREE_TONE_PRIORITY: Record<TreeTone, number> = {
   gray: 0,
@@ -187,6 +202,17 @@ function SectionTreeItem({
           <code>{node.clause}</code>
           <span>{node.title}</span>
         </button>
+        {tone ? (
+          <span
+            className="requirement-toc__status"
+            aria-label={`Section result: ${TREE_TONE_LABELS[tone]}`}
+            title={TREE_TONE_LABELS[tone]}
+          >
+            {TREE_TONE_SYMBOLS[tone]}
+          </span>
+        ) : (
+          <span className="requirement-toc__status" aria-hidden="true" />
+        )}
         <span
           className="requirement-toc__count"
           aria-label={`${visible} of ${total} requirements`}
@@ -495,9 +521,13 @@ export function RequirementsView({
           const reasons = results
             .filter((result): result is Result => Boolean(result))
             .map((result) => result.reason);
+          const statuses = results
+            .filter((result): result is Result => Boolean(result))
+            .map((result) => result.status);
           return {
             key: profileKey,
             status: aggregateStatus(results),
+            statuses: statuses.length ? statuses : ["not-run"],
             reason: [...new Set(reasons)].join(", "),
           };
         }),
@@ -518,8 +548,8 @@ export function RequirementsView({
     if (!toolFilter) return values;
     for (const requirement of requirements) {
       const tone = requirementTreeTone(
-        (evidenceByRequirement.get(requirement.id) ?? []).map(
-          (item) => item.status,
+        (evidenceByRequirement.get(requirement.id) ?? []).flatMap(
+          (item) => item.statuses,
         ),
       );
       const parts = requirement.clause.split(".");
@@ -534,10 +564,10 @@ export function RequirementsView({
   }, [evidenceByRequirement, requirements, sectionClauses, toolFilter]);
   const visibleRequirements = useMemo(
     () =>
-      selectedSections.length === 0
+      selected.size === 0
         ? requirements
         : requirements.filter((requirement) => selected.has(requirement.clause)),
-    [requirements, selected, selectedSections.length],
+    [requirements, selected],
   );
 
   useEffect(() => {
@@ -598,7 +628,7 @@ export function RequirementsView({
           <label className="requirement-toc__all">
             <input
               type="checkbox"
-              checked={selectedSections.length === 0}
+              checked={selected.size === 0}
               onChange={() => onSelectedSectionsChange([])}
             />
             <strong>All</strong>
@@ -633,7 +663,7 @@ export function RequirementsView({
                 {visibleRequirements.length === 1 ? "" : "s"}
               </h2>
             </div>
-            {selectedSections.length > 0 && (
+            {selected.size > 0 && (
               <button type="button" onClick={() => onSelectedSectionsChange([])}>
                 Show all sections
               </button>

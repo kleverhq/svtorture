@@ -1007,7 +1007,7 @@ details summary {
 
 .requirement-toc__row {
   display: grid;
-  grid-template-columns: 20px 18px minmax(0, 1fr) auto;
+  grid-template-columns: 20px 18px minmax(0, 1fr) 12px auto;
   gap: 5px;
   align-items: center;
   min-height: 35px;
@@ -1082,6 +1082,28 @@ button.requirement-toc__toggle,
 .requirement-toc__link:not(:disabled):hover span {
   color: var(--accent-strong);
   text-decoration: underline;
+}
+
+.requirement-toc__status {
+  width: 12px;
+  font-size: 0.6rem;
+  text-align: center;
+}
+
+.requirement-toc__row--gray .requirement-toc__status {
+  color: var(--unscored);
+}
+
+.requirement-toc__row--green .requirement-toc__status {
+  color: var(--pass);
+}
+
+.requirement-toc__row--yellow .requirement-toc__status {
+  color: var(--issue);
+}
+
+.requirement-toc__row--red .requirement-toc__status {
+  color: var(--fail);
 }
 
 .requirement-cards {
