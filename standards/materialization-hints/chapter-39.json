@@ -1,0 +1,1052 @@
+{
+  "authority": "1800-2023",
+  "part": "39",
+  "requirements": [
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Attempt a non-lifecycle callback on a bare sequence instance."
+        ],
+        "notes": [],
+        "positive": [
+          "Register supported callbacks on concurrent and immediate assertions and lifecycle callbacks on sequence and property instances."
+        ]
+      },
+      "id": "SV-2023-39-ASSERTION-CALLBACK-APPLICABILITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Register null user data and verify it is passed unchanged."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Validate all five arguments in an invoked callback."
+        ]
+      },
+      "id": "SV-2023-39-ASSERTION-CALLBACK-ARGUMENTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Remove after one of several attempts."
+        ],
+        "negative": [
+          "Cause another event or an event on another assertion."
+        ],
+        "notes": [],
+        "positive": [
+          "Cause the same event multiple times and observe one invocation per occurrence, then remove the callback."
+        ]
+      },
+      "id": "SV-2023-39-ASSERTION-CALLBACK-LIFETIME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Remove a successful callback between two occurrences of its selected event."
+        ],
+        "negative": [
+          "Attempt an invalid assertion-callback registration and verify that it returns NULL."
+        ],
+        "notes": [],
+        "positive": [
+          "Register an assertion callback successfully, remove it using the returned handle, and verify later matching events do not invoke it."
+        ]
+      },
+      "id": "SV-2023-39-ASSERTION-CALLBACK-REGISTRATION-HANDLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use two same-named assertions in distinct instances and register on only one assertion handle."
+        ],
+        "negative": [
+          "Cause the specified event on a different assertion and verify that it does not invoke the callback registered on the selected assertion."
+        ],
+        "notes": [],
+        "positive": [
+          "Register the same event callback on one of two assertions and verify that only the selected assertion invokes it."
+        ]
+      },
+      "id": "SV-2023-39-ASSERTION-CALLBACK-SCOPE-HANDLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Run overlapping attempts and distinguish them by attemptStartTime."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Run a multicycle attempt and compare start, completion, step, disabled, and control-event cb_time values with the common attemptStartTime."
+        ]
+      },
+      "id": "SV-2023-39-ASSERTION-CALLBACK-TIMES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use assume and cover statement handles."
+        ],
+        "negative": [
+          "Apply it using a sequence or property instance handle."
+        ],
+        "notes": [],
+        "positive": [
+          "Apply a control using an assert-statement handle."
+        ]
+      },
+      "id": "SV-2023-39-ASSERTION-CONTROL-HANDLE-KIND"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Repeat each control."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Disable during an active attempt, then enable for later attempts."
+        ]
+      },
+      "id": "SV-2023-39-ASSERTION-ENABLE-CONTROL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Repeat each control."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Disable then enable fail action around separate failures."
+        ]
+      },
+      "id": "SV-2023-39-ASSERTION-FAIL-ACTION-CONTROL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use identical assertion names in sibling scopes and select each by its scope handle."
+        ],
+        "negative": [
+          "Look up an assertion name from a scope where that name is not visible."
+        ],
+        "notes": [
+          "A VPI consumer is required."
+        ],
+        "positive": [
+          "Look up a named assertion relative to its containing scope."
+        ]
+      },
+      "id": "SV-2023-39-ASSERTION-HANDLE-BY-NAME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare handles for repeated instances generated from one declaration."
+        ],
+        "negative": [],
+        "notes": [
+          "A VPI consumer and multiply instantiated design are required."
+        ],
+        "positive": [
+          "Obtain handles for the same assertion declaration in two module instances and distinguish their instance identities."
+        ]
+      },
+      "id": "SV-2023-39-ASSERTION-HANDLE-INSTANCE-IDENTITY"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Change status while locked."
+        ],
+        "notes": [],
+        "positive": [
+          "Lock, attempt a status change, then unlock and retry."
+        ]
+      },
+      "id": "SV-2023-39-ASSERTION-LOCK-CONTROL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Enable during an existing attempt and verify that attempt is unaffected, then repeat the enable control."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Enable nonvacuous-success pass actions for one assertion and verify a later nonvacuous success executes its pass action."
+        ]
+      },
+      "id": "SV-2023-39-ASSERTION-NONVACUOUS-ACTION-CONTROL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Repeat same-state control."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Exercise both success kinds before, during, and after disabling pass action."
+        ]
+      },
+      "id": "SV-2023-39-ASSERTION-PASS-ACTION-CONTROL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify another assertion remains unchanged."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Reset one assertion with multiple active attempts."
+        ]
+      },
+      "id": "SV-2023-39-ASSERTION-RESET-CONTROL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Query an assertion inheriting its clock from context."
+        ],
+        "negative": [],
+        "notes": [
+          "A VPI consumer is required."
+        ],
+        "positive": [
+          "Query assertions clocked by an explicit clocking block and by an explicit event expression."
+        ]
+      },
+      "id": "SV-2023-39-ASSERTION-STATIC-CLOCKING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Query corresponding assertions in two instances of the same module and distinguish the containing instance while retaining the same module definition."
+        ],
+        "negative": [],
+        "notes": [
+          "A VPI consumer is required."
+        ],
+        "positive": [
+          "Query a named assertion in a module instance and verify its name, containing instance, and module definition information."
+        ]
+      },
+      "id": "SV-2023-39-ASSERTION-STATIC-IDENTITY-INFO"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place two assertions on one line at different columns."
+        ],
+        "negative": [],
+        "notes": [
+          "A VPI consumer is required."
+        ],
+        "positive": [
+          "Query an assertion declared at a known file location and compare all three source coordinates."
+        ]
+      },
+      "id": "SV-2023-39-ASSERTION-STATIC-SOURCE-INFO"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Distinguish a property instance from an assert statement that uses a property."
+        ],
+        "negative": [],
+        "notes": [
+          "A VPI consumer is required."
+        ],
+        "positive": [
+          "Query static type information for one object of each listed assertion category."
+        ]
+      },
+      "id": "SV-2023-39-ASSERTION-STATIC-TYPE-CLASSIFICATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Disable during an existing attempt and verify that attempt is unaffected, then repeat the disable control."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Disable vacuous-success pass actions for one assertion and verify a later vacuous success does not execute its pass action."
+        ]
+      },
+      "id": "SV-2023-39-ASSERTION-VACUITY-ACTION-CONTROL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Disable twice."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Enable stepping for an attempt, then disable it and observe no later step callbacks."
+        ]
+      },
+      "id": "SV-2023-39-ATTEMPT-DISABLE-STEP"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change mode with repeated enable before start."
+        ],
+        "negative": [
+          "Try to modify stepping mode after the attempt starts."
+        ],
+        "notes": [],
+        "positive": [
+          "Enable stepping before an identified attempt starts and observe callbacks."
+        ]
+      },
+      "id": "SV-2023-39-ATTEMPT-ENABLE-STEP"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare success, failure, and step callbacks from one assertion."
+        ],
+        "negative": [
+          "Expect attempt information on a lock callback."
+        ],
+        "notes": [
+          "Do not inspect fields the standard does not mark valid for the event."
+        ],
+        "positive": [
+          "Trigger each event family and inspect only the fields specified as valid."
+        ]
+      },
+      "id": "SV-2023-39-ATTEMPT-INFO-EVENT-VALIDITY"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Run overlapping attempts, kill one by its start time, and verify the other attempt continues while sampled history is preserved."
+        ]
+      },
+      "id": "SV-2023-39-ATTEMPT-KILL-CONTROL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Toggle disable iff at the attempt's starting sample."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Disable one attempt at start and another during evaluation."
+        ]
+      },
+      "id": "SV-2023-39-CALLBACK-ASSERTION-DISABLED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify the state change is scoped to the selected assertion."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Disable then enable one assertion and observe both callbacks."
+        ]
+      },
+      "id": "SV-2023-39-CALLBACK-ASSERTION-ENABLE-STATE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Cause failure after each state."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Disable then enable fail action and observe both events."
+        ]
+      },
+      "id": "SV-2023-39-CALLBACK-ASSERTION-FAIL-ACTION"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Cause property failure and sequence nonmatch and observe failure callbacks."
+        ]
+      },
+      "id": "SV-2023-39-CALLBACK-ASSERTION-FAILURE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Keep a sibling assertion unlocked."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Lock then unlock one assertion and observe both callbacks in order."
+        ]
+      },
+      "id": "SV-2023-39-CALLBACK-ASSERTION-LOCK-STATE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Keep vacuous-success pass-action execution disabled while enabling only nonvacuous-success execution."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Enable nonvacuous-success pass actions on one assertion and observe cbAssertionEnableNonvacuousAction."
+        ]
+      },
+      "id": "SV-2023-39-CALLBACK-ASSERTION-NONVACUOUS-ACTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise vacuous and nonvacuous success."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Disable then enable pass action and observe both events."
+        ]
+      },
+      "id": "SV-2023-39-CALLBACK-ASSERTION-PASS-ACTION"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Reset an assertion with an active attempt and observe the callback."
+        ]
+      },
+      "id": "SV-2023-39-CALLBACK-ASSERTION-RESET"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Observe repeated starts on successive clock ticks."
+        ],
+        "negative": [
+          "Register on a property instance unused by any verification statement and ensure no start event."
+        ],
+        "notes": [],
+        "positive": [
+          "Observe start for an instantiated property evaluation."
+        ]
+      },
+      "id": "SV-2023-39-CALLBACK-ASSERTION-START"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Distinguish sequence match from property success while using the same reason."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Trigger successful property and sequence evaluations and observe success callbacks."
+        ]
+      },
+      "id": "SV-2023-39-CALLBACK-ASSERTION-SUCCESS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Keep nonvacuous-success pass-action execution enabled while disabling only vacuous-success execution."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Disable vacuous-success pass actions on one assertion and observe cbAssertionDisableVacuousAction."
+        ]
+      },
+      "id": "SV-2023-39-CALLBACK-ASSERTION-VACUITY-ACTION"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Make the implication succeed nonvacuously and do not classify that result as vacuous."
+        ],
+        "notes": [],
+        "positive": [
+          "Make an implication succeed vacuously and observe the callback."
+        ]
+      },
+      "id": "SV-2023-39-CALLBACK-ASSERTION-VACUOUS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Leave another attempt active."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Kill an active multicycle attempt and observe the callback."
+        ]
+      },
+      "id": "SV-2023-39-CALLBACK-ATTEMPT-KILL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Fail an assertion after each state change."
+        ],
+        "negative": [],
+        "notes": [
+          "The source describes success categories for these fail-action callback names; materialize against the API event and action state without correcting the standard text."
+        ],
+        "positive": [
+          "Enable then disable fail actions and observe the corresponding callbacks."
+        ]
+      },
+      "id": "SV-2023-39-CALLBACK-FAIL-ACTION-STATE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast with a vacuous success."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Enable nonvacuous actions and complete a property nonvacuously."
+        ]
+      },
+      "id": "SV-2023-39-CALLBACK-NONVACUOUS-ACTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise both vacuous and nonvacuous successes after each state change."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Enable then disable pass actions and observe the corresponding callbacks for an assertion."
+        ]
+      },
+      "id": "SV-2023-39-CALLBACK-PASS-ACTION-STATE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use concurrent attempts of the same assertion and distinguish their successful or failed step events."
+        ],
+        "negative": [],
+        "notes": [
+          "Step-callback enablement and default state are owned by the assertion-control requirement in 39.5.2."
+        ],
+        "positive": [
+          "Enable stepping for one attempt and separately produce a successful step and a failed step, observing the corresponding callback reason."
+        ]
+      },
+      "id": "SV-2023-39-CALLBACK-STEP-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Attempt to provoke an assertion callback after cbAssertionSysEnd."
+        ],
+        "notes": [],
+        "positive": [
+          "Observe system end after all attempts finish, then request an assertion action and verify no effect."
+        ]
+      },
+      "id": "SV-2023-39-CALLBACK-SYSTEM-END"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Accept either ordering of cbAssertionSysInitialized relative to cbStartOfSimulation."
+        ],
+        "negative": [
+          "Attempt an assertion-specific action before completion of cbAssertionSysInitialized."
+        ],
+        "notes": [
+          "Do not require one ordering relative to cbStartOfSimulation."
+        ],
+        "positive": [
+          "Register both initialization callbacks and perform an assertion-specific action only after cbAssertionSysInitialized completes."
+        ]
+      },
+      "id": "SV-2023-39-CALLBACK-SYSTEM-INITIALIZED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Repeat suspension and resumption in one run."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Suspend and resume assertion processing and observe cbAssertionSysKill."
+        ]
+      },
+      "id": "SV-2023-39-CALLBACK-SYSTEM-KILL"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [
+          "Requires support for an action that locks the assertion system."
+        ],
+        "positive": [
+          "Register cbAssertionSysLock, trigger a system-control lock, and observe the callback."
+        ]
+      },
+      "id": "SV-2023-39-CALLBACK-SYSTEM-LOCK"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify an in-progress attempt is not terminated by the stop."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Stop and resume the system twice while an assertion attempt is already executing."
+        ]
+      },
+      "id": "SV-2023-39-CALLBACK-SYSTEM-OFF"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use system control to delay activation beyond simulation startup."
+        ],
+        "negative": [],
+        "notes": [
+          "The delayed-start scenario requires assertion system control."
+        ],
+        "positive": [
+          "Observe cbAssertionSysInitialized followed by cbAssertionSysOn and subsequent assertion-attempt processing at normal startup."
+        ]
+      },
+      "id": "SV-2023-39-CALLBACK-SYSTEM-ON"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Trigger an assertion-system reset and observe the registered callback."
+        ]
+      },
+      "id": "SV-2023-39-CALLBACK-SYSTEM-RESET"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Lock then unlock and verify event order."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Register cbAssertionSysUnlock, unlock a previously locked assertion system, and observe the callback."
+        ]
+      },
+      "id": "SV-2023-39-CALLBACK-SYSTEM-UNLOCK"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast with nonvacuous success."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Disable vacuous actions and produce a vacuous success."
+        ]
+      },
+      "id": "SV-2023-39-CALLBACK-VACUOUS-ACTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a clocking expression distinct from another design clock."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Enable clock-step mode on a multicycle assertion and observe one callback at each assertion clock event."
+        ]
+      },
+      "id": "SV-2023-39-CLOCK-STEP-MODE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Apply equivalent controls to pending procedural concurrent assertion instances."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Reset a deferred assertion with a pending report and verify it is flushed; disable one and verify its already pending report may mature."
+        ]
+      },
+      "id": "SV-2023-39-CONTROL-PENDING-QUEUE-EFFECT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place the event exactly relative to adjacent global-clock ticks and require the strictly following tick."
+        ],
+        "negative": [
+          "Execute the callback at the event time before the next global-clock tick."
+        ],
+        "notes": [],
+        "positive": [
+          "Trigger an assertion callback between global-clock ticks and verify delayed execution with the earlier event cb_time."
+        ]
+      },
+      "id": "SV-2023-39-GLOBAL-FUTURE-CALLBACK-TIMING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use assertions in both top-level and nested scopes."
+        ],
+        "negative": [],
+        "notes": [
+          "A VPI consumer is required."
+        ],
+        "positive": [
+          "Invoke vpi_iterate(vpiAssertion, NULL) in a design containing named assertions in multiple scopes and scan their handles."
+        ]
+      },
+      "id": "SV-2023-39-ITERATE-ALL-ASSERTIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use sibling instances with distinct assertion declarations to check instance scoping."
+        ],
+        "negative": [],
+        "notes": [
+          "A VPI consumer is required."
+        ],
+        "positive": [
+          "Scan vpiAssertion objects using a selected instance handle and observe that its assertions are returned."
+        ]
+      },
+      "id": "SV-2023-39-ITERATE-INSTANCE-ASSERTIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Register separate routines for two supported callback reasons on the same assertion."
+        ],
+        "negative": [],
+        "notes": [
+          "Callback invocation argument contents, applicability by object kind, and registration return handles are owned by separate requirements."
+        ],
+        "positive": [
+          "Register a routine and distinct user data for a valid assertion handle and supported reason, then cause that event and observe invocation."
+        ]
+      },
+      "id": "SV-2023-39-REGISTER-ASSERTION-CALLBACK"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Register different routines for multiple assertion-system reasons."
+        ],
+        "negative": [],
+        "notes": [
+          "A VPI consumer is required."
+        ],
+        "positive": [
+          "Register a callback with cb_rtn and a supported assertion-system reason and observe invocation at that event."
+        ]
+      },
+      "id": "SV-2023-39-REGISTER-SYSTEM-CALLBACK"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Cause one successful and one failed step and compare invoked function identity and reason."
+        ]
+      },
+      "id": "SV-2023-39-STEP-CALLBACK-BOTH-OUTCOMES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a step containing multiple matched expressions and compare their reported source references."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Produce a successful assertion step with matched expressions and verify that detail identifies those expressions and their source references."
+        ]
+      },
+      "id": "SV-2023-39-STEP-CALLBACK-DETAIL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Fail on the first expression and verify that the one-element array identifies that failure point."
+        ],
+        "negative": [
+          "Observe an empty expression array for a failing transition."
+        ],
+        "notes": [],
+        "positive": [
+          "Cause a failing transition after earlier matched expressions and verify the final array element identifies the failing expression."
+        ]
+      },
+      "id": "SV-2023-39-STEP-CALLBACK-FAILURE-DETAIL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use two distinct paths and verify their source/destination state IDs uniquely identify the path transitions."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Observe step details along a path from origin through an intermediate state to an accepting state and verify the defined state-ID categories."
+        ]
+      },
+      "id": "SV-2023-39-STEP-CALLBACK-STATE-IDS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast an unconditional zero-expression transition with a conditional transition that reports its matched expression."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Construct an unconditional assertion transition and verify that its step detail can contain zero matched expressions."
+        ]
+      },
+      "id": "SV-2023-39-STEP-CALLBACK-UNCONDITIONAL-TRANSITION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a null user-data value."
+        ],
+        "negative": [],
+        "notes": [
+          "A VPI consumer is required."
+        ],
+        "positive": [
+          "Register distinct user data and verify the invoked routine receives it with the callback reason."
+        ]
+      },
+      "id": "SV-2023-39-SYSTEM-CALLBACK-DATA"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use sibling scopes to verify selection."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Apply a control to one scope, then with NULL to all scopes."
+        ]
+      },
+      "id": "SV-2023-39-SYSTEM-CONTROL-SCOPE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "End with active attempts and callbacks, then attempt further control and assertion activity."
+        ]
+      },
+      "id": "SV-2023-39-SYSTEM-END-CONTROL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Repeat disable and enable operations."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Fail assertions before disable, while disabled, and after enable."
+        ]
+      },
+      "id": "SV-2023-39-SYSTEM-FAIL-ACTION-CONTROL"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Kill active attempts and verify no new attempt starts while callback registrations remain."
+        ]
+      },
+      "id": "SV-2023-39-SYSTEM-KILL-CONTROL"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Change assertion status while locked."
+        ],
+        "notes": [],
+        "positive": [
+          "Lock, attempt a status change, unlock, and repeat the change."
+        ]
+      },
+      "id": "SV-2023-39-SYSTEM-LOCK-CONTROL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Enable while an attempt is active, verify that attempt is unaffected, and repeat the enable control."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Enable nonvacuous-success pass actions in one scope and verify a later nonvacuous success executes its pass action."
+        ]
+      },
+      "id": "SV-2023-39-SYSTEM-NONVACUOUS-ACTION-CONTROL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify callback registrations remain."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Turn off while one attempt runs and before another would start."
+        ]
+      },
+      "id": "SV-2023-39-SYSTEM-OFF-CONTROL"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Turn off or kill, then turn on and observe new attempts with callbacks retained."
+        ]
+      },
+      "id": "SV-2023-39-SYSTEM-ON-CONTROL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Repeat disable and enable operations."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Exercise vacuous and nonvacuous pass actions before disable, while disabled, and after enable."
+        ]
+      },
+      "id": "SV-2023-39-SYSTEM-PASS-ACTION-CONTROL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify non-step callbacks survive."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Reset with active attempts and both step and non-step callbacks."
+        ]
+      },
+      "id": "SV-2023-39-SYSTEM-RESET-CONTROL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Disable while an attempt is active, verify that attempt is unaffected, and repeat the disable control."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Disable vacuous-success pass actions in one scope and verify a later vacuous success does not execute its pass action."
+        ]
+      },
+      "id": "SV-2023-39-SYSTEM-VACUITY-ACTION-CONTROL"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Attempt to obtain an unnamed assertion using vpi_handle_by_name."
+        ],
+        "notes": [
+          "A VPI consumer is required; do not assume an implementation-generated display label is a lookup name."
+        ],
+        "positive": [
+          "Confirm an unnamed assertion remains available through iteration."
+        ]
+      },
+      "id": "SV-2023-39-UNNAMED-ASSERTION-NOT-NAME-LOOKUP"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Navigate objects nested below multiple scopes rather than only top-level objects."
+        ],
+        "negative": [],
+        "notes": [
+          "A VPI consumer and elaborated design containing each object kind are required."
+        ],
+        "positive": [
+          "Navigate an elaborated design and obtain handles for a named assertion, property, and sequence object."
+        ]
+      },
+      "id": "SV-2023-39-VPI-ASSERTION-NAVIGATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use sibling instances containing distinct objects and verify direct iteration remains instance-scoped."
+        ],
+        "negative": [],
+        "notes": [
+          "A VPI consumer and elaborated design containing each object kind are required."
+        ],
+        "positive": [
+          "From one elaborated instance handle, directly iterate its assertion, property, and sequence objects."
+        ]
+      },
+      "id": "SV-2023-39-VPI-INSTANCE-DIRECT-ACCESS"
+    }
+  ],
+  "schema_version": 1
+}

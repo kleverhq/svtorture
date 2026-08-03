@@ -2,12 +2,5506 @@ schema_version = 3
 part = "7"
 
 [[requirements]]
-id = "SV-2023-07-PACKED-STRUCT-ORDER"
+id = "SV-2023-07-ARRAY-ACTUAL-FORMAL-COMPATIBILITY"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.7"
+anchors = [
+    "[2023:7.7:P002:p162]",
+]
+summary = "An array actual may associate with an array formal exactly when the actual could be assigned as a source to the formal's array type; an unsized formal dimension matches any size in the corresponding actual dimension."
+related_clauses = [
+    "7.6",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.7"
+
+[[requirements]]
+id = "SV-2023-07-ARRAY-AND-REDUCTION-METHOD"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.12.3"
+anchors = [
+    "[2023:7.12.3:L003:p176]",
+]
+summary = "and() returns the bitwise AND of all element values, or with a with clause, the bitwise AND of the expression value evaluated for every element."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.12.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.12.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.12.3"
+
+[[requirements]]
+id = "SV-2023-07-ARRAY-ARGUMENT-BY-VALUE-COPY"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.7"
+anchors = [
+    "[2023:7.7:P001:p162]",
+]
+summary = "Passing a fixed-size, dynamic, queue, or associative array argument by value passes a copy, with compatibility governed by array-assignment rules."
+related_clauses = [
+    "7.6",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.7"
+
+[[requirements]]
+id = "SV-2023-07-ARRAY-DIMENSION-PLACEMENT"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.4"
+anchors = [
+    "[2023:7.4:P001:p153]",
+    "[2023:7.4.4:P001:p154]",
+]
+summary = "Array dimensions before the data identifier are packed dimensions; dimensions after it are unpacked dimensions, and multiple dimensions declare an array of arrays."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "same-rule-different-clause"
+clause = "7.4.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.4"
+
+[[requirements]]
+id = "SV-2023-07-ARRAY-ELEMENT-INDEXED-SELECTION"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.4.5"
+anchors = [
+    "[2023:7.4.5:P004:p156]",
+]
+summary = "An indexed name may select one element from either a packed or unpacked array."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "same-rule-different-clause"
+clause = "7.4.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "same-rule-different-clause"
+clause = "7.4.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.4.5"
+
+[[requirements]]
+id = "SV-2023-07-ARRAY-ELEMENT-READ-WRITE"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.4.6"
+anchors = [
+    "[2023:7.4.6:L002:p157]",
+]
+summary = "An individual element of a packed or unpacked array may be read and written."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "same-rule-different-clause"
+clause = "7.4.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "same-rule-different-clause"
+clause = "7.4.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.4.6"
+
+[[requirements]]
+id = "SV-2023-07-ARRAY-EQUALITY-OPERATIONS"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.4.6"
+anchors = [
+    "[2023:7.4.6:L004:p157]",
+]
+summary = "Equality and inequality operations may compare compatible whole arrays or compatible array slices."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "same-rule-different-clause"
+clause = "7.4.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "same-rule-different-clause"
+clause = "7.4.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.4.6"
+
+[[requirements]]
+id = "SV-2023-07-ARRAY-EXPRESSION-AS-ASSIGNMENT-SOURCE"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.6"
+anchors = [
+    "[2023:7.6:P009:p161]",
+    "[2023:7.6:C006:p161]",
+    "[2023:7.6:P010:p161]",
+]
+summary = "An assignment-compatible array source may be a complex expression containing array slices and concatenations; assigning it to a dynamic array sizes the target to the expression's element count and copies elements in expression order."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.6"
+
+[[requirements]]
+id = "SV-2023-07-ARRAY-MAP-METHOD"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.12.5"
+anchors = [
+    "[2023:7.12.5:P001:p178]",
+]
+summary = "map() requires a with expression and returns an unpacked array with the source's same dimension ranges or associative key set and index type, replacing each element by its with-expression value whose self-determined type becomes the result element type."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "The map() array method and its result-shape and element-type guarantees are absent from IEEE 1800-2012."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "The map() array method and its shape, index-type, and result-element-type guarantees are absent from IEEE 1800-2017."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.12.5"
+
+[[requirements]]
+id = "SV-2023-07-ARRAY-METHOD-CALL-SYNTAX"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.12"
+anchors = [
+    "[2023:7.12:P002:p173]",
+    "[2023:7.12:G001:p173]",
+]
+summary = "An array method call consists of an array expression, dot, method name, optional attributes and parenthesized iterator/index arguments, followed by an optional with(expression) clause."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "changed-expectation"
+clause = "7.12"
+note = "The 2012 syntax permits only an optional iterator_argument; it does not provide the later optional index_argument."
+
+[requirements.revision_applicability.1800-2017]
+status = "changed-expectation"
+clause = "7.12"
+note = "IEEE 1800-2017 permits only an optional iterator_argument in the parenthesized method arguments; it does not provide the 2023 index_argument form."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.12"
+
+[[requirements]]
+id = "SV-2023-07-ARRAY-METHOD-ITERATOR-BINDINGS"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.12"
+anchors = [
+    "[2023:7.12:P004:p174]",
+]
+summary = "An array manipulation method iterates its elements to evaluate the with expression; an explicit iterator name designates each element and is scoped to that expression, defaulting to item, while the optional index-query name defaults to index."
+related_clauses = [
+    "7.12.4",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "changed-expectation"
+clause = "7.12"
+note = "The 2012 rule defines the element iterator and default item binding, but has no index_argument or default index querying-method binding."
+
+[requirements.revision_applicability.1800-2017]
+status = "changed-expectation"
+clause = "7.12"
+note = "IEEE 1800-2017 defines the explicit/default element iterator and its scope, but has no separate index_argument binding or default index name."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.12"
+
+[[requirements]]
+id = "SV-2023-07-ARRAY-METHOD-ITERATOR-REQUIRES-WITH"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.12"
+anchors = [
+    "[2023:7.12:P004:p174]",
+]
+summary = "Specifying an iterator_argument in an array manipulation method call without a with clause is illegal."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.12"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.12"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.12"
+
+[[requirements]]
+id = "SV-2023-07-ARRAY-METHOD-POSTFIX-PLACEMENT"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.12"
+anchors = [
+    "[2023:7.12:P006:p174]",
+]
+summary = "An array manipulation method call may be used as an implicit variable in an expression; range selects and property accesses shall follow the with clause when present, otherwise they follow the method call."
+related_clauses = [
+    "13.4.1",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 does not specify the later implicit-variable use and postfix placement guarantee for array method calls."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 does not define array method calls as implicit variables or specify postfix range-select/property placement around a with clause."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.12"
+
+[[requirements]]
+id = "SV-2023-07-ARRAY-METHOD-WITH-EXPRESSION"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.12"
+anchors = [
+    "[2023:7.12:P003:p173]",
+]
+summary = "An array manipulation method's optional with clause shall contain one expression in parentheses, unlike randomize() constraints, which use braces."
+related_clauses = [
+    "18.7",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.12"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.12"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.12"
+
+[[requirements]]
+id = "SV-2023-07-ARRAY-OR-REDUCTION-METHOD"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.12.3"
+anchors = [
+    "[2023:7.12.3:L004:p176]",
+]
+summary = "or() returns the bitwise OR of all element values, or with a with clause, the bitwise OR of the expression value evaluated for every element."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.12.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.12.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.12.3"
+
+[[requirements]]
+id = "SV-2023-07-ARRAY-ORDERING-APPLICABILITY"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.12.2"
+anchors = [
+    "[2023:7.12.2:P001:p175]",
+]
+summary = "Array ordering methods reorder in place any fixed-size or dynamically sized unpacked array, but shall not be applied to associative arrays."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.12.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.12.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.12.2"
+
+[[requirements]]
+id = "SV-2023-07-ARRAY-ORDERING-METHOD-SIGNATURE"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.12.2"
+anchors = [
+    "[2023:7.12.2:P002:p175]",
+    "[2023:7.12.2:C001:p175]",
+    "[2023:7.12.2:P003:p176]",
+]
+summary = "Array ordering methods are void methods operating on the receiver, with an optional array-element iterator argument whose default name is item."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.12.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.12.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.12.2"
+
+[[requirements]]
+id = "SV-2023-07-ARRAY-PRODUCT-METHOD"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.12.3"
+anchors = [
+    "[2023:7.12.3:L002:p176]",
+]
+summary = "product() returns the product of all element values, or with a with clause, the product of the expression value evaluated for every element."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.12.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.12.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.12.3"
+
+[[requirements]]
+id = "SV-2023-07-ARRAY-REDUCTION-APPLICABILITY"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.12.3"
+anchors = [
+    "[2023:7.12.3:P001:p176]",
+]
+summary = "A reduction method may reduce any unpacked array of integral values to one value; when with is present, the reduction operates on the expression value evaluated for each element rather than using it as a selection predicate."
+related_clauses = [
+    "7.12.1",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.12.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.12.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.12.3"
+
+[[requirements]]
+id = "SV-2023-07-ARRAY-REDUCTION-TYPE-RULES"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.12.3"
+anchors = [
+    "[2023:7.12.3:P002:p176]",
+    "[2023:7.12.3:C001:p176]",
+    "[2023:7.12.3:P003:p176]",
+    "[2023:7.12.3:P004:p176]",
+    "[2023:7.12.3:P006:p177]",
+]
+summary = "A reduction returns one value of the element type when with is omitted or exactly the with-expression type and width when present; omission requires the operation on the element type and presence requires it on the expression type, with iterator default item."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.12.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.12.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.12.3"
+
+[[requirements]]
+id = "SV-2023-07-ARRAY-REVERSE-METHOD"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.12.2"
+anchors = [
+    "[2023:7.12.2:L001:p176]",
+]
+summary = "reverse() reverses the array element order in place, and specifying a with clause on reverse() shall be a compiler error."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.12.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.12.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.12.2"
+
+[[requirements]]
+id = "SV-2023-07-ARRAY-RSORT-METHOD"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.12.2"
+anchors = [
+    "[2023:7.12.2:L003:p176]",
+]
+summary = "rsort() orders array elements descending by the element value or optional with-expression value; omission of with requires <, >, and == on the element type, while presence requires them on the expression type."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.12.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.12.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.12.2"
+
+[[requirements]]
+id = "SV-2023-07-ARRAY-SHUFFLE-METHOD"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.12.2"
+anchors = [
+    "[2023:7.12.2:L004:p176]",
+]
+summary = "shuffle() randomizes array element order in place, and a with clause on shuffle() shall be a compiler error."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.12.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.12.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.12.2"
+
+[[requirements]]
+id = "SV-2023-07-ARRAY-SLICE-ASSIGNMENT-ATOMIC"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.6"
+anchors = [
+    "[2023:7.6:P004:p160]",
+]
+summary = "An assignment whose left-hand side contains an array slice is treated as one assignment to the entire slice."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "same-rule-different-clause"
+clause = "6.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "same-rule-different-clause"
+clause = "6.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.6"
+
+[[requirements]]
+id = "SV-2023-07-ARRAY-SLICE-READ-WRITE"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.4.6"
+anchors = [
+    "[2023:7.4.6:L003:p157]",
+]
+summary = "A constant-width slice of a packed or nonassociative unpacked array may be read and written."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "same-rule-different-clause"
+clause = "7.4.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "same-rule-different-clause"
+clause = "7.4.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.4.6"
+
+[[requirements]]
+id = "SV-2023-07-ARRAY-SLICE-SELECTION"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.4.5"
+anchors = [
+    "[2023:7.4.5:P003:p156]",
+    "[2023:7.4.5:P005:p156]",
+]
+summary = "A slice name selects one or more contiguous array elements and retains the source array's packed or unpacked category."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "same-rule-different-clause"
+clause = "7.4.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "same-rule-different-clause"
+clause = "7.4.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.4.5"
+
+[[requirements]]
+id = "SV-2023-07-ARRAY-SORT-METHOD"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.12.2"
+anchors = [
+    "[2023:7.12.2:L002:p176]",
+]
+summary = "sort() orders array elements ascending by the element value or optional with-expression value; omission of with requires <, >, and == on the element type, while presence requires them on the expression type."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.12.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.12.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.12.2"
+
+[[requirements]]
+id = "SV-2023-07-ARRAY-SUM-METHOD"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.12.3"
+anchors = [
+    "[2023:7.12.3:L001:p176]",
+]
+summary = "sum() returns the sum of all element values, or with a with clause, the sum of the expression value evaluated for every element."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.12.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.12.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.12.3"
+
+[[requirements]]
+id = "SV-2023-07-ARRAY-WHOLE-READ-WRITE"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.4.6"
+anchors = [
+    "[2023:7.4.6:P001:p157]",
+    "[2023:7.4.6:L001:p157]",
+]
+summary = "Compatible packed or unpacked arrays may be read and written as whole array values."
+related_clauses = [
+    "7.6",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "same-rule-different-clause"
+clause = "7.4.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "same-rule-different-clause"
+clause = "7.4.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.4.6"
+
+[[requirements]]
+id = "SV-2023-07-ARRAY-XOR-REDUCTION-METHOD"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.12.3"
+anchors = [
+    "[2023:7.12.3:L005:p177]",
+]
+summary = "xor() returns the bitwise XOR of all element values, or with a with clause, the bitwise XOR of the expression value evaluated for every element."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.12.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.12.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.12.3"
+
+[[requirements]]
+id = "SV-2023-07-ASSOCIATIVE-ARRAY-ARGUMENT-BY-VALUE"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.9.10"
+anchors = [
+    "[2023:7.9.10:P002:p168]",
+]
+summary = "Passing an associative array by value creates a local copy for the called subroutine."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.9.10"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.9.10"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.9.10"
+
+[[requirements]]
+id = "SV-2023-07-ASSOCIATIVE-ARRAY-ARGUMENT-COMPATIBILITY"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.9.10"
+anchors = [
+    "[2023:7.9.10:P001:p168]",
+]
+summary = "An associative-array actual may be passed only to an associative-array formal with compatible element type and the same index type; associative arrays and nonassociative array formals or actuals shall not be mixed."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.9.10"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.9.10"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.9.10"
+
+[[requirements]]
+id = "SV-2023-07-ASSOCIATIVE-ARRAY-ASSIGNMENT-CATEGORY"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.6"
+anchors = [
+    "[2023:7.6:P002:p160]",
+    "[2023:7.9.9:P001:p168]",
+]
+summary = "An associative array is assignment compatible only with another associative array having a compatible element type and the same index type; assignment between associative and fixed-size, dynamic, or queue arrays is illegal."
+related_clauses = [
+    "7.9.9",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.6"
+
+[[requirements]]
+id = "SV-2023-07-ASSOCIATIVE-ARRAY-DECLARATION"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.8"
+anchors = [
+    "[2023:7.8:P003:p163]",
+    "[2023:7.8:C001:p163]",
+    "[2023:7.8:P004:p163]",
+]
+summary = "An associative array declaration has form data_type array_id[index_type], where the element type may be any type allowed for fixed-size arrays and index_type names an existing type or is wildcard *; the index position shall not itself declare a type."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.8"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.8"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.8"
+
+[[requirements]]
+id = "SV-2023-07-ASSOCIATIVE-ARRAY-KEY-ORDERING"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.8"
+anchors = [
+    "[2023:7.8:P001:p163]",
+    "[2023:7.8:P002:p163]",
+    "[2023:7.8:P006:p163]",
+]
+summary = "An associative array is a lookup table whose declared index type supplies keys and their ordering; associative indices are not restricted to integral types."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.8"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.8"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.8"
+
+[[requirements]]
+id = "SV-2023-07-ASSOCIATIVE-ARRAY-LAZY-STORAGE"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.8"
+anchors = [
+    "[2023:7.8:P001:p163]",
+]
+summary = "A newly declared associative array has no allocated entries; element storage appears only when an indexed entry is allocated."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.8"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.8"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.8"
+
+[[requirements]]
+id = "SV-2023-07-ASSOCIATIVE-ARRAY-LITERAL"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.9.11"
+anchors = [
+    "[2023:7.9.11:P001:p169]",
+]
+summary = "An associative-array literal uses '{index:value} entries and may include a default:value item; assigning the literal may replace the entire array contents, while individual entries may also be written separately."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.9.11"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.9.11"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.9.11"
+
+[[requirements]]
+id = "SV-2023-07-ASSOCIATIVE-ARRAY-OPERATIONS-NO-SLICE"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.4.6"
+anchors = [
+    "[2023:7.4.6:P002:p157]",
+]
+summary = "Associative arrays do not permit slicing, but permit read, write, and equality operations on a whole associative array or one element."
+related_clauses = [
+    "7.6",
+    "7.9.9",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 does not state the later combined rule expressly permitting whole/element associative operations while prohibiting associative-array slices."
+
+[requirements.revision_applicability.1800-2017]
+status = "changed-expectation"
+clause = "7.4.3"
+note = "IEEE 1800-2017 states that slice read/write operations can be performed on all packed or unpacked arrays and does not state the 2023 associative-array exception."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.4.6"
+
+[[requirements]]
+id = "SV-2023-07-ASSOCIATIVE-ASSIGNMENT-REPLACES-TARGET"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.9.9"
+anchors = [
+    "[2023:7.9.9:P002:p168]",
+]
+summary = "Associative-array assignment first removes every existing target entry and then copies every source entry into the target."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.9.9"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.9.9"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.9.9"
+
+[[requirements]]
+id = "SV-2023-07-ASSOCIATIVE-DEFAULT-DOES-NOT-CREATE-ENTRY"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.9.11"
+anchors = [
+    "[2023:7.9.11:P004:p169]",
+]
+summary = "Specifying a default value for an associative array shall not change the results or entry set observed by associative-array methods."
+related_clauses = [
+    "7.9",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.9.11"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.9.11"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.9.11"
+
+[[requirements]]
+id = "SV-2023-07-ASSOCIATIVE-DEFAULT-READ"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.8.6"
+anchors = [
+    "[2023:7.8.6:P001:p165]",
+    "[2023:7.9.11:P003:p169]",
+]
+summary = "Reading a nonexistent associative entry from an array with a user-specified default shall return that default and shall not issue a warning; without a specified default, it returns the element type's Table 7-1 value."
+related_clauses = [
+    "7.9.11",
+    "7.4.5",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.8.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.8.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.8.6"
+
+[[requirements]]
+id = "SV-2023-07-ASSOCIATIVE-DELETE-ALL"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.9.2"
+anchors = [
+    "[2023:7.9.2:P004:p166]",
+]
+summary = "Calling delete() on an associative array without an index removes every entry."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.9.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.9.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.9.2"
+
+[[requirements]]
+id = "SV-2023-07-ASSOCIATIVE-DELETE-INDEXED"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.9.2"
+anchors = [
+    "[2023:7.9.2:P003:p166]",
+]
+summary = "delete(index) removes the associative-array entry at the specified key; if no such entry exists, it performs no change and issues no warning."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.9.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.9.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.9.2"
+
+[[requirements]]
+id = "SV-2023-07-ASSOCIATIVE-DELETE-SIGNATURE"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.9.2"
+anchors = [
+    "[2023:7.9.2:P001:p166]",
+    "[2023:7.9.2:C001:p166]",
+    "[2023:7.9.2:P002:p166]",
+]
+summary = "An associative array provides function void delete() with an optional input index argument; when supplied, the index shall be of the array's appropriate index type."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.9.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.9.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.9.2"
+
+[[requirements]]
+id = "SV-2023-07-ASSOCIATIVE-ELEMENT-CREATION"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.8"
+anchors = [
+    "[2023:7.8:P006:p163]",
+    "[2023:7.8.7:P001:p165]",
+]
+summary = "A nonexistent associative-array entry shall be dynamically allocated when used as an assignment target or as an actual argument passed by reference."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.8"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.8"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.8"
+
+[[requirements]]
+id = "SV-2023-07-ASSOCIATIVE-ELEMENT-EXPRESSION-SELECTION"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.8"
+anchors = [
+    "[2023:7.8:P006:p163]",
+]
+summary = "Associative-array elements are unpacked, so except for whole-array copying or comparison, an individual element shall be selected before its value is used in an expression."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.8"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.8"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.8"
+
+[[requirements]]
+id = "SV-2023-07-ASSOCIATIVE-EXISTS-METHOD"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.9.3"
+anchors = [
+    "[2023:7.9.3:P001:p166]",
+    "[2023:7.9.3:C001:p166]",
+    "[2023:7.9.3:P002:p166]",
+    "[2023:7.9.3:P003:p166]",
+]
+summary = "An associative array provides function int exists(input index), where index has the array's appropriate key type; it returns 1 if that entry exists and 0 otherwise."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.9.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.9.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.9.3"
+
+[[requirements]]
+id = "SV-2023-07-ASSOCIATIVE-FIRST-SIGNATURE"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.9.4"
+anchors = [
+    "[2023:7.9.4:P001:p167]",
+    "[2023:7.9.4:C001:p167]",
+    "[2023:7.9.4:P002:p167]",
+    "[2023:7.9.4:P003:p167]",
+]
+summary = "For a non-wildcard associative array, function int first(ref index) requires an appropriate index-typed variable; on a nonempty array it stores the smallest key and returns 1, while on an empty array it returns 0."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.9.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.9.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.9.4"
+
+[[requirements]]
+id = "SV-2023-07-ASSOCIATIVE-INDEX-EQUALITY-LEGALITY"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.8.5"
+anchors = [
+    "[2023:7.8.5:P002:p165]",
+    "[2023:7.8.5:L001:p165]",
+]
+summary = "An associative-array index type is legal only if equality is defined for it; dynamically sized types may qualify, but real, shortreal, and any type containing real or shortreal are illegal index types."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.8.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.8.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.8.5"
+
+[[requirements]]
+id = "SV-2023-07-ASSOCIATIVE-INVALID-READ"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.8.6"
+anchors = [
+    "[2023:7.8.6:P001:p165]",
+]
+summary = "Reading an associative array with an X/Z-containing 4-state index or reading a nonexistent entry without a user default shall issue a warning and return the array element type's Table 7-1 nonexistent-entry value."
+related_clauses = [
+    "7.4.5",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.8.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.8.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.8.6"
+
+[[requirements]]
+id = "SV-2023-07-ASSOCIATIVE-INVALID-WRITE"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.8.6"
+anchors = [
+    "[2023:7.8.6:P002:p165]",
+]
+summary = "Writing an associative array with an invalid index shall be ignored and shall issue a warning."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.8.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.8.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.8.6"
+
+[[requirements]]
+id = "SV-2023-07-ASSOCIATIVE-LAST-METHOD"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.9.5"
+anchors = [
+    "[2023:7.9.5:P001:p167]",
+    "[2023:7.9.5:C001:p167]",
+    "[2023:7.9.5:P002:p167]",
+    "[2023:7.9.5:P003:p167]",
+]
+summary = "For a non-wildcard associative array, function int last(ref index) requires an appropriate index-typed variable; on a nonempty array it stores the largest key and returns 1, while on an empty array it returns 0."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.9.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.9.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.9.5"
+
+[[requirements]]
+id = "SV-2023-07-ASSOCIATIVE-NEXT-SIGNATURE"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.9.6"
+anchors = [
+    "[2023:7.9.6:P001:p167]",
+    "[2023:7.9.6:C001:p167]",
+    "[2023:7.9.6:P002:p167]",
+    "[2023:7.9.6:P003:p167]",
+    "[2023:7.9.6:P004:p167]",
+]
+summary = "For a non-wildcard associative array, function int next(ref index) requires an appropriate key-typed variable; it finds the smallest key greater than the input key, stores and returns 1 for that key if found, otherwise leaves the argument unchanged and returns 0."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.9.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.9.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.9.6"
+
+[[requirements]]
+id = "SV-2023-07-ASSOCIATIVE-NUM-SIZE-METHODS"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.9.1"
+anchors = [
+    "[2023:7.9.1:P001:p166]",
+    "[2023:7.9.1:C001:p166]",
+    "[2023:7.9.1:P002:p166]",
+]
+summary = "An associative array provides no-argument functions int num() and int size(); each returns the current number of allocated entries, returning zero when the array is empty."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.9.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.9.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.9.1"
+
+[[requirements]]
+id = "SV-2023-07-ASSOCIATIVE-PREV-METHOD"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.9.7"
+anchors = [
+    "[2023:7.9.7:P001:p168]",
+    "[2023:7.9.7:C001:p168]",
+    "[2023:7.9.7:P002:p168]",
+    "[2023:7.9.7:P003:p168]",
+]
+summary = "For a non-wildcard associative array, function int prev(ref index) requires an appropriate key-typed variable; it finds the largest key smaller than the input key, stores and returns 1 for that key if found, otherwise leaves the argument unchanged and returns 0."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.9.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.9.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.9.7"
+
+[[requirements]]
+id = "SV-2023-07-ASSOCIATIVE-READ-MODIFY-WRITE-ALLOCATION"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.8.7"
+anchors = [
+    "[2023:7.8.7:P001:p165]",
+    "[2023:7.8.7:P002:p165]",
+]
+summary = "When one construct both reads and writes a nonexistent associative entry, the entry shall be allocated and initialized to its user-specified or type default before the read portion occurs; the operation then applies to that initialized value."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.8.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.8.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.8.7"
+
+[[requirements]]
+id = "SV-2023-07-ASSOCIATIVE-TRAVERSAL-ARGUMENT-COMPATIBILITY"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.9.8"
+anchors = [
+    "[2023:7.9.8:P001:p168]",
+]
+summary = "The ref argument passed to first(), last(), next(), or prev() shall be assignment compatible with the associative array's index type."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.9.8"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.9.8"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.9.8"
+
+[[requirements]]
+id = "SV-2023-07-ASSOCIATIVE-TRAVERSAL-NARROW-ARGUMENT"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.9.8"
+anchors = [
+    "[2023:7.9.8:P001:p168]",
+]
+summary = "If an integral traversal-method argument is narrower than the associative index type, the selected index shall be truncated to fit the argument and the method shall return -1 rather than its ordinary success status."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.9.8"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.9.8"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.9.8"
+
+[[requirements]]
+id = "SV-2023-07-BOUNDED-QUEUE-CAPACITY"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.10.1"
+anchors = [
+    "[2023:7.10.1:L013:p170]",
+]
+summary = "A queue declared [$:N] is bounded: no valid index may exceed N and its size shall not exceed N+1."
+related_clauses = [
+    "7.10.5",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.10.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.10.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.10.1"
+
+[[requirements]]
+id = "SV-2023-07-BOUNDED-QUEUE-OVERFLOW-DISCARD"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.10.5"
+anchors = [
+    "[2023:7.10.5:P001:p173]",
+]
+summary = "A bounded queue otherwise behaves as unbounded, but after any write all elements with indices above its declared upper bound shall be discarded and a warning shall be issued, leaving no element beyond the bound."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.10.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.10.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.10.5"
+
+[[requirements]]
+id = "SV-2023-07-CLASS-ASSOCIATIVE-DETERMINISTIC-ORDER"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.8.3"
+anchors = [
+    "[2023:7.8.3:L003:p164]",
+]
+summary = "Class-handle keys have an implementation-chosen arbitrary ordering, but that ordering shall be deterministic."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.8.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.8.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.8.3"
+
+[[requirements]]
+id = "SV-2023-07-CLASS-ASSOCIATIVE-INDEX-TYPE"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.8.3"
+anchors = [
+    "[2023:7.8.3:L001:p164]",
+]
+summary = "A class-indexed associative array accepts object handles of its declared class or any derived class; an index of any other type is illegal and shall cause a type-check error."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.8.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.8.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.8.3"
+
+[[requirements]]
+id = "SV-2023-07-CLASS-ASSOCIATIVE-NULL-INDEX"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.8.3"
+anchors = [
+    "[2023:7.8.3:L002:p164]",
+]
+summary = "The null handle is a valid key for a class-indexed associative array."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.8.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.8.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.8.3"
+
+[[requirements]]
+id = "SV-2023-07-COMMA-SEPARATED-ARRAY-DECLARATIONS"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.4.4"
+anchors = [
+    "[2023:7.4.4:P008:p155]",
+]
+summary = "A comma-separated declaration may declare multiple arrays only with one common data type and identical packed dimensions; each declarator may have its own unpacked dimensions."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "same-rule-different-clause"
+clause = "7.4.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "same-rule-different-clause"
+clause = "7.4.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.4.4"
+
+[[requirements]]
+id = "SV-2023-07-DPI-OPEN-ARRAY-UNPACKED-DIMENSIONS"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.7"
+anchors = [
+    "[2023:7.7:P011:p163]",
+]
+summary = "Unpacked dimensions of DPI open-array formals follow dynamic-array and queue formal-argument rules; a DPI open array may additionally have one solitary unsized packed dimension."
+related_clauses = [
+    "7.6",
+    "34.5.6.1",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.7"
+
+[[requirements]]
+id = "SV-2023-07-DPI-OUTPUT-OPEN-ARRAY-ACTUAL-RESTRICTION"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.7"
+anchors = [
+    "[2023:7.7:P011:p163]",
+]
+summary = "A dynamic array or queue actual shall not be passed to a DPI output formal that has unsized dimensions."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.7"
+
+[[requirements]]
+id = "SV-2023-07-DYNAMIC-ARRAY-DELETE-METHOD"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.5"
+anchors = [
+    "[2023:7.5:P007:p158]",
+    "[2023:7.5.3:P001:p160]",
+    "[2023:7.5.3:C001:p160]",
+    "[2023:7.5.3:P002:p160]",
+]
+summary = "A dynamic array provides function void delete() with no arguments; calling it removes every element and leaves the array with size zero."
+related_clauses = [
+    "7.5.3",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.5"
+
+[[requirements]]
+id = "SV-2023-07-DYNAMIC-ARRAY-DIMENSION-SYNTAX"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.5"
+anchors = [
+    "[2023:7.5:P002:p157]",
+]
+summary = "An empty unpacked dimension [] denotes a dynamic dimension, and any unpacked dimension position may be dynamic."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.5"
+
+[[requirements]]
+id = "SV-2023-07-DYNAMIC-ARRAY-DIRECT-ASSIGNMENT-EQUIVALENCE"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.6"
+anchors = [
+    "[2023:7.6:P008:p161]",
+    "[2023:7.6:C005:p161]",
+]
+summary = "Directly assigning array C to dynamic array B is equivalent to B = new[C.size()](C): B is resized to C's count and initialized from C's elements."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.6"
+
+[[requirements]]
+id = "SV-2023-07-DYNAMIC-ARRAY-ELEMENT-TYPES"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.5"
+anchors = [
+    "[2023:7.5:P001:p157]",
+]
+summary = "A dynamic array may use any variable data type as its element type, including an array type."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.5"
+
+[[requirements]]
+id = "SV-2023-07-DYNAMIC-ARRAY-IDENTIFIER-LEFTMOST-DIMENSION"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.5"
+anchors = [
+    "[2023:7.5:P004:p158]",
+]
+summary = "An identifier denotes a dynamic array only when its leftmost unpacked dimension is dynamic; a later dynamic dimension makes containing elements dynamic subarrays."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.5"
+
+[[requirements]]
+id = "SV-2023-07-DYNAMIC-ARRAY-NEW-ARRAY-INITIALIZER"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.5.1"
+anchors = [
+    "[2023:7.5.1:P003:p158]",
+    "[2023:7.5.1:P008:p159]",
+]
+summary = "new[] may include a parenthesized array initialization expression, which shall be assignment compatible with the left-hand-side dynamic array and supplies initial element values."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.5.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.5.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.5.1"
+
+[[requirements]]
+id = "SV-2023-07-DYNAMIC-ARRAY-NEW-CONTEXT"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.5.1"
+anchors = [
+    "[2023:7.5.1:P001:p158]",
+    "[2023:7.5.1:G001:p158]",
+    "[2023:7.5.1:P005:p158]",
+    "[2023:7.5.1:P006:p159]",
+]
+summary = "new[] sets or changes a dynamic array's size and initializes its elements, and may be the right-hand side of a variable declaration assignment or blocking procedural assignment when the left-hand side denotes a dynamic array."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.5.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.5.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.5.1"
+
+[[requirements]]
+id = "SV-2023-07-DYNAMIC-ARRAY-NEW-DEFAULT-INITIALIZATION"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.5.1"
+anchors = [
+    "[2023:7.5.1:P007:p159]",
+]
+summary = "If new[] omits its optional initialization expression, every newly allocated element shall receive the default value of its element type."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.5.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.5.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.5.1"
+
+[[requirements]]
+id = "SV-2023-07-DYNAMIC-ARRAY-NEW-DESTRUCTIVE"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.5.1"
+anchors = [
+    "[2023:7.5.1:P011:p159]",
+]
+summary = "Applying new[] to an initialized dynamic array destroys all previous contents unless those contents are explicitly supplied as the initializer."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.5.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.5.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.5.1"
+
+[[requirements]]
+id = "SV-2023-07-DYNAMIC-ARRAY-NEW-EVALUATION-ORDER"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.5.1"
+anchors = [
+    "[2023:7.5.1:P004:p158]",
+]
+summary = "When new[] includes both size and initialization expressions, they have equal precedence and shall be evaluated left to right, evaluating the bracketed size expression before the parenthesized initializer."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.5.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.5.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.5.1"
+
+[[requirements]]
+id = "SV-2023-07-DYNAMIC-ARRAY-NEW-INVALIDATES-REFERENCES"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.5.1"
+anchors = [
+    "[2023:7.5.1:P011:p159]",
+]
+summary = "Resizing or reinitializing a dynamic array with new[] makes every preexisting reference to its elements outdated."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.5.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.5.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.5.1"
+
+[[requirements]]
+id = "SV-2023-07-DYNAMIC-ARRAY-NEW-SIZE"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.5.1"
+anchors = [
+    "[2023:7.5.1:P002:p158]",
+]
+summary = "The new[] size operand has type longint; a negative value is an error, zero produces an empty dynamic array, and a positive value establishes that many elements."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.5.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.5.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.5.1"
+
+[[requirements]]
+id = "SV-2023-07-DYNAMIC-ARRAY-NEW-SOURCE-SIZE-ADJUSTMENT"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.5.1"
+anchors = [
+    "[2023:7.5.1:P009:p159]",
+]
+summary = "When a new[] initialization array is larger than the requested size, only its leading requested elements are retained; when smaller, copied elements are followed by element-type default values until the requested size is reached."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.5.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.5.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.5.1"
+
+[[requirements]]
+id = "SV-2023-07-DYNAMIC-ARRAY-SELF-RESIZE-PRESERVES-CONTENTS"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.5.1"
+anchors = [
+    "[2023:7.5.1:P010:p159]",
+]
+summary = "A dynamic array may be resized while preserving its leading contents by using the same array as both assignment target and new[] initialization expression."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.5.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.5.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.5.1"
+
+[[requirements]]
+id = "SV-2023-07-DYNAMIC-ARRAY-SIZE-LIFECYCLE"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.5"
+anchors = [
+    "[2023:7.5:P001:p157]",
+]
+summary = "An uninitialized dynamic array has size zero, and its runtime size may be established or changed by new[] or array assignment."
+related_clauses = [
+    "7.5.1",
+    "7.6",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.5"
+
+[[requirements]]
+id = "SV-2023-07-DYNAMIC-ARRAY-SIZE-METHOD"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.5"
+anchors = [
+    "[2023:7.5:P006:p158]",
+    "[2023:7.5.2:P001:p159]",
+    "[2023:7.5.2:C001:p159]",
+    "[2023:7.5.2:P002:p159]",
+]
+summary = "A dynamic array provides function int size() with no arguments; it returns the current element count, or zero if the array has not been created."
+related_clauses = [
+    "7.5.2",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.5"
+
+[[requirements]]
+id = "SV-2023-07-DYNAMIC-ARRAY-SIZE-SYSTEM-FUNCTION-EQUIVALENCE"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.5.2"
+anchors = [
+    "[2023:7.5.2:P003:p160]",
+]
+summary = "For a dynamic array addr, addr.size() shall return the same value as $size(addr, 1)."
+related_clauses = [
+    "20.7",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.5.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.5.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.5.2"
+
+[[requirements]]
+id = "SV-2023-07-EMPTY-QUEUE-VALID-VALUE"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.10.1"
+anchors = [
+    "[2023:7.10.1:P002:p170]",
+]
+summary = "The empty queue {} is a valid queue value and may be produced by queue operations."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.10.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.10.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.10.1"
+
+[[requirements]]
+id = "SV-2023-07-EXPLICIT-STRUCT-INITIALIZER-OVERRIDES-DEFAULTS"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.2.2"
+anchors = [
+    "[2023:7.2.2:P005:p148]",
+]
+summary = "When a structure variable declaration has an explicit initial value, member initializers declared in the structure type shall be ignored for that variable."
+related_clauses = [
+    "5.10",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.2.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.2.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.2.2"
+
+[[requirements]]
+id = "SV-2023-07-FIND-FIRST-INDEX-METHOD"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.12.1"
+anchors = [
+    "[2023:7.12.1:P001:p174]",
+    "[2023:7.12.1:L004:p174]",
+    "[2023:7.12.1:P004:p174]",
+]
+summary = "find_first_index() returns a queue containing the index of the first element satisfying its with expression, or an empty queue if none does."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.12.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.12.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.12.1"
+
+[[requirements]]
+id = "SV-2023-07-FIND-FIRST-METHOD"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.12.1"
+anchors = [
+    "[2023:7.12.1:P001:p174]",
+    "[2023:7.12.1:L003:p174]",
+    "[2023:7.12.1:P004:p174]",
+]
+summary = "find_first() returns a queue containing the first element that satisfies its with expression, or an empty queue if none does."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.12.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.12.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.12.1"
+
+[[requirements]]
+id = "SV-2023-07-FIND-INDEX-METHOD"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.12.1"
+anchors = [
+    "[2023:7.12.1:P001:p174]",
+    "[2023:7.12.1:L002:p174]",
+]
+summary = "find_index() returns a queue containing the indices of all elements that satisfy its with expression."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.12.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.12.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.12.1"
+
+[[requirements]]
+id = "SV-2023-07-FIND-LAST-INDEX-METHOD"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.12.1"
+anchors = [
+    "[2023:7.12.1:P001:p174]",
+    "[2023:7.12.1:L006:p174]",
+    "[2023:7.12.1:P004:p174]",
+]
+summary = "find_last_index() returns a queue containing the index of the last element satisfying its with expression, or an empty queue if none does."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.12.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.12.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.12.1"
+
+[[requirements]]
+id = "SV-2023-07-FIND-LAST-METHOD"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.12.1"
+anchors = [
+    "[2023:7.12.1:P001:p174]",
+    "[2023:7.12.1:L005:p174]",
+    "[2023:7.12.1:P004:p174]",
+]
+summary = "find_last() returns a queue containing the last element that satisfies its with expression, or an empty queue if none does."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.12.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.12.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.12.1"
+
+[[requirements]]
+id = "SV-2023-07-FIND-METHOD"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.12.1"
+anchors = [
+    "[2023:7.12.1:P001:p174]",
+    "[2023:7.12.1:L001:p174]",
+]
+summary = "find() returns a queue containing all array elements that satisfy its with expression."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.12.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.12.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.12.1"
+
+[[requirements]]
+id = "SV-2023-07-FIND-WITH-BOOLEAN-REQUIRED"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.12.1"
+anchors = [
+    "[2023:7.12.1:P003:p174]",
+]
+summary = "find(), find_index(), find_first(), find_first_index(), find_last(), and find_last_index() require a with clause whose expression evaluates to Boolean."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.12.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.12.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.12.1"
+
+[[requirements]]
+id = "SV-2023-07-FIXED-ARRAY-FORMAL-DIMENSION-SIZES"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.7"
+anchors = [
+    "[2023:7.7:P004:p162]",
+]
+summary = "An actual passed to a fixed-size multidimensional array formal shall have the same number of dimensions, compatible element type, and equal element count in every fixed dimension; corresponding index ranges may differ."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.7"
+
+[[requirements]]
+id = "SV-2023-07-FIXED-ARRAY-FORMAL-VARIABLE-ACTUAL"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.7"
+anchors = [
+    "[2023:7.7:P005:p162]",
+]
+summary = "A fixed-size array formal may accept a dynamic-array or queue actual when its type is compatible and its runtime element count equals the fixed formal size."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.7"
+
+[[requirements]]
+id = "SV-2023-07-FIXED-UNPACKED-DIMENSION-RANGE"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.4.2"
+anchors = [
+    "[2023:7.4.2:P003:p154]",
+]
+summary = "A fixed-size unpacked dimension may use [constant_expression:constant_expression], whose integer bounds contain no X or Z bits and may be ascending, descending, equal, positive, negative, or zero."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.4.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.4.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.4.2"
+
+[[requirements]]
+id = "SV-2023-07-FIXED-UNPACKED-DIMENSION-SIZE"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.4.2"
+anchors = [
+    "[2023:7.4.2:P004:p154]",
+]
+summary = "A fixed-size unpacked dimension may be a single positive constant integer [size], which is equivalent to range [0:size-1]."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.4.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.4.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.4.2"
+
+[[requirements]]
+id = "SV-2023-07-HARD-SOFT-PACKED-UNION-SIZES"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.3.1"
+anchors = [
+    "[2023:7.3.1:P002:p149]",
+]
+summary = "An untagged union with packed but not soft is hard packed and all members shall have equal size; an untagged union with soft is soft packed, may omit packed, and permits unequal member sizes."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 does not define the later hard-packed versus soft-packed untagged union forms or soft qualifier."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 has no soft packed union construct or hard-versus-soft packed-union size rules."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.3.1"
+
+[[requirements]]
+id = "SV-2023-07-INDEX-LOCATOR-RESULT-TYPE"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.12.1"
+anchors = [
+    "[2023:7.12.1:P002:p174]",
+]
+summary = "An index locator returns queue of int for a nonassociative array and a queue of the associative index type for a typed associative array; wildcard-index associative arrays are illegal operands."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.12.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.12.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.12.1"
+
+[[requirements]]
+id = "SV-2023-07-INTEGRAL-ASSOCIATIVE-INDEX-CAST"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.8.4"
+anchors = [
+    "[2023:7.8.4:P002:p164]",
+    "[2023:7.8.4:L001:p164]",
+]
+summary = "An index expression for an integral-typed associative array shall be evaluated as cast to the declared index type, except that implicit conversion from real or shortreal is illegal."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.8.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.8.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.8.4"
+
+[[requirements]]
+id = "SV-2023-07-INTEGRAL-ASSOCIATIVE-NUMERICAL-ORDER"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.8.4"
+anchors = [
+    "[2023:7.8.4:L003:p164]",
+]
+summary = "Integral-typed associative-array keys are ordered numerically according to the declared index type's signedness: signed numerical order for signed types and unsigned numerical order for unsigned types."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.8.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.8.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.8.4"
+
+[[requirements]]
+id = "SV-2023-07-INTEGRAL-ASSOCIATIVE-XZ-INVALID"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.8.4"
+anchors = [
+    "[2023:7.8.4:L002:p164]",
+]
+summary = "A 4-state index expression containing any X or Z bit is invalid for an integral-typed associative array."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.8.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.8.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.8.4"
+
+[[requirements]]
+id = "SV-2023-07-INVALID-INDEX-ENUM-READ-VALUE"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.4.5"
+anchors = [
+    "[2023:7.4.5:T7-1.R03:p156]",
+    "[2023:7.4.5:T7-1.R04:p156]",
+]
+summary = "Reading a nonexistent unpacked-array entry of enumeration type shall return the Table 7-1 invalid-read value corresponding to the enumeration's base type."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "same-rule-different-clause"
+clause = "7.4.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "same-rule-different-clause"
+clause = "7.4.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.4.5"
+
+[[requirements]]
+id = "SV-2023-07-INVALID-INDEX-FIXED-ARRAY-READ-VALUE"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.4.5"
+anchors = [
+    "[2023:7.4.5:T7-1.R15:p157]",
+    "[2023:7.4.5:T7-1.R16:p157]",
+]
+summary = "Reading a nonexistent unpacked-array entry whose element is a fixed-size unpacked array shall return an array of that fixed shape with every element set to its own type-specific Table 7-1 invalid-read value."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "same-rule-different-clause"
+clause = "7.4.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "same-rule-different-clause"
+clause = "7.4.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.4.5"
+
+[[requirements]]
+id = "SV-2023-07-INVALID-INDEX-HANDLE-READ-VALUE"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.4.5"
+anchors = [
+    "[2023:7.4.5:T7-1.R07:p156]",
+    "[2023:7.4.5:T7-1.R08:p156]",
+    "[2023:7.4.5:T7-1.R09:p156]",
+    "[2023:7.4.5:T7-1.R10:p156]",
+    "[2023:7.4.5:T7-1.R11:p156]",
+]
+summary = "Reading a nonexistent unpacked-array entry whose element type is class, interface class, event, chandle, or virtual interface shall return null."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "same-rule-different-clause"
+clause = "7.4.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "same-rule-different-clause"
+clause = "7.4.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.4.5"
+
+[[requirements]]
+id = "SV-2023-07-INVALID-INDEX-INTEGRAL-READ-VALUE"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.4.5"
+anchors = [
+    "[2023:7.4.5:T7-1.R01:p156]",
+    "[2023:7.4.5:T7-1.R02:p156]",
+]
+summary = "Reading a nonexistent unpacked-array entry of 4-state integral type shall return 'x, while one of 2-state integral type shall return '0."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "same-rule-different-clause"
+clause = "7.4.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "same-rule-different-clause"
+clause = "7.4.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.4.5"
+
+[[requirements]]
+id = "SV-2023-07-INVALID-INDEX-REAL-READ-VALUE"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.4.5"
+anchors = [
+    "[2023:7.4.5:T7-1.R05:p156]",
+]
+summary = "Reading a nonexistent unpacked-array entry of real or shortreal type shall return 0.0."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "same-rule-different-clause"
+clause = "7.4.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "same-rule-different-clause"
+clause = "7.4.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.4.5"
+
+[[requirements]]
+id = "SV-2023-07-INVALID-INDEX-STRING-READ-VALUE"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.4.5"
+anchors = [
+    "[2023:7.4.5:T7-1.R06:p156]",
+]
+summary = "Reading a nonexistent unpacked-array entry of string type shall return the empty string."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "same-rule-different-clause"
+clause = "7.4.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "same-rule-different-clause"
+clause = "7.4.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.4.5"
+
+[[requirements]]
+id = "SV-2023-07-INVALID-INDEX-STRUCT-READ-VALUE"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.4.5"
+anchors = [
+    "[2023:7.4.5:T7-1.R17:p157]",
+    "[2023:7.4.5:T7-1.R18:p157]",
+    "[2023:7.4.5:T7-1.R19:p157]",
+    "[2023:7.4.5:T7-1.R20:p157]",
+    "[2023:7.4.5:T7-1.R21:p157]",
+]
+summary = "Reading a nonexistent unpacked-array entry of unpacked-struct type shall return a struct whose members have their type-specific Table 7-1 values, except that a member declared with an initial assignment shall have that assigned initial value."
+related_clauses = [
+    "7.2.2",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "same-rule-different-clause"
+clause = "7.4.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "same-rule-different-clause"
+clause = "7.4.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.4.5"
+
+[[requirements]]
+id = "SV-2023-07-INVALID-INDEX-UNION-READ-VALUE"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.4.5"
+anchors = [
+    "[2023:7.4.5:T7-1.R22:p157]",
+    "[2023:7.4.5:T7-1.R23:p157]",
+]
+summary = "Reading a nonexistent unpacked-array entry of unpacked-union type shall return the Table 7-1 invalid-read value for the type of the union's first declared member."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "same-rule-different-clause"
+clause = "7.4.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "same-rule-different-clause"
+clause = "7.4.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.4.5"
+
+[[requirements]]
+id = "SV-2023-07-INVALID-INDEX-VARIABLE-ARRAY-READ-VALUE"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.4.5"
+anchors = [
+    "[2023:7.4.5:T7-1.R13:p157]",
+    "[2023:7.4.5:T7-1.R14:p157]",
+]
+summary = "Reading a nonexistent unpacked-array entry whose element is a dynamic array, queue, or associative array shall return a variable-size unpacked array with zero elements."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "same-rule-different-clause"
+clause = "7.4.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "same-rule-different-clause"
+clause = "7.4.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.4.5"
+
+[[requirements]]
+id = "SV-2023-07-INVALID-UNPACKED-ARRAY-INDEX"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.4.5"
+anchors = [
+    "[2023:7.4.5:P008:p156]",
+    "[2023:7.4.5:T7-1:p156]",
+]
+summary = "An out-of-bounds array index or an index containing X or Z is invalid; reading an unpacked array at such an index returns the type-specific nonexistent-entry value from Table 7-1, and writing performs no operation except queue [$+1] insertion and associative-array element creation."
+related_clauses = [
+    "7.10.1",
+    "7.8.6",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "same-rule-different-clause"
+clause = "7.4.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "same-rule-different-clause"
+clause = "7.4.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.4.5"
+
+[[requirements]]
+id = "SV-2023-07-ITERATOR-INDEX-DIMENSION-NUMBERING"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.12.4"
+anchors = [
+    "[2023:7.12.4:P002:p177]",
+]
+summary = "Iterator index dimensions are numbered from 1 at the slowest-varying dimension, increasing toward faster-varying dimensions; omission selects dimension 1."
+related_clauses = [
+    "20.7",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.12.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 has no array-method iterator index() querying facility or dimension-numbering rule for it."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.12.4"
+
+[[requirements]]
+id = "SV-2023-07-ITERATOR-INDEX-METHOD-NAME"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.12.4"
+anchors = [
+    "[2023:7.12.4:P005:p177]",
+]
+summary = "The iterator index method is named index by default; an array method call's optional index argument may supply a different method name to avoid conflicts with members or methods of the iterated element."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "changed-expectation"
+clause = "7.12.4"
+note = "IEEE 1800-2012 fixes the iterator method name as index and provides no optional array-call index argument to rename it."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 has no iterator index-method name or optional array-method index argument."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.12.4"
+
+[[requirements]]
+id = "SV-2023-07-ITERATOR-INDEX-METHOD-SIGNATURE"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.12.4"
+anchors = [
+    "[2023:7.12.4:P001:p177]",
+    "[2023:7.12.4:C001:p177]",
+]
+summary = "Within an array-method iterator expression, the iterator index method has form index_method_name(int dimension = 1) and returns the current index value for the requested dimension."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "changed-expectation"
+clause = "7.12.4"
+note = "IEEE 1800-2012 defines function index(int dimension=1) with a fixed method name, rather than the later customizable index_method_name."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 has no iterator index() method or its dimension-argument signature."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.12.4"
+
+[[requirements]]
+id = "SV-2023-07-ITERATOR-INDEX-RETURN-TYPE"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.12.4"
+anchors = [
+    "[2023:7.12.4:P003:p177]",
+]
+summary = "Iterator index() returns int for nonassociative arrays and the declared associative index type for typed associative arrays; wildcard associative arrays shall not be used."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.12.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 has no iterator index() method and therefore no corresponding return-type or wildcard-array restriction."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.12.4"
+
+[[requirements]]
+id = "SV-2023-07-LOCATOR-FIRST-LAST-ORDER"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.12.1"
+anchors = [
+    "[2023:7.12.1:P004:p174]",
+]
+summary = "For first/last locator methods, first and last mean nearest the leftmost and rightmost indexed elements respectively; for associative arrays they follow the index type's first()/last() ordering."
+related_clauses = [
+    "7.9",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.12.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.12.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.12.1"
+
+[[requirements]]
+id = "SV-2023-07-LOCATOR-METHOD-COMMON-RESULT"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.12.1"
+anchors = [
+    "[2023:7.12.1:P001:p174]",
+]
+summary = "Array locator methods operate on any unpacked array and return queue results; when no element qualifies or the input is empty the result is an empty queue, and traversal order is unspecified."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.12.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.12.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.12.1"
+
+[[requirements]]
+id = "SV-2023-07-LOCATOR-OPTIONAL-WITH-RELATIONAL-TYPE"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.12.1"
+anchors = [
+    "[2023:7.12.1:P005:p174]",
+    "[2023:7.12.1:L007:p175]",
+    "[2023:7.12.1:L008:p175]",
+    "[2023:7.12.1:L009:p175]",
+    "[2023:7.12.1:L010:p175]",
+]
+summary = "For min(), max(), unique(), and unique_index(), omitting with is legal only when <, >, and == are defined for the element type and behaves as with(item); when with is present, those operators shall be defined for the expression type."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.12.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.12.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.12.1"
+
+[[requirements]]
+id = "SV-2023-07-MAX-LOCATOR-METHOD"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.12.1"
+anchors = [
+    "[2023:7.12.1:L008:p175]",
+]
+summary = "max() returns a queue containing one array element whose with expression has the maximum value; if several elements tie, exactly one of them is returned."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.12.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.12.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.12.1"
+
+[[requirements]]
+id = "SV-2023-07-MIN-LOCATOR-METHOD"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.12.1"
+anchors = [
+    "[2023:7.12.1:L007:p175]",
+]
+summary = "min() returns a queue containing one array element whose with expression has the minimum value; if several elements tie, exactly one of them is returned."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.12.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.12.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.12.1"
+
+[[requirements]]
+id = "SV-2023-07-MULTIDIMENSIONAL-ARRAY-DIMENSION-ORDER"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.4.4"
+anchors = [
+    "[2023:7.4.4:P003:p155]",
+    "[2023:7.4.4:P004:p155]",
+]
+summary = "In multidimensional arrays, all packed dimensions vary more rapidly than unpacked dimensions; within each dimension list the rightmost dimension varies most rapidly, and references place unpacked indices before packed indices."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "same-rule-different-clause"
+clause = "7.4.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "same-rule-different-clause"
+clause = "7.4.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.4.4"
+
+[[requirements]]
+id = "SV-2023-07-MULTIDIMENSIONAL-PACKED-ARRAY"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.4"
+anchors = [
+    "[2023:7.4:P002:p153]",
+]
+summary = "A packed array may have one or multiple packed dimensions; a one-dimensional packed array is a vector."
+related_clauses = [
+    "6.9",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.4"
+
+[[requirements]]
+id = "SV-2023-07-NET-ARRAY-ELEMENT-USAGE"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.4.2"
+anchors = [
+    "[2023:7.4.2:P002:p154]",
+]
+summary = "An element of a net array may be used in the same ways as a scalar or vector net, including as an instance-port connection."
+related_clauses = [
+    "27.4",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.4.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.4.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.4.2"
+
+[[requirements]]
+id = "SV-2023-07-NET-IGNORES-DATATYPE-INITIALIZER"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.2.2"
+anchors = [
+    "[2023:7.2.2:P007:p148]",
+]
+summary = "When a data type declares a net without a user-defined nettype, any initial assignment expression in that data type shall be ignored."
+related_clauses = [
+    "6.7.1",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.2.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.2.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.2.2"
+
+[[requirements]]
+id = "SV-2023-07-NET-VARIABLE-ARRAY-ASSIGNMENT"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.6"
+anchors = [
+    "[2023:7.6:P005:p161]",
+]
+summary = "An array of nets and an array of variables may be assigned in either direction when their data types are assignment compatible."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.6"
+
+[[requirements]]
+id = "SV-2023-07-PACKED-ARRAY-AND-INTEGER-SELECTION"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.4.5"
+anchors = [
+    "[2023:7.4.5:P001:p155]",
+    "[2023:7.4.5:P002:p155]",
+]
+summary = "An expression may select bits from a packed array or integer type, with an integer type treated as numbered down to bit 0; selecting one or more contiguous bits of a one-dimensional packed array is a part-select."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "same-rule-different-clause"
+clause = "7.4.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "same-rule-different-clause"
+clause = "7.4.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.4.5"
+
+[[requirements]]
+id = "SV-2023-07-PACKED-ARRAY-ARBITRARY-WIDTH"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.4.1"
+anchors = [
+    "[2023:7.4.1:P005:p153]",
+]
+summary = "Packed arrays support arbitrary-width integral values and corresponding-width arithmetic; an implementation may impose a maximum packed-array size, but that maximum shall be at least 65536 bits."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.4.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.4.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.4.1"
+
+[[requirements]]
+id = "SV-2023-07-PACKED-ARRAY-CONTIGUOUS-VECTOR"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.4.1"
+anchors = [
+    "[2023:7.4.1:P001:p153]",
+]
+summary = "A packed array is a contiguous set of bits subdividable into elements and, when used as a primary, is treated as one vector."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.4.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.4.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.4.1"
+
+[[requirements]]
+id = "SV-2023-07-PACKED-ARRAY-ELEMENT-TYPES"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.4.1"
+anchors = [
+    "[2023:7.4.1:P006:p153]",
+]
+summary = "A packed array element type shall be bit, logic, reg, an enumerated type, or recursively a packed array or packed structure."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.4.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.4.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.4.1"
+
+[[requirements]]
+id = "SV-2023-07-PACKED-ARRAY-INTEGER-ASSIGNMENT"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.4.6"
+anchors = [
+    "[2023:7.4.6:P003:p157]",
+    "[2023:7.4.6:L005:p157]",
+]
+summary = "A packed array may be assigned from an integer value; an unpacked array may not be assigned from an integer merely as a whole vector."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "same-rule-different-clause"
+clause = "7.4.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "same-rule-different-clause"
+clause = "7.4.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.4.6"
+
+[[requirements]]
+id = "SV-2023-07-PACKED-ARRAY-INTEGER-EXPRESSION"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.4.6"
+anchors = [
+    "[2023:7.4.6:P003:p157]",
+    "[2023:7.4.6:L006:p157]",
+]
+summary = "A packed array may be treated as an integer operand in an expression; an unpacked array may not."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "same-rule-different-clause"
+clause = "7.4.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "same-rule-different-clause"
+clause = "7.4.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.4.6"
+
+[[requirements]]
+id = "SV-2023-07-PACKED-ARRAY-SIGNEDNESS"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.4.1"
+anchors = [
+    "[2023:7.4.1:P004:p153]",
+]
+summary = "A packed array declared signed is signed when viewed as a whole vector; each element is unsigned unless its named element type is signed, and every packed-array part-select is unsigned."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.4.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.4.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.4.1"
+
+[[requirements]]
+id = "SV-2023-07-PACKED-ARRAY-VECTOR-ASSIGNMENT"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.6"
+anchors = [
+    "[2023:7.6:P001:p160]",
+]
+summary = "For assignment, a packed array is a vector and may receive any vector expression regardless of the target's declared packed bounds."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.6"
+
+[[requirements]]
+id = "SV-2023-07-PACKED-DIMENSION-CONSTANT-RANGE"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.4.1"
+anchors = [
+    "[2023:7.4.1:P002:p153]",
+    "[2023:7.4.1:N001:p153]",
+]
+summary = "Each packed dimension shall be a two-bound range [constant_expression:constant_expression]; each bound shall be an integer without X or Z bits, and ascending, descending, and equal bounds are permitted."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.4.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.4.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.4.1"
+
+[[requirements]]
+id = "SV-2023-07-PACKED-DIMENSION-KEYWORDS"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.2"
+anchors = [
+    "[2023:7.2:G001:p146]",
+]
+summary = "A struct with a packed dimension shall use the packed keyword; a union with a packed dimension shall use packed, soft, or both as permitted by the struct_union grammar."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "changed-expectation"
+clause = "7.2"
+note = "IEEE 1800-2012 requires packed for a packed dimension on either struct or union and does not provide the later soft union alternative."
+
+[requirements.revision_applicability.1800-2017]
+status = "changed-expectation"
+clause = "7.2"
+note = "IEEE 1800-2017 requires packed for a packed dimension on either struct or union and has no soft qualifier alternative for unions."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.2"
+
+[[requirements]]
+id = "SV-2023-07-PACKED-STRUCT-AS-VECTOR"
 standard_revision = "1800-2023"
 part = "7"
 clause = "7.2.1"
-anchors = ["[2023:7.2.1:P002:p147]"]
-summary = "The first member of a packed structure occupies its most-significant bits."
+anchors = [
+    "[2023:7.2.1:P001:p147]",
+]
+summary = "When used as a primary, a packed structure shall be treated as one contiguous vector whose member bit fields have no intervening gaps."
 related_clauses = []
-tags = ["layout", "packed-struct"]
-revision_applicability = { "1800-2012" = { status = "applicable", clause = "7.2.1" }, "1800-2017" = { status = "applicable", clause = "7.2.1" }, "1800-2023" = { status = "applicable", clause = "7.2.1" } }
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.2.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.2.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.2.1"
+
+[[requirements]]
+id = "SV-2023-07-PACKED-STRUCT-BIT-SELECTION"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.2.1"
+anchors = [
+    "[2023:7.2.1:P006:p147]",
+]
+summary = "An n-bit packed structure permits bit-selects and part-selects as a packed array with effective range [n-1:0]."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.2.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.2.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.2.1"
+
+[[requirements]]
+id = "SV-2023-07-PACKED-STRUCT-MEMBER-TYPES"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.2.1"
+anchors = [
+    "[2023:7.2.1:P007:p147]",
+]
+summary = "Every member type of a packed structure shall be either a packed data type or an integer data type permitted by Table 6-8."
+related_clauses = [
+    "6.11",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.2.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.2.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.2.1"
+
+[[requirements]]
+id = "SV-2023-07-PACKED-STRUCT-SIGNEDNESS-ORDER"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.2.1"
+anchors = [
+    "[2023:7.2.1:P002:p147]",
+]
+summary = "A packed structure is unsigned by default; its declared signedness controls whole-value arithmetic and logical operations, and members occupy bits from the first member at the most-significant end through later members in decreasing significance."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.2.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.2.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.2.1"
+
+[[requirements]]
+id = "SV-2023-07-PACKED-STRUCT-STATE-DOMAIN"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.2.1"
+anchors = [
+    "[2023:7.2.1:P004:p147]",
+    "[2023:7.2.1:P005:p147]",
+]
+summary = "A packed structure is a 2-state vector exactly when all members are 2-state; if any member is 4-state, the whole is 4-state and accesses to 2-state members implicitly convert between the whole's 4-state domain and the member's 2-state domain."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.2.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.2.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.2.1"
+
+[[requirements]]
+id = "SV-2023-07-PACKED-STRUCT-TYPEDEF"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.2.1"
+anchors = [
+    "[2023:7.2.1:P008:p147]",
+]
+summary = "A packed structure type may be defined by a typedef and subsequently used through that type name."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.2.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.2.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.2.1"
+
+[[requirements]]
+id = "SV-2023-07-PACKED-TAGGED-UNION-MEMBER-TYPES"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.3.2"
+anchors = [
+    "[2023:7.3.2:P009:p152]",
+]
+summary = "Every member of a packed tagged union shall have a packed type, but packed tagged union members may have unequal widths."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.3.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.3.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.3.2"
+
+[[requirements]]
+id = "SV-2023-07-PACKED-TAGGED-UNION-REPRESENTATION"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.3.2"
+anchors = [
+    "[2023:7.3.2:P009:p152]",
+    "[2023:7.3.2:L001:p152]",
+    "[2023:7.3.2:L002:p152]",
+    "[2023:7.3.2:L003:p152]",
+    "[2023:7.3.2:L004:p152]",
+    "[2023:7.3.2:L005:p152]",
+    "[2023:7.3.2:P010:p152]",
+]
+summary = "A packed tagged union has the minimum tag width needed to encode every member plus the maximum member width; tag bits occupy the MSBs, active-member bits are LSB-aligned, intervening bits are undefined, all non-tag bits are undefined for a void member, and the representation applies recursively to nested tagged unions."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.3.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.3.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.3.2"
+
+[[requirements]]
+id = "SV-2023-07-PACKED-TO-UNPACKED-ASSIGNMENT-CAST"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.6"
+anchors = [
+    "[2023:7.6:P001:p160]",
+]
+summary = "A packed array shall not be assigned directly to an unpacked array; such an assignment requires an explicit cast."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.6"
+
+[[requirements]]
+id = "SV-2023-07-PACKED-UNION-BIT-INTERPRETATION"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.3.1"
+anchors = [
+    "[2023:7.3.1:P001:p149]",
+    "[2023:7.3.1:P006:p150]",
+]
+summary = "An untagged packed union permits reading a different member from the one last written, reinterpreting the same packed bits independently of host-machine byte ordering."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.3.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.3.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.3.1"
+
+[[requirements]]
+id = "SV-2023-07-PACKED-UNION-INTEGRAL-MEMBERS"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.3.1"
+anchors = [
+    "[2023:7.3.1:P001:p149]",
+]
+summary = "A packed union shall contain only members of integral data types."
+related_clauses = [
+    "6.11.1",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.3.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.3.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.3.1"
+
+[[requirements]]
+id = "SV-2023-07-PACKED-UNION-STATE-DOMAIN"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.3.1"
+anchors = [
+    "[2023:7.3.1:P004:p149]",
+]
+summary = "A packed union containing both 2-state and 4-state members is wholly 4-state, with implicit 4-to-2 conversion when reading a 2-state member and 2-to-4 conversion when writing it."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.3.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.3.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.3.1"
+
+[[requirements]]
+id = "SV-2023-07-PACKED-UNION-VECTOR-SEMANTICS"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.3.1"
+anchors = [
+    "[2023:7.3.1:P003:p149]",
+]
+summary = "A packed union primary is one vector, unsigned by default with whole-value arithmetic and logical behavior controlled by signedness, and permits selections over effective range [n-1:0] for its n-bit size."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.3.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.3.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.3.1"
+
+[[requirements]]
+id = "SV-2023-07-PREDEFINED-INTEGER-NO-PACKED-DIMENSIONS"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.4.1"
+anchors = [
+    "[2023:7.4.1:P007:p153]",
+]
+summary = "The predefined-width integer types byte, shortint, int, longint, integer, and time shall not be declared with packed array dimensions."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.4.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.4.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.4.1"
+
+[[requirements]]
+id = "SV-2023-07-PREDEFINED-INTEGER-PACKED-COMPATIBILITY"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.4.1"
+anchors = [
+    "[2023:7.4.1:P007:p153]",
+]
+summary = "A predefined-width n-bit integer type matches a one-dimensional packed array of range [n-1:0] and permits selects as though it were that packed array type."
+related_clauses = [
+    "6.22",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.4.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.4.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.4.1"
+
+[[requirements]]
+id = "SV-2023-07-QUEUE-ASSIGNMENT-METHOD-VALUE-EQUIVALENCE"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.10.4"
+anchors = [
+    "[2023:7.10.4:P002:p172]",
+    "[2023:7.10.4:C001:p173]",
+]
+summary = "Queue assignments formed from concatenations and slices shall produce the same queue values as their corresponding push_back, push_front, pop_front, pop_back, insert, indexed delete, or delete-all method forms identified in 7.10.4."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.10.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.10.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.10.4"
+
+[[requirements]]
+id = "SV-2023-07-QUEUE-AUTOMATIC-RESIZE"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.10.1"
+anchors = [
+    "[2023:7.10.1:L001:p170]",
+]
+summary = "Writing a queue value shall automatically resize the target queue to accommodate that value, subject to any declared maximum bound."
+related_clauses = [
+    "7.10",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.10.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.10.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.10.1"
+
+[[requirements]]
+id = "SV-2023-07-QUEUE-DEFAULT-EMPTY"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.10"
+anchors = [
+    "[2023:7.10:P007:p170]",
+]
+summary = "A queue variable declared without an initial value shall initialize to the empty queue, which may also be denoted by empty unpacked array concatenation {}."
+related_clauses = [
+    "10.10",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.10"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.10"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.10"
+
+[[requirements]]
+id = "SV-2023-07-QUEUE-DELETE-ALL"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.10.2.3"
+anchors = [
+    "[2023:7.10.2.3:P001:p171]",
+    "[2023:7.10.2.3:C001:p171]",
+    "[2023:7.10.2.3:P002:p171]",
+    "[2023:7.10.2.3:P003:p171]",
+]
+summary = "A queue provides function void delete([input integer index]); when the optional index is omitted, it removes every element and leaves the queue empty."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.10.2.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.10.2.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.10.2.3"
+
+[[requirements]]
+id = "SV-2023-07-QUEUE-DELETE-INDEXED"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.10.2.3"
+anchors = [
+    "[2023:7.10.2.3:P004:p171]",
+]
+summary = "delete(index) removes the queue item at a valid position; an index containing X/Z, below zero, or at least the current size leaves the queue unchanged, and a warning is optional."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.10.2.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.10.2.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.10.2.3"
+
+[[requirements]]
+id = "SV-2023-07-QUEUE-DIMENSION-DECLARATION"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.10"
+anchors = [
+    "[2023:7.10:P002:p169]",
+    "[2023:7.10:P004:p169]",
+    "[2023:7.10:G001:p169]",
+    "[2023:7.10:P005:p169]",
+]
+summary = "A queue is declared with unpacked dimension [$] or bounded dimension [$:constant_expression]; the optional right bound is the maximum last index and shall evaluate to a positive integer."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.10"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.10"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.10"
+
+[[requirements]]
+id = "SV-2023-07-QUEUE-INDEXING-AND-ARRAY-OPERATIONS"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.10"
+anchors = [
+    "[2023:7.10:P001:p169]",
+]
+summary = "A queue is a variable-size unpacked array whose positional indices run from 0 for the first element through $ for the last, and it supports array indexing, slicing, concatenation, and equality operations while growing and shrinking automatically."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.10"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.10"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.10"
+
+[[requirements]]
+id = "SV-2023-07-QUEUE-INSERT-INVALID-INDEX"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.10.2.2"
+anchors = [
+    "[2023:7.10.2.2:P003:p171]",
+]
+summary = "insert() with an index containing X/Z, below zero, or greater than the current queue size shall leave the queue unchanged; issuing a warning is optional."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.10.2.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.10.2.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.10.2.2"
+
+[[requirements]]
+id = "SV-2023-07-QUEUE-INSERT-METHOD"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.10.2.2"
+anchors = [
+    "[2023:7.10.2.2:P001:p171]",
+    "[2023:7.10.2.2:C001:p171]",
+    "[2023:7.10.2.2:P002:p171]",
+]
+summary = "A queue provides function void insert(input integer index, input element_t item), which inserts item at the specified position and shifts the existing item at that position and subsequent items toward the back."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.10.2.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.10.2.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.10.2.2"
+
+[[requirements]]
+id = "SV-2023-07-QUEUE-INVALID-INDEX-READ"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.10.1"
+anchors = [
+    "[2023:7.10.1:L011:p170]",
+]
+summary = "Reading a queue with an index containing X or Z or outside 0 through $ shall return the Table 7-1 nonexistent-entry value for the queue element type."
+related_clauses = [
+    "7.4.5",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.10.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.10.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.10.1"
+
+[[requirements]]
+id = "SV-2023-07-QUEUE-INVALID-INDEX-WRITE"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.10.1"
+anchors = [
+    "[2023:7.10.1:L012:p170]",
+]
+summary = "Writing a queue at an X/Z-containing index or outside 0 through $+1 shall be ignored and issue a runtime warning; writing at exactly $+1 is legal."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.10.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.10.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.10.1"
+
+[[requirements]]
+id = "SV-2023-07-QUEUE-METHOD-REFERENCE-PERSISTENCE"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.10.3"
+anchors = [
+    "[2023:7.10.3:P002:p172]",
+    "[2023:7.10.3:P004:p172]",
+]
+summary = "After a queue method updates a queue, references to elements retained by the method shall remain current and references to removed elements shall become outdated; insert, push_front(), and push_back() therefore preserve retained references, except a bounded-queue overflow removal outdates the discarded highest-index element."
+related_clauses = [
+    "13.5.2",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.10.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.10.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.10.3"
+
+[[requirements]]
+id = "SV-2023-07-QUEUE-POP-BACK"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.10.2.5"
+anchors = [
+    "[2023:7.10.2.5:P001:p171]",
+    "[2023:7.10.2.5:C001:p171]",
+    "[2023:7.10.2.5:P002:p171]",
+]
+summary = "A queue provides no-argument function element_t pop_back(), which removes and returns the last element."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.10.2.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.10.2.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.10.2.5"
+
+[[requirements]]
+id = "SV-2023-07-QUEUE-POP-BACK-EMPTY"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.10.2.5"
+anchors = [
+    "[2023:7.10.2.5:P003:p172]",
+    "[2023:7.10.2.5:L001:p172]",
+    "[2023:7.10.2.5:L002:p172]",
+]
+summary = "Calling pop_back() on an empty queue shall return the Table 7-1 nonexistent-entry value for the element type and leave the queue unchanged; a warning is optional."
+related_clauses = [
+    "7.4.5",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.10.2.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.10.2.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.10.2.5"
+
+[[requirements]]
+id = "SV-2023-07-QUEUE-POP-FRONT"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.10.2.4"
+anchors = [
+    "[2023:7.10.2.4:P001:p171]",
+    "[2023:7.10.2.4:C001:p171]",
+    "[2023:7.10.2.4:P002:p171]",
+]
+summary = "A queue provides no-argument function element_t pop_front(), which removes and returns the first element."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.10.2.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.10.2.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.10.2.4"
+
+[[requirements]]
+id = "SV-2023-07-QUEUE-POP-FRONT-EMPTY"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.10.2.4"
+anchors = [
+    "[2023:7.10.2.4:P003:p171]",
+    "[2023:7.10.2.4:L001:p171]",
+    "[2023:7.10.2.4:L002:p171]",
+]
+summary = "Calling pop_front() on an empty queue shall return the Table 7-1 nonexistent-entry value for the element type and leave the queue unchanged; a warning is optional."
+related_clauses = [
+    "7.4.5",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.10.2.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.10.2.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.10.2.4"
+
+[[requirements]]
+id = "SV-2023-07-QUEUE-PUSH-BACK"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.10.2.7"
+anchors = [
+    "[2023:7.10.2.7:P001:p172]",
+    "[2023:7.10.2.7:C001:p172]",
+    "[2023:7.10.2.7:P002:p172]",
+]
+summary = "A queue provides function void push_back(input element_t item), which inserts item at the end of the queue."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.10.2.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.10.2.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.10.2.7"
+
+[[requirements]]
+id = "SV-2023-07-QUEUE-PUSH-FRONT"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.10.2.6"
+anchors = [
+    "[2023:7.10.2.6:P001:p172]",
+    "[2023:7.10.2.6:C001:p172]",
+    "[2023:7.10.2.6:P002:p172]",
+]
+summary = "A queue provides function void push_front(input element_t item), which inserts item at the front and shifts existing elements one position toward the back."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.10.2.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.10.2.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.10.2.6"
+
+[[requirements]]
+id = "SV-2023-07-QUEUE-SIZE-METHOD"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.10.2.1"
+anchors = [
+    "[2023:7.10.2.1:P001:p170]",
+    "[2023:7.10.2.1:C001:p170]",
+    "[2023:7.10.2.1:P002:p170]",
+]
+summary = "A queue provides no-argument function int size(), returning its current number of items and zero when empty."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.10.2.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.10.2.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.10.2.1"
+
+[[requirements]]
+id = "SV-2023-07-QUEUE-SLICE-LOWER-BOUND-CLAMP"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.10.1"
+anchors = [
+    "[2023:7.10.1:L009:p170]",
+    "[2023:7.10.1:L010:p170]",
+]
+summary = "Queue slice bounds are clamped to the queue range: Q[a:b] with a below zero is Q[0:b], and with b above $ is Q[a:$]."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.10.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.10.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.10.1"
+
+[[requirements]]
+id = "SV-2023-07-QUEUE-SLICE-RESULT"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.10.1"
+anchors = [
+    "[2023:7.10.1:L004:p170]",
+    "[2023:7.10.1:L005:p170]",
+    "[2023:7.10.1:L006:p170]",
+    "[2023:7.10.1:L007:p170]",
+    "[2023:7.10.1:L008:p170]",
+]
+summary = "For valid ordered bounds, Q[a:b] contains b-a+1 consecutive elements; reversed bounds yield {}, Q[n:n] yields {Q[n]} when n is in range and {} otherwise, and any X/Z in either bound yields {}."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.10.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.10.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.10.1"
+
+[[requirements]]
+id = "SV-2023-07-QUEUE-SLICE-VARIABLE-BOUNDS"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.10.1"
+anchors = [
+    "[2023:7.10.1:L002:p170]",
+]
+summary = "Both bounds in a queue slice Q[a:b] may be arbitrary runtime integral expressions and need not be constant."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.10.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.10.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.10.1"
+
+[[requirements]]
+id = "SV-2023-07-QUEUE-VALUE-CONSTRUCTION"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.10"
+anchors = [
+    "[2023:7.10:P003:p169]",
+]
+summary = "A queue value may be written using an assignment pattern or an unpacked array concatenation."
+related_clauses = [
+    "10.9",
+    "10.10",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.10"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.10"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.10"
+
+[[requirements]]
+id = "SV-2023-07-QUEUE-WHOLE-ASSIGNMENT-INVALIDATES-REFERENCES"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.10.3"
+anchors = [
+    "[2023:7.10.3:P003:p172]",
+    "[2023:7.10.3:P004:p172]",
+    "[2023:7.10.4:P002:p172]",
+]
+summary = "Any assignment to an entire queue, including assignment using unpacked concatenation, shall make every reference to an element of the prior queue outdated, even when the resulting value equals that of a queue method."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.10.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.10.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.10.3"
+
+[[requirements]]
+id = "SV-2023-07-RANDOM-QUALIFIER-UNPACKED-STRUCT"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.2"
+anchors = [
+    "[2023:7.2:G001:p146]",
+]
+summary = "A random qualifier on a structure-or-union member is legal only when the containing aggregate is an unpacked structure."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "changed-expectation"
+clause = "7.2"
+note = "IEEE 1800-2012 includes random_qualifier in struct_union_member grammar but does not state the later restriction limiting it to unpacked structures."
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.2"
+
+[[requirements]]
+id = "SV-2023-07-SELECT-WIDTH-CONSTANT-POSITION-VARIABLE"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.4.5"
+anchors = [
+    "[2023:7.4.5:P006:p156]",
+]
+summary = "The width of an array slice or packed part-select shall be constant, while its starting position may be variable."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "same-rule-different-clause"
+clause = "7.4.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "same-rule-different-clause"
+clause = "7.4.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.4.5"
+
+[[requirements]]
+id = "SV-2023-07-SLICE-SINGLE-DIMENSION"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.4.5"
+anchors = [
+    "[2023:7.4.5:P007:p156]",
+]
+summary = "A single array expression may slice only one dimension; its other dimensions may each be selected by a single index."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "same-rule-different-clause"
+clause = "7.4.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "same-rule-different-clause"
+clause = "7.4.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.4.5"
+
+[[requirements]]
+id = "SV-2023-07-SOFT-PACKED-UNION-REPRESENTATION"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.3.1"
+anchors = [
+    "[2023:7.3.1:P007:p150]",
+    "[2023:7.3.1:L001:p150]",
+    "[2023:7.3.1:L002:p150]",
+    "[2023:7.3.1:P008:p150]",
+]
+summary = "A soft packed union has the width of its largest member, represents every member right-justified at the least-significant end, and applies these sizing and alignment rules recursively to nested soft packed unions."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 does not define soft packed unions or their recursive width and alignment representation."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 has no soft packed union construct or corresponding width, alignment, and recursive representation rules."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.3.1"
+
+[[requirements]]
+id = "SV-2023-07-SOFT-UNION-MEMBER-WRITE-PRESERVES-MSBS"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.3.1"
+anchors = [
+    "[2023:7.3.1:P011:p151]",
+]
+summary = "Assigning a member of a soft packed union shall update only that member's right-justified bits and leave all more-significant union bits beyond the member width unchanged."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 does not define soft packed unions or the later narrow-member write preservation behavior."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 has no soft packed union construct or member-write MSB-preservation guarantee."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.3.1"
+
+[[requirements]]
+id = "SV-2023-07-STAGED-ARRAY-DIMENSIONS-BY-TYPEDEF"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.4.4"
+anchors = [
+    "[2023:7.4.4:P005:p155]",
+    "[2023:7.4.4:P006:p155]",
+]
+summary = "Successive typedef and variable declarations may add packed or unpacked dimensions in stages, producing a multidimensional array while preserving the dimension ordering contributed by each declaration."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "same-rule-different-clause"
+clause = "7.4.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "same-rule-different-clause"
+clause = "7.4.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.4.4"
+
+[[requirements]]
+id = "SV-2023-07-STRING-ASSOCIATIVE-EMPTY-INDEX"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.8.2"
+anchors = [
+    "[2023:7.8.2:L002:p164]",
+]
+summary = "The empty string is a valid key for a string-indexed associative array."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.8.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.8.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.8.2"
+
+[[requirements]]
+id = "SV-2023-07-STRING-ASSOCIATIVE-INDEX-TYPE"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.8.2"
+anchors = [
+    "[2023:7.8.2:P002:p164]",
+    "[2023:7.8.2:L001:p164]",
+]
+summary = "A string-indexed associative array accepts string expressions and string literals of any length as indices; any other index type is illegal and shall cause a type-check error."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.8.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.8.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.8.2"
+
+[[requirements]]
+id = "SV-2023-07-STRING-ASSOCIATIVE-LEXICOGRAPHICAL-ORDER"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.8.2"
+anchors = [
+    "[2023:7.8.2:L003:p164]",
+]
+summary = "Keys of a string-indexed associative array are ordered lexicographically from lesser to greater."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.8.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.8.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.8.2"
+
+[[requirements]]
+id = "SV-2023-07-STRUCT-MEMBER-DEFAULT-CONSTANT"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.2.2"
+anchors = [
+    "[2023:7.2.2:P002:p148]",
+]
+summary = "An unpacked structure member may declare an individual default value; its initializer shall be a constant expression and supplies that member's declared default value."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.2.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.2.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.2.2"
+
+[[requirements]]
+id = "SV-2023-07-STRUCT-MEMBER-DEFAULT-RESTRICTIONS"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.2.2"
+anchors = [
+    "[2023:7.2.2:P006:p148]",
+]
+summary = "Individual default member values are illegal in packed structures and in unpacked structures that contain a union."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.2.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.2.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.2.2"
+
+[[requirements]]
+id = "SV-2023-07-STRUCT-UNION-DECLARATION-GRAMMAR"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.2"
+anchors = [
+    "[2023:7.2:G001:p146]",
+]
+summary = "A structure or union type declaration shall match the struct_union grammar: one or more semicolon-terminated members, optional attributes and permitted qualifiers, and any packed dimensions following the closing brace."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "changed-expectation"
+clause = "7.2"
+note = "The 2012 struct_union grammar has no soft union qualifier and lacks the later random-qualifier restriction, so its permitted qualifier set differs."
+
+[requirements.revision_applicability.1800-2017]
+status = "changed-expectation"
+clause = "7.2"
+note = "IEEE 1800-2017 has the same aggregate-member framework but its struct_union grammar lacks the 2023 soft union qualifier."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.2"
+
+[[requirements]]
+id = "SV-2023-07-STRUCTURE-ACCESS"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.2"
+anchors = [
+    "[2023:7.2:P001:p146]",
+]
+summary = "A structure without the packed qualifier is unpacked; its value can be referenced as a whole, each member can be referenced by its declared name, and an unpacked structure may contain members of any data type."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.2"
+
+[[requirements]]
+id = "SV-2023-07-STRUCTURE-WHOLE-TRANSFER"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.2.2"
+anchors = [
+    "[2023:7.2.2:P001:p148]",
+]
+summary = "A structure may be assigned, passed into a subroutine, or returned from a subroutine as one whole value."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.2.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.2.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.2.2"
+
+[[requirements]]
+id = "SV-2023-07-SUBARRAY-REFERENCE-BY-OMITTED-INDICES"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.4.4"
+anchors = [
+    "[2023:7.4.4:P007:p155]",
+]
+summary = "A multidimensional-array reference may omit one or more indices only from the dimensions that vary most rapidly, yielding the corresponding subarray; omitting every index references the whole array."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "same-rule-different-clause"
+clause = "7.4.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "same-rule-different-clause"
+clause = "7.4.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.4.4"
+
+[[requirements]]
+id = "SV-2023-07-TAGGED-UNION-EXPRESSION-REFERENCE"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.3.2"
+anchors = [
+    "[2023:7.3.2:P003:p151]",
+]
+summary = "A tagged-union member may be referenced using a tagged expression as defined by 11.9."
+related_clauses = [
+    "11.9",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.3.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.3.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.3.2"
+
+[[requirements]]
+id = "SV-2023-07-TAGGED-UNION-TAG-VALUE-CONSISTENCY"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.3.2"
+anchors = [
+    "[2023:7.3.2:P001:p151]",
+    "[2023:7.3.2:P006:p151]",
+    "[2023:7.3.2:P008:p151]",
+]
+summary = "A tagged union stores a member-name tag together with its value; they may be updated only together by a statically type-checked tagged expression, and a member value may be read only when its member name matches the current tag, including every tag along a nested access path."
+related_clauses = [
+    "11.9",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.3.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.3.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.3.2"
+
+[[requirements]]
+id = "SV-2023-07-UNION-STORAGE-AND-TYPE-RESTRICTIONS"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.3"
+anchors = [
+    "[2023:7.3:P001:p148]",
+    "[2023:7.3.2:P002:p151]",
+]
+summary = "An untagged union provides one shared storage object accessed through one named member type at a time, is unpacked by default, and may not have dynamic-type or chandle members; those member types are permitted only in tagged unions."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.3"
+
+[[requirements]]
+id = "SV-2023-07-UNIQUE-INDEX-LOCATOR-METHOD"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.12.1"
+anchors = [
+    "[2023:7.12.1:L010:p175]",
+]
+summary = "unique_index() returns exactly one source index for each distinct with-expression value; result order is unrelated to source order and any duplicate-valued element's index may represent its value."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.12.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.12.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.12.1"
+
+[[requirements]]
+id = "SV-2023-07-UNIQUE-LOCATOR-METHOD"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.12.1"
+anchors = [
+    "[2023:7.12.1:L009:p175]",
+]
+summary = "unique() returns one and only one source element for each distinct with-expression value present; result order is unrelated to source-array order."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.12.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.12.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.12.1"
+
+[[requirements]]
+id = "SV-2023-07-UNPACKED-ARRAY-ASSIGNMENT-COMPATIBILITY"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.6"
+anchors = [
+    "[2023:7.6:P002:p160]",
+    "[2023:7.6:L001:p160]",
+    "[2023:7.6:L002:p160]",
+    "[2023:7.6:P003:p160]",
+]
+summary = "Fixed-size arrays, dynamic arrays, queues, and their slices are assignment compatible when slowest-dimension element types are equivalent and a fixed-size or slice target has the same element count as the source; source and target shall have the same unpacked-dimension count, every faster-varying dimension shall be equivalent, while the slowest dimension may differ among fixed, dynamic, and queue kinds."
+related_clauses = [
+    "6.22.2",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.6"
+
+[[requirements]]
+id = "SV-2023-07-UNPACKED-ARRAY-ASSIGNMENT-CORRESPONDENCE"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.6"
+anchors = [
+    "[2023:7.6:P004:p160]",
+]
+summary = "Unpacked-array assignment copies each source element to the corresponding target element by each array's left-to-right element order, independent of numerical index values or direction."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.6"
+
+[[requirements]]
+id = "SV-2023-07-UNPACKED-ARRAY-DECLARATION"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.4.2"
+anchors = [
+    "[2023:7.4.2:P001:p154]",
+]
+summary = "An unpacked array may have any element data type, including array types, and its element address ranges shall be declared after the identifier."
+related_clauses = [
+    "7.4.4",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.4.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.4.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.4.2"
+
+[[requirements]]
+id = "SV-2023-07-UNPACKED-ARRAY-ELEMENT-SIGNEDNESS"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.4.6"
+anchors = [
+    "[2023:7.4.6:P004:p157]",
+]
+summary = "A signed qualifier associated with an unpacked-array declaration applies to each element, not to the unpacked array as a whole, because the whole array is not a vector."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "same-rule-different-clause"
+clause = "7.4.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "same-rule-different-clause"
+clause = "7.4.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.4.6"
+
+[[requirements]]
+id = "SV-2023-07-UNPACKED-ARRAY-KINDS-AND-ELEMENT-TYPES"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.4"
+anchors = [
+    "[2023:7.4:P003:p153]",
+]
+summary = "An unpacked array may be fixed-size, dynamic, associative, or a queue, and may be formed from any data type, including another packed or unpacked array."
+related_clauses = [
+    "7.4.2",
+    "7.5",
+    "7.8",
+    "7.10",
+    "7.4.4",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.4"
+
+[[requirements]]
+id = "SV-2023-07-UNPACKED-ARRAY-MINIMUM-CAPACITY"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.4.2"
+anchors = [
+    "[2023:7.4.2:P006:p154]",
+]
+summary = "An implementation may limit array size, but shall support unpacked arrays containing at least 16777216 elements."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 does not specify the later minimum support guarantee of 16777216 unpacked-array elements."
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.4.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.4.2"
+
+[[requirements]]
+id = "SV-2023-07-UNPACKED-STRUCT-NOT-SIGNED"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.2.1"
+anchors = [
+    "[2023:7.2.1:P003:p147]",
+]
+summary = "A signed or unsigned qualifier is illegal on an unpacked structure declaration."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.2.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.2.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.2.1"
+
+[[requirements]]
+id = "SV-2023-07-UNPACKED-UNION-COMMON-INITIAL-SEQUENCE"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.3"
+anchors = [
+    "[2023:7.3:P005:p149]",
+]
+summary = "When an unpacked union currently contains a structure, code where the complete union type is visible may inspect through another structure member the common initial sequence consisting of one or more corresponding initial members with equivalent types."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.3"
+
+[[requirements]]
+id = "SV-2023-07-UNPACKED-UNION-DEFAULT-INITIALIZATION"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.3"
+anchors = [
+    "[2023:7.3:P004:p149]",
+]
+summary = "An unpacked union variable declared without an explicit initial value shall initialize to the default initial value of the union's first member type in declaration order."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.3"
+
+[[requirements]]
+id = "SV-2023-07-USER-TYPED-ASSOCIATIVE-EMPTY-NULL-VALID"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.8.5"
+anchors = [
+    "[2023:7.8.5:L003:p165]",
+]
+summary = "An empty value or null in any element of a general associative-array index does not by itself make the index invalid."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.8.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.8.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.8.5"
+
+[[requirements]]
+id = "SV-2023-07-USER-TYPED-ASSOCIATIVE-ORDER-STABILITY"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.8.5"
+anchors = [
+    "[2023:7.8.5:L004:p165]",
+]
+summary = "If relational comparison is defined for an associative index type, its key ordering follows that comparison; otherwise ordering may vary across runs but shall remain stable within one simulation run while no keys are added or deleted."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.8.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.8.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.8.5"
+
+[[requirements]]
+id = "SV-2023-07-USER-TYPED-ASSOCIATIVE-XZ-INVALID"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.8.5"
+anchors = [
+    "[2023:7.8.5:L002:p165]",
+]
+summary = "An associative-array index expression of a general user-defined type is invalid if it or any contained element contains X or Z."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.8.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.8.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.8.5"
+
+[[requirements]]
+id = "SV-2023-07-VARIABLE-ARRAY-ASSIGNMENT-RESIZE"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.6"
+anchors = [
+    "[2023:7.6:P004:p160]",
+]
+summary = "When an unpacked-array assignment target is a queue or dynamic array, it shall first resize to the source element count and then copy elements in left-to-right correspondence."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.6"
+
+[[requirements]]
+id = "SV-2023-07-VARIABLE-ARRAY-FORMAL-ACTUAL-KINDS"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.7"
+anchors = [
+    "[2023:7.7:P008:p162]",
+    "[2023:7.7:P010:p162]",
+]
+summary = "A dynamic-array or queue formal may accept a compatible fixed-size array, dynamic array, or queue actual; corresponding dimension count and element type compatibility still apply."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.7"
+
+[[requirements]]
+id = "SV-2023-07-VARIABLE-SOURCE-FIXED-TARGET-SIZE-ERROR"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.6"
+anchors = [
+    "[2023:7.6:P006:p161]",
+]
+summary = "Assigning a dynamic array or queue to a fixed-size array whose element count differs at runtime shall produce a runtime error and perform no assignment."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.6"
+
+[[requirements]]
+id = "SV-2023-07-VOID-MEMBER-TAGGED-UNION"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.2"
+anchors = [
+    "[2023:7.2:G001:p146]",
+    "[2023:7.3.2:P005:p151]",
+]
+summary = "A void structure-or-union member is legal only within a tagged union."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.2"
+
+[[requirements]]
+id = "SV-2023-07-WILDCARD-ASSOCIATIVE-INDEX"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.8"
+anchors = [
+    "[2023:7.8:P004:p163]",
+]
+summary = "An associative array declared with wildcard index [*] may be indexed by any integral expression of arbitrary width."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.8"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.8"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.8"
+
+[[requirements]]
+id = "SV-2023-07-WILDCARD-ASSOCIATIVE-NO-FOREACH"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.8.1"
+anchors = [
+    "[2023:7.8.1:L007:p164]",
+]
+summary = "An associative array with wildcard index type shall not be used as the iterated array of a foreach loop."
+related_clauses = [
+    "12.7.3",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.8.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.8.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.8.1"
+
+[[requirements]]
+id = "SV-2023-07-WILDCARD-ASSOCIATIVE-NO-INDEX-RETURNING-METHOD"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.8.1"
+anchors = [
+    "[2023:7.8.1:L007:p164]",
+]
+summary = "An associative array with wildcard index type shall not be used with an array manipulation method that returns an index value or an array of index values."
+related_clauses = [
+    "7.12",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.8.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.8.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.8.1"
+
+[[requirements]]
+id = "SV-2023-07-WILDCARD-INDEX-CANONICAL-REPRESENTATION"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.8.1"
+anchors = [
+    "[2023:7.8.1:P002:p163]",
+    "[2023:7.8.1:L001:p163]",
+    "[2023:7.8.1:P003:p164]",
+]
+summary = "A wildcard associative index accepts integral expressions of differing widths and canonicalizes each numeric key by removing leading zero bits and using the resulting minimum-length representation."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.8.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.8.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.8.1"
+
+[[requirements]]
+id = "SV-2023-07-WILDCARD-INDEX-NONINTEGRAL-ERROR"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.8.1"
+anchors = [
+    "[2023:7.8.1:L002:p164]",
+]
+summary = "Using a nonintegral value to index a wildcard associative array is illegal and shall result in an error."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.8.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.8.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.8.1"
+
+[[requirements]]
+id = "SV-2023-07-WILDCARD-INDEX-NUMERICAL-ORDER"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.8.1"
+anchors = [
+    "[2023:7.8.1:L006:p164]",
+]
+summary = "Wildcard associative-array keys are ordered numerically from smallest to largest."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.8.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.8.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.8.1"
+
+[[requirements]]
+id = "SV-2023-07-WILDCARD-INDEX-SELF-DETERMINED-UNSIGNED"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.8.1"
+anchors = [
+    "[2023:7.8.1:L004:p164]",
+]
+summary = "A wildcard associative-array index expression is self-determined and interpreted as unsigned."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.8.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.8.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.8.1"
+
+[[requirements]]
+id = "SV-2023-07-WILDCARD-INDEX-XZ-INVALID"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.8.1"
+anchors = [
+    "[2023:7.8.1:L003:p164]",
+]
+summary = "A 4-state wildcard associative-array index containing any X or Z bit is invalid."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.8.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.8.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.8.1"
+
+[[requirements]]
+id = "SV-2023-07-WILDCARD-STRING-LITERAL-INDEX-CAST"
+standard_revision = "1800-2023"
+part = "7"
+clause = "7.8.1"
+anchors = [
+    "[2023:7.8.1:L005:p164]",
+]
+summary = "A string literal used as a wildcard associative-array index is automatically cast to an equivalently sized bit vector."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "7.8.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "7.8.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "7.8.1"

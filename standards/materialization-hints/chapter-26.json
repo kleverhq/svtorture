@@ -1,0 +1,617 @@
+{
+  "authority": "1800-2023",
+  "part": "26",
+  "requirements": [
+    {
+      "hints": {
+        "edge": [
+          "Use an empty anonymous program body."
+        ],
+        "negative": [
+          "Put a net declaration directly inside an anonymous program."
+        ],
+        "notes": [],
+        "positive": [
+          "Put a task and class declaration in an anonymous program inside a package."
+        ]
+      },
+      "id": "SV-2023-26-ANONYMOUS-PROGRAM-CONTENTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Follow the import with only a parameter-port list."
+        ],
+        "negative": [
+          "End an ANSI header immediately after a package import."
+        ],
+        "notes": [],
+        "positive": [
+          "Follow an ANSI-header import with a typed port declaration list."
+        ]
+      },
+      "id": "SV-2023-26-ANSI-HEADER-IMPORT-REQUIRES-FOLLOWING-LIST"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Export the same original declaration once explicitly and once through wildcard export."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Export P::X twice in one package."
+        ]
+      },
+      "id": "SV-2023-26-DUPLICATE-EXPORTS-ALLOWED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Try to export X using a different package name from its import source."
+        ],
+        "negative": [
+          "Export P::X when X is not an import candidate."
+        ],
+        "notes": [],
+        "positive": [
+          "Wildcard-import P, then explicitly export P::X to activate and re-export X."
+        ]
+      },
+      "id": "SV-2023-26-EXPLICIT-EXPORT-VALIDITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Explicitly import identically named identifiers from two different packages."
+        ],
+        "negative": [
+          "Declare X locally and explicitly import P::X into the same scope."
+        ],
+        "notes": [],
+        "positive": [
+          "Explicitly import a name not otherwise declared or explicitly imported in the scope."
+        ]
+      },
+      "id": "SV-2023-26-EXPLICIT-IMPORT-CONFLICT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Explicitly import one enumeration literal by name and use that literal unqualified."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Explicitly import P::T and use T unqualified in the importing scope."
+        ]
+      },
+      "id": "SV-2023-26-EXPLICIT-IMPORT-DIRECT-VISIBILITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use package qualification for a literal when only its enum type was imported."
+        ],
+        "negative": [
+          "Import only an enum type and use one of its literals unqualified."
+        ],
+        "notes": [],
+        "positive": [
+          "Import both an enum type and one of its literals explicitly, then use both unqualified."
+        ]
+      },
+      "id": "SV-2023-26-EXPLICIT-IMPORT-ONLY-NAMED-SYMBOL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Export and import the name in adjacent declarations."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Export P::X before a later wildcard import of P in the same package."
+        ]
+      },
+      "id": "SV-2023-26-EXPORT-MAY-PRECEDE-IMPORT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast two paths to one declaration with distinct declarations having the same name."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Re-export one original declaration through two packages and import both paths."
+        ]
+      },
+      "id": "SV-2023-26-EXPORT-PATHS-PRESERVE-DECLARATION-IDENTITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the imported name in a parameter declaration."
+        ],
+        "negative": [
+          "Try to use the header-imported name in a separate design unit."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a header-imported type in both a port and the design-unit body."
+        ]
+      },
+      "id": "SV-2023-26-HEADER-IMPORT-VISIBILITY-EXTENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place multiple package imports before a parameter-port list."
+        ],
+        "negative": [
+          "Place a package import after the header's port list."
+        ],
+        "notes": [],
+        "positive": [
+          "Place import P::* after a module identifier and before its port list."
+        ]
+      },
+      "id": "SV-2023-26-HEADER-PACKAGE-IMPORT-POSITION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Access the declaration through its original package-qualified name from another scope."
+        ],
+        "negative": [
+          "Hierarchically reference an imported-only name through the importing scope from outside."
+        ],
+        "notes": [],
+        "positive": [
+          "Use an imported identifier unqualified within its importing scope."
+        ]
+      },
+      "id": "SV-2023-26-IMPORTED-NAME-SCOPE-CONFINEMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Access the original P::X by qualification."
+        ],
+        "negative": [
+          "Import P::X into Q without export, then expect Q import to expose X."
+        ],
+        "notes": [],
+        "positive": [
+          "Export an imported name and import it through the exporting package."
+        ]
+      },
+      "id": "SV-2023-26-IMPORTED-NAMES-NOT-TRANSITIVE-BY-DEFAULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Declare the same name in a nested scope."
+        ],
+        "negative": [
+          "Activate wildcard-imported X, then declare or explicitly import X in the same scope."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a local name before any reference activates an identically named wildcard symbol."
+        ]
+      },
+      "id": "SV-2023-26-LATER-DECLARATION-CONFLICTS-WILDCARD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare a forward function call with a forward variable reference."
+        ],
+        "negative": [
+          "Use a non-call identifier before its later declaration when no other rule makes it visible."
+        ],
+        "notes": [],
+        "positive": [
+          "Call a function declared later in the same scope."
+        ]
+      },
+      "id": "SV-2023-26-LOCAL-NAME-SEARCH-AND-BINDING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Reference the name of a nested scope from its containing scope."
+        ],
+        "negative": [
+          "Reference a later local declaration before its declaration absent another visibility rule."
+        ],
+        "notes": [],
+        "positive": [
+          "Reference a local declaration after its declaration and an explicitly imported name after its import."
+        ]
+      },
+      "id": "SV-2023-26-LOCAL-VISIBILITY-CONDITIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a variable declaration with initialization, distinct from a net's implicit continuous assignment."
+        ],
+        "negative": [
+          "Declare and initialize a package net in one net declaration."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare an uninitialized net in a package."
+        ]
+      },
+      "id": "SV-2023-26-NO-IMPLICIT-CONTINUOUS-ASSIGNMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a package-qualified name directly in a class without an import statement."
+        ],
+        "negative": [
+          "Place an import declaration directly among class members."
+        ],
+        "notes": [],
+        "positive": [
+          "Import P::T in an enclosing scope and use T within a nested class."
+        ]
+      },
+      "id": "SV-2023-26-NO-IMPORT-DIRECTLY-IN-CLASS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Resolve a name available only from a compilation-unit-scope import."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Reference in a nested block an unshadowed name wildcard-imported in its enclosing module."
+        ]
+      },
+      "id": "SV-2023-26-OUTER-LEXICAL-IMPORT-SEARCH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place the package and importing module in one compilation input with the package first."
+        ],
+        "negative": [
+          "Place an importing scope before the imported package in a controlled compilation order."
+        ],
+        "notes": [
+          "Materialization must control compilation-unit and input order rather than depend on unspecified build-system ordering."
+        ],
+        "positive": [
+          "Compile a package before a module that imports it."
+        ]
+      },
+      "id": "SV-2023-26-PACKAGE-BEFORE-IMPORTING-SCOPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Declare an empty package with no optional closing identifier."
+        ],
+        "negative": [
+          "Omit the semicolon after the package identifier."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a package containing a data declaration and a matching endpackage identifier."
+        ]
+      },
+      "id": "SV-2023-26-PACKAGE-DECLARATION-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use `export *::*;`."
+        ],
+        "negative": [
+          "Use export without a package import item or global wildcard form."
+        ],
+        "notes": [],
+        "positive": [
+          "After importing P::X and Q::Y, export P::X, Q::Y in one declaration."
+        ]
+      },
+      "id": "SV-2023-26-PACKAGE-EXPORT-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Reference an identifier imported into the package from another package."
+        ],
+        "negative": [
+          "Use a hierarchical path from a package item to an identifier in a module instance."
+        ],
+        "notes": [],
+        "positive": [
+          "Reference another declaration in the same package from a package function."
+        ]
+      },
+      "id": "SV-2023-26-PACKAGE-HIERARCHICAL-REFERENCE-LIMIT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a single explicit import item."
+        ],
+        "negative": [
+          "Use an import item without a package identifier or scope-resolution operator."
+        ],
+        "notes": [],
+        "positive": [
+          "Import one named item and a wildcard item in a comma-separated declaration."
+        ]
+      },
+      "id": "SV-2023-26-PACKAGE-IMPORT-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the empty package_or_generate_item_declaration alternative represented by a semicolon."
+        ],
+        "negative": [
+          "Place a module declaration directly as a package item."
+        ],
+        "notes": [],
+        "positive": [
+          "Place a typedef, function, checker, or class declaration in a package."
+        ]
+      },
+      "id": "SV-2023-26-PACKAGE-ITEM-ALTERNATIVES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Import an item from another package rather than relying on compilation-unit scope."
+        ],
+        "negative": [
+          "Reference a compilation-unit variable from a package function."
+        ],
+        "notes": [],
+        "positive": [
+          "Use an item declared locally in the package."
+        ]
+      },
+      "id": "SV-2023-26-PACKAGE-NO-COMPILATION-UNIT-REFERENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Declare process-free tasks and functions directly in a package."
+        ],
+        "negative": [
+          "Place an initial or always process directly in a package."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a checker containing a procedural block inside a package."
+        ]
+      },
+      "id": "SV-2023-26-PACKAGE-PROCESS-RESTRICTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use qualified references without importing the package's names."
+        ],
+        "negative": [
+          "Qualify a name with a package that does not declare it."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a variable whose type is selected as P::T and initialize it with P::f()."
+        ]
+      },
+      "id": "SV-2023-26-PACKAGE-QUALIFIED-REFERENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Observe several independently declaration-initialized package variables when an initial procedure starts."
+        ],
+        "negative": [],
+        "notes": [
+          "Use a runtime observation that does not depend on ordering among separate variable initializers."
+        ],
+        "positive": [
+          "Observe a package variable's declaration-assigned value from an initial block at time zero."
+        ]
+      },
+      "id": "SV-2023-26-PACKAGE-VARIABLE-INITIALIZATION-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use global wildcard export after actual imports from two packages."
+        ],
+        "negative": [
+          "Expect an unactivated P wildcard candidate to be re-exported by P::*."
+        ],
+        "notes": [],
+        "positive": [
+          "Activate one wildcard candidate from P and export P::*, then import it downstream."
+        ]
+      },
+      "id": "SV-2023-26-PACKAGE-WILDCARD-EXPORT-SET"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Put the wildcard import in a different scope from the unqualified reference."
+        ],
+        "negative": [
+          "Reference a package-declared identifier before the wildcard import."
+        ],
+        "notes": [],
+        "positive": [
+          "Wildcard-import a package before an unqualified reference to one of its declarations."
+        ]
+      },
+      "id": "SV-2023-26-POTENTIAL-WILDCARD-VISIBILITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Repeat the same import before and after unrelated declarations."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Repeat `import P::X;` in the same scope."
+        ]
+      },
+      "id": "SV-2023-26-REPEATED-SAME-PACKAGE-IMPORT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Provide the package's initial timeunits declaration in its dedicated pre-item position."
+        ],
+        "negative": [
+          "Repeat a package timeunits declaration with a different unit or precision."
+        ],
+        "notes": [],
+        "positive": [
+          "Repeat the same timeunit/timeprecision declaration later in a package."
+        ]
+      },
+      "id": "SV-2023-26-REPEATED-TIMEUNITS-MATCH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Define a user identifier with the same name and resolve the user declaration unqualified."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use a declaration from std unqualified without an explicit import."
+        ]
+      },
+      "id": "SV-2023-26-STD-IMPLICIT-WILDCARD-IMPORT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the built-in declaration without std:: when no user declaration shadows it."
+        ],
+        "negative": [
+          "Use an unknown name after std::."
+        ],
+        "notes": [],
+        "positive": [
+          "Use std:: qualification for a built-in type or function despite a colliding user name."
+        ]
+      },
+      "id": "SV-2023-26-STD-QUALIFIED-REFERENCE-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Declare a colliding user function and use std:: qualification to select the built-in one."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Call an unshadowed std function whose identifier has no dollar prefix."
+        ]
+      },
+      "id": "SV-2023-26-STD-SUBROUTINES-NO-DOLLAR-PREFIX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Provide a lexical function of the same name and verify it is selected before upward search."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Call a task resolved by upward hierarchical search after lexical search has no match."
+        ]
+      },
+      "id": "SV-2023-26-UNRESOLVED-CALL-UPWARD-SEARCH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Reference a wildcard-imported name available in the outermost lexical scope."
+        ],
+        "negative": [
+          "Reference an undeclared variable name."
+        ],
+        "notes": [],
+        "positive": [
+          "Reference a declared local variable."
+        ]
+      },
+      "id": "SV-2023-26-UNRESOLVED-NONCALL-ILLEGAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Declare a local name matching a std name without modifying std."
+        ],
+        "negative": [
+          "Attempt to reopen or otherwise add a declaration to std."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare user names in a separate package."
+        ]
+      },
+      "id": "SV-2023-26-USERS-CANNOT-EXTEND-STD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Import colliding names but never reference the ambiguous name."
+        ],
+        "negative": [
+          "Wildcard-import two packages that both declare X and reference unqualified X."
+        ],
+        "notes": [],
+        "positive": [
+          "Wildcard-import two packages with distinct names and reference each."
+        ]
+      },
+      "id": "SV-2023-26-WILDCARD-IMPORT-AMBIGUITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Declare a local identifier with the same name as one in a wildcard-imported package and resolve the local name."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Wildcard-import P and use an otherwise undefined P identifier."
+        ]
+      },
+      "id": "SV-2023-26-WILDCARD-IMPORT-NONOVERRIDE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place the reference before versus after the wildcard import."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Wildcard-import P, then reference X where P declares X and no local X exists."
+        ]
+      },
+      "id": "SV-2023-26-WILDCARD-MATCH-IMPORTS-AND-BINDS"
+    }
+  ],
+  "schema_version": 1
+}

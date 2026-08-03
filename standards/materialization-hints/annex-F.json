@@ -1,0 +1,4467 @@
+{
+  "authority": "1800-2023",
+  "part": "F",
+  "requirements": [
+    {
+      "hints": {
+        "edge": [
+          "Assert `b` while `P` is pending and compare prefixes with differing true/false continuations."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Evaluate `P` nonvacuously while `b` remains inactive."
+        ]
+      },
+      "id": "SV-2023-F-ACCEPT-ON-NONVACUITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Assert `b` at the first position and while `P` is pending."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Allow `P` to complete normally with `b` false."
+        ]
+      },
+      "id": "SV-2023-F-ACCEPT-ON-SATISFACTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Make `p` fail only at a late tick."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare `always p` with `p until 0` over finite and continuing traces."
+        ]
+      },
+      "id": "SV-2023-F-ALWAYS-DERIVATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Have `P` succeed only vacuously at every position."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Satisfy `P` at earlier positions and make one later evaluation nonvacuous."
+        ]
+      },
+      "id": "SV-2023-F-ALWAYS-NONVACUITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Make both operands nonvacuous."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Make one operand nonvacuous while the other succeeds vacuously."
+        ]
+      },
+      "id": "SV-2023-F-AND-NONVACUITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Let the assertion fail only on an infeasible trace."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Check an assertion over multiple assumption-feasible traces."
+        ]
+      },
+      "id": "SV-2023-F-ASSERT-PREDICATED-UNIVERSAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a local variable elsewhere in the property but not in the event-control condition."
+        ],
+        "negative": [
+          "Make an event-control condition depend on a local variable declared in the sequence or property."
+        ],
+        "notes": [],
+        "positive": [
+          "Use an assertion event control depending only on nonlocal sampled signals."
+        ]
+      },
+      "id": "SV-2023-F-ASSERTION-EVENT-CONTROL-NO-LOCAL-DEPENDENCY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Include an infeasible counterexample trace, which does not prevent global holding."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Evaluate global holding across all traces that satisfy the assumptions."
+        ]
+      },
+      "id": "SV-2023-F-ASSERTION-GLOBAL-HOLDING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use procedural enabling and a local-variable property simultaneously."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare structurally identical assertion statements with and without local capture in the underlying property."
+        ]
+      },
+      "id": "SV-2023-F-ASSERTION-NEUTRAL-SATISFACTION-WITH-LOCALS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Violate exactly one assumption so the word is excluded as infeasible."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Constrain a trace with two assumptions and satisfy both."
+        ]
+      },
+      "id": "SV-2023-F-ASSUMPTION-FEASIBLE-WORD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "End a finite simulation with a pending unbounded sequence to expose strong completion semantics."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use an eventually completing sequence in `cover property` and compare with explicit `strong`."
+        ]
+      },
+      "id": "SV-2023-F-BARE-SEQUENCE-STRONG-CONTEXT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "End a finite trace with an incomplete sequence to expose weak semantics."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use the same bare sequence and explicit `weak(sequence)` in assertion statements."
+        ]
+      },
+      "id": "SV-2023-F-BARE-SEQUENCE-WEAK-CONTEXT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Reference but do not assign a local in the Boolean expression."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use a pure Boolean sequence between local-variable flow points."
+        ]
+      },
+      "id": "SV-2023-F-BLOCK-BOOLEAN-SEQUENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a local blocked in the first operand but restored to flow by the second."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Assign and block distinct locals across both operands of a delayed concatenation."
+        ]
+      },
+      "id": "SV-2023-F-BLOCK-CONCATENATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Select different earliest endpoints."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare blocked-local flow for a multi-endpoint sequence with and without first_match."
+        ]
+      },
+      "id": "SV-2023-F-BLOCK-FIRST-MATCH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise same-endpoint local flow."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Assign and block locals across fused operands."
+        ]
+      },
+      "id": "SV-2023-F-BLOCK-FUSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Shadow an outer local name."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare a local around a body blocking both local and outer names."
+        ]
+      },
+      "id": "SV-2023-F-BLOCK-LOCAL-DECLARATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast assignment inside branching sequence constructs."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Assign a local in a simple match item and allow its value to flow onward."
+        ]
+      },
+      "id": "SV-2023-F-BLOCK-MATCH-ASSIGNMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast with one-or-more repetition."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Put blocking behavior inside `R` but select zero repetitions."
+        ]
+      },
+      "id": "SV-2023-F-BLOCK-NULL-REPETITION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Block a local on one repetition and resample it on another."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare blocked flow through one and several repetitions."
+        ]
+      },
+      "id": "SV-2023-F-BLOCK-ONE-OR-MORE-REPETITION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Nest parentheses around a branch."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare blocked-local analysis with and without parentheses."
+        ]
+      },
+      "id": "SV-2023-F-BLOCK-PARENTHESES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Sample the same local in both operands and contrast with one-sided sampling."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Sample a local in only one intersection operand and observe that it is blocked from flowing out."
+        ]
+      },
+      "id": "SV-2023-F-BLOCK-SEQUENCE-INTERSECT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Make only one branch match; static blocked analysis includes both."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Block distinct locals in each sequence-or branch."
+        ]
+      },
+      "id": "SV-2023-F-BLOCK-SEQUENCE-OR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use Boolean constant true; it still consumes a sequence element rather than matching the empty word."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Place a Boolean sequence where a surrounding concatenation distinguishes zero-tick from one-tick matching."
+        ]
+      },
+      "id": "SV-2023-F-BOOLEAN-SEQUENCE-NOT-EMPTY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast empty and multi-position words using surrounding sequence composition."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Evaluate a Boolean sequence on a single sampled position where it is true."
+        ]
+      },
+      "id": "SV-2023-F-BOOLEAN-TIGHT-SATISFACTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place the nonvacuous evaluation at each interval endpoint in separate traces."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Satisfy `P` from the lower bound and make one in-range evaluation nonvacuous."
+        ]
+      },
+      "id": "SV-2023-F-BOUNDED-ALWAYS-NONVACUITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Fail `p` only at the upper endpoint."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Hold `p` throughout every tick in `always[2:4]`."
+        ]
+      },
+      "id": "SV-2023-F-BOUNDED-ALWAYS-RECURSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise `m=1` and both range endpoints."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare `R1 ##[2:4] R2` with its unit-delay and true-repetition expansion."
+        ]
+      },
+      "id": "SV-2023-F-BOUNDED-CONCATENATION-DELAY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use adjacent bounds such as `R[*2:3]` to expose both exact alternatives."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare `R[*2:4]` with the union of matches of lengths 2 through 4."
+        ]
+      },
+      "id": "SV-2023-F-BOUNDED-CONSECUTIVE-REPETITION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place the nonvacuous evaluation at each interval endpoint in separate traces."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Keep `P` false from the lower bound until a later in-range nonvacuous evaluation."
+        ]
+      },
+      "id": "SV-2023-F-BOUNDED-EVENTUALLY-NONVACUITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use adjacent bounds to expose both alternatives."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Make `p` true at each endpoint of an `eventually[2:4]` range in separate traces."
+        ]
+      },
+      "id": "SV-2023-F-BOUNDED-EVENTUALLY-RECURSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise occurrences on adjacent ticks, where each false run is empty."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare `b[->2:3]` with two or three occurrences of `b` separated by arbitrary false runs."
+        ]
+      },
+      "id": "SV-2023-F-BOUNDED-GOTO-REPETITION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Observe a match ending after trailing false ticks rather than at the last occurrence."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare `b[=2:3]` with bounded goto repetition followed by zero or more false ticks."
+        ]
+      },
+      "id": "SV-2023-F-BOUNDED-NONCONSECUTIVE-REPETITION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "End the trace before the upper bound to expose strong semantics."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Hold `p` throughout a bounded interval and compare with the dual form."
+        ]
+      },
+      "id": "SV-2023-F-BOUNDED-STRONG-ALWAYS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a finite trace ending within the interval to retain strong semantics."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Make `P` nonvacuous at an in-range position after satisfying it from the lower bound."
+        ]
+      },
+      "id": "SV-2023-F-BOUNDED-STRONG-ALWAYS-NONVACUITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a finite trace ending before the interval completes."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Make `p` true at one tick inside the bounded interval."
+        ]
+      },
+      "id": "SV-2023-F-BOUNDED-STRONG-EVENTUALLY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a finite trace near the upper bound to retain strong completion semantics."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Keep `P` false from the lower bound until a later in-range nonvacuous strong-eventually witness."
+        ]
+      },
+      "id": "SV-2023-F-BOUNDED-STRONG-EVENTUALLY-NONVACUITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change between X and Z and compare with `$stable`."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Change one bit of a vector between clocked samples."
+        ]
+      },
+      "id": "SV-2023-F-CHANGED-DERIVATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise X-to-Z and equal-X transitions."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Change a four-state expression across global-clock samples."
+        ]
+      },
+      "id": "SV-2023-F-CHANGED-GCLK-DERIVATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise known-to-X and X-to-Z changes."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Change one bit before the future global-clock value."
+        ]
+      },
+      "id": "SV-2023-F-CHANGING-GCLK-DERIVATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Mix explicit named inputs with omitted defaulted inputs."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare an explicit checker input argument with an omitted input having the same declared default."
+        ]
+      },
+      "id": "SV-2023-F-CHECKER-INPUT-ACTUAL-BINDING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multiple levels of nested checker instances."
+        ],
+        "negative": [],
+        "notes": [
+          "Checker output formals are handled separately and are outside this flattening algorithm."
+        ],
+        "positive": [
+          "Compare a checker containing a nested input-only checker with an equivalent manually flattened checker."
+        ]
+      },
+      "id": "SV-2023-F-CHECKER-INSTANCE-FLATTENING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a sequence actual whose method operation requires preservation by the internal `item` wrapper."
+        ],
+        "negative": [],
+        "notes": [
+          "`item` is internal rewriting notation."
+        ],
+        "positive": [
+          "Pass a sequence to a checker input used as a sequence-method-call operand."
+        ]
+      },
+      "id": "SV-2023-F-CHECKER-NAMED-ITEM-METHOD-SUBSTITUTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an already-parenthesized reference, for which adding another pair is optional."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Pass a named-item actual to an ordinary checker-input reference and compare with explicit parenthesized substitution."
+        ]
+      },
+      "id": "SV-2023-F-CHECKER-NAMED-ITEM-ORDINARY-SUBSTITUTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise signedness and width conversion."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Pass a differently sized value to a typed checker input and compare with explicit conversion to its formal type."
+        ]
+      },
+      "id": "SV-2023-F-CHECKER-TYPED-INPUT-CASTING-SUBSTITUTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast with a checker formal whose type is a casting type."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Instantiate a checker input with a non-casting ordinary type and compare with the prescribed type-based conversion."
+        ]
+      },
+      "id": "SV-2023-F-CHECKER-TYPED-INPUT-NONCASTING-SUBSTITUTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast reading the input with using it as an increment/decrement lvalue."
+        ],
+        "negative": [
+          "Assign to an ordinary typed checker input formal within the checker body."
+        ],
+        "notes": [],
+        "positive": []
+      },
+      "id": "SV-2023-F-CHECKER-TYPED-INPUT-NOT-LVALUE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use `$` as an allowed checker actual."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Pass a variable lvalue to an untyped checker input and compare with direct substitution."
+        ]
+      },
+      "id": "SV-2023-F-CHECKER-UNTYPED-INPUT-DIRECT-SUBSTITUTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a concatenation or cast expression rather than a variable lvalue."
+        ],
+        "negative": [],
+        "notes": [
+          "`item` is internal rewriting notation."
+        ],
+        "positive": [
+          "Pass a compound expression to an untyped checker input used with a type-dependent operation."
+        ]
+      },
+      "id": "SV-2023-F-CHECKER-UNTYPED-INPUT-EXPRESSION-SUBSTITUTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use inherited and explicit semantic leading clocks."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare an empty-capable sequence before and after explicit clocking."
+        ]
+      },
+      "id": "SV-2023-F-CLOCK-PRESERVES-EMPTY-ADMISSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Assert `b` between clock ticks."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare clocked and explicitly transformed `accept_on` properties."
+        ]
+      },
+      "id": "SV-2023-F-CLOCK-REWRITE-ACCEPT-ON"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Make `b` true between clock ticks but false at the clock tick."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Evaluate a Boolean sequence across several nonclock positions before a clock tick where `b` is true."
+        ]
+      },
+      "id": "SV-2023-F-CLOCK-REWRITE-BOOLEAN-SEQUENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Assert the disable condition between qualifying clock ticks."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare an explicitly transformed property inside `disable iff` with the original clocked form."
+        ]
+      },
+      "id": "SV-2023-F-CLOCK-REWRITE-DISABLE-IFF"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Make the earliest match occur after several nonclock positions."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use a sequence with multiple possible endpoints and compare first-match selection before and after explicit transformation."
+        ]
+      },
+      "id": "SV-2023-F-CLOCK-REWRITE-FIRST-MATCH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change the assigned expression between clock events."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Capture a value in a sequence match item and verify assignment at the qualifying clock tick."
+        ]
+      },
+      "id": "SV-2023-F-CLOCK-REWRITE-MATCH-ASSIGNMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change `p` between clocks but restore it by the next clock."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use irregular clock spacing and evaluate `p` at the next qualifying clock."
+        ]
+      },
+      "id": "SV-2023-F-CLOCK-REWRITE-NEXTTIME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an operand that could never match."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare a clocked null repetition with null repetition of the transformed operand."
+        ]
+      },
+      "id": "SV-2023-F-CLOCK-REWRITE-NULL-REPETITION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multiple antecedent endpoints."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare a clocked implication with separately transformed antecedent and consequent."
+        ]
+      },
+      "id": "SV-2023-F-CLOCK-REWRITE-OVERLAPPING-IMPLICATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Make one branch fail at a later clock tick."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare a clocked conjunction with conjunction of separately transformed operands."
+        ]
+      },
+      "id": "SV-2023-F-CLOCK-REWRITE-PROPERTY-AND"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a pending weak/strong-sensitive property."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare transformation of `not p` with negation of transformed `p`."
+        ]
+      },
+      "id": "SV-2023-F-CLOCK-REWRITE-PROPERTY-NOT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Make both branches pending across different clock ticks."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Independently satisfy each branch of a transformed property disjunction."
+        ]
+      },
+      "id": "SV-2023-F-CLOCK-REWRITE-PROPERTY-OR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use sparse qualifying clock ticks."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare a clocked `r1 ##1 r2` with concatenation of each operand's explicit clock transformation."
+        ]
+      },
+      "id": "SV-2023-F-CLOCK-REWRITE-SEQUENCE-CONCATENATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use operands matching on the same sampled tick."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare a clocked fused sequence with fusion of separately transformed operands."
+        ]
+      },
+      "id": "SV-2023-F-CLOCK-REWRITE-SEQUENCE-FUSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use sparse clock ticks and operands with a shared endpoint."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare a clocked intersection with intersection of separately transformed operands."
+        ]
+      },
+      "id": "SV-2023-F-CLOCK-REWRITE-SEQUENCE-INTERSECT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Make both branches match at different endpoints."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Independently satisfy each branch of a clocked sequence `or`."
+        ]
+      },
+      "id": "SV-2023-F-CLOCK-REWRITE-SEQUENCE-OR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "End a finite trace with the sequence pending."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare a clocked strong sequence property with explicit strong wrapping of the transformed sequence."
+        ]
+      },
+      "id": "SV-2023-F-CLOCK-REWRITE-STRONG-SEQUENCE-PROPERTY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Assert `b` only between clock ticks."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Assert `b` on a qualifying clock tick and compare synchronous acceptance with the expanded form."
+        ]
+      },
+      "id": "SV-2023-F-CLOCK-REWRITE-SYNC-ACCEPT-ON"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use irregular clock spacing."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare one and multiple clocked repetitions with repetitions of the transformed operand."
+        ]
+      },
+      "id": "SV-2023-F-CLOCK-REWRITE-UNBOUNDED-REPETITION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Vary `p1` freely between clock positions."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Hold `p1` on qualifying clocks until a later qualifying clock with `p2`."
+        ]
+      },
+      "id": "SV-2023-F-CLOCK-REWRITE-UNTIL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "End a finite trace with the sequence pending."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare a clocked weak sequence property with explicit weak wrapping of the transformed sequence."
+        ]
+      },
+      "id": "SV-2023-F-CLOCK-REWRITE-WEAK-SEQUENCE-PROPERTY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Trigger between clock events and then again on a clock event; the first trigger controls."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Trigger asynchronous `disable iff` while a clocked property is pending."
+        ]
+      },
+      "id": "SV-2023-F-CLOCKED-DISABLE-IFF-DISABLING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Nest parentheses around a multiclocked property."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare disabling of a clocked top-level property with and without parentheses."
+        ]
+      },
+      "id": "SV-2023-F-CLOCKED-DISABLING-PARENTHESES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use irregular clock spacing to distinguish clock ticks from simulation time units."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare a clocked `S |=> Q` with its explicit next-clock extension."
+        ]
+      },
+      "id": "SV-2023-F-CLOCKED-NONOVERLAPPING-IMPLICATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use locals declared entirely inside the property."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare a clocked property with no external locals against explicit empty-context semantics."
+        ]
+      },
+      "id": "SV-2023-F-CLOCKED-PROPERTY-EMPTY-LOCAL-CONTEXT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use inner explicit clocks and captured locals."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare a clocked local property with its unit-clock unclocked rewrite."
+        ]
+      },
+      "id": "SV-2023-F-CLOCKED-PROPERTY-LOCAL-UNIT-CLOCK"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a property containing an inner explicit clock."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare a clocked property with its explicit property rewrite under unit clock."
+        ]
+      },
+      "id": "SV-2023-F-CLOCKED-PROPERTY-UNIT-CLOCK-SATISFACTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Apply a clock to an empty-only sequence."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare a clocked local-variable sequence with its nondegenerate unclocked rewrite."
+        ]
+      },
+      "id": "SV-2023-F-CLOCKED-SEQUENCE-LOCAL-NONDEGENERATE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Apply a clock to a sequence whose only tight match is empty."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare a clocked Boolean sequence with its nondegenerate unclocked rewrite."
+        ]
+      },
+      "id": "SV-2023-F-CLOCKED-SEQUENCE-NONDEGENERATE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use sparse clocks and assignments at sampled ticks."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare a clocked local-variable sequence with its explicit unclocked rewrite."
+        ]
+      },
+      "id": "SV-2023-F-CLOCKED-SEQUENCE-TIGHT-LOCAL-SATISFACTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use sparse clock events."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare a clocked sequence with its explicitly rewritten unclocked form over the same trace."
+        ]
+      },
+      "id": "SV-2023-F-CLOCKED-SEQUENCE-TIGHT-SATISFACTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare comma-separated and `or`-separated forms under the same event trace."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use `e1, e2` as an assertion clock and independently trigger each operand; either operand supplies the clock event."
+        ]
+      },
+      "id": "SV-2023-F-COMMA-EVENT-CLOCK-REWRITE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Disable one nested condition and confirm the derived update relation is not applied."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Place a free checker assignment under nested conditions and enable both conditions."
+        ]
+      },
+      "id": "SV-2023-F-CONDITIONAL-FREE-CHECKER-ENABLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Satisfy the cover only on infeasible traces."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Provide one feasible trace satisfying the cover among several traces."
+        ]
+      },
+      "id": "SV-2023-F-COVER-PREDICATED-EXISTENTIAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Repeat with a Boolean sequence that does not admit empty."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Wrap an empty-match-capable sequence in a local declaration and compare empty-match behavior."
+        ]
+      },
+      "id": "SV-2023-F-DECLARATION-PRESERVES-EMPTY-ADMISSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Make exactly one operand nonempty."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Concatenate two empty-capable sequences with `##1` in a context exposing empty admission."
+        ]
+      },
+      "id": "SV-2023-F-DELAY-CONCAT-EMPTY-ADMISSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use nested derived operators and unroll recursively."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare nonvacuity of a derived temporal operator with its fully expanded basic-operator form."
+        ]
+      },
+      "id": "SV-2023-F-DERIVED-OPERATOR-NONVACUITY-UNROLLING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Assert `b` while `P` is pending and compare prefixes whose true and false continuations differ."
+        ],
+        "negative": [],
+        "notes": [
+          "Use the complete first-disable semantics from F.5.3.1 when materializing."
+        ],
+        "positive": [
+          "Evaluate `P` nonvacuously while `b` remains inactive."
+        ]
+      },
+      "id": "SV-2023-F-DISABLE-IFF-NONVACUITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Include stable global-clock ticks between transitions and observe no edge-triggered evaluation on stable ticks."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Clock an assertion on `edge b` and drive both rising and falling transitions; either transition triggers evaluation."
+        ]
+      },
+      "id": "SV-2023-F-EDGE-CLOCK-REWRITE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an explicitly clocked empty-capable body."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Rewrite an initialized local around an empty-capable sequence and exercise both nonempty and null branches."
+        ]
+      },
+      "id": "SV-2023-F-EMPTY-SEQUENCE-INITIALIZER-SIMPLIFICATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare `R[*0:0]` with the null repetition base case."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare `R[*2:2]` with `R[*2]` under identical traces."
+        ]
+      },
+      "id": "SV-2023-F-EQUAL-BOUNDED-REPETITION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change only upper bits of a vector."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Exercise current 1/X/Z to future 0 transitions of the LSB."
+        ]
+      },
+      "id": "SV-2023-F-FALLING-GCLK-DERIVATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change only upper bits of a vector expression."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Exercise 1-to-0, X-to-0, and Z-to-0 transitions of the LSB."
+        ]
+      },
+      "id": "SV-2023-F-FELL-DERIVATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change upper vector bits without changing the LSB."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Exercise 1/X/Z-to-0 LSB transitions across global-clock samples."
+        ]
+      },
+      "id": "SV-2023-F-FELL-GCLK-DERIVATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "End a finite trace with a local-dependent obligation pending."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare finite-word weak/strong classification for a property before and after adding local capture."
+        ]
+      },
+      "id": "SV-2023-F-FINITE-SATISFACTION-WITH-LOCALS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Leave an eventual obligation pending at trace end."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Complete an assertion before the end of a finite trace so its false-placeholder continuation still satisfies."
+        ]
+      },
+      "id": "SV-2023-F-FINITE-WORD-STRONG-SATISFACTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare the same finite prefix under true-placeholder and false-placeholder continuations."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "End a finite trace with a pending assertion whose all-true continuation satisfies it."
+        ]
+      },
+      "id": "SV-2023-F-FINITE-WORD-WEAK-SATISFACTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Repeat with a nonempty sequence."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Wrap an empty-capable sequence in `first_match`."
+        ]
+      },
+      "id": "SV-2023-F-FIRST-MATCH-PRESERVES-EMPTY-ADMISSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise the minimum covered delay `m=2`."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare `R1 ##3 R2` with its true-repetition expansion."
+        ]
+      },
+      "id": "SV-2023-F-FIXED-CONCATENATION-DELAY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use `m=1`, reducing through the zero-repetition base case followed by `R`."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare `R[*3]` with `R[*2] ##1 R` under traces with three consecutive matches."
+        ]
+      },
+      "id": "SV-2023-F-FIXED-CONSECUTIVE-REPETITION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise `m=1` with leading false ticks."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare `b[->2]` with exactly two occurrence units separated by arbitrary false runs."
+        ]
+      },
+      "id": "SV-2023-F-FIXED-GOTO-REPETITION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise an empty trailing false repetition."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare `b[=2]` with fixed goto repetition followed by arbitrary trailing false ticks."
+        ]
+      },
+      "id": "SV-2023-F-FIXED-NONCONSECUTIVE-REPETITION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Reference locals without assignment."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Place a Boolean sequence between two local-variable flow points."
+        ]
+      },
+      "id": "SV-2023-F-FLOW-BOOLEAN-SEQUENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Shadow or block a flowing local in the second operand."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Assign a local in `R1` and consume or propagate it in `R2`."
+        ]
+      },
+      "id": "SV-2023-F-FLOW-CONCATENATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Assign locals on different candidate endpoints."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare local flow through a multi-endpoint sequence with and without first_match."
+        ]
+      },
+      "id": "SV-2023-F-FLOW-FIRST-MATCH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Apply multiple match assignments at the fused endpoint."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Assign a local in the first fused operand and use it in the second at the shared endpoint."
+        ]
+      },
+      "id": "SV-2023-F-FLOW-FUSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the same name in the incoming flow set."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare a local that shadows an incoming local and verify the declaration-local value does not escape."
+        ]
+      },
+      "id": "SV-2023-F-FLOW-LOCAL-DECLARATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Assign a local already in the incoming set."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Assign a previously nonflowing local in a match item and use it afterward."
+        ]
+      },
+      "id": "SV-2023-F-FLOW-MATCH-ASSIGNMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast with one-or-more repetition."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Place local assignments in `R` but select zero repetitions; incoming locals remain unchanged."
+        ]
+      },
+      "id": "SV-2023-F-FLOW-NULL-REPETITION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Assign the same local in multiple repetitions."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare local flow after one and several repetitions."
+        ]
+      },
+      "id": "SV-2023-F-FLOW-ONE-OR-MORE-REPETITION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Nest parentheses around an assignment."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare local flow with and without sequence parentheses."
+        ]
+      },
+      "id": "SV-2023-F-FLOW-PARENTHESES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Sample a local inconsistently between operands so block removes it."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Flow a local through one intersection operand without inconsistent sampling or blocking."
+        ]
+      },
+      "id": "SV-2023-F-FLOW-SEQUENCE-INTERSECT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Assign a local in only one branch and confirm it does not flow out."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Assign the same local in both sequence-or branches and use it afterward."
+        ]
+      },
+      "id": "SV-2023-F-FLOW-SEQUENCE-OR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use four-state values and case equality in the derived relation."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Toggle the assignment clock and compare future `u` on enabled and disabled ticks."
+        ]
+      },
+      "id": "SV-2023-F-FREE-CHECKER-NBA-ASSUMPTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast with unit-delay concatenation."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use fusion of empty-capable operands and observe it is not classified as admitting empty."
+        ]
+      },
+      "id": "SV-2023-F-FUSION-NOT-EMPTY-ADMISSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Evaluate at the last position of a finite trace."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare `$future_gclk(e)` with `e` at the next global-clock position."
+        ]
+      },
+      "id": "SV-2023-F-FUTURE-GCLK-SAMPLED-VALUE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast direct `$global_clock` with a value-change-sensitive Boolean clock expression."
+        ],
+        "negative": [],
+        "notes": [
+          "The annex transformation assumes all represented clock events occur on `$global_clock` ticks."
+        ],
+        "positive": [
+          "Evaluate an assertion clocked directly by `$global_clock` and observe an evaluation at every global-clock tick."
+        ]
+      },
+      "id": "SV-2023-F-GLOBAL-CLOCK-CONTROL-REWRITE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Trigger the same `e` while the `iff` condition is false and observe that it is filtered out."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Trigger `e` while the `iff` condition is true and observe the assertion clock event."
+        ]
+      },
+      "id": "SV-2023-F-IFF-EVENT-CLOCK-REWRITE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Make both equivalent operands succeed vacuously."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Evaluate equivalent properties with one operand nonvacuous."
+        ]
+      },
+      "id": "SV-2023-F-IFF-NONVACUITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use nested instances where illegality appears only after all substitutions are completed."
+        ],
+        "negative": [
+          "Instantiate a named sequence or nonrecursive property so actual-argument substitution yields an illegal flattened expression."
+        ],
+        "notes": [],
+        "positive": []
+      },
+      "id": "SV-2023-F-ILLEGAL-FLATTENED-ASSERTION-SOURCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multiple nesting levels where illegality appears only after recursive flattening."
+        ],
+        "negative": [
+          "Instantiate a nested checker so actual substitution produces an illegal flattened checker body."
+        ],
+        "notes": [],
+        "positive": []
+      },
+      "id": "SV-2023-F-ILLEGAL-FLATTENED-CHECKER-SOURCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Provide no antecedent match to expose vacuous implication success."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Produce an antecedent match followed by a nonvacuous consequent evaluation."
+        ]
+      },
+      "id": "SV-2023-F-IMPLICATION-NONVACUITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a false antecedent to expose vacuous implication success."
+        ],
+        "negative": [],
+        "notes": [
+          "The source equation's mathematical adornments require care when materializing finite-trace cases."
+        ],
+        "positive": [
+          "Make a true nonvacuous antecedent lead to a nonvacuous consequent."
+        ]
+      },
+      "id": "SV-2023-F-IMPLIES-NONVACUITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise `m=1` against the zero-index base."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare `nexttime[3] p` with three nested `nexttime` operators."
+        ]
+      },
+      "id": "SV-2023-F-INDEXED-NEXTTIME-DERIVATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a trace ending before the indexed tick exists."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare indexed strong nexttime with its indexed dual form."
+        ]
+      },
+      "id": "SV-2023-F-INDEXED-STRONG-NEXTTIME-DERIVATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Make only one operand empty-capable."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Intersect two empty-capable sequences."
+        ]
+      },
+      "id": "SV-2023-F-INTERSECT-EMPTY-ADMISSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an actual cast expression on which a direct part-select would be illegal, while the same select is legal through the typed formal."
+        ],
+        "negative": [],
+        "notes": [
+          "`item` is rewriting notation, not callable SystemVerilog syntax."
+        ],
+        "positive": [
+          "Pass a typed expression to a sequence formal and apply a selection or sequence method that is legal on the formal after flattening."
+        ]
+      },
+      "id": "SV-2023-F-ITEM-PRESERVES-NAMED-ITEM-OPERATIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast the same operation on a corresponding actual expression with a defined formal-compatible type."
+        ],
+        "negative": [
+          "Use an undefined-type actual expression where substitution would require an operation not otherwise legal; `item` does not legalize it."
+        ],
+        "notes": [
+          "Materialize through a named sequence, property, checker, or let actual argument; `item` is not source syntax."
+        ],
+        "positive": []
+      },
+      "id": "SV-2023-F-ITEM-UNDEFINED-TYPE-NO-EXTRA-OPERATIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Assert `b` while a captured-local obligation is pending."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Complete a local-dependent `P` with `b` inactive."
+        ]
+      },
+      "id": "SV-2023-F-LOCAL-ACCEPT-ON-SATISFACTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Disable between clock events."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Disable a clocked declared-local property after local capture."
+        ]
+      },
+      "id": "SV-2023-F-LOCAL-CLOCKED-DECLARATION-DISABLING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Capture a local before disabling between clocks."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Disable a pending clocked local-variable property at an asynchronous first `b`."
+        ]
+      },
+      "id": "SV-2023-F-LOCAL-CLOCKED-DISABLE-IFF-DISABLING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Disable asynchronously between clock ticks after local capture."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Satisfy a clocked local-variable property while disable remains false."
+        ]
+      },
+      "id": "SV-2023-F-LOCAL-CLOCKED-DISABLE-IFF-SATISFACTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Nest parentheses around a multiclocked property."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare clocked-property disabling with and without parentheses."
+        ]
+      },
+      "id": "SV-2023-F-LOCAL-CLOCKED-DISABLING-PARENTHESES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a sequence capable of an empty match, requiring the rewrite to preserve empty-match behavior."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare a property using a local declaration initializer with the equivalent explicit local assignment."
+        ]
+      },
+      "id": "SV-2023-F-LOCAL-DECLARATION-ASSIGNMENT-REWRITE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use independent local-formal initializers and vary their declaration order."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Instantiate a property with multiple local-variable formals and observe their actual values inside the body."
+        ]
+      },
+      "id": "SV-2023-F-LOCAL-FORMAL-FLATTENING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "End the trace before a next position."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Capture a local before nexttime and use it at the next position."
+        ]
+      },
+      "id": "SV-2023-F-LOCAL-NEXTTIME-SATISFACTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Create multiple antecedent matches with different output contexts."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Capture a local in each antecedent match and satisfy the consequent using that value."
+        ]
+      },
+      "id": "SV-2023-F-LOCAL-OVERLAPPING-IMPLICATION-SATISFACTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Disable at the boundary where the property would otherwise pass."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Construct separate passing, disabled, and failing local-variable evaluations."
+        ]
+      },
+      "id": "SV-2023-F-LOCAL-PASS-DISABLE-FAIL-CLASSIFICATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Make the plain property's body fail or remain pending; without `disable iff`, it is still not classified as disabled."
+        ],
+        "negative": [],
+        "notes": [
+          "Materialize through the top-level pass/disabled/fail classification."
+        ],
+        "positive": [
+          "Evaluate a plain clocked top-level property that passes and confirm it is not classified as disabled."
+        ]
+      },
+      "id": "SV-2023-F-LOCAL-PLAIN-CLOCKED-DISABLING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Make the plain property's body fail; without `disable iff`, it is still not classified as disabled."
+        ],
+        "negative": [],
+        "notes": [
+          "Materialize through the top-level pass/disabled/fail classification."
+        ],
+        "positive": [
+          "Evaluate a plain unclocked top-level property that passes and confirm it is not classified as disabled."
+        ]
+      },
+      "id": "SV-2023-F-LOCAL-PLAIN-UNCLOCKED-DISABLING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Make exactly one conjunct fail based on a local value."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Satisfy both local-dependent conjuncts."
+        ]
+      },
+      "id": "SV-2023-F-LOCAL-PROPERTY-AND"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Make both operands reference the same captured local."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Independently satisfy each local-dependent disjunct."
+        ]
+      },
+      "id": "SV-2023-F-LOCAL-PROPERTY-OR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Nest parentheses around an implication."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare a local-dependent property with and without parentheses."
+        ]
+      },
+      "id": "SV-2023-F-LOCAL-PROPERTY-PARENTHESES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Shadow an incoming local across clock events."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare a local around a clocked top-level property and use it after assignment inside the body."
+        ]
+      },
+      "id": "SV-2023-F-LOCAL-TOP-LEVEL-CLOCKED-DECLARATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Nest parentheses around a multiclocked body."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare a clocked local-variable property with and without parentheses."
+        ]
+      },
+      "id": "SV-2023-F-LOCAL-TOP-LEVEL-CLOCKED-PARENTHESES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use sparse clock events and initialized locals."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare a top-level clocked local-variable property with its enclosed property semantics."
+        ]
+      },
+      "id": "SV-2023-F-LOCAL-TOP-LEVEL-PLAIN-CLOCKED-SATISFACTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use several incoming locals."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare a top-level local-variable property with its enclosed unclocked property semantics."
+        ]
+      },
+      "id": "SV-2023-F-LOCAL-TOP-LEVEL-PLAIN-UNCLOCKED-SATISFACTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Preserve unrelated incoming locals."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare a top-level property local that shadows an incoming local."
+        ]
+      },
+      "id": "SV-2023-F-LOCAL-TOP-LEVEL-UNCLOCKED-DECLARATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Nest parentheses around a declaration."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare a local-variable top-level property with and without parentheses."
+        ]
+      },
+      "id": "SV-2023-F-LOCAL-TOP-LEVEL-UNCLOCKED-PARENTHESES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Shadow an incoming `v`."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Disable an unclocked declared-local property while preserving unrelated locals."
+        ]
+      },
+      "id": "SV-2023-F-LOCAL-UNCLOCKED-DECLARATION-DISABLING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use local state whose outcome is definitive under both placeholder continuations."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Disable a pending unclocked local-variable property at the first `b`."
+        ]
+      },
+      "id": "SV-2023-F-LOCAL-UNCLOCKED-DISABLE-IFF-DISABLING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Disable while a captured local affects a pending property."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Satisfy a local-variable property while disable remains false."
+        ]
+      },
+      "id": "SV-2023-F-LOCAL-UNCLOCKED-DISABLE-IFF-SATISFACTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Nest parentheses around a local declaration."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare disabling with and without parentheses."
+        ]
+      },
+      "id": "SV-2023-F-LOCAL-UNCLOCKED-DISABLING-PARENTHESES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Keep `P1` true without `P2` through a finite word."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use a captured local in `P1` until a later local-dependent `P2`."
+        ]
+      },
+      "id": "SV-2023-F-LOCAL-UNTIL-SATISFACTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Allow `p` to be false before the lower bound and true thereafter."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare `always[2:$] p` with `nexttime[2] always p`."
+        ]
+      },
+      "id": "SV-2023-F-LOWER-BOUNDED-UNBOUNDED-ALWAYS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise the minimum covered bound `m=2`."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare `R[*3:$]` with `R[*2] ##1 R[*1:$]`."
+        ]
+      },
+      "id": "SV-2023-F-LOWER-BOUNDED-UNBOUNDED-REPETITION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast with null repetition."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use a match assignment before a suffix and observe that it consumes a sequence position."
+        ]
+      },
+      "id": "SV-2023-F-MATCH-ASSIGNMENT-NOT-EMPTY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Give later initializers dependencies on earlier declared locals."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare several assertion local variables and use them in a nested sequence or property."
+        ]
+      },
+      "id": "SV-2023-F-MULTIPLE-LOCAL-DECLARATION-NESTING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use two assignments, the minimum multi-assignment form, where later expressions depend on ordering."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Attach three local-variable assignments to one sequence endpoint and observe each captured value."
+        ]
+      },
+      "id": "SV-2023-F-MULTIPLE-MATCH-ASSIGNMENT-DERIVATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Flatten nested named sequence and nonrecursive property instances, including formal arguments, and compare against the fully explicit expression."
+        ],
+        "negative": [],
+        "notes": [
+          "Recursive property instances use the separate F.7 construction rather than finite nonrecursive flattening."
+        ],
+        "positive": [
+          "Compare a property using a named nonrecursive sequence with the equivalent property containing the sequence expression inline; both produce the same assertion outcomes."
+        ]
+      },
+      "id": "SV-2023-F-NAMED-ASSERTION-FLATTENING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Leave the named event untriggered over intervening slots and confirm its dummy-event representation remains false."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Trigger a named event and use that event as a concurrent assertion clock; evaluation occurs for the corresponding trigger slot."
+        ]
+      },
+      "id": "SV-2023-F-NAMED-EVENT-CLOCK-REWRITE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a method operation whose legality must be preserved by the internal `item` wrapper."
+        ],
+        "negative": [],
+        "notes": [
+          "`item` is internal rewriting notation."
+        ],
+        "positive": [
+          "Pass a sequence actual to a named property or sequence formal used as a sequence-method-call operand."
+        ]
+      },
+      "id": "SV-2023-F-NAMED-ITEM-FORMAL-METHOD-SUBSTITUTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an already-parenthesized reference, for which adding another pair is optional."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Pass a named-item actual to an ordinary formal reference and compare with explicit parenthesized substitution."
+        ]
+      },
+      "id": "SV-2023-F-NAMED-ITEM-FORMAL-ORDINARY-SUBSTITUTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Drive only a rising transition and contrast it with the falling-clock evaluation."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Clock a concurrent assertion on `negedge b` and drive a falling transition of `b`."
+        ]
+      },
+      "id": "SV-2023-F-NEGEDGE-CLOCK-REWRITE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a property with disable conditions."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare internally clocked always assume and assert forms over the same trace."
+        ]
+      },
+      "id": "SV-2023-F-NEUTRAL-ALWAYS-ASSUME-EQUIVALENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Disable a procedural evaluation attempt at one clock event while enabling the next."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Enable a declarative clocked assertion at successive clock events and satisfy its property on every attempt."
+        ]
+      },
+      "id": "SV-2023-F-NEUTRAL-ALWAYS-CLOCKED-ASSERTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a false enabling condition at selected clock events."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare clocked always assume and assert forms over the same enabled trace."
+        ]
+      },
+      "id": "SV-2023-F-NEUTRAL-ALWAYS-CLOCKED-ASSUME-EQUIVALENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Produce a property match only at a clock event where the procedural enable is false."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Produce one successful enabled cover attempt among several clock events."
+        ]
+      },
+      "id": "SV-2023-F-NEUTRAL-ALWAYS-CLOCKED-COVER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Vary a procedural enabling condition independently of the property's internal clock."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use a property with an internal clock and satisfy every enabled continuously monitored attempt."
+        ]
+      },
+      "id": "SV-2023-F-NEUTRAL-ALWAYS-CLOCKED-PROPERTY-ASSERTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Provide successful property behavior only from disabled positions."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Provide one enabled successful attempt for an internally clocked cover property."
+        ]
+      },
+      "id": "SV-2023-F-NEUTRAL-ALWAYS-COVER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Make the initial enabling condition false."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare internally clocked initial assume and assert forms over the same trace."
+        ]
+      },
+      "id": "SV-2023-F-NEUTRAL-INITIAL-ASSUME-EQUIVALENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Produce later clock events with different property values; only the first-clock initial attempt controls."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Delay the first clock event and satisfy the initial clocked assertion beginning there."
+        ]
+      },
+      "id": "SV-2023-F-NEUTRAL-INITIAL-CLOCKED-ASSERTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Delay the first clock event and vary later events."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare clocked initial assume and assert forms at the first clock event."
+        ]
+      },
+      "id": "SV-2023-F-NEUTRAL-INITIAL-CLOCKED-ASSUME-EQUIVALENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Fail at the first clock event but match at a later event."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Enable and satisfy an initial cover beginning at the first delayed clock event."
+        ]
+      },
+      "id": "SV-2023-F-NEUTRAL-INITIAL-CLOCKED-COVER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Make the enable false initially and true later."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Enable an initial cover at trace start and satisfy its property."
+        ]
+      },
+      "id": "SV-2023-F-NEUTRAL-INITIAL-COVER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Make the enabling condition false initially and true later."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Enable an initial assertion at trace start and satisfy its internally clocked property."
+        ]
+      },
+      "id": "SV-2023-F-NEUTRAL-INITIAL-PROPERTY-ASSERTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "End the trace before a next position exists."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Provide a next sampled position where `P` evaluates nonvacuously."
+        ]
+      },
+      "id": "SV-2023-F-NEXTTIME-NONVACUITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Evaluate on a finite trace with no next position."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Make `P` true beginning one sampled position later."
+        ]
+      },
+      "id": "SV-2023-F-NEXTTIME-SATISFACTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast with an empty-capable body."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Rewrite an initialized local around a Boolean sequence using only the assignment-fused branch."
+        ]
+      },
+      "id": "SV-2023-F-NONEMPTY-SEQUENCE-INITIALIZER-SIMPLIFICATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Distinguish a property true at the antecedent endpoint from one true on the next tick."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare `r #=# p` with the negated nonoverlapping implication form."
+        ]
+      },
+      "id": "SV-2023-F-NONOVERLAPPING-FOLLOWED-BY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Nest multiple parentheses."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare nonvacuity of a property with and without parentheses."
+        ]
+      },
+      "id": "SV-2023-F-NONVACUITY-PARENTHESES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Shadow an incoming local name."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare nonvacuity before and after introducing a local declaration used by the property."
+        ]
+      },
+      "id": "SV-2023-F-NONVACUITY-WITH-LOCALS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast ordinary vacuous satisfaction with nonvacuous satisfaction."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Satisfy a property through an exercised antecedent and nonvacuous consequent."
+        ]
+      },
+      "id": "SV-2023-F-NONVACUOUS-PROPERTY-SATISFACTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a property that succeeds vacuously before negation."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare nonvacuity of `P` and `not P` on the same trace."
+        ]
+      },
+      "id": "SV-2023-F-NOT-NONVACUITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Choose an `r` that itself cannot match."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use `r[*0]` before a suffix whose start exposes the empty match."
+        ]
+      },
+      "id": "SV-2023-F-NULL-REPETITION-ADMITS-EMPTY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Apply it to a Boolean operand."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Apply one-or-more repetition to an empty-capable operand."
+        ]
+      },
+      "id": "SV-2023-F-ONE-OR-MORE-EMPTY-ADMISSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise both operands nonempty and both empty-capable."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Combine one empty-capable and one nonempty sequence with `or`."
+        ]
+      },
+      "id": "SV-2023-F-OR-EMPTY-ADMISSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Trigger both operands in the same slot and observe the disjunctive clock condition for that slot."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use `e1 or e2` as an assertion clock and independently trigger each operand; either operand supplies the clock event."
+        ]
+      },
+      "id": "SV-2023-F-OR-EVENT-CLOCK-REWRITE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Have both disjuncts succeed only vacuously."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Satisfy one disjunct nonvacuously."
+        ]
+      },
+      "id": "SV-2023-F-OR-NONVACUITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multiple matches of `r` with only one satisfying continuation."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare `r #-# p` with the negated overlapping implication form."
+        ]
+      },
+      "id": "SV-2023-F-OVERLAPPING-FOLLOWED-BY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Provide no antecedent match to exercise vacuity."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Create multiple antecedent matches and satisfy the consequent from every endpoint."
+        ]
+      },
+      "id": "SV-2023-F-OVERLAPPING-IMPLICATION-SATISFACTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Repeat with a nonempty Boolean sequence."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare an empty-capable sequence with the same sequence parenthesized."
+        ]
+      },
+      "id": "SV-2023-F-PARENTHESES-PRESERVE-EMPTY-ADMISSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Evaluate at the first global-clock position."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Change `e` on successive global-clock positions and observe the prior value."
+        ]
+      },
+      "id": "SV-2023-F-PAST-GCLK-SAMPLED-VALUE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Request more history than exists for initialized static, uninitialized static, and automatic variables."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Sample an expression after more than `n` gated clock occurrences."
+        ]
+      },
+      "id": "SV-2023-F-PAST-SAMPLED-VALUE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Make the plain property's body fail or remain pending; without `disable iff`, it is still not classified as disabled."
+        ],
+        "negative": [],
+        "notes": [
+          "Materialize through the top-level pass/disabled/fail classification; the disabling relation is formal notation."
+        ],
+        "positive": [
+          "Evaluate a plain clocked top-level property that passes and confirm it is not classified as disabled."
+        ]
+      },
+      "id": "SV-2023-F-PLAIN-CLOCKED-TOP-LEVEL-DISABLING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Make the plain property's body fail; without `disable iff`, it is still not classified as disabled."
+        ],
+        "negative": [],
+        "notes": [
+          "Materialize through the top-level pass/disabled/fail classification; the disabling relation is formal notation."
+        ],
+        "positive": [
+          "Evaluate a plain unclocked top-level property that passes and confirm it is not classified as disabled."
+        ]
+      },
+      "id": "SV-2023-F-PLAIN-UNCLOCKED-TOP-LEVEL-DISABLING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify that an empty match alone does not satisfy the one-or-more shorthand."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare `R[+]` with `R[*1:$]` across one and multiple matches."
+        ]
+      },
+      "id": "SV-2023-F-PLUS-REPETITION-ALIAS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Drive only a falling transition and contrast it with the rising-clock evaluation."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Clock a concurrent assertion on `posedge b` and drive a rising transition of `b`."
+        ]
+      },
+      "id": "SV-2023-F-POSEDGE-CLOCK-REWRITE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise matches at both delay bounds."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare `##[1:3] R` with `1[*1:3] ##1 R`."
+        ]
+      },
+      "id": "SV-2023-F-PREFIX-BOUNDED-DELAY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise zero delay."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare `##2 R` with `1[*2] ##1 R`."
+        ]
+      },
+      "id": "SV-2023-F-PREFIX-FIXED-DELAY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast an immediate `R` with an `R` one tick later."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare `##[+] R` with `##[1:$] R`."
+        ]
+      },
+      "id": "SV-2023-F-PREFIX-PLUS-DELAY-ALIAS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise the zero-delay alternative."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare `##[*] R` with `##[0:$] R` for immediate and delayed matches."
+        ]
+      },
+      "id": "SV-2023-F-PREFIX-STAR-DELAY-ALIAS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place `R` exactly at the lower bound."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare `##[2:$] R` with `1[*2:$] ##1 R` for several qualifying delays."
+        ]
+      },
+      "id": "SV-2023-F-PREFIX-UNBOUNDED-DELAY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Fail exactly one operand."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Satisfy both property-and operands on the same trace."
+        ]
+      },
+      "id": "SV-2023-F-PROPERTY-AND-SATISFACTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Vary the unused case expression, including unknown values."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare a default-only property case with the same property written directly."
+        ]
+      },
+      "id": "SV-2023-F-PROPERTY-CASE-DEFAULT-ONLY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use X/Z-containing and differently signed case expressions."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Exercise both a matching explicit item and a nonmatching value that selects default."
+        ]
+      },
+      "id": "SV-2023-F-PROPERTY-CASE-ITEM-DEFAULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Make an earlier and later expression both match and confirm first-item selection."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use three case items and select each position with separate case-expression values."
+        ]
+      },
+      "id": "SV-2023-F-PROPERTY-CASE-ITEM-RECURSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Make multiple items case-equal and confirm the first matching item is selected."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Select first, later, and default branches in a multi-item property case."
+        ]
+      },
+      "id": "SV-2023-F-PROPERTY-CASE-ITEMS-DEFAULT-RECURSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use differently sized or signed expressions and X/Z bits to exercise `specify` and case equality."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Match a single case item and observe its property branch."
+        ]
+      },
+      "id": "SV-2023-F-PROPERTY-CASE-SINGLE-ITEM"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Mix explicit bindings with an omitted defaulted formal in both sequence and property instances."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare explicit and omitted named-item arguments where the omitted formal has a default."
+        ]
+      },
+      "id": "SV-2023-F-PROPERTY-FORMAL-ACTUAL-BINDING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Set `b` false and observe vacuous satisfaction."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Exercise `if (b) P` with `b` true and compare with implication."
+        ]
+      },
+      "id": "SV-2023-F-PROPERTY-IF-DERIVATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a four-state Boolean condition to exercise the formal weak-Boolean branch behavior."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Exercise both true and false values of `b` with independently observable branches."
+        ]
+      },
+      "id": "SV-2023-F-PROPERTY-IF-ELSE-DERIVATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Make exactly one operand satisfied and observe equivalence fail."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare two properties with equal satisfaction values and observe `iff` succeeds."
+        ]
+      },
+      "id": "SV-2023-F-PROPERTY-IFF-DERIVATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a false antecedent and false consequent to expose vacuous truth."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Exercise all Boolean satisfaction combinations of two simple properties and compare with `not p1 or p2`."
+        ]
+      },
+      "id": "SV-2023-F-PROPERTY-IMPLIES-DERIVATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Preserve unrelated incoming local values."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare a property local that shadows an incoming name and assign it inside `P`."
+        ]
+      },
+      "id": "SV-2023-F-PROPERTY-LOCAL-DECLARATION-SATISFACTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a finite pending local-dependent property."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Negate a false local-dependent property."
+        ]
+      },
+      "id": "SV-2023-F-PROPERTY-LOCAL-NEGATION-SATISFACTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a finite pending property to exercise neutral finite-trace negation semantics."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use a simple property that fails and observe its negation succeeds."
+        ]
+      },
+      "id": "SV-2023-F-PROPERTY-NEGATION-SATISFACTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Make both operands satisfied."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Independently satisfy each property-or operand."
+        ]
+      },
+      "id": "SV-2023-F-PROPERTY-OR-SATISFACTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Nest several parentheses around a temporal expression."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare an unclocked property with the same property parenthesized."
+        ]
+      },
+      "id": "SV-2023-F-PROPERTY-PARENTHESES-SATISFACTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a clock different from the enclosing assertion clock."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Place initialized property locals outside an explicitly clocked property and compare with the nested rewrite."
+        ]
+      },
+      "id": "SV-2023-F-PUSH-CLOCKED-PROPERTY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Assert the disable condition while assignments are pending."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Place initialized property locals outside a `disable iff` and compare with the prescribed nested rewrite."
+        ]
+      },
+      "id": "SV-2023-F-PUSH-DISABLE-IFF"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Let a later initializer depend on an earlier local."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use nested initialized property locals and observe initializer assignments retain source order."
+        ]
+      },
+      "id": "SV-2023-F-PUSH-INITIALIZED-DECLARATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Let the initializer affect the truth of the negated property."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use initialized locals around a negated property and compare with `not` of the pushed body."
+        ]
+      },
+      "id": "SV-2023-F-PUSH-NEGATED-PROPERTY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an antecedent that admits both empty and nonempty matches."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Exercise pending initializers with both nonempty and empty-capable antecedents."
+        ]
+      },
+      "id": "SV-2023-F-PUSH-NONOVERLAPPING-IMPLICATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multiple antecedent matches."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Push a local initializer into an overlapping implication and compare with the explicit assignment before its antecedent."
+        ]
+      },
+      "id": "SV-2023-F-PUSH-OVERLAPPING-IMPLICATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Nest multiple parentheses."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare pending initializer rewriting with and without redundant property parentheses."
+        ]
+      },
+      "id": "SV-2023-F-PUSH-PARENTHESIZED-PROPERTY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Make one operand fail based on the initialized value."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use a local initializer consumed by both property-and operands."
+        ]
+      },
+      "id": "SV-2023-F-PUSH-PROPERTY-AND"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a conditional without an else branch."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Push initializers into an `if` property and independently select then and else branches."
+        ]
+      },
+      "id": "SV-2023-F-PUSH-PROPERTY-CONDITIONAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Make both branches evaluate the initialized value differently."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use a local initializer consumed by both property-or branches and independently satisfy each branch."
+        ]
+      },
+      "id": "SV-2023-F-PUSH-PROPERTY-OR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare an empty pending list with multiple ordered assignments."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Push one or more pending local initializers into a nondegenerate sequence property."
+        ]
+      },
+      "id": "SV-2023-F-PUSH-SEQUENCE-PROPERTY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Nest multiple uninitialized declarations."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Place an uninitialized local declaration around a nested property receiving pending initializer assignments."
+        ]
+      },
+      "id": "SV-2023-F-PUSH-UNINITIALIZED-DECLARATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an initializer containing X/Z values."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Initialize a random checker variable from an expression and constrain its initial value by case equality."
+        ]
+      },
+      "id": "SV-2023-F-RAND-CHECKER-VARIABLE-ASSUMPTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Mix qualifying arguments of all three categories in one recursive instance."
+        ],
+        "negative": [
+          "Pass a transformed expression involving a containing-property formal to an ordinary formal of the recursive instance."
+        ],
+        "notes": [],
+        "positive": [
+          "Pass a containing formal unchanged; pass an expression independent of containing formals; and bind an expression to a local-variable formal."
+        ]
+      },
+      "id": "SV-2023-F-RECURSIVE-ACTUAL-ARGUMENT-RESTRICTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a multi-property cycle with zero-weight edges except one delayed edge."
+        ],
+        "negative": [
+          "Define a recursive dependency cycle composed entirely of zero-weight references."
+        ],
+        "notes": [],
+        "positive": [
+          "Define a recursive cycle where at least one dependency is guaranteed after a positive time step."
+        ]
+      },
+      "id": "SV-2023-F-RECURSIVE-CYCLE-POSITIVE-WEIGHT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Include a zero-delay recursive reference and a delayed reference on the same edge."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Place repeated instances of one dependency behind different guaranteed delays and use the minimum as edge weight."
+        ]
+      },
+      "id": "SV-2023-F-RECURSIVE-DEPENDENCY-WEIGHT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Include nested nonrecursive property instances alongside recursive ones."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Expand a mutually recursive property to depths one and two and compare the substituted approximations."
+        ]
+      },
+      "id": "SV-2023-F-RECURSIVE-K-FOLD-APPROXIMATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use `disable iff` outside the recursive declaration at the assertion top level."
+        ],
+        "negative": [
+          "Place `disable iff` in a directly or mutually recursive property declaration."
+        ],
+        "notes": [],
+        "positive": []
+      },
+      "id": "SV-2023-F-RECURSIVE-PROPERTY-DISABLE-IFF-RESTRICTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use direct self-instantiation."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Place one mutually recursive instance and one acyclic instance in the same declaration."
+        ]
+      },
+      "id": "SV-2023-F-RECURSIVE-PROPERTY-INSTANCE-SCC"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast an acyclic property chain and a recursive property not reachable from the negated expression."
+        ],
+        "negative": [
+          "Negate a property expression that instantiates a property leading transitively to a recursive dependency cycle."
+        ],
+        "notes": [],
+        "positive": []
+      },
+      "id": "SV-2023-F-RECURSIVE-PROPERTY-NOT-RESTRICTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Include a self-recursive property and an acyclic nested property."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Define direct and mutual recursive properties and construct their dependency cycles."
+        ]
+      },
+      "id": "SV-2023-F-RECURSIVE-PROPERTY-SCC"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Construct a trace that satisfies early approximations but fails a later one."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare a legal delayed recursive property with several increasing finite approximations."
+        ]
+      },
+      "id": "SV-2023-F-RECURSIVE-PROPERTY-UNIVERSAL-APPROXIMATION-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a recursive property whose body contains locals and nested dependencies."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare the zero-fold approximation of a recursive property with a true property having the same formals."
+        ]
+      },
+      "id": "SV-2023-F-RECURSIVE-ZERO-FOLD-APPROXIMATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast an inner distinct clock."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare `@(c) p` under clock context `c` with `p` in that context."
+        ]
+      },
+      "id": "SV-2023-F-REDUNDANT-PROPERTY-CLOCK-REWRITE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast an inner distinct clock, which is not covered by this same-clock rule."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare `@(c) r` under an inherited `c` context with `r` under that context."
+        ]
+      },
+      "id": "SV-2023-F-REDUNDANT-SEQUENCE-CLOCK-REWRITE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Assert the abort condition while the property is pending."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare `reject_on` with the dual negated `accept_on` form under an abort condition."
+        ]
+      },
+      "id": "SV-2023-F-REJECT-ON-DERIVATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Assert `b` while `P` is pending and compare prefixes with differing true/false continuations."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Evaluate `P` nonvacuously while `b` remains inactive."
+        ]
+      },
+      "id": "SV-2023-F-REJECT-ON-NONVACUITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a clocked property with `disable iff` in both statement forms."
+        ],
+        "negative": [],
+        "notes": [
+          "A runtime simulation may not provide a portable observation for environmental assumptions; materialize in a conformance context that supports assumption/restriction semantics."
+        ],
+        "positive": [
+          "Apply the same property once as `restrict property` and once as `assume property` in an assertion-analysis context and compare their property constraints."
+        ]
+      },
+      "id": "SV-2023-F-RESTRICT-DERIVES-ASSUME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change only upper bits of a vector."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Exercise current 0/X/Z to future 1 transitions of the LSB."
+        ]
+      },
+      "id": "SV-2023-F-RISING-GCLK-DERIVATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change only upper bits of a vector expression."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Exercise 0-to-1, X-to-1, and Z-to-1 transitions of the LSB."
+        ]
+      },
+      "id": "SV-2023-F-ROSE-DERIVATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change upper vector bits without changing the LSB."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Exercise 0/X/Z-to-1 LSB transitions across global-clock samples."
+        ]
+      },
+      "id": "SV-2023-F-ROSE-GCLK-DERIVATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Reference a local variable without assigning it; reference alone is not sampling."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use a pure Boolean sequence and verify no local assignment flows from it."
+        ]
+      },
+      "id": "SV-2023-F-SAMPLE-BOOLEAN-SEQUENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Assign the same local in both operands."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Assign distinct locals in each side of a unit-delay concatenation."
+        ]
+      },
+      "id": "SV-2023-F-SAMPLE-CONCATENATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare different selected endpoints."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Assign a local inside a sequence having several possible endpoints and wrap it in first_match."
+        ]
+      },
+      "id": "SV-2023-F-SAMPLE-FIRST-MATCH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Assign both locals on the shared endpoint."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Assign distinct locals in each side of fusion."
+        ]
+      },
+      "id": "SV-2023-F-SAMPLE-FUSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Shadow an outer local variable with the declaration."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare a local name around a body that assigns both that local and an outer local; only the outer name flows as sampled."
+        ]
+      },
+      "id": "SV-2023-F-SAMPLE-LOCAL-DECLARATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Let `e` reference other locals; only the assignment target is sampled."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Assign one assertion local in a match item and observe it in subsequent flow analysis."
+        ]
+      },
+      "id": "SV-2023-F-SAMPLE-MATCH-ASSIGNMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast with one-or-more repetition."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Place a local assignment in `R` but use zero repetition."
+        ]
+      },
+      "id": "SV-2023-F-SAMPLE-NULL-REPETITION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Assign the same local on multiple repetitions."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Assign locals in an operand repeated once and several times."
+        ]
+      },
+      "id": "SV-2023-F-SAMPLE-ONE-OR-MORE-REPETITION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Nest parentheses around a match assignment."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare local-variable sampling with and without sequence parentheses."
+        ]
+      },
+      "id": "SV-2023-F-SAMPLE-PARENTHESES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Assign the same local in both operands."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Assign distinct locals in the two intersection operands."
+        ]
+      },
+      "id": "SV-2023-F-SAMPLE-SEQUENCE-INTERSECT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Make only one branch match on a trace; static sample analysis still includes both branches."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Assign distinct locals in each sequence-or branch."
+        ]
+      },
+      "id": "SV-2023-F-SAMPLE-SEQUENCE-OR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a four-state expression sampled immediately before a value update."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare `$sampled(e)` and `e` in an assertion action context where the unsampled value later changes."
+        ]
+      },
+      "id": "SV-2023-F-SAMPLED-IDENTITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Swap which operand ends first and compare both expansion alternatives."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Match two sequences that start together but end on different ticks using `and`."
+        ]
+      },
+      "id": "SV-2023-F-SEQUENCE-AND-DERIVATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an empty-match-capable body and separately inherited versus explicit leading clocks."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare an initialized local declaration around a nonempty sequence with the prescribed explicit assignment form."
+        ]
+      },
+      "id": "SV-2023-F-SEQUENCE-DECLARATION-INITIALIZER-EXPANSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise a sequence with multiple possible endpoints and observe copy-back only for a completed match."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Pass a local variable through an inout sequence formal, modify it during matching, and observe the final value copied back."
+        ]
+      },
+      "id": "SV-2023-F-SEQUENCE-INOUT-LOCAL-FORMAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Pass a four-state value and verify initialization at each sequence attempt."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Pass an input local-variable actual to a named sequence and use the copied local in its body."
+        ]
+      },
+      "id": "SV-2023-F-SEQUENCE-INPUT-LOCAL-FORMAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a one-tick `R` to expose same-tick fusion of the assignment."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Capture an expression into a local variable at the endpoint of a multi-cycle sequence."
+        ]
+      },
+      "id": "SV-2023-F-SEQUENCE-MATCH-ASSIGNMENT-DERIVATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Insert multiple clock events after triggering and observe only the first subsequent one qualifies."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Complete a sequence between clock events and test `.matched` at the next clock."
+        ]
+      },
+      "id": "SV-2023-F-SEQUENCE-MATCHED-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise a sequence with multiple possible endpoints and observe copyback only for a completed match."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Set an output local formal during a named sequence and observe its value copied to the actual at successful completion."
+        ]
+      },
+      "id": "SV-2023-F-SEQUENCE-OUTPUT-LOCAL-FORMAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Pass local variables as sequence actuals and verify their completion values merge into context."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Start a named sequence before the current position and complete it at the position where `.triggered` is tested."
+        ]
+      },
+      "id": "SV-2023-F-SEQUENCE-TRIGGERED-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place `R1` at either boundary using an empty leading or trailing padding match."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Match `R1` strictly inside the interval matched by `R2`."
+        ]
+      },
+      "id": "SV-2023-F-SEQUENCE-WITHIN-DERIVATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Vary `p` outside the indexed tick."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare `always[2:2] p` with `nexttime[2] p`."
+        ]
+      },
+      "id": "SV-2023-F-SINGLETON-BOUNDED-ALWAYS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Make `p` true at adjacent but not indexed ticks."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare `eventually[2:2] p` with `nexttime[2] p`."
+        ]
+      },
+      "id": "SV-2023-F-SINGLETON-BOUNDED-EVENTUALLY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change between X and Z to confirm case-equality comparison."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Keep a four-state vector case-equal across two samples."
+        ]
+      },
+      "id": "SV-2023-F-STABLE-DERIVATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare X, Z, and known-bit changes."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Keep a four-state expression unchanged across global-clock samples."
+        ]
+      },
+      "id": "SV-2023-F-STABLE-GCLK-DERIVATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare directly with `R[*0:$]`."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use `R[*]` in a surrounding sequence that exposes both empty and nonempty matches."
+        ]
+      },
+      "id": "SV-2023-F-STAR-REPETITION-ALIAS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Hold an X bit unchanged and contrast with X-to-Z."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Keep a four-state expression equal through the next global-clock value."
+        ]
+      },
+      "id": "SV-2023-F-STEADY-GCLK-DERIVATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a finite trace where `p` never becomes true."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Make `p` become true after several ticks and compare both forms."
+        ]
+      },
+      "id": "SV-2023-F-STRONG-EVENTUALLY-DERIVATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Let `P` succeed vacuously at an earlier position."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Keep `P` false before a later nonvacuous satisfying evaluation."
+        ]
+      },
+      "id": "SV-2023-F-STRONG-EVENTUALLY-NONVACUITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "End a finite trace with the sequence and its local update pending."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Complete a local-variable sequence on a finite prefix."
+        ]
+      },
+      "id": "SV-2023-F-STRONG-LOCAL-SEQUENCE-PROPERTY-SATISFACTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "End the trace before a next tick exists."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare strong nexttime with the dual negated weak-nexttime form."
+        ]
+      },
+      "id": "SV-2023-F-STRONG-NEXTTIME-DERIVATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a sequence with several possible completion paths."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Complete a sequence used as `strong(R)` and classify the successful evaluation as nonvacuous."
+        ]
+      },
+      "id": "SV-2023-F-STRONG-SEQUENCE-NONVACUOUS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Leave an unbounded sequence pending through the end of a finite trace."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Complete a sequence on a finite prefix of the evaluation trace."
+        ]
+      },
+      "id": "SV-2023-F-STRONG-SEQUENCE-PROPERTY-SATISFACTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Keep `p` true forever without `q` to distinguish strong from weak until."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Hold `p` until a later `q` and compare with the explicit conjunction."
+        ]
+      },
+      "id": "SV-2023-F-STRONG-UNTIL-DERIVATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast with a trace where `P2` never occurs."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Hold `P1` before a later nonvacuous terminating `P2`."
+        ]
+      },
+      "id": "SV-2023-F-STRONG-UNTIL-NONVACUITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Keep `p` true without ever producing `q` to expose strong termination."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Hold `p` until and including a later `q` tick."
+        ]
+      },
+      "id": "SV-2023-F-STRONG-UNTIL-WITH-DERIVATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Toggle `b` between represented ticks to ensure the clock-context condition is respected."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare synchronous and asynchronous accept forms in a unit clock context."
+        ]
+      },
+      "id": "SV-2023-F-SYNC-ACCEPT-ON-UNIT-CLOCK"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Assert `b` on the sampling clock while `P` is pending."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare synchronous reject with the dual negated synchronous accept form."
+        ]
+      },
+      "id": "SV-2023-F-SYNC-REJECT-ON-DERIVATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Deassert `b` on the final tick of the `R` match."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Keep `b` true for the complete match of `R`."
+        ]
+      },
+      "id": "SV-2023-F-THROUGHOUT-DERIVATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a sequence with simultaneous alternative matches at the earliest endpoint."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Give `R` possible matches at two endpoints and observe only the shortest tight word satisfies `first_match`."
+        ]
+      },
+      "id": "SV-2023-F-TIGHT-FIRST-MATCH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multi-tick operands sharing exactly their boundary letter."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Fuse two Boolean sequences true on the same sampled position."
+        ]
+      },
+      "id": "SV-2023-F-TIGHT-FUSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use four-state local and sampled values."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use a Boolean expression depending on an incoming assertion local."
+        ]
+      },
+      "id": "SV-2023-F-TIGHT-LOCAL-BOOLEAN"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an empty-capable operand and observe context handoff at the split."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Assign a local in `R1` and consume it in `R2` after one sequence step."
+        ]
+      },
+      "id": "SV-2023-F-TIGHT-LOCAL-CONCATENATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Shadow an incoming local named `v` and verify declaration scoping in the output context."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare a local around a sequence that assigns it, while preserving unrelated outer locals."
+        ]
+      },
+      "id": "SV-2023-F-TIGHT-LOCAL-DECLARATION-CONTEXT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Have alternative earliest matches produce different local assignments."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Give `R` multiple endpoints and verify the earliest endpoint's local output context is selected."
+        ]
+      },
+      "id": "SV-2023-F-TIGHT-LOCAL-FIRST-MATCH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multi-letter operands with exactly one overlapping boundary letter."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Assign a local in `R1` and consume it in fused `R2` at the shared letter."
+        ]
+      },
+      "id": "SV-2023-F-TIGHT-LOCAL-FUSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise placeholder extensions, for which any type-correct constant may represent the expression value."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Capture an expression combining an incoming local and sampled signal into `v`."
+        ]
+      },
+      "id": "SV-2023-F-TIGHT-LOCAL-MATCH-ASSIGNMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place assignments in `R`; zero repetition executes none."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use null repetition before a suffix and verify incoming locals pass through."
+        ]
+      },
+      "id": "SV-2023-F-TIGHT-LOCAL-NULL-REPETITION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise exactly one repetition and an empty-capable operand."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Accumulate or update a local across several repetitions."
+        ]
+      },
+      "id": "SV-2023-F-TIGHT-LOCAL-ONE-OR-MORE-REPETITION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Nest parentheses around an assignment."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare a local-variable sequence with and without parentheses."
+        ]
+      },
+      "id": "SV-2023-F-TIGHT-LOCAL-PARENTHESES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Sample a local in only one operand so inconsistent flow removes it."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Assign compatible locals in both intersection operands and observe the combined output context."
+        ]
+      },
+      "id": "SV-2023-F-TIGHT-LOCAL-SEQUENCE-INTERSECT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Assign a local in only one alternative and confirm it is removed from the outgoing context."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Assign the same local in both alternatives and use the resulting value after either matching branch."
+        ]
+      },
+      "id": "SV-2023-F-TIGHT-LOCAL-SEQUENCE-OR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Choose an `R` that itself matches the current position; zero repetition remains empty."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use null repetition where an empty match enables an immediate suffix."
+        ]
+      },
+      "id": "SV-2023-F-TIGHT-NULL-REPETITION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an empty-match-capable `R` together with a surrounding endpoint oracle."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Match one and several consecutive tight instances of `R`."
+        ]
+      },
+      "id": "SV-2023-F-TIGHT-ONE-OR-MORE-REPETITION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Nest redundant parentheses around an empty-capable sequence."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare a sequence with the same sequence parenthesized in a surrounding property."
+        ]
+      },
+      "id": "SV-2023-F-TIGHT-PARENTHESES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Make operands match prefixes of different lengths to prevent tight intersection."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use two sequences with the same start and endpoint over one word."
+        ]
+      },
+      "id": "SV-2023-F-TIGHT-SEQUENCE-INTERSECT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use operands matching the same word with different internal paths."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Independently produce tight matches for each disjunct."
+        ]
+      },
+      "id": "SV-2023-F-TIGHT-SEQUENCE-OR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an operand admitting empty to exercise split boundaries."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Concatenate two single-tick Boolean sequences and observe a two-part tight match."
+        ]
+      },
+      "id": "SV-2023-F-TIGHT-UNIT-CONCATENATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Assert asynchronous `b` between property clock events and observe truncation at its first occurrence."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Satisfy clocked `Q` while `b` remains false."
+        ]
+      },
+      "id": "SV-2023-F-TOP-LEVEL-CLOCKED-DISABLE-IFF-SATISFACTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Nest parentheses around a multiclocked property."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare a top-level clocked property with the same property parenthesized."
+        ]
+      },
+      "id": "SV-2023-F-TOP-LEVEL-CLOCKED-PARENTHESES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Trigger a disable condition at the boundary where the property would otherwise pass and verify outcomes do not overlap."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Construct separate passing, disabled, and failing evaluations of one property."
+        ]
+      },
+      "id": "SV-2023-F-TOP-LEVEL-PASS-DISABLE-FAIL-CLASSIFICATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a multiclocked property expression."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare a clocked property used directly at top level with its underlying property semantics."
+        ]
+      },
+      "id": "SV-2023-F-TOP-LEVEL-PLAIN-CLOCKED-PROPERTY-SATISFACTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a property containing temporal and Boolean operators."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare a property expression used directly at top level with its underlying expression semantics."
+        ]
+      },
+      "id": "SV-2023-F-TOP-LEVEL-PLAIN-PROPERTY-SATISFACTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Assert `b` at several positions and confirm only its first occurrence determines truncation."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Satisfy `P` while `b` remains false throughout evaluation."
+        ]
+      },
+      "id": "SV-2023-F-TOP-LEVEL-UNCLOCKED-DISABLE-IFF-SATISFACTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Nest multiple parentheses around `disable iff`."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare a top-level unclocked property with the same property parenthesized."
+        ]
+      },
+      "id": "SV-2023-F-TOP-LEVEL-UNCLOCKED-PARENTHESES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use signedness and width conversion in the actual argument."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Pass a differently sized value to a typed named-item formal and compare with explicit casting to the formal type."
+        ]
+      },
+      "id": "SV-2023-F-TYPED-FORMAL-CASTING-TYPE-SUBSTITUTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast with a formal whose type itself is a casting type."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Instantiate a named-item formal having a non-casting ordinary type and compare its use with the prescribed type-based conversion."
+        ]
+      },
+      "id": "SV-2023-F-TYPED-FORMAL-NONCASTING-TYPE-SUBSTITUTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast a simple read with an increment/decrement lvalue use."
+        ],
+        "negative": [
+          "Use a typed named-item formal reference as the lvalue of an operator assignment in a sequence match item."
+        ],
+        "notes": [],
+        "positive": []
+      },
+      "id": "SV-2023-F-TYPED-FORMAL-NOT-MATCH-ITEM-LVALUE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise `m=1` and multiple later matches of `R2`."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare `R1 ##[2:$] R2` with its unit-delay and unbounded true-repetition expansion."
+        ]
+      },
+      "id": "SV-2023-F-UNBOUNDED-CONCATENATION-DELAY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use long false runs between occurrences."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare `b[->2:$]` with two or more separated occurrences of `b`."
+        ]
+      },
+      "id": "SV-2023-F-UNBOUNDED-GOTO-REPETITION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise more than the minimum occurrences and a nonempty trailing false run."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare `b[=2:$]` with the unbounded goto form plus trailing false ticks."
+        ]
+      },
+      "id": "SV-2023-F-UNBOUNDED-NONCONSECUTIVE-REPETITION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Make `p` true before but never at or after the lower bound."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare `s_eventually[2:$] p` with the delayed unbounded strong-eventually form."
+        ]
+      },
+      "id": "SV-2023-F-UNBOUNDED-STRONG-EVENTUALLY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Trigger `b` multiple times and use only its first occurrence."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Trigger `disable iff` while an unclocked property is pending and insensitive to either continuation beyond the trigger."
+        ]
+      },
+      "id": "SV-2023-F-UNCLOCKED-DISABLE-IFF-DISABLING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Nest parentheses around `disable iff`."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare disabling of a top-level property with and without parentheses."
+        ]
+      },
+      "id": "SV-2023-F-UNCLOCKED-DISABLING-PARENTHESES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a one-tick antecedent to expose the consequent start tick."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare an unclocked nonoverlapping implication with the one-tick-extended overlapping form."
+        ]
+      },
+      "id": "SV-2023-F-UNCLOCKED-NONOVERLAPPING-IMPLICATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast a sequence whose only match is empty."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use a one-letter sequence that assigns a local and produces an output context."
+        ]
+      },
+      "id": "SV-2023-F-UNCLOCKED-SEQUENCE-LOCAL-NONDEGENERATE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast null repetition, which only tightly matches the empty word."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use a Boolean sequence with a one-letter tight match."
+        ]
+      },
+      "id": "SV-2023-F-UNCLOCKED-SEQUENCE-NONDEGENERATE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Make `P1` itself nonvacuous at an earlier qualifying position."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Hold `P1` before a later nonvacuous `P2` evaluation."
+        ]
+      },
+      "id": "SV-2023-F-UNTIL-NONVACUITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Keep `P1` true through a finite word without `P2` to exercise weak-until completion."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Hold `P1` until a later `P2`."
+        ]
+      },
+      "id": "SV-2023-F-UNTIL-SATISFACTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Drop `p` exactly when `q` becomes true to distinguish `until_with` from `until`."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Hold `p` through the tick where `q` becomes true."
+        ]
+      },
+      "id": "SV-2023-F-UNTIL-WITH-DERIVATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use `$` as an allowed actual argument."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Pass a variable lvalue to an untyped named-item formal and compare with direct substitution."
+        ]
+      },
+      "id": "SV-2023-F-UNTYPED-FORMAL-DIRECT-SUBSTITUTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a concatenation or cast expression that is not a variable lvalue."
+        ],
+        "negative": [],
+        "notes": [
+          "`item` is internal rewriting notation."
+        ],
+        "positive": [
+          "Pass a compound typed expression to an untyped named-item formal used with an operation preserved by `item`."
+        ]
+      },
+      "id": "SV-2023-F-UNTYPED-FORMAL-EXPRESSION-SUBSTITUTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Hold `b` stable across global-clock ticks and confirm the value-change clock does not trigger."
+        ],
+        "negative": [],
+        "notes": [
+          "The source extraction flags the exclusion typography for visual review; direct `$global_clock` is covered by its separate rewrite."
+        ],
+        "positive": [
+          "Use `@(b)` on an assertion and exercise both rising and falling changes of `b`; each value change is represented by `$changing_gclk(b)`."
+        ]
+      },
+      "id": "SV-2023-F-VALUE-CHANGE-CLOCK-REWRITE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "End a finite trace with the sequence incomplete."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Complete a local-variable sequence and compare weak and strong forms."
+        ]
+      },
+      "id": "SV-2023-F-WEAK-LOCAL-SEQUENCE-PROPERTY-SATISFACTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "End the trace while the weak sequence remains incomplete."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Evaluate a sequence used as `weak(R)` and classify its successful evaluation as nonvacuous."
+        ]
+      },
+      "id": "SV-2023-F-WEAK-SEQUENCE-NONVACUOUS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "End a finite trace while `R` remains pending and observe weak completion behavior."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Complete `R` on a finite prefix and compare weak and strong forms."
+        ]
+      },
+      "id": "SV-2023-F-WEAK-SEQUENCE-PROPERTY-SATISFACTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use `n=1` to isolate the two alternatives."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Exercise both the fused and positive-delay matches of `R1 ##[0:2] R2`."
+        ]
+      },
+      "id": "SV-2023-F-ZERO-LOWER-BOUNDED-CONCATENATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast a same-tick `R2` with an arbitrarily delayed `R2`."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Exercise both fused and later matches of `R1 ##[0:$] R2`."
+        ]
+      },
+      "id": "SV-2023-F-ZERO-LOWER-UNBOUNDED-CONCATENATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast with `nexttime[1] p` when `p` changes on the next tick."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare `nexttime[0] p` with an immediate true-antecedent implication."
+        ]
+      },
+      "id": "SV-2023-F-ZERO-NEXTTIME-DERIVATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Choose operands whose same-tick endpoint/start requirement is observable."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare `R1 ##[0:0] R2` with `R1 ##0 R2`."
+        ]
+      },
+      "id": "SV-2023-F-ZERO-RANGE-CONCATENATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place the repetition before a fused or delayed suffix to distinguish its empty match."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use `R[*0:$]` where both an empty match and traces with one or more consecutive `R` matches affect a surrounding sequence."
+        ]
+      },
+      "id": "SV-2023-F-ZERO-TO-UNBOUNDED-REPETITION"
+    }
+  ],
+  "schema_version": 1
+}

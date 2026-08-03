@@ -1,0 +1,379 @@
+{
+  "authority": "1800-2023",
+  "part": "I",
+  "requirements": [
+    {
+      "hints": {
+        "edge": [
+          "Call an export from within a context import without svSetScope and observe inheritance of the import declaration scope."
+        ],
+        "negative": [],
+        "notes": [
+          "Do not test scope APIs outside a DPI context call chain: H.9.3 makes that behavior undefined, despite Annex I's narrower svGetScope comment about unrelated C code."
+        ],
+        "positive": [
+          "From a context imported function, verify svGetScope identifies its declaration instance and that svSetScope selects the instance used by a subsequent export."
+        ]
+      },
+      "id": "SV-2023-I-DPI-ACTIVE-SCOPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Copy the returned filename before making another SystemVerilog call rather than retaining or freeing it."
+        ],
+        "negative": [
+          "When information is unavailable, detect modification of sentinel output values."
+        ],
+        "notes": [
+          "Availability of caller source information is implementation-specific."
+        ],
+        "positive": [
+          "When caller information is supported, call from an import and verify true with updated file and line."
+        ]
+      },
+      "id": "SV-2023-I-DPI-CALLER-INFO"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call svIsDisabledState during ordinary nondisabled execution."
+        ],
+        "negative": [
+          "Return from an imported function in disabled state without calling svAckDisabledState."
+        ],
+        "notes": [],
+        "positive": [
+          "Disable an execution containing an imported task, observe svIsDisabledState equal to 1, and acknowledge before return."
+        ]
+      },
+      "id": "SV-2023-I-DPI-DISABLE-PROTOCOL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compile the declarations from both C and C++ translation units."
+        ],
+        "negative": [
+          "Detect an incompatible svDpiVersion prototype or missing handle typedef."
+        ],
+        "notes": [],
+        "positive": [
+          "Compile C code that calls svDpiVersion and declares both handle types."
+        ]
+      },
+      "id": "SV-2023-I-DPI-HANDLE-AND-VERSION-API"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Pass NULL and verify scaling to the simulation time unit."
+        ],
+        "negative": [
+          "Pass an invalid scope and require -1."
+        ],
+        "notes": [],
+        "positive": [
+          "At a known simulation time, query using scopes with differing time units and compare scaled results."
+        ]
+      },
+      "id": "SV-2023-I-DPI-SCALED-TIME-QUERY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Resolve module, interface, program, and generate scopes where present."
+        ],
+        "negative": [
+          "Look up an unknown scope name and detect a non-NULL result."
+        ],
+        "notes": [],
+        "positive": [
+          "Resolve a known generated instance by full name and round-trip the handle through svGetNameFromScope."
+        ]
+      },
+      "id": "SV-2023-I-DPI-SCOPE-NAME-LOOKUP"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Query a valid pair never stored and require NULL; use the same key in two scopes."
+        ],
+        "negative": [
+          "Pass NULL scope or userData to svPutUserData and require -1."
+        ],
+        "notes": [],
+        "positive": [
+          "Store distinct pointers under distinct scope/key pairs and retrieve each one."
+        ]
+      },
+      "id": "SV-2023-I-DPI-SCOPE-USER-DATA"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Pass NULL to retrieve simulation-wide unit and precision."
+        ],
+        "negative": [
+          "Pass an invalid scope to each routine and require -1."
+        ],
+        "notes": [],
+        "positive": [
+          "Query a scope with explicitly distinct timeunit and timeprecision and compare both outputs."
+        ]
+      },
+      "id": "SV-2023-I-DPI-TIME-UNIT-PRECISION-QUERY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Predefine DPI_EXTERN and confirm the header preserves the caller-supplied definition."
+        ],
+        "negative": [
+          "Compile against a header lacking the inclusion guard or C++ extern-C wrapping."
+        ],
+        "notes": [
+          "Import/export attributes are platform-dependent; test their macro availability and expansion in the relevant platform configuration."
+        ],
+        "positive": [
+          "Include svdpi.h twice from a C++ translation unit and reference a declared DPI routine with C linkage."
+        ]
+      },
+      "id": "SV-2023-I-HEADER-LINKAGE-SCAFFOLD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Predefine DPI_PROTOTYPES before inclusion and verify that the header still undefines DPI_PROTOTYPES, XXTERN, and EETERN at cleanup."
+        ],
+        "negative": [
+          "Detect DPI_EXTERN, XXTERN, or EETERN remaining defined after a normal include."
+        ],
+        "notes": [],
+        "positive": [
+          "Include svdpi.h and use preprocessing checks that its temporary declaration macros do not leak afterward."
+        ]
+      },
+      "id": "SV-2023-I-HEADER-MACRO-CLEANUP"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call with a null array handle and require NULL."
+        ],
+        "negative": [
+          "Request an out-of-range element and detect a non-NULL result."
+        ],
+        "notes": [],
+        "positive": [
+          "Retrieve in-range elements through the variadic and dimension-specialized forms and compare the addressed values."
+        ]
+      },
+      "id": "SV-2023-I-OPEN-ARRAY-ELEMENT-POINTERS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Pass a non-C-layout array and require both NULL pointer and zero size."
+        ],
+        "negative": [
+          "Detect a non-C-layout array for which a non-NULL whole-array pointer is returned."
+        ],
+        "notes": [],
+        "positive": [
+          "Pass a contiguous C-layout open array and compare its pointer and reported byte size with its elements."
+        ]
+      },
+      "id": "SV-2023-I-OPEN-ARRAY-LAYOUT-ACCESS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Write X and Z bits through a multi-chunk svLogicVecVal element."
+        ],
+        "negative": [
+          "Detect a copy that updates only one 32-bit chunk of a wider packed element."
+        ],
+        "notes": [
+          "The caller must allocate sufficient canonical source storage."
+        ],
+        "positive": [
+          "Write a packed element through each dimension-specific form and observe the complete value in SystemVerilog."
+        ]
+      },
+      "id": "SV-2023-I-OPEN-ARRAY-PACKED-COPY-IN"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Read an element containing X and Z through a multi-chunk logic destination."
+        ],
+        "negative": [
+          "Detect a copy that loses upper chunks or four-state bval data."
+        ],
+        "notes": [
+          "The caller must allocate sufficient destination storage."
+        ],
+        "positive": [
+          "Read a wider-than-32-bit packed element through each dimension-specific form and compare all chunks."
+        ]
+      },
+      "id": "SV-2023-I-OPEN-ARRAY-PACKED-COPY-OUT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Query an argument having both a packed part and multiple unpacked dimensions."
+        ],
+        "negative": [
+          "Detect a query implementation that treats dimension 0 as the first unpacked dimension."
+        ],
+        "notes": [],
+        "positive": [
+          "Query ascending and descending unpacked dimensions and compare every result with the corresponding SystemVerilog array query."
+        ]
+      },
+      "id": "SV-2023-I-OPEN-ARRAY-QUERY-API"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Write and read X and Z through the svLogic forms."
+        ],
+        "negative": [
+          "Detect multidimensional index-order reversal."
+        ],
+        "notes": [],
+        "positive": [
+          "Read and write scalar elements in one-, two-, and three-dimensional open arrays."
+        ]
+      },
+      "id": "SV-2023-I-OPEN-ARRAY-SCALAR-ELEMENT-ACCESS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Check N equal to 32 without evaluating the nonselected masking branch."
+        ],
+        "negative": [
+          "Detect a missing helper or a replacement definition that differs from the normative Annex I expression."
+        ],
+        "notes": [
+          "Do not reinterpret SV_GET_SIGNED_BITS as an idealized portable C sign-extension primitive: the normative text literally tests bit N and includes shifts whose C-language portability depends on operand types and values."
+        ],
+        "positive": [
+          "Preprocess or compile checks that all three helper macros are present with the Annex I parameterization and that each extraction helper returns VALUE for N equal to 32."
+        ]
+      },
+      "id": "SV-2023-I-PACKED-BIT-MASK-HELPERS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Put and retrieve X and Z through the svLogic variants."
+        ],
+        "negative": [
+          "Detect an implementation that treats index 0 as the most-significant bit."
+        ],
+        "notes": [],
+        "positive": [
+          "Get and put index 0 and a higher index in two-state and four-state packed vectors."
+        ]
+      },
+      "id": "SV-2023-I-PACKED-BITSELECT-API"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise widths 1 and 32, including a slice crossing a 32-bit chunk boundary in the source."
+        ],
+        "negative": [
+          "Detect reversed normalized indexing in a part-select result."
+        ],
+        "notes": [],
+        "positive": [
+          "Extract and insert an 8-bit slice at a nonzero starting index for bit and logic vectors."
+        ]
+      },
+      "id": "SV-2023-I-PACKED-PARTSELECT-API"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Inspect a packed logic value containing 0, 1, X, and Z through aval/bval chunks."
+        ],
+        "negative": [
+          "Detect a header whose 33-bit packed value requires only one chunk."
+        ],
+        "notes": [],
+        "positive": [
+          "Compile structural and chunk-count assertions for widths 1, 32, and 33."
+        ]
+      },
+      "id": "SV-2023-I-PACKED-VECTOR-REPRESENTATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Pass each canonical svLogic value across a DPI scalar argument and observe the corresponding four-state value."
+        ],
+        "negative": [
+          "Detect a header that swaps the canonical X and Z encodings."
+        ],
+        "notes": [],
+        "positive": [
+          "Compile C static assertions for the four constants and the sizes of svBit and svLogic."
+        ]
+      },
+      "id": "SV-2023-I-SCALAR-CANONICAL-REPRESENTATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise a platform where the header obtains the types from a platform integer-types header rather than local typedefs."
+        ],
+        "negative": [
+          "Use a provided header in which either required type is unavailable."
+        ],
+        "notes": [],
+        "positive": [
+          "Include svdpi.h in C and use uint8_t and uint32_t in compile-time size checks for 8 and 32 bits."
+        ]
+      },
+      "id": "SV-2023-I-SIZE-CRITICAL-TYPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify that omission is confined to the explicitly delimited deprecated region."
+        ],
+        "negative": [
+          "Check an installation that provides no svdpi.h or omits a nondeprecated declaration required by Annex I."
+        ],
+        "notes": [
+          "Materialization needs access to the simulator's installed C header."
+        ],
+        "positive": [
+          "Compile a DPI C source that includes the implementation-provided svdpi.h and uses a nondeprecated declaration."
+        ]
+      },
+      "id": "SV-2023-I-SVDPI-HEADER-PROVISION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Define a compatible VPI_TIME/s_vpi_time interface before including svdpi.h and verify that the header reuses it while still exposing svTimeVal and the DPI aliases."
+        ],
+        "negative": [
+          "Detect an absent or incorrectly typed svTimeVal field, incorrect VPI time-kind value, or incorrect DPI alias."
+        ],
+        "notes": [],
+        "positive": [
+          "Compile C code that initializes every svTimeVal field and checks all VPI time-kind constants and both DPI aliases."
+        ]
+      },
+      "id": "SV-2023-I-TIME-REPRESENTATION"
+    }
+  ],
+  "schema_version": 1
+}

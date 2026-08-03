@@ -1,0 +1,548 @@
+{
+  "authority": "1800-2023",
+  "part": "27",
+  "requirements": [
+    {
+      "hints": {
+        "edge": [
+          "Use several directly nested alternatives with one shared name."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Give if and else alternatives the same block name and select each in separate elaborations."
+        ]
+      },
+      "id": "SV-2023-27-CONDITIONAL-ALTERNATIVE-SAME-NAME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Make the conflicting block unselected."
+        ],
+        "negative": [
+          "Reuse a name across separate generate constructs or an ordinary declaration."
+        ],
+        "notes": [],
+        "positive": [
+          "Use distinct names across separate constructs and declarations."
+        ]
+      },
+      "id": "SV-2023-27-CONDITIONAL-BLOCK-NAME-CONFLICT"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Reference a name belonging only to an unselected alternative."
+        ],
+        "notes": [],
+        "positive": [
+          "Hierarchically reference a declaration through the selected named block."
+        ]
+      },
+      "id": "SV-2023-27-CONDITIONAL-NAMED-SCOPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Select no alternative where no default or else exists."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Select one alternative with a constant parameter."
+        ]
+      },
+      "id": "SV-2023-27-CONDITIONAL-SELECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare with the direct-nesting exception."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Instantiate a one-item conditional block without begin/end and observe its scope."
+        ]
+      },
+      "id": "SV-2023-27-CONDITIONAL-SINGLE-ITEM-SCOPE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Attempt an external hierarchical reference to it."
+        ],
+        "notes": [],
+        "positive": [
+          "Reference a declaration from within the unnamed block's instantiated hierarchy."
+        ]
+      },
+      "id": "SV-2023-27-CONDITIONAL-UNNAMED-REFERENCE-LIMIT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Mix if-generate and case-generate by direct nesting."
+        ],
+        "negative": [
+          "Assume direct nesting through begin/end or through a loop generate."
+        ],
+        "notes": [],
+        "positive": [
+          "Build unbracketed if\u2013else-if and mixed if/case schemes whose alternatives share a block name."
+        ]
+      },
+      "id": "SV-2023-27-DIRECT-CONDITIONAL-NESTING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Conflict with a zero-instance array declaration."
+        ],
+        "negative": [
+          "Reuse a variable or generated-array name."
+        ],
+        "notes": [],
+        "positive": [
+          "Use distinct names."
+        ]
+      },
+      "id": "SV-2023-27-GENERATE-ARRAY-NAME-CONFLICT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Nest conditional and loop generate constructs."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Place a nested generate construct and other allowed module items in a generate block."
+        ]
+      },
+      "id": "SV-2023-27-GENERATE-BLOCK-ALLOWED-MODULE-ITEMS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Reference an enclosing declaration from a nested generate block."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Directly reference an enclosing variable from inside a generate block."
+        ]
+      },
+      "id": "SV-2023-27-GENERATE-BLOCK-ENCLOSING-REFERENCES"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Place a port declaration, specify block, or specparam declaration in a generate block."
+        ],
+        "notes": [],
+        "positive": [
+          "Use ordinary declarations in a generate block."
+        ]
+      },
+      "id": "SV-2023-27-GENERATE-BLOCK-FORBIDDEN-ITEMS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Select no block and verify enclosed hierarchy is absent."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Select a block containing a declaration, behavior, and module instance and observe them under its hierarchy."
+        ]
+      },
+      "id": "SV-2023-27-GENERATE-BLOCK-INSTANCE-HIERARCHY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a single unbracketed generate item and an empty begin/end block."
+        ],
+        "negative": [
+          "Mutate required delimiters or production ordering one at a time."
+        ],
+        "notes": [
+          "Split candidate cases by production and one syntax mutation."
+        ],
+        "positive": [
+          "Exercise each generate construct production in a minimal valid context."
+        ]
+      },
+      "id": "SV-2023-27-GENERATE-CONSTRUCT-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Insert begin/end and observe the intentionally changed association and hierarchy."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use nested unbracketed if-generates and select values that distinguish nearest-if association."
+        ]
+      },
+      "id": "SV-2023-27-GENERATE-DANGLING-ELSE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Use an item admitted only by another context's generate-item category."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a context-appropriate generate item in each of module, interface, and checker."
+        ]
+      },
+      "id": "SV-2023-27-GENERATE-ITEM-CONTEXT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use it in a nested generate construct."
+        ],
+        "negative": [
+          "Attempt to override a parameter declared within a generate block."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare and use a parameter in an instantiated generate block."
+        ]
+      },
+      "id": "SV-2023-27-GENERATE-PARAMETERS-LOCAL"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Omit endgenerate."
+        ],
+        "notes": [],
+        "positive": [
+          "Close a generate region with endgenerate."
+        ]
+      },
+      "id": "SV-2023-27-GENERATE-REGION-MATCHING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use generate constructs without a generate region."
+        ],
+        "negative": [
+          "Nest generate regions or place one below a non-module scope."
+        ],
+        "notes": [],
+        "positive": [
+          "Use one generate region directly in a module."
+        ]
+      },
+      "id": "SV-2023-27-GENERATE-REGION-PLACEMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place nested generate constructs within one generate region and confirm the wrapper itself introduces no hierarchy or semantic change."
+        ],
+        "negative": [],
+        "notes": [
+          "Diagnostic wording may differ for misused keywords and is not part of this requirement."
+        ],
+        "positive": [
+          "Compare equivalent modules with and without a generate/endgenerate wrapper around the same conditional generate construct and observe the same selected hierarchy and values."
+        ]
+      },
+      "id": "SV-2023-27-GENERATE-REGION-SEMANTIC-NEUTRALITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use dependent parameters in the constant expression."
+        ],
+        "negative": [
+          "Control a scheme with a runtime variable."
+        ],
+        "notes": [],
+        "positive": [
+          "Control a scheme with a parameter-based constant expression."
+        ]
+      },
+      "id": "SV-2023-27-GENERATE-SCHEME-CONSTANT-EXPRESSIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Put runtime behavior in the selected branch, distinguishing elaboration from execution."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use a parameter-controlled scheme and observe selected elaborated hierarchy."
+        ]
+      },
+      "id": "SV-2023-27-GENERATE-SCHEME-ELABORATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Distinguish the elaboration-time genvar from each generated block's same-named implicit localparam."
+        ],
+        "negative": [],
+        "notes": [
+          "Legality of references outside the loop-generate scheme is owned by SV-2023-27-GENVAR-REFERENCE-RESTRICTED."
+        ],
+        "positive": [
+          "Use a genvar-controlled loop to elaborate a known set of generated block instances."
+        ]
+      },
+      "id": "SV-2023-27-GENVAR-ELABORATION-ONLY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a partially unknown value."
+        ],
+        "negative": [
+          "Produce an x or z bit during evaluation."
+        ],
+        "notes": [],
+        "positive": [
+          "Use known genvar values."
+        ]
+      },
+      "id": "SV-2023-27-GENVAR-NO-UNKNOWN-BITS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Distinguish a reference to the per-instance implicit localparam inside the generated block from a prohibited reference to the genvar itself."
+        ],
+        "negative": [
+          "Reference a declared genvar in an ordinary continuous assignment outside a loop generate scheme."
+        ],
+        "notes": [
+          "The same-named implicit localparam inside each generated instance is governed separately by 27.4."
+        ],
+        "positive": [
+          "Use a declared genvar as the index in a loop generate initialization, condition, and iteration."
+        ]
+      },
+      "id": "SV-2023-27-GENVAR-REFERENCE-RESTRICTED"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Use a terminating sequence that revisits a value."
+        ],
+        "notes": [],
+        "positive": [
+          "Use unique genvar values."
+        ]
+      },
+      "id": "SV-2023-27-GENVAR-VALUE-UNIQUE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Use a scheme that cannot terminate."
+        ],
+        "notes": [
+          "Protect the harness from hangs without making a timeout the language oracle."
+        ],
+        "positive": [
+          "Use a terminating iteration."
+        ]
+      },
+      "id": "SV-2023-27-LOOP-GENERATE-TERMINATION"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Use an undeclared ordinary identifier as the loop index."
+        ],
+        "notes": [],
+        "positive": [
+          "Use both a previously declared genvar and an inline genvar declaration."
+        ]
+      },
+      "id": "SV-2023-27-LOOP-GENVAR-DECLARATION"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Initialize one genvar and iterate another."
+        ],
+        "notes": [],
+        "positive": [
+          "Initialize and iterate one genvar."
+        ]
+      },
+      "id": "SV-2023-27-LOOP-GENVAR-SAME-TARGET"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the value in a nested constant expression."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Read the implicit localparam in each generated instance and observe its distinct index value."
+        ]
+      },
+      "id": "SV-2023-27-LOOP-IMPLICIT-LOCALPARAM"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use it in a width or other constant context."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Hierarchically read the implicit index localparam from generated instances."
+        ]
+      },
+      "id": "SV-2023-27-LOOP-INDEX-HIERARCHICAL-REFERENCE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Reference the initialized genvar on the initialization right-hand side."
+        ],
+        "notes": [],
+        "positive": [
+          "Initialize the genvar from an independent constant expression."
+        ]
+      },
+      "id": "SV-2023-27-LOOP-INIT-NO-SELF-REFERENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use sparse and multilevel generated indices."
+        ],
+        "negative": [
+          "Use an index for which no instance was generated."
+        ],
+        "notes": [],
+        "positive": [
+          "Reference nested generated instances using each elaboration-time index."
+        ]
+      },
+      "id": "SV-2023-27-LOOP-INSTANCE-INDEXED-NAME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use nested named generate-block hierarchy."
+        ],
+        "negative": [
+          "Reference through a named block that was not elaborated."
+        ],
+        "notes": [],
+        "positive": [
+          "Hierarchically reference an object in a selected named generate block."
+        ]
+      },
+      "id": "SV-2023-27-NAMED-GENERATE-HIERARCHICAL-REFERENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a loop that executes zero times and test declaration visibility without selecting an element."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Generate named instances with noncontiguous genvar values and reference their corresponding indices."
+        ]
+      },
+      "id": "SV-2023-27-NAMED-LOOP-GENERATE-ARRAY"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Reuse the outer genvar in a nested loop generate."
+        ],
+        "notes": [],
+        "positive": [
+          "Use distinct genvars for nested loop-generate constructs."
+        ]
+      },
+      "id": "SV-2023-27-NESTED-LOOPS-DISTINCT-GENVAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Terminate after zero recursive child instances."
+        ],
+        "negative": [
+          "Use recursion whose parameter control never reaches a base case."
+        ],
+        "notes": [],
+        "positive": [
+          "Recursively instantiate a module under a decreasing parameter and terminate at a base case."
+        ]
+      },
+      "id": "SV-2023-27-RECURSIVE-GENERATE-INSTANTIATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare braced and unbraced single-item blocks."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use a single-item loop body without begin/end and access its generated hierarchy."
+        ]
+      },
+      "id": "SV-2023-27-SINGLE-ITEM-GENERATE-SCOPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Declare a conflicting genblk1 name and observe the unnamed block's zero-padded assigned name."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use several unnamed blocks and externally identify them as genblk1, genblk2, and so on."
+        ]
+      },
+      "id": "SV-2023-27-UNNAMED-GENBLK-ASSIGNED-NAME"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Attempt an external hierarchical reference to that declaration."
+        ],
+        "notes": [],
+        "positive": [
+          "Reference an unnamed-block declaration from within its own instantiated hierarchy."
+        ]
+      },
+      "id": "SV-2023-27-UNNAMED-GENERATE-REFERENCE-LIMIT"
+    }
+  ],
+  "schema_version": 1
+}

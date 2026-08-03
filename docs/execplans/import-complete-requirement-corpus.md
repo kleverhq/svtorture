@@ -16,16 +16,29 @@ This work does not make waivers part of runtime catalog models, campaign coverag
 
 - [x] (2026-08-03 07:49Z) Created branch `feat/import-complete-requirement-corpus` from a clean `main` working tree.
 - [x] (2026-08-03 07:49Z) Read repository guidance and the annotation and methodology documentation.
-- [ ] Audit current and incoming requirement IDs, content differences, tags, parts, and anchors; define the exact deterministic deduplication result.
-- [ ] Determine the minimal permanent locations and documentation for waiver, materialization-hint, and historical-evidence sidecars.
-- [ ] Import and merge requirements and sidecars without importing `output/manifests/`.
-- [ ] Update the part index, tag registry, README files, schemas, and tests only where required by normal catalog contracts.
-- [ ] Validate catalog loading, corpus counts, sidecar inventory, manifest exclusion, schemas, annotation anchors, and the repository smoke/precommit gates.
+- [x] (2026-08-03 08:02Z) Audited both catalogs: 12 current IDs, 6,719 incoming IDs, no ID collisions, and 12 semantic duplicates resolved against the annotated IEEE 1800-2023 corpus.
+- [x] (2026-08-03 08:02Z) Selected `standards/{waivers,materialization-hints,historical-evidence}` as archival sidecar locations with no runtime loader or metric integration.
+- [x] (2026-08-03 08:02Z) Imported 49 requirement files and all 168 approved sidecar files byte-for-byte; no session manifest was imported.
+- [x] (2026-08-03 08:02Z) Expanded the requirement part index, documented the sidecars, remapped all 12 cases, and adjusted the affected catalog test fixture; no tag or schema-model change was needed.
+- [ ] Validate catalog loading, corpus counts, sidecar inventory, manifest exclusion, schemas, annotation anchors, and the repository smoke/precommit gates (completed: metadata load, source byte comparison, schema regeneration, annotation index, 118 focused tests; remaining: smoke, precommit, complete CI).
 - [ ] Review the final diff, commit it with a Conventional Commit message, push the branch, and open a pull request.
 
 ## Surprises & Discoveries
 
-No unexpected behavior has been observed yet. The source publication contains 49 requirement files and 6,719 requirements, plus 56 files in each sidecar directory and eight session manifests that must not be copied.
+- Observation: The two catalogs have no common IDs, but all 12 current requirements semantically overlap the consolidated publication and all 12 are primary requirements of existing cases.
+  Evidence: Anchor comparison found 23 current-to-incoming overlap pairs involving 20 incoming records; clause-level review found an exact or decomposed replacement for every current case oracle.
+
+- Observation: Some legacy requirements combined several atomic rules, so correct deduplication requires one primary and multiple related requirements rather than retaining a second composite record.
+  Evidence: `ch13-output-copyout-width` now maps assignment-like argument conversion as primary plus narrowing and transfer timing as related rules; `ch26-multifile-package-import` maps lookup order as primary plus three package/wildcard rules.
+
+- Observation: All incoming requirement tags are empty and all 10,771 incoming citations resolve to the committed anchor index.
+  Evidence: The parsed audit found zero unknown tags and zero missing anchors among 8,696 unique cited anchors, so neither `standards/tags.toml` nor generated schema enums need a change.
+
+- Observation: Sidecar files cover 56 parts even though only 49 parts contain requirements.
+  Evidence: Chapter 41 and annexes C, D, E, O, P, and Q have intentionally empty materialization and historical requirement lists but still carry waiver or empty-part evidence.
+
+- Observation: The larger corpus exposed a latent mismatch between requirement-manifest hashing and dashboard catalog ordering.
+  Evidence: Bundle validation failed because `Catalog.requirement_manifest_hash()` hashed requirement-file/ID order while `bundle._catalog()` and `CampaignCatalog` use standard clause order. With one or two requirements per part these orders had happened to coincide; the 6,719-record corpus made them diverge. Canonicalizing the hash to the existing dashboard order restored all 118 focused tests.
 
 ## Decision Log
 
@@ -35,6 +48,18 @@ No unexpected behavior has been observed yet. The source publication contains 49
 
 - Decision: Treat the imported sidecars as maintained corpus evidence, but do not add them to runtime loading or metrics in this change.
   Rationale: The user explicitly requested all sidecars except session manifests and explicitly deferred waiver integration into dashboard coverage and related calculations. Keeping these files outside the runtime path is the smallest change that preserves the artifacts without changing behavior.
+  Date/Author: 2026-08-03 / Pi
+
+- Decision: Use the consolidated publication's 6,719 records as the final corpus and remove all 12 legacy records after remapping their cases.
+  Rationale: Keeping all records would produce 6,731 unique IDs but retain 12 semantic duplicates. IEEE 1800-2023 clause and anchor review proved that each legacy oracle is represented by one incoming requirement or by an incoming primary plus related atomic requirements. This preserves case behavior while achieving semantic deduplication.
+  Date/Author: 2026-08-03 / Pi
+
+- Decision: Copy publication requirement and sidecar files byte-for-byte rather than introducing sidecar schemas and loaders.
+  Rationale: Existing runtime validation fully handles schema-version-3 requirements, while the user requested transfer—not runtime consumption—of sidecars. Validation-only model layers would add public schemas and code without a current execution requirement. Exact source comparison and inventory checks prove transfer fidelity with less complexity.
+  Date/Author: 2026-08-03 / Pi
+
+- Decision: Canonicalize `Catalog.requirement_manifest_hash()` in standard clause order.
+  Rationale: Campaign catalogs are already required to serialize requirements in standard clause order and bundle validation rehashes that projection. Making the source manifest hash use the same existing canonical order fixes the root cause rather than weakening bundle integrity or changing dashboard contracts.
   Date/Author: 2026-08-03 / Pi
 
 ## Outcomes & Retrospective
@@ -53,13 +78,13 @@ The root `justfile` is the stable command interface. `just schemas` regenerates 
 
 ## Open Questions
 
-The audit must settle whether incoming records with IDs matching current records are byte-identical, semantically compatible, or conflicting; whether incoming tags are already registered; and whether the sidecar JSON files contain paths or provenance fields that need normalization before commit. These are implementation questions to resolve from repository evidence and do not require user input.
+No open implementation questions remain. The catalogs have no ID collisions; the 12 semantic duplicates have explicit remappings; incoming tags require no registry changes; and the approved source artifacts require no path normalization.
 
 ## Plan of Work
 
 First, inventory both catalogs and parse them with Python's standard `tomllib`. Compare records by ID and report identical entries, incoming-only entries, current-only entries, and field-level conflicts. Search all case TOML files for references to current IDs. Check every incoming tag against `standards/tags.toml`, every part against the committed anchor index, and every cited anchor for existence. Use those facts to choose a deterministic merge in which semantically distinct obligations remain separate and exact duplicates appear once.
 
-Second, build the merged chapter and annex TOML files under `standards/requirements/`, sorted by requirement ID as required by the catalog model. Add every published part containing requirements to `standards/index.toml` in standard order. Preserve the existing project-owned requirement when an incoming record is merely a duplicate and the existing record has live case references or stronger reviewed detail; otherwise use the consolidated publication record. Record every nontrivial conflict resolution in this plan.
+Second, replace the catalog TOML files under `standards/requirements/` with the consolidated publication's byte-identical files, which are already sorted by requirement ID. Add every published part containing requirements to `standards/index.toml` in standard order. Remove the 12 semantically duplicate legacy records and remap each affected case to the corresponding consolidated primary requirement, adding related atomic requirements where the legacy record had combined several rules. Record the deduplication decision and representative decompositions in this plan.
 
 Third, copy `output/waivers/`, `output/materialization-hints/`, and `output/historical-evidence/` into clearly named directories under `standards/`. Do not copy `output/manifests/`. Add concise README navigation that explains that these artifacts are extraction sidecars and are not runtime scoring inputs. Avoid adding loaders, model types, schemas, or dashboard code unless an existing repository contract proves they are required.
 
@@ -131,4 +156,8 @@ The current catalog initially indexes chapters 4, 5, 6, 7, 11, 12, 13, 22, 23, 2
 
 No new runtime interface or dependency is planned. Parsing and merge audit utilities should use Python 3's standard `tomllib`, `json`, and `pathlib` modules. Existing catalog validation remains in `src/svtorture/catalog.py` and `src/svtorture/models.py`; existing Pydantic models remain the authoritative runtime contract. Generated schemas remain outputs of `just schemas`.
 
-Revision note (2026-08-03): Created the initial plan after branch creation and repository-guidance review. Counts and conflict decisions remain explicitly pending the catalog and sidecar audits.
+Revision note (2026-08-03): Created the initial plan after branch creation and repository-guidance review. Counts and conflict decisions remained explicitly pending the catalog and sidecar audits.
+
+Revision note (2026-08-03 08:02Z): Updated the living plan after the semantic audit and import. Recorded the 6,719-record deduplicated outcome, case-remapping strategy, sidecar boundary, observed source facts, and remaining validation work.
+
+Revision note (2026-08-03 08:08Z): Recorded the manifest-hash ordering defect exposed by the complete corpus, its root-cause fix, and the passing focused test gate.

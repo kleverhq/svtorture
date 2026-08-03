@@ -1,0 +1,1088 @@
+{
+  "authority": "1800-2023",
+  "part": "35",
+  "requirements": [
+    {
+      "hints": {
+        "edge": [
+          "Omit a name from a non-array formal that is bound positionally."
+        ],
+        "negative": [
+          "Omit the formal name where packed and unpacked dimensions would become inseparable."
+        ],
+        "notes": [],
+        "positive": [
+          "Name an array formal between its packed and unpacked dimensions."
+        ]
+      },
+      "id": "SV-2023-35-ARRAY-FORMAL-NAME-REQUIRED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Export a package function rather than a class method."
+        ],
+        "negative": [
+          "Export a class member function."
+        ],
+        "notes": [],
+        "positive": [
+          "Export a module-scope function."
+        ]
+      },
+      "id": "SV-2023-35-CLASS-METHOD-EXPORT-FORBIDDEN"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare otherwise equivalent context and non-context declarations without requiring a performance oracle."
+        ],
+        "negative": [
+          "Assume a non-context import receives context instrumentation."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a context import and obtain its current instantiated scope through the DPI scope API."
+        ]
+      },
+      "id": "SV-2023-35-CONTEXT-CALL-INSTRUMENTATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Invoke the context and non-context declarations sequentially to show the characteristic follows each call chain rather than the shared foreign implementation."
+        ],
+        "negative": [
+          "Within a non-context import call, use scope selection and then attempt an export call as though scope selection had promoted the call to context."
+        ],
+        "notes": [
+          "Scope selection changes the current scope value; it does not dynamically change a call's context characteristic."
+        ],
+        "positive": [
+          "Bind one foreign implementation to separate context and non-context imports and invoke each through its own call chain."
+        ]
+      },
+      "id": "SV-2023-35-CONTEXT-CHARACTERISTIC-STABILITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Select another instance with the scope API and then call its export."
+        ],
+        "negative": [
+          "Directly call an export in another instance without first selecting that scope."
+        ],
+        "notes": [],
+        "positive": [
+          "From a context import, directly call an export declared in the same module instance."
+        ]
+      },
+      "id": "SV-2023-35-CONTEXT-DIRECT-EXPORT-SCOPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Mix context and non-context imports where only the context imports make export calls."
+        ],
+        "negative": [
+          "Have a non-context nested import call an export because an outer import was context."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare every import that calls an export as context in a nested DPI call chain."
+        ]
+      },
+      "id": "SV-2023-35-CONTEXT-NOT-TRANSITIVE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a non-context import that only reads and writes its actual arguments and performs a foreign file side effect."
+        ],
+        "negative": [
+          "From a non-context import, access a SystemVerilog object through VPI."
+        ],
+        "notes": [
+          "Violations can have unpredictable effects, so use declaration/static restrictions where possible rather than expecting a particular runtime failure."
+        ],
+        "positive": [
+          "Declare an import `context` before it invokes an exported SystemVerilog function."
+        ]
+      },
+      "id": "SV-2023-35-CONTEXT-REQUIRED-FOR-SV-ACCESS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use `\"DPI-C\"` and verify this deprecation diagnostic is not required."
+        ],
+        "negative": [
+          "Compile an import using `\"DPI\"` and require a warning or error conveying all mandated information."
+        ],
+        "notes": [
+          "Match diagnostic meaning, not exact wording."
+        ],
+        "positive": []
+      },
+      "id": "SV-2023-35-DEPRECATED-DPI-DIAGNOSTIC"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compile a deprecated `\"DPI\"` packed-array import and use the implementation's actual representation contract."
+        ],
+        "negative": [],
+        "notes": [
+          "Exact actual representation is implementation dependent."
+        ],
+        "positive": [
+          "Pass a packed array through a `\"DPI-C\"` declaration using canonical representation."
+        ]
+      },
+      "id": "SV-2023-35-DEPRECATED-DPI-REPRESENTATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast direct export disable with disabling a parent scope of the mixed-language call chain."
+        ],
+        "negative": [
+          "Treat the parent import as disabled solely because its called export was directly disabled."
+        ],
+        "notes": [],
+        "positive": [
+          "Directly disable an exported task and verify its imported caller sees status 0 and disabled-state query 0."
+        ]
+      },
+      "id": "SV-2023-35-DIRECTLY-DISABLED-EXPORT-NOT-PARENT-DISABLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the same ordinary call syntax for normal and disabled completion."
+        ],
+        "negative": [
+          "Require a SystemVerilog expression to capture the hidden disable-protocol integer result."
+        ],
+        "notes": [],
+        "positive": [
+          "Call imported and exported tasks using ordinary task-enable syntax while their foreign ABI carries disable status."
+        ]
+      },
+      "id": "SV-2023-35-DISABLE-PROTOCOL-CALL-SYNTAX-TRANSPARENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Attempt an export call after disable and require fatal protocol enforcement."
+        ],
+        "negative": [
+          "Omit an acknowledgement or return wrong status and require a fatal simulation error."
+        ],
+        "notes": [
+          "Do not depend on exact diagnostic wording."
+        ],
+        "positive": [
+          "Follow all disable protocol steps and complete without a protocol fatal error."
+        ]
+      },
+      "id": "SV-2023-35-DISABLE-PROTOCOL-FATAL-CHECK"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an inout actual requiring coercion in both copy-in and copy-out directions."
+        ],
+        "negative": [
+          "Apply a foreign-specific coercion differing from SystemVerilog assignment rules."
+        ],
+        "notes": [],
+        "positive": [
+          "Pass a width-mismatched compatible input and verify assignment-style coercion before the foreign call."
+        ]
+      },
+      "id": "SV-2023-35-DPI-ARGUMENT-COERCION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Implement copy semantics using foreign references while preserving identical SystemVerilog observations."
+        ],
+        "negative": [
+          "Expose an output formal's intermediate foreign-side changes before the call returns."
+        ],
+        "notes": [],
+        "positive": [
+          "Verify input is available on entry, output updates only on return, and inout performs both transfers."
+        ]
+      },
+      "id": "SV-2023-35-DPI-ARGUMENT-COPY-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use argument expressions with observable but standards-compliant evaluation interactions."
+        ],
+        "negative": [],
+        "notes": [
+          "Avoid assuming an order where the general rules leave it unspecified."
+        ],
+        "positive": [
+          "Call an import with argument expressions and observe the evaluation behavior required for native calls."
+        ]
+      },
+      "id": "SV-2023-35-DPI-ARGUMENT-EVALUATION-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Declare a function result at the permitted size boundary specified by 35.5.5."
+        ],
+        "negative": [
+          "Use C type syntax directly as a formal type in a SystemVerilog import declaration."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare an imported function using a DPI-permitted SystemVerilog formal type."
+        ]
+      },
+      "id": "SV-2023-35-DPI-BOUNDARY-SYSTEMVERILOG-TYPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exchange an output argument through the standardized C linkage."
+        ],
+        "negative": [],
+        "notes": [
+          "Requires compiling and linking a C companion artifact according to Annex H."
+        ],
+        "positive": [
+          "Link and call a conforming C implementation of a DPI-C imported function."
+        ]
+      },
+      "id": "SV-2023-35-DPI-C-PROTOCOL-LINKAGE-SUPPORT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Invoke nested exports after multiple legal scope selections and verify stack-like restoration."
+        ],
+        "negative": [
+          "Retain an export's internal scope after returning to the foreign caller instead of restoring the prior chain context."
+        ],
+        "notes": [],
+        "positive": [
+          "Enter a context import in one instance, switch scope before an export call, and observe restoration after the export returns."
+        ]
+      },
+      "id": "SV-2023-35-DPI-CALL-CHAIN-CONTEXT-VALUE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Wrap an internal throwing C++ helper with a non-throwing `extern \"C\"` DPI entry point."
+        ],
+        "negative": [
+          "Allow a thrown C++ exception to escape an imported function into SystemVerilog."
+        ],
+        "notes": [
+          "Escaped-exception behavior is undefined, so rejection/static inspection is preferable to a runtime outcome oracle."
+        ],
+        "positive": [
+          "Catch a C++ exception inside the imported function and return through C linkage."
+        ]
+      },
+      "id": "SV-2023-35-DPI-CXX-EXCEPTION-BOUNDARY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Target the imported subroutine itself versus its parent and observe the same state-entry point."
+        ],
+        "negative": [
+          "Treat an import as entering disabled state at an unrelated point before an export returns."
+        ],
+        "notes": [],
+        "positive": [
+          "After an export returns due to a parent disable, query disabled state from the import."
+        ]
+      },
+      "id": "SV-2023-35-DPI-DISABLED-STATE-ENTRY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Pass a multidimensional packed logic type and access it as one packed dimension on the foreign side."
+        ],
+        "negative": [
+          "Declare an unpacked union formal or an aggregate containing an unsupported member type."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare DPI formals using built-ins, packed aggregates, enum base types, supported structs, packed unions, unpacked arrays, and typedefs."
+        ]
+      },
+      "id": "SV-2023-35-DPI-FORMAL-PERMITTED-TYPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Perform lengthy host computation in a DPI function while observing that simulated time does not advance."
+        ],
+        "negative": [
+          "Implement a DPI function that attempts to suspend or advance simulation time."
+        ],
+        "notes": [
+          "Do not use wall-clock duration as the oracle; observe simulation time and suspension behavior."
+        ],
+        "positive": [
+          "Call an imported function and verify simulation time is unchanged across the call."
+        ]
+      },
+      "id": "SV-2023-35-DPI-FUNCTION-ZERO-TIME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a local SystemVerilog name mapped to a differently named global symbol."
+        ],
+        "negative": [
+          "Provide an imported implementation that cannot resolve to its declared global symbol."
+        ],
+        "notes": [],
+        "positive": [
+          "Link an imported function to its process-global C symbol."
+        ]
+      },
+      "id": "SV-2023-35-DPI-GLOBAL-LINKAGE-SYMBOLS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use dynamic override specifiers only on a method declaration inside a non-interface class scope."
+        ],
+        "negative": [
+          "Put `pure` on a task import or add an import property to an export declaration."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse function and task imports and exports with optional valid C linkage aliases."
+        ]
+      },
+      "id": "SV-2023-35-DPI-IMPORT-EXPORT-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Read and rewrite a four-state inout value through the defined DPI representation."
+        ],
+        "negative": [
+          "Discard a foreign-side update made through an inout formal."
+        ],
+        "notes": [],
+        "positive": [
+          "Pass an initialized variable as inout, increment it in foreign code, and observe the updated actual."
+        ]
+      },
+      "id": "SV-2023-35-DPI-INOUT-COPY-IN-OUT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Pass a variable as input and also return a separately computed modified value."
+        ],
+        "negative": [
+          "Expose a foreign-side write through an input formal as a change to the caller's actual."
+        ],
+        "notes": [],
+        "positive": [
+          "Have foreign code locally alter its input parameter and verify the SystemVerilog actual is unchanged."
+        ]
+      },
+      "id": "SV-2023-35-DPI-INPUT-ARGUMENT-COPY-IN"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Spell a keyword linkage name as an escaped identifier and resolve the stripped keyword text."
+        ],
+        "negative": [
+          "Preserve the escape backslash as part of the foreign linkage symbol."
+        ],
+        "notes": [],
+        "positive": [
+          "Export `function f` without an explicit global name and resolve symbol `f`."
+        ]
+      },
+      "id": "SV-2023-35-DPI-LINKAGE-NAME-DERIVATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an escaped SystemVerilog global name whose stripped text is a valid C identifier."
+        ],
+        "negative": [
+          "Use an explicit or derived linkage identifier beginning with a digit and require an error."
+        ],
+        "notes": [],
+        "positive": [
+          "Use linkage identifiers beginning with a letter or underscore and containing only alphanumeric characters and underscores."
+        ]
+      },
+      "id": "SV-2023-35-DPI-LINKAGE-NAME-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use different local SystemVerilog names while keeping their global linkage names distinct."
+        ],
+        "negative": [
+          "Declare two incompatible DPI subroutines with the same global linkage name as an attempted overload."
+        ],
+        "notes": [],
+        "positive": [
+          "Give imported and exported subroutines distinct global linkage names."
+        ]
+      },
+      "id": "SV-2023-35-DPI-LINKAGE-NAME-UNIQUENESS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use several unpacked dimensions mixing fixed and unsized ranges and match them dimension-by-dimension."
+        ],
+        "negative": [
+          "Declare an open formal with an unsized packed dimension plus another packed dimension."
+        ],
+        "notes": [],
+        "positive": [
+          "Pass a multiply packed actual to a formal having one unsized packed dimension."
+        ]
+      },
+      "id": "SV-2023-35-DPI-OPEN-ARRAY-DIMENSION-MATCHING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Leave both packed and unpacked dimensions open in an imported formal."
+        ],
+        "negative": [
+          "Declare an exported function with an open-array formal."
+        ],
+        "notes": [],
+        "positive": [
+          "Import a function with an open unpacked-array formal and pass actuals with different bounds."
+        ]
+      },
+      "id": "SV-2023-35-DPI-OPEN-ARRAY-LEGALITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Return changes through multiple output arguments and accept ordering defined by general assignment rules."
+        ],
+        "negative": [
+          "Propagate output changes before foreign control returns or omit resulting value-change handling."
+        ],
+        "notes": [],
+        "positive": [
+          "Modify output and inout formals in foreign code and observe actual updates and events immediately after return."
+        ]
+      },
+      "id": "SV-2023-35-DPI-OUTPUT-INOUT-RETURN-PROPAGATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Repeat a signature while changing only formal names and default values."
+        ],
+        "negative": [
+          "Reuse a C identifier with a changed array bound, direction, qualifier, or DPI string."
+        ],
+        "notes": [],
+        "positive": [
+          "Import one C identifier in two scopes with identical complete signatures."
+        ]
+      },
+      "id": "SV-2023-35-DPI-SIGNATURE-CONSISTENCY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Bind the same SystemVerilog declaration through two supported foreign adapters while preserving SystemVerilog-visible results."
+        ],
+        "negative": [
+          "Require foreign-language-specific calling-convention syntax in the SystemVerilog call site."
+        ],
+        "notes": [
+          "Materialization requires more than one supported foreign layer, so portability may limit practical coverage."
+        ],
+        "positive": [
+          "Use the same SystemVerilog DPI import declaration and call behavior with conforming foreign-layer bindings."
+        ]
+      },
+      "id": "SV-2023-35-DPI-SYSTEMVERILOG-LAYER-INDEPENDENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the deprecated syntax with a packed-array argument governed by its convention."
+        ],
+        "negative": [
+          "Mix `\"DPI\"` and `\"DPI-C\"` declarations for one linkage identifier."
+        ],
+        "notes": [
+          "Although deprecated, the syntax remains permitted and testable."
+        ],
+        "positive": [
+          "Declare all uses of one linkage identifier with the deprecated `\"DPI\"` string."
+        ]
+      },
+      "id": "SV-2023-35-DPI-VERSION-CONSISTENCY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Pass an empty dynamic array under the same rules as a native open-array call."
+        ],
+        "negative": [
+          "Pass a dynamic array where native argument compatibility rules reject it."
+        ],
+        "notes": [],
+        "positive": [
+          "Pass a dynamic array to a compatible imported open-array formal."
+        ]
+      },
+      "id": "SV-2023-35-DYNAMIC-ARRAY-ACTUAL-RULES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call `svSetScope` first and direct the export to another instantiated scope."
+        ],
+        "negative": [
+          "Resolve the default export context to an unrelated instance."
+        ],
+        "notes": [
+          "Requires two instances with observably distinct state and the normative Annex H scope API."
+        ],
+        "positive": [
+          "Call an export from an import without `svSetScope` and observe data in the import declaration's instance."
+        ]
+      },
+      "id": "SV-2023-35-EXPORT-CALL-CONTEXT-SELECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Export a function under an explicit foreign linkage name."
+        ],
+        "negative": [
+          "Attempt foreign invocation of a SystemVerilog function having no export declaration."
+        ],
+        "notes": [
+          "The runtime foreign-call harness must distinguish export visibility from C linker setup failures."
+        ],
+        "positive": [
+          "Export a SystemVerilog function before calling it through the DPI C side."
+        ]
+      },
+      "id": "SV-2023-35-EXPORT-DECLARATION-REQUIRED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Put the export before the corresponding definition."
+        ],
+        "negative": [
+          "Export a function from another scope or export it twice in its scope."
+        ],
+        "notes": [],
+        "positive": [
+          "Place one export in the function's defining scope before or after its definition."
+        ]
+      },
+      "id": "SV-2023-35-EXPORT-DECLARATION-SCOPE-AND-COUNT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call the same exported function both natively and from foreign code."
+        ],
+        "negative": [
+          "Alter native call semantics solely because the function is exported."
+        ],
+        "notes": [],
+        "positive": [
+          "Call an exported function natively and verify behavior matches the same function before export."
+        ]
+      },
+      "id": "SV-2023-35-EXPORT-PRESERVES-SV-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an imported open-array formal instead of an exported dynamic-array formal."
+        ],
+        "negative": [
+          "Export a SystemVerilog function with a dynamic-array formal."
+        ],
+        "notes": [],
+        "positive": [
+          "Export a subroutine with a permitted fixed-size array formal."
+        ]
+      },
+      "id": "SV-2023-35-EXPORTED-DYNAMIC-ARRAY-FORMAL-FORBIDDEN"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Export the same function signature from different instantiated scopes and select the intended context before calling."
+        ],
+        "negative": [
+          "Treat an exported function as non-context and omit the context needed for its selected instance."
+        ],
+        "notes": [],
+        "positive": [
+          "Call an exported function through a DPI call chain and access state in its selected SystemVerilog context."
+        ]
+      },
+      "id": "SV-2023-35-EXPORTED-FUNCTION-ALWAYS-CONTEXT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Export a void function with no arguments."
+        ],
+        "negative": [
+          "Export a function returning or accepting a DPI-forbidden type."
+        ],
+        "notes": [],
+        "positive": [
+          "Export a function using permitted DPI formal and result types."
+        ]
+      },
+      "id": "SV-2023-35-EXPORTED-FUNCTION-TYPE-CONSTRAINTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Disable a parent block while an exported task is suspended and observe result 1."
+        ],
+        "negative": [
+          "Disable an active exported task but return 0 to its foreign caller."
+        ],
+        "notes": [],
+        "positive": [
+          "Call an exported task that completes normally and observe disable result 0."
+        ]
+      },
+      "id": "SV-2023-35-EXPORTED-TASK-DISABLE-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Move the exported-task call to a context imported task while leaving the imported function task-free."
+        ],
+        "negative": [
+          "Have an imported function call an exported task."
+        ],
+        "notes": [],
+        "positive": [
+          "Have an imported function call an exported function."
+        ]
+      },
+      "id": "SV-2023-35-EXPORTED-TASK-FORBIDDEN-FROM-IMPORTED-FUNCTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Export a task using its implicit linkage name."
+        ],
+        "negative": [
+          "Export a task from a scope other than its definition scope."
+        ],
+        "notes": [],
+        "positive": [
+          "Export a module task in its defining scope with an optional C identifier."
+        ]
+      },
+      "id": "SV-2023-35-EXPORTED-TASK-INHERITS-EXPORT-RULES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a context imported task that calls an exported function as well as an exported task."
+        ],
+        "negative": [
+          "Call an exported task from a non-context imported task."
+        ],
+        "notes": [],
+        "positive": [
+          "Call an exported task from a context imported task."
+        ]
+      },
+      "id": "SV-2023-35-EXPORTED-TASK-REQUIRES-CONTEXT-IMPORT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use generated headers while leaving the SystemVerilog declaration unchanged."
+        ],
+        "negative": [
+          "Require a SystemVerilog declaration change solely because the foreign argument-access mechanism changes."
+        ],
+        "notes": [],
+        "positive": [
+          "Compile unchanged SystemVerilog DPI source against a conforming foreign-layer call protocol."
+        ]
+      },
+      "id": "SV-2023-35-FOREIGN-CALL-PROTOCOL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exchange a four-state value whose representation requires the foreign-layer access API."
+        ],
+        "negative": [],
+        "notes": [
+          "The concrete C mappings are owned by normative Annex H."
+        ],
+        "positive": [
+          "Use the standardized C-layer mappings to exchange a packed logic argument."
+        ]
+      },
+      "id": "SV-2023-35-FOREIGN-LAYER-MAPPING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Import a context task with an unnamed positional formal having a default."
+        ],
+        "negative": [
+          "Omit a formal name and then attempt to bind that formal by name."
+        ],
+        "notes": [],
+        "positive": [
+          "Import a function with typed input formals, defaults, and the pure property."
+        ]
+      },
+      "id": "SV-2023-35-IMPORT-DECLARATION-CONTENTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place an import declaration in package scope."
+        ],
+        "negative": [
+          "Place an import declaration in a syntactic location where subroutine definitions are not permitted."
+        ],
+        "notes": [],
+        "positive": [
+          "Place an import declaration in a module scope where a function definition is permitted."
+        ]
+      },
+      "id": "SV-2023-35-IMPORT-DECLARATION-PLACEMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Declare an imported void function with no formal arguments."
+        ],
+        "negative": [
+          "Call a foreign subroutine name from SystemVerilog without an import declaration."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a DPI-C imported function and call it from SystemVerilog."
+        ]
+      },
+      "id": "SV-2023-35-IMPORT-DECLARATION-REQUIRED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an inout formal where bidirectional transfer is required."
+        ],
+        "negative": [
+          "Declare a DPI imported function with a ref formal."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare equivalent DPI formals using input, output, or inout."
+        ]
+      },
+      "id": "SV-2023-35-IMPORT-REF-FORBIDDEN"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a sized unpacked-array formal whose accepted actual representations may be implementation dependent."
+        ],
+        "negative": [
+          "Reject an otherwise compatible unpacked-array actual solely because an open formal is unsized."
+        ],
+        "notes": [],
+        "positive": [
+          "Pass implementation-varied unpacked arrays to an imported open-array formal."
+        ]
+      },
+      "id": "SV-2023-35-IMPORTED-FORMAL-TYPE-REPRESENTATION-INDEPENDENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Mix positional arguments before named arguments as permitted by general call rules."
+        ],
+        "negative": [
+          "Use named binding when one or more import formals are unnamed."
+        ],
+        "notes": [],
+        "positive": [
+          "Call an import while omitting a trailing defaulted argument and bind another call by formal name."
+        ]
+      },
+      "id": "SV-2023-35-IMPORTED-FUNCTION-CALL-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Do not call the acknowledgement API on normal nondisabled return."
+        ],
+        "negative": [
+          "Return from a disabled imported function without acknowledging."
+        ],
+        "notes": [],
+        "positive": [
+          "Call svAckDisabledState before a disabled imported function returns."
+        ]
+      },
+      "id": "SV-2023-35-IMPORTED-FUNCTION-DISABLE-ACK"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call an imported void function as a statement."
+        ],
+        "negative": [
+          "Use an imported void function where an expression value is required."
+        ],
+        "notes": [],
+        "positive": [
+          "Import and call one value-returning function and one void function."
+        ]
+      },
+      "id": "SV-2023-35-IMPORTED-FUNCTION-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Declare a DPI void function."
+        ],
+        "negative": [
+          "Use an array or aggregate as a DPI function result."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare DPI functions returning int, real, chandle, string, scalar bit, and scalar logic."
+        ]
+      },
+      "id": "SV-2023-35-IMPORTED-FUNCTION-RESULT-TYPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Import a subroutine with no formal arguments."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Import a subroutine containing input, output, and inout formals."
+        ]
+      },
+      "id": "SV-2023-35-IMPORTED-SUBROUTINE-FORMALS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Acknowledge a parent-block disable after return from an exported task."
+        ],
+        "negative": [
+          "Return 0 when an imported task unwinds due to disable."
+        ],
+        "notes": [],
+        "positive": [
+          "Return 0 from an imported task after normal completion and 1 after detecting disable."
+        ]
+      },
+      "id": "SV-2023-35-IMPORTED-TASK-DISABLE-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Declare a qualifying imported function, rather than a task, as pure."
+        ],
+        "negative": [
+          "Declare `import \"DPI-C\" pure task ...`."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare an imported task without `pure`."
+        ]
+      },
+      "id": "SV-2023-35-IMPORTED-TASK-NOT-PURE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call an imported task that returns without consuming time."
+        ],
+        "negative": [
+          "Use an imported task in an expression as though it returned a value."
+        ],
+        "notes": [
+          "A time-consuming imported task requires the context/task DPI machinery specified later in this clause."
+        ],
+        "positive": [
+          "Call an imported void task as a statement and have it return after simulation time advances."
+        ]
+      },
+      "id": "SV-2023-35-IMPORTED-TASK-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Have an exported task wait on an event before returning to its imported caller."
+        ],
+        "negative": [],
+        "notes": [
+          "Foreign helper code must be thread-safe and instrument overlap without introducing races."
+        ],
+        "positive": [
+          "From two processes call an imported task that invokes a delaying exported task and observe overlapping active invocations."
+        ]
+      },
+      "id": "SV-2023-35-IMPORTED-TASK-SUSPENSION-REENTRANCY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Omit a default in one scope and provide it in another."
+        ],
+        "negative": [
+          "Vary a formal type while relying on permission to vary its name."
+        ],
+        "notes": [],
+        "positive": [
+          "Import the same linkage symbol in two scopes with different formal names and defaults but identical types."
+        ]
+      },
+      "id": "SV-2023-35-MULTIPLE-DPI-DECLARATIONS-ACROSS-SCOPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the same C identifier in different scopes with nonequivalent signatures."
+        ],
+        "negative": [
+          "Export two functions under the same C identifier in one scope."
+        ],
+        "notes": [],
+        "positive": [
+          "Export equivalent-signature functions from two scopes under one C identifier."
+        ]
+      },
+      "id": "SV-2023-35-MULTIPLE-EXPORT-LINKAGE-NAME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Import one symbol twice in different scopes using the same local name."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Import one C symbol under two SystemVerilog names in separate scopes."
+        ]
+      },
+      "id": "SV-2023-35-MULTIPLE-IMPORT-ALIASES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call exports before, but not after, the exported call that causes disabled-state entry."
+        ],
+        "negative": [
+          "Call an exported function after the current import invocation enters disabled state."
+        ],
+        "notes": [],
+        "positive": [
+          "Upon detecting disabled state, clean up and return without another export call."
+        ]
+      },
+      "id": "SV-2023-35-NO-EXPORT-CALL-AFTER-DISABLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Pass a multidimensional packed actual and inspect the normalized linear range."
+        ],
+        "negative": [
+          "Use declaration-site bounds for an unsized unpacked formal instead of actual bounds."
+        ],
+        "notes": [],
+        "positive": [
+          "Pass differently bounded actual arrays and inspect each call's open-array bounds."
+        ]
+      },
+      "id": "SV-2023-35-OPEN-ARRAY-CALL-SITE-RANGES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Declare a nonvoid pure import with no arguments."
+        ],
+        "negative": [
+          "Declare a void import or one with an output formal as pure."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a value-returning import with input-only formals as pure."
+        ]
+      },
+      "id": "SV-2023-35-PURE-IMPORT-ELIGIBILITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the same imported SystemVerilog name in two different scopes."
+        ],
+        "negative": [
+          "Declare two imported subroutines with the same SystemVerilog name in one scope."
+        ],
+        "notes": [],
+        "positive": [
+          "Import one foreign symbol under two distinct SystemVerilog subroutine names in the same scope."
+        ]
+      },
+      "id": "SV-2023-35-SUBROUTINE-NAME-DEFINED-ONCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast a fixed formal range with an open range determined at the call site."
+        ],
+        "negative": [
+          "Derive a fixed formal's bounds from a caller context rather than its import declaration."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a fixed-range packed and unpacked formal and inspect matching bounds in foreign code."
+        ]
+      },
+      "id": "SV-2023-35-WYSIWYG-FORMAL-TYPE"
+    }
+  ],
+  "schema_version": 1
+}

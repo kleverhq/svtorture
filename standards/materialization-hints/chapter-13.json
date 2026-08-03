@@ -1,0 +1,1648 @@
+{
+  "authority": "1800-2023",
+  "part": "13",
+  "requirements": [
+    {
+      "hints": {
+        "edge": [
+          "Use nested aggregate members."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Assign fields of a struct return through function_name.member."
+        ]
+      },
+      "id": "SV-2023-13-AGGREGATE-FUNCTION-RETURN"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare otherwise identical static and automatic scopes."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Exercise both explicit and enclosing-scope automatic forms."
+        ]
+      },
+      "id": "SV-2023-13-AUTOMATIC-FUNCTION-DECLARATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast invocation with prohibited local-item access."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Invoke an automatic function by a legal hierarchical name."
+        ]
+      },
+      "id": "SV-2023-13-AUTOMATIC-FUNCTION-HIERARCHICAL-INVOKE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Distinguish item access from hierarchical function invocation."
+        ],
+        "negative": [
+          "Hierarchically reference an automatic-function local."
+        ],
+        "notes": [],
+        "positive": [
+          "Access automatic-function locals only lexically during a call."
+        ]
+      },
+      "id": "SV-2023-13-AUTOMATIC-FUNCTION-ITEM-NO-HIERARCHICAL-REFERENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use recursion to expose independent storage."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Recursively or concurrently call an automatic function with invocation-specific locals."
+        ]
+      },
+      "id": "SV-2023-13-AUTOMATIC-FUNCTION-REENTRANT-STORAGE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare a task in automatic scope with one in otherwise identical static scope."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare one task explicitly automatic and another inside an automatic module, then invoke each concurrently."
+        ]
+      },
+      "id": "SV-2023-13-AUTOMATIC-TASK-DECLARATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Pass differing values on consecutive invocations."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Invoke an automatic task repeatedly and inspect fresh locals/output formals plus copied input/inout values on each entry."
+        ]
+      },
+      "id": "SV-2023-13-AUTOMATIC-TASK-ENTRY-INITIALIZATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast legal task invocation with illegal hierarchical access to its local item."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Invoke an automatic task through a legal hierarchical task name."
+        ]
+      },
+      "id": "SV-2023-13-AUTOMATIC-TASK-HIERARCHICAL-INVOKE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Distinguish referencing the task itself from referencing an item inside it."
+        ],
+        "negative": [
+          "Hierarchically reference a local item of an automatic task."
+        ],
+        "notes": [],
+        "positive": [
+          "Access automatic-task state only within its valid lexical invocation."
+        ]
+      },
+      "id": "SV-2023-13-AUTOMATIC-TASK-ITEM-NO-HIERARCHICAL-REFERENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use recursion to distinguish per-invocation storage."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Recursively or concurrently invoke an automatic task and observe independent locals and formals."
+        ]
+      },
+      "id": "SV-2023-13-AUTOMATIC-TASK-PER-INVOCATION-STORAGE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast a static local declared inside the automatic task."
+        ],
+        "negative": [
+          "Reference an automatic-task variable in procedural assign or force."
+        ],
+        "notes": [],
+        "positive": [
+          "Use assign or force on storage whose lifetime is static."
+        ]
+      },
+      "id": "SV-2023-13-AUTOMATIC-VARIABLE-NO-ASSIGN-FORCE-REFERENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast a static local in an automatic task."
+        ],
+        "negative": [
+          "Target an automatic-task variable with a nonblocking assignment or procedural assign."
+        ],
+        "notes": [],
+        "positive": [
+          "Assign an automatic-task variable with an ordinary blocking assignment."
+        ]
+      },
+      "id": "SV-2023-13-AUTOMATIC-VARIABLE-NO-DEFERRED-ASSIGNMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Keep the NBA target static while only the event-control reference is automatic."
+        ],
+        "negative": [
+          "Reference an automatic-task variable in the intra-assignment event control of an NBA."
+        ],
+        "notes": [],
+        "positive": [
+          "Use an intra-assignment event control that references static-lifetime storage."
+        ]
+      },
+      "id": "SV-2023-13-AUTOMATIC-VARIABLE-NO-NBA-INTRA-EVENT-REFERENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast a static local inside an automatic task."
+        ],
+        "negative": [
+          "Trace an automatic-task variable with $monitor or $dumpvars."
+        ],
+        "notes": [],
+        "positive": [
+          "Trace a static-lifetime task variable."
+        ]
+      },
+      "id": "SV-2023-13-AUTOMATIC-VARIABLE-NO-TRACE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare with a module function."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Recursively call a class function and observe independent locals."
+        ]
+      },
+      "id": "SV-2023-13-CLASS-FUNCTION-AUTOMATIC"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare a class task with a default-lifetime module task."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Concurrently invoke a class task and observe invocation-local storage."
+        ]
+      },
+      "id": "SV-2023-13-CLASS-TASK-AUTOMATIC"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare mutable ref."
+        ],
+        "negative": [
+          "Assign to the const ref formal and require compile-time rejection."
+        ],
+        "notes": [],
+        "positive": [
+          "Read from a const ref formal."
+        ]
+      },
+      "id": "SV-2023-13-CONST-REF-READONLY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a parameterized static class function."
+        ],
+        "negative": [
+          "Supply a nonconstant argument or use a declaration outside the permitted locations."
+        ],
+        "notes": [],
+        "positive": [
+          "Call a local or package constant function with constant arguments during elaboration."
+        ]
+      },
+      "id": "SV-2023-13-CONSTANT-FUNCTION-CALL-DEFINITION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call a normally nonconstant built-in method on a local implicit variable."
+        ],
+        "negative": [
+          "Call a nonconstant user function."
+        ],
+        "notes": [],
+        "positive": [
+          "Call a constant helper and a built-in method on a local variable."
+        ]
+      },
+      "id": "SV-2023-13-CONSTANT-FUNCTION-CALLS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Omit the actual so the default is used."
+        ],
+        "negative": [
+          "Use a runtime expression as the default."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a constant-expression default argument."
+        ]
+      },
+      "id": "SV-2023-13-CONSTANT-FUNCTION-DEFAULT-ARGUMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Reference a package parameter."
+        ],
+        "negative": [
+          "Reference an external nonparameter object."
+        ],
+        "notes": [],
+        "positive": [
+          "Reference local variables, parameters, and functions."
+        ]
+      },
+      "id": "SV-2023-13-CONSTANT-FUNCTION-IDENTIFIER-REFERENCES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a const ref formal, which remains ref and is prohibited."
+        ],
+        "negative": [
+          "Use an output, inout, or ref formal."
+        ],
+        "notes": [],
+        "positive": [
+          "Use only input formals in a constant function."
+        ]
+      },
+      "id": "SV-2023-13-CONSTANT-FUNCTION-INPUT-ONLY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Vary only whether the inner context requires constancy."
+        ],
+        "negative": [
+          "Call a constant helper in a nested context requiring a constant expression."
+        ],
+        "notes": [],
+        "positive": [
+          "Call a constant helper in an ordinary expression within the function."
+        ]
+      },
+      "id": "SV-2023-13-CONSTANT-FUNCTION-NO-CONSTANT-CONTEXT-CALL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Try each fork joining variant."
+        ],
+        "negative": [
+          "Place a fork construct in a constant function."
+        ],
+        "notes": [],
+        "positive": [
+          "Use sequential statements in a constant function."
+        ]
+      },
+      "id": "SV-2023-13-CONSTANT-FUNCTION-NO-FORK"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast package-scoped names with hierarchical instance references."
+        ],
+        "negative": [
+          "Reference an object through a hierarchical path."
+        ],
+        "notes": [],
+        "positive": [
+          "Reference only formals and local declarations."
+        ]
+      },
+      "id": "SV-2023-13-CONSTANT-FUNCTION-NO-HIERARCHICAL-REFERENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Distinguish immediate value computation from deferred event scheduling."
+        ],
+        "negative": [
+          "Directly schedule a post-return event from a constant function."
+        ],
+        "notes": [
+          "Source text requires visual review."
+        ],
+        "positive": [
+          "Use only immediate computation in a constant function."
+        ]
+      },
+      "id": "SV-2023-13-CONSTANT-FUNCTION-NO-POSTRETURN-EVENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare elaboration invocations with a later simulation call."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Invoke a constant function multiple times and verify each begins with normal initial values and simulation storage is unchanged."
+        ]
+      },
+      "id": "SV-2023-13-CONSTANT-FUNCTION-NO-STORAGE-SIDE-EFFECT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare otherwise equivalent source and DPI functions."
+        ],
+        "negative": [
+          "Use a DPI import as a constant function."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a source-defined function in a constant expression."
+        ]
+      },
+      "id": "SV-2023-13-CONSTANT-FUNCTION-NOT-DPI-IMPORT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call an outside function from generated structure."
+        ],
+        "negative": [
+          "Declare one inside a generate block."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a constant function outside generate scope."
+        ]
+      },
+      "id": "SV-2023-13-CONSTANT-FUNCTION-NOT-IN-GENERATE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Reference a package or $unit parameter."
+        ],
+        "negative": [
+          "Use a parameter defined only after the call site."
+        ],
+        "notes": [],
+        "positive": [
+          "Define a parameter before a constant-function call that uses it."
+        ]
+      },
+      "id": "SV-2023-13-CONSTANT-FUNCTION-PARAMETER-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the call inside a nested constant helper."
+        ],
+        "negative": [
+          "Call a system function not allowed in a constant expression."
+        ],
+        "notes": [],
+        "positive": [
+          "Call a system function allowed in a constant expression."
+        ]
+      },
+      "id": "SV-2023-13-CONSTANT-FUNCTION-SYSTEM-CALLS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an elaboration severity task as the exception."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Include a nonseverity system task and observe it has no evaluation effect."
+        ]
+      },
+      "id": "SV-2023-13-CONSTANT-FUNCTION-SYSTEM-TASKS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Modify an inout formal and inspect before and after return."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Observe input copy-in at entry and output/inout copy-out only at return."
+        ]
+      },
+      "id": "SV-2023-13-COPY-ARGUMENT-TRANSFER-TIMING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare equivalent declarations in both styles."
+        ],
+        "negative": [
+          "Put a default in a body-style formal declaration."
+        ],
+        "notes": [],
+        "positive": [
+          "Put a default in a parenthesized ANSI-style declaration."
+        ]
+      },
+      "id": "SV-2023-13-DEFAULT-ARGUMENT-ANSI-ONLY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call the subroutine hierarchically from a scope with a same-named object."
+        ],
+        "negative": [
+          "Use an unresolvable name in the declaration scope."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a declaration-scope expression with observable per-call evaluation, then supply an explicit actual."
+        ]
+      },
+      "id": "SV-2023-13-DEFAULT-ARGUMENT-EVALUATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Mix explicit actuals with empty placeholders."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Omit leading, trailing, and interior defaulted positional arguments."
+        ]
+      },
+      "id": "SV-2023-13-DEFAULT-ARGUMENT-SUBSTITUTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare bare and void-cast calls."
+        ],
+        "negative": [
+          "Call a nonvoid function as a bare statement and require a diagnostic."
+        ],
+        "notes": [
+          "The oracle is warning presence, not wording."
+        ],
+        "positive": [
+          "Cast a nonvoid function call to void as a statement."
+        ]
+      },
+      "id": "SV-2023-13-DISCARDED-FUNCTION-RETURN-WARNING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare class scope kinds."
+        ],
+        "negative": [
+          "Use one on a module function or interface-class method."
+        ],
+        "notes": [],
+        "positive": [
+          "Use one on a non-interface class method."
+        ]
+      },
+      "id": "SV-2023-13-DYNAMIC-OVERRIDE-FUNCTION-SCOPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare otherwise identical methods in a class and interface class."
+        ],
+        "negative": [
+          "Apply a dynamic override specifier to a module task or an interface-class method."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a task method with an allowed dynamic override specifier in a non-interface class."
+        ]
+      },
+      "id": "SV-2023-13-DYNAMIC-OVERRIDE-TASK-SCOPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a return type with a distinctive default value."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare an empty nonvoid function and observe its implicit return-variable value."
+        ]
+      },
+      "id": "SV-2023-13-EMPTY-FUNCTION-RETURN"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Include declarations but no statements in the task body."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare and call an empty task."
+        ]
+      },
+      "id": "SV-2023-13-EMPTY-TASK-BODY-LEGAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a multidimensional array formal."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Pass packed and unpacked arrays to function formals."
+        ]
+      },
+      "id": "SV-2023-13-FUNCTION-ARRAY-FORMAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use several dependent statements."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use dependent assignments whose result demonstrates sequential execution."
+        ]
+      },
+      "id": "SV-2023-13-FUNCTION-BODY-SEQUENTIAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a non-zero-based packed return range."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Apply selection or indexing to user, built-in, system, and DPI nonvoid calls."
+        ]
+      },
+      "id": "SV-2023-13-FUNCTION-CALL-IMPLICIT-VARIABLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare f.member and f().member in the same scope."
+        ],
+        "negative": [
+          "Write f.member when intending a function call implicit variable."
+        ],
+        "notes": [],
+        "positive": [
+          "Use f().member for a no-argument class-returning function."
+        ]
+      },
+      "id": "SV-2023-13-FUNCTION-CALL-PARENTHESES-IMPLICIT-VARIABLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise a 13.4.4 exception separately."
+        ],
+        "negative": [
+          "Have an ordinary function enable a task with no timing controls."
+        ],
+        "notes": [],
+        "positive": [
+          "Have a function call another function."
+        ]
+      },
+      "id": "SV-2023-13-FUNCTION-CANNOT-ENABLE-TASK"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Declare a function with no formals."
+        ],
+        "negative": [
+          "Use a token sequence outside the grammar."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare functions using both formal styles."
+        ]
+      },
+      "id": "SV-2023-13-FUNCTION-DECLARATION-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place the same timing statement directly in the function and inside fork-join_none."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Put task-legal timing statements inside a function's fork-join_none branch."
+        ]
+      },
+      "id": "SV-2023-13-FUNCTION-FORK-JOIN-NONE-TASK-STATEMENTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Check const ref qualifier inheritance."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use initial undirected formals and formals following output or qualified ref."
+        ]
+      },
+      "id": "SV-2023-13-FUNCTION-FORMAL-DIRECTION-DEFAULTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Observe copy timing versus reference updates."
+        ],
+        "negative": [],
+        "notes": [
+          "Direction table requires visual review."
+        ],
+        "positive": [
+          "Exercise all four formal directions on functions."
+        ]
+      },
+      "id": "SV-2023-13-FUNCTION-FORMAL-DIRECTION-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Make direction explicit to switch from inheritance to logic default."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Exercise first-formal logic default and subsequent type inheritance."
+        ]
+      },
+      "id": "SV-2023-13-FUNCTION-FORMAL-TYPE-DEFAULTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use fork-join_none background work."
+        ],
+        "negative": [
+          "Attempt to block the calling thread inside a function."
+        ],
+        "notes": [],
+        "positive": [
+          "Call a function whose body launches only permitted nonblocking work and observe immediate return."
+        ]
+      },
+      "id": "SV-2023-13-FUNCTION-IMMEDIATE-RETURN"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a structured return type."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Implement equivalent functions using same-name assignment and return expression."
+        ]
+      },
+      "id": "SV-2023-13-FUNCTION-IMPLICIT-RETURN-VARIABLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call concurrently to reveal the override."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use each local lifetime override."
+        ]
+      },
+      "id": "SV-2023-13-FUNCTION-LOCAL-LIFETIME-OVERRIDE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast a bare same-name prefix inside an aggregate-returning function."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use a function name in an external hierarchical reference."
+        ]
+      },
+      "id": "SV-2023-13-FUNCTION-NAME-SCOPE-RESOLUTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Explicitly import a function and collide with an object name."
+        ],
+        "negative": [
+          "Declare a same-named object in each prohibited scope."
+        ],
+        "notes": [],
+        "positive": [
+          "Use distinct names in both enclosing and function scopes."
+        ]
+      },
+      "id": "SV-2023-13-FUNCTION-NAME-UNIQUENESS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast fork-join_none with blocking fork variants."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use each specifically allowed nonblocking construct in a function."
+        ]
+      },
+      "id": "SV-2023-13-FUNCTION-NONBLOCKING-STATEMENTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Vary only the origin of the calling thread."
+        ],
+        "negative": [
+          "Call it from a disallowed initializer or side-effect-free context and require an error."
+        ],
+        "notes": [
+          "Diagnostic timing may be compile time or run time; wording is not prescribed."
+        ],
+        "positive": [
+          "Call such a function from initial and from a fork spawned by initial in a side-effect-allowed context."
+        ]
+      },
+      "id": "SV-2023-13-FUNCTION-POSTRETURN-EVENT-CONTEXT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Kill the current process from a function."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Call an allowed process-control method from a function."
+        ]
+      },
+      "id": "SV-2023-13-FUNCTION-PROCESS-CONTROL-METHODS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare empty implicit type with explicit logic."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use explicit, implicit ranged, empty implicit, and void return declarations."
+        ]
+      },
+      "id": "SV-2023-13-FUNCTION-RETURN-TYPE-IMPLICIT-LOGIC"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change only ref to const ref."
+        ],
+        "negative": [
+          "Call a function with output, inout, or non-const ref in each restricted context."
+        ],
+        "notes": [],
+        "positive": [
+          "Call a function with const ref in each restricted context."
+        ]
+      },
+      "id": "SV-2023-13-FUNCTION-SIDE-EFFECT-ARGUMENT-CONTEXT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise a 13.4.4 exception separately."
+        ],
+        "negative": [
+          "Put a listed time-controlling construct in an ordinary function."
+        ],
+        "notes": [],
+        "positive": [
+          "Call a function containing only non-time-controlling computation."
+        ]
+      },
+      "id": "SV-2023-13-FUNCTION-ZERO-TIME-BODY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Pass a non-lvalue expression."
+        ],
+        "negative": [],
+        "notes": [
+          "Do not depend on argument-expression evaluation order, which is undefined."
+        ],
+        "positive": [
+          "Pass literals, operators, calls, and variable expressions to an input formal."
+        ]
+      },
+      "id": "SV-2023-13-INPUT-ACTUAL-ANY-EXPRESSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Omit only optional arguments around a required one."
+        ],
+        "negative": [
+          "Omit a required argument and use an empty placeholder for one."
+        ],
+        "notes": [],
+        "positive": [
+          "Supply every nondefaulted argument."
+        ]
+      },
+      "id": "SV-2023-13-MISSING-REQUIRED-ARGUMENT-ERROR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an empty named binding to select its default."
+        ],
+        "negative": [
+          "Use a name that is not a formal."
+        ],
+        "notes": [],
+        "positive": [
+          "Call a subroutine with named actuals in declaration and reverse order while omitting a defaulted formal."
+        ]
+      },
+      "id": "SV-2023-13-NAMED-ARGUMENT-BINDING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Supply the required formal while omitting optional formals around it."
+        ],
+        "negative": [
+          "Omit a named formal lacking a default."
+        ],
+        "notes": [],
+        "positive": [
+          "Omit only named formals with defaults."
+        ]
+      },
+      "id": "SV-2023-13-NAMED-CALL-REQUIRED-ARGUMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the function call as the sole operand in a larger assignment expression."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use a nonvoid function call in an arithmetic expression and observe the returned value participate in evaluation."
+        ]
+      },
+      "id": "SV-2023-13-NONVOID-FUNCTION-EXPRESSION-OPERAND"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Return an aggregate value, which is still one function value.",
+          "Use an empty nonvoid function and observe that its implicit return variable still supplies one value."
+        ],
+        "negative": [],
+        "notes": [
+          "An explicit return statement or assignment is not required; under 13.4 an empty nonvoid function returns the current value of its implicit same-named return variable."
+        ],
+        "positive": [
+          "Call a typed function that computes and returns one value."
+        ]
+      },
+      "id": "SV-2023-13-NONVOID-FUNCTION-SINGLE-RETURN-VALUE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast a bare return in a void function."
+        ],
+        "negative": [
+          "Use a bare return in a nonvoid function."
+        ],
+        "notes": [],
+        "positive": [
+          "Return an expression from a nonvoid function."
+        ]
+      },
+      "id": "SV-2023-13-NONVOID-RETURN-REQUIRES-EXPRESSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare rebinding timing through ref and inout."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Rebind an object handle through ref and separately modify its object's fields."
+        ]
+      },
+      "id": "SV-2023-13-OBJECT-HANDLE-REF-INOUT-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare a no-argument class method with a package function."
+        ],
+        "negative": [
+          "Omit parentheses from an ordinary nonvoid nonmethod function call."
+        ],
+        "notes": [],
+        "positive": [
+          "Omit parentheses in each permitted no-argument or all-defaulted call."
+        ]
+      },
+      "id": "SV-2023-13-OPTIONAL-CALL-PARENTHESES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Remove the referenced element before a callee write and verify that write does not affect the caller's container."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Pass a variable-size-array element by ref, perform an operation listed in 13.5.2 that makes its reference outdated, and continue reading or writing it within the callee."
+        ]
+      },
+      "id": "SV-2023-13-OUTDATED-ELEMENT-REFERENCE-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Modify a different associative element and verify the listed referenced-element deletion condition is not met."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Create a ref then apply each listed invalidating operation."
+        ]
+      },
+      "id": "SV-2023-13-OUTDATED-REFERENCE-OPERATIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a valid select lvalue."
+        ],
+        "negative": [
+          "Pass a literal or arithmetic expression."
+        ],
+        "notes": [],
+        "positive": [
+          "Pass an assignable variable to output and inout formals."
+        ]
+      },
+      "id": "SV-2023-13-OUTPUT-INOUT-ACTUAL-LVALUE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare packed and unpacked aggregate return types."
+        ],
+        "negative": [
+          "In a function return type, use a packed dimension with struct or union but omit the packed keyword."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a function returning a packed struct or union with a packed dimension."
+        ]
+      },
+      "id": "SV-2023-13-PACKED-STRUCT-UNION-KEYWORD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a defaulted class parameter derived from another parameter."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Define a static method using class value and type parameters, then call it through two class specializations."
+        ]
+      },
+      "id": "SV-2023-13-PARAMETERIZED-SUBROUTINE-STATIC-CLASS-METHOD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Attempt object construction separately to observe virtual-class restrictions owned by Clause 8."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare a virtual parameterized class containing only static subroutine methods and invoke them by class scope."
+        ]
+      },
+      "id": "SV-2023-13-PARAMETERIZED-SUBROUTINE-VIRTUAL-CONTAINER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an automatic subroutine and recursive calls."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Modify a default input formal and observe the caller's variable unchanged."
+        ]
+      },
+      "id": "SV-2023-13-PASS-BY-VALUE-DEFAULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use only named or only positional arguments."
+        ],
+        "negative": [
+          "Place a positional actual after a named binding."
+        ],
+        "notes": [],
+        "positive": [
+          "Place positional actuals before named actuals."
+        ]
+      },
+      "id": "SV-2023-13-POSITIONAL-BEFORE-NAMED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast a hierarchically qualified or nonrecursive method call."
+        ],
+        "negative": [
+          "Omit them on an unqualified direct recursive call."
+        ],
+        "notes": [],
+        "positive": [
+          "Use parentheses on a directly recursive nonvoid method call."
+        ]
+      },
+      "id": "SV-2023-13-RECURSIVE-NONVOID-METHOD-PARENTHESES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare ref with copy-out semantics."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Modify the ref formal and caller actual while the call is active and observe immediate mutual visibility."
+        ]
+      },
+      "id": "SV-2023-13-REF-ARGUMENT-ALIAS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare typedef-equivalent and width-compatible but nonequivalent types."
+        ],
+        "negative": [
+          "Pass a merely assignment-compatible type or explicit cast."
+        ],
+        "notes": [],
+        "positive": [
+          "Pass an actual with an equivalent type."
+        ]
+      },
+      "id": "SV-2023-13-REF-ARGUMENT-TYPE-EQUIVALENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change only ref to ref static with a static actual."
+        ],
+        "negative": [
+          "Use it in a deferred context forbidden for automatic variables."
+        ],
+        "notes": [],
+        "positive": [
+          "Use an ordinary ref only in automatic-variable-safe contexts."
+        ]
+      },
+      "id": "SV-2023-13-REF-AUTOMATIC-CONTEXT-RESTRICTIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Access the ref formal as an ordinary identifier inside the callee."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Call value and ref versions with identical actual syntax."
+        ]
+      },
+      "id": "SV-2023-13-REF-CALL-SYNTAX-TRANSPARENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Combine ref with permitted const or static instead."
+        ],
+        "negative": [
+          "Declare ref input, ref output, and ref inout."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a formal with ref alone."
+        ]
+      },
+      "id": "SV-2023-13-REF-DIRECTION-EXCLUSIVE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast unpacked array element with packed bit-select."
+        ],
+        "negative": [
+          "Pass a literal, expression result, or packed select."
+        ],
+        "notes": [],
+        "positive": [
+          "Pass each of the four allowed actual forms."
+        ]
+      },
+      "id": "SV-2023-13-REF-LEGAL-ACTUAL-FORMS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare variable select with net select."
+        ],
+        "negative": [
+          "Pass a net and a net select."
+        ],
+        "notes": [],
+        "positive": [
+          "Pass a variable to ref."
+        ]
+      },
+      "id": "SV-2023-13-REF-NO-NET-ACTUAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a static local in an otherwise automatic subroutine."
+        ],
+        "negative": [
+          "Declare ref on a static-lifetime subroutine."
+        ],
+        "notes": [],
+        "positive": [
+          "Use ref in an automatic subroutine."
+        ]
+      },
+      "id": "SV-2023-13-REF-REQUIRES-AUTOMATIC-SUBROUTINE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare static and non-static class properties."
+        ],
+        "negative": [
+          "Pass each listed non-static or dynamic form."
+        ],
+        "notes": [],
+        "positive": [
+          "Pass static storage and another ref static argument."
+        ]
+      },
+      "id": "SV-2023-13-REF-STATIC-ACTUAL-LIFETIME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place the explicit return after conditional named-variable assignments."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Assign one value to the function name, then return a different value."
+        ]
+      },
+      "id": "SV-2023-13-RETURN-OVERRIDES-NAMED-VARIABLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use defaults on several nonconsecutive formals."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare input, output, or inout singular formals with defaults."
+        ]
+      },
+      "id": "SV-2023-13-SINGULAR-ARGUMENT-DEFAULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare with an automatic function."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Concurrently call a default-lifetime module function and observe shared declared storage."
+        ]
+      },
+      "id": "SV-2023-13-STATIC-FUNCTION-STORAGE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare default static and explicitly automatic task declarations."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Concurrently invoke a default-lifetime module task and observe both executions access the same declared storage."
+        ]
+      },
+      "id": "SV-2023-13-STATIC-TASK-STORAGE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use 2-state and 4-state declared types to distinguish their default values."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "On the first call of a static task, inspect an otherwise unassigned local or output formal and observe its type's default initialization value."
+        ]
+      },
+      "id": "SV-2023-13-STATIC-TASK-VARIABLE-INITIALIZATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast a local with an input formal whose retained storage is overwritten by normal copy-in on the next call."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Call a static task twice and observe an unassigned local retain the value stored during the first call."
+        ]
+      },
+      "id": "SV-2023-13-STATIC-TASK-VARIABLE-RETENTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast a task statement call with a nonvoid-function expression call."
+        ],
+        "negative": [
+          "Use a task call as an expression operand."
+        ],
+        "notes": [],
+        "positive": [
+          "Call a task as a statement in a procedural block."
+        ]
+      },
+      "id": "SV-2023-13-SUBROUTINE-CALL-CONTEXT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use omitted positional argument slots followed by named arguments."
+        ],
+        "negative": [
+          "Use a call-statement token sequence outside the grammar."
+        ],
+        "notes": [],
+        "positive": [
+          "Use task, system, method, randomize, void-cast, positional, and named call forms."
+        ]
+      },
+      "id": "SV-2023-13-SUBROUTINE-CALL-STATEMENT-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place a competing declaration in an intermediate scope."
+        ],
+        "negative": [
+          "Reference a name unavailable under upward resolution."
+        ],
+        "notes": [],
+        "positive": [
+          "Call a task or function declared later in the same scope and in an enclosing scope."
+        ]
+      },
+      "id": "SV-2023-13-SUBROUTINE-NAME-RESOLUTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a multidimensional array formal."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Pass an array to a task formal with packed and unpacked dimensions."
+        ]
+      },
+      "id": "SV-2023-13-TASK-ARRAY-FORMAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use several statements with dependencies on preceding assignments."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use ordered assignments in a task body whose final value distinguishes sequential execution."
+        ]
+      },
+      "id": "SV-2023-13-TASK-BODY-SEQUENTIAL-EXECUTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use overlapping calls with distinct arguments."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Fork two simultaneous calls to the same task."
+        ]
+      },
+      "id": "SV-2023-13-TASK-CONCURRENT-ENABLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use several levels of nested task enables."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Have a task enable a delayed nested task and observe the caller resume only after nested completion."
+        ]
+      },
+      "id": "SV-2023-13-TASK-CONTROL-RETURNS-AFTER-COMPLETION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Declare a task with no formal arguments using each applicable grammar form."
+        ],
+        "negative": [
+          "Mix tokens into a task declaration in a form not admitted by task_declaration grammar."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare equivalent tasks using parenthesized and body-style formal argument forms."
+        ]
+      },
+      "id": "SV-2023-13-TASK-DECLARATION-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Enable a task having no formal arguments."
+        ],
+        "negative": [
+          "Enable a task without the arguments required by its declaration."
+        ],
+        "notes": [],
+        "positive": [
+          "Enable a task with input and output actual arguments and observe the output variable receive the result."
+        ]
+      },
+      "id": "SV-2023-13-TASK-ENABLE-ARGUMENT-BINDING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place return in a conditional branch and observe only the taken branch exits early."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Call one task that reaches endtask and one that executes return before a later side effect."
+        ]
+      },
+      "id": "SV-2023-13-TASK-EXIT-BEHAVIOR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change only whether a direction is explicit and inspect whether logic defaulting or type inheritance applies."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use an untyped first formal, an untyped explicitly directed formal, and an undirected successor to a typed formal."
+        ]
+      },
+      "id": "SV-2023-13-TASK-FORMAL-DATA-TYPE-DEFAULTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Modify each formal during the task and inspect when the caller's actual changes."
+        ],
+        "negative": [],
+        "notes": [
+          "The direction table source anchor requires visual review; preserve the four direction-to-semantics mappings shown."
+        ],
+        "positive": [
+          "Use input, output, inout, and ref formals and observe their distinct value/reference transfer behavior."
+        ]
+      },
+      "id": "SV-2023-13-TASK-FORMAL-DIRECTION-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Invoke each task concurrently to expose the overridden storage behavior."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use an automatic local in a static task and a static local in an automatic task."
+        ]
+      },
+      "id": "SV-2023-13-TASK-LOCAL-LIFETIME-OVERRIDE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a task with multiple forms of time control while varying only task-versus-function context."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare and call a task containing a delay control."
+        ]
+      },
+      "id": "SV-2023-13-TASK-MAY-CONTROL-TIME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare class method and package function."
+        ],
+        "negative": [
+          "Omit parentheses on a nonvoid nonmethod function."
+        ],
+        "notes": [],
+        "positive": [
+          "Omit parentheses on a no-argument task, void function, and class method."
+        ]
+      },
+      "id": "SV-2023-13-TF-CALL-PARENTHESES-OMISSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place omitted directions before the first explicit direction."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare initial task formals without directions and use them as inputs."
+        ]
+      },
+      "id": "SV-2023-13-TF-DIRECTION-DEFAULT-INPUT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Declare const ref or ref static followed by undirected formals and verify qualifier inheritance."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare one output followed by undirected formals and observe all are outputs."
+        ]
+      },
+      "id": "SV-2023-13-TF-DIRECTION-INHERITANCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Omit an identifier in a task prototype where the exception permits it."
+        ],
+        "negative": [
+          "Omit the identifier from a port item in a task body declaration."
+        ],
+        "notes": [],
+        "positive": [
+          "Use an explicit identifier in a task declaration port item."
+        ]
+      },
+      "id": "SV-2023-13-TF-PORT-IDENTIFIER-OMISSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare net and variable declarations."
+        ],
+        "negative": [
+          "Omit the required prefix."
+        ],
+        "notes": [],
+        "positive": [
+          "Use the required prefix in each declaration kind."
+        ]
+      },
+      "id": "SV-2023-13-TYPE-REFERENCE-DECLARATION-PREFIX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a nonvoid call as a discarded-value statement only under its separate warning or void-cast rules."
+        ],
+        "negative": [
+          "Use a void function call as an expression operand."
+        ],
+        "notes": [],
+        "positive": [
+          "Call a void function as a statement in a procedural block."
+        ]
+      },
+      "id": "SV-2023-13-VOID-FUNCTION-CALL-STATEMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare a bare return with a return carrying an expression."
+        ],
+        "negative": [
+          "Attempt to return an expression value from a void function or task."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a valueless return from a void function or task where otherwise permitted."
+        ]
+      },
+      "id": "SV-2023-13-VOID-SUBROUTINE-NO-RETURN-VALUE"
+    }
+  ],
+  "schema_version": 1
+}

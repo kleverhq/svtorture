@@ -1,0 +1,2882 @@
+{
+  "authority": "1800-2023",
+  "part": "8",
+  "requirements": [
+    {
+      "hints": {
+        "edge": [
+          "Redeclare an inherited implemented virtual method as pure virtual in an abstract subclass."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Extend a concrete class into an abstract class adding a pure method, and chain abstract subclasses."
+        ]
+      },
+      "id": "SV-2023-08-ABSTRACT-CLASS-EXTENSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Store objects of several concrete descendant types in one abstract-base array."
+        ],
+        "negative": [
+          "Attempt to construct the abstract type directly rather than assigning a concrete object."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare an abstract-base handle and array, then assign concrete derived objects."
+        ]
+      },
+      "id": "SV-2023-08-ABSTRACT-CLASS-HANDLE-VARIABLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use several abstract levels above a concrete leaf."
+        ],
+        "negative": [
+          "Invoke new directly for an abstract class."
+        ],
+        "notes": [],
+        "positive": [
+          "Construct a concrete derived class and observe abstract-base constructor initialization."
+        ]
+      },
+      "id": "SV-2023-08-ABSTRACT-CLASS-NO-DIRECT-CONSTRUCTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Inherit a virtual implementation without repeating the keyword."
+        ],
+        "negative": [
+          "Declare a required local method without virtual."
+        ],
+        "notes": [],
+        "positive": [
+          "In an abstract implementing class, redeclare an interface method pure virtual and implement it in a concrete descendant."
+        ]
+      },
+      "id": "SV-2023-08-ABSTRACT-INTERFACE-OBLIGATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use dynamic values across concurrent and reentrant processes."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Create and release references to representative dynamic values without manual free operations."
+        ]
+      },
+      "id": "SV-2023-08-AUTOMATIC-DYNAMIC-MEMORY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Cast through a multilevel ancestor type."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Cast a derived handle to identical and base destination types."
+        ]
+      },
+      "id": "SV-2023-08-CAST-ASSIGNMENT-COMPATIBLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an incompatible typed handle whose run-time value is null and contrast it with literal null."
+        ],
+        "negative": [
+          "Cast between unrelated class types and require failure."
+        ],
+        "notes": [],
+        "positive": [
+          "Check that a compatible cast succeeds."
+        ]
+      },
+      "id": "SV-2023-08-CAST-INCOMPATIBLE-FAILS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use different implementing classes behind the same interface-class handle."
+        ],
+        "negative": [
+          "Cast an interface-class handle referencing an incompatible object to the destination."
+        ],
+        "notes": [],
+        "positive": [
+          "Cast an interface-class handle referencing an implementing compatible object to its class type."
+        ]
+      },
+      "id": "SV-2023-08-CAST-INTERFACE-CLASS-SOURCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast literal null with an incompatible typed handle expression whose value is null."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Cast literal null to a class-handle destination and observe success and a null destination."
+        ]
+      },
+      "id": "SV-2023-08-CAST-LITERAL-NULL-SUCCEEDS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast function-form failure handling with task-form failure handling."
+        ],
+        "negative": [
+          "Perform a failed cast and check behavior using the general $cast function or task oracle."
+        ],
+        "notes": [],
+        "positive": [
+          "Perform a successful handle cast and verify the destination aliases the source object."
+        ]
+      },
+      "id": "SV-2023-08-CAST-SUCCESS-ASSIGNS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Chain through several handles of the same recursive class type."
+        ],
+        "negative": [
+          "Dereference a null intermediate handle."
+        ],
+        "notes": [],
+        "positive": [
+          "Read and write a member through a.b.c on initialized nested handles."
+        ]
+      },
+      "id": "SV-2023-08-CHAINED-INSTANCE-QUALIFICATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast with a forward typedef used before the declaration."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare class C and use C directly as a handle type."
+        ]
+      },
+      "id": "SV-2023-08-CLASS-DECLARATION-CREATES-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Declare each inside an automatic task."
+        ],
+        "negative": [
+          "Treat a class-handle declaration as object construction."
+        ],
+        "notes": [],
+        "positive": [
+          "Compare immediate struct storage with a null class handle before new and a created object afterward."
+        ]
+      },
+      "id": "SV-2023-08-CLASS-DYNAMIC-VS-STRUCT-STATIC"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use two classes with identically named enum literals and qualify each."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Reference one class enum literal as C::E and through c.E."
+        ]
+      },
+      "id": "SV-2023-08-CLASS-ENUM-INSTANCE-ACCESS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the function return value to distinguish success and failure."
+        ],
+        "negative": [
+          "Use a nonvariable expression as the destination."
+        ],
+        "notes": [],
+        "positive": [
+          "Call $cast in function form and task form with class handles."
+        ]
+      },
+      "id": "SV-2023-08-CLASS-HANDLE-CAST-CALL-FORMS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Inherit an implementation from a base class where it satisfies the interface."
+        ],
+        "negative": [
+          "Omit a required implementation or use an incompatible signature in a concrete implementing class."
+        ],
+        "notes": [],
+        "positive": [
+          "Implement all pure methods from one and multiple interface classes with matching signatures."
+        ]
+      },
+      "id": "SV-2023-08-CLASS-IMPLEMENTS-INTERFACE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Attempt to override a body-declared parameter and observe local-parameter semantics."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare a body parameter and use it internally."
+        ]
+      },
+      "id": "SV-2023-08-CLASS-ITEM-PARAMETER-LOCAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Distinguish a static method qualifier from the prohibited static method qualifier."
+        ],
+        "negative": [
+          "Declare a class method with the static lifetime keyword."
+        ],
+        "notes": [],
+        "positive": [
+          "Use recursive or concurrent calls whose method locals are automatic."
+        ]
+      },
+      "id": "SV-2023-08-CLASS-METHOD-AUTOMATIC-LIFETIME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call a zero-argument constructor with and without parentheses."
+        ],
+        "negative": [
+          "Use a class constructor call shape outside the class_new grammar."
+        ],
+        "notes": [],
+        "positive": [
+          "Use unscoped new, typed C::new, and shallow-copy new source."
+        ]
+      },
+      "id": "SV-2023-08-CLASS-NEW-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast instance qualification with class-scope qualification."
+        ],
+        "negative": [
+          "Use the instance-qualified value where a constant expression is required."
+        ],
+        "notes": [],
+        "positive": [
+          "Display an instance-qualified class value parameter at run time."
+        ]
+      },
+      "id": "SV-2023-08-CLASS-PARAMETER-INSTANCE-ACCESS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Omit overrides to select defaults."
+        ],
+        "negative": [
+          "Use an unknown named parameter or invalid positional override."
+        ],
+        "notes": [],
+        "positive": [
+          "Specialize a class by positional and named parameter override and create a typedef of a specialization."
+        ]
+      },
+      "id": "SV-2023-08-CLASS-PARAMETER-OVERRIDE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Access values on a parameterized specialization."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Access class parameter and localparam values from outside the class through class scope."
+        ]
+      },
+      "id": "SV-2023-08-CLASS-PARAMETERS-PUBLIC"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Declare a property whose type is another class handle or a dynamic aggregate."
+        ],
+        "negative": [],
+        "notes": [
+          "Type-specific declaration rules still apply; this rule adds no class-property-only type restriction."
+        ],
+        "positive": [
+          "Declare class properties using integral, string, aggregate, and class-handle types."
+        ]
+      },
+      "id": "SV-2023-08-CLASS-PROPERTY-ANY-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a null versus new initializer for an object-handle property."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare scalar and object-handle properties with declaration initializers and observe them after construction."
+        ]
+      },
+      "id": "SV-2023-08-CLASS-PROPERTY-DECLARATION-INITIALIZER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Access a property whose value is itself a class handle."
+        ],
+        "negative": [
+          "Attempt unqualified access from a scope where the property name is not otherwise visible."
+        ],
+        "notes": [],
+        "positive": [
+          "Read and write a property through an initialized object instance."
+        ]
+      },
+      "id": "SV-2023-08-CLASS-PROPERTY-TYPE-AND-ACCESS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use qualifiers separately on adjacent declarations."
+        ],
+        "negative": [
+          "Combine a mutually exclusive pair or repeat static or virtual."
+        ],
+        "notes": [],
+        "positive": [
+          "Use each qualifier in a legal declaration."
+        ]
+      },
+      "id": "SV-2023-08-CLASS-QUALIFIER-UNIQUENESS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Disambiguate an enum literal from a same-named local identifier."
+        ],
+        "negative": [
+          "Use :: externally to bypass local or protected access restrictions."
+        ],
+        "notes": [],
+        "positive": [
+          "Use C::static_member externally and Base::protected_member from a derived class."
+        ]
+      },
+      "id": "SV-2023-08-CLASS-SCOPE-ACCESS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Resolve an identifier in a multiply nested class."
+        ],
+        "negative": [
+          "Use malformed scope-resolution token ordering."
+        ],
+        "notes": [],
+        "positive": [
+          "Resolve a member with C::m and a nested member with Outer::Inner::m."
+        ]
+      },
+      "id": "SV-2023-08-CLASS-SCOPE-RESOLUTION-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a scoped event in an event expression."
+        ],
+        "negative": [
+          "Use class scope on an instance-only property."
+        ],
+        "notes": [],
+        "positive": [
+          "Resolve representative static value, method, enum, typedef, nested class, and event through class scope."
+        ]
+      },
+      "id": "SV-2023-08-CLASS-SCOPE-STATIC-ELEMENTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast class-scoped C::P with instance-qualified c.P."
+        ],
+        "negative": [
+          "Use an instance-qualified parameter expression where a constant expression is required."
+        ],
+        "notes": [],
+        "positive": [
+          "Use C::P or C::LP in a constant-expression context."
+        ]
+      },
+      "id": "SV-2023-08-CLASS-SCOPED-PARAMETER-CONSTANT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Declare an empty class and a class containing an empty item."
+        ],
+        "negative": [
+          "Use an unsupported class item or violate a required constructor token order."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare classes exercising each principal class-item and method alternative."
+        ]
+      },
+      "id": "SV-2023-08-CLASS-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast a value parameter, which may be instance-qualified, with a type parameter."
+        ],
+        "negative": [
+          "Qualify a type parameter with an object handle."
+        ],
+        "notes": [],
+        "positive": [
+          "Access a class type parameter through class scope resolution."
+        ]
+      },
+      "id": "SV-2023-08-CLASS-TYPE-NO-HANDLE-ACCESS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a typedef name as the actual type."
+        ],
+        "negative": [
+          "Supply a value expression where a type parameter requires a type."
+        ],
+        "notes": [],
+        "positive": [
+          "Specialize one generic class with int, packed vector, real, struct, and class types."
+        ]
+      },
+      "id": "SV-2023-08-CLASS-TYPE-PARAMETER-ANY-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Declare multiple handles without constructing any objects."
+        ],
+        "negative": [
+          "Dereference the declaration-only null handle."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a class variable and confirm it is null before assigning new."
+        ]
+      },
+      "id": "SV-2023-08-CLASS-VARIABLE-DECLARATION-NO-OBJECT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Satisfy one pure method in an intermediate abstract class and the remainder in the concrete leaf."
+        ],
+        "negative": [
+          "Declare or construct a nonabstract derived class with an unimplemented pure virtual method."
+        ],
+        "notes": [],
+        "positive": [
+          "Implement every inherited pure virtual method in a nonvirtual derived class and construct it."
+        ]
+      },
+      "id": "SV-2023-08-CONCRETE-CLASS-IMPLEMENTS-PURE-METHODS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast shared constant initialization with per-instance constant initialization."
+        ],
+        "negative": [
+          "Modify a const property outside its permitted initialization mechanism."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare representative global and instance const class properties."
+        ]
+      },
+      "id": "SV-2023-08-CONST-CLASS-PROPERTY-FORMS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Reference a base property from a derived property initializer after super.new completes."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use base and derived initializers plus constructor assignments to observe the prescribed order."
+        ]
+      },
+      "id": "SV-2023-08-CONSTRUCTION-INITIALIZATION-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Invoke a protected constructor from a derived class."
+        ],
+        "negative": [
+          "Invoke a local or protected constructor from a prohibited scope."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare protected and local constructors and invoke them from permitted scopes."
+        ]
+      },
+      "id": "SV-2023-08-CONSTRUCTOR-ACCESS-QUALIFIERS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Mix supplied and defaulted constructor arguments according to subroutine rules."
+        ],
+        "negative": [
+          "Omit a required nondefaulted constructor argument."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare and omit a defaulted constructor argument."
+        ]
+      },
+      "id": "SV-2023-08-CONSTRUCTOR-ARGUMENT-CONVENTIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use defaulted and zero-argument constructors."
+        ],
+        "negative": [
+          "Call a constructor with an incompatible argument list."
+        ],
+        "notes": [],
+        "positive": [
+          "Pass a run-time value to new and store it in an object property."
+        ]
+      },
+      "id": "SV-2023-08-CONSTRUCTOR-ARGUMENTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use no default marker."
+        ],
+        "negative": [
+          "Use two default markers in one constructor argument list."
+        ],
+        "notes": [],
+        "positive": [
+          "Use one default marker in a constructor argument list."
+        ]
+      },
+      "id": "SV-2023-08-CONSTRUCTOR-DEFAULT-ARG-MARKER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Expand a base list containing directions, types, and default values."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use default in a derived constructor and call it with inherited named and positional arguments."
+        ]
+      },
+      "id": "SV-2023-08-CONSTRUCTOR-DEFAULT-EXPANSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a different name with the same type and default value."
+        ],
+        "negative": [
+          "Add an argument whose name duplicates one expanded from the base constructor."
+        ],
+        "notes": [],
+        "positive": [
+          "Add a derived-only argument with a name absent from the base constructor."
+        ]
+      },
+      "id": "SV-2023-08-CONSTRUCTOR-DEFAULT-NAME-COLLISION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast local and nonlocal member references in defaults."
+        ],
+        "negative": [
+          "Use default when a base constructor argument default references a local class member."
+        ],
+        "notes": [],
+        "positive": [
+          "Expand base arguments whose defaults reference only accessible values."
+        ]
+      },
+      "id": "SV-2023-08-CONSTRUCTOR-DEFAULT-NO-LOCAL-REFERENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use it in a class indirectly derived through multiple levels."
+        ],
+        "negative": [
+          "Use default in a root-class constructor argument list."
+        ],
+        "notes": [],
+        "positive": [
+          "Use default in a derived-class constructor argument list."
+        ]
+      },
+      "id": "SV-2023-08-CONSTRUCTOR-DEFAULT-SUBCLASS-ONLY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Create two instances and verify each constructor initializes its own properties."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Set a property in new and observe it immediately after object creation."
+        ]
+      },
+      "id": "SV-2023-08-CONSTRUCTOR-INVOKED-ON-CREATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call new inside an expression context that requires function behavior."
+        ],
+        "negative": [
+          "Place a timing control or other blocking task behavior in a constructor."
+        ],
+        "notes": [],
+        "positive": [
+          "Call a constructor containing only function-legal, zero-time behavior."
+        ]
+      },
+      "id": "SV-2023-08-CONSTRUCTOR-NONBLOCKING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Combine an allowed access qualifier with new."
+        ],
+        "negative": [
+          "Declare new with static or virtual."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare an unqualified constructor."
+        ]
+      },
+      "id": "SV-2023-08-CONSTRUCTOR-NOT-STATIC-OR-VIRTUAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Assign derived-class construction to a compatible base-class handle."
+        ],
+        "negative": [
+          "Assign a newly constructed object to an assignment-incompatible class handle."
+        ],
+        "notes": [],
+        "positive": [
+          "Assign new to a variable of the constructed class type."
+        ]
+      },
+      "id": "SV-2023-08-CONSTRUCTOR-RETURN-TYPE-CONTEXT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use unadorned C as a class-scope prefix and apply the separate scope-resolution specialization rules."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use C#() and unadorned C as equivalent default specialized types."
+        ]
+      },
+      "id": "SV-2023-08-DEFAULT-CLASS-SPECIALIZATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Access a public inherited member through a derived object."
+        ],
+        "negative": [
+          "Attempt equivalent external access after qualifying the member local or protected."
+        ],
+        "notes": [],
+        "positive": [
+          "Access an unqualified property and method from outside the class."
+        ]
+      },
+      "id": "SV-2023-08-DEFAULT-PUBLIC-MEMBERS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast selection through a fully resolved concrete class type."
+        ],
+        "negative": [
+          "Use such dependent type selection in an unlisted context."
+        ],
+        "notes": [],
+        "positive": [
+          "Select a nested type through a dependent class type in each permitted context."
+        ]
+      },
+      "id": "SV-2023-08-DEPENDENT-SCOPE-TYPE-SELECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an implicit base constructor."
+        ],
+        "negative": [
+          "Execute a constructor statement before the required super.new call."
+        ],
+        "notes": [],
+        "positive": [
+          "Begin a derived constructor with super.new arguments."
+        ]
+      },
+      "id": "SV-2023-08-DERIVED-CONSTRUCTOR-CALLS-BASE-FIRST"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Invoke overridden behavior through derived and base-typed handles."
+        ],
+        "negative": [
+          "Override with a declaration violating later override compatibility rules."
+        ],
+        "notes": [],
+        "positive": [
+          "Redeclare an inherited method in a derived class with a compatible signature."
+        ]
+      },
+      "id": "SV-2023-08-DERIVED-METHOD-OVERRIDE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a deeply derived object as the root-base type."
+        ],
+        "negative": [
+          "Use an unrelated class object where a base type is expected."
+        ],
+        "notes": [],
+        "positive": [
+          "Assign a derived object handle to a base-class handle and pass it to a base-typed formal."
+        ]
+      },
+      "id": "SV-2023-08-DERIVED-OBJECT-REPRESENTS-BASE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "The direct assignment remains illegal even when the base handle dynamically refers to the derived type."
+        ],
+        "negative": [
+          "Directly assign a base-typed handle variable to a derived-typed variable."
+        ],
+        "notes": [],
+        "positive": [
+          "Use $cast for a checked downcast."
+        ]
+      },
+      "id": "SV-2023-08-DIRECT-DOWNCAST-ILLEGAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Combine an initial-or-extends specifier with final."
+        ],
+        "negative": [
+          "Apply one outside a class or to an interface-class method."
+        ],
+        "notes": [],
+        "positive": [
+          "Apply a dynamic override specifier to a non-interface class method."
+        ]
+      },
+      "id": "SV-2023-08-DYNAMIC-OVERRIDE-SCOPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use no user-defined derived constructor and rely on implicit construction."
+        ],
+        "negative": [
+          "Combine extends(base_args) with an explicit super.new call."
+        ],
+        "notes": [],
+        "positive": [
+          "Use extends(base_args) and omit super.new in the derived constructor."
+        ]
+      },
+      "id": "SV-2023-08-EXTENDS-ARGS-NO-EXPLICIT-SUPER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Supply constants and defaulted base arguments."
+        ],
+        "negative": [
+          "Supply arguments incompatible with the base constructor."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare class D extends B(5) and observe 5 in B::new."
+        ]
+      },
+      "id": "SV-2023-08-EXTENDS-CONSTRUCTOR-ARGUMENTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Include base constructor arguments with defaults and directions."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use extends Base(default) without new and call the subclass with Base's constructor arguments."
+        ]
+      },
+      "id": "SV-2023-08-EXTENDS-DEFAULT-IMPLICIT-CONSTRUCTOR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use function new(default) with no derived-only arguments."
+        ],
+        "negative": [
+          "Declare extends Base(default) with a user constructor lacking default."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare extends Base(default) with function new(extra, default)."
+        ]
+      },
+      "id": "SV-2023-08-EXTENDS-DEFAULT-USER-CONSTRUCTOR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Define an extern task and an extern constructor out of block where permitted."
+        ],
+        "negative": [
+          "Omit extern from the bodyless in-class prototype or omit C:: from the external definition."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare an extern protected virtual function in a class and define C::f outside."
+        ]
+      },
+      "id": "SV-2023-08-EXTERN-METHOD-DEFINITION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Apply :final to a leaf in a multilevel hierarchy."
+        ],
+        "negative": [
+          "Declare a class that extends a :final class."
+        ],
+        "notes": [
+          "Require an error, not diagnostic wording."
+        ],
+        "positive": [
+          "Instantiate and use a final class without extending it."
+        ]
+      },
+      "id": "SV-2023-08-FINAL-CLASS-NO-EXTENSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Mark a nonvirtual method final."
+        ],
+        "negative": [
+          "Override a final base method with either a virtual or nonvirtual declaration."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare and invoke a final method without overriding it."
+        ]
+      },
+      "id": "SV-2023-08-FINAL-METHOD-NO-OVERRIDE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Apply :final to a pure virtual method or pure constraint."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare pure virtual members without final."
+        ]
+      },
+      "id": "SV-2023-08-FINAL-PURE-VIRTUAL-ILLEGAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use same-named classes in nested scopes and ensure correct local resolution."
+        ],
+        "negative": [
+          "Attempt to resolve the forward declaration with a definition in a different scope."
+        ],
+        "notes": [],
+        "positive": [
+          "Forward-declare and define a class in one local scope or generate block."
+        ]
+      },
+      "id": "SV-2023-08-FORWARD-CLASS-SAME-SCOPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Forward-declare two classes to permit mutually referential handles."
+        ],
+        "negative": [
+          "Use an undeclared class name before any forward or complete declaration."
+        ],
+        "notes": [],
+        "positive": [
+          "Use both equivalent forward-declaration spellings before a complete class declaration."
+        ]
+      },
+      "id": "SV-2023-08-FORWARD-CLASS-TYPEDEF"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use positional and named actual parameters before the complete definition."
+        ],
+        "negative": [
+          "Resolve the forward name as a nonclass declaration."
+        ],
+        "notes": [],
+        "positive": [
+          "Forward-declare C, use C#(...) handles, then define parameterized class C."
+        ]
+      },
+      "id": "SV-2023-08-FORWARD-PARAMETERIZED-CLASS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Create a typedef of the default specialization."
+        ],
+        "negative": [
+          "Use a generic class lacking applicable defaults without specializing it."
+        ],
+        "notes": [],
+        "positive": [
+          "Use C#(actuals), C#(), or default-denoting C where permitted as a concrete type."
+        ]
+      },
+      "id": "SV-2023-08-GENERIC-CLASS-NOT-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Declare it static const to share the same value."
+        ],
+        "negative": [
+          "Assign the initialized const property in a constructor or method."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a const class property with an initializer and read it."
+        ]
+      },
+      "id": "SV-2023-08-GLOBAL-CONST-PROPERTY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Assign null from one handle variable to another."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Assign p1 to p2, mutate through p2, and observe the same object through p1."
+        ]
+      },
+      "id": "SV-2023-08-HANDLE-ASSIGNMENT-ALIASES-OBJECT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Rely on a superclass's implements declaration."
+        ],
+        "negative": [
+          "Omit implements while providing identically shaped methods, then try interface-handle assignment."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare implements and provide compatible methods."
+        ]
+      },
+      "id": "SV-2023-08-IMPLEMENTS-KEYWORD-REQUIRED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast a class extended from a base with one implementing an interface."
+        ],
+        "negative": [
+          "Expect an interface typedef or parameter to become an unqualified member solely via implements."
+        ],
+        "notes": [],
+        "positive": [
+          "Implement an interface and provide required methods while accessing interface parameters only by interface scope."
+        ]
+      },
+      "id": "SV-2023-08-IMPLEMENTS-NO-MEMBER-INHERITANCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Instantiate an empty class with the implicit constructor."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Instantiate a class that declares no constructor."
+        ]
+      },
+      "id": "SV-2023-08-IMPLICIT-DEFAULT-CONSTRUCTOR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a multilevel subclass of the original implementing class."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Assign a subclass object to an interface handle when its base declares implements."
+        ]
+      },
+      "id": "SV-2023-08-IMPLICIT-INTERFACE-IMPLEMENTATION-INHERITANCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an entirely implicit derived constructor."
+        ],
+        "negative": [
+          "Omit super.new when the base constructor requires arguments that cannot be supplied implicitly."
+        ],
+        "notes": [],
+        "positive": [
+          "Omit super.new in a derived constructor whose base has a callable default constructor and observe base initialization."
+        ]
+      },
+      "id": "SV-2023-08-IMPLICIT-SUPER-CONSTRUCTOR-CALL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Add derived-only arguments alongside default while relying on implicit forwarding."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Omit super.new from new(default) and observe inherited arguments initialize the base."
+        ]
+      },
+      "id": "SV-2023-08-IMPLICIT-SUPER-DEFAULT-FORWARDING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast with an inherited virtual method, which does satisfy the interface."
+        ],
+        "negative": [
+          "Rely solely on the inherited nonvirtual method to satisfy implements."
+        ],
+        "notes": [],
+        "positive": [
+          "In a derived implementing class, redeclare an inherited nonvirtual matching method as a virtual compatible implementation."
+        ]
+      },
+      "id": "SV-2023-08-INHERITED-NONVIRTUAL-NOT-INTERFACE-IMPLEMENTATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use initialized static const as the global-constant form."
+        ],
+        "negative": [
+          "Combine static with an uninitialized instance-constant declaration intended for constructor assignment."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a nonstatic instance const and a separately initialized static global const."
+        ]
+      },
+      "id": "SV-2023-08-INSTANCE-CONST-NOT-STATIC"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Assign a run-time constructor argument to the instance constant."
+        ],
+        "negative": [
+          "Assign it twice, outside new, or give it a declaration initializer as an instance constant."
+        ],
+        "notes": [],
+        "positive": [
+          "Assign an uninitialized const property once in new and read it afterward."
+        ]
+      },
+      "id": "SV-2023-08-INSTANCE-CONST-PROPERTY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Have one instance method call another method of the same instance."
+        ],
+        "negative": [
+          "Attempt to invoke an instance method as a free function by passing the object."
+        ],
+        "notes": [],
+        "positive": [
+          "Invoke the same method on two instances and observe each instance's own property."
+        ]
+      },
+      "id": "SV-2023-08-INSTANCE-METHOD-RECEIVER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Declare an empty interface class."
+        ],
+        "negative": [
+          "Add a concrete method, property, constraint, covergroup, nested class, or nested interface class."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare an interface class with pure methods, typedefs, and parameters."
+        ]
+      },
+      "id": "SV-2023-08-INTERFACE-CLASS-CONTENTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Hide an inherited type or parameter with a derived declaration."
+        ],
+        "negative": [
+          "Leave a conflicting inherited name unresolved."
+        ],
+        "notes": [],
+        "positive": [
+          "Extend two interface classes and inherit their distinct methods, types, and parameters."
+        ]
+      },
+      "id": "SV-2023-08-INTERFACE-CLASS-MULTIPLE-INHERITANCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an interface handle initialized to null."
+        ],
+        "negative": [
+          "Invoke new for an interface-class type."
+        ],
+        "notes": [],
+        "positive": [
+          "Construct a concrete implementing class and assign its handle to an interface variable."
+        ]
+      },
+      "id": "SV-2023-08-INTERFACE-CLASS-NO-CONSTRUCTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an empty item and optional end label."
+        ],
+        "negative": [
+          "Place a concrete method body or nonpermitted item in an interface class."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare empty, parameterized, multiply extended interface classes with each permitted item kind."
+        ]
+      },
+      "id": "SV-2023-08-INTERFACE-CLASS-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a deeper diamond with more than two paths."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Build an interface diamond and use one inherited parameter or method from the shared root without an override."
+        ]
+      },
+      "id": "SV-2023-08-INTERFACE-DIAMOND-MERGE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Assign a subclass of an implementing class."
+        ],
+        "negative": [
+          "Assign an object whose methods happen to match but whose hierarchy lacks implements."
+        ],
+        "notes": [],
+        "positive": [
+          "Assign objects of multiple declared implementing classes to one interface handle."
+        ]
+      },
+      "id": "SV-2023-08-INTERFACE-HANDLE-ASSIGNMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use two parameterized interface specializations."
+        ],
+        "negative": [
+          "Cast when the referenced object does not implement the destination interface."
+        ],
+        "notes": [],
+        "positive": [
+          "Cast between two interface handles when the object implements both interfaces."
+        ]
+      },
+      "id": "SV-2023-08-INTERFACE-HANDLE-DYNAMIC-CAST"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an empty inline constraint."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Call randomize() through an interface handle and supply an inline constraint on an accessible implementing-object state variable."
+        ]
+      },
+      "id": "SV-2023-08-INTERFACE-HANDLE-RANDOMIZE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Resolve a conflict combining inherited interface methods and implemented interface obligations."
+        ],
+        "negative": [
+          "Use one declaration incompatible with any same-name inherited or required method."
+        ],
+        "notes": [],
+        "positive": [
+          "Merge compatible same-name method requirements and satisfy all with one declaration."
+        ]
+      },
+      "id": "SV-2023-08-INTERFACE-METHOD-CONFLICT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use different spelling only where the resolved constant value remains the required same value under general override rules."
+        ],
+        "negative": [
+          "Use a nonconstant default or alter the effective default value across implementations."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare an interface method default from a scope constant and implement it in multiple classes."
+        ]
+      },
+      "id": "SV-2023-08-INTERFACE-METHOD-DEFAULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Inherit all required implementations."
+        ],
+        "negative": [
+          "Leave a required method unimplemented in a nonabstract class."
+        ],
+        "notes": [],
+        "positive": [
+          "Satisfy one required method locally and another through inheritance."
+        ]
+      },
+      "id": "SV-2023-08-INTERFACE-METHOD-IMPLEMENTATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place a forward declaration earlier but also ensure the complete declaration precedes use."
+        ],
+        "negative": [
+          "Implement or extend only a forward interface typedef."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare the complete interface before a class implements it."
+        ]
+      },
+      "id": "SV-2023-08-INTERFACE-MUST-BE-DEFINED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Merge names through indirect multiple-interface inheritance."
+        ],
+        "negative": [
+          "Leave an incompatible same-name conflict unresolved."
+        ],
+        "notes": [],
+        "positive": [
+          "Combine interfaces with distinct names and with same names resolved under the applicable rules."
+        ]
+      },
+      "id": "SV-2023-08-INTERFACE-NAMESPACE-MERGE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast randomize(), which is legal through the interface handle."
+        ],
+        "negative": [
+          "Invoke rand_mode or constraint_mode through an interface-class handle."
+        ],
+        "notes": [],
+        "positive": [
+          "Invoke mode methods through a concrete class handle where legal."
+        ]
+      },
+      "id": "SV-2023-08-INTERFACE-NO-RANDOMIZATION-MODES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Distinguish literal null from a typed null-valued incompatible interface expression."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Apply class-handle null-cast cases to an interface source handle."
+        ]
+      },
+      "id": "SV-2023-08-INTERFACE-NULL-CAST"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Require resolution even when both inherited T types and defaults match."
+        ],
+        "negative": [
+          "Inherit duplicate T names without a derived overriding declaration."
+        ],
+        "notes": [],
+        "positive": [
+          "Resolve two inherited T declarations by declaring a derived typedef or parameter T."
+        ]
+      },
+      "id": "SV-2023-08-INTERFACE-PARAMETER-TYPE-CONFLICT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Implement multiple interfaces and verify inherited hook names do not conflict."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Override both hooks in an implementing class and observe calls bracketing randomization."
+        ]
+      },
+      "id": "SV-2023-08-INTERFACE-RANDOMIZE-HOOKS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Declare an interface with no bases and a class with neither extends nor implements."
+        ],
+        "negative": [
+          "Make an interface implement, make it extend a class, make a class extend an interface, implement a class, or extend two classes."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare multiple interface extends, multiple class implements, and a class simultaneously extending one class and implementing interfaces."
+        ]
+      },
+      "id": "SV-2023-08-INTERFACE-RELATIONSHIP-MATRIX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use matching versus distinct actual parameter sets."
+        ],
+        "negative": [
+          "Treat different specializations as one shared diamond root and omit conflict resolution."
+        ],
+        "notes": [],
+        "positive": [
+          "Inherit I#(bit) and I#(logic), then explicitly resolve duplicated type and method names."
+        ]
+      },
+      "id": "SV-2023-08-INTERFACE-SPECIALIZATION-NO-DIAMOND"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Access a local parameter through explicit interface scope."
+        ],
+        "negative": [
+          "Use handle-qualified type access or a handle-qualified parameter as a constant expression."
+        ],
+        "notes": [],
+        "positive": [
+          "Access interface typedefs and parameters through interface scope."
+        ]
+      },
+      "id": "SV-2023-08-INTERFACE-STATIC-TYPE-ACCESS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Inherit a type parameter through multiple interface-extends levels."
+        ],
+        "negative": [
+          "Use an interface typedef unqualified solely because a class implements that interface."
+        ],
+        "notes": [],
+        "positive": [
+          "Use an inherited typedef unqualified in an extending interface and class-qualify it in an implementing class."
+        ]
+      },
+      "id": "SV-2023-08-INTERFACE-TYPE-PARAMETER-INHERITANCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Override a public accessor while retaining an inherited accessor."
+        ],
+        "negative": [
+          "Directly access a base local member from a subclass or external scope."
+        ],
+        "notes": [],
+        "positive": [
+          "Access a local property from a public base method inherited by a subclass."
+        ]
+      },
+      "id": "SV-2023-08-LOCAL-MEMBER-ACCESS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Combine access, const, or virtual modifiers where applicable."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare otherwise equivalent members using multiple legal modifier orders."
+        ]
+      },
+      "id": "SV-2023-08-MEMBER-MODIFIER-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use :extends to implement an inherited pure virtual method."
+        ],
+        "negative": [
+          "Use :extends for a method with no virtual base declaration."
+        ],
+        "notes": [],
+        "positive": [
+          "Override a virtual base method using :extends without repeating virtual."
+        ]
+      },
+      "id": "SV-2023-08-METHOD-EXTENDS-SPECIFIER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use :initial while hiding a nonvirtual base method."
+        ],
+        "negative": [
+          "Use :initial on an override of a virtual or pure virtual base method."
+        ],
+        "notes": [],
+        "positive": [
+          "Use :initial on a new nonvirtual method name and on the first virtual declaration in a hierarchy."
+        ]
+      },
+      "id": "SV-2023-08-METHOD-INITIAL-SPECIFIER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use each specifier alone."
+        ],
+        "negative": [
+          "Declare one method with both :initial and :extends."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare methods using :final :initial and :final :extends in contexts satisfying those specifiers."
+        ]
+      },
+      "id": "SV-2023-08-METHOD-OVERRIDE-SPECIFIER-COMBINATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the nested class's own this and confirm it denotes the nested instance, not the outer instance."
+        ],
+        "negative": [
+          "Access an outer non-static property unqualified from the nested class."
+        ],
+        "notes": [],
+        "positive": [
+          "Pass an Outer handle into an Inner method and access Outer instance members through it."
+        ]
+      },
+      "id": "SV-2023-08-NESTED-CLASS-NO-OUTER-THIS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Access a protected static member inherited by the outer class."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "From an inner class, access outer local static storage and outer parameters without qualification."
+        ]
+      },
+      "id": "SV-2023-08-NESTED-CLASS-OUTER-ACCESS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Declare same-named nested types in two enclosing classes and distinguish them by scope."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare Outer::Inner and instantiate or reference it externally."
+        ]
+      },
+      "id": "SV-2023-08-NESTED-CLASS-TYPE-PUBLIC"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a parameterized concrete interface name with explicit actuals."
+        ],
+        "negative": [
+          "Use implements T or interface extends T where T is a type parameter resolving to an interface."
+        ],
+        "notes": [],
+        "positive": [
+          "Name a concrete interface specialization directly in implements or extends."
+        ]
+      },
+      "id": "SV-2023-08-NO-PARAMETERIZED-INTERFACE-RELATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Shallow-copy between identically typed handles without class scope."
+        ],
+        "negative": [
+          "Combine class_scope::new with a shallow-copy source expression."
+        ],
+        "notes": [],
+        "positive": [
+          "Use untyped new source for a shallow copy and typed new for ordinary construction."
+        ]
+      },
+      "id": "SV-2023-08-NO-TYPED-SHALLOW-COPY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Make the method virtual and contrast dynamic dispatch."
+        ],
+        "negative": [
+          "Attempt to access a derived-only member through a base handle."
+        ],
+        "notes": [],
+        "positive": [
+          "Call same-named nonvirtual base and derived methods through respectively typed handles and observe static selection."
+        ]
+      },
+      "id": "SV-2023-08-NONVIRTUAL-BASE-HANDLE-LOOKUP"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Do not require a particular diagnostic or result after the illegal access."
+        ],
+        "negative": [
+          "Access a non-static property or virtual method through null."
+        ],
+        "notes": [
+          "Use legality as the oracle; diagnostic issuance is optional and the resulting value is not portable."
+        ],
+        "positive": [
+          "Access a static member without dereferencing an object instance."
+        ]
+      },
+      "id": "SV-2023-08-NULL-HANDLE-MEMBER-ACCESS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare handle rebinding across all four argument directions."
+        ],
+        "negative": [],
+        "notes": [
+          "Use observations distinguishing handle transfer from content copying."
+        ],
+        "positive": [
+          "Pass an object and mutate a property through the received handle."
+        ]
+      },
+      "id": "SV-2023-08-OBJECT-ARGUMENT-COPIES-HANDLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Keep two handles referring to the same newly created object."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare a class variable, assign new, and access the resulting object's member."
+        ]
+      },
+      "id": "SV-2023-08-OBJECT-CREATION-AND-HANDLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Assign between handles of the identical class type."
+        ],
+        "negative": [
+          "Assign an unrelated class handle to the target."
+        ],
+        "notes": [],
+        "positive": [
+          "Assign a derived-class handle to a compatible base-class target and assign null."
+        ]
+      },
+      "id": "SV-2023-08-OBJECT-HANDLE-ASSIGNMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare aliases and distinct objects."
+        ],
+        "negative": [
+          "Case-compare mutually incompatible class handle types."
+        ],
+        "notes": [],
+        "positive": [
+          "Case-compare assignment-compatible object handles and null."
+        ]
+      },
+      "id": "SV-2023-08-OBJECT-HANDLE-CASE-EQUALITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Select between an object handle and null."
+        ],
+        "negative": [
+          "Use mutually incompatible handle result types."
+        ],
+        "notes": [],
+        "positive": [
+          "Select between compatible object handles with ?:."
+        ]
+      },
+      "id": "SV-2023-08-OBJECT-HANDLE-CONDITIONAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Cast null and apply the general $cast result rules."
+        ],
+        "negative": [
+          "$cast a base handle containing only a base object to a derived target."
+        ],
+        "notes": [],
+        "positive": [
+          "$cast a base handle dynamically containing the target derived object."
+        ]
+      },
+      "id": "SV-2023-08-OBJECT-HANDLE-DOWNCAST"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare base- and derived-class handles in both operand orders."
+        ],
+        "negative": [
+          "Compare handles of mutually assignment-incompatible classes."
+        ],
+        "notes": [],
+        "positive": [
+          "Compare assignment-compatible handles and compare a handle with null."
+        ]
+      },
+      "id": "SV-2023-08-OBJECT-HANDLE-EQUALITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Distinguish object handles from arithmetic-capable integer values and from chandle."
+        ],
+        "negative": [
+          "Apply increment, addition, or another arithmetic operator to an object handle."
+        ],
+        "notes": [],
+        "positive": [
+          "Assign and compare object handles using the explicitly permitted handle operations."
+        ]
+      },
+      "id": "SV-2023-08-OBJECT-HANDLE-NO-ARITHMETIC"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Distinguish object handles from chandle."
+        ],
+        "negative": [
+          "Assign a nonclass data address to an object handle or use an unsupported cast."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a class-typed handle for a class instance and perform a permitted class-handle cast."
+        ]
+      },
+      "id": "SV-2023-08-OBJECT-HANDLE-TYPE-RESTRICTIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast instance-method invocation with static method access."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Invoke an instance method through an initialized object handle."
+        ]
+      },
+      "id": "SV-2023-08-OBJECT-METHOD-INSTANCE-ACCESS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Drop the last strong handle while retaining a weak reference, then drop all reachability."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Classify objects reached by active handles, pending NBA member updates, and only weak references."
+        ]
+      },
+      "id": "SV-2023-08-OBJECT-REACHABILITY-LEVELS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Direct assignment from implementing object to interface needs no cast."
+        ],
+        "negative": [
+          "Cast a nonimplementing object to the interface."
+        ],
+        "notes": [],
+        "positive": [
+          "Cast an implementing object to its interface and back to the concrete class."
+        ]
+      },
+      "id": "SV-2023-08-OBJECT-TO-INTERFACE-CAST"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use equivalent-valued but syntactically different expressions and require rejection."
+        ],
+        "negative": [
+          "Put a default only in the external definition or repeat a syntactically different expression."
+        ],
+        "notes": [],
+        "positive": [
+          "Omit a prototype default in the external definition and separately repeat it identically."
+        ]
+      },
+      "id": "SV-2023-08-OUT-OF-BLOCK-DEFAULT-ARGUMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Define extern methods from two classes in the same enclosing scope."
+        ],
+        "negative": [
+          "Define it before C, in a different enclosing scope, or define it twice."
+        ],
+        "notes": [],
+        "positive": [
+          "Place one C::f definition after C in the same package or compilation-unit scope."
+        ]
+      },
+      "id": "SV-2023-08-OUT-OF-BLOCK-DEFINITION-PLACEMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a return type nested in the declaring class that requires C:: qualification externally."
+        ],
+        "negative": [
+          "Change an argument type, name, direction, or return type between prototype and definition."
+        ],
+        "notes": [],
+        "positive": [
+          "Define an extern method with an otherwise identical signature and class-qualified method and nested return types."
+        ]
+      },
+      "id": "SV-2023-08-OUT-OF-BLOCK-MATCHING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use identical spellings from shadowed scopes to test declaration identity rather than textual identity."
+        ],
+        "negative": [
+          "Let a prototype resolve T externally while the definition resolves a later C::T."
+        ],
+        "notes": [
+          "Require an error, not specific diagnostic wording."
+        ],
+        "positive": [
+          "Place a nested typedef before an extern prototype and use corresponding qualified resolution externally."
+        ]
+      },
+      "id": "SV-2023-08-OUT-OF-BLOCK-NAME-RESOLUTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a typedef that indirectly resolves to a class specialization."
+        ],
+        "negative": [
+          "Specialize that base type parameter with a nonclass type."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a type parameter defaulting to a class as the extends base."
+        ]
+      },
+      "id": "SV-2023-08-PARAMETERIZED-BASE-RESOLVES-CLASS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the default specialization and an explicitly overridden specialization."
+        ],
+        "negative": [
+          "Reference an undeclared class parameter in a member declaration."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare class vector #(int size=1) and use size in a property width."
+        ]
+      },
+      "id": "SV-2023-08-PARAMETERIZED-CLASS-DECLARATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a default type parameter that itself is a parameterized class specialization."
+        ],
+        "negative": [
+          "Supply incompatible base specialization actuals."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare derived classes exercising each listed base-specialization form."
+        ]
+      },
+      "id": "SV-2023-08-PARAMETERIZED-CLASS-INHERITANCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Reference both unqualified p and C::p in the body."
+        ],
+        "negative": [
+          "Interpret C:: in that declaration as C#()::."
+        ],
+        "notes": [],
+        "positive": [
+          "Define C::T C::f out of block and instantiate multiple specializations using the same body."
+        ]
+      },
+      "id": "SV-2023-08-PARAMETERIZED-EXTERN-SCOPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Access through a typedef naming a concrete specialization."
+        ],
+        "negative": [
+          "Externally access C::P with unadorned C."
+        ],
+        "notes": [],
+        "positive": [
+          "Externally access C#(3)::P, C#()::P, and local/type parameters."
+        ]
+      },
+      "id": "SV-2023-08-PARAMETERIZED-SCOPE-EXPLICIT-EXTERNAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use C::T in an out-of-block return-type declaration."
+        ],
+        "negative": [
+          "Use unadorned C::p externally to mean the default specialization."
+        ],
+        "notes": [],
+        "positive": [
+          "Use C::p inside C and C#()::p externally."
+        ]
+      },
+      "id": "SV-2023-08-PARAMETERIZED-SCOPE-UNADORNED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the parameterized class's default specialization."
+        ],
+        "negative": [
+          "Use malformed or incompatible specialization arguments."
+        ],
+        "notes": [],
+        "positive": [
+          "Call E#(.T(byte))::new with an argument of the specialized type."
+        ]
+      },
+      "id": "SV-2023-08-PARAMETERIZED-TYPED-CONSTRUCTOR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place a fully declared argument before default."
+        ],
+        "negative": [
+          "Give the directly following argument an explicit nondefault direction or type contrary to this restricted form."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare function new(default, extra) and use extra as an input logic argument."
+        ]
+      },
+      "id": "SV-2023-08-POST-DEFAULT-CONSTRUCTOR-ARG-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Pass a not-yet-initialized derived property as an argument to super.new and avoid requiring a concrete value."
+        ],
+        "negative": [],
+        "notes": [
+          "Undefined values do not support a specific portable value oracle."
+        ],
+        "positive": [
+          "Use properties only after their initialization point."
+        ]
+      },
+      "id": "SV-2023-08-PREINITIALIZATION-PROPERTY-UNDEFINED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call a local method on a second instance from within the declaring class."
+        ],
+        "negative": [
+          "Attempt the same access from an unrelated class."
+        ],
+        "notes": [],
+        "positive": [
+          "In a class method, compare this.local_property with another_same_class.local_property."
+        ]
+      },
+      "id": "SV-2023-08-PRIVATE-CROSS-INSTANCE-ACCESS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Access an inherited protected member in a deeply derived class."
+        ],
+        "negative": [
+          "Access a protected member from unrelated external code."
+        ],
+        "notes": [],
+        "positive": [
+          "Access a protected base member from a derived-class method."
+        ]
+      },
+      "id": "SV-2023-08-PROTECTED-MEMBER-ACCESS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Omit the virtual keyword on a compatible derived implementation while retaining inherited virtual status."
+        ],
+        "negative": [
+          "Provide a method body in a pure virtual declaration."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a pure virtual prototype and implement it in a derived class."
+        ]
+      },
+      "id": "SV-2023-08-PURE-VIRTUAL-METHOD-DECLARATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Mix required and defaulted parameters."
+        ],
+        "negative": [
+          "Use C#() or unadorned C when a required parameter has no default."
+        ],
+        "notes": [],
+        "positive": [
+          "Supply every required parameter while allowing parameters with defaults to remain omitted."
+        ]
+      },
+      "id": "SV-2023-08-REQUIRED-CLASS-PARAMETER-OVERRIDE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an elaboration-resolved type parameter."
+        ],
+        "negative": [
+          "Use a type name that resolves to neither class nor covergroup."
+        ],
+        "notes": [],
+        "positive": [
+          "Use each applicable scope-name category and a typedef resolving to a class."
+        ]
+      },
+      "id": "SV-2023-08-SCOPE-RESOLUTION-LEFT-OPERAND"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Include a null object-handle property in the source."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Shallow-copy an object containing scalar, string, and nested-object properties; observe independent scalars and aliased nested object."
+        ]
+      },
+      "id": "SV-2023-08-SHALLOW-COPY-CREATES-OBJECT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Shallow-copy an object whose dynamic type equals the handle's declared type."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Store a derived object in a base handle, shallow-copy it to another base handle, and recover the derived type by a checked cast."
+        ]
+      },
+      "id": "SV-2023-08-SHALLOW-COPY-DYNAMIC-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast an embedded covergroup with an ordinary covergroup handle property."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Shallow-copy an object containing an embedded covergroup and test the copied embedded handle against null."
+        ]
+      },
+      "id": "SV-2023-08-SHALLOW-COPY-EMBEDDED-COVERGROUP-NULL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Include an ordinary nonembedded covergroup handle property."
+        ],
+        "negative": [],
+        "notes": [
+          "Materialization should isolate one internal-state dimension per eventual case."
+        ],
+        "positive": [
+          "Copy an object after changing randomization modes and state, then compare subsequent state-dependent behavior."
+        ]
+      },
+      "id": "SV-2023-08-SHALLOW-COPY-INTERNAL-STATE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Overwrite a previously non-null target handle with the new copy."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Verify the target becomes non-null and distinct from the source after shallow copy."
+        ]
+      },
+      "id": "SV-2023-08-SHALLOW-COPY-RESULT-ASSIGNMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Copy values that differ from their declaration initializers."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Shallow-copy a class whose constructor and property initializer have observable side effects and verify neither runs."
+        ]
+      },
+      "id": "SV-2023-08-SHALLOW-COPY-SKIPS-INITIALIZATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a null object handle as the source and apply the separately defined null behavior."
+        ],
+        "negative": [
+          "Use a scalar or aggregate non-object expression as the shallow-copy source."
+        ],
+        "notes": [],
+        "positive": [
+          "Construct a shallow copy from an object handle."
+        ]
+      },
+      "id": "SV-2023-08-SHALLOW-COPY-SOURCE-HANDLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a multilevel inheritance chain while each class names only one immediate base."
+        ],
+        "negative": [
+          "Attempt to extend multiple base classes."
+        ],
+        "notes": [],
+        "positive": [
+          "Extend one base class, access inherited members, and add derived-only members."
+        ]
+      },
+      "id": "SV-2023-08-SINGLE-INHERITANCE-MEMBERS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use typedef int T and compare C#(T, 1) with C#(int, 1)."
+        ],
+        "negative": [
+          "Change a type actual, a value parameter's type, or its value and treat the result as the same specialization."
+        ],
+        "notes": [],
+        "positive": [
+          "Compare specializations using matching type aliases and value parameters with matching types and equal values."
+        ]
+      },
+      "id": "SV-2023-08-SPECIALIZATION-IDENTITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Create multiple objects of one specialization and verify they share that specialization's static member."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Modify a static count in two specializations and observe independent values, then use a nonparameterized base static for sharing."
+        ]
+      },
+      "id": "SV-2023-08-SPECIALIZATION-STATIC-STORAGE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use two generic declarations with identical text in different packages."
+        ],
+        "negative": [
+          "Treat matching-looking specializations from distinct module instances as the same type."
+        ],
+        "notes": [],
+        "positive": [
+          "Compare matching package-class specializations across scopes and matching module-local specializations within one module instance."
+        ]
+      },
+      "id": "SV-2023-08-SPECIALIZATION-TYPE-CONTEXT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Pass an explicit object handle argument and access its members through that handle."
+        ],
+        "negative": [
+          "Reference an instance property, instance method, or this in a static method."
+        ],
+        "notes": [
+          "Require compile-time rejection, not diagnostic wording."
+        ],
+        "positive": [
+          "Read a static property and invoke a static peer from a static method."
+        ]
+      },
+      "id": "SV-2023-08-STATIC-METHOD-MEMBER-ACCESS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call one static method from another in the same class."
+        ],
+        "negative": [
+          "Call an inaccessible static method from a prohibited scope."
+        ],
+        "notes": [],
+        "positive": [
+          "Call a public static method through class scope before constructing an object."
+        ]
+      },
+      "id": "SV-2023-08-STATIC-METHOD-NO-INSTANCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the static qualifier on a nonvirtual method in a derived class."
+        ],
+        "negative": [
+          "Declare one method both static and virtual."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare separate static and virtual instance methods."
+        ]
+      },
+      "id": "SV-2023-08-STATIC-METHOD-NOT-VIRTUAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast access to a non-static property without an instance."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Access a static property through class scope before any instance exists."
+        ]
+      },
+      "id": "SV-2023-08-STATIC-PROPERTY-NO-INSTANCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Give a static property an initializer with an observable single evaluation."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Modify a static property through one object and observe the shared value through another."
+        ]
+      },
+      "id": "SV-2023-08-STATIC-PROPERTY-SHARED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Access a member inherited by the immediate base from its own base."
+        ],
+        "negative": [
+          "Use super outside a derived-class context."
+        ],
+        "notes": [],
+        "positive": [
+          "Override a property and method, then access both base versions with super."
+        ]
+      },
+      "id": "SV-2023-08-SUPER-BASE-MEMBER-ACCESS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a base constructor whose remaining arguments have defaults."
+        ],
+        "negative": [
+          "Supply required base arguments by neither mechanism."
+        ],
+        "notes": [],
+        "positive": [
+          "Instantiate derived classes using each of the two permitted ways to supply required base-constructor arguments."
+        ]
+      },
+      "id": "SV-2023-08-SUPER-CONSTRUCTOR-ARGUMENT-SOURCES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Forward arguments having direction and default-value metadata."
+        ],
+        "negative": [
+          "Combine default with another argument inside the super.new call."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare new(extra, default) and call super.new(default), then verify expanded arguments reach the base."
+        ]
+      },
+      "id": "SV-2023-08-SUPER-NEW-DEFAULT-FORWARDING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use ordinary explicit arguments when no expansion is present."
+        ],
+        "negative": [
+          "Call super.new(default) from a constructor list without default."
+        ],
+        "notes": [],
+        "positive": [
+          "Use matching default expansion in both constructor list and super.new."
+        ]
+      },
+      "id": "SV-2023-08-SUPER-NEW-DEFAULT-REQUIRES-EXPANSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a three-level hierarchy to distinguish inherited lookup from chained super."
+        ],
+        "negative": [
+          "Use super.super.member."
+        ],
+        "notes": [],
+        "positive": [
+          "Use super to access an immediate base member inherited from the root."
+        ]
+      },
+      "id": "SV-2023-08-SUPER-ONE-LEVEL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast direct class-scope parameter access."
+        ],
+        "negative": [
+          "Use the super-qualified value in a context requiring a constant expression."
+        ],
+        "notes": [],
+        "positive": [
+          "Evaluate a super-qualified value parameter at run time."
+        ]
+      },
+      "id": "SV-2023-08-SUPER-PARAMETER-NONCONSTANT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Pass this as an object handle from an instance method."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use this.x in a constructor to distinguish an instance property from a same-named argument."
+        ]
+      },
+      "id": "SV-2023-08-THIS-CURRENT-INSTANCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use this inside a class-embedded covergroup."
+        ],
+        "negative": [
+          "Use this at module scope or within a static class method."
+        ],
+        "notes": [
+          "Require an error, not specific diagnostic text."
+        ],
+        "positive": [
+          "Use this in each permitted context and use type(this)."
+        ]
+      },
+      "id": "SV-2023-08-THIS-PERMITTED-CONTEXTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a typed constructor whose specified type exactly matches the target."
+        ],
+        "negative": [
+          "Use an unrelated typed constructor for the assignment target."
+        ],
+        "notes": [],
+        "positive": [
+          "Construct a derived object with D::new into a compatible base-class handle."
+        ]
+      },
+      "id": "SV-2023-08-TYPED-CONSTRUCTOR-CALL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a typed zero-argument constructor."
+        ],
+        "negative": [
+          "Pass arguments incompatible with the selected type's constructor."
+        ],
+        "notes": [],
+        "positive": [
+          "Use D::new(args) and observe the same initialization sequence as new assigned to D."
+        ]
+      },
+      "id": "SV-2023-08-TYPED-CONSTRUCTOR-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare before and after assigning new."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare a newly declared, unassigned object handle with null."
+        ]
+      },
+      "id": "SV-2023-08-UNINITIALIZED-HANDLE-NULL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Add a nested block declaration with the same name to exercise innermost-scope resolution."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use an argument and property named x, observe unqualified x as the argument and this.x as the property."
+        ]
+      },
+      "id": "SV-2023-08-UNQUALIFIED-MEMBER-SCOPE-RESOLUTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise an object with no weak references transitioning directly to unreachable."
+        ],
+        "negative": [
+          "Require reclamation while an object remains strongly reachable."
+        ],
+        "notes": [],
+        "positive": [
+          "Remove strong references while retaining and then clearing weak reachability."
+        ]
+      },
+      "id": "SV-2023-08-UNREACHABLE-OBJECT-RECLAIMABLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Retain only a weak reference and apply the defined transition/clearing semantics before reclamation eligibility."
+        ],
+        "negative": [
+          "Require reclamation while an alias or pending nonblocking member update keeps the object strongly reachable."
+        ],
+        "notes": [
+          "Do not require a specific reclamation time; implementation timing is not portable."
+        ],
+        "positive": [
+          "Remove all strong references and other strong reachability, then allow weak references to clear."
+        ]
+      },
+      "id": "SV-2023-08-UNREFERENCED-OBJECT-GC"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast unscoped `new` with `Derived::new` assigned to an assignment-compatible base-class handle."
+        ],
+        "negative": [
+          "Attempt to use unscoped `new` to construct a derived type while assigning to a base-class target, rather than using a typed constructor call."
+        ],
+        "notes": [
+          "Keep the negative case focused on constructor type selection, not argument mismatch."
+        ],
+        "positive": [
+          "Assign an unscoped `new` to a variable of the same class type."
+        ]
+      },
+      "id": "SV-2023-08-UNTYPED-CONSTRUCTOR-TARGET-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Assign a null derived handle to a base handle."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Assign a deeply derived handle to immediate-base and root-base variables."
+        ]
+      },
+      "id": "SV-2023-08-UPCAST-ASSIGNMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Declare an abstract class with no pure virtual methods."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare a virtual class and extend it."
+        ]
+      },
+      "id": "SV-2023-08-VIRTUAL-CLASS-DECLARATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast an identically redeclared nonvirtual method."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Call a derived override through a base handle to a derived object and observe latest-derived virtual behavior."
+        ]
+      },
+      "id": "SV-2023-08-VIRTUAL-METHOD-DYNAMIC-OVERRIDE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Repeat virtual explicitly on the matching override."
+        ],
+        "negative": [
+          "Change an argument name, type, qualifier, or direction."
+        ],
+        "notes": [],
+        "positive": [
+          "Override with an identical argument signature while omitting virtual in the derived declaration."
+        ]
+      },
+      "id": "SV-2023-08-VIRTUAL-OVERRIDE-ARGUMENT-SIGNATURE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a multilevel-derived return class."
+        ],
+        "negative": [
+          "Override with an unrelated return type."
+        ],
+        "notes": [],
+        "positive": [
+          "Override with the same return type and with a derived class return type."
+        ]
+      },
+      "id": "SV-2023-08-VIRTUAL-OVERRIDE-COVARIANT-RETURN"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use default expressions that evaluate to different values; only default presence is required to match here."
+        ],
+        "negative": [
+          "Add or remove a default relative to the prototype."
+        ],
+        "notes": [],
+        "positive": [
+          "Override while retaining a default in the same formal position but using a different default expression."
+        ]
+      },
+      "id": "SV-2023-08-VIRTUAL-OVERRIDE-DEFAULT-PRESENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Complete a redeclared pure method in a later nonabstract descendant."
+        ],
+        "negative": [
+          "Omit an interface method entirely without either a compatible implementation or pure virtual redeclaration."
+        ],
+        "notes": [],
+        "positive": [
+          "Implement one required method and redeclare another required method pure virtual in the same virtual class."
+        ]
+      },
+      "id": "SV-2023-08-VIRTUAL-PARTIAL-INTERFACE-IMPLEMENTATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Repeat virtual at every override level."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare a nonvirtual base method, make a derived override virtual, then override again without virtual and observe dynamic dispatch."
+        ]
+      },
+      "id": "SV-2023-08-VIRTUAL-STATUS-PERSISTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Remove stale metadata before allowing possible ID reuse."
+        ],
+        "negative": [
+          "Assume an ID key permanently identifies an object after its collection."
+        ],
+        "notes": [],
+        "positive": [
+          "Index metadata by get_id and verify the numeric key itself does not keep the referent strongly reachable."
+        ]
+      },
+      "id": "SV-2023-08-WEAK-ID-ASSOCIATIVE-INDEX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call get after automatic or explicit clearing and call static get_id without a wrapper instance."
+        ],
+        "negative": [
+          "Call a method outside the defined weak-reference API as though it were built in."
+        ],
+        "notes": [],
+        "positive": [
+          "Construct a weak reference, retrieve and clear its referent, and query an object's ID through get_id."
+        ]
+      },
+      "id": "SV-2023-08-WEAK-REFERENCE-API"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Observe concurrently from multiple processes around reclamation without assuming collection timing."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Create multiple weak references, drop all strong references, and require observations not to expose a partially cleared set."
+        ]
+      },
+      "id": "SV-2023-08-WEAK-REFERENCE-ATOMIC-CLEAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Pass null."
+        ],
+        "negative": [
+          "Pass an assignment-incompatible handle as referent."
+        ],
+        "notes": [],
+        "positive": [
+          "Construct a weak_reference#(C) from a C handle and retrieve it."
+        ]
+      },
+      "id": "SV-2023-08-WEAK-REFERENCE-CONSTRUCTOR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Do not require deterministic timing for memory-manager clearing."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Wait for weak_ref.get()==null and explicitly clear the reference."
+        ]
+      },
+      "id": "SV-2023-08-WEAK-REFERENCE-GET-EVENT-CONTROL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call with null."
+        ],
+        "negative": [
+          "Pass an assignment-incompatible non-T object."
+        ],
+        "notes": [],
+        "positive": [
+          "Call WR::get_id with a compatible object without constructing a WR instance."
+        ]
+      },
+      "id": "SV-2023-08-WEAK-REFERENCE-GET-ID-API"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Require zero for literal and typed null."
+        ],
+        "negative": [
+          "Return zero for a nonnull object or different IDs for aliases of one object."
+        ],
+        "notes": [],
+        "positive": [
+          "Compare repeated IDs through base- and derived-typed weak_reference specializations for one object."
+        ]
+      },
+      "id": "SV-2023-08-WEAK-REFERENCE-GET-ID-DETERMINISTIC"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Do not require an ID never to be reused after collection."
+        ],
+        "negative": [
+          "Reuse one ID while the earlier object remains live."
+        ],
+        "notes": [],
+        "positive": [
+          "Compare IDs of simultaneously live objects of same and different classes and require them to differ."
+        ]
+      },
+      "id": "SV-2023-08-WEAK-REFERENCE-GET-ID-UNIQUE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Construct with null and observe null both before and after clear."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Call get before clearing and after clear."
+        ]
+      },
+      "id": "SV-2023-08-WEAK-REFERENCE-GET-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Collect the wrapper before and after referent eligibility."
+        ],
+        "negative": [
+          "Assume the wrapper remains alive solely because its referent does."
+        ],
+        "notes": [],
+        "positive": [
+          "Drop the final strong handle to a weak-reference wrapper while retaining the referent strongly."
+        ]
+      },
+      "id": "SV-2023-08-WEAK-REFERENCE-INSTANCE-GC"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a typed null handle."
+        ],
+        "negative": [
+          "Require or treat a warning as mandated."
+        ],
+        "notes": [],
+        "positive": [
+          "Call new(null) and query the resulting empty weak reference."
+        ]
+      },
+      "id": "SV-2023-08-WEAK-REFERENCE-NULL-CONSTRUCTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Import std and test ordinary name-resolution ambiguity rules."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Refer to std::weak_reference explicitly alongside a user-defined weak_reference in another scope."
+        ]
+      },
+      "id": "SV-2023-08-WEAK-REFERENCE-STD-PACKAGE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an interface class type if the general class-type category permits it and verify applicable semantics."
+        ],
+        "negative": [
+          "Specialize weak_reference with int, struct, or another nonclass type."
+        ],
+        "notes": [
+          "Require compile-time rejection for nonclass actuals."
+        ],
+        "positive": [
+          "Declare weak_reference of an ordinary or forward-declared class and pass it through tasks and object properties."
+        ]
+      },
+      "id": "SV-2023-08-WEAK-REFERENCE-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare a wrapper alias with itself."
+        ],
+        "negative": [
+          "Assume wrapper equality is based on referent identity."
+        ],
+        "notes": [],
+        "positive": [
+          "Construct two wrappers from one object, compare wrappers unequal and retrieved referents equal."
+        ]
+      },
+      "id": "SV-2023-08-WEAK-REFERENCE-WRAPPER-IDENTITY"
+    }
+  ],
+  "schema_version": 1
+}

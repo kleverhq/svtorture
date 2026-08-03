@@ -1,0 +1,1381 @@
+{
+  "authority": "1800-2023",
+  "part": "40",
+  "requirements": [
+    {
+      "hints": {
+        "edge": [
+          "Query an assertion that is attempted but never succeeds."
+        ],
+        "negative": [],
+        "notes": [
+          "Requires a coverage-enabled API harness."
+        ],
+        "positive": [
+          "Query coverage of an assertion that succeeds."
+        ]
+      },
+      "id": "SV-2023-40-ASSERTION-COVERAGE-SUPPORT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Attempt an assertion only unsuccessfully and query whether it is covered."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Cause one assertion success and query its assertion coverage."
+        ]
+      },
+      "id": "SV-2023-40-ASSERTION-COVERED-ON-SUCCESS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Query an empty or single-primitive block."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Query a block containing multiple covered and uncovered primitives and compare its total with their sum."
+        ]
+      },
+      "id": "SV-2023-40-CONTAINED-COVERAGE-PRIMITIVE-SUM"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Add or enable a coverage type and verify that an existing coverage query does not become invalid."
+        ],
+        "notes": [
+          "Compare behavior through the standardized API rather than vendor-specific interfaces."
+        ],
+        "positive": [
+          "Use an existing coverage query in an implementation that also offers an additional coverage type."
+        ]
+      },
+      "id": "SV-2023-40-COVERAGE-API-BACKWARD-COMPATIBILITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Query coverage immediately before and after the first coverable event without an explicit start call."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Without calling `SV_COV_START`, exercise a coverage-enabled object after simulation begins and query the accumulated coverage."
+        ]
+      },
+      "id": "SV-2023-40-COVERAGE-AUTOMATIC-INITIAL-START"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Check with a bad hierarchy argument and verify the error status."
+        ],
+        "notes": [],
+        "positive": [
+          "Check fully, partially, and non-enabled hierarchies and inspect their statuses."
+        ]
+      },
+      "id": "SV-2023-40-COVERAGE-CHECK-RETURN-SET"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Call `$coverage_control` with an invalid hierarchy target and inspect its standardized status."
+        ],
+        "notes": [],
+        "positive": [
+          "Call `$coverage_control` with four arguments selecting an operation, type, scope, and hierarchy target."
+        ]
+      },
+      "id": "SV-2023-40-COVERAGE-CONTROL-CALL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Check a hierarchy with no enabled coverage."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Stop available coverage collection and verify check still reports availability."
+        ]
+      },
+      "id": "SV-2023-40-COVERAGE-CONTROL-CHECK"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Target a nonexistent module and verify `SV_COV_ERROR` with no coverage-control effect."
+        ]
+      },
+      "id": "SV-2023-40-COVERAGE-CONTROL-ERROR-STATUS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use each macro in a constant integer expression."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Preprocess references to all four coverage-control macros and verify their integer expansions."
+        ]
+      },
+      "id": "SV-2023-40-COVERAGE-CONTROL-MACRO-VALUES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Attempt start on the same hierarchy."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Check a hierarchy with no coverage available and compare with `SV_COV_NOCOV`."
+        ]
+      },
+      "id": "SV-2023-40-COVERAGE-CONTROL-NOCOV-STATUS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Check a fully coverage-enabled hierarchy."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Perform a successful operation and compare the return value with `SV_COV_OK`."
+        ]
+      },
+      "id": "SV-2023-40-COVERAGE-CONTROL-OK-STATUS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Start that partially enabled hierarchy and inspect the status."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Check a hierarchy containing both coverage-enabled and unavailable portions."
+        ]
+      },
+      "id": "SV-2023-40-COVERAGE-CONTROL-PARTIAL-STATUS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Reset a hierarchy having no coverage available."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Accumulate coverage, reset the hierarchy, and query the cleared information."
+        ]
+      },
+      "id": "SV-2023-40-COVERAGE-CONTROL-RESET"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Invoke start on a selected hierarchy in which collection can be enabled."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Stop collection, invoke `SV_COV_START`, and verify subsequent events contribute coverage."
+        ]
+      },
+      "id": "SV-2023-40-COVERAGE-CONTROL-START"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Stop collection, exercise a coverable object, and verify coverage does not advance."
+        ]
+      },
+      "id": "SV-2023-40-COVERAGE-CONTROL-STOP"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Query before any coverable item has been covered."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Cover a known subset of items and query their current coverage value."
+        ]
+      },
+      "id": "SV-2023-40-COVERAGE-GET-CURRENT"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Query with an invalid hierarchy argument and compare with `SV_COV_ERROR`."
+        ]
+      },
+      "id": "SV-2023-40-COVERAGE-GET-ERROR"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Call with an invalid hierarchy or coverage-type argument and compare the result with `SV_COV_ERROR`."
+        ]
+      },
+      "id": "SV-2023-40-COVERAGE-GET-MAX-ERROR"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Query a coverage type not enabled anywhere in the selected hierarchy."
+        ]
+      },
+      "id": "SV-2023-40-COVERAGE-GET-MAX-NOCOV"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [
+          "May require a synthetic large-design harness."
+        ],
+        "positive": [
+          "Query a coverage population whose maximum exceeds the representable integer range, where practical."
+        ]
+      },
+      "id": "SV-2023-40-COVERAGE-GET-MAX-OVERFLOW"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Query a single-coverable-item hierarchy."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Query a hierarchy with a known positive number of coverable items and compare the maximum with their sum."
+        ]
+      },
+      "id": "SV-2023-40-COVERAGE-GET-MAX-POSITIVE-SUM"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Select one named nested instance."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Query maximum coverage using each standardized module and hierarchical scope form."
+        ]
+      },
+      "id": "SV-2023-40-COVERAGE-GET-MAX-SCOPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Query at multiple simulation times without structural changes."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Query the maximum before and after accumulating coverage and verify it is unchanged."
+        ]
+      },
+      "id": "SV-2023-40-COVERAGE-GET-MAX-VALUE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Query a coverage type unavailable throughout the selected hierarchy."
+        ]
+      },
+      "id": "SV-2023-40-COVERAGE-GET-NOCOV"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [
+          "May require a synthetic large-design harness."
+        ],
+        "positive": [
+          "Query a current covered-item count exceeding the integer range, where practical."
+        ]
+      },
+      "id": "SV-2023-40-COVERAGE-GET-OVERFLOW"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Cover exactly one item."
+        ],
+        "negative": [],
+        "notes": [
+          "The list entry's use of 'maximum' is read with the preceding explicit current-level definition."
+        ],
+        "positive": [
+          "Cover a known positive subset of coverable items and compare the result with that count."
+        ]
+      },
+      "id": "SV-2023-40-COVERAGE-GET-POSITIVE-CURRENT-COUNT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Query one nested named instance."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Query current coverage using each standardized scope form."
+        ]
+      },
+      "id": "SV-2023-40-COVERAGE-GET-SCOPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Attempt to merge data associated with another design."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Merge a nonexistent name and compare the result with `SV_COV_ERROR`."
+        ]
+      },
+      "id": "SV-2023-40-COVERAGE-MERGE-ERROR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a name whose backing storage has an implementation-specific extension."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Save coverage under a name, then merge that name for the same coverage type."
+        ]
+      },
+      "id": "SV-2023-40-COVERAGE-MERGE-NAMED-DATA"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Merge existing saved data while requesting an absent coverage type."
+        ]
+      },
+      "id": "SV-2023-40-COVERAGE-MERGE-NOCOV"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Merge compatible saved coverage and compare the result with `SV_COV_OK`."
+        ]
+      },
+      "id": "SV-2023-40-COVERAGE-MERGE-OK"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compute full coverage where current equals maximum."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Cover half of a known set and compute the percentage from current and maximum values."
+        ]
+      },
+      "id": "SV-2023-40-COVERAGE-PERCENTAGE-RATIO"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Invoke reset repeatedly without intervening coverage accumulation."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Reset accumulated coverage, invoke reset again, and verify the second call causes no additional coverage-state change."
+        ]
+      },
+      "id": "SV-2023-40-COVERAGE-RESET-REPEATED-NO-EFFECT"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Reset coverage with a bad hierarchy argument and inspect the error status."
+        ],
+        "notes": [],
+        "positive": [
+          "Reset coverage with valid arguments and inspect the success status."
+        ]
+      },
+      "id": "SV-2023-40-COVERAGE-RESET-RETURN-SET"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Fail while replacing an existing name and verify database integrity semantics."
+        ],
+        "negative": [
+          "Induce a failed save, then attempt to merge the same name and verify no partial entry remains."
+        ],
+        "notes": [],
+        "positive": []
+      },
+      "id": "SV-2023-40-COVERAGE-SAVE-ERROR-REMOVES-ENTRY"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [
+          "Do not depend on diagnostic wording."
+        ],
+        "positive": [
+          "Induce a save failure and compare the result with `SV_COV_ERROR`."
+        ]
+      },
+      "id": "SV-2023-40-COVERAGE-SAVE-ERROR-STATUS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Save while collection is active and verify collection state is unchanged."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Query coverage immediately before and after saving and verify it is unchanged."
+        ]
+      },
+      "id": "SV-2023-40-COVERAGE-SAVE-NO-LIVE-EFFECT"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Request saving an unavailable coverage type and compare with `SV_COV_NOCOV`."
+        ]
+      },
+      "id": "SV-2023-40-COVERAGE-SAVE-NOCOV"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Save available coverage and compare the return value with `SV_COV_OK`."
+        ]
+      },
+      "id": "SV-2023-40-COVERAGE-SAVE-OK"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change coverage between the two saves."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Save coverage twice under the same name and verify the second save is not rejected merely because the name exists."
+        ]
+      },
+      "id": "SV-2023-40-COVERAGE-SAVE-OVERWRITE-PERMITTED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Retrieve after additional simulation coverage has accumulated."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Save current coverage under a name and later merge that same name."
+        ]
+      },
+      "id": "SV-2023-40-COVERAGE-SAVE-RETRIEVABLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify deeply nested descendants are included."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Select hierarchical coverage for a multiply instantiated module having covered descendants."
+        ]
+      },
+      "id": "SV-2023-40-COVERAGE-SCOPE-HIERARCHICAL-MODULE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Pass each scope macro to a coverage access function."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use both predefined scope macros in constant expressions and verify their values."
+        ]
+      },
+      "id": "SV-2023-40-COVERAGE-SCOPE-MACRO-VALUES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place covered child instances beneath the selected module instances and verify they are excluded."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Select a module definition instantiated twice and verify both instances contribute."
+        ]
+      },
+      "id": "SV-2023-40-COVERAGE-SCOPE-MODULE-DEFINITION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a nested instance path."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Select one of two instances by hierarchical path and query its coverage."
+        ]
+      },
+      "id": "SV-2023-40-COVERAGE-SCOPE-NAMED-INSTANCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify both the named instance and a deeply nested descendant are included."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Select a named instance with covered descendants using hierarchical scope."
+        ]
+      },
+      "id": "SV-2023-40-COVERAGE-SCOPE-NAMED-INSTANCE-HIERARCHY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Invoke start repeatedly without intervening stop or reset operations."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Accumulate coverage, invoke `SV_COV_START` again on the same active hierarchy, and verify the accumulated state is unchanged."
+        ]
+      },
+      "id": "SV-2023-40-COVERAGE-START-ALREADY-ACTIVE-NO-EFFECT"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Call start with a bad hierarchy argument and verify the error status."
+        ],
+        "notes": [],
+        "positive": [
+          "Start coverage in fully enabled, unavailable, and partially enabled hierarchies and inspect each status."
+        ]
+      },
+      "id": "SV-2023-40-COVERAGE-START-RETURN-SET"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the negative status macros in constant signed comparisons."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Evaluate every predefined coverage-status macro and compare its signed integer value."
+        ]
+      },
+      "id": "SV-2023-40-COVERAGE-STATUS-MACRO-VALUES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Invoke stop repeatedly without an intervening start."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Stop collection, record coverage state, invoke `SV_COV_STOP` again, and verify that state is unchanged."
+        ]
+      },
+      "id": "SV-2023-40-COVERAGE-STOP-ALREADY-STOPPED-NO-EFFECT"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Stop coverage with a bad hierarchy argument and inspect the error status."
+        ],
+        "notes": [],
+        "positive": [
+          "Stop coverage with valid arguments and inspect the success status."
+        ]
+      },
+      "id": "SV-2023-40-COVERAGE-STOP-RETURN-SET"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Pass each type macro to a coverage query."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Evaluate all predefined coverage-type macros as constant integers."
+        ]
+      },
+      "id": "SV-2023-40-COVERAGE-TYPE-MACRO-VALUES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a two-signal concatenation."
+        ],
+        "negative": [
+          "Omit the FSM name or enumeration name."
+        ],
+        "notes": [],
+        "positive": [
+          "Identify two whole signals concatenated as current state with FSM and enumeration names."
+        ]
+      },
+      "id": "SV-2023-40-FSM-CONCATENATED-STATE-PRAGMA"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Concatenate whole signals of differing widths."
+        ],
+        "negative": [
+          "Use a bit-select or part-select as a concatenation member."
+        ],
+        "notes": [],
+        "positive": [
+          "Use only whole signals in the state concatenation."
+        ]
+      },
+      "id": "SV-2023-40-FSM-CONCATENATED-STATE-WHOLE-SIGNALS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an explicit description that selects a different state expression than automatic recognition would select."
+        ],
+        "negative": [],
+        "notes": [
+          "Automatic recognition algorithms are not standardized."
+        ],
+        "positive": [
+          "Apply standard FSM pragmas to a design that could also be automatically recognized and verify the explicit description controls extraction."
+        ]
+      },
+      "id": "SV-2023-40-FSM-EXPLICIT-DESCRIPTION-OVERRIDES-AUTOMATIC"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Identify an FSM without a next-state register."
+        ],
+        "negative": [
+          "Omit the required current-state identification or legal-state identification."
+        ],
+        "notes": [],
+        "positive": [
+          "Describe an FSM with current-state storage, legal states, and an optional next-state register."
+        ]
+      },
+      "id": "SV-2023-40-FSM-IDENTIFICATION-COMPONENTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use exactly two signals after the pragma."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare current-state and next-state signals in that order after one enum pragma and verify their assigned roles."
+        ]
+      },
+      "id": "SV-2023-40-FSM-MULTISIGNAL-ENUM-DECLARATION-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Omit the next-state pragma for an FSM with no next-state signal."
+        ],
+        "negative": [
+          "Provide a next-state signal without its required enum association."
+        ],
+        "notes": [],
+        "positive": [
+          "Associate an existing next-state vector with the same enumeration as current state."
+        ]
+      },
+      "id": "SV-2023-40-FSM-NEXT-STATE-ENUM-PRAGMA"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a one-bit part-select."
+        ],
+        "negative": [
+          "Use a part-select state pragma without an FSM name."
+        ],
+        "notes": [],
+        "positive": [
+          "Identify a vector slice as current state with distinct FSM and enumeration names."
+        ]
+      },
+      "id": "SV-2023-40-FSM-PART-SELECT-STATE-PRAGMA"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a one-bit parameter width."
+        ],
+        "negative": [
+          "Place the enum pragma after the first parameter name."
+        ],
+        "notes": [],
+        "positive": [
+          "Associate a parameter state list both with and without an explicit bit width."
+        ]
+      },
+      "id": "SV-2023-40-FSM-POSSIBLE-STATES-ENUM-PRAGMA"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a one-line enum pragma immediately after a parameter width."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Express equivalent enum pragmas once in block-comment form and once in one-line-comment form."
+        ]
+      },
+      "id": "SV-2023-40-FSM-PRAGMAS-COMMENT-FORMS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Present an unannotated coding style that is not automatically recognized and do not require automatic extraction."
+        ],
+        "negative": [],
+        "notes": [
+          "Forced recognition via pragmas is specified elsewhere."
+        ],
+        "positive": [
+          "Drive a recognized FSM through a known subset of its states and query state coverage."
+        ]
+      },
+      "id": "SV-2023-40-FSM-STATE-COVERAGE-REACHED-STATES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a recognized FSM with a declared state that is never visited and inspect its state coverage."
+        ],
+        "negative": [],
+        "notes": [
+          "FSM recognition criteria are specified separately; requires a coverage-enabled API harness."
+        ],
+        "positive": [
+          "Retrieve state coverage for a recognized FSM after visiting one or more states."
+        ]
+      },
+      "id": "SV-2023-40-FSM-STATE-COVERAGE-SUPPORT"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Omit the `enum` keyword while supplying the enumeration name."
+        ],
+        "notes": [],
+        "positive": [
+          "Associate a current-state vector with an enumeration in one state-vector pragma."
+        ]
+      },
+      "id": "SV-2023-40-FSM-STATE-VECTOR-INLINE-ENUM"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Name a vector declared near the end of the module."
+        ],
+        "negative": [
+          "Place the pragma outside the declaring module or omit a required keyword."
+        ],
+        "notes": [],
+        "positive": [
+          "Place a state-vector pragma naming a declared vector inside its declaring module."
+        ]
+      },
+      "id": "SV-2023-40-FSM-STATE-VECTOR-PRAGMA"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the separate form together with a state-vector pragma elsewhere in the module."
+        ],
+        "negative": [
+          "Place the separate enum pragma after the signal identifier or omit `tool`."
+        ],
+        "notes": [],
+        "positive": [
+          "Place a separate enum pragma immediately after a vector's bit range."
+        ]
+      },
+      "id": "SV-2023-40-FSM-STATE-VECTOR-SEPARATE-ENUM"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Visit two FSM states without taking every recognized transition and inspect transition coverage."
+        ],
+        "negative": [],
+        "notes": [
+          "FSM recognition criteria are specified separately; requires a coverage-enabled API harness."
+        ],
+        "positive": [
+          "Retrieve transition coverage for a recognized FSM after taking a state transition."
+        ]
+      },
+      "id": "SV-2023-40-FSM-TRANSITION-COVERAGE-SUPPORT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise statements in distinct procedural branches and retrieve their statement-coverage data."
+        ],
+        "negative": [],
+        "notes": [
+          "Requires a coverage-enabled implementation and API harness."
+        ],
+        "positive": [
+          "Query statement coverage for an instrumented design containing executable statements."
+        ]
+      },
+      "id": "SV-2023-40-STATEMENT-COVERAGE-SUPPORT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Leave a syntactic statement unexecuted and query its status."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Execute a statement once and query its covered status."
+        ]
+      },
+      "id": "SV-2023-40-STATEMENT-COVERED-ONCE-EXECUTED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Request coverage for a leaf subhierarchy without separately naming the leaf's contained objects."
+        ],
+        "negative": [],
+        "notes": [
+          "Requires an API harness and an instrumented hierarchy."
+        ],
+        "positive": [
+          "Request coverage rooted at a hierarchy node containing multiple nested instances."
+        ]
+      },
+      "id": "SV-2023-40-SUBHIERARCHY-COVERAGE-QUERY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise only one transition direction on a tracked signal and retrieve its toggle-coverage data."
+        ],
+        "negative": [],
+        "notes": [
+          "Requires a coverage-enabled implementation and API harness."
+        ],
+        "positive": [
+          "Query toggle coverage for an instrumented design signal that changes value."
+        ]
+      },
+      "id": "SV-2023-40-TOGGLE-COVERAGE-SUPPORT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Hold a bit at one binary value throughout simulation and query its toggle coverage."
+        ],
+        "negative": [],
+        "notes": [
+          "Partial coverage and toggle-count queries are implementation-permitted, not mandatory."
+        ],
+        "positive": [
+          "Drive a signal bit to both 0 and 1 and query full toggle coverage."
+        ]
+      },
+      "id": "SV-2023-40-TOGGLE-FULL-COVERAGE-BOTH-BINARY-VALUES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Query an unattempted assertion."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Trigger a known number of assertion attempts and query the attempt count."
+        ]
+      },
+      "id": "SV-2023-40-VPI-ASSERTION-ATTEMPT-COUNT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Query distinct assertion attempt, success, failure, vacuous-success, disable, and kill counts."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Reference every assertion-specific coverage-status property in a VPI application."
+        ]
+      },
+      "id": "SV-2023-40-VPI-ASSERTION-COVERAGE-STATUS-PROPERTIES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Query an assertion never attempted."
+        ],
+        "negative": [
+          "Query one that succeeded and later failed."
+        ],
+        "notes": [],
+        "positive": [
+          "Query an assertion that was attempted, succeeded, and never failed."
+        ]
+      },
+      "id": "SV-2023-40-VPI-ASSERTION-COVERED-CONDITION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Start an attempt while disable iff is already true."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Drive disable iff true during an attempt and query the disabled count."
+        ]
+      },
+      "id": "SV-2023-40-VPI-ASSERTION-DISABLED-COUNT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Query an assertion with no failures."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Cause a known number of assertion failures and query the count."
+        ]
+      },
+      "id": "SV-2023-40-VPI-ASSERTION-FAILURE-COUNT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Query before the assertion is covered."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Query `vpiCovered` for an assertion after it becomes covered."
+        ]
+      },
+      "id": "SV-2023-40-VPI-ASSERTION-HANDLE-COVERED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Derive zero when every attempt has concluded."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Start attempts that remain unresolved and derive their count from all standardized counters."
+        ]
+      },
+      "id": "SV-2023-40-VPI-ASSERTION-IN-PROGRESS-COUNT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Query an assertion with no killed attempts."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Kill an active assertion attempt using a control action and query the killed count."
+        ]
+      },
+      "id": "SV-2023-40-VPI-ASSERTION-KILLED-COUNT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "For a cover sequence, produce a known number of matches."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Produce known nonvacuous successes and query their count."
+        ]
+      },
+      "id": "SV-2023-40-VPI-ASSERTION-NONVACUOUS-SUCCESS-COUNT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Query when successes are exclusively nonvacuous."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Produce a known number of vacuous successes and query the count."
+        ]
+      },
+      "id": "SV-2023-40-VPI-ASSERTION-VACUOUS-SUCCESS-COUNT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Control assertion coverage through an assertion handle."
+        ],
+        "negative": [
+          "Pass a non-coverage control value."
+        ],
+        "notes": [],
+        "positive": [
+          "Start, stop, reset, and check a standardized coverage type through `vpi_control`."
+        ]
+      },
+      "id": "SV-2023-40-VPI-COVERAGE-CONTROL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use each value with the applicable VPI coverage routine."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compile a VPI application referencing every coverage-control enumeration name."
+        ]
+      },
+      "id": "SV-2023-40-VPI-COVERAGE-CONTROL-ENUMS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Merge existing data that lacks the requested coverage type."
+        ],
+        "negative": [
+          "Attempt to merge a nonexistent name and inspect the standardized error result."
+        ],
+        "notes": [],
+        "positive": [
+          "Merge compatible named coverage data through VPI."
+        ]
+      },
+      "id": "SV-2023-40-VPI-COVERAGE-MERGE-CONTROL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Overwrite an existing name through VPI."
+        ],
+        "negative": [],
+        "notes": [
+          "The displayed call omits the `vpi` prefix, but its defining cross-reference names `vpiCoverageSave`."
+        ],
+        "positive": [
+          "Save a standardized coverage type through VPI under a name, then retrieve it."
+        ]
+      },
+      "id": "SV-2023-40-VPI-COVERAGE-SAVE-CONTROL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Query an uncovered object."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Reference and query all three coverage-status properties through VPI."
+        ]
+      },
+      "id": "SV-2023-40-VPI-COVERAGE-STATUS-PROPERTIES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Query objects for each supported coverage type."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Reference each standardized coverage-type property in a VPI application."
+        ]
+      },
+      "id": "SV-2023-40-VPI-COVERAGE-TYPE-PROPERTIES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Query an aggregate whose constituent counts differ."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Query an individual item and an aggregate handle containing items with known coverage counts."
+        ]
+      },
+      "id": "SV-2023-40-VPI-COVERED-COUNT-SUM"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Query a handle representing no nested aggregate."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Query an aggregate handle with a known number of coverable entities."
+        ]
+      },
+      "id": "SV-2023-40-VPI-COVERED-MAX-ENTITY-COUNT"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Query `vpiCoveredMax` on both an assertion and an individual FSM state."
+        ]
+      },
+      "id": "SV-2023-40-VPI-COVERED-MAX-SINGLETON-HANDLES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Query before any state is counted covered."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Query an FSM handle after reaching a known subset of states."
+        ]
+      },
+      "id": "SV-2023-40-VPI-FSM-HANDLE-COVERED-STATE-COUNT"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Reference and obtain each standardized FSM handle type through VPI."
+        ]
+      },
+      "id": "SV-2023-40-VPI-FSM-HANDLE-TYPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use each method on an FSM handle."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Reference both FSM-specific method names in a VPI application."
+        ]
+      },
+      "id": "SV-2023-40-VPI-FSM-METHOD-ENUMS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Obtain it for an FSM encoded by a compound expression."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Obtain the state-expression handle for an FSM encoded by a signal."
+        ]
+      },
+      "id": "SV-2023-40-VPI-FSM-STATE-EXPRESSION-HANDLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Query a state before and after the FSM first reaches it."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Query vpiCovered on handles for one reached FSM state and one unreached FSM state and compare the returned covered indications."
+        ]
+      },
+      "id": "SV-2023-40-VPI-FSM-STATE-HANDLE-COVERED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Query a state encoded with a nonzero value."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Obtain the value of each state handle returned by an FSM-state iterator."
+        ]
+      },
+      "id": "SV-2023-40-VPI-FSM-STATE-VALUE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Query an instance with zero covered items."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Query statement coverage on an instance containing a known count of covered statements."
+        ]
+      },
+      "id": "SV-2023-40-VPI-INSTANCE-COVERAGE-TYPE-COUNT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Iterate a single-state FSM."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Iterate a recognized FSM having multiple states and enumerate every state."
+        ]
+      },
+      "id": "SV-2023-40-VPI-ITERATE-FSM-STATES-CALL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Iterate an instance containing no FSMs."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Iterate an instance containing multiple recognized FSMs."
+        ]
+      },
+      "id": "SV-2023-40-VPI-ITERATE-INSTANCE-FSMS"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Attempt such control through an individual statement, signal, or FSM handle."
+        ],
+        "notes": [],
+        "positive": [
+          "Control statement, toggle, or FSM coverage using an instance handle."
+        ]
+      },
+      "id": "SV-2023-40-VPI-NONASSERTION-INDIVIDUAL-CONTROL-PROHIBITED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Query a one-bit signal."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Query a multibit signal after obtaining coverage on only a subset of its bits."
+        ]
+      },
+      "id": "SV-2023-40-VPI-SIGNAL-HANDLE-COVERED-BIT-COUNT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Query a single-statement handle."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Query a statement handle representing multiple statements after covering a subset."
+        ]
+      },
+      "id": "SV-2023-40-VPI-STATEMENT-HANDLE-COVERED-COUNT"
+    }
+  ],
+  "schema_version": 1
+}

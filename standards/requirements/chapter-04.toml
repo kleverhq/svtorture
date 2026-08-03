@@ -2,12 +2,1376 @@ schema_version = 3
 part = "4"
 
 [[requirements]]
-id = "SV-2023-04-NBA-RHS-CAPTURE"
+id = "SV-2023-04-ACTIVE-REGION-ARBITRARY-EVENT-ORDER"
+standard_revision = "1800-2023"
+part = "4"
+clause = "4.4.2.2"
+anchors = [
+    "[2023:4.4.2.2:P001:p064]",
+]
+summary = "The Active region contains the active-region-set events currently being evaluated, and those events may be processed in any order."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "4.4.2.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "4.4.2.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "4.4.2.2"
+
+[[requirements]]
+id = "SV-2023-04-ACTIVE-SET-NBA-SCHEDULING"
+standard_revision = "1800-2023"
+part = "4"
+clause = "4.4.2.4"
+anchors = [
+    "[2023:4.4.2.4:P002:p064]",
+]
+summary = "A nonblocking assignment executed in the active region set creates an NBA-region event scheduled for the current or a later simulation time."
+related_clauses = [
+    "10.4.2",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "4.4.2.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "4.4.2.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "4.4.2.4"
+
+[[requirements]]
+id = "SV-2023-04-ACTIVE-SET-ZERO-DELAY-SCHEDULING"
+standard_revision = "1800-2023"
+part = "4"
+clause = "4.4.2.3"
+anchors = [
+    "[2023:4.4.2.3:P002:p064]",
+]
+summary = "An explicit #0 executed in the active region set suspends its process and schedules resumption in the current slot's Inactive region for the next Inactive-to-Active iteration."
+related_clauses = [
+    "9.4",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "4.4.2.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "4.4.2.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "4.4.2.3"
+
+[[requirements]]
+id = "SV-2023-04-BEGIN-END-SOURCE-ORDER"
+standard_revision = "1800-2023"
+part = "4"
+clause = "4.6"
+anchors = [
+    "[2023:4.6:L001:p069]",
+]
+summary = "Statements in a begin-end block shall execute in source order, even though execution of that block may be suspended and interleaved with other processes."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "4.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "4.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "4.6"
+
+[[requirements]]
+id = "SV-2023-04-BIDIRECTIONAL-SWITCH-WHOLE-NET-RESOLUTION"
+standard_revision = "1800-2023"
+part = "4"
+clause = "4.9.5"
+anchors = [
+    "[2023:4.9.5:P004:p070-071]",
+]
+summary = "Before determining any node value on a bidirectional switch-connected net, resolution shall consider every device in the connected network."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "4.9.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "4.9.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "4.9.5"
+
+[[requirements]]
+id = "SV-2023-04-BLOCKING-INTRA-ASSIGNMENT-DELAY-SCHEDULING"
+standard_revision = "1800-2023"
+part = "4"
+clause = "4.9.3"
+anchors = [
+    "[2023:4.9.3:P001:p070]",
+    "[2023:4.9.3:P002:p070]",
+]
+summary = "A blocking intra-assignment delay captures the RHS immediately, suspends the process until the future event (Inactive for active-set #0 or Re-Inactive for Reactive #0), then determines targets from resume-time values, updates the LHS, enables dependent events, and continues scheduling."
+related_clauses = [
+    "10.4.1",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "4.9.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "4.9.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "4.9.3"
+
+[[requirements]]
+id = "SV-2023-04-BUILTIN-NET-SWITCH-UNKNOWN-CONTROL-RESOLUTION"
+standard_revision = "1800-2023"
+part = "4"
+clause = "4.9.5"
+anchors = [
+    "[2023:4.9.5:P005:p071]",
+]
+summary = "For a built-in-net bidirectional switch with x control, each node's steady state is the unique logic level common to all conducting/nonconducting interpretations, or x when those interpretations do not agree."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "4.9.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "4.9.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "4.9.5"
+
+[[requirements]]
+id = "SV-2023-04-CB-AFTER-DELAY-PRE-ACTIVE"
+standard_revision = "1800-2023"
+part = "4"
+clause = "4.10"
+anchors = [
+    "[2023:4.10:T4-1.R01:p072]",
+]
+summary = "A cbAfterDelay PLI callback executes in the Pre-Active event region."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "4.10"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "4.10"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "4.10"
+
+[[requirements]]
+id = "SV-2023-04-CB-END-SIM-TIME-PRE-POSTPONED"
+standard_revision = "1800-2023"
+part = "4"
+clause = "4.10"
+anchors = [
+    "[2023:4.10:T4-1.R06:p072]",
+]
+summary = "A cbAtEndOfSimTime PLI callback executes in the Pre-Postponed event region."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "4.10"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "4.10"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "4.10"
+
+[[requirements]]
+id = "SV-2023-04-CB-NBA-SYNCH-PRE-NBA"
+standard_revision = "1800-2023"
+part = "4"
+clause = "4.10"
+anchors = [
+    "[2023:4.10:T4-1.R05:p072]",
+]
+summary = "A cbNBASynch PLI callback executes in the Pre-NBA event region."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "4.10"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "4.10"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "4.10"
+
+[[requirements]]
+id = "SV-2023-04-CB-NEXT-SIM-TIME-PRE-ACTIVE"
+standard_revision = "1800-2023"
+part = "4"
+clause = "4.10"
+anchors = [
+    "[2023:4.10:T4-1.R02:p072]",
+]
+summary = "A cbNextSimTime PLI callback executes in the Pre-Active event region."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "4.10"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "4.10"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "4.10"
+
+[[requirements]]
+id = "SV-2023-04-CB-READ-ONLY-SYNCH-POSTPONED"
+standard_revision = "1800-2023"
+part = "4"
+clause = "4.10"
+anchors = [
+    "[2023:4.10:T4-1.R07:p072]",
+]
+summary = "A cbReadOnlySynch PLI callback executes in the Postponed event region."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "4.10"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "4.10"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "4.10"
+
+[[requirements]]
+id = "SV-2023-04-CB-READ-WRITE-SYNCH-NBA-BOUNDARY"
+standard_revision = "1800-2023"
+part = "4"
+clause = "4.10"
+anchors = [
+    "[2023:4.10:T4-1.R03:p072]",
+]
+summary = "A cbReadWriteSynch PLI callback executes in either the Pre-NBA or Post-NBA event region."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "4.10"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "4.10"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "4.10"
+
+[[requirements]]
+id = "SV-2023-04-CB-START-SIM-TIME-PRE-ACTIVE"
+standard_revision = "1800-2023"
+part = "4"
+clause = "4.10"
+anchors = [
+    "[2023:4.10:T4-1.R04:p072]",
+]
+summary = "A cbAtStartOfSimTime PLI callback executes in the Pre-Active event region."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "4.10"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "4.10"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "4.10"
+
+[[requirements]]
+id = "SV-2023-04-CONTINUOUS-ASSIGNMENT-TIME-ZERO-EVALUATION"
+standard_revision = "1800-2023"
+part = "4"
+clause = "4.9.1"
+anchors = [
+    "[2023:4.9.1:P001:p070]",
+]
+summary = "A continuous-assignment process, including one implicit from a port connection, is evaluated at time zero to propagate constant values."
+related_clauses = [
+    "10.3",
+    "4.9.6",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "4.9.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "4.9.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "4.9.1"
+
+[[requirements]]
+id = "SV-2023-04-CONTINUOUS-ASSIGNMENT-UPDATE-SCHEDULING"
+standard_revision = "1800-2023"
+part = "4"
+clause = "4.9.1"
+anchors = [
+    "[2023:4.9.1:P001:p070]",
+]
+summary = "A continuous assignment is a process sensitive to expression sources; an expression-value change schedules an active update using current values to determine the target, including for implicit continuous assignments from port connections."
+related_clauses = [
+    "10.3",
+    "4.9.6",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "4.9.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "4.9.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "4.9.1"
+
+[[requirements]]
+id = "SV-2023-04-CONTINUOUS-UPDATE-DISPLAY-RACE"
+standard_revision = "1800-2023"
+part = "4"
+clause = "4.8"
+anchors = [
+    "[2023:4.8:P001:p069]",
+    "[2023:4.8:C001:p069]",
+    "[2023:4.8:P002:p069]",
+]
+summary = "When a blocking source update enables a continuous-assignment target update in the same Active-region execution as a following display, either the display or target update may execute first, so either old or new target value is permitted."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "4.8"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "4.8"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "4.8"
+
+[[requirements]]
+id = "SV-2023-04-DEASSIGN-RELEASE-DEACTIVATION"
+standard_revision = "1800-2023"
+part = "4"
+clause = "4.9.2"
+anchors = [
+    "[2023:4.9.2:P002:p070]",
+]
+summary = "A deassign or release statement deactivates its corresponding active assign or force statement or statements."
+related_clauses = [
+    "10.6",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "4.9.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "4.9.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "4.9.2"
+
+[[requirements]]
+id = "SV-2023-04-INACTIVE-AFTER-ACTIVE"
+standard_revision = "1800-2023"
+part = "4"
+clause = "4.4.2.3"
+anchors = [
+    "[2023:4.4.2.3:P001:p064]",
+]
+summary = "Inactive-region events are evaluated only after all Active-region events have been processed."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "4.4.2.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "4.4.2.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "4.4.2.3"
+
+[[requirements]]
+id = "SV-2023-04-INOUT-PORT-BIDIRECTIONAL-CONNECTION"
+standard_revision = "1800-2023"
+part = "4"
+clause = "4.9.6"
+anchors = [
+    "[2023:4.9.6:P001:p071]",
+    "[2023:4.9.6:P002:p071]",
+    "[2023:4.9.6:L003:p071]",
+]
+summary = "An inout port behaves as an always-enabled non-strength-reducing transistor connection between the local and outside nets, except the referenced supply-to-strong rule."
+related_clauses = [
+    "28.13",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "4.9.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "4.9.6"
+note = "The port rule is stated in 4.9.6; its supply-to-strong exception is specified by 28.13."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "4.9.6"
+
+[[requirements]]
+id = "SV-2023-04-INPUT-PORT-IMPLICIT-CONTINUOUS-CONNECTION"
+standard_revision = "1800-2023"
+part = "4"
+clause = "4.9.6"
+anchors = [
+    "[2023:4.9.6:P001:p071]",
+    "[2023:4.9.6:P002:p071]",
+    "[2023:4.9.6:L001:p071]",
+]
+summary = "An input port connection behaves as a continuous assignment from the outside expression to the local input net or variable."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "4.9.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "4.9.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "4.9.6"
+
+[[requirements]]
+id = "SV-2023-04-NBA-AFTER-INACTIVE"
+standard_revision = "1800-2023"
+part = "4"
+clause = "4.4.2.4"
+anchors = [
+    "[2023:4.4.2.4:P001:p064]",
+]
+summary = "NBA-region events are evaluated only after all Inactive-region events have been processed."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "4.4.2.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "4.4.2.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "4.4.2.4"
+
+[[requirements]]
+id = "SV-2023-04-NBA-EXECUTION-ORDER"
+standard_revision = "1800-2023"
+part = "4"
+clause = "4.6"
+anchors = [
+    "[2023:4.6:L002:p069]",
+    "[2023:4.6:P003:p069]",
+]
+summary = "Nonblocking assignment updates shall be performed in the order their statements were executed."
+related_clauses = [
+    "10.4.2",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "4.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "4.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "4.6"
+
+[[requirements]]
+id = "SV-2023-04-NONBLOCKING-ASSIGNMENT-CAPTURE-AND-SCHEDULING"
 standard_revision = "1800-2023"
 part = "4"
 clause = "4.9.4"
-anchors = ["[2023:4.9.4:P001:p070]"]
-summary = "A nonblocking assignment captures its right-hand value when the NBA update is scheduled."
-related_clauses = ["10.4.2"]
-tags = ["nba", "scheduling"]
-revision_applicability = { "1800-2012" = { status = "applicable", clause = "4.9.4" }, "1800-2017" = { status = "applicable", clause = "4.9.4" }, "1800-2023" = { status = "applicable", clause = "4.9.4" } }
+anchors = [
+    "[2023:4.9.4:P001:p070]",
+]
+summary = "When a nonblocking-assignment update is queued, both its right-hand value and left-hand target are computed from the values then in effect."
+related_clauses = [
+    "10.4.2",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "4.9.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "4.9.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "4.9.4"
+
+[[requirements]]
+id = "SV-2023-04-NONBLOCKING-ASSIGNMENT-DELAY-PLACEMENT"
+standard_revision = "1800-2023"
+part = "4"
+clause = "4.9.4"
+anchors = [
+    "[2023:4.9.4:P001:p070]",
+]
+summary = "A nonblocking assignment schedules its NBA update in the current time step when its delay is zero and at the specified future time when its delay is nonzero."
+related_clauses = [
+    "10.4.2",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "4.9.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "4.9.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "4.9.4"
+
+[[requirements]]
+id = "SV-2023-04-OBSERVED-PROPERTY-ACTION-SCHEDULING"
+standard_revision = "1800-2023"
+part = "4"
+clause = "4.4.2.5"
+anchors = [
+    "[2023:4.4.2.5:P001:p065]",
+]
+summary = "During evaluation of a triggered property, its pass or fail action code shall be scheduled in the Reactive region of the current time slot."
+related_clauses = [
+    "16",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "4.4.2.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "4.4.2.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "4.4.2.5"
+
+[[requirements]]
+id = "SV-2023-04-ONE-STEP-PREPONED-SAMPLING"
+standard_revision = "1800-2023"
+part = "4"
+clause = "4.4.2.1"
+anchors = [
+    "[2023:4.4.2.1:P001:p064]",
+]
+summary = "A #1step sampling delay samples immediately before the current time slot, identically to sampling in its Preponed region and equivalently to sampling in the preceding Postponed region."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "4.4.2.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "4.4.2.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "4.4.2.1"
+
+[[requirements]]
+id = "SV-2023-04-OUTPUT-PORT-IMPLICIT-CONTINUOUS-CONNECTION"
+standard_revision = "1800-2023"
+part = "4"
+clause = "4.9.6"
+anchors = [
+    "[2023:4.9.6:P001:p071]",
+    "[2023:4.9.6:P002:p071]",
+    "[2023:4.9.6:L002:p071]",
+]
+summary = "An output port connection behaves as a continuous assignment from the local output expression to the outside net or variable."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "4.9.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "4.9.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "4.9.6"
+
+[[requirements]]
+id = "SV-2023-04-PLI-CALLBACK-EXECUTION-KINDS"
+standard_revision = "1800-2023"
+part = "4"
+clause = "4.10"
+anchors = [
+    "[2023:4.10:P001:p071]",
+]
+summary = "A PLI callback is either executed immediately upon its specified triggering activity or explicitly registered as a one-shot evaluation event."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "4.10"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "4.10"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "4.10"
+
+[[requirements]]
+id = "SV-2023-04-POSTPONED-EVENT-PLACEMENT"
+standard_revision = "1800-2023"
+part = "4"
+clause = "4.4.2.9"
+anchors = [
+    "[2023:4.4.2.9:P001:p065]",
+]
+summary = "$monitor, $strobe, and similar observation events are scheduled in the Postponed region."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "4.4.2.9"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "4.4.2.9"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "4.4.2.9"
+
+[[requirements]]
+id = "SV-2023-04-POSTPONED-NO-CURRENT-SLOT-WRITES"
+standard_revision = "1800-2023"
+part = "4"
+clause = "4.4.2.9"
+anchors = [
+    "[2023:4.4.2.9:P002:p065]",
+]
+summary = "Once a time slot reaches Postponed, no new value change may occur in that slot, and writing any net or variable is illegal."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "4.4.2.9"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "4.4.2.9"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "4.4.2.9"
+
+[[requirements]]
+id = "SV-2023-04-POSTPONED-PLI-READ-ONLY-CONTROL-POINT"
+standard_revision = "1800-2023"
+part = "4"
+clause = "4.4.3.10"
+anchors = [
+    "[2023:4.4.3.10:P001:p066]",
+]
+summary = "At the Postponed PLI control point, after all other regions have run, application routines may create read-only events."
+related_clauses = [
+    "4.4.2.9",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "4.4.3.10"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "4.4.3.10"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "4.4.3.10"
+
+[[requirements]]
+id = "SV-2023-04-PRE-ACTIVE-PLI-CONTROL-POINT"
+standard_revision = "1800-2023"
+part = "4"
+clause = "4.4.3.2"
+anchors = [
+    "[2023:4.4.3.2:P001:p066]",
+]
+summary = "At the Pre-Active PLI control point, application routines may read and write values and create events before Active-region events are evaluated."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "4.4.3.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "4.4.3.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "4.4.3.2"
+
+[[requirements]]
+id = "SV-2023-04-PRE-NBA-PLI-CONTROL-POINT"
+standard_revision = "1800-2023"
+part = "4"
+clause = "4.4.3.3"
+anchors = [
+    "[2023:4.4.3.3:P001:p066]",
+]
+summary = "At the Pre-NBA PLI control point, application routines may read and write values and create events before NBA-region events are evaluated."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "4.4.3.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "4.4.3.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "4.4.3.3"
+
+[[requirements]]
+id = "SV-2023-04-PRE-POSTPONED-PLI-CONTROL-POINT"
+standard_revision = "1800-2023"
+part = "4"
+clause = "4.4.3.9"
+anchors = [
+    "[2023:4.4.3.9:P001:p066]",
+]
+summary = "At the Pre-Postponed PLI control point, application routines may read and write values and create events after every region except Postponed has been processed."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "4.4.3.9"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "4.4.3.9"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "4.4.3.9"
+
+[[requirements]]
+id = "SV-2023-04-PRIMITIVE-EXPRESSION-INPUT-IMPLICIT-NET"
+standard_revision = "1800-2023"
+part = "4"
+clause = "4.9.6"
+anchors = [
+    "[2023:4.9.6:P003:p071]",
+]
+summary = "A primitive input connected to an expression other than a 1-bit net or 1-bit structural net expression is represented by an implicit continuous assignment from that expression to an implicit net connected to the terminal."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "4.9.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "4.9.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "4.9.6"
+
+[[requirements]]
+id = "SV-2023-04-PRIMITIVE-INPUT-DIRECT-NET-CONNECTION"
+standard_revision = "1800-2023"
+part = "4"
+clause = "4.9.6"
+anchors = [
+    "[2023:4.9.6:P003:p071]",
+]
+summary = "A primitive input connected to a 1-bit net or 1-bit structural net expression connects directly, with no intervening process that could affect strength."
+related_clauses = [
+    "23.3.3",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "4.9.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "4.9.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "4.9.6"
+
+[[requirements]]
+id = "SV-2023-04-PRIMITIVE-OUTPUT-ACTIVE-UPDATE"
+standard_revision = "1800-2023"
+part = "4"
+clause = "4.9.6"
+anchors = [
+    "[2023:4.9.6:P003:p071]",
+]
+summary = "A change resulting from primitive evaluation is scheduled as an Active-region update event on the directly connected net."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "4.9.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "4.9.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "4.9.6"
+
+[[requirements]]
+id = "SV-2023-04-PRIMITIVE-TERMINAL-DIRECT-NET-CONNECTION"
+standard_revision = "1800-2023"
+part = "4"
+clause = "4.9.6"
+anchors = [
+    "[2023:4.9.6:P003:p071]",
+]
+summary = "Primitive output and inout terminals shall connect directly to 1-bit nets or 1-bit structural net expressions, with no intervening process that could alter strength."
+related_clauses = [
+    "23.3.3",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "4.9.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "4.9.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "4.9.6"
+
+[[requirements]]
+id = "SV-2023-04-PROCEDURAL-CONTINUOUS-ASSIGNMENT-SCHEDULING"
+standard_revision = "1800-2023"
+part = "4"
+clause = "4.9.2"
+anchors = [
+    "[2023:4.9.2:P001:p070]",
+]
+summary = "An active procedural assign or force is a process sensitive to expression sources; an expression-value change schedules an active update using current values to determine the target."
+related_clauses = [
+    "10.6",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "4.9.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "4.9.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "4.9.2"
+
+[[requirements]]
+id = "SV-2023-04-PROCESS-INTERLEAVING-NONDETERMINISM"
+standard_revision = "1800-2023"
+part = "4"
+clause = "4.7"
+anchors = [
+    "[2023:4.7:P001:p069]",
+]
+summary = "While evaluating a procedural statement without a time-control construct, a simulator may suspend it and place the partially completed evaluation back into the same region, permitting nondeterministic interleaving with other processes while preserving each block's internal order."
+related_clauses = [
+    "9.4",
+    "4.6",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "4.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "4.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "4.7"
+
+[[requirements]]
+id = "SV-2023-04-PROPERTY-EVALUATION-IN-OBSERVED"
+standard_revision = "1800-2023"
+part = "4"
+clause = "4.4.2.5"
+anchors = [
+    "[2023:4.4.2.5:P001:p065]",
+]
+summary = "When a property expression is triggered, it is evaluated in the Observed region."
+related_clauses = [
+    "16",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "4.4.2.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "4.4.2.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "4.4.2.5"
+
+[[requirements]]
+id = "SV-2023-04-RE-INACTIVE-AFTER-REACTIVE"
+standard_revision = "1800-2023"
+part = "4"
+clause = "4.4.2.7"
+anchors = [
+    "[2023:4.4.2.7:P001:p065]",
+]
+summary = "Re-Inactive-region events are evaluated only after all Reactive-region events have been processed."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "4.4.2.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "4.4.2.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "4.4.2.7"
+
+[[requirements]]
+id = "SV-2023-04-RE-NBA-AFTER-RE-INACTIVE"
+standard_revision = "1800-2023"
+part = "4"
+clause = "4.4.2.8"
+anchors = [
+    "[2023:4.4.2.8:P001:p065]",
+]
+summary = "Re-NBA-region events are evaluated only after all Re-Inactive-region events have been processed."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "4.4.2.8"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "4.4.2.8"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "4.4.2.8"
+
+[[requirements]]
+id = "SV-2023-04-REACTIVE-REGION-ARBITRARY-EVENT-ORDER"
+standard_revision = "1800-2023"
+part = "4"
+clause = "4.4.2.6"
+anchors = [
+    "[2023:4.4.2.6:P001:p065]",
+]
+summary = "Events currently in the Reactive region may be processed in any order."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "4.4.2.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "4.4.2.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "4.4.2.6"
+
+[[requirements]]
+id = "SV-2023-04-REACTIVE-REGION-SCHEDULING"
+standard_revision = "1800-2023"
+part = "4"
+clause = "4.4.2.6"
+anchors = [
+    "[2023:4.4.2.6:P002:p065]",
+]
+summary = "Blocking-assignment code in checkers and program blocks, and action-block code of concurrent assertions, is scheduled in the Reactive region."
+related_clauses = [
+    "16",
+    "17",
+    "24",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "changed-expectation"
+clause = "4.4.2.6"
+note = "The 2012 rule schedules program-block blocking assignments and concurrent-assertion action code in Reactive, but does not include blocking-assignment code in checkers."
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "4.4.2.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "4.4.2.6"
+
+[[requirements]]
+id = "SV-2023-04-REACTIVE-SET-NBA-SCHEDULING"
+standard_revision = "1800-2023"
+part = "4"
+clause = "4.4.2.8"
+anchors = [
+    "[2023:4.4.2.8:P002:p065]",
+]
+summary = "A nonblocking assignment executed in the reactive region set creates a Re-NBA update event scheduled for the current or a later simulation time."
+related_clauses = [
+    "10.4.2",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "4.4.2.8"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "4.4.2.8"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "4.4.2.8"
+
+[[requirements]]
+id = "SV-2023-04-REACTIVE-SET-ZERO-DELAY-SCHEDULING"
+standard_revision = "1800-2023"
+part = "4"
+clause = "4.4.2.7"
+anchors = [
+    "[2023:4.4.2.7:P002:p065]",
+]
+summary = "An explicit #0 executed in the reactive region set suspends its process and schedules resumption in the current slot's Re-Inactive region for the next Re-Inactive-to-Reactive iteration."
+related_clauses = [
+    "9.4",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "4.4.2.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "4.4.2.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "4.4.2.7"
+
+[[requirements]]
+id = "SV-2023-04-REFERENCE-ALGORITHM-TIME-AND-REGION-ITERATION"
+standard_revision = "1800-2023"
+part = "4"
+clause = "4.5"
+anchors = [
+    "[2023:4.5:P001:p068]",
+    "[2023:4.5:C001:p068]",
+]
+summary = "Once any Reactive, Re-Inactive, Pre-Re-NBA, Re-NBA, or Post-Re-NBA region is processed, all five reactive-set regions shall become empty before iteration resumes over earlier regions."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "4.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "4.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "4.5"
+
+[[requirements]]
+id = "SV-2023-04-SUBROUTINE-COPY-IN-COPY-OUT-SCHEDULING"
+standard_revision = "1800-2023"
+part = "4"
+clause = "4.9.7"
+anchors = [
+    "[2023:4.9.7:P001:p071]",
+]
+summary = "Value arguments copy input and inout values into formals at invocation, and copy output and inout values back to actuals at return; each copy-out has blocking-assignment scheduling and effects."
+related_clauses = [
+    "13.3",
+    "13.4",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "4.9.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "4.9.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "4.9.7"
+
+[[requirements]]
+id = "SV-2023-04-TIME-SLOT-CHRONOLOGICAL-EXECUTION"
+standard_revision = "1800-2023"
+part = "4"
+clause = "4.4"
+anchors = [
+    "[2023:4.4:P002:p063]",
+]
+summary = "Every scheduled event has exactly one current or future execution time; a simulator shall execute and remove all events in the current time slot before advancing chronologically to the next nonempty time slot."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "4.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "4.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "4.4"
+
+[[requirements]]
+id = "SV-2023-04-TIME-SLOT-ORDERED-REGIONS"
+standard_revision = "1800-2023"
+part = "4"
+clause = "4.4"
+anchors = [
+    "[2023:4.4:P003:p063]",
+    "[2023:4.4:L001:p063]",
+    "[2023:4.4:L002:p063]",
+    "[2023:4.4:L003:p063]",
+    "[2023:4.4:L004:p063]",
+    "[2023:4.4:L005:p063]",
+    "[2023:4.4:L006:p063]",
+    "[2023:4.4:L007:p063]",
+    "[2023:4.4:L008:p063]",
+    "[2023:4.4:L009:p063]",
+    "[2023:4.4:L010:p063]",
+    "[2023:4.4:L011:p063]",
+    "[2023:4.4:L012:p063]",
+    "[2023:4.4:L013:p063]",
+    "[2023:4.4:L014:p063]",
+    "[2023:4.4:L015:p063]",
+    "[2023:4.4:L016:p063]",
+    "[2023:4.4:L017:p063]",
+]
+summary = "Each simulation time slot is partitioned, in order, into Preponed, Pre-Active, Active, Inactive, Pre-NBA, NBA, Post-NBA, Pre-Observed, Observed, Post-Observed, Reactive, Re-Inactive, Pre-Re-NBA, Re-NBA, Post-Re-NBA, Pre-Postponed, and Postponed regions."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "4.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "4.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "4.4"
+
+[[requirements]]
+id = "SV-2023-04-UDN-BIDIRECTIONAL-SWITCH-CONTROL"
+standard_revision = "1800-2023"
+part = "4"
+clause = "4.9.5"
+anchors = [
+    "[2023:4.9.5:P006:p071]",
+]
+summary = "Across a bidirectional switch connecting user-defined net types, terminals resolve separately when control is off and as one net otherwise; x or z control shall be treated as off."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no rule defining controlled bidirectional-switch resolution between user-defined net types."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 defines user-defined nettypes but does not specify this bidirectional-switch resolution and x/z-control behavior for them."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "4.9.5"
+
+[[requirements]]
+id = "SV-2023-04-UPDATE-EVENT-PROCESS-EVALUATION"
+standard_revision = "1800-2023"
+part = "4"
+clause = "4.3"
+anchors = [
+    "[2023:4.3:P003:p062]",
+    "[2023:4.3:P004:p062]",
+]
+summary = "Each net or variable state change is an update event; executing it causes every process sensitive to that event to be considered for evaluation, with their mutual consideration order unspecified."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "4.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "4.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "4.3"

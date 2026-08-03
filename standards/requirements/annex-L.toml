@@ -1,0 +1,108 @@
+schema_version = 3
+part = "L"
+
+[[requirements]]
+id = "SV-2023-L-COMPATIBILITY-FUNCTION-MACRO-MAPPINGS"
+standard_revision = "1800-2023"
+part = "L"
+clause = "L.2"
+anchors = [
+    "[2023:L.2:C001:p1323-1325]",
+]
+summary = "For a selected compatibility version (1364-1995, 1364-2001, 1364-2005, 1800-2005, 1800-2009, or 1800-2012), vpi_compatibility.h shall macro-map each listed generic VPI function name—vpi_compare_objects, vpi_control, vpi_get, vpi_get_str, vpi_get_value, vpi_handle, vpi_handle_by_index, vpi_handle_by_multi_index, vpi_handle_by_name, vpi_handle_multi, vpi_iterate, vpi_put_value, vpi_register_cb, and vpi_scan—to the corresponding name suffixed with that selected version."
+related_clauses = [
+    "36.12.2.1",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "L.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "L.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "L.2"
+
+[[requirements]]
+id = "SV-2023-L-COMPATIBILITY-HEADER-INCLUSION-GUARD"
+standard_revision = "1800-2023"
+part = "L"
+clause = "L.2"
+anchors = [
+    "[2023:L.2:C001:p1323-1325]",
+]
+summary = "If vpi_compatibility.h is processed when VPI_COMPATIBILITY_H is already defined, preprocessing shall issue an error; otherwise the header defines VPI_COMPATIBILITY_H."
+related_clauses = [
+    "L.1",
+    "36.12.2.1",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "L.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "L.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "L.2"
+
+[[requirements]]
+id = "SV-2023-L-COMPATIBILITY-VERSION-MUTUAL-EXCLUSION"
+standard_revision = "1800-2023"
+part = "L"
+clause = "L.2"
+anchors = [
+    "[2023:L.2:C001:p1323-1325]",
+]
+summary = "If two or more distinct effective compatibility branch selectors among 1364-1995, 1364-2001, 1364-2005, 1800-2005, 1800-2009, and 1800-2012 have value 1 when vpi_compatibility.h is processed, the header shall issue a preprocessing error."
+related_clauses = [
+    "36.12.2.1",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "L.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "L.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "L.2"
+
+[[requirements]]
+id = "SV-2023-L-NEWER-COMPATIBILITY-VERSIONS-NORMALIZE-TO-2012"
+standard_revision = "1800-2023"
+part = "L"
+clause = "L.2"
+anchors = [
+    "[2023:L.2:C001:p1323-1325]",
+]
+summary = "If VPI_COMPATIBILITY_VERSION_1800v2017 or VPI_COMPATIBILITY_VERSION_1800v2023 is selected with value 1 before vpi_compatibility.h is processed, the header shall define VPI_COMPATIBILITY_VERSION_1800v2012."
+related_clauses = [
+    "36.12.2.1",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no 1800v2017 or 1800v2023 compatibility selectors and therefore no rule normalizing either selector to 1800v2012."
+
+[requirements.revision_applicability.1800-2017]
+status = "changed-expectation"
+clause = "L.2"
+note = "The 2017 header normalizes only VPI_COMPATIBILITY_VERSION_1800v2017 to the 1800v2012 selector; the 1800v2023 selector and its additional normalization were not present."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "L.2"

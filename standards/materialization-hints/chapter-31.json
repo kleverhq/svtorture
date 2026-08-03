@@ -1,0 +1,1342 @@
+{
+  "authority": "1800-2023",
+  "part": "31",
+  "requirements": [
+    {
+      "hints": {
+        "edge": [
+          "Produce an adjusted limit exactly zero and require the same clamp and warning."
+        ],
+        "negative": [],
+        "notes": [
+          "The diagnostic oracle is occurrence of a warning, not its wording."
+        ],
+        "positive": [
+          "Produce an adjusted limit below zero and verify zero-limit behavior plus a warning."
+        ]
+      },
+      "id": "SV-2023-31-ADJUSTED-LIMIT-ZERO-CLAMP-WARNING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise elapsed time exactly equal to the limit."
+        ],
+        "negative": [],
+        "notes": [
+          "Use each check's specific subclause for event derivation and comparison relation."
+        ],
+        "positive": [
+          "Exercise elapsed times on each side of a check-specific limit."
+        ]
+      },
+      "id": "SV-2023-31-CLOCK-CONTROL-CHECK-ELAPSED-TIME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Hold upper bits opposite the LSB to prove they are ignored."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use scalar conditions and multibit values whose LSB controls enablement."
+        ]
+      },
+      "id": "SV-2023-31-CONDITION-SCALAR-AND-LSB"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use one condition depending on both delayed reference and delayed data."
+        ],
+        "negative": [
+          "Assume an ordinary condition signal is implicitly delayed with the checked signal."
+        ],
+        "notes": [],
+        "positive": [
+          "Form a condition from explicit delayed signals and use it as timestamp/timecheck condition."
+        ]
+      },
+      "id": "SV-2023-31-CONDITION-SIGNALS-NOT-IMPLICITLY-DELAYED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Apply x with ===, !==, negation, and bare expression and require no enablement."
+        ],
+        "negative": [],
+        "notes": [
+          "Source annotation warrants checking the visual source when materializing exact operator examples."
+        ],
+        "positive": [
+          "Apply x with == and != conditions and require event enablement."
+        ]
+      },
+      "id": "SV-2023-31-CONDITION-X-COMPARISON-ENABLEMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Transition the signal while its condition is false, then true without another signal transition."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Trigger an event while its condition is true."
+        ]
+      },
+      "id": "SV-2023-31-CONDITIONAL-EVENT-DETECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Choose values for which the original and adjusted limits produce opposite violation outcomes."
+        ],
+        "negative": [
+          "Evaluate a listed check against the original unadjusted limit when a delayed signal requires adjustment."
+        ],
+        "notes": [],
+        "positive": [
+          "Exercise an explicit or implicit delayed signal with each listed timing check and verify evaluation uses the correspondingly adjusted limit."
+        ]
+      },
+      "id": "SV-2023-31-DELAYED-SIGNAL-APPLICABLE-CHECKS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Set induced delay equal to the path delay and just above it."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use a negative limit whose induced delay exceeds a specify path delay and verify output follows the induced delay."
+        ]
+      },
+      "id": "SV-2023-31-DELAYED-SIGNAL-OUTPUT-TRANSITION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use exactly six distinct transition descriptors."
+        ],
+        "negative": [
+          "Use an empty list or more than six descriptors."
+        ],
+        "notes": [],
+        "positive": [
+          "Use one and six descriptors."
+        ]
+      },
+      "id": "SV-2023-31-EDGE-CONTROL-DESCRIPTOR-COUNT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare x and z transition matching."
+        ],
+        "negative": [
+          "Trigger an unlisted direction for a restricted edge list."
+        ],
+        "notes": [],
+        "positive": [
+          "Trigger each listed transition and corresponding z transition under its descriptor."
+        ]
+      },
+      "id": "SV-2023-31-EDGE-CONTROL-TRANSITION-MATCHING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Mix uppercase and lowercase forms in one edge list."
+        ],
+        "negative": [
+          "Insert whitespace between descriptor characters."
+        ],
+        "notes": [],
+        "positive": [
+          "Use 01, 10, 0x, X1, z0, and 1Z descriptors."
+        ]
+      },
+      "id": "SV-2023-31-EDGE-DESCRIPTOR-LEXICAL-FORMS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise transitions to and from z under shorthand and explicit forms."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare posedge against its three-descriptor form and negedge against its form over 0/1/x/z transitions."
+        ]
+      },
+      "id": "SV-2023-31-EDGE-KEYWORD-EQUIVALENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Mix explicit shared reference with implicit distinct data signals."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use one signal in two checks, explicitly naming its delayed copy in only one, and verify both use that copy."
+        ]
+      },
+      "id": "SV-2023-31-EXPLICIT-DELAYED-SIGNAL-PRECEDENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Provide the opposite event just before expiration and require no violation plus dormancy."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Start windows with each event type and omit the opposite event to observe expiration violations."
+        ]
+      },
+      "id": "SV-2023-31-FULLSKEW-DEFAULT-TIMER-LIFECYCLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Provide a false-conditioned timestamp and require no activation except as governed by remain_active replacement rules."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "After dormancy, provide an unconditional timestamp and a true-conditioned timestamp."
+        ]
+      },
+      "id": "SV-2023-31-FULLSKEW-DORMANT-ACTIVATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Deliver a timecheck exactly at the limit and just within it."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Deliver a late timecheck and verify both violation and immediate start of the opposite-direction window."
+        ]
+      },
+      "id": "SV-2023-31-FULLSKEW-EVENT-BASED-LIFECYCLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Swap events one simulation precision unit apart to isolate each event-order mapping."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Exercise reference-first and data-first sequences and verify the corresponding timestamp/timecheck mapping."
+        ]
+      },
+      "id": "SV-2023-31-FULLSKEW-EVENT-ROLES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use zero and unequal directional limits."
+        ],
+        "negative": [
+          "Use a negative limit or runtime-varying flag."
+        ],
+        "notes": [],
+        "positive": [
+          "Use distinct limits in each event order and all flag combinations."
+        ]
+      },
+      "id": "SV-2023-31-FULLSKEW-LIMITS-AND-FLAGS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Issue a false-conditioned second timestamp with remain_active set and clear."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Issue a second valid timestamp before completion and verify the window restarts."
+        ]
+      },
+      "id": "SV-2023-31-FULLSKEW-REPLACEMENT-TIMESTAMP"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use equality, simultaneous events with zero limit, and replacement timestamp at expiration."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Exceed each directional limit in its corresponding event order."
+        ]
+      },
+      "id": "SV-2023-31-FULLSKEW-VIOLATION-RELATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place data at the ending endpoint and use a zero limit; require no violation."
+        ],
+        "negative": [
+          "Use a negative or nonconstant hold limit."
+        ],
+        "notes": [
+          "Observe violations through a notifier."
+        ],
+        "positive": [
+          "Place a data event at the timestamp or strictly inside a positive hold window and require a violation."
+        ]
+      },
+      "id": "SV-2023-31-HOLD-CHECK-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use differing negative limits across checks sharing the reference."
+        ],
+        "negative": [],
+        "notes": [
+          "Observation may require behavior that distinguishes duplicated from shared delayed state."
+        ],
+        "positive": [
+          "Use one reference signal in two negative checks and distinct data signals; require one logical delayed copy per distinct source signal."
+        ]
+      },
+      "id": "SV-2023-31-IMPLICIT-DELAYED-SIGNAL-SHARING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Construct a case requiring multiple limits to be changed to zero."
+        ],
+        "negative": [],
+        "notes": [
+          "Smallest means the most negative numeric limit in the source wording."
+        ],
+        "positive": [
+          "Provide mutually inconsistent negative limits and verify warning plus iterative normalization."
+        ]
+      },
+      "id": "SV-2023-31-INCONSISTENT-NEGATIVE-LIMIT-RESOLUTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Combine three or more condition inputs into one scalar signal outside the specify block."
+        ],
+        "negative": [
+          "Attempt to define the combining logic inside the specify block."
+        ],
+        "notes": [],
+        "positive": [
+          "Combine two conditions in module logic and use the resulting scalar in &&&."
+        ]
+      },
+      "id": "SV-2023-31-MULTIPLE-CONDITIONS-EXTERNAL-LOGIC"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place the two delayed transitions one simulation precision unit apart and swap their order."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Construct one case where delayed reference transitions first and one where delayed data transitions first, using distinguishable conditions."
+        ]
+      },
+      "id": "SV-2023-31-NEGATIVE-CHECK-CONDITION-EVENT-ASSOCIATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Declare only the delayed signals needed by the production's optional positions."
+        ],
+        "negative": [
+          "Attempt to reference an implicitly created delayed signal."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare delayed signals and reference them in model logic; separately omit them with a negative limit and verify check evaluation."
+        ]
+      },
+      "id": "SV-2023-31-NEGATIVE-CHECK-DELAYED-SIGNAL-DECLARATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use unequal data and reference delays around the reference edge."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use negative setup or hold and verify violation timing against the shifted window."
+        ]
+      },
+      "id": "SV-2023-31-NEGATIVE-CHECK-INTERNAL-DELAYED-EVALUATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use one negative and one positive limit satisfying the required sum."
+        ],
+        "negative": [],
+        "notes": [
+          "Materialization requires a standardized or harness-supported way to enable the language option."
+        ],
+        "positive": [
+          "Under negative-check mode, apply equivalent negative-limit scenarios to setuphold and recrem and compare behavior."
+        ]
+      },
+      "id": "SV-2023-31-NEGATIVE-CHECK-OPTION-APPLICABILITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place transitions at boundaries according to the detailed negative-check rules."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Place a data transition inside the shifted negative-limit window and require a violation."
+        ]
+      },
+      "id": "SV-2023-31-NEGATIVE-CHECK-STABILITY-WINDOW"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Choose values where adjusted and original violation times coincide as a control."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Create a negative check where adjusted delayed detection differs in time from the original-input relation and observe notifier timing."
+        ]
+      },
+      "id": "SV-2023-31-NEGATIVE-NOTIFIER-DETECTION-TIME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Toggle source signals multiple times in one time unit and verify copy behavior."
+        ],
+        "negative": [],
+        "notes": [
+          "Harness must identify supported standardized invocation options."
+        ],
+        "positive": [
+          "Run a model with declared delayed signals with negative mode disabled and with all checks disabled; compare each copy to its original."
+        ]
+      },
+      "id": "SV-2023-31-NEGATIVE-OPTION-DISABLED-DELAYED-COPIES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Transition data exactly at each endpoint."
+        ],
+        "negative": [],
+        "notes": [
+          "Requires a functional model using accessible delayed signals for a portable observation."
+        ],
+        "positive": [
+          "Arrange one value stable throughout the open window and verify that value is latched."
+        ]
+      },
+      "id": "SV-2023-31-NEGATIVE-WINDOW-LATCHED-VALUE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change at each endpoint and use a window narrower than two precision units; require no violation."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Change data strictly inside a window at least two precision units wide."
+        ]
+      },
+      "id": "SV-2023-31-NEGATIVE-WINDOW-VIOLATION-PRECISION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use constant mintypmax expressions for both offsets."
+        ],
+        "negative": [
+          "Use runtime-varying offsets."
+        ],
+        "notes": [],
+        "positive": [
+          "Use constant positive, zero, and negative offsets."
+        ]
+      },
+      "id": "SV-2023-31-NOCHANGE-ARGUMENTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place data at each endpoint and require no violation; use zero offsets."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Place data strictly inside offset-adjusted window."
+        ]
+      },
+      "id": "SV-2023-31-NOCHANGE-OFFSET-WINDOW"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place data outside the controlled level."
+        ],
+        "negative": [
+          "Use edge[...] as the nochange reference control."
+        ],
+        "notes": [],
+        "positive": [
+          "Use posedge and negedge references with data transition during the controlled level."
+        ]
+      },
+      "id": "SV-2023-31-NOCHANGE-REFERENCE-CONTROL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Share one module variable among multiple timing checks."
+        ],
+        "negative": [
+          "Pass an undeclared name, non-variable expression, or variable outside the containing module's scope."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a module variable and pass it as notifier."
+        ]
+      },
+      "id": "SV-2023-31-NOTIFIER-DECLARATION-AND-ARGUMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Cause consecutive violations after an x resolves to a binary value."
+        ],
+        "negative": [],
+        "notes": [
+          "For initial x, accept either binary result without requiring which one."
+        ],
+        "positive": [
+          "Cause violations from initial notifier values 0, 1, x, and z and observe the specified resulting value sets."
+        ]
+      },
+      "id": "SV-2023-31-NOTIFIER-ON-VIOLATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Omit notifier using the production's optional trailing syntax."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Run equivalent violating and nonviolating checks with and without notifier and compare check behavior aside from notifier observation."
+        ]
+      },
+      "id": "SV-2023-31-NOTIFIER-OPTIONALITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a zero period limit."
+        ],
+        "negative": [
+          "Use a negative or runtime-varying period limit."
+        ],
+        "notes": [
+          "Subsequent anchors define implicit event derivation."
+        ],
+        "positive": [
+          "Use a controlled edge and positive constant period limit."
+        ]
+      },
+      "id": "SV-2023-31-PERIOD-ARGUMENT-ROLES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an edge descriptor list."
+        ],
+        "negative": [
+          "Use an uncontrolled terminal as period reference."
+        ],
+        "notes": [],
+        "positive": [
+          "Use posedge, negedge, or a legal edge control specification."
+        ]
+      },
+      "id": "SV-2023-31-PERIOD-REQUIRES-EDGE-REFERENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Insert an opposite edge between the two same-edge events."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Measure posedge-to-next-posedge and negedge-to-next-negedge periods."
+        ]
+      },
+      "id": "SV-2023-31-PERIOD-SAME-EDGE-DERIVATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a period exactly equal to limit and require no violation."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use a same-edge period shorter than limit."
+        ]
+      },
+      "id": "SV-2023-31-PERIOD-VIOLATION-RELATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "At the ending endpoint and with zero limit require no violation."
+        ],
+        "negative": [
+          "Use a negative or nonconstant recovery limit."
+        ],
+        "notes": [],
+        "positive": [
+          "Place the data event at the start or strictly inside a positive recovery window and require a violation."
+        ]
+      },
+      "id": "SV-2023-31-RECOVERY-CHECK-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a zero recovery limit with complete event-selection rules."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Exercise positive and negative recovery limits while triggering data events."
+        ]
+      },
+      "id": "SV-2023-31-RECREM-DATA-EVENT-ROLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Beginning endpoint does not violate; ending endpoint and simultaneous events violate."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Place timestamp strictly inside the data-first interval."
+        ]
+      },
+      "id": "SV-2023-31-RECREM-DATA-FIRST-WINDOW"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Ending endpoint does not violate; simultaneous events violate."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Place timecheck at the beginning or inside the data-second interval."
+        ]
+      },
+      "id": "SV-2023-31-RECREM-DATA-SECOND-WINDOW"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use one negative and one positive limit."
+        ],
+        "negative": [
+          "Use a runtime-varying value as either limit."
+        ],
+        "notes": [
+          "Apply the negative-limit restrictions that follow."
+        ],
+        "positive": [
+          "Use positive, zero, and permitted negative constant recovery and removal limits."
+        ]
+      },
+      "id": "SV-2023-31-RECREM-LIMITS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Provide delayed signals while omitting earlier optional arguments via comma placeholders."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Provide all four auxiliaries and independently vary each condition."
+        ]
+      },
+      "id": "SV-2023-31-RECREM-NEGATIVE-CHECK-AUXILIARIES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the smallest representable sum above the threshold."
+        ],
+        "negative": [
+          "Make the sum equal to or below one precision unit."
+        ],
+        "notes": [],
+        "positive": [
+          "Use one negative limit with a sum exceeding one precision unit."
+        ]
+      },
+      "id": "SV-2023-31-RECREM-NEGATIVE-LIMIT-SUM"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use zero for either or both limits."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare notifier behavior of recrem with separate removal and recovery checks."
+        ]
+      },
+      "id": "SV-2023-31-RECREM-NONNEGATIVE-EQUIVALENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Swap the event order one simulation precision unit apart."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Run one case where reference occurs first and one where data occurs first, and verify the corresponding timestamp/timecheck roles."
+        ]
+      },
+      "id": "SV-2023-31-RECREM-POSITIVE-EVENT-SELECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a zero removal limit with complete recrem selection rules."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Exercise positive and negative removal limits while triggering reference events."
+        ]
+      },
+      "id": "SV-2023-31-RECREM-REFERENCE-EVENT-ROLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare with one smallest-positive limit."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use both limits zero with separated and simultaneous events; require no violation."
+        ]
+      },
+      "id": "SV-2023-31-RECREM-ZERO-LIMITS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place data at either endpoint and use a zero limit; require no violation."
+        ],
+        "negative": [
+          "Use a negative or nonconstant removal limit."
+        ],
+        "notes": [
+          "Observe violations through a notifier."
+        ],
+        "positive": [
+          "Place the data timestamp strictly inside the interval before the reference event and require a violation."
+        ]
+      },
+      "id": "SV-2023-31-REMOVAL-CHECK-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place data exactly at either endpoint and use a zero limit; require no violation."
+        ],
+        "negative": [],
+        "notes": [
+          "Observe violations through a notifier rather than diagnostic wording."
+        ],
+        "positive": [
+          "Use a positive constant limit with the data timestamp strictly inside the interval before the reference event."
+        ]
+      },
+      "id": "SV-2023-31-SETUP-CHECK-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Populate timestamp_condition only, timecheck_condition only, and both."
+        ],
+        "negative": [
+          "Place the condition in the wrong optional position or omit required placeholder commas."
+        ],
+        "notes": [],
+        "positive": [
+          "Compare separate setup/hold checks conditioned on their timecheck events with setuphold using null timestamp_condition and populated timecheck_condition."
+        ]
+      },
+      "id": "SV-2023-31-SETUPHOLD-CONDITION-EQUIVALENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a zero hold limit with the complete event-selection rules."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Exercise positive and negative hold limits while triggering the data event."
+        ]
+      },
+      "id": "SV-2023-31-SETUPHOLD-DATA-EVENT-ROLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "At the beginning endpoint require no violation; at the ending endpoint, including simultaneous events, require a violation."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Place the timestamp strictly inside the data-first interval and require a violation."
+        ]
+      },
+      "id": "SV-2023-31-SETUPHOLD-DATA-FIRST-WINDOW"
+    },
+    {
+      "hints": {
+        "edge": [
+          "At the ending endpoint require no violation; simultaneous events require a violation."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Place the timecheck event at the beginning or strictly inside the data-second interval and require a violation."
+        ]
+      },
+      "id": "SV-2023-31-SETUPHOLD-DATA-SECOND-WINDOW"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use one negative and one positive limit."
+        ],
+        "negative": [
+          "Use a runtime-varying value as either limit."
+        ],
+        "notes": [
+          "Negative-limit semantics require Clause 31.9 context."
+        ],
+        "positive": [
+          "Use positive, zero, and permitted negative constant setup and hold limits."
+        ]
+      },
+      "id": "SV-2023-31-SETUPHOLD-LIMITS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Omit early optional fields while providing delayed signals via positional comma placeholders."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Provide all four optional negative-check auxiliaries and independently vary each condition."
+        ]
+      },
+      "id": "SV-2023-31-SETUPHOLD-NEGATIVE-CHECK-AUXILIARIES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Set the sum exactly one precision unit above the threshold."
+        ],
+        "negative": [
+          "Use negative-limit combinations whose sum equals or is below one precision unit."
+        ],
+        "notes": [],
+        "positive": [
+          "Use one negative limit whose sum with the other exceeds the precision unit."
+        ]
+      },
+      "id": "SV-2023-31-SETUPHOLD-NEGATIVE-LIMIT-SUM"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use zero for either or both limits."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare notifier behavior of one setuphold check against separate setup and hold checks for the same events and non-negative limits."
+        ]
+      },
+      "id": "SV-2023-31-SETUPHOLD-NONNEGATIVE-EQUIVALENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Swap the event order one simulation precision unit apart."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Run one case where reference occurs first and one where data occurs first, and verify the corresponding timestamp/timecheck roles."
+        ]
+      },
+      "id": "SV-2023-31-SETUPHOLD-POSITIVE-EVENT-SELECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a zero setup limit and verify behavior from the complete setuphold event-role rules."
+        ],
+        "negative": [],
+        "notes": [
+          "Combine with subsequent table rows defining the data event and event-selection conditions."
+        ],
+        "positive": [
+          "Exercise positive and negative setup limits while triggering the reference event."
+        ]
+      },
+      "id": "SV-2023-31-SETUPHOLD-REFERENCE-EVENT-ROLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare against a case with one smallest-positive limit."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use both limits zero with separated and simultaneous reference and data events; require no violation."
+        ]
+      },
+      "id": "SV-2023-31-SETUPHOLD-ZERO-LIMITS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a zero skew limit."
+        ],
+        "negative": [
+          "Use a negative or runtime-varying skew limit."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a constant non-negative skew limit and reference followed by data."
+        ]
+      },
+      "id": "SV-2023-31-SKEW-ARGUMENT-ROLES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Choose delayed-signal values that would reverse event order if used, and verify the skew-family result follows the original order."
+        ],
+        "negative": [
+          "Evaluate a skew-family check from generated delayed signal versions."
+        ],
+        "notes": [],
+        "positive": [
+          "Combine negative checks and skew checks on common source signals and verify the skew-family checks use undelayed event order."
+        ]
+      },
+      "id": "SV-2023-31-SKEW-CHECKS-EXCLUDE-DELAYED-SIGNALS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Schedule the relevant event exactly when the timer reaches the limit."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Contrast an event arriving after the limit under event-based and timer-based checking."
+        ]
+      },
+      "id": "SV-2023-31-SKEW-DETECTION-MECHANISMS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Issue two references before data and measure skew from the second; omit data entirely and require no violation."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Issue reference then delayed data; evaluate only on data."
+        ]
+      },
+      "id": "SV-2023-31-SKEW-EVENT-BASED-WAIT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Interleave at-limit and beyond-limit data events."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "After one reference, issue multiple late data events and require a violation for each."
+        ]
+      },
+      "id": "SV-2023-31-SKEW-REMAINS-ACTIVE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use elapsed time equal to the limit and simultaneous events with zero limit; require no violation."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Place data later than reference by more than the limit."
+        ]
+      },
+      "id": "SV-2023-31-SKEW-VIOLATION-RELATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place a transition at each check-specific window boundary."
+        ],
+        "negative": [
+          "Place a data transition within the check-specific stability window and require a violation."
+        ],
+        "notes": [
+          "Use the check-specific subclause to determine window orientation and boundary treatment."
+        ],
+        "positive": [
+          "Place a data transition outside the check-specific stability window."
+        ]
+      },
+      "id": "SV-2023-31-STABILITY-WINDOW-VIOLATION"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Place a system task in a specify block."
+        ],
+        "notes": [],
+        "positive": [
+          "Place a system task in procedural code outside a specify block."
+        ]
+      },
+      "id": "SV-2023-31-SYSTEM-TASK-SPECIFY-PROHIBITION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Omit earlier optional arguments while supplying later ones."
+        ],
+        "negative": [
+          "Omit a required argument or positional comma."
+        ],
+        "notes": [],
+        "positive": [
+          "Use each timing-check form with its minimum required arguments."
+        ]
+      },
+      "id": "SV-2023-31-SYSTEM-TIMING-CHECK-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use zero limit and zero-valued flags."
+        ],
+        "negative": [
+          "Use a negative limit or runtime-varying flag."
+        ],
+        "notes": [],
+        "positive": [
+          "Use constant limits and each flag combination."
+        ]
+      },
+      "id": "SV-2023-31-TIMESKEW-ARGUMENTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place data just before expiration and require no violation plus dormancy."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Omit data and observe violation at expiration; then require dormancy until a new reference."
+        ]
+      },
+      "id": "SV-2023-31-TIMESKEW-DEFAULT-TIMER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Omit data indefinitely in event-based mode."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare event-based mode with and without remain_active across multiple late data events."
+        ]
+      },
+      "id": "SV-2023-31-TIMESKEW-EVENT-BASED-MODES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Repeat with remain_active set."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Present a false-conditioned reference without remain_active, then late data; require no violation."
+        ]
+      },
+      "id": "SV-2023-31-TIMESKEW-FALSE-REFERENCE-DORMANCY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use simultaneous events and a replacement timestamp exactly at expiration."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use elapsed time beyond limit."
+        ]
+      },
+      "id": "SV-2023-31-TIMESKEW-VIOLATION-RELATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place events exactly at a boundary defined by the specific check."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Trigger a timestamp event followed by timecheck events inside and outside the limit."
+        ]
+      },
+      "id": "SV-2023-31-TIMESTAMP-TIMECHECK-EVALUATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use delayed terminals with and without an index."
+        ],
+        "negative": [
+          "Use a non-variable construct as notifier or nonconstant flag."
+        ],
+        "notes": [],
+        "positive": [
+          "Use each auxiliary argument with its defined expression or identifier category."
+        ]
+      },
+      "id": "SV-2023-31-TIMING-CHECK-AUXILIARY-ARGUMENT-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an unsized 'b0 scalar constant."
+        ],
+        "negative": [
+          "Use a relational comparison as this grammar production."
+        ],
+        "notes": [],
+        "positive": [
+          "Use plain, negated, and equality-comparison conditions."
+        ]
+      },
+      "id": "SV-2023-31-TIMING-CHECK-CONDITION-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Place a timing check in procedural code."
+        ],
+        "notes": [],
+        "positive": [
+          "Place each timing-check form in a specify block."
+        ]
+      },
+      "id": "SV-2023-31-TIMING-CHECK-CONTEXT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use only a terminal descriptor as a timing_check_event."
+        ],
+        "negative": [
+          "Use a controlled_reference_event without an event control."
+        ],
+        "notes": [],
+        "positive": [
+          "Use controlled and uncontrolled timing-check events with optional conditions."
+        ]
+      },
+      "id": "SV-2023-31-TIMING-CHECK-EVENT-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a single edge descriptor."
+        ],
+        "negative": [
+          "Omit brackets around an edge descriptor list."
+        ],
+        "notes": [],
+        "positive": [
+          "Use posedge, negedge, edge, and edge[01,10] controls."
+        ]
+      },
+      "id": "SV-2023-31-TIMING-EVENT-CONTROL-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Use a runtime-varying variable as a timing-check limit."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a literal expression and a specparam in timing-check limits."
+        ]
+      },
+      "id": "SV-2023-31-TIMING-LIMIT-CONSTANT-EXPRESSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change multiple vector bits in one update and require only one timing violation from that vector transition."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use vector data and reference signals and change one bit or multiple bits simultaneously."
+        ]
+      },
+      "id": "SV-2023-31-VECTOR-TIMING-CHECK-TRANSITION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise posedge and negedge controlled references."
+        ],
+        "negative": [],
+        "notes": [
+          "Subsequent text defines derivation for edge-control specifiers."
+        ],
+        "positive": [
+          "Control one edge and observe the opposite implicit edge as timecheck."
+        ]
+      },
+      "id": "SV-2023-31-WIDTH-EVENT-ROLES"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use a posedge reference followed by negedge and a negedge reference followed by posedge; verify each opposite edge is the implicit timecheck."
+        ]
+      },
+      "id": "SV-2023-31-WIDTH-IMPLICIT-OPPOSITE-EDGE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use threshold equal to limit."
+        ],
+        "negative": [
+          "Use negative or runtime-varying values."
+        ],
+        "notes": [],
+        "positive": [
+          "Use zero and positive constant limits and thresholds."
+        ]
+      },
+      "id": "SV-2023-31-WIDTH-LIMIT-THRESHOLD-CONSTANTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Provide threshold zero with notifier."
+        ],
+        "negative": [
+          "Provide notifier with an omitted/null threshold slot."
+        ],
+        "notes": [],
+        "positive": [
+          "Omit threshold and notifier; separately provide both."
+        ]
+      },
+      "id": "SV-2023-31-WIDTH-OPTIONAL-ARGUMENT-DEPENDENCY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an edge control specifier list."
+        ],
+        "negative": [
+          "Use an uncontrolled terminal as the width reference event."
+        ],
+        "notes": [],
+        "positive": [
+          "Use posedge, negedge, or a legal controlled edge specification."
+        ]
+      },
+      "id": "SV-2023-31-WIDTH-REQUIRES-EDGE-REFERENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use widths equal to threshold and limit; require no violation."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use pulse width strictly between threshold and limit."
+        ]
+      },
+      "id": "SV-2023-31-WIDTH-VIOLATION-RANGE"
+    }
+  ],
+  "schema_version": 1
+}

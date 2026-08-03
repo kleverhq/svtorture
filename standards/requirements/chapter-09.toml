@@ -1,0 +1,4093 @@
+schema_version = 3
+part = "9"
+
+[[requirements]]
+id = "SV-2023-09-ALWAYS-COMB-EXCLUSIVE-WRITERS"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.2.2.2"
+anchors = [
+    "[2023:9.2.2.2:L002:p222]",
+    "[2023:9.2.2.2.2:L003:p223]",
+    "[2023:9.2.2.3:P002:p223]",
+    "[2023:9.2.2.4:P002:p224]",
+]
+summary = "A variable written by an always_comb, always_latch, or always_ff procedure, including a variable written by a function it calls but excluding one written by a task it calls, shall not be written by another process; distinct elements may have separate writers when their longest static prefixes do not overlap."
+related_clauses = [
+    "11.5.3",
+    "6.5",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.2.2.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.2.2.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.2.2.2"
+
+[[requirements]]
+id = "SV-2023-09-ALWAYS-COMB-NO-BLOCKING-STATEMENTS"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.2.2.2.2"
+anchors = [
+    "[2023:9.2.2.2.2:L004:p223]",
+    "[2023:9.2.2.3:P002:p223]",
+]
+summary = "An always_comb or always_latch procedure shall not contain a statement that blocks execution."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.2.2.2.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.2.2.2.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.2.2.2.2"
+
+[[requirements]]
+id = "SV-2023-09-ALWAYS-COMB-NO-BLOCKING-TIMING-CONTROLS"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.2.2.2.2"
+anchors = [
+    "[2023:9.2.2.2.2:L004:p223]",
+    "[2023:9.2.2.3:P002:p223]",
+]
+summary = "An always_comb or always_latch procedure shall not contain blocking timing controls or blocking event controls."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.2.2.2.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.2.2.2.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.2.2.2.2"
+
+[[requirements]]
+id = "SV-2023-09-ALWAYS-COMB-NO-FORK-JOIN"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.2.2.2.2"
+anchors = [
+    "[2023:9.2.2.2.2:L004:p223]",
+    "[2023:9.2.2.3:P002:p223]",
+]
+summary = "An always_comb or always_latch procedure shall not contain a fork-join statement."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.2.2.2.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.2.2.2.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.2.2.2.2"
+
+[[requirements]]
+id = "SV-2023-09-ALWAYS-COMB-SENSITIVITY-IMMEDIATE-ASSERTIONS"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.2.2.2.1"
+anchors = [
+    "[2023:9.2.2.2.1:P005:p223]",
+    "[2023:9.2.2.2.2:L005:p223]",
+    "[2023:9.2.2.3:P002:p223]",
+]
+summary = "Expressions in immediate assertions in an always_comb or always_latch block, or in a function it calls, contribute to sensitivity as if used as an if condition, whereas expressions used only in assertion action blocks do not contribute."
+related_clauses = [
+    "16.3",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.2.2.2.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.2.2.2.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.2.2.2.1"
+
+[[requirements]]
+id = "SV-2023-09-ALWAYS-COMB-SENSITIVITY-LOCAL-EXCLUSION"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.2.2.2.1"
+anchors = [
+    "[2023:9.2.2.2.1:L001:p222]",
+    "[2023:9.2.2.3:P002:p223]",
+]
+summary = "Always_comb and always_latch sensitivity excludes expansions of variables declared within the block or within a function called by the block."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.2.2.2.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.2.2.2.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.2.2.2.1"
+
+[[requirements]]
+id = "SV-2023-09-ALWAYS-COMB-SENSITIVITY-METHOD-CALLS"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.2.2.2.1"
+anchors = [
+    "[2023:9.2.2.2.1:P003:p222]",
+    "[2023:9.2.2.3:P002:p223]",
+]
+summary = "For always_comb and always_latch, hierarchical, package, and class-scope static function calls contribute sensitivity through normal function-body analysis; class-object references and object method bodies contribute nothing, while expressions passed as method arguments do contribute."
+related_clauses = [
+    "8.23",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.2.2.2.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.2.2.2.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.2.2.2.1"
+
+[[requirements]]
+id = "SV-2023-09-ALWAYS-COMB-SENSITIVITY-READS"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.2.2.2.1"
+anchors = [
+    "[2023:9.2.2.2.1:P001:p222]",
+    "[2023:9.2.2.2:L001:p222]",
+    "[2023:9.2.2.2.2:L002:p223]",
+    "[2023:9.2.2.3:P002:p223]",
+]
+summary = "Subject to the specified exclusions, always_comb and always_latch sensitivity includes expansions of the longest static prefix of every net, variable identifier, or select expression read in the block or in a function called by it."
+related_clauses = [
+    "11.5.3",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "changed-expectation"
+clause = "9.2.2.2.1"
+note = "The 2012 rule includes the longest static prefix of each variable or select expression read, but does not expressly include a plain net identifier as the 2023 rule does."
+
+[requirements.revision_applicability.1800-2017]
+status = "changed-expectation"
+clause = "9.2.2.2.1"
+note = "The 2017 rule includes longest-static-prefix reads of variables and select expressions, but does not include the 2023 rule's explicit coverage of each net identifier."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.2.2.2.1"
+
+[[requirements]]
+id = "SV-2023-09-ALWAYS-COMB-SENSITIVITY-TASK-CALLS"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.2.2.2.1"
+anchors = [
+    "[2023:9.2.2.2.1:P004:p223]",
+    "[2023:9.2.2.3:P002:p223]",
+]
+summary = "For a task called from an always_comb or always_latch procedure, task argument expressions contribute to implicit sensitivity, but expressions read only inside the task body do not."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.2.2.2.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.2.2.2.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.2.2.2.1"
+
+[[requirements]]
+id = "SV-2023-09-ALWAYS-COMB-SENSITIVITY-TIMING-EXCLUSION"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.2.2.2.1"
+anchors = [
+    "[2023:9.2.2.2.1:L003:p222]",
+    "[2023:9.2.2.3:P002:p223]",
+]
+summary = "An identifier appearing only in a wait, event, or delay timing-control expression does not enter an always_comb or always_latch implicit sensitivity list."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "changed-expectation"
+clause = "9.2.2.2.1"
+note = "The 2012 exception list omits the 2023 exclusion for identifiers appearing only in wait, event, or delay timing-control expressions."
+
+[requirements.revision_applicability.1800-2017]
+status = "changed-expectation"
+clause = "9.2.2.2.1"
+note = "The 2017 exception list excludes block/function locals and expressions also written there, but has no exception for identifiers appearing only in timing-control expressions."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.2.2.2.1"
+
+[[requirements]]
+id = "SV-2023-09-ALWAYS-COMB-SENSITIVITY-WRITTEN-EXCLUSION"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.2.2.2.1"
+anchors = [
+    "[2023:9.2.2.2.1:L002:p222]",
+    "[2023:9.2.2.3:P002:p223]",
+]
+summary = "Always_comb and always_latch sensitivity excludes an expression that is also written within the block or within a function called by the block."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.2.2.2.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.2.2.2.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.2.2.2.1"
+
+[[requirements]]
+id = "SV-2023-09-ALWAYS-COMB-TASK-CALLS-PERMITTED"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.2.2.2.1"
+anchors = [
+    "[2023:9.2.2.2.1:P004:p223]",
+    "[2023:9.2.2.3:P002:p223]",
+]
+summary = "An always_comb or always_latch procedure may call a task, subject to the separate prohibition on statements that block execution."
+related_clauses = [
+    "9.2.2.2.2",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.2.2.2.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.2.2.2.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.2.2.2.1"
+
+[[requirements]]
+id = "SV-2023-09-ALWAYS-COMB-TIME-ZERO-TRIGGER"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.2.2.2"
+anchors = [
+    "[2023:9.2.2.2:L003:p222]",
+    "[2023:9.2.2.2.2:L001:p223]",
+    "[2023:9.2.2.3:P002:p223]",
+]
+summary = "An always_comb or always_latch procedure is automatically triggered once at time zero after all initial and always procedures have started."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.2.2.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.2.2.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.2.2.2"
+
+[[requirements]]
+id = "SV-2023-09-ALWAYS-CONSTRUCT-SYNTAX"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.2"
+anchors = [
+    "[2023:9.2:G001:p220]",
+    "[2023:9.2.2:P001:p221]",
+]
+summary = "An always construct consists of an always-family keyword followed by a statement; the allowed keywords are always, always_comb, always_latch, and always_ff."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.2"
+
+[[requirements]]
+id = "SV-2023-09-ALWAYS-FF-NO-BLOCKING-TIMING-CONTROLS"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.2.2.4"
+anchors = [
+    "[2023:9.2.2.4:P002:p224]",
+]
+summary = "An always_ff procedure shall contain no blocking timing controls."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.2.2.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.2.2.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.2.2.4"
+
+[[requirements]]
+id = "SV-2023-09-ALWAYS-FF-ONE-EVENT-CONTROL"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.2.2.4"
+anchors = [
+    "[2023:9.2.2.4:P002:p224]",
+]
+summary = "An always_ff procedure shall contain exactly one event control."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.2.2.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.2.2.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.2.2.4"
+
+[[requirements]]
+id = "SV-2023-09-ALWAYS-REPEATS-UNTIL-TERMINATION"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.2"
+anchors = [
+    "[2023:9.2:P003:p220]",
+    "[2023:9.2.2:P001:p221]",
+]
+summary = "Each always, always_comb, always_latch, or always_ff procedure repeatedly executes its statement and remains active until simulation terminates."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.2"
+
+[[requirements]]
+id = "SV-2023-09-AUTOMATIC-SIMULATION-TERMINATION-NO-ACTIVITY"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.6.1"
+anchors = [
+    "[2023:9.6.1:P004:p241]",
+]
+summary = "Simulation automatically terminates when no activity of any kind remains."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.6.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.6.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.6.1"
+
+[[requirements]]
+id = "SV-2023-09-BLOCK-END-NAME-MUST-MATCH"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.3.4"
+anchors = [
+    "[2023:9.3.4:P005:p229]",
+]
+summary = "An optional name after end, join, join_any, or join_none shall match the name following the corresponding begin or fork; a differing closing name is an error."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.3.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.3.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.3.4"
+
+[[requirements]]
+id = "SV-2023-09-BLOCK-FINISH-BEFORE-FOLLOWING-STATEMENT"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.3.3"
+anchors = [
+    "[2023:9.3.3:P002:p228]",
+    "[2023:9.3.3:P001:p228]",
+    "[2023:9.3.1:L003:p225]",
+]
+summary = "Execution shall not continue to the statement following a sequential or parallel block until the block's defined finish time: after the sequential block's last statement, or at the completion point selected by the parallel block's join form."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.3.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.3.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.3.3"
+
+[[requirements]]
+id = "SV-2023-09-BLOCK-LABEL-AND-OPENING-NAME-MUTUALLY-EXCLUSIVE"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.3.5"
+anchors = [
+    "[2023:9.3.5:P003:p230]",
+]
+summary = "It is illegal to specify both a statement label before begin or fork and a block name after that begin or fork."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.3.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.3.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.3.5"
+
+[[requirements]]
+id = "SV-2023-09-BLOCK-LABEL-EQUIVALENT-TO-BLOCK-NAME"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.3.5"
+anchors = [
+    "[2023:9.3.5:P002:p230]",
+]
+summary = "A label before a begin-end or fork-join block is equivalent to a block name after begin or fork and permits a matching name after the corresponding closing keyword."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.3.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.3.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.3.5"
+
+[[requirements]]
+id = "SV-2023-09-BLOCK-VARIABLE-STATIC-STORAGE"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.3.4"
+anchors = [
+    "[2023:9.3.4:P003:p229]",
+]
+summary = "A block variable with static lifetime has one storage location, and leaving and reentering the block does not by itself change its stored value."
+related_clauses = [
+    "6.21",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.3.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.3.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.3.4"
+
+[[requirements]]
+id = "SV-2023-09-BLOCKING-INTRA-ASSIGNMENT-CONTROL-SYNTAX"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.4.5"
+anchors = [
+    "[2023:9.4.5:G001:p237]",
+]
+summary = "The intra-assignment timing form of a blocking assignment consists of a variable lvalue, =, a required delay_or_event_control, and an expression."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.4.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.4.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.4.5"
+
+[[requirements]]
+id = "SV-2023-09-CLOCKING-BLOCK-EVENT-CONTROL-SAMPLED-VALUE"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.4.2"
+anchors = [
+    "[2023:9.4.2:P006:p233]",
+]
+summary = "When an event-control expression denotes a clocking block input or inout, event detection uses the synchronous value sampled by the clocking event."
+related_clauses = [
+    "14.13",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.4.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.4.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.4.2"
+
+[[requirements]]
+id = "SV-2023-09-CLOCKING-EVENT-SYNTAX"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.4"
+anchors = [
+    "[2023:9.4:G001:p231]",
+]
+summary = "A clocking event is @ followed by a package-scope identifier, a hierarchical identifier, or a parenthesized event expression."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "changed-expectation"
+clause = "9.4"
+note = "The 2012 grammar permits a bare package-scope form specifically for a sequence identifier, rather than the broader bare ps_identifier alternative in the 2023 grammar."
+
+[requirements.revision_applicability.1800-2017]
+status = "changed-expectation"
+clause = "9.4"
+note = "The 2017 grammar permits unparenthesized @ identifiers only through hierarchical-event and package/hierarchical-sequence identifier productions, rather than the 2023 generic package-scope or hierarchical identifier forms."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.4"
+
+[[requirements]]
+id = "SV-2023-09-COMMA-EVENT-ACTUAL-ARGUMENT-PARENTHESES"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.4"
+anchors = [
+    "[2023:9.4:G001:p231]",
+]
+summary = "When an event expression containing comma-separated event expressions is passed as a positional actual argument, the event expression shall be parenthesized."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.4"
+
+[[requirements]]
+id = "SV-2023-09-CONCURRENT-ASSERTION-LABEL"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.3.5"
+anchors = [
+    "[2023:9.3.5:P006:p230]",
+]
+summary = "A label may be placed before a concurrent assertion."
+related_clauses = [
+    "16.5",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.3.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.3.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.3.5"
+
+[[requirements]]
+id = "SV-2023-09-CONDITIONAL-EVENT-IFF-QUALIFIER"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.4.2.3"
+anchors = [
+    "[2023:9.4.2.3:P001:p235]",
+    "[2023:9.4.2.3:P002:p235]",
+]
+summary = "An @ event control may have an iff qualifier, and the source event triggers the control only when the iff expression is true under the conditional-expression truth rules."
+related_clauses = [
+    "12.4",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.4.2.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.4.2.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.4.2.3"
+
+[[requirements]]
+id = "SV-2023-09-DELAY-CONTROL-SYNTAX"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.4"
+anchors = [
+    "[2023:9.4:G001:p231]",
+]
+summary = "A delay control is # followed by a delay value, or # followed by a parenthesized mintypmax expression."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.4"
+
+[[requirements]]
+id = "SV-2023-09-DELAY-OR-EVENT-CONTROL-FORMS"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.4"
+anchors = [
+    "[2023:9.4:G001:p231]",
+]
+summary = "A delay_or_event_control is a delay control, an event control, or repeat(expression) followed by an event control."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.4"
+
+[[requirements]]
+id = "SV-2023-09-DISABLE-ALL-TASK-ACTIVATIONS"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.6.2"
+anchors = [
+    "[2023:9.6.2:P002:p242]",
+    "[2023:9.6.2:P004:p242]",
+    "[2023:9.6.2:P008:p243]",
+]
+summary = "If a task has multiple active invocations, disabling that task disables all of its activations."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.6.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.6.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.6.2"
+
+[[requirements]]
+id = "SV-2023-09-DISABLE-CONTAINING-SCOPE"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.6.2"
+anchors = [
+    "[2023:9.6.2:P004:p242]",
+]
+summary = "A disable statement inside a block or task may disable that containing block or task."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.6.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.6.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.6.2"
+
+[[requirements]]
+id = "SV-2023-09-DISABLE-FORK-PARENT-CHILD-SCOPE"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.6"
+anchors = [
+    "[2023:9.6:P001:p240]",
+    "[2023:9.6.3:P001:p244]",
+    "[2023:9.6.3:P005:p244-245]",
+]
+summary = "disable fork terminates every descendant subprocess of the calling process, including non-immediate descendants and descendants of subprocesses that have already terminated."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "same-rule-different-clause"
+clause = "9.6.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "changed-expectation"
+clause = "9.6.3"
+note = "The 2017 rule terminates all active descendants and does not include the 2023 guarantee covering descendants whose intervening parent subprocess has already terminated."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.6"
+
+[[requirements]]
+id = "SV-2023-09-DISABLE-IN-FUNCTION-TARGETS"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.6.2"
+anchors = [
+    "[2023:9.6.2:P004:p242]",
+]
+summary = "Inside a function, disable may target a named block but shall not target a function."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.6.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.6.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.6.2"
+
+[[requirements]]
+id = "SV-2023-09-DISABLE-INACTIVE-BLOCK-NO-EFFECT"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.6.2"
+anchors = [
+    "[2023:9.6.2:P007:p242]",
+]
+summary = "Disabling a named block that is not currently executing has no effect."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.6.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.6.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.6.2"
+
+[[requirements]]
+id = "SV-2023-09-DISABLE-LABELED-ASSERTION-TARGET"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.6.2"
+anchors = [
+    "[2023:9.6.2:P001:p241-242]",
+]
+summary = "disable may terminate a labeled deferred assertion or labeled procedural concurrent assertion."
+related_clauses = [
+    "16.4",
+    "16.14.6",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.6.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.6.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.6.2"
+
+[[requirements]]
+id = "SV-2023-09-DISABLE-LABELED-STATEMENT"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.3.5"
+anchors = [
+    "[2023:9.3.5:P007:p230]",
+]
+summary = "A labeled statement may be targeted by disable, with the same behavior as disabling a named block."
+related_clauses = [
+    "9.6.2",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.3.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.3.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.3.5"
+
+[[requirements]]
+id = "SV-2023-09-DISABLE-LOOP-BODY-ACTS-CONTINUE"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.6.2"
+anchors = [
+    "[2023:9.6.2:P007:p242]",
+]
+summary = "When the disabled named block is a loop body, control proceeds like a continue statement to the next iteration."
+related_clauses = [
+    "12.8",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.6.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.6.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.6.2"
+
+[[requirements]]
+id = "SV-2023-09-DISABLE-NAMED-SCOPE-STOPS-ACTIVITY"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.6"
+anchors = [
+    "[2023:9.6:P001:p240]",
+    "[2023:9.6.2:P004:p242]",
+    "[2023:9.6.3:P005:p244-245]",
+]
+summary = "Disabling a named block or task stops all activity within that scope without regard to parent-child relationship, allowing a child or unrelated process to disable it."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.6"
+
+[[requirements]]
+id = "SV-2023-09-DISABLE-STATEMENT-SYNTAX"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.6"
+anchors = [
+    "[2023:9.6:G001:p240]",
+    "[2023:9.6.3:P003:p244]",
+]
+summary = "A disable statement is disable followed by a hierarchical task identifier, hierarchical block identifier, or fork, and then a semicolon."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.6"
+
+[[requirements]]
+id = "SV-2023-09-DISABLE-TARGET-AND-RESUMPTION"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.6.2"
+anchors = [
+    "[2023:9.6.2:P002:p242]",
+    "[2023:9.6.2:P007:p242]",
+]
+summary = "Disabling a task or named block terminates its activity, then execution resumes after the disabled block or after the task-enabling statement, respectively."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.6.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.6.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.6.2"
+
+[[requirements]]
+id = "SV-2023-09-DISABLE-TASK-DOWNWARD-CHAIN"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.6.2"
+anchors = [
+    "[2023:9.6.2:P002:p242]",
+]
+summary = "When task enables are nested, disabling a task in the enable chain disables every task below it in that chain."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.6.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.6.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.6.2"
+
+[[requirements]]
+id = "SV-2023-09-DISABLE-TERMINATES-ENABLED-ACTIVITY"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.6.2"
+anchors = [
+    "[2023:9.6.2:P002:p242]",
+]
+summary = "Disabling a named block or task also terminates every activity enabled within that block or task."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.6.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.6.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.6.2"
+
+[[requirements]]
+id = "SV-2023-09-DYNAMIC-OVERRIDE-DECLARATION-SCOPE"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.2"
+anchors = [
+    "[2023:9.2:G001:p220]",
+]
+summary = "Dynamic override specifiers on task or function declarations are legal only for method declarations inside a non-interface class scope."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no dynamic override specifier construct on task or function declarations."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "The 2017 task and function declaration grammar has no dynamic_override_specifiers construct or corresponding declaration-scope rule."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.2"
+
+[[requirements]]
+id = "SV-2023-09-EDGE-DETECTION-UNION"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.4.2"
+anchors = [
+    "[2023:9.4.2:L003:p232]",
+]
+summary = "An edge event is detected whenever either a posedge or a negedge is detected."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.4.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.4.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.4.2"
+
+[[requirements]]
+id = "SV-2023-09-EDGE-EVENT-USES-LSB"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.4.2"
+anchors = [
+    "[2023:9.4.2:P004:p232]",
+]
+summary = "For a multibit expression, edge-event detection uses only the expression's least significant bit."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.4.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.4.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.4.2"
+
+[[requirements]]
+id = "SV-2023-09-EDGE-IDENTIFIER-KEYWORDS"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.4"
+anchors = [
+    "[2023:9.4:G001:p231]",
+]
+summary = "The edge identifiers admitted by event-expression grammar are posedge, negedge, and edge."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.4"
+
+[[requirements]]
+id = "SV-2023-09-EVENT-CONTROL-FUNCTION-CALLS"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.4.2"
+anchors = [
+    "[2023:9.4.2:P009:p233]",
+]
+summary = "An event-control expression may call a non-virtual object method, aggregate built-in method, or aggregate system function only when the call is a function rather than a task and returns a singular value."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.4.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.4.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.4.2"
+
+[[requirements]]
+id = "SV-2023-09-EVENT-CONTROL-SYNCHRONIZATION-SOURCES"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.4.2"
+anchors = [
+    "[2023:9.4.2:P001:p232]",
+]
+summary = "A procedural statement may be synchronized to an expression value change, named event occurrence, clocking block event, or sequence instance match."
+related_clauses = [
+    "15.5.2",
+    "14.10",
+    "9.4.2.4",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.4.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.4.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.4.2"
+
+[[requirements]]
+id = "SV-2023-09-EVENT-CONTROL-SYNTAX"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.4"
+anchors = [
+    "[2023:9.4:G001:p231]",
+]
+summary = "An event control is a clocking event or one of the wildcard forms @* and @(*)."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.4"
+
+[[requirements]]
+id = "SV-2023-09-EVENT-EXPRESSION-SINGULAR-RESULT"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.4.2"
+anchors = [
+    "[2023:9.4.2:P007:p233]",
+]
+summary = "An event expression shall produce a singular value; it may access aggregate elements or object members of any type only when the complete expression reduces to a singular value."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.4.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.4.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.4.2"
+
+[[requirements]]
+id = "SV-2023-09-EVENT-EXPRESSION-SYNTAX"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.4"
+anchors = [
+    "[2023:9.4:G001:p231]",
+]
+summary = "An event expression is an optionally edge-qualified expression with optional iff condition, a sequence instance with optional iff condition, two event expressions joined by or or comma, or a parenthesized event expression."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.4"
+
+[[requirements]]
+id = "SV-2023-09-EVENT-FUNCTION-DEPENDENCY-REEVALUATION"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.4.2"
+anchors = [
+    "[2023:9.4.2:P010:p233]",
+]
+summary = "An event expression containing a method or function shall be reevaluated when a referenced object member or aggregate element changes or when a referenced dynamically sized array changes size."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.4.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.4.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.4.2"
+
+[[requirements]]
+id = "SV-2023-09-EVENT-OR-OPERATOR"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.4.2.1"
+anchors = [
+    "[2023:9.4.2.1:P001:p233]",
+]
+summary = "Event expressions joined by or, comma, or a mixture of both trigger the following statement when any constituent event occurs; comma-separated and or-separated sensitivity lists are synonymous."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.4.2.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.4.2.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.4.2.1"
+
+[[requirements]]
+id = "SV-2023-09-EVENT-REQUIRES-EXPRESSION-RESULT-CHANGE"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.4.2"
+anchors = [
+    "[2023:9.4.2:P004:p232]",
+]
+summary = "A change in an operand of an event expression does not produce an event when the resulting expression value does not change."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.4.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.4.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.4.2"
+
+[[requirements]]
+id = "SV-2023-09-FINAL-BEFORE-END-OF-SIMULATION-PLI"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.2.3"
+anchors = [
+    "[2023:9.2.3:P005:p224]",
+]
+summary = "Final procedures shall execute before PLI callbacks that indicate the end of simulation."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.2.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.2.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.2.3"
+
+[[requirements]]
+id = "SV-2023-09-FINAL-CONSTRUCT-SYNTAX"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.2"
+anchors = [
+    "[2023:9.2:G001:p220]",
+]
+summary = "A final construct consists of the keyword final followed by a function_statement."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.2"
+
+[[requirements]]
+id = "SV-2023-09-FINAL-ENABLED-AT-END"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.2"
+anchors = [
+    "[2023:9.2:P005:p221]",
+    "[2023:9.2.3:P003:p224]",
+]
+summary = "Final procedures are enabled at the end of simulation time."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.2"
+
+[[requirements]]
+id = "SV-2023-09-FINAL-EXECUTES-ONCE"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.2"
+anchors = [
+    "[2023:9.2:P005:p221]",
+    "[2023:9.2.3:P004:p224]",
+]
+summary = "Each final procedure executes exactly once."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.2"
+
+[[requirements]]
+id = "SV-2023-09-FINAL-FUNCTION-STATEMENTS-ZERO-TIME"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.2.3"
+anchors = [
+    "[2023:9.2.3:P001:p224]",
+    "[2023:9.2.3:P002:p224]",
+]
+summary = "A final procedure may contain only statements permitted in a function and executes those statements in zero simulation time within a single simulation cycle."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.2.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.2.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.2.3"
+
+[[requirements]]
+id = "SV-2023-09-FINAL-SINGLE-PROCESS-SEQUENTIAL-ORDER"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.2.3"
+anchors = [
+    "[2023:9.2.3:P002:p224]",
+    "[2023:9.2.3:P006:p224]",
+]
+summary = "Final procedures do not run as separate processes; they execute sequentially from one process in an implementation-chosen arbitrary but deterministic order."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.2.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.2.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.2.3"
+
+[[requirements]]
+id = "SV-2023-09-FINISH-WITHIN-FINAL-STOPS-IMMEDIATELY"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.2.3"
+anchors = [
+    "[2023:9.2.3:P004:p224]",
+]
+summary = "Executing $finish, tf_dofinish(), or vpi_control(vpiFinish, ...) within a final procedure ends simulation immediately."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.2.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.2.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.2.3"
+
+[[requirements]]
+id = "SV-2023-09-FORK-BEGIN-END-SINGLE-CHILD"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.3.2"
+anchors = [
+    "[2023:9.3.2:P007:p227]",
+]
+summary = "A begin-end block used as one statement of a fork creates one child process whose enclosed statements execute sequentially."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.3.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.3.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.3.2"
+
+[[requirements]]
+id = "SV-2023-09-FORK-BLOCK-DECLARATION-INITIALIZATION"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.3.2"
+anchors = [
+    "[2023:9.3.2:P010:p227]",
+    "[2023:9.3.2:P011:p228]",
+]
+summary = "Each variable declared as a fork-join block item is initialized from its initialization expression whenever execution enters that block scope, before any child process is spawned."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.3.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.3.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.3.2"
+
+[[requirements]]
+id = "SV-2023-09-FORK-CHILD-START-AFTER-PARENT-BLOCKS"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.3.2"
+anchors = [
+    "[2023:9.3.2:P006:p227]",
+]
+summary = "A process spawned by any fork-join form shall not begin executing until its parent process blocks or terminates."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.3.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.3.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.3.2"
+
+[[requirements]]
+id = "SV-2023-09-FORK-JOIN-ANY-WAITS-ONE"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.3.2"
+anchors = [
+    "[2023:9.3.2:T9-1.R02:p226]",
+    "[2023:9.3.2:L004:p226]",
+    "[2023:9.3.3:P001:p228]",
+]
+summary = "With join_any, the parent process blocks until any one process spawned by the fork terminates."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.3.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.3.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.3.2"
+
+[[requirements]]
+id = "SV-2023-09-FORK-JOIN-NONE-NONBLOCKING"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.3.2"
+anchors = [
+    "[2023:9.3.2:T9-1.R03:p226]",
+    "[2023:9.3.2:T9-1.R04:p226]",
+    "[2023:9.3.2:L004:p226]",
+    "[2023:9.3.3:P001:p228]",
+]
+summary = "With join_none, the parent continues executing concurrently with every process spawned by the fork."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.3.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.3.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.3.2"
+
+[[requirements]]
+id = "SV-2023-09-FORK-JOIN-WAITS-ALL"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.3.2"
+anchors = [
+    "[2023:9.3.2:T9-1.R01:p226]",
+    "[2023:9.3.2:L004:p226]",
+    "[2023:9.3.2:P008:p227]",
+    "[2023:9.3.3:P001:p228]",
+    "[2023:9.3.3:P005:p228]",
+]
+summary = "With join, the parent process blocks until every process spawned by the fork terminates."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.3.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.3.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.3.2"
+
+[[requirements]]
+id = "SV-2023-09-FUNCTION-CANNOT-SELF-SUSPEND"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.7"
+anchors = [
+    "[2023:9.7:P007:p245]",
+]
+summary = "It is an error for a function to call suspend() on its current process."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "changed-expectation"
+clause = "9.7"
+note = "IEEE 1800-2012 allows a process to suspend its own execution and specifies how it resumes; it does not make a function's self-suspend call an error."
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.7"
+
+[[requirements]]
+id = "SV-2023-09-GENERATE-BLOCK-LEADING-LABEL"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.3.5"
+anchors = [
+    "[2023:9.3.5:P005:p230]",
+]
+summary = "A label may be placed before a generate begin-end block."
+related_clauses = [
+    "27.3",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.3.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.3.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.3.5"
+
+[[requirements]]
+id = "SV-2023-09-GENERATE-END-NAME-MUST-MATCH"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.3.4"
+anchors = [
+    "[2023:9.3.4:L016:p229-230]",
+]
+summary = "A generate begin-end block may have an optional name after end, and when present that closing name shall match the opening block name."
+related_clauses = [
+    "27.3",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.3.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.3.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.3.4"
+
+[[requirements]]
+id = "SV-2023-09-HANDLE-EVENT-ON-UNEQUAL-WRITE"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.4.2"
+anchors = [
+    "[2023:9.4.2:P008:p233]",
+]
+summary = "For an event expression that is a simple object-handle or chandle variable reference, an event occurs when a write changes the handle to a value unequal to its previous value."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.4.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.4.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.4.2"
+
+[[requirements]]
+id = "SV-2023-09-IFF-CONDITION-CHANGE-NOT-EVENT"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.4.2.3"
+anchors = [
+    "[2023:9.4.2.3:P002:p235]",
+]
+summary = "An iff-qualified event expression is evaluated when its source event expression changes; a change only to the iff condition does not itself trigger the event."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.4.2.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.4.2.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.4.2.3"
+
+[[requirements]]
+id = "SV-2023-09-IFF-PRECEDENCE-OVER-OR"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.4.2.3"
+anchors = [
+    "[2023:9.4.2.3:P002:p235]",
+]
+summary = "Within an event expression, iff binds more tightly than the event or operator."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.4.2.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.4.2.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.4.2.3"
+
+[[requirements]]
+id = "SV-2023-09-IMPLICIT-EVENT-HIERARCHICAL-LVALUE-EXCLUSION"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.4.2.2"
+anchors = [
+    "[2023:9.4.2.2:L002:p234]",
+]
+summary = "An identifier appearing only as a hierarchical variable identifier in an assignment's left-hand-side variable lvalue is excluded from an @* implicit event expression."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.4.2.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.4.2.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.4.2.2"
+
+[[requirements]]
+id = "SV-2023-09-IMPLICIT-EVENT-INCLUDED-USES"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.4.2.2"
+anchors = [
+    "[2023:9.4.2.2:P003:p234]",
+]
+summary = "The @* implicit event expression includes nets and variables used on assignment right-hand sides, in subroutine calls, in case and conditional expressions, as assignment-lvalue index variables, and in case-item expressions."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.4.2.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.4.2.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.4.2.2"
+
+[[requirements]]
+id = "SV-2023-09-IMPLICIT-EVENT-READ-SET"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.4.2.2"
+anchors = [
+    "[2023:9.4.2.2:P001:p234]",
+    "[2023:9.4.2.2:P002:p234]",
+]
+summary = "The @* implicit event expression automatically includes every net and variable identifier read by its following statement or statement group, subject to the specified exclusions."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.4.2.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.4.2.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.4.2.2"
+
+[[requirements]]
+id = "SV-2023-09-IMPLICIT-EVENT-TIMING-CONTROL-EXCLUSION"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.4.2.2"
+anchors = [
+    "[2023:9.4.2.2:L001:p234]",
+]
+summary = "An identifier appearing only in a wait, event, or delay timing-control expression within an @*-controlled statement is excluded from the implicit event expression."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "changed-expectation"
+clause = "9.4.2.2"
+note = "The 2012 exclusion covers identifiers appearing only in wait or event expressions, but does not also exclude identifiers appearing only in delay expressions."
+
+[requirements.revision_applicability.1800-2017]
+status = "changed-expectation"
+clause = "9.4.2.2"
+note = "The 2017 exclusion covers identifiers appearing only in wait or event expressions, but unlike 2023 it does not exclude identifiers appearing only in delay expressions."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.4.2.2"
+
+[[requirements]]
+id = "SV-2023-09-INITIAL-ALWAYS-START-OF-SIMULATION"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.2"
+anchors = [
+    "[2023:9.2:P003:p220]",
+]
+summary = "Initial and always procedures are enabled at the beginning of simulation."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.2"
+
+[[requirements]]
+id = "SV-2023-09-INITIAL-CONSTRUCT-SYNTAX"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.2"
+anchors = [
+    "[2023:9.2:G001:p220]",
+]
+summary = "An initial construct consists of the keyword initial followed by a statement or null statement."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.2"
+
+[[requirements]]
+id = "SV-2023-09-INITIAL-EXECUTES-ONCE"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.2"
+anchors = [
+    "[2023:9.2:P003:p220]",
+    "[2023:9.2.1:P001:p221]",
+]
+summary = "An initial procedure executes once and ceases activity when its statement finishes."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.2"
+
+[[requirements]]
+id = "SV-2023-09-INTRA-ASSIGNMENT-TIMING-EVALUATION"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.4.5"
+anchors = [
+    "[2023:9.4.5:P002:p237]",
+    "[2023:9.4.5:P011:p239]",
+    "[2023:9.4.5:P012:p239]",
+]
+summary = "For an intra-assignment delay or event control, the right-hand expression is evaluated when the assignment is encountered, before the timing control, while assignment of that captured value to the left-hand side is delayed until the control completes."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.4.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.4.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.4.5"
+
+[[requirements]]
+id = "SV-2023-09-JOIN-ANY-NONE-REF-ARGUMENT-USE"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.3.2"
+anchors = [
+    "[2023:9.3.2:P010:p227]",
+]
+summary = "Within fork-join_any or fork-join_none, a by-reference formal argument may be referenced only in initialization expressions of fork block-item variables, unless the formal is declared ref static."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "changed-expectation"
+clause = "9.3.2"
+note = "IEEE 1800-2012 permits by-reference formals in these fork forms only in fork block-item initialization expressions; it has no ref static exception."
+
+[requirements.revision_applicability.1800-2017]
+status = "changed-expectation"
+clause = "9.3.2"
+note = "The 2017 rule allows by-reference formals only in fork block-item initialization expressions and has no 2023 exception permitting direct references to ref static formals."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.3.2"
+
+[[requirements]]
+id = "SV-2023-09-LOOP-LABEL-NAMES-IMPLICIT-BLOCK"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.3.5"
+anchors = [
+    "[2023:9.3.5:P004:p230]",
+]
+summary = "A label on a foreach loop or on a for loop that declares variables in its initialization names the implicit block created by that loop."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.3.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.3.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.3.5"
+
+[[requirements]]
+id = "SV-2023-09-NAMED-BLOCK-HIERARCHICAL-ITEM-ACCESS"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.3.4"
+anchors = [
+    "[2023:9.3.4:L001:p229]",
+]
+summary = "Local variables, parameters, and named events in a named block may be referenced hierarchically through the block name."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.3.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.3.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.3.4"
+
+[[requirements]]
+id = "SV-2023-09-NAMED-BLOCK-HIERARCHY-SCOPE"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.3.4"
+anchors = [
+    "[2023:9.3.4:P001:p229]",
+]
+summary = "Adding a block name after begin or fork names either a sequential or parallel block and creates a new hierarchy scope."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.3.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.3.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.3.4"
+
+[[requirements]]
+id = "SV-2023-09-NAMED-BLOCK-STATEMENT-REFERENCE"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.3.4"
+anchors = [
+    "[2023:9.3.4:L002:p229]",
+]
+summary = "A named block may be referenced by statements that take a block target, including disable."
+related_clauses = [
+    "9.6.2",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.3.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.3.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.3.4"
+
+[[requirements]]
+id = "SV-2023-09-NEGATIVE-DELAY-UNSIGNED-CONVERSION"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.4.1"
+anchors = [
+    "[2023:9.4.1:P001:p232]",
+]
+summary = "A negative procedural delay value is interpreted as a two's-complement unsigned integer having the same size as a time variable."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.4.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.4.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.4.1"
+
+[[requirements]]
+id = "SV-2023-09-NEGEDGE-DETECTION-TRANSITIONS"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.4.2"
+anchors = [
+    "[2023:9.4.2:L001:p232]",
+    "[2023:9.4.2:T9-2.R04:p232]",
+    "[2023:9.4.2:T9-2.R05:p232]",
+    "[2023:9.4.2:T9-2.R06:p232]",
+]
+summary = "A negedge is detected for transitions from 1 to X, Z, or 0 and from X or Z to 0."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.4.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.4.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.4.2"
+
+[[requirements]]
+id = "SV-2023-09-NO-EVENTS-AFTER-FINALS"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.2.3"
+anchors = [
+    "[2023:9.2.3:P002:p224]",
+]
+summary = "After all final procedures finish, no remaining scheduled event shall execute."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.2.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.2.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.2.3"
+
+[[requirements]]
+id = "SV-2023-09-NO-LABEL-BEFORE-BLOCK-CLOSER"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.3.5"
+anchors = [
+    "[2023:9.3.5:P003:p230]",
+]
+summary = "A statement label cannot appear before end, join, join_any, or join_none because those closing keywords do not form statements."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.3.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.3.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.3.5"
+
+[[requirements]]
+id = "SV-2023-09-NONBLOCKING-INTRA-ASSIGNMENT-CONTROL-SYNTAX"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.4.5"
+anchors = [
+    "[2023:9.4.5:G001:p237]",
+]
+summary = "A nonblocking assignment consists of a variable lvalue, <=, an optional delay_or_event_control, and an expression."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.4.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.4.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.4.5"
+
+[[requirements]]
+id = "SV-2023-09-NONEDGE-EVENT-RESULT-CHANGE"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.4.2"
+anchors = [
+    "[2023:9.4.2:P004:p232]",
+]
+summary = "A non-edge implicit event is detected on any change in the value of its complete expression."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.4.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.4.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.4.2"
+
+[[requirements]]
+id = "SV-2023-09-OTHER-STATEMENT-LABEL-CREATES-NAMED-BLOCK"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.3.5"
+anchors = [
+    "[2023:9.3.5:P004:p230]",
+]
+summary = "For a labeled statement other than the specified foreach or declaration-bearing for loops, the label creates a named begin-end block around the statement and a new hierarchy scope."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.3.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.3.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.3.5"
+
+[[requirements]]
+id = "SV-2023-09-PARALLEL-BLOCK-CONCURRENT-START"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.3"
+anchors = [
+    "[2023:9.3:P003:p225]",
+    "[2023:9.3.2:P001:p226]",
+    "[2023:9.3.2:L001:p226]",
+    "[2023:9.3.2:P003:p226]",
+    "[2023:9.3.3:P001:p228]",
+]
+summary = "Procedural statements in a parallel block execute concurrently."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.3"
+
+[[requirements]]
+id = "SV-2023-09-PARALLEL-BLOCK-DECLARATION-FORMS"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.3.2"
+anchors = [
+    "[2023:9.3.2:G001:p226]",
+]
+summary = "A parallel-block item declaration is an optionally attributed data declaration, local parameter declaration, parameter declaration, or let declaration, with semicolons as prescribed by each grammar alternative."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "changed-expectation"
+clause = "9.3.2"
+note = "The 2012 block_item_declaration grammar additionally admits an attributed overload declaration, which the 2023 alternatives in this requirement omit."
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.3.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.3.2"
+
+[[requirements]]
+id = "SV-2023-09-PARALLEL-BLOCK-DELIMITERS"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.3"
+anchors = [
+    "[2023:9.3:P003:p225]",
+    "[2023:9.3.2:G001:p226]",
+]
+summary = "A parallel block begins with fork and ends with join, join_any, or join_none."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.3"
+
+[[requirements]]
+id = "SV-2023-09-PARALLEL-BLOCK-ITEM-ORDER"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.3.2"
+anchors = [
+    "[2023:9.3.2:G001:p226]",
+]
+summary = "Within a parallel block, zero or more block item declarations precede zero or more statements or null statements."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.3.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.3.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.3.2"
+
+[[requirements]]
+id = "SV-2023-09-PARALLEL-BLOCK-OPTIONAL-IDENTIFIERS"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.3.2"
+anchors = [
+    "[2023:9.3.2:G001:p226]",
+]
+summary = "A parallel block may have an identifier after fork and may have an identifier after its join keyword."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.3.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.3.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.3.2"
+
+[[requirements]]
+id = "SV-2023-09-PARALLEL-BLOCK-RELATIVE-DELAYS"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.3.2"
+anchors = [
+    "[2023:9.3.2:L002:p226]",
+]
+summary = "Each statement delay in a parallel block is measured relative to the simulation time at which the block is entered."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.3.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.3.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.3.2"
+
+[[requirements]]
+id = "SV-2023-09-POSEDGE-DETECTION-TRANSITIONS"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.4.2"
+anchors = [
+    "[2023:9.4.2:L002:p232]",
+    "[2023:9.4.2:T9-2.R03:p232]",
+    "[2023:9.4.2:T9-2.R05:p232]",
+    "[2023:9.4.2:T9-2.R06:p232]",
+]
+summary = "A posedge is detected for transitions from 0 to X, Z, or 1 and from X or Z to 1."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.4.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.4.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.4.2"
+
+[[requirements]]
+id = "SV-2023-09-PROCEDURAL-DELAY-EXECUTION-TIME"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.4.1"
+anchors = [
+    "[2023:9.4.1:P001:p232]",
+]
+summary = "A statement following a delay control executes the specified delay after the preceding procedural statement."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.4.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.4.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.4.1"
+
+[[requirements]]
+id = "SV-2023-09-PROCEDURAL-STATEMENT-LABEL-SYNTAX"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.3.5"
+anchors = [
+    "[2023:9.3.5:P001:p230]",
+]
+summary = "Any procedural non-declaration statement allowed in a begin-end block may be labeled by placing an identifier and colon before the statement; the label identifies that single statement."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.3.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.3.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.3.5"
+
+[[requirements]]
+id = "SV-2023-09-PROCEDURAL-TIMING-CONTROL-FORMS"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.4"
+anchors = [
+    "[2023:9.4:G001:p231]",
+]
+summary = "A procedural timing control is a delay control, event control, or cycle delay."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.4"
+
+[[requirements]]
+id = "SV-2023-09-PROCEDURAL-TIMING-CONTROL-STATEMENT-SYNTAX"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.4"
+anchors = [
+    "[2023:9.4:G001:p231]",
+]
+summary = "A procedural timing control statement consists of a procedural timing control followed by a statement or null statement."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.4"
+
+[[requirements]]
+id = "SV-2023-09-PROCESS-AWAIT-SELF-ERROR"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.7"
+anchors = [
+    "[2023:9.7:P006:p245]",
+]
+summary = "Calling await() on the current process is an error."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.7"
+
+[[requirements]]
+id = "SV-2023-09-PROCESS-AWAIT-TERMINATION"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.7"
+anchors = [
+    "[2023:9.7:P006:p245]",
+]
+summary = "process::await() blocks the caller until the target process terminates either normally or forcefully."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.7"
+
+[[requirements]]
+id = "SV-2023-09-PROCESS-CLASS-API"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.7"
+anchors = [
+    "[2023:9.7:P001:p245]",
+    "[2023:9.7:C001:p245]",
+]
+summary = "process is a built-in final class whose declared interface provides self, status, kill, await, suspend, resume, srandom, get_randstate, and set_randstate with the specified static/function/task forms and return and argument types."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.7"
+
+[[requirements]]
+id = "SV-2023-09-PROCESS-CLASS-NONEXTENSIBLE"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.7"
+anchors = [
+    "[2023:9.7:P002:p245]",
+]
+summary = "The process class cannot be extended; an attempted derived class shall cause a compilation error."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.7"
+
+[[requirements]]
+id = "SV-2023-09-PROCESS-CONTROL-METHOD-ORIGIN-RESTRICTION"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.7"
+anchors = [
+    "[2023:9.7:P009:p246]",
+]
+summary = "kill(), await(), suspend(), and resume() are restricted to process objects created by an initial procedure, an always procedure, or a fork block descended from one of those procedures."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.7"
+
+[[requirements]]
+id = "SV-2023-09-PROCESS-KILL-COMPLETES-BEFORE-RETURN"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.7"
+anchors = [
+    "[2023:9.7:P005:p245]",
+]
+summary = "Every process affected by kill() shall terminate before kill() returns, although an affected process may terminate normally during the call because of nondeterminism."
+related_clauses = [
+    "4.7",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "changed-expectation"
+clause = "9.7"
+note = "IEEE 1800-2012 permits termination of an unblocked target at an unspecified time in the current time step and does not guarantee that all affected processes have terminated before kill() returns."
+
+[requirements.revision_applicability.1800-2017]
+status = "changed-expectation"
+clause = "9.7"
+note = "The 2017 kill() rule permits an unblocked target to terminate at an unspecified time in the current time step, rather than requiring every affected process to terminate before kill() returns."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.7"
+
+[[requirements]]
+id = "SV-2023-09-PROCESS-KILL-FINISHED-TARGET-DESCENDANTS"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.7"
+anchors = [
+    "[2023:9.7:P005:p245]",
+]
+summary = "Calling kill() on a FINISHED or KILLED process still forcibly terminates any descendant not already FINISHED or KILLED."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "changed-expectation"
+clause = "9.7"
+note = "IEEE 1800-2012 does not guarantee that kill() on an already FINISHED or KILLED target terminates its surviving descendants."
+
+[requirements.revision_applicability.1800-2017]
+status = "changed-expectation"
+clause = "9.7"
+note = "The 2017 kill() rule does not guarantee that calling kill() on a FINISHED or KILLED process terminates surviving descendants."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.7"
+
+[[requirements]]
+id = "SV-2023-09-PROCESS-KILL-TERMINATES-DESCENDANTS"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.7"
+anchors = [
+    "[2023:9.7:P005:p245]",
+]
+summary = "process::kill() forcibly terminates its target process and every descendant subprocess spawned by that process or its descendants."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "changed-expectation"
+clause = "9.7"
+note = "IEEE 1800-2012 states that kill() terminates the target and processes spawned by that target, but does not expressly extend the rule to processes spawned by those descendants."
+
+[requirements.revision_applicability.1800-2017]
+status = "changed-expectation"
+clause = "9.7"
+note = "The 2017 rule describes terminating the target and subprocesses spawned by that target; it does not include the 2023 recursive guarantee for processes spawned by descendants."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.7"
+
+[[requirements]]
+id = "SV-2023-09-PROCESS-OBJECT-INTERNAL-CREATION"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.7"
+anchors = [
+    "[2023:9.7:P002:p245]",
+]
+summary = "Process objects are created internally when processes are spawned; a user call to process::new shall not create a process and shall produce an error."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.7"
+
+[[requirements]]
+id = "SV-2023-09-PROCESS-RESUME-NONSUSPENDED-NO-EFFECT"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.7"
+anchors = [
+    "[2023:9.7:P008:p246]",
+]
+summary = "Calling resume() on a process not in SUSPENDED state has no effect."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "changed-expectation"
+clause = "9.7"
+note = "IEEE 1800-2012 defines resume() for a previously suspended process but does not guarantee that calling it in every non-SUSPENDED state has no effect."
+
+[requirements.revision_applicability.1800-2017]
+status = "changed-expectation"
+clause = "9.7"
+note = "The 2017 resume() rule does not specify that a call on every process outside SUSPENDED state has no effect."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.7"
+
+[[requirements]]
+id = "SV-2023-09-PROCESS-RESUME-RUNNING-ORIGIN"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.7"
+anchors = [
+    "[2023:9.7:P008:p246]",
+]
+summary = "Resuming a process suspended from RUNNING schedules it into the Active or Reactive region to continue in the current time step."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "changed-expectation"
+clause = "9.7"
+note = "IEEE 1800-2012 does not specify Active-or-Reactive current-time-step scheduling when resuming a process that was suspended from RUNNING."
+
+[requirements.revision_applicability.1800-2017]
+status = "changed-expectation"
+clause = "9.7"
+note = "The 2017 rule does not require an externally resumed process suspended from RUNNING to be scheduled into Active or Reactive in the current time step; it specifies only self-suspension continuation and waiting-state resensitization."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.7"
+
+[[requirements]]
+id = "SV-2023-09-PROCESS-RESUME-SATISFIED-WAIT"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.7"
+anchors = [
+    "[2023:9.7:P008:p246]",
+]
+summary = "If a resumed WAITING process's wait condition is already true or original delay has elapsed, it is scheduled into the Active or Reactive region to continue in the current time step."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.7"
+
+[[requirements]]
+id = "SV-2023-09-PROCESS-RESUME-WAITING-RESENSITIZES"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.7"
+anchors = [
+    "[2023:9.7:P008:p246]",
+]
+summary = "Resuming a process suspended from WAITING resensitizes it to its event expression, wait condition, or remaining delay."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.7"
+
+[[requirements]]
+id = "SV-2023-09-PROCESS-SELF-CURRENT-HANDLE"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.7"
+anchors = [
+    "[2023:9.7:P003:p245]",
+]
+summary = "process::self() returns a handle to the process making the call."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.7"
+
+[[requirements]]
+id = "SV-2023-09-PROCESS-STATE-ENUMERATION"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.7"
+anchors = [
+    "[2023:9.7:C001:p245]",
+]
+summary = "The process class defines state enumeration values FINISHED, RUNNING, WAITING, SUSPENDED, and KILLED."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.7"
+
+[[requirements]]
+id = "SV-2023-09-PROCESS-STATUS-FINISHED"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.7"
+anchors = [
+    "[2023:9.7:L001:p245]",
+]
+summary = "status() reports FINISHED for a process that terminated normally."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.7"
+
+[[requirements]]
+id = "SV-2023-09-PROCESS-STATUS-KILLED"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.7"
+anchors = [
+    "[2023:9.7:L005:p245]",
+]
+summary = "status() reports KILLED for a process forcibly terminated by kill() or disable."
+related_clauses = [
+    "9.6.2",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.7"
+
+[[requirements]]
+id = "SV-2023-09-PROCESS-STATUS-RETURNS-STATE"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.7"
+anchors = [
+    "[2023:9.7:P004:p245]",
+]
+summary = "A process handle's status() function returns a value of the process::state enumeration representing its current status."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.7"
+
+[[requirements]]
+id = "SV-2023-09-PROCESS-STATUS-RUNNING"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.7"
+anchors = [
+    "[2023:9.7:L002:p245]",
+]
+summary = "status() reports RUNNING for a process currently running and not in a blocking statement."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.7"
+
+[[requirements]]
+id = "SV-2023-09-PROCESS-STATUS-SUSPENDED"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.7"
+anchors = [
+    "[2023:9.7:L004:p245]",
+]
+summary = "status() reports SUSPENDED for a process stopped awaiting resume."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.7"
+
+[[requirements]]
+id = "SV-2023-09-PROCESS-STATUS-WAITING"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.7"
+anchors = [
+    "[2023:9.7:L003:p245]",
+]
+summary = "status() reports WAITING for a process waiting in a blocking statement."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.7"
+
+[[requirements]]
+id = "SV-2023-09-PROCESS-SUSPEND-TARGET-AND-COMPLETION"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.7"
+anchors = [
+    "[2023:9.7:P007:p245]",
+]
+summary = "suspend() may target the caller or another process, and the target shall be suspended before the function returns; concurrent normal or forced termination during the call is permitted."
+related_clauses = [
+    "4.7",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "changed-expectation"
+clause = "9.7"
+note = "IEEE 1800-2012 permits suspension of an unblocked target at an unspecified time in the current time step and does not guarantee suspension before suspend() returns."
+
+[requirements.revision_applicability.1800-2017]
+status = "changed-expectation"
+clause = "9.7"
+note = "The 2017 rule permits suspension of an unblocked process at an unspecified time in the current time step, rather than requiring suspension before suspend() returns with the 2023 termination-race qualification."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.7"
+
+[[requirements]]
+id = "SV-2023-09-PROCESS-SUSPEND-TERMINAL-NO-EFFECT"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.7"
+anchors = [
+    "[2023:9.7:P007:p245]",
+]
+summary = "Calling suspend() on a process in SUSPENDED, FINISHED, or KILLED state has no effect."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "changed-expectation"
+clause = "9.7"
+note = "IEEE 1800-2012 states only that repeated suspend() calls on an already suspended process have no effect; it does not extend this guarantee to FINISHED and KILLED targets."
+
+[requirements.revision_applicability.1800-2017]
+status = "changed-expectation"
+clause = "9.7"
+note = "The 2017 rule says only that repeated suspend() calls on the same suspended process have no effect; it does not extend this guarantee to FINISHED and KILLED targets."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.7"
+
+[[requirements]]
+id = "SV-2023-09-PROCESS-SUSPEND-WAITING-DESENSITIZES"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.7"
+anchors = [
+    "[2023:9.7:P007:p245]",
+]
+summary = "Suspending a WAITING process desensitizes it from the event expression, wait condition, or delay expiration on which it was blocked."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.7"
+
+[[requirements]]
+id = "SV-2023-09-PROGRAM-COMPLETION-TERMINATES-SIMULATION"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.6.1"
+anchors = [
+    "[2023:9.6.1:P004:p241]",
+]
+summary = "Simulation automatically terminates when all program blocks finish their execute blocks, regardless of any child-process status."
+related_clauses = [
+    "24.7",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.6.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.6.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.6.1"
+
+[[requirements]]
+id = "SV-2023-09-REPEAT-EVENT-CONTROL-COUNT"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.4.5"
+anchors = [
+    "[2023:9.4.5:P004:p237-238]",
+]
+summary = "A repeat event control delays an intra-assignment update until the specified number of occurrences of its event."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.4.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.4.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.4.5"
+
+[[requirements]]
+id = "SV-2023-09-REPEAT-EVENT-COUNT-SAMPLED-ONCE"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.4.5"
+anchors = [
+    "[2023:9.4.5:P004:p237-238]",
+]
+summary = "The repeat count expression for an intra-assignment event control is evaluated once before scheduling; later changes to any part of that expression do not alter the scheduled count."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.4.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.4.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.4.5"
+
+[[requirements]]
+id = "SV-2023-09-REPEAT-EVENT-NONPOSITIVE-UNKNOWN-COUNT"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.4.5"
+anchors = [
+    "[2023:9.4.5:P004:p237-238]",
+]
+summary = "If an intra-assignment repeat count evaluates to zero, a negative value, X, or Z, the assignment proceeds as though the repeat construct were absent."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.4.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.4.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.4.5"
+
+[[requirements]]
+id = "SV-2023-09-REPEAT-EVENT-SIMULTANEOUS-CONSTITUENTS-COUNT-SEPARATELY"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.4.5"
+anchors = [
+    "[2023:9.4.5:P019:p240]",
+]
+summary = "When multiple constituent events of a repeat event control occur at the same simulation time, each occurrence is detected and counted separately toward the repeat count."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.4.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.4.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.4.5"
+
+[[requirements]]
+id = "SV-2023-09-RETURN-FROM-TASK-TERMINATES-CURRENT-PROCESS"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.6.2"
+anchors = [
+    "[2023:9.6.2:P008:p243]",
+]
+summary = "A return statement in a task terminates execution of the process in which that return executes, unlike disabling the task name across activations."
+related_clauses = [
+    "12.8",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.6.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.6.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.6.2"
+
+[[requirements]]
+id = "SV-2023-09-RETURN-ILLEGAL-IN-FORK-JOIN"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.3.2"
+anchors = [
+    "[2023:9.3.2:P009:p227]",
+]
+summary = "A return statement in the context of a fork-join block is illegal and shall cause a compile-time error."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.3.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.3.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.3.2"
+
+[[requirements]]
+id = "SV-2023-09-SDF-OVERRIDDEN-DELAY-REEVALUATION"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.4.1"
+anchors = [
+    "[2023:9.4.1:P001:p232]",
+]
+summary = "When SDF annotation overrides a specify parameter used in a delay expression, that delay expression is reevaluated using the override."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.4.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.4.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.4.1"
+
+[[requirements]]
+id = "SV-2023-09-SEQUENCE-EVENT-ASSERT-LIKE-INSTANTIATION"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.4.2.4"
+anchors = [
+    "[2023:9.4.2.4:P005:p236]",
+]
+summary = "A sequence used in an event control is instantiated as if by an assert property statement, and synchronization is to its endpoint regardless of its start time."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.4.2.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.4.2.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.4.2.4"
+
+[[requirements]]
+id = "SV-2023-09-SEQUENCE-EVENT-BLOCK-UNTIL-ENDPOINT"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.4.2.4"
+anchors = [
+    "[2023:9.4.2.4:P002:p235]",
+]
+summary = "A process executing an event control on a sequence instance blocks until that sequence reaches its endpoint."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.4.2.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.4.2.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.4.2.4"
+
+[[requirements]]
+id = "SV-2023-09-SEQUENCE-EVENT-RESUME-AFTER-OBSERVED"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.4.2.4"
+anchors = [
+    "[2023:9.4.2.4:P002:p235]",
+]
+summary = "A process released by a sequence endpoint resumes after the Observed region in which that endpoint is detected."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.4.2.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.4.2.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.4.2.4"
+
+[[requirements]]
+id = "SV-2023-09-SEQUENCE-EVENT-STATIC-ARGUMENTS"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.4.2.4"
+anchors = [
+    "[2023:9.4.2.4:P005:p236]",
+]
+summary = "Arguments passed to a sequence used in an event control shall be static; using an automatic variable as such an argument is an error."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.4.2.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.4.2.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.4.2.4"
+
+[[requirements]]
+id = "SV-2023-09-SEQUENCE-INSTANCE-EVENT"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.4.2.4"
+anchors = [
+    "[2023:9.4.2.4:P001:p235]",
+]
+summary = "A sequence instance may appear directly in an event expression and triggers the controlled procedural statement when the sequence successfully matches."
+related_clauses = [
+    "16.7",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.4.2.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.4.2.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.4.2.4"
+
+[[requirements]]
+id = "SV-2023-09-SEQUENCE-TRIGGERED-PERSISTS-TIME-STEP"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.4.4"
+anchors = [
+    "[2023:9.4.4:P002:p236]",
+]
+summary = "Once set, a sequence's triggered status remains true for the rest of the current time step and clears when simulation time advances."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.4.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.4.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.4.4"
+
+[[requirements]]
+id = "SV-2023-09-SEQUENCE-TRIGGERED-SET-IN-OBSERVED"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.4.4"
+anchors = [
+    "[2023:9.4.4:P002:p236]",
+]
+summary = "A sequence's triggered status is set during the Observed region in which its endpoint is reached."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.4.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.4.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.4.4"
+
+[[requirements]]
+id = "SV-2023-09-SEQUENCE-TRIGGERED-STATUS-VALUE"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.4.4"
+anchors = [
+    "[2023:9.4.4:P001:p236]",
+    "[2023:9.4.4:P002:p236]",
+]
+summary = "A named sequence's triggered method returns 1'b1 when that sequence has reached its endpoint in the current time step and returns 1'b0 otherwise, so it may serve as a level-sensitive wait condition."
+related_clauses = [
+    "16.7",
+    "16.9.11",
+    "16.13.6",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.4.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.4.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.4.4"
+
+[[requirements]]
+id = "SV-2023-09-SEQUENTIAL-BLOCK-DECLARATION-FORMS"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.3.1"
+anchors = [
+    "[2023:9.3.1:G001:p225]",
+]
+summary = "A sequential-block item declaration is an optionally attributed data declaration, local parameter declaration, parameter declaration, or let declaration, with semicolons as prescribed by each grammar alternative."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "changed-expectation"
+clause = "9.3.1"
+note = "The 2012 block_item_declaration grammar additionally admits an attributed overload declaration, which the 2023 alternatives in this requirement omit."
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.3.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.3.1"
+
+[[requirements]]
+id = "SV-2023-09-SEQUENTIAL-BLOCK-DELIMITERS"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.3"
+anchors = [
+    "[2023:9.3:P002:p224]",
+    "[2023:9.3.1:G001:p225]",
+]
+summary = "A sequential block is delimited by begin and end."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.3"
+
+[[requirements]]
+id = "SV-2023-09-SEQUENTIAL-BLOCK-ITEM-ORDER"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.3.1"
+anchors = [
+    "[2023:9.3.1:G001:p225]",
+]
+summary = "Within a sequential block, zero or more block item declarations precede zero or more statements or null statements."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.3.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.3.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.3.1"
+
+[[requirements]]
+id = "SV-2023-09-SEQUENTIAL-BLOCK-OPTIONAL-IDENTIFIERS"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.3.1"
+anchors = [
+    "[2023:9.3.1:G001:p225]",
+]
+summary = "A sequential block may have an identifier after begin and may have an identifier after end."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.3.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.3.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.3.1"
+
+[[requirements]]
+id = "SV-2023-09-SEQUENTIAL-BLOCK-ORDER"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.3"
+anchors = [
+    "[2023:9.3:P002:p224]",
+    "[2023:9.3.1:L001:p225]",
+    "[2023:9.3.1:P004:p225]",
+]
+summary = "Statements in a sequential block execute one after another in their given source order."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.3"
+
+[[requirements]]
+id = "SV-2023-09-SEQUENTIAL-BLOCK-RELATIVE-DELAYS"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.3.1"
+anchors = [
+    "[2023:9.3.1:L002:p225]",
+]
+summary = "Each statement delay in a sequential block is measured relative to the simulation time at which the previous statement executes."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.3.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.3.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.3.1"
+
+[[requirements]]
+id = "SV-2023-09-SPECIFY-PARAMETER-DELAY-EXPRESSION"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.4.1"
+anchors = [
+    "[2023:9.4.1:P001:p232]",
+]
+summary = "A specify parameter is permitted in a procedural delay expression."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.4.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.4.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.4.1"
+
+[[requirements]]
+id = "SV-2023-09-THREAD-FOR-ALWAYS-PROCEDURE"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.5"
+anchors = [
+    "[2023:9.5:L003:p240]",
+]
+summary = "SystemVerilog creates a thread for each always, always_comb, always_latch, and always_ff procedure."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.5"
+
+[[requirements]]
+id = "SV-2023-09-THREAD-FOR-DYNAMIC-PROCESS"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.5"
+anchors = [
+    "[2023:9.5:L005:p240]",
+]
+summary = "SystemVerilog creates a thread for each dynamic process."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.5"
+
+[[requirements]]
+id = "SV-2023-09-THREAD-FOR-INITIAL-PROCEDURE"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.5"
+anchors = [
+    "[2023:9.5:L001:p240]",
+]
+summary = "SystemVerilog creates a thread of execution for each initial procedure."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.5"
+
+[[requirements]]
+id = "SV-2023-09-THREAD-FOR-PARALLEL-STATEMENT"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.5"
+anchors = [
+    "[2023:9.5:L004:p240]",
+]
+summary = "SystemVerilog creates a thread for each parallel statement in a fork block using join, join_any, or join_none."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.5"
+
+[[requirements]]
+id = "SV-2023-09-UNBOUNDED-INITIAL-ALWAYS-COUNT"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.2"
+anchors = [
+    "[2023:9.2:P004:p220]",
+]
+summary = "A module may contain any number of initial and always procedures; the language imposes no fixed count limit."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.2"
+
+[[requirements]]
+id = "SV-2023-09-UNKNOWN-DELAY-IS-ZERO"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.4.1"
+anchors = [
+    "[2023:9.4.1:P001:p232]",
+]
+summary = "A procedural delay expression evaluating to X or Z is interpreted as zero delay."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.4.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.4.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.4.1"
+
+[[requirements]]
+id = "SV-2023-09-UNNAMED-BLOCK-DECLARATION-SCOPE"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.3.4"
+anchors = [
+    "[2023:9.3.4:P002:p229]",
+]
+summary = "An unnamed block creates a new unnamed hierarchy scope only when it directly contains a block item declaration."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.3.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.3.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.3.4"
+
+[[requirements]]
+id = "SV-2023-09-UNNAMED-BLOCK-NO-HIERARCHICAL-ACCESS"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.3.4"
+anchors = [
+    "[2023:9.3.4:P002:p229]",
+]
+summary = "Items declared in an unnamed block scope cannot be referenced hierarchically."
+related_clauses = [
+    "6.21",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.3.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.3.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.3.4"
+
+[[requirements]]
+id = "SV-2023-09-WAIT-FORK-WAITS-FOR-TERMINATION"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.6"
+anchors = [
+    "[2023:9.6:P001:p240]",
+    "[2023:9.6.1:P001:p241]",
+]
+summary = "wait fork blocks the current process until all of its immediate child subprocesses have terminated, excluding descendants of those children."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "same-rule-different-clause"
+clause = "9.6.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.6"
+
+[[requirements]]
+id = "SV-2023-09-WAIT-LEVEL-SENSITIVE-BLOCKING"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.4.3"
+anchors = [
+    "[2023:9.4.3:P001:p236]",
+    "[2023:9.4.3:P002:p236]",
+]
+summary = "A wait(expression) evaluates its condition and, while the condition is not true under conditional truth rules, blocks its following statement until the condition becomes true, then continues."
+related_clauses = [
+    "12.4",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.4.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.4.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.4.3"
+
+[[requirements]]
+id = "SV-2023-09-WAIT-STATEMENT-SYNTAX"
+standard_revision = "1800-2023"
+part = "9"
+clause = "9.4"
+anchors = [
+    "[2023:9.4:G001:p231]",
+    "[2023:9.4.3:G001:p236]",
+    "[2023:9.6:G001:p240]",
+    "[2023:9.6.1:P003:p241]",
+]
+summary = "A wait statement is wait(expression) followed by a statement or null statement, wait fork followed by a semicolon, or wait_order with one or more comma-separated hierarchical identifiers followed by an action block."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "9.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "9.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "9.4"

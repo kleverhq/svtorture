@@ -1,0 +1,1671 @@
+{
+  "authority": "1800-2023",
+  "part": "22",
+  "requirements": [
+    {
+      "hints": {
+        "edge": [
+          "Place endcelldefine within one module and ensure a following module is processed in the non-cell state."
+        ],
+        "negative": [],
+        "notes": [
+          "Do not turn the recommended outside-design-element style into a rejection expectation."
+        ],
+        "positive": [
+          "Place a celldefine state transition within a design element and ensure the source is accepted."
+        ]
+      },
+      "id": "SV-2023-22-CELLDEFINE-PLACEMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use unpaired directives and multiple state transitions and verify the latest directive governs subsequent modules."
+        ],
+        "negative": [],
+        "notes": [
+          "Materialization requires a portable standard PLI oracle for cell-module tagging."
+        ],
+        "positive": [
+          "Place one module after `celldefine and another after `endcelldefine and distinguish their cell tagging through a standard PLI cell-property observation."
+        ]
+      },
+      "id": "SV-2023-22-CELLDEFINE-TAGGING-SCOPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place apparent `else or `endif text inside a comment, string, and macro definition and verify the surrounding block continues."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Terminate selected `ifdef and `elsif blocks with each permitted following directive and an `else block with `endif."
+        ]
+      },
+      "id": "SV-2023-22-CONDITIONAL-BLOCK-TERMINATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an empty block and omit both `elsif and `else."
+        ],
+        "negative": [
+          "Place `elsif after `else or omit the terminating `endif."
+        ],
+        "notes": [
+          "The grammar anchor is visually sensitive; materialize directive prefixes as grave accents."
+        ],
+        "positive": [
+          "Use each opening directive with a simple macro identifier and terminate with `endif.",
+          "Use multiple `elsif branches, an `else, and a parenthesized expression combining supported operators."
+        ]
+      },
+      "id": "SV-2023-22-CONDITIONAL-COMPILATION-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Conditionally select text that completes a surrounding syntactic context."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use conditional directives at a design-unit boundary and within a design element to select complete source fragments."
+        ]
+      },
+      "id": "SV-2023-22-CONDITIONAL-DIRECTIVE-PLACEMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Indent conditional directives and add trailing whitespace."
+        ],
+        "negative": [
+          "Remove whitespace where needed to prevent two tokens from merging."
+        ],
+        "notes": [],
+        "positive": [
+          "Vary spaces and tabs around conditional directive tokens while preserving token separation."
+        ]
+      },
+      "id": "SV-2023-22-CONDITIONAL-DIRECTIVE-WHITESPACE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Put the same directive in an ignored branch and verify it has no later effect."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Put a stateful directive in a selected conditional branch and observe its later effect."
+        ]
+      },
+      "id": "SV-2023-22-CONDITIONAL-EMBEDDED-DIRECTIVE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Redefine or undefine a macro before a condition and verify evaluation uses current definition state."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Evaluate conditions using defined and undefined macro identifiers with logical operators and parentheses."
+        ]
+      },
+      "id": "SV-2023-22-CONDITIONAL-EXPRESSION-EVALUATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Make multiple conditions true and verify only the earliest true branch is processed.",
+          "Use optional empty blocks in the chain."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Create several `elsif conditions with exactly one success and verify only the first successful block is processed.",
+          "Make all tested conditions fail and verify the `else block is processed."
+        ]
+      },
+      "id": "SV-2023-22-CONDITIONAL-FIRST-SUCCESSFUL-BRANCH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Restore `default_nettype wire before a later otherwise identical implicit-net context."
+        ],
+        "negative": [
+          "Reference a net in an implicit-net context while `default_nettype none is active without declaring it."
+        ],
+        "notes": [],
+        "positive": [
+          "Under `default_nettype none, explicitly declare every referenced net."
+        ]
+      },
+      "id": "SV-2023-22-DEFAULT-NETTYPE-NONE-REQUIRES-DECLARATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Issue multiple directives and verify each affects only subsequent implicit nets; in a fresh compilation unit verify the no-directive type is wire."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Select a non-wire listed type and observe the type of a subsequently created implicit net."
+        ]
+      },
+      "id": "SV-2023-22-DEFAULT-NETTYPE-STATE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use none as the listed value while avoiding any implicit-net context."
+        ],
+        "negative": [
+          "Place `default_nettype within a design element or supply an unlisted value."
+        ],
+        "notes": [],
+        "positive": [
+          "Place representative listed values between design elements."
+        ]
+      },
+      "id": "SV-2023-22-DEFAULT-NETTYPE-SYNTAX-PLACEMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Supersede a directive later in the compilation unit and distinguish source before and after it.",
+          "Verify directive state does not extend beyond completion of its compilation unit."
+        ],
+        "negative": [],
+        "notes": [
+          "Choose a stateful directive whose effect has a portable observation."
+        ],
+        "positive": [
+          "Set a stateful directive in one file and observe its effect in another file of the same compilation unit."
+        ]
+      },
+      "id": "SV-2023-22-DIRECTIVE-COMPILATION-UNIT-SCOPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place grave-accent and apostrophe-prefixed spellings in comparable source contexts to distinguish the characters."
+        ],
+        "negative": [
+          "Replace the grave accent on an otherwise valid directive with an apostrophe."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a grave accent before a defined compiler-directive name."
+        ]
+      },
+      "id": "SV-2023-22-DIRECTIVE-GRAVE-ACCENT-PREFIX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an ordinary identifier spelled `define without a grave accent in an identifier-legal context."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare and use an ordinary identifier with the same spelling as a macro, then invoke the macro with grave accent."
+        ]
+      },
+      "id": "SV-2023-22-DIRECTIVE-KEYWORD-NAMESPACE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast a normal defined macro name with an undeclared directive-keyword name."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Test a compiler-directive keyword spelling with `ifdef without defining a macro of that name and select the false branch."
+        ]
+      },
+      "id": "SV-2023-22-DIRECTIVE-NAMES-UNDEFINED-IN-CONDITIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast an indeterminate-text directive whose termination consumes a newline with one whose defined end permits following text."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Follow a completely terminated directive with a valid language element on the same line."
+        ]
+      },
+      "id": "SV-2023-22-DIRECTIVE-SAME-LINE-FOLLOWING-ELEMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an element whose own grammar does not permit termination at the directive position."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Place a complete language element before an otherwise valid directive on one line."
+        ]
+      },
+      "id": "SV-2023-22-DIRECTIVE-SAME-LINE-PRECEDING-ELEMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a directive with explicitly defined multiline support."
+        ],
+        "negative": [
+          "Continue an ordinary directive onto a second line without directive-specific continuation support."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a complete ordinary directive on one line."
+        ]
+      },
+      "id": "SV-2023-22-DIRECTIVE-SINGLE-LINE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare an empty actual with an omitted trailing actual."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Supply an empty actual to a defaulted formal and to a nondefaulted formal."
+        ]
+      },
+      "id": "SV-2023-22-EMPTY-MACRO-ACTUAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast omission, an explicitly empty actual, and an actual containing an empty-macro use."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Pass an empty-macro use to a formal with a nonempty default and observe empty substitution."
+        ]
+      },
+      "id": "SV-2023-22-EMPTY-MACRO-BYPASSES-DEFAULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place an empty macro invocation between tokens and observe only removal of the invocation."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Define and invoke a macro with no replacement text."
+        ]
+      },
+      "id": "SV-2023-22-EMPTY-MACRO-TEXT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Invoke it in an included file whose include spelling differs from the tool-opened path, without requiring a platform-specific path format."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Expand `__FILE__ inside an input file and verify it is a string representing the opened current file path."
+        ]
+      },
+      "id": "SV-2023-22-FILE-PREDEFINED-MACRO"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare `ifndef (A && B) with `ifdef (!(A && B)) rather than negating only one operand."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare `ifndef M with `ifdef (!M) for both defined and undefined M."
+        ]
+      },
+      "id": "SV-2023-22-IFNDEF-NEGATED-IFDEF"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use tokens that are lexically valid but would be grammatically invalid if selected."
+        ],
+        "negative": [
+          "Place an unterminated string or block comment in an ignored block."
+        ],
+        "notes": [],
+        "positive": [
+          "Place syntactically incomplete but lexically valid source tokens in an ignored block."
+        ]
+      },
+      "id": "SV-2023-22-IGNORED-CONDITIONAL-TEXT-LEXICAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast the same existing file named by an absolute quoted path and an angle-bracket path."
+        ],
+        "negative": [
+          "Put an absolute path in angle brackets."
+        ],
+        "notes": [
+          "Use a generated absolute path to avoid host-specific fixtures."
+        ],
+        "positive": [
+          "Include an existing absolute path in double quotes."
+        ]
+      },
+      "id": "SV-2023-22-INCLUDE-ABSOLUTE-PATH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a relative subpath under the implementation's standard-file location."
+        ],
+        "negative": [
+          "Configure an unrelated ordinary user include directory and expect angle-bracket search to use it."
+        ],
+        "notes": [
+          "Materialization requires knowledge of an implementation-provided standard-file location and is unsuitable where none is exposed."
+        ],
+        "positive": [
+          "Use an angle-bracket include resolved in the implementation's standard-file location."
+        ]
+      },
+      "id": "SV-2023-22-INCLUDE-ANGLE-SEARCH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Put a block comment before the directive on its line and a comment after the directive."
+        ],
+        "negative": [
+          "Put a language token after the filename on an `include line."
+        ],
+        "notes": [],
+        "positive": [
+          "Put whitespace and a trailing line or block comment on an `include line."
+        ]
+      },
+      "id": "SV-2023-22-INCLUDE-LINE-CONTENTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Do not infer support for a sixteenth level, because an implementation limit of exactly 15 is permitted."
+        ],
+        "negative": [],
+        "notes": [
+          "Count nesting levels consistently when generating files."
+        ],
+        "positive": [
+          "Construct a finite chain of 15 nested include-file levels and verify all levels contribute source text."
+        ]
+      },
+      "id": "SV-2023-22-INCLUDE-MINIMUM-NESTING-DEPTH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use several finite levels while keeping the chain below any implementation limit."
+        ],
+        "negative": [
+          "Create a direct or indirect recursive include chain with no finite nesting depth."
+        ],
+        "notes": [
+          "Count nesting levels consistently."
+        ],
+        "positive": [
+          "Construct a short finite nested include chain in which every file contributes an observable token."
+        ]
+      },
+      "id": "SV-2023-22-INCLUDE-NESTING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place includes at design-unit boundaries and within a design unit."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Place `include at a source location nested within a syntactic construct where the inserted text completes that context."
+        ]
+      },
+      "id": "SV-2023-22-INCLUDE-PLACEMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a user-configured include location, recognizing that searching it is permitted rather than mandatory."
+        ],
+        "negative": [],
+        "notes": [
+          "Do not require optional user-location search without explicit tool configuration."
+        ],
+        "positive": [
+          "Include a quoted relative path found from the compiler current working directory."
+        ]
+      },
+      "id": "SV-2023-22-INCLUDE-QUOTED-SEARCH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a filename containing path separators within each delimiter form."
+        ],
+        "negative": [
+          "Use an unquoted, non-bracketed filename after `include."
+        ],
+        "notes": [],
+        "positive": [
+          "Include a relative filename using quotes and using angle brackets."
+        ]
+      },
+      "id": "SV-2023-22-INCLUDE-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Include text whose meaning depends on the syntactic context at the insertion location."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Include a file containing declarations used by following source."
+        ]
+      },
+      "id": "SV-2023-22-INCLUDE-TEXTUAL-SUBSTITUTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use syntax whose semantics exist only in a later standard and verify keyword selection alone does not switch the language semantic revision."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use an identifier that became a keyword after an older selected version and verify it is available as an identifier only inside that older-version block."
+        ]
+      },
+      "id": "SV-2023-22-KEYWORD-DIRECTIVE-ONLY-RESERVED-SET"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Process `resetall inside the delimited source span and verify the selected keyword set remains active."
+        ],
+        "negative": [
+          "Place either keyword directive inside a design element."
+        ],
+        "notes": [],
+        "positive": [
+          "Begin a keyword region between design elements, continue it into another source file, and end it there or later."
+        ]
+      },
+      "id": "SV-2023-22-KEYWORD-DIRECTIVE-PLACEMENT-SCOPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise the 1364-2001-noconfig spelling and oldest/newest listed versions."
+        ],
+        "negative": [
+          "Omit quotes around a version or supply an argument to `end_keywords."
+        ],
+        "notes": [],
+        "positive": [
+          "Use each standardized quoted version specifier and an argumentless `end_keywords."
+        ]
+      },
+      "id": "SV-2023-22-KEYWORD-DIRECTIVE-SYNTAX-VERSIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place a keyword-sensitive identifier immediately inside and immediately outside the delimited block."
+        ],
+        "negative": [
+          "Use either directive unpaired or put `end_keywords before its corresponding `begin_keywords."
+        ],
+        "notes": [],
+        "positive": [
+          "Surround source with a valid `begin_keywords version and later `end_keywords."
+        ]
+      },
+      "id": "SV-2023-22-KEYWORD-DIRECTIVES-PAIRED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Sample each of the table's three columns, including strength, switch, control-flow, declaration, and net keywords."
+        ],
+        "negative": [
+          "Attempt ordinary identifier declarations using representative listed words such as parameter, primitive, event, for, real, while, function, or wire."
+        ],
+        "notes": [
+          "This requirement partitions the normative table for tractable test generation; all listed row entries remain mandatory reserved words."
+        ],
+        "positive": [
+          "Select 1364-1995 and use representative words from rows R19 through R30 in their keyword roles."
+        ]
+      },
+      "id": "SV-2023-22-KEYWORDS-1364-1995-R19-R30"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Cover strength, procedural, switch, net, and operator keywords from all three rows."
+        ],
+        "negative": [
+          "Attempt ordinary identifier declarations using each listed word."
+        ],
+        "notes": [],
+        "positive": [
+          "Select 1364-1995 and use each listed word in a valid keyword role."
+        ]
+      },
+      "id": "SV-2023-22-KEYWORDS-1364-1995-R31-R33"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify words introduced only in later keyword sets remain available as ordinary identifiers under 1364-1995."
+        ],
+        "negative": [
+          "Attempt ordinary identifier declarations using representative listed words from each cited row range."
+        ],
+        "notes": [
+          "This requirement is the R00\u2013R18 partition of the visually verified normative table; later rows are cataloged separately."
+        ],
+        "positive": [
+          "Select 1364-1995 and use representative listed words from rows R00 through R18 in their keyword roles."
+        ]
+      },
+      "id": "SV-2023-22-KEYWORDS-1364-1995-TABLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast an added 1364-2001 word used as an identifier under 1364-1995 and as a reserved word under 1364-2001."
+        ],
+        "negative": [
+          "Attempt ordinary identifier declarations using additions such as automatic, config, signed, library, endgenerate, or localparam."
+        ],
+        "notes": [
+          "Table 22-2 requires visual review; subsequent row groups are cataloged separately."
+        ],
+        "positive": [
+          "Select 1364-2001 and use representative inherited 1364-1995 keywords and added Table 22-2 words in valid roles."
+        ]
+      },
+      "id": "SV-2023-22-KEYWORDS-1364-2001-ADDITIONS-R00-R05"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast these words under 1364-1995, where they are not added by Table 22-2."
+        ],
+        "negative": [
+          "Attempt ordinary identifier declarations using each listed word under 1364-2001."
+        ],
+        "notes": [],
+        "positive": [
+          "Use each listed word in a valid 1364-2001 keyword role."
+        ]
+      },
+      "id": "SV-2023-22-KEYWORDS-1364-2001-ADDITIONS-R06-R07"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast each excluded word under 1364-2001, where it is reserved, and under 1364-2001-noconfig."
+        ],
+        "negative": [
+          "Treat nonexcluded 1364-2001 additions such as automatic, signed, generate, or genvar as ordinary identifiers."
+        ],
+        "notes": [],
+        "positive": [
+          "Under 1364-2001-noconfig, declare ordinary identifiers using each excluded configuration word."
+        ]
+      },
+      "id": "SV-2023-22-KEYWORDS-1364-2001-NOCONFIG-EXCLUSIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast uwire as an identifier under 1364-2001 and as reserved under 1364-2005."
+        ],
+        "negative": [
+          "Attempt to declare an ordinary identifier named uwire under 1364-2005."
+        ],
+        "notes": [],
+        "positive": [
+          "Select 1364-2005 and use uwire in its net-type keyword role."
+        ]
+      },
+      "id": "SV-2023-22-KEYWORDS-1364-2005-UWIRE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast a Table 22-4 addition with inherited words; additions are cataloged separately."
+        ],
+        "negative": [],
+        "notes": [
+          "Table 22-4 additions are owned by the row-partition requirements."
+        ],
+        "positive": [
+          "Select 1800-2005 and verify representative keywords inherited from each preceding version remain reserved."
+        ]
+      },
+      "id": "SV-2023-22-KEYWORDS-1800-2005-INHERITANCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Sample each table column and language area, including assertions, randomization, coverage, types, classes, and procedural control."
+        ],
+        "negative": [
+          "Attempt ordinary identifier declarations using representative words from every row, such as alias, always_comb, enum, assert, ref, bind, foreach, bit, break, or static."
+        ],
+        "notes": [
+          "This requirement partitions Table 22-4 for tractable complete coverage."
+        ],
+        "positive": [
+          "Select 1800-2005 and use representative listed words in their valid keyword roles."
+        ]
+      },
+      "id": "SV-2023-22-KEYWORDS-1800-2005-R00-R11"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Sample all table columns and cover types, classes, interfaces, assertions, coverage, timing declarations, and control-flow words."
+        ],
+        "negative": [
+          "Attempt ordinary identifier declarations using representative words from every row, such as byte, class, interface, constraint, timeunit, logic, union, or unique."
+        ],
+        "notes": [
+          "This requirement partitions Table 22-4 for tractable complete coverage."
+        ],
+        "positive": [
+          "Select 1800-2005 and use representative listed words in valid keyword roles."
+        ]
+      },
+      "id": "SV-2023-22-KEYWORDS-1800-2005-R12-R23"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Sample all columns and cover class, package, interface, program, assertion, randomization, and type-related words."
+        ],
+        "negative": [
+          "Attempt ordinary identifier declarations using representative words such as dist, virtual, package, wildcard, priority, program, property, or protected."
+        ],
+        "notes": [
+          "This requirement completes partitioned coverage of Table 22-4."
+        ],
+        "positive": [
+          "Select 1800-2005 and use representative listed words in valid keyword roles."
+        ]
+      },
+      "id": "SV-2023-22-KEYWORDS-1800-2005-R24-R32"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast these assertion, checker, temporal, and type-related words against the 1800-2005 keyword set."
+        ],
+        "negative": [
+          "Attempt ordinary identifier declarations using representative additions such as checker, unique0, eventually, global, implies, let, weak, or strong."
+        ],
+        "notes": [],
+        "positive": [
+          "Select 1800-2009 and use each listed word in a valid keyword role."
+        ]
+      },
+      "id": "SV-2023-22-KEYWORDS-1800-2009-ADDITIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast a Table 22-5 addition with inherited words; additions are cataloged separately."
+        ],
+        "negative": [],
+        "notes": [
+          "Table 22-5 additions are owned by the additions requirement."
+        ],
+        "positive": [
+          "Select 1800-2009 and verify representative keywords inherited from each earlier set remain reserved."
+        ]
+      },
+      "id": "SV-2023-22-KEYWORDS-1800-2009-INHERITANCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast implements and nettype against the 1800-2009 set."
+        ],
+        "negative": [
+          "Attempt ordinary identifier declarations named implements or nettype."
+        ],
+        "notes": [
+          "Table 22-6 row R01 is cataloged separately."
+        ],
+        "positive": [
+          "Select 1800-2012 and use implements and nettype in valid keyword roles while checking representative inherited words."
+        ]
+      },
+      "id": "SV-2023-22-KEYWORDS-1800-2012-INHERITANCE-R00"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast both words against the 1800-2009 keyword set."
+        ],
+        "negative": [
+          "Attempt ordinary identifier declarations named interconnect or soft under 1800-2012."
+        ],
+        "notes": [],
+        "positive": [
+          "Use interconnect and soft in valid keyword roles under 1800-2012."
+        ]
+      },
+      "id": "SV-2023-22-KEYWORDS-1800-2012-R01"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the same keyword-sensitive source under 1800-2017 and 1800-2023 and expect no reserved-set difference."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Select 1800-2017 and 1800-2023 and verify representative cumulative keywords, including 1800-2012 additions, remain reserved."
+        ]
+      },
+      "id": "SV-2023-22-KEYWORDS-1800-2017-2023-INHERITED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Process `resetall after `line and verify the source mapping continues rather than reverting."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Set a synthetic file name and line number with `line, then observe them through `__FILE__ and `__LINE__ on the following line."
+        ]
+      },
+      "id": "SV-2023-22-LINE-DIRECTIVE-MAPPING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use leading and trailing spaces and tabs only."
+        ],
+        "negative": [
+          "Add a comment or language token on the same line as `line."
+        ],
+        "notes": [],
+        "positive": [
+          "Place `line at different source nesting locations with only surrounding whitespace."
+        ]
+      },
+      "id": "SV-2023-22-LINE-DIRECTIVE-PLACEMENT-CONTENTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use line number 1 and filenames containing path separators."
+        ],
+        "negative": [
+          "Omit a parameter, use zero as the line number, or use a level outside 0 through 2."
+        ],
+        "notes": [],
+        "positive": [
+          "Use all three levels with positive line numbers and relative or full-path filename strings."
+        ]
+      },
+      "id": "SV-2023-22-LINE-DIRECTIVE-SYNTAX-PARAMETERS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a synthetic filename in a different directory while keeping library configuration fixed."
+        ],
+        "negative": [],
+        "notes": [
+          "Materialization must isolate library search from quoted-include search and avoid tool-specific library configuration assumptions."
+        ],
+        "positive": [
+          "Apply `line with a synthetic path before a construct requiring configured library resolution and verify resolution is unchanged."
+        ]
+      },
+      "id": "SV-2023-22-LINE-DOES-NOT-AFFECT-LIBRARY-SEARCH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place it on the line immediately following a `line directive and verify the remapped number."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use `__LINE__ in a constant expression and compare it with its source line."
+        ]
+      },
+      "id": "SV-2023-22-LINE-PREDEFINED-MACRO"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use nested matched delimiter pairs and a triple-quoted string containing delimiters."
+        ],
+        "negative": [
+          "Place an unprotected comma within one intended actual argument."
+        ],
+        "notes": [],
+        "positive": [
+          "Pass actuals containing commas inside matched braces, parentheses, and strings."
+        ]
+      },
+      "id": "SV-2023-22-MACRO-ACTUAL-DELIMITERS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use actual expressions whose surrounding replacement text makes correspondence observable."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Invoke an object-like macro repeatedly and observe identical replacement.",
+          "Invoke a macro whose formals occur multiple times using distinct actual expressions."
+        ]
+      },
+      "id": "SV-2023-22-MACRO-ACTUAL-SUBSTITUTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Omit every actual when every formal has a default, while retaining the required call parentheses."
+        ],
+        "negative": [
+          "Omit a trailing actual whose formal lacks a default."
+        ],
+        "notes": [],
+        "positive": [
+          "Omit trailing actuals whose remaining formals all have defaults and observe those defaults."
+        ]
+      },
+      "id": "SV-2023-22-MACRO-CALL-ARITY-AND-DEFAULTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast an empty actual in an existing argument position with an extra comma that creates an excess position."
+        ],
+        "negative": [
+          "Supply one more actual argument than the number of formals."
+        ],
+        "notes": [],
+        "positive": [
+          "Call a function-like macro with exactly one actual per formal."
+        ]
+      },
+      "id": "SV-2023-22-MACRO-CALL-EXCESS-ACTUALS-ERROR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Invoke a simple-name macro both with and without intervening whitespace."
+        ],
+        "negative": [
+          "Invoke an escaped-name macro without identifier-terminating whitespace."
+        ],
+        "notes": [],
+        "positive": [
+          "Invoke a simple-name function-like macro with whitespace before `(` and an escaped-name macro with required terminating whitespace."
+        ]
+      },
+      "id": "SV-2023-22-MACRO-CALL-NAME-WHITESPACE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place unescaped newlines inside a block comment embedded in a continued macro."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Put comments in replacement text and observe their removal on expansion.",
+          "Continue after a line comment using backslash-newline."
+        ]
+      },
+      "id": "SV-2023-22-MACRO-COMMENT-REMOVAL-AND-CONTINUATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Define in one file and use in a later file of the same compilation unit."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Define a macro outside a design element and use it in multiple later design elements in the same compilation unit."
+        ]
+      },
+      "id": "SV-2023-22-MACRO-COMPILATION-UNIT-VISIBILITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Define a one-formal macro with empty default text and a macro with no formal list."
+        ],
+        "negative": [
+          "Define a formal argument using an escaped identifier."
+        ],
+        "notes": [],
+        "positive": [
+          "Define an object-like macro and a function-like macro with multiple formals, including a defaulted formal."
+        ]
+      },
+      "id": "SV-2023-22-MACRO-DEFINITION-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Define a macro inside one design element and use it later in the same compilation unit."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Define and subsequently use one macro inside a design element and another between design elements."
+        ]
+      },
+      "id": "SV-2023-22-MACRO-DEFINITION-PLACEMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Define but do not invoke the macro and verify the embedded directive has no effect."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Define macro text containing a stateful directive, invoke the macro, and observe the resulting state."
+        ]
+      },
+      "id": "SV-2023-22-MACRO-EMBEDDED-DIRECTIVE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use nested macro replacement in directive input."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use an object-like macro to supply text consumed by a compiler directive."
+        ]
+      },
+      "id": "SV-2023-22-MACRO-EXPANSION-IN-DIRECTIVE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast an omitted actual having an empty default with an explicitly supplied empty actual."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Omit an actual for a formal with nonempty default text and observe default substitution.",
+          "Omit an actual for a formal explicitly defaulted to empty."
+        ]
+      },
+      "id": "SV-2023-22-MACRO-FORMAL-DEFAULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Add optional whitespace around commas between simple-identifier formals."
+        ],
+        "negative": [
+          "Insert whitespace between a simple macro name and its formal-list opening parenthesis.",
+          "Use an escaped identifier as a formal name."
+        ],
+        "notes": [],
+        "positive": [
+          "Define function-like macros with a simple name immediately followed by `(` and an escaped name followed by exactly its terminating space then `(`."
+        ]
+      },
+      "id": "SV-2023-22-MACRO-FORMAL-LIST-LEXICAL-RULES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use text matching the formal outside the macro definition and verify it has no formal-argument role."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Reference a formal multiple times through the end of replacement text."
+        ]
+      },
+      "id": "SV-2023-22-MACRO-FORMAL-SCOPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a side-effecting actual in replacement text whose runtime context evaluates both formal occurrences, making repeated evaluation observable."
+        ],
+        "negative": [],
+        "notes": [
+          "Control precedence and evaluation paths so the oracle isolates literal duplication."
+        ],
+        "positive": [
+          "Pass a compound expression to a macro whose formal appears twice and observe two literal copies in the resulting expression."
+        ]
+      },
+      "id": "SV-2023-22-MACRO-LITERAL-ACTUAL-SUBSTITUTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place grave-accent-quote characters inside an ordinary string and verify they remain string contents."
+        ],
+        "negative": [
+          "Start an ordinary quoted or triple-quoted literal in macro text without its matching terminator."
+        ],
+        "notes": [
+          "The source anchor is visually sensitive; preserve exact quote/grave-accent character distinctions when materializing."
+        ],
+        "positive": [
+          "Mix macro quote construction with a complete ordinary string literal in replacement text."
+        ]
+      },
+      "id": "SV-2023-22-MACRO-MIXED-QUOTE-DELIMITERS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast an ordinary identifier that may reuse a directive spelling with a macro name, which may not."
+        ],
+        "negative": [
+          "Attempt to define a macro named after a compiler directive such as include."
+        ],
+        "notes": [],
+        "positive": [
+          "Define a macro whose spelling is not a compiler-directive keyword."
+        ]
+      },
+      "id": "SV-2023-22-MACRO-NAME-DIRECTIVE-PROHIBITION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use punctuation permitted inside an escaped identifier but not a simple identifier."
+        ],
+        "negative": [
+          "Use a token that is neither a simple nor escaped identifier as a macro name."
+        ],
+        "notes": [],
+        "positive": [
+          "Define and invoke one simple-identifier macro and one escaped-identifier macro with required terminating whitespace."
+        ]
+      },
+      "id": "SV-2023-22-MACRO-NAME-IDENTIFIER-FORMS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Include an embedded macro use together with a formal inside constructed quoted text."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Define a macro using grave-accent-quote delimiters around a formal and verify the expanded string contains the actual text."
+        ]
+      },
+      "id": "SV-2023-22-MACRO-QUOTE-CONSTRUCTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Redefine with a different formal list and invoke only after the new definition."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Define a macro, use it, redefine it, and use it again to observe old then new replacement text."
+        ]
+      },
+      "id": "SV-2023-22-MACRO-REDEFINITION-LATEST-PREVAILS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast backslash-newline inside and outside a string in otherwise matching macro text."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Continue a string literal in macro text with backslash-newline and observe concatenated string contents."
+        ]
+      },
+      "id": "SV-2023-22-MACRO-STRING-CONTINUATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast adjacent complete tokens with a boundary inserted inside one token."
+        ],
+        "negative": [
+          "End or continue macro text in the middle of a string literal or identifier token."
+        ],
+        "notes": [],
+        "positive": [
+          "Place complete instances of each listed token class in macro replacement text."
+        ]
+      },
+      "id": "SV-2023-22-MACRO-TEXT-CANNOT-SPLIT-TOKEN"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast an unescaped newline in ordinary macro text with one inside a block comment or triple-quoted string; observe that backslash-newline preserves newline but removes backslash."
+        ],
+        "negative": [
+          "Place an ordinary newline outside a block comment or triple-quoted string and expect following text to remain in the macro."
+        ],
+        "notes": [],
+        "positive": [
+          "Define a multiline macro using backslash immediately before each continuing newline."
+        ]
+      },
+      "id": "SV-2023-22-MACRO-TEXT-LINE-CONTINUATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast token concatenation with ordinary whitespace-separated replacement tokens."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Concatenate a formal actual with a fixed identifier suffix using double grave accents."
+        ]
+      },
+      "id": "SV-2023-22-MACRO-TOKEN-CONCATENATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast newlines in a literal triple-quoted string with those in grave-accent-triple-quote construction."
+        ],
+        "negative": [
+          "Use an unescaped newline inside grave-accent-triple-quote construction and expect the macro definition to continue."
+        ],
+        "notes": [],
+        "positive": [
+          "Construct triple-quoted expanded text from a formal using grave-accent-triple-quote and backslash-newline continuations."
+        ]
+      },
+      "id": "SV-2023-22-MACRO-TRIPLE-QUOTE-CONSTRUCTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify the first newline after the closing triple quote terminates the definition when not continued."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Define a macro whose replacement is a multiline triple-quoted string without backslashes on its internal newlines."
+        ]
+      },
+      "id": "SV-2023-22-MACRO-TRIPLE-QUOTED-NEWLINES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use one expression actual argument."
+        ],
+        "negative": [
+          "Invoke a function-like macro with malformed argument separators."
+        ],
+        "notes": [],
+        "positive": [
+          "Invoke an object-like macro and a function-like macro with expression arguments."
+        ]
+      },
+      "id": "SV-2023-22-MACRO-USAGE-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place inner `else and `endif directives where treating them as outer terminators would change selected text."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Nest conditional constructs and independently select inner and outer branches."
+        ]
+      },
+      "id": "SV-2023-22-NESTED-CONDITIONAL-COMPILATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use three nested versions and verify each successive `end_keywords restores the immediately enclosing set."
+        ],
+        "negative": [],
+        "notes": [
+          "Preserve exact version-specifier spelling despite the visual annotation in the anchor."
+        ],
+        "positive": [
+          "Nest two different keyword versions and use version-sensitive identifiers before, within, and after the inner pair."
+        ]
+      },
+      "id": "SV-2023-22-NESTED-KEYWORD-DIRECTIVES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place the inner macro use in an actual argument and separately in a formal default."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Define an outer macro containing an inner macro use, redefine the inner macro before invoking the outer, and observe the later inner definition."
+        ]
+      },
+      "id": "SV-2023-22-NESTED-MACRO-DEFERRED-EXPANSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Test nested uses separately as an actual and as a default."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Nest calls to a macro using same-spelled formal names and verify inner expansion text is not recaptured by the outer substitution."
+        ]
+      },
+      "id": "SV-2023-22-NESTED-MACRO-NO-FORMAL-CAPTURE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Insert a non-macro compiler directive before another directive has ended."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a macro invocation within a directive where the directive grammar permits it."
+        ]
+      },
+      "id": "SV-2023-22-NO-DIRECTIVE-WITHIN-DIRECTIVE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place a real directive adjacent to matching text inside a comment or string."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Place directive-looking text in a comment and in a string literal and observe no directive effect."
+        ]
+      },
+      "id": "SV-2023-22-NO-DIRECTIVES-IN-COMMENTS-OR-STRINGS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast ordinary string contents with the special macro-quote operator used to construct a string."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Put grave-accent macro-looking text and a formal name inside an ordinary string in macro text and observe literal characters."
+        ]
+      },
+      "id": "SV-2023-22-NO-MACRO-SUBSTITUTION-IN-STRING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a pragma name with no expressions and one with multiple comma-separated expressions."
+        ],
+        "negative": [
+          "Use a malformed expression list or a non-simple pragma keyword."
+        ],
+        "notes": [],
+        "positive": [
+          "Form pragmas using each expression and value alternative, including a nested parenthesized expression list."
+        ]
+      },
+      "id": "SV-2023-22-PRAGMA-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Reset one of multiple changed pragma names and verify only named states reset; compare with resetall."
+        ],
+        "negative": [],
+        "notes": [
+          "Materialization requires a standardized or otherwise reliably recognized stateful pragma; do not assume extension-specific values as normative."
+        ],
+        "positive": [
+          "Change a recognized stateful pragma then use pragma reset naming it and verify restoration.",
+          "Change recognized pragma state then use pragma resetall and verify restoration."
+        ]
+      },
+      "id": "SV-2023-22-PRAGMA-RESET-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use nested includes and a `line directive that changes line but repeats the current filename."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Expand both predefined macros before an include, inside the included file, and after return, checking context switch and restoration.",
+          "Apply `line before expanding both macros and observe remapping."
+        ]
+      },
+      "id": "SV-2023-22-PREDEFINED-LOCATION-INCLUDE-AND-LINE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Distinguish self-spelling in an actual argument from self-use introduced by replacement text."
+        ],
+        "negative": [
+          "Define a macro whose replacement directly invokes itself.",
+          "Define two macros whose replacement texts invoke each other."
+        ],
+        "notes": [],
+        "positive": [
+          "Pass a same-macro invocation as an actual in a nonrecursive nesting pattern."
+        ]
+      },
+      "id": "SV-2023-22-RECURSIVE-MACRO-ERROR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare a module processed before reset with one processed afterward."
+        ],
+        "negative": [],
+        "notes": [
+          "Requires a portable standard PLI cell-tag observation."
+        ],
+        "positive": [
+          "Enter celldefine state, process `resetall, and use a standard PLI cell property to verify a subsequent module is not tagged as a cell."
+        ]
+      },
+      "id": "SV-2023-22-RESETALL-CELLDEFINE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify an implicit net created before reset retains its established type while a later one uses wire."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Set default_nettype to a non-wire value, process `resetall, and observe a subsequent implicit net has type wire."
+        ]
+      },
+      "id": "SV-2023-22-RESETALL-DEFAULT-NETTYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place it immediately before and immediately after a design-element boundary."
+        ],
+        "negative": [
+          "Place `resetall lexically inside a module design element."
+        ],
+        "notes": [],
+        "positive": [
+          "Place `resetall between design elements."
+        ]
+      },
+      "id": "SV-2023-22-RESETALL-OUTSIDE-DESIGN-ELEMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast the surviving macro with a stateful directive that has a defined reset value."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Define a macro, process `resetall, and successfully use the same definition afterward."
+        ]
+      },
+      "id": "SV-2023-22-RESETALL-PRESERVES-NONDEFAULT-DIRECTIVES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a later explicit timescale after reset to establish a portable known value again."
+        ],
+        "negative": [],
+        "notes": [
+          "Use a differential oracle; do not assert particular tool-default units or precision."
+        ],
+        "positive": [
+          "Set an explicit timescale, process `resetall, and verify a later design element is no longer governed by that explicit setting without assuming the tool-specific defaults."
+        ]
+      },
+      "id": "SV-2023-22-RESETALL-TIMESCALE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast an input governed before reset with one governed after reset."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Enable `unconnected_drive pull1 or pull0, process `resetall, and observe that a subsequent unconnected input is no longer automatically pulled by that directive."
+        ]
+      },
+      "id": "SV-2023-22-RESETALL-UNCONNECTED-DRIVE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use nested include files and query updated file/line information through standard PLI access."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Observe sequential line increments and reset to line 1 in a newly included file, then restoration to the including file after return."
+        ]
+      },
+      "id": "SV-2023-22-SOURCE-LOCATION-TRACKING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Schedule two successive uses of the same parameter delay and verify events at 16 ns and 32 ns without another scheduling-time rounding step."
+        ],
+        "negative": [],
+        "notes": [
+          "Use the anchor's exact values to avoid floating-point ambiguity; general precision rounding is cataloged separately."
+        ],
+        "positive": [
+          "Use a real-valued parameter as a delay under 10 ns / 1 ns, verify the parameter remains 1.55, and observe the converted event at 16 ns."
+        ]
+      },
+      "id": "SV-2023-22-TIMESCALE-DELAY-CONVERSION-NOT-STORED-VALUE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use delays immediately below and above a precision rounding boundary."
+        ],
+        "negative": [],
+        "notes": [
+          "Choose values with an unambiguous rounding result under Clause 3.14."
+        ],
+        "positive": [
+          "Apply a fractional delay under a known `timescale and observe simulation time after rounding to the specified precision."
+        ]
+      },
+      "id": "SV-2023-22-TIMESCALE-DELAY-ROUNDING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place a second `timescale before a later design element and contrast defaults; include a design element with explicit timeunit/timeprecision that overrides the directive default."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Apply `timescale before a design element with no local time declarations and observe delay scaling and rounding."
+        ]
+      },
+      "id": "SV-2023-22-TIMESCALE-FOLLOWING-DESIGN-ELEMENTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place it immediately before and after design-element boundaries."
+        ],
+        "negative": [
+          "Place `timescale lexically inside a module."
+        ],
+        "notes": [],
+        "positive": [
+          "Place `timescale between two design elements."
+        ]
+      },
+      "id": "SV-2023-22-TIMESCALE-OUTSIDE-DESIGN-ELEMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare values where magnitude and suffix jointly determine ordering, such as 10 ps versus 1 ps."
+        ],
+        "negative": [
+          "Specify a precision interval longer than the time-unit interval."
+        ],
+        "notes": [],
+        "positive": [
+          "Use equal unit and precision intervals and a precision interval smaller than the unit interval."
+        ]
+      },
+      "id": "SV-2023-22-TIMESCALE-PRECISION-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the largest and smallest permitted units and all three magnitudes."
+        ],
+        "negative": [
+          "Use magnitude 2 or an unrecognized unit suffix."
+        ],
+        "notes": [],
+        "positive": [
+          "Use representative legal magnitudes and units in both positions."
+        ]
+      },
+      "id": "SV-2023-22-TIMESCALE-SYNTAX-VALUES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Issue `nounconnected_drive before a later design element and verify normal behavior resumes; use independent unpaired directives."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Apply `unconnected_drive pull1 and pull0 before separate design elements having unconnected input ports and observe 1 and 0."
+        ]
+      },
+      "id": "SV-2023-22-UNCONNECTED-DRIVE-EFFECT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place directives immediately adjacent to design-element boundaries."
+        ],
+        "negative": [
+          "Place either directive inside a module declaration."
+        ],
+        "notes": [],
+        "positive": [
+          "Place each directive between design elements."
+        ]
+      },
+      "id": "SV-2023-22-UNCONNECTED-DRIVE-OUTSIDE-DESIGN-ELEMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Redefine the same macro after `undef and verify only the new definition governs later use."
+        ],
+        "negative": [],
+        "notes": [
+          "Do not require or forbid a warning for an undefined name; the source states only that a tool can issue one."
+        ],
+        "positive": [
+          "Define a macro, use it, `undef it, then verify it is no longer defined."
+        ]
+      },
+      "id": "SV-2023-22-UNDEF-SYNTAX-AND-EFFECT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Define a new macro after `undefineall and verify it is available."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Define multiple macros, process `undefineall, and verify each is no longer defined."
+        ]
+      },
+      "id": "SV-2023-22-UNDEFINEALL-EFFECT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place it at a design-element boundary."
+        ],
+        "negative": [
+          "Supply an argument to `undefineall."
+        ],
+        "notes": [],
+        "positive": [
+          "Place argumentless `undefineall both between and within design elements."
+        ]
+      },
+      "id": "SV-2023-22-UNDEFINEALL-SYNTAX-PLACEMENT"
+    }
+  ],
+  "schema_version": 1
+}

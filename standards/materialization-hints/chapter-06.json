@@ -1,0 +1,5151 @@
+{
+  "authority": "1800-2023",
+  "part": "6",
+  "requirements": [
+    {
+      "hints": {
+        "edge": [
+          "Use nested member selects and packed selects within an aggregate element."
+        ],
+        "negative": [
+          "Attempt to override or assign one aggregate parameter member separately."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare and whole-value override unpacked array and structure parameters, then use individual members in expressions."
+        ]
+      },
+      "id": "SV-2023-06-AGGREGATE-PARAMETER-WHOLE-OVERRIDE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare packed and unpacked anonymous structures."
+        ],
+        "negative": [
+          "Treat an identically written separate anonymous declaration as matching."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare multiple objects in one anonymous aggregate/enum declaration and use them where matching is required."
+        ]
+      },
+      "id": "SV-2023-06-ANONYMOUS-AGGREGATE-ENUM-MATCHING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare multiple objects declared together against one declared separately."
+        ],
+        "negative": [
+          "Treat a textually identical separate anonymous declaration as equivalent."
+        ],
+        "notes": [],
+        "positive": [
+          "Use same-statement objects of one anonymous unpacked type in equivalence-required contexts."
+        ]
+      },
+      "id": "SV-2023-06-ANONYMOUS-UNPACKED-TYPE-EQUIVALENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare equal widths with opposite range directions and recursively differing inner dimensions."
+        ],
+        "negative": [
+          "Vary packedness, kind, associative index type, element type, or either fixed bound."
+        ],
+        "notes": [],
+        "positive": [
+          "Match corresponding fixed, dynamic, associative, queue, and multidimensional arrays."
+        ]
+      },
+      "id": "SV-2023-06-ARRAY-TYPE-MATCHING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise directional compatibility and conversions that truncate or round."
+        ],
+        "negative": [
+          "Assign integral to enum without explicit cast."
+        ],
+        "notes": [],
+        "positive": [
+          "Assign among integral types and from enum to integral while observing conversion effects."
+        ]
+      },
+      "id": "SV-2023-06-ASSIGNMENT-COMPATIBLE-TYPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use separate activations with distinct run-time values."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Initialize automatic const variables from task arguments, local variables, function calls, and dynamic expressions."
+        ]
+      },
+      "id": "SV-2023-06-AUTOMATIC-CONST-ANY-LEGAL-EXPRESSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use nested procedural blocks and class methods."
+        ],
+        "negative": [
+          "Reference them from a continuous or other nonprocedural context."
+        ],
+        "notes": [],
+        "positive": [
+          "Reference automatic locals and dynamic elements inside procedural code."
+        ]
+      },
+      "id": "SV-2023-06-AUTOMATIC-DYNAMIC-REFERENCE-PROCEDURAL-ONLY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Narrow signed and unsigned sources with identical bits."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Convert an 8-bit pattern to 4 bits and observe retention of the least-significant four bits."
+        ]
+      },
+      "id": "SV-2023-06-AUTOMATIC-NARROWING-TRUNCATES-MSBS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Mix automatic and static locals in one automatic task."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Invoke an automatic recursive or concurrent subroutine and verify per-call locals while one explicit static local accumulates."
+        ]
+      },
+      "id": "SV-2023-06-AUTOMATIC-SUBROUTINE-BLOCK-LIFETIME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Test automatic scalar, dynamic-array element, queue element, and associative-array element contexts."
+        ],
+        "negative": [
+          "Target them with nonblocking, continuous, or procedural continuous assignments."
+        ],
+        "notes": [],
+        "positive": [
+          "Write automatic variables and dynamic-array elements with blocking procedural assignments."
+        ]
+      },
+      "id": "SV-2023-06-AUTOMATIC-VARIABLE-ASSIGNMENT-RESTRICTIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Widen a signed value with top bit 1 and an unsigned value with the same bits."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Widen equal-width signed and unsigned source patterns and compare upper bits."
+        ]
+      },
+      "id": "SV-2023-06-AUTOMATIC-WIDENING-EXTENSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise scalar and vector values with x in the least-significant, middle, and most-significant positions."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Cast x-containing values to bit and logic vectors and compare results."
+        ]
+      },
+      "id": "SV-2023-06-BIT-CAST-DROPS-X-LOGIC-PRESERVES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use descending insertion order and multibyte elements so insertion order cannot masquerade as sorted order."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Pack an associative array with known nonconsecutive indices and verify index-sorted MSB-first item order."
+        ]
+      },
+      "id": "SV-2023-06-BIT-STREAM-ASSOCIATIVE-SOURCE-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast casting this with casting an alias handle to the same current object."
+        ],
+        "negative": [
+          "Attempt to bit-stream cast a non-this handle whose class has a local or protected member."
+        ],
+        "notes": [],
+        "positive": [
+          "Within a class, bit-stream cast this when the class has local or protected members."
+        ]
+      },
+      "id": "SV-2023-06-BIT-STREAM-CAST-CLASS-ASSOCIATIVE-RESTRICTIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a class with only public bit-stream members to confirm the destination prohibition is independent of member accessibility."
+        ],
+        "negative": [
+          "Attempt bit-stream casts whose destination type is an associative array and whose destination type is a class."
+        ],
+        "notes": [],
+        "positive": [
+          "Bit-stream cast to eligible packed, unpacked fixed, dynamic-array, or queue destinations."
+        ]
+      },
+      "id": "SV-2023-06-BIT-STREAM-CAST-DESTINATION-TYPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise mismatches knowable statically and only dynamically."
+        ],
+        "negative": [
+          "Cast mismatched fixed unpacked sizes and mismatched realized dynamic sizes."
+        ],
+        "notes": [],
+        "positive": [
+          "Cast fixed unpacked and dynamic-containing types whose realized bit sizes agree."
+        ]
+      },
+      "id": "SV-2023-06-BIT-STREAM-CAST-SIZE-MISMATCH-ERROR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place x/z bits in source positions mapped to both 2-state and 4-state destination fields."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Cast nested 2-state and mixed-state sources through equal-bit-count destinations."
+        ]
+      },
+      "id": "SV-2023-06-BIT-STREAM-CAST-TWO-STEP-CONVERSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use zero remaining bits, a mid-structure dynamic field, and multiple dynamic fields."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Cast into destinations with fixed fields before and after multiple dynamic fields and verify the first dynamic field consumes the remainder."
+        ]
+      },
+      "id": "SV-2023-06-BIT-STREAM-DYNAMIC-DESTINATION-GREEDY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Mix empty and nonempty dynamically sized source fields before and after fixed fields."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Cast a structure containing multiple nonempty dynamic arrays or queues separated by fixed fields and verify all realized source items are represented."
+        ]
+      },
+      "id": "SV-2023-06-BIT-STREAM-DYNAMIC-SOURCE-INCLUSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use empty, one-item, and multibyte sequence values."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Pack known dynamic-array, queue, and string contents and verify index-0-first MSB ordering."
+        ]
+      },
+      "id": "SV-2023-06-BIT-STREAM-SOURCE-PACKING-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use empty strings and strings with multiple bytes."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare bit-stream results of a string and a dynamic byte array with identical characters."
+        ]
+      },
+      "id": "SV-2023-06-BIT-STREAM-STRING-AS-BYTE-ARRAY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Nest fixed and dynamically sized containers several levels deep."
+        ],
+        "negative": [
+          "Use an aggregate with a recursively non-bit-stream member."
+        ],
+        "notes": [],
+        "positive": [
+          "Cast nested aggregates including a structure containing a queue of int."
+        ]
+      },
+      "id": "SV-2023-06-BIT-STREAM-TYPE-CATEGORIES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Assign x and z into bit elements and observe 2-state conversion."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare scalar and ranged bit objects and verify 2-state unsigned behavior."
+        ]
+      },
+      "id": "SV-2023-06-BIT-TYPE-PROPERTIES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use nested fixed-size unpacked composites terminating in 4-state integral elements."
+        ],
+        "negative": [
+          "Declare a built-in net with a 2-state bit type or dynamic array type."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare nets using logic vectors, packed logic structures, and fixed-size unpacked arrays of logic."
+        ]
+      },
+      "id": "SV-2023-06-BUILTIN-NET-ALLOWED-DATA-TYPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an optional initializer, which denotes a continuous assignment under Clause 10."
+        ],
+        "negative": [
+          "Reorder declaration modifiers outside the grammar."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare built-in nets with data type, dimensions, delay, and multiple declarators."
+        ]
+      },
+      "id": "SV-2023-06-BUILTIN-NET-DECLARATION-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use each keyword with an explicit compatible data type where permitted."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare a net using each built-in net-type keyword."
+        ]
+      },
+      "id": "SV-2023-06-BUILTIN-NET-TYPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast two different built-in types that may be equivalent but not the same matching type."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use same built-in type declarations from distinct scopes where matching is required."
+        ]
+      },
+      "id": "SV-2023-06-BUILTIN-TYPE-SELF-MATCHES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Assign x or z and observe conversion to 2-state."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Check $bits(byte) is 8 and exercise signed arithmetic and ASCII assignment."
+        ]
+      },
+      "id": "SV-2023-06-BYTE-TYPE-PROPERTIES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Test propagation across adjacent size levels as well as large to small."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Connect a large charged trireg to a small capacitive trireg and observe propagation of the larger charge strength."
+        ]
+      },
+      "id": "SV-2023-06-CAPACITIVE-STRENGTH-LARGE-TO-SMALL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast assignment compatibility with cast-only compatibility."
+        ],
+        "negative": [
+          "Cast between a pair with no explicit or implicit cast rule."
+        ],
+        "notes": [],
+        "positive": [
+          "Explicitly cast integral values to enum and exercise other defined explicit casts."
+        ]
+      },
+      "id": "SV-2023-06-CAST-COMPATIBLE-TYPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use typedef names for complex target types."
+        ],
+        "negative": [
+          "Omit parentheses/apostrophe or use a nonconstant expression in a constant-cast context."
+        ],
+        "notes": [],
+        "positive": [
+          "Cast using built-in/scoped types, parameters, signedness, string, const, and constant-primary widths."
+        ]
+      },
+      "id": "SV-2023-06-CAST-OPERATOR-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use package-scoped type identifiers."
+        ],
+        "negative": [
+          "Spell a user-defined cast target with an inline complex type unsupported by casting_type."
+        ],
+        "notes": [],
+        "positive": [
+          "Cast using built-in keywords and typedef identifiers."
+        ]
+      },
+      "id": "SV-2023-06-CAST-TYPE-PREFIX-NAME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Copy a nonnull DPI-provided chandle and compare pointer identity."
+        ],
+        "negative": [
+          "Assign an integer, class handle, or real value to a chandle."
+        ],
+        "notes": [],
+        "positive": [
+          "Copy one chandle to another and assign null."
+        ]
+      },
+      "id": "SV-2023-06-CHANDLE-ASSIGNMENTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify membership and lookup without requiring a stable iteration order."
+        ],
+        "negative": [],
+        "notes": [
+          "Never use relative iteration order as the oracle."
+        ],
+        "positive": [
+          "Use distinct chandles as associative-array indices and retrieve their associated values."
+        ]
+      },
+      "id": "SV-2023-06-CHANDLE-ASSOCIATIVE-ARRAY-KEY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Obtain a nonnull opaque pointer through DPI without inspecting its numeric representation."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use null and nonnull chandles as if conditions and observe false and true."
+        ]
+      },
+      "id": "SV-2023-06-CHANDLE-BOOLEAN-VALUE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use static and instance chandle class members."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare a chandle property in a class and assign a DPI-provided pointer to it."
+        ]
+      },
+      "id": "SV-2023-06-CHANDLE-CLASS-MEMBER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Declare multiple chandle variables through the general variable declaration grammar."
+        ],
+        "negative": [
+          "Use a nonidentifier in the declarator position."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare scalar chandle variables with valid identifiers."
+        ]
+      },
+      "id": "SV-2023-06-CHANDLE-DECLARATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare two aliases of one native pointer and two distinct pointer values."
+        ],
+        "negative": [
+          "Compare a chandle with an integer or apply a relational operator."
+        ],
+        "notes": [],
+        "positive": [
+          "Compare null and nonnull chandles using all four permitted operators."
+        ]
+      },
+      "id": "SV-2023-06-CHANDLE-EQUALITY-OPERATORS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify case equality is legal while ordering comparison is not."
+        ],
+        "negative": [
+          "Apply arithmetic, bitwise, relational, concatenation, or indexing operations to a chandle."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a chandle in equality and Boolean expressions."
+        ]
+      },
+      "id": "SV-2023-06-CHANDLE-EXPRESSIONS-RESTRICTED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Copy the returned chandle and compare it for identity."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Return null and nonnull DPI-provided chandles from functions."
+        ]
+      },
+      "id": "SV-2023-06-CHANDLE-FUNCTION-RETURN"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast initial null with a nonnull pointer returned through DPI."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare a newly declared chandle with null and pass it through DPI to observe a null C pointer."
+        ]
+      },
+      "id": "SV-2023-06-CHANDLE-INITIAL-NULL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use pointer values exercising high address bits on the host platform."
+        ],
+        "negative": [],
+        "notes": [
+          "Requires a DPI harness and compares pointer identity, not a fixed chandle bit width."
+        ],
+        "positive": [
+          "Round-trip a native pointer through a chandle across DPI and recover the same pointer."
+        ]
+      },
+      "id": "SV-2023-06-CHANDLE-POINTER-CAPACITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise input, output, and inout/ref modes where separately legal."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Pass null and nonnull chandles to functions and tasks."
+        ]
+      },
+      "id": "SV-2023-06-CHANDLE-SUBROUTINE-ARGUMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise each keyword on scalar and vector trireg declarations."
+        ],
+        "negative": [
+          "Use a non-charge-strength keyword in the trireg charge-strength position."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare otherwise identical trireg nets using small, medium, and large charge strengths."
+        ]
+      },
+      "id": "SV-2023-06-CHARGE-STRENGTH-KEYWORDS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Apply charge strength to a signed vector trireg."
+        ],
+        "negative": [
+          "Specify a charge strength on wire, tri, or another non-trireg net declaration."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare scalar, vector, signed, and unsigned trireg nets with charge-strength specifications."
+        ]
+      },
+      "id": "SV-2023-06-CHARGE-STRENGTH-TRIREG-ONLY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare a class handle with an unpacked array of class handles, whose container is aggregate."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare and assign a class handle as a singular value."
+        ]
+      },
+      "id": "SV-2023-06-CLASS-HANDLES-SINGULAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Declare the class within a scope explicitly qualified static."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Invoke a class method concurrently or recursively and verify separate default-automatic locals."
+        ]
+      },
+      "id": "SV-2023-06-CLASS-METHOD-LOOP-VARIABLE-AUTOMATIC"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Assign null and contrast handle assignment with object construction."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Construct a class object, assign its handle to another class variable, and observe both refer to the same object."
+        ]
+      },
+      "id": "SV-2023-06-CLASS-VARIABLE-HOLDS-OBJECT-HANDLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use class-handle and integral expressions."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Apply const cast and verify type/bit value are unchanged while const restrictions apply to the result."
+        ]
+      },
+      "id": "SV-2023-06-CONST-CAST"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Alias the same object through const and non-const handles to distinguish handle and object state."
+        ],
+        "negative": [
+          "Reassign the const handle or modify a const member."
+        ],
+        "notes": [],
+        "positive": [
+          "Initialize a const class handle and modify a non-const object member through it."
+        ]
+      },
+      "id": "SV-2023-06-CONST-CLASS-OBJECT-HANDLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare separate automatic task activations receiving different initial const values."
+        ],
+        "negative": [
+          "Reassign the const after initialization."
+        ],
+        "notes": [],
+        "positive": [
+          "Initialize an automatic const from a run-time task argument and observe its fixed value for that activation."
+        ]
+      },
+      "id": "SV-2023-06-CONST-RUNTIME-INITIALIZATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a source capable of nondefault strengths and verify only its value is stored."
+        ],
+        "negative": [],
+        "notes": [
+          "A warning is permitted but not required and is not the oracle."
+        ],
+        "positive": [
+          "Continuously assign a strength-bearing net value to a variable and observe the converted logic value."
+        ]
+      },
+      "id": "SV-2023-06-CONTINUOUS-DRIVE-TO-VARIABLE-CONVERTS-AND-DROPS-STRENGTH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Declare multiple initialized nets under one declaration carrying the drive strength."
+        ],
+        "negative": [
+          "Put a drive strength on an otherwise unassigned net declaration."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a wire with drive strength and an initializer continuous assignment in the same statement."
+        ]
+      },
+      "id": "SV-2023-06-DECLARATION-DRIVE-STRENGTH-REQUIRES-ASSIGNMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Disable implicit nets with the applicable compiler directive and use an otherwise implicit-net identifier."
+        ],
+        "negative": [
+          "Reference an undeclared variable in a context that cannot create an implicit net."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a variable before an expression that references it.",
+          "Use an allowed undeclared identifier in an implicit-net context."
+        ]
+      },
+      "id": "SV-2023-06-DECLARE-BEFORE-USE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an enum whose base default is not one of its named values."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Observe the base-type default in uninitialized enums with 2-state and 4-state bases."
+        ]
+      },
+      "id": "SV-2023-06-DEFAULT-ENUM-BASE-VALUE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Declare two uninitialized events and verify they denote distinct synchronization objects until explicitly aliased."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Trigger and wait on an uninitialized event variable."
+        ]
+      },
+      "id": "SV-2023-06-DEFAULT-EVENT-NEW-EVENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Check every bit of a packed 4-state vector."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Observe 'x in an uninitialized scalar logic and logic vector before assignment."
+        ]
+      },
+      "id": "SV-2023-06-DEFAULT-FOUR-STATE-VARIABLE-X"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast the null default with a handle after class-object construction."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare an uninitialized class handle with null."
+        ]
+      },
+      "id": "SV-2023-06-DEFAULT-HANDLE-NULL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify design-scope variables themselves remain static while nested procedural declarations follow the qualifier."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Define matching tasks/blocks in automatic-, static-, and unqualified containers and compare default local lifetimes."
+        ]
+      },
+      "id": "SV-2023-06-DEFAULT-LIFETIME-QUALIFIER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Check positive-zero equality without relying on representation formatting."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Read uninitialized real and shortreal variables before assignment and observe 0.0."
+        ]
+      },
+      "id": "SV-2023-06-DEFAULT-REAL-VARIABLE-ZERO"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast int with an equal-width unsigned declaration."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Apply sign-sensitive operations to each default-signed integer type.",
+          "Explicitly declare one unsigned and observe unsigned behavior."
+        ]
+      },
+      "id": "SV-2023-06-DEFAULT-SIGNED-INTEGER-TYPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Distinguish empty string from a one-character string."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Read an uninitialized string and observe equality to \"\" and length zero."
+        ]
+      },
+      "id": "SV-2023-06-DEFAULT-STRING-EMPTY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an unadorned scalar trireg to isolate the default."
+        ],
+        "negative": [],
+        "notes": [
+          "Materialization needs a strength-sensitive portable observation rather than diagnostic text."
+        ],
+        "positive": [
+          "Compare charge-resolution behavior of an implicit-strength trireg with an explicitly medium trireg."
+        ]
+      },
+      "id": "SV-2023-06-DEFAULT-TRIREG-CHARGE-STRENGTH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Check every bit of a packed 2-state vector."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Observe zero in an uninitialized bit scalar and bit vector before assignment."
+        ]
+      },
+      "id": "SV-2023-06-DEFAULT-TWO-STATE-VARIABLE-ZERO"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare an array's default signedness with an explicitly signed packed vector."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Exercise unsigned comparisons on each unqualified type and explicitly signed logic vectors."
+        ]
+      },
+      "id": "SV-2023-06-DEFAULT-UNSIGNED-INTEGER-VECTOR-TYPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast the distinct meanings of $ in declarations and selects."
+        ],
+        "negative": [
+          "Use bare $ as a general arithmetic constant outside an allowed context."
+        ],
+        "notes": [],
+        "positive": [
+          "Use $ in each listed queue, range, coverage, and assertion context."
+        ]
+      },
+      "id": "SV-2023-06-DOLLAR-CONSTANT-CONTEXT-RESTRICTED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Check boundary equality and values immediately on either side for both lower-open and upper-open forms."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use both open-ended forms in covergroup bin ranges and sample values below, at, and above the bound."
+        ]
+      },
+      "id": "SV-2023-06-DOLLAR-COVERGROUP-OPEN-VALUE-RANGE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use singleton and multi-tuple cross products."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Construct a cross-bin selection where all tuples satisfy and another where one tuple fails."
+        ]
+      },
+      "id": "SV-2023-06-DOLLAR-CROSS-COVERAGE-ALL-TUPLES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Check boundary equality and values immediately on either side."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use both open-ended forms in inside/range-list and distribution-item contexts."
+        ]
+      },
+      "id": "SV-2023-06-DOLLAR-OPEN-VALUE-RANGE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast [$] queue dimension with fixed unpacked and dynamic array dimensions."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare queues of scalar, aggregate, and class-handle element types using [$]."
+        ]
+      },
+      "id": "SV-2023-06-DOLLAR-QUEUE-DIMENSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use $ in queue slices and handle the empty-queue boundary under queue rules."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Read and write q[$] on nonempty queues of varying size."
+        ]
+      },
+      "id": "SV-2023-06-DOLLAR-QUEUE-LAST-INDEX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare q[$], q[$-1], and prohibited nonqueue arithmetic with $."
+        ],
+        "negative": [
+          "Combine $ with operators outside queue-select context."
+        ],
+        "notes": [],
+        "positive": [
+          "Use $ alone in allowed range contexts and use arithmetic relative to $ in a queue select."
+        ]
+      },
+      "id": "SV-2023-06-DOLLAR-SELF-CONTAINED-EXPRESSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Instantiate through nested sequence or property argument forwarding."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Pass $ to an appropriate sequence/property/checker formal used as an upper cycle-delay bound."
+        ]
+      },
+      "id": "SV-2023-06-DOLLAR-SEQUENCE-PROPERTY-ACTUAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify the guarded numeric operand is skipped when the parameter is $."
+        ],
+        "negative": [
+          "Evaluate arithmetic or numeric equality directly on a $-valued parameter."
+        ],
+        "notes": [],
+        "positive": [
+          "Guard numeric use with $isunbounded(p) and a short-circuit operator."
+        ]
+      },
+      "id": "SV-2023-06-DOLLAR-SYMBOLIC-NONNUMERIC"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast a bounded upper endpoint with $."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Match a sequence/property using an unbounded upper cycle delay at several finite delays."
+        ]
+      },
+      "id": "SV-2023-06-DOLLAR-UNBOUNDED-CYCLE-DELAY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Pass a $ parameter through sequence/property actual arguments."
+        ],
+        "negative": [
+          "Assign $ to a nonsimple type or use a $ parameter in a queue context."
+        ],
+        "notes": [],
+        "positive": [
+          "Assign $ to a simple-vector parameter, forward it to another parameter, and use it as an assertion unbounded bound."
+        ]
+      },
+      "id": "SV-2023-06-DOLLAR-VALUE-PARAMETER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use aliases that are equivalent but not matching as element or index types."
+        ],
+        "negative": [
+          "Mix array kinds or vary element/index equivalence."
+        ],
+        "notes": [],
+        "positive": [
+          "Compare corresponding dynamic arrays, queues, and associative arrays with equivalent element/index types."
+        ]
+      },
+      "id": "SV-2023-06-DYNAMIC-ASSOCIATIVE-QUEUE-EQUIVALENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Check return 0 and sentinel preservation for invalid cast without accepting diagnostics."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Check return 1 and destination update for a valid cast."
+        ]
+      },
+      "id": "SV-2023-06-DYNAMIC-CAST-FUNCTION-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Initialize destination to a sentinel before failure."
+        ],
+        "negative": [
+          "Invoke an invalid task-form cast and verify run-time error plus unchanged destination."
+        ],
+        "notes": [],
+        "positive": [
+          "Use task-form $cast successfully and inspect the assigned destination."
+        ]
+      },
+      "id": "SV-2023-06-DYNAMIC-CAST-TASK-FAILURE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use scalar and aggregate destinations under their separate compatibility rules."
+        ],
+        "negative": [
+          "Supply a nonvariable destination or wrong argument count."
+        ],
+        "notes": [],
+        "positive": [
+          "Call $cast in statement/task form and expression/function form with valid destination variables and source expressions."
+        ]
+      },
+      "id": "SV-2023-06-DYNAMIC-CAST-TASK-FUNCTION-SIGNATURE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast a cast-compatible-but-not-assignment-compatible singular pair with aggregates."
+        ],
+        "negative": [
+          "Use cast-incompatible singular or assignment-incompatible nonsingular arguments."
+        ],
+        "notes": [],
+        "positive": [
+          "Dynamically cast cast-compatible singular values and assignment-compatible aggregates."
+        ]
+      },
+      "id": "SV-2023-06-DYNAMIC-CAST-VALIDITY-CRITERIA"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare constant and nonconstant multipliers having the same numeric value."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Replicate mixed literal/string operands and all-literal operands with a run-time multiplier."
+        ]
+      },
+      "id": "SV-2023-06-DYNAMIC-STRING-REPLICATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Empty a formerly nonempty string before attempting the same index."
+        ],
+        "negative": [
+          "Read or write index 0 of an empty string."
+        ],
+        "notes": [
+          "For a portable read oracle, apply the string indexing/getc out-of-range result of 0; for a write oracle, apply indexed-assignment/putc no-change semantics. Do not require a diagnostic."
+        ],
+        "positive": [
+          "Avoid character indexing when the string length is zero."
+        ]
+      },
+      "id": "SV-2023-06-EMPTY-STRING-INDEX-OUT-OF-BOUNDS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use nonconsecutive encodings and enums with non-int explicit bases."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use enum constants and variables in arithmetic and relational expressions."
+        ]
+      },
+      "id": "SV-2023-06-ENUM-AUTO-INTEGRAL-EXPRESSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Continue automatic enum values before and after a generated range."
+        ],
+        "negative": [
+          "Use zero or negative N."
+        ],
+        "notes": [],
+        "positive": [
+          "Use name[1] and name[4] and reference every generated identifier."
+        ]
+      },
+      "id": "SV-2023-06-ENUM-COUNTED-NAME-RANGE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use N=1, where only name0 receives C."
+        ],
+        "negative": [
+          "Use zero or negative N."
+        ],
+        "notes": [],
+        "positive": [
+          "Generate multiple names from an explicit start value and verify identifiers and consecutive values."
+        ]
+      },
+      "id": "SV-2023-06-ENUM-COUNTED-NAME-RANGE-INITIAL-VALUE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use ascending and descending enumerator-name ranges."
+        ],
+        "negative": [
+          "Declare an enum with no enumerators or a nonconstant initializer."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare enums with implicit and explicit bases, initialized names, name ranges, and packed dimensions."
+        ]
+      },
+      "id": "SV-2023-06-ENUM-DECLARATION-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast omitted base with explicit integer, which is 4-state rather than default int."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Check width, signedness, and state domain of an enum with omitted base against int.",
+          "Declare an explicit logic or bit vector base."
+        ]
+      },
+      "id": "SV-2023-06-ENUM-DEFAULT-BASE-INT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Check negative signed values at and just outside the base range."
+        ],
+        "negative": [
+          "Use values requiring nonzero unsigned truncation or nonsign-extension signed truncation."
+        ],
+        "notes": [],
+        "positive": [
+          "Use representable unsized values and sign-preserving values for narrow signed and unsigned bases."
+        ]
+      },
+      "id": "SV-2023-06-ENUM-ENCODING-BASE-CAST-RANGE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify suffix direction is independent of consecutive enum value progression."
+        ],
+        "negative": [
+          "Use a negative or nonintegral endpoint."
+        ],
+        "notes": [],
+        "positive": [
+          "Generate ascending, descending, and equal-endpoint explicit-index ranges and reference every generated name."
+        ]
+      },
+      "id": "SV-2023-06-ENUM-EXPLICIT-INDEX-NAME-RANGE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use N=M so one generated member receives C."
+        ],
+        "negative": [
+          "Use a negative or nonintegral endpoint."
+        ],
+        "notes": [],
+        "positive": [
+          "Generate ascending and descending ranges from explicit C and verify names and consecutive values."
+        ]
+      },
+      "id": "SV-2023-06-ENUM-EXPLICIT-INDEX-RANGE-INITIAL-VALUE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call through a variable currently holding a different or out-of-range value."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Call first on enums with sequential and explicit nonsequential values."
+        ]
+      },
+      "id": "SV-2023-06-ENUM-FIRST-METHOD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use narrow signed and unsigned bases."
+        ],
+        "negative": [
+          "Implicitly increment after the maximum representable base value."
+        ],
+        "notes": [],
+        "positive": [
+          "Mix explicit and implicit members and verify initial zero and resumed increments."
+        ]
+      },
+      "id": "SV-2023-06-ENUM-IMPLICIT-INCREMENT-VALUES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a constant function combining parameters and prior enum constants."
+        ],
+        "negative": [
+          "Use a hierarchical reference or const variable as an enum member initializer."
+        ],
+        "notes": [],
+        "positive": [
+          "Initialize enum members from each permitted constant source."
+        ]
+      },
+      "id": "SV-2023-06-ENUM-INITIALIZER-CONSTANT-EXPRESSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call through a variable currently holding a different or out-of-range value."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Call last on enums with sequential and explicit nonmonotonic values."
+        ]
+      },
+      "id": "SV-2023-06-ENUM-LAST-METHOD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast same-scope declarations with class- or package-scoped members."
+        ],
+        "negative": [
+          "Declare two enum types with an identically named member in one scope."
+        ],
+        "notes": [],
+        "positive": [
+          "Use distinct member names or place same names in distinct scopes."
+        ]
+      },
+      "id": "SV-2023-06-ENUM-MEMBER-NAMES-SCOPE-COLLISION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Test duplicate identifiers generated by enum name ranges where applicable."
+        ],
+        "negative": [
+          "Repeat one enumerator identifier with another explicit value."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare enums with distinct member identifiers."
+        ]
+      },
+      "id": "SV-2023-06-ENUM-MEMBER-NAMES-UNIQUE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use differently written constant expressions that evaluate to the same base-typed value."
+        ],
+        "negative": [
+          "Create duplicate explicit values or collide an automatic increment with a later explicit value."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare members with distinct explicit and implicit values."
+        ]
+      },
+      "id": "SV-2023-06-ENUM-MEMBER-VALUES-UNIQUE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use members with nonconsecutive encodings to ensure the identifier, not numeric formatting, is returned."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Call name for every declared and range-generated enum member."
+        ]
+      },
+      "id": "SV-2023-06-ENUM-NAME-METHOD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use unnamed values immediately below, between, and above declared encodings where representable."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Statically cast an unnamed representable value into an enum and verify name() returns the empty string."
+        ]
+      },
+      "id": "SV-2023-06-ENUM-NAME-NONMEMBER-EMPTY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an anonymous enum and a typedef-named enum."
+        ],
+        "negative": [
+          "Use a named member as though it belonged to an unrelated enum type without conversion."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare enum variables, assign named members, and display or inspect their names."
+        ]
+      },
+      "id": "SV-2023-06-ENUM-NAMED-INTEGRAL-CONSTANTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Cross the last-member boundary repeatedly and verify traversal follows declaration order rather than numeric order."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Call next with omitted, zero, one, and larger N on sequential and nonsequential enum encodings."
+        ]
+      },
+      "id": "SV-2023-06-ENUM-NEXT-METHOD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise both 2-state and 4-state enum bases whose defaults differ."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Cast an unnamed value into an enum, call next(), and compare the result with that enum base type's default initial value."
+        ]
+      },
+      "id": "SV-2023-06-ENUM-NEXT-NONMEMBER-DEFAULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use partially unknown preceding values and chains of subsequent implicit members."
+        ],
+        "negative": [
+          "Leave a member implicit immediately after an x- or z-valued member."
+        ],
+        "notes": [],
+        "positive": [
+          "Explicitly assign the member following an x- or z-valued enum member."
+        ]
+      },
+      "id": "SV-2023-06-ENUM-NO-INCREMENT-AFTER-XZ"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a one-member enum and an enum with nonconsecutive values."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Call num on enums with explicit members and generated ranges."
+        ]
+      },
+      "id": "SV-2023-06-ENUM-NUM-METHOD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Cross the first-member boundary repeatedly and verify traversal follows declaration order rather than numeric order."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Call prev with omitted, zero, one, and larger N on sequential and nonsequential enum encodings."
+        ]
+      },
+      "id": "SV-2023-06-ENUM-PREV-METHOD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise both 2-state and 4-state enum bases whose defaults differ."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Cast an unnamed value into an enum, call prev(), and compare the result with that enum base type's default initial value."
+        ]
+      },
+      "id": "SV-2023-06-ENUM-PREV-NONMEMBER-DEFAULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place a bare name after an explicit value and verify it receives the next value."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use bare and explicitly valued enum names in one declaration."
+        ]
+      },
+      "id": "SV-2023-06-ENUM-SINGLE-NAME-RANGE-FORMS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare equal numeric values written as exact-size, wrong-size, and unsized literals."
+        ],
+        "negative": [
+          "Use narrower or wider sized literals for a member of a fixed-width enum base."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a sized literal exactly matching the enum base width or an unsized literal."
+        ]
+      },
+      "id": "SV-2023-06-ENUM-SIZED-LITERAL-EXACT-BASE-WIDTH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise union-member exception and explicit out-of-range casts."
+        ],
+        "negative": [
+          "Directly assign arithmetic results, integers, or unrelated enums without a cast."
+        ],
+        "notes": [],
+        "positive": [
+          "Assign same-enum members and explicitly cast integral or other-type values."
+        ]
+      },
+      "id": "SV-2023-06-ENUM-STRICT-ASSIGNMENT-TYPE-CHECKING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast aliases of integer atom and integer vector types."
+        ],
+        "negative": [
+          "Use an alias of real or add a packed dimension to an integer-atom alias."
+        ],
+        "notes": [],
+        "positive": [
+          "Use aliases of int and logic vector as enum bases, adding dimensions only to vector-type bases."
+        ]
+      },
+      "id": "SV-2023-06-ENUM-TYPE-IDENTIFIER-BASE-RESTRICTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Reassign one alias while confirming the other remains associated with the original synchronization object."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Assign one event variable to another, trigger through one alias, and wait through the other."
+        ]
+      },
+      "id": "SV-2023-06-EVENT-HANDLE-ASSIGN-COMPARE-NULL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare before and after alias assignment."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare event variables that alias the same synchronization object and variables that refer to distinct objects."
+        ]
+      },
+      "id": "SV-2023-06-EVENT-HANDLE-COMPARISON"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Assign null to an already null event variable and to one of several aliases."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Alias two event variables, assign null to one, and verify the other remains associated with the synchronization object."
+        ]
+      },
+      "id": "SV-2023-06-EVENT-HANDLE-NULL-DISASSOCIATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multiple waiting processes on the same event object."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Trigger an event in one process and unblock another process waiting on it."
+        ]
+      },
+      "id": "SV-2023-06-EVENT-HANDLE-TRIGGER-WAIT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Inspect the state in the next time step to verify persistence does not extend beyond the triggering step."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Trigger an event and inspect its triggered state later in the same time step."
+        ]
+      },
+      "id": "SV-2023-06-EVENT-PERSISTENT-TRIGGERED-STATE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Nest declared for-loop variables inside scopes with explicit static and automatic lifetime qualifiers."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare a loop variable in a for-loop initializer within a static scope and observe a distinct automatic instance for each applicable activation."
+        ]
+      },
+      "id": "SV-2023-06-FOR-LOOP-DECLARED-VARIABLE-AUTOMATIC"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use join_none and delayed child completion while the lexical parent has advanced."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Reference fork-scope variables from spawned processes through their completion."
+        ]
+      },
+      "id": "SV-2023-06-FORK-JOIN-SCOPE-LIFETIME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use category-unspecified forward typedef to permit a later legal category."
+        ],
+        "negative": [
+          "Forward-declare struct and later define class, or otherwise mismatch categories."
+        ],
+        "notes": [],
+        "positive": [
+          "Complete each category-specific forward typedef with the matching type."
+        ]
+      },
+      "id": "SV-2023-06-FORWARD-TYPEDEF-CATEGORY-CONFORMANCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Declare a category-unspecified forward type and later define each supported kind where legal."
+        ],
+        "negative": [
+          "Use an unsupported forward category."
+        ],
+        "notes": [],
+        "positive": [
+          "Forward-declare each supported category and use the category-unspecified form."
+        ]
+      },
+      "id": "SV-2023-06-FORWARD-TYPEDEF-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use same-named types in nested scopes to verify local resolution."
+        ],
+        "negative": [
+          "Complete it only in another scope or leave it unresolved."
+        ],
+        "notes": [],
+        "positive": [
+          "Forward-declare and complete a type in the same scope or generate block."
+        ]
+      },
+      "id": "SV-2023-06-FORWARD-TYPEDEF-LOCAL-RESOLUTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Combine repeated category-specific declarations with a conforming final definition."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Place matching forward declarations before and after a final definition and repeat them in one scope."
+        ]
+      },
+      "id": "SV-2023-06-FORWARD-TYPEDEF-ORDER-AND-REPETITION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast otherwise identical bit- and logic-based enums."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare logic- and integer-based enums with x, z, and partially unknown member values."
+        ]
+      },
+      "id": "SV-2023-06-FOUR-STATE-ENUM-PERMITS-XZ"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Store different four-state values independently in adjacent vector bits."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Represent each of 0, 1, x, and z in a logic object and distinguish them with case equality."
+        ]
+      },
+      "id": "SV-2023-06-FOUR-STATE-LOGIC-VALUES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Combine state conversion with widening or narrowing while isolating expected retained positions."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Assign a mixed 0/1/x/z logic vector to an equal-width bit vector and verify x and z become zero."
+        ]
+      },
+      "id": "SV-2023-06-FOUR-STATE-TO-TWO-STATE-XZ-ZERO"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place an explicit static local inside an automatic named task."
+        ],
+        "negative": [
+          "Hierarchically reference a static variable declared in an unnamed block."
+        ],
+        "notes": [],
+        "positive": [
+          "Hierarchically reference module static variables and explicit static locals in named automatic subroutines."
+        ]
+      },
+      "id": "SV-2023-06-HIERARCHICAL-STATIC-VARIABLE-ACCESS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place a same-named declaration in a directly referenceable outer scope and verify it is used instead."
+        ],
+        "negative": [
+          "Use an undeclared identifier outside an implicit-net-creating context."
+        ],
+        "notes": [],
+        "positive": [
+          "Continuously assign to an undeclared identifier and observe creation of a scalar default-type net."
+        ]
+      },
+      "id": "SV-2023-06-IMPLICIT-NET-CONTINUOUS-ASSIGN-LHS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a declaration directly referenceable from an enclosing scope and verify no new implicit net is created."
+        ],
+        "negative": [
+          "Rely on implicit-net creation in a procedural checker instance connection."
+        ],
+        "notes": [],
+        "positive": [
+          "Connect an undeclared identifier to a module instance and observe a scalar implicit net."
+        ]
+      },
+      "id": "SV-2023-06-IMPLICIT-NET-INSTANCE-TERMINAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change default_nettype and verify the implicit port-expression net uses it."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use an undeclared identifier in a ranged port expression and verify the implicit net has that width."
+        ]
+      },
+      "id": "SV-2023-06-IMPLICIT-NET-PORT-EXPRESSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the same identifier in two generate scopes and verify distinct nets."
+        ],
+        "negative": [
+          "Reference a generate-block implicit net from outside without a qualifying declaration context."
+        ],
+        "notes": [],
+        "positive": [
+          "Create an implicit net inside one generate block and separately create the same name in another qualifying block."
+        ]
+      },
+      "id": "SV-2023-06-IMPLICIT-NET-REFERENCE-SCOPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast var with explicit logic and with range-only implicit logic."
+        ],
+        "negative": [
+          "Omit both var and an explicit data type before a variable declarator."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare var x and var signed [7:0] y and use them as logic types."
+        ]
+      },
+      "id": "SV-2023-06-IMPLICIT-VARIABLE-TYPE-REQUIRES-VAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Complete the class later and contrast uses before and after completion."
+        ],
+        "negative": [
+          "Use the selection directly as an ordinary declaration type while incomplete, or resolve the prefix to a nonclass type."
+        ],
+        "notes": [],
+        "positive": [
+          "Select a nested type through such a prefix in a typedef, type operator, and type parameter assignment after valid class resolution."
+        ]
+      },
+      "id": "SV-2023-06-INCOMPLETE-TYPE-CLASS-SCOPE-RESTRICTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast explicit automatic per-entry initialization with explicit static one-time initialization."
+        ],
+        "negative": [
+          "Initialize an implicitly static procedural local without static or automatic where either lifetime is possible."
+        ],
+        "notes": [],
+        "positive": [
+          "Use explicit static on initialized procedural locals and omit it on design-scope static declarations."
+        ]
+      },
+      "id": "SV-2023-06-INITIALIZED-STATIC-LOCAL-EXPLICIT-KEYWORD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an initializer whose evaluation requires run-time allocation before initial processes begin."
+        ],
+        "negative": [],
+        "notes": [
+          "Avoid requiring a particular random value when using a random system function."
+        ],
+        "positive": [
+          "Initialize a static class handle with new and a static integral variable with a system-function result."
+        ]
+      },
+      "id": "SV-2023-06-INITIALIZER-RUNTIME-EXPRESSIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast the input-port variable with a ref-connected shared variable."
+        ],
+        "negative": [
+          "Procedurally or continuously assign a variable declared as an input port."
+        ],
+        "notes": [],
+        "positive": [
+          "Read a variable declared as an input port without writing it."
+        ]
+      },
+      "id": "SV-2023-06-INPUT-PORT-VARIABLE-NO-ASSIGNMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast packed aggregate equivalence with stricter matching across instance-local declarations."
+        ],
+        "negative": [
+          "Treat separate instance-local class, enum, or aggregate declarations as the same type."
+        ],
+        "notes": [],
+        "positive": [
+          "Share a package-defined type across instances and use it in matching/equivalent contexts."
+        ]
+      },
+      "id": "SV-2023-06-INSTANCE-LOCAL-USER-TYPE-IDENTITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast distinct independently driven elements with overlapping longest-static-prefix writes."
+        ],
+        "negative": [
+          "Add a procedural assignment or another continuous assignment to a variable connected to an instance output."
+        ],
+        "notes": [],
+        "positive": [
+          "Connect an instance output port to an otherwise undriven variable."
+        ]
+      },
+      "id": "SV-2023-06-INSTANCE-OUTPUT-VARIABLE-NO-ADDITIONAL-DRIVER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Assign x or z and observe conversion to the 2-state domain."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Check $bits(int) is 32 and exercise signed arithmetic."
+        ]
+      },
+      "id": "SV-2023-06-INT-TYPE-PROPERTIES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast integer with 2-state int."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Check $bits(integer) is 32 and store x and z values."
+        ]
+      },
+      "id": "SV-2023-06-INTEGER-TYPE-PROPERTIES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use folded constant expressions that evaluate to zero, negative one, and positive one."
+        ],
+        "negative": [
+          "Use zero and negative constant expressions as cast sizes."
+        ],
+        "notes": [],
+        "positive": [
+          "Use positive literal and parameterized integral size casts."
+        ]
+      },
+      "id": "SV-2023-06-INTEGRAL-NONPOSITIVE-SIZE-CAST-ERROR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Select boundary bits and use parameter selects in elaboration-time expressions."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Select scalar bits, fixed part-selects, and indexed part-selects of integral parameters."
+        ]
+      },
+      "id": "SV-2023-06-INTEGRAL-PARAMETER-SELECTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Cast a top-bit-one pattern and verify no width or bit-pattern change."
+        ],
+        "negative": [
+          "Apply a signing cast to a nonintegral expression."
+        ],
+        "notes": [],
+        "positive": [
+          "Apply signed and unsigned casts to equal bit patterns across 2-state and 4-state widths and verify sign-sensitive behavior."
+        ]
+      },
+      "id": "SV-2023-06-INTEGRAL-SIGNING-CAST"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify width, preserved signedness, state domain, padding, and truncation independently."
+        ],
+        "negative": [
+          "Apply a size cast to a nonintegral source expression."
+        ],
+        "notes": [],
+        "positive": [
+          "Resize signed and unsigned 2-state and 4-state expressions narrower and wider using literal and parameterized positive sizes."
+        ]
+      },
+      "id": "SV-2023-06-INTEGRAL-SIZE-CAST"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use x and z in both high- and low-significance source positions."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Assign known integral values and mixed 0/1/x/z vectors to real variables and compare with x/z replaced by zero."
+        ]
+      },
+      "id": "SV-2023-06-INTEGRAL-TO-REAL-IMPLICIT-CONVERSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Include zero bytes and a non-byte-multiple source width."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Cast 8-, 12-, and 16-bit integral values to string and verify byte grouping, sizing, left extension, and NUL removal."
+        ]
+      },
+      "id": "SV-2023-06-INTEGRAL-TO-STRING-CAST-SIZING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast a string literal, a string-typed expression, and an integral expression as assignment sources."
+        ],
+        "negative": [
+          "Assign an integral value directly to a string variable without a cast."
+        ],
+        "notes": [],
+        "positive": [
+          "Assign an integral value to a string using string'(value)."
+        ]
+      },
+      "id": "SV-2023-06-INTEGRAL-TO-STRING-REQUIRES-CAST"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast packed and unpacked structures."
+        ],
+        "negative": [
+          "Use a real, string, or unpacked array where an integral expression is required."
+        ],
+        "notes": [],
+        "positive": [
+          "Use each listed category in a context requiring an integral expression."
+        ]
+      },
+      "id": "SV-2023-06-INTEGRAL-TYPE-CATEGORY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a time literal or 1step as the single delay value."
+        ],
+        "negative": [
+          "Give an interconnect a two- or three-value delay tuple."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare interconnect with zero or one delay value."
+        ]
+      },
+      "id": "SV-2023-06-INTERCONNECT-AT-MOST-ONE-DELAY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Pass an interconnect through multiple hierarchy levels without reading its value."
+        ],
+        "negative": [
+          "Reference an interconnect in a procedural statement or continuous assignment."
+        ],
+        "notes": [],
+        "positive": [
+          "Connect an interconnect net between compatible instance ports."
+        ]
+      },
+      "id": "SV-2023-06-INTERCONNECT-CONNECTIONS-ONLY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a signing or packed-dimension implicit data-type component."
+        ],
+        "negative": [
+          "Give an interconnect declaration an initializer or delay3 tuple."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare scalar and unpacked-array interconnects with an optional delay value."
+        ]
+      },
+      "id": "SV-2023-06-INTERCONNECT-DECLARATION-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use selects of interconnect arrays in an all-interconnect net_lvalue."
+        ],
+        "negative": [
+          "Read an interconnect in a value expression or mix it with an ordinary net in a net_lvalue."
+        ],
+        "notes": [],
+        "positive": [
+          "Form a net_lvalue concatenation entirely from interconnect nets."
+        ]
+      },
+      "id": "SV-2023-06-INTERCONNECT-EXPRESSION-RESTRICTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Resolve adjacent array elements to built-in and user-defined net types."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Connect separate elements of one interconnect array to logic and real user-nettype ports."
+        ]
+      },
+      "id": "SV-2023-06-INTERCONNECT-HETEROGENEOUS-ARRAY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Alias selected elements of interconnect arrays."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Alias two compatible all-interconnect net_lvalues."
+        ]
+      },
+      "id": "SV-2023-06-INTERCONNECT-NET-ALIAS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast connection through a port with prohibited declaration assignment."
+        ],
+        "negative": [
+          "Add = expression to an interconnect declarator."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare an uninitialized interconnect."
+        ]
+      },
+      "id": "SV-2023-06-INTERCONNECT-NO-DECLARATION-ASSIGNMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast strength-bearing built-in net declarations with interconnect."
+        ],
+        "negative": [
+          "Add a drive-strength pair or charge size to an interconnect declaration."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare an interconnect without strength modifiers."
+        ]
+      },
+      "id": "SV-2023-06-INTERCONNECT-NO-DECLARATION-STRENGTH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use both packed and unpacked dimensions on one interconnect."
+        ],
+        "negative": [
+          "Specify logic or another explicit data type after interconnect."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare scalar, packed, and unpacked interconnect nets without a data type."
+        ]
+      },
+      "id": "SV-2023-06-INTERCONNECT-NO-DECLARED-DATA-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a constant select on an interface array before the member type name."
+        ],
+        "negative": [
+          "Use a nonconstant bit-select in the typedef path."
+        ],
+        "notes": [],
+        "positive": [
+          "Locally typedef a type member through a scalar interface port and an element of an interface-port array."
+        ]
+      },
+      "id": "SV-2023-06-INTERFACE-BASED-TYPEDEF-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Apply the rule through an interface array port with a constant selection."
+        ],
+        "negative": [
+          "Use the interface-port type member directly without the required prior local redefinition."
+        ],
+        "notes": [],
+        "positive": [
+          "Access an interface type member through a port, locally typedef it, then declare an object of the local alias."
+        ]
+      },
+      "id": "SV-2023-06-INTERFACE-BASED-TYPEDEF-LOCAL-REDEFINITION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast the null default with a handle assigned from an implementing class object."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare an uninitialized interface-class handle with null."
+        ]
+      },
+      "id": "SV-2023-06-INTERFACE-CLASS-HANDLE-DEFAULT-NULL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Forward $ through one parameter to another before testing."
+        ],
+        "negative": [
+          "Pass a nonparameter expression where the signature does not permit it."
+        ],
+        "notes": [],
+        "positive": [
+          "Call $isunbounded on $, finite, local, and hierarchical parameters and use the result in generate conditions."
+        ]
+      },
+      "id": "SV-2023-06-ISUNBOUNDED-SYSTEM-FUNCTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare instances with default, ordered, and named overrides of the depended-on ordinary parameter."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Derive a localparam from an overridable parameter and verify per-instance recomputation after ordinary parameter overrides."
+        ]
+      },
+      "id": "SV-2023-06-LOCALPARAM-INDIRECT-PARAMETER-DEPENDENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast direct targeting of a localparam with targeting an adjacent ordinary parameter."
+        ],
+        "negative": [
+          "Directly target the localparam with named, ordered, or defparam override."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare and use a localparam without targeting it for override."
+        ]
+      },
+      "id": "SV-2023-06-LOCALPARAM-NOT-DIRECTLY-OVERRIDABLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Let a localparam segment extend to list end and reset one with a later parameter keyword."
+        ],
+        "negative": [
+          "Override a declaration lying within a localparam segment."
+        ],
+        "notes": [],
+        "positive": [
+          "Mix parameter and localparam keywords in one parameter port list and test override eligibility of each segment."
+        ]
+      },
+      "id": "SV-2023-06-LOCALPARAM-PORT-LIST-KEYWORD-EXTENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use scalar logic and logic as nested aggregate or array element types."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare a logic variable, a net with logic data type, and packed and unpacked constructed types with logic components."
+        ]
+      },
+      "id": "SV-2023-06-LOGIC-KEYWORD-DECLARATION-CONTEXTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare scalar, vector, signed, and unsigned forms."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use corresponding logic and reg declarations in the same type-compatible contexts."
+        ]
+      },
+      "id": "SV-2023-06-LOGIC-REG-SAME-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Explicitly add signed to contrast the unsigned default."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare scalar and ranged logic objects and store 0, 1, x, and z."
+        ]
+      },
+      "id": "SV-2023-06-LOGIC-TYPE-PROPERTIES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Assign x or z and observe conversion to the 2-state domain."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Check $bits(longint) is 64 and exercise signed arithmetic."
+        ]
+      },
+      "id": "SV-2023-06-LONGINT-TYPE-PROPERTIES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast a nonmatching but structurally equivalent packed-type pair, showing the implication does not state a converse."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use representative matching built-in, alias, aggregate, and array pairs where equivalence is required."
+        ]
+      },
+      "id": "SV-2023-06-MATCHING-IMPLIES-EQUIVALENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use both range directions."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare and access a 65,536-bit packed vector."
+        ]
+      },
+      "id": "SV-2023-06-MINIMUM-MAXIMUM-VECTOR-LENGTH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast nested scope shadowing with same-namespace redeclaration."
+        ],
+        "negative": [
+          "Declare a variable and then redeclare the same name in the same namespace."
+        ],
+        "notes": [],
+        "positive": [
+          "Use the same identifier in distinct namespaces."
+        ]
+      },
+      "id": "SV-2023-06-NAME-REDECLARATION-ILLEGAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Test typedef scope boundaries."
+        ],
+        "negative": [
+          "Treat objects from separate but textually identical typedef definitions as matching."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare multiple objects from one named enum/aggregate/class type."
+        ]
+      },
+      "id": "SV-2023-06-NAMED-ENUM-AGGREGATE-CLASS-SELF-MATCHING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use equal-strength conflicts and unequal-strength conflicts as separate resolution cases."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Combine net-bit drivers with selected differing values and strengths and verify both resultant value and strength."
+        ]
+      },
+      "id": "SV-2023-06-NET-BIT-STRENGTH-RESOLUTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Check corresponding bits of packed and unpacked composite nets independently."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Store and drive 0, 1, x, and z on built-in net bits and inspect their associated strengths."
+        ]
+      },
+      "id": "SV-2023-06-NET-BITS-CARRY-STRENGTH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use parameter, specparam, time-literal, and 1step single delay values."
+        ],
+        "negative": [
+          "Specify more than three parenthesized delay expressions."
+        ],
+        "notes": [],
+        "positive": [
+          "Exercise one-, two-, and three-expression parenthesized delay3 forms and each single delay-value category."
+        ]
+      },
+      "id": "SV-2023-06-NET-DELAY3-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Cover supply, strong, pull, and weak strengths on each logical side."
+        ],
+        "negative": [
+          "Specify two strength0 forms, two strength1 forms, or pair highz0/highz1 in a disallowed ordering."
+        ],
+        "notes": [],
+        "positive": [
+          "Exercise complementary 0/1 strengths and each permitted value/high-impedance ordering."
+        ]
+      },
+      "id": "SV-2023-06-NET-DRIVE-STRENGTH-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast an unresolved net type or a single-driver case with a built-in resolvable net."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Drive a resolvable net from two sources with agreeing and conflicting values and observe the resolved result."
+        ]
+      },
+      "id": "SV-2023-06-NET-DRIVING-AND-RESOLUTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use conflicting drivers so the post-release value demonstrates resolution rather than retention."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Force a continuously driven net to another value, release it, and observe its resolved driver value return."
+        ]
+      },
+      "id": "SV-2023-06-NET-FORCE-RELEASE-RESOLUTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast an omitted type with an explicitly named non-logic data type."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare wire w and observe equivalence to wire logic w.",
+          "Declare a signed ranged wire without a type and use it as signed packed logic."
+        ]
+      },
+      "id": "SV-2023-06-NET-IMPLICIT-LOGIC-DATA-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast procedural assignment to a variable with continuous assignment to a net."
+        ],
+        "negative": [
+          "Target a wire from an assignment statement in an initial block."
+        ],
+        "notes": [],
+        "positive": [
+          "Drive a net using a continuous assignment."
+        ]
+      },
+      "id": "SV-2023-06-NET-NO-PROCEDURAL-ASSIGNMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use each source form on scalar and vector nets."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Drive separate nets through a continuous assignment, a primitive output, and a module output port."
+        ]
+      },
+      "id": "SV-2023-06-NET-PERMITTED-DRIVER-SOURCES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast value/strength inspection with data-type identity for a strength-bearing net."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare otherwise equivalent nets with differing strength information and use them in the same type-compatible contexts."
+        ]
+      },
+      "id": "SV-2023-06-NET-STRENGTH-NOT-DATA-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast lexical adjacency with intervening comments or whitespace, which do not constitute lexical elements."
+        ],
+        "negative": [
+          "Declare wire reg or tri reg with adjacent keywords."
+        ],
+        "notes": [],
+        "positive": [
+          "Place a permitted range or other lexical element between wire and reg in a port declaration."
+        ]
+      },
+      "id": "SV-2023-06-NET-TYPE-NOT-DIRECTLY-FOLLOWED-BY-REG"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast an ordinary net after driver removal with a trireg retaining charge."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Change a continuous-assignment driver and observe the net follow its resolved value."
+        ]
+      },
+      "id": "SV-2023-06-NET-VALUE-FROM-DRIVERS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use scoped aliases and alias chains."
+        ],
+        "negative": [
+          "Assume independently defined structurally similar nettypes match."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a nettype alias and use alias- and target-declared nets in matching-required connections."
+        ]
+      },
+      "id": "SV-2023-06-NETTYPE-ALIAS-MATCHES-TARGET"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast fixed-size and dynamic unpacked arrays of the same element type."
+        ],
+        "negative": [
+          "Use a dynamic array or an unpacked composite containing an invalid element type."
+        ],
+        "notes": [],
+        "positive": [
+          "Define nettypes over logic vectors, all-bit packed structures, real, and fixed-size unpacked arrays of valid elements."
+        ]
+      },
+      "id": "SV-2023-06-NETTYPE-ALLOWED-DATA-TYPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare otherwise identical nettypes with and without a resolution function."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare a net with a resolved user nettype, apply multiple drivers, and observe its resolution function determine the value."
+        ]
+      },
+      "id": "SV-2023-06-NETTYPE-APPLIES-DATA-AND-RESOLUTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use package- and class-scoped names."
+        ],
+        "negative": [
+          "Place a resolution-function clause on the alias form."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare explicit-data-type and alias nettypes."
+        ]
+      },
+      "id": "SV-2023-06-NETTYPE-DECLARATION-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Make the oracle independent of the permitted evaluation count and contrast updates in separate regions."
+        ],
+        "negative": [],
+        "notes": [
+          "Do not require an exact resolution-function call count for multiple same-region updates."
+        ],
+        "positive": [
+          "Change multiple drivers in one scheduling region and accept one or multiple resolution-function evaluations while verifying the final resolved value."
+        ]
+      },
+      "id": "SV-2023-06-NETTYPE-MULTIPLE-SAME-REGION-EVALUATIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an alias form whose target already supplies its data type."
+        ],
+        "negative": [
+          "Attempt to define a new nettype without either an explicit data type or an existing nettype alias target."
+        ],
+        "notes": [],
+        "positive": [
+          "Define a nettype with an explicit integral data type."
+        ]
+      },
+      "id": "SV-2023-06-NETTYPE-REQUIRES-EXPLICIT-DATA-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multiple drivers while checking that the matured computation receives all current driver values."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Change one driver from module activity and one from program or clocking-block activity and observe the resolved update in the corresponding region."
+        ]
+      },
+      "id": "SV-2023-06-NETTYPE-RESOLUTION-UPDATE-SCHEDULING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use aliases and scoped nettype identifiers under the following matching rules."
+        ],
+        "negative": [
+          "Treat a separately declared nettype with the same data type/resolution function as matching solely by structure."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare multiple nets with one nettype and use them where matching nettypes are required."
+        ]
+      },
+      "id": "SV-2023-06-NETTYPE-SELF-MATCHING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast declaration initialization with continuous assignment."
+        ],
+        "negative": [
+          "Use a chandle as either side of a continuous assignment."
+        ],
+        "notes": [],
+        "positive": [
+          "Copy a chandle with a procedural assignment."
+        ]
+      },
+      "id": "SV-2023-06-NO-CHANDLE-CONTINUOUS-ASSIGNMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Test explicit and implicit sensitivity constructs involving a direct chandle reference."
+        ],
+        "negative": [
+          "Place a chandle directly in an always sensitivity list or event control expression."
+        ],
+        "notes": [],
+        "positive": [
+          "Trigger event logic from a separately derived Boolean variable."
+        ]
+      },
+      "id": "SV-2023-06-NO-CHANDLE-EVENT-EXPRESSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast packed and unpacked aggregate declarations."
+        ],
+        "negative": [
+          "Declare a packed structure or packed union member of chandle type."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a chandle in an unpacked structure where otherwise permitted."
+        ]
+      },
+      "id": "SV-2023-06-NO-CHANDLE-PACKED-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast DPI subroutine arguments with module ports."
+        ],
+        "negative": [
+          "Declare an input, output, inout, or ref design port of chandle type."
+        ],
+        "notes": [],
+        "positive": [
+          "Pass a chandle as a subroutine argument rather than a design port."
+        ]
+      },
+      "id": "SV-2023-06-NO-CHANDLE-PORTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use explicit casting attempts to verify they do not bypass the restriction."
+        ],
+        "negative": [
+          "Assign a chandle to an integer, class handle, string, or bit vector."
+        ],
+        "notes": [],
+        "positive": [
+          "Assign a chandle to another chandle."
+        ]
+      },
+      "id": "SV-2023-06-NO-CHANDLE-TO-OTHER-TYPE-ASSIGNMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast tagged and untagged aggregate contexts where applicable."
+        ],
+        "negative": [
+          "Declare an untagged union member of chandle type."
+        ],
+        "notes": [],
+        "positive": [
+          "Store a chandle as a class member or ordinary structure member where permitted."
+        ]
+      },
+      "id": "SV-2023-06-NO-CHANDLE-UNTAGGED-UNION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast value-parameter and type-parameter defparam targets."
+        ],
+        "negative": [
+          "Target a type parameter with defparam."
+        ],
+        "notes": [],
+        "positive": [
+          "Override a type parameter through an instance parameter assignment."
+        ]
+      },
+      "id": "SV-2023-06-NO-DEFPARAM-TYPE-PARAMETER-OVERRIDE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast package/class scope resolution and interface-based typedef access with prohibited direct instance hierarchy traversal."
+        ],
+        "negative": [
+          "Reference a type identifier directly through an instance hierarchy path."
+        ],
+        "notes": [],
+        "positive": [
+          "Import or locally alias a type through supported scope mechanisms, including an interface-based typedef."
+        ]
+      },
+      "id": "SV-2023-06-NO-HIERARCHICAL-TYPE-IDENTIFIER-REFERENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Test both constant and variable select forms."
+        ],
+        "negative": [
+          "Apply a bit-select or part-select directly to a real variable."
+        ],
+        "notes": [],
+        "positive": [
+          "Convert a real explicitly to an integral type before selecting bits."
+        ]
+      },
+      "id": "SV-2023-06-NO-REAL-BIT-PART-SELECT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Test each prohibited edge keyword separately."
+        ],
+        "negative": [
+          "Apply posedge, negedge, or edge to a real variable."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a value-change event control on a real where otherwise permitted."
+        ]
+      },
+      "id": "SV-2023-06-NO-REAL-EDGE-EVENT-CONTROL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Test real and shortreal index expressions."
+        ],
+        "negative": [
+          "Index a vector bit-select or indexed part-select with a real expression."
+        ],
+        "notes": [],
+        "positive": [
+          "Explicitly convert a real expression to integral before using it as a select index."
+        ]
+      },
+      "id": "SV-2023-06-NO-REAL-VECTOR-SELECT-INDEX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Test separately the instance-side and module-side variable restrictions."
+        ],
+        "negative": [
+          "Connect a variable to the internal or external side of an inout port."
+        ],
+        "notes": [],
+        "positive": [
+          "Connect an inout port using a net."
+        ]
+      },
+      "id": "SV-2023-06-NO-VARIABLE-INOUT-CONNECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Mix defaulted and nondefaulted class parameters."
+        ],
+        "negative": [
+          "Reference a specialization omitting a no-default argument."
+        ],
+        "notes": [],
+        "positive": [
+          "Specialize a class with explicit value and type arguments for every no-default parameter."
+        ]
+      },
+      "id": "SV-2023-06-NODEFAULT-CLASS-TYPE-PARAMETER-REQUIRES-OVERRIDE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Provide named and ordered overrides in separate instances."
+        ],
+        "negative": [
+          "Instantiate it without an override or rely on implicit top-level instantiation."
+        ],
+        "notes": [],
+        "positive": [
+          "Instantiate a no-default parameterized module/interface/program with an explicit override."
+        ]
+      },
+      "id": "SV-2023-06-NODEFAULT-DESIGN-PARAMETER-REQUIRES-OVERRIDE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast class, module, and subroutine declaration contexts."
+        ],
+        "negative": [
+          "Specify automatic on a module-level data declaration."
+        ],
+        "notes": [],
+        "positive": [
+          "Use automatic on a permitted procedural block-item declaration."
+        ]
+      },
+      "id": "SV-2023-06-NONPROCEDURAL-DATA-NO-AUTOMATIC-LIFETIME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast static and non-static class properties."
+        ],
+        "negative": [
+          "Target an instance property with continuous or procedural continuous assignment."
+        ],
+        "notes": [],
+        "positive": [
+          "Write instance properties procedurally with ordinary permitted assignment."
+        ]
+      },
+      "id": "SV-2023-06-NONSTATIC-CLASS-PROPERTY-NO-CONTINUOUS-WRITE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast its intermediate result with replication using a nonconstant multiplier."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Replicate all-literal operands with a positive constant multiplier and use the result in integral and string contexts."
+        ]
+      },
+      "id": "SV-2023-06-NONZERO-ALL-LITERAL-STRING-REPLICATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use selective import, wildcard import, and explicit package qualification."
+        ],
+        "negative": [
+          "Substitute separately defined identical package types."
+        ],
+        "notes": [],
+        "positive": [
+          "Import one package type into multiple scopes and use objects in matching-required contexts."
+        ]
+      },
+      "id": "SV-2023-06-PACKAGE-TYPEDEF-SELF-MATCHING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast member dimensions with a dimension applied to the struct type itself."
+        ],
+        "negative": [
+          "Attach a packed dimension to an unpacked struct declaration."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a packed struct with a following packed dimension."
+        ]
+      },
+      "id": "SV-2023-06-PACKED-DIMENSION-STRUCT-UNION-REQUIRES-PACKED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "A packed aggregate containing any 4-state bit is treated as 4-state."
+        ],
+        "negative": [
+          "Vary total bits, state domain, or signedness."
+        ],
+        "notes": [],
+        "positive": [
+          "Compare equal-width/state/sign packed vectors, structures, unions, and atom types."
+        ]
+      },
+      "id": "SV-2023-06-PACKED-INTEGRAL-TYPE-EQUIVALENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Add explicit casts where stricter type intent is desired."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Assign between assignment-compatible packed vectors/structures/unions without explicit cast."
+        ]
+      },
+      "id": "SV-2023-06-PACKED-TYPES-IMPLICIT-INTEGRAL-CAST"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use explicitly typed and inferred parameter constants."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Initialize parameter constants from integral, real, time, and string literals where type-compatible."
+        ]
+      },
+      "id": "SV-2023-06-PARAMETER-CONSTANT-LITERAL-INITIALIZER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare module body parameter behavior with generate-block parameter behavior."
+        ],
+        "negative": [
+          "Attempt to override a context-localized parameter."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare parameter in each listed context and verify it cannot be overridden."
+        ]
+      },
+      "id": "SV-2023-06-PARAMETER-DECLARATION-CONTEXT-LOCALIZATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Override the earlier parameter and verify dependent defaults are reevaluated."
+        ],
+        "negative": [
+          "Reference a later parameter from an earlier default where forward dependence is not allowed."
+        ],
+        "notes": [],
+        "positive": [
+          "Derive a later value from an earlier value and type a later parameter with an earlier type parameter."
+        ]
+      },
+      "id": "SV-2023-06-PARAMETER-DEFAULT-DEPENDS-ON-EARLIER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare signed typed and wholly untyped parameters."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use sized final values of multiple widths and verify implied LSB zero and MSB width-minus-one."
+        ]
+      },
+      "id": "SV-2023-06-PARAMETER-IMPLIED-RANGE-FROM-FINAL-SIZE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Override different instances with different values and combine partially named overrides with defaults where legal."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Instantiate parameterized design elements using defaults and each of the three override mechanisms."
+        ]
+      },
+      "id": "SV-2023-06-PARAMETER-OVERRIDE-MECHANISMS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Mix initial bare assignments with later explicit parameter declarations as allowed by list ordering."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare empty, value, typed, local, and type parameter port lists, including omitted parameter keyword."
+        ]
+      },
+      "id": "SV-2023-06-PARAMETER-PORT-LIST-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast value and type parameters under the same omission rule."
+        ],
+        "negative": [
+          "Omit a default outside a parameter port list or from a localparam entry within one."
+        ],
+        "notes": [],
+        "positive": [
+          "Omit defaults for overridable parameter-port entries and provide required localparam defaults."
+        ]
+      },
+      "id": "SV-2023-06-PARAMETER-PORT-OMISSION-RESTRICTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify half-away-from-zero rounding and x/z-to-zero behavior where applicable."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Assign real values at half and nonhalf boundaries to integer parameters and integral values to real parameters."
+        ]
+      },
+      "id": "SV-2023-06-PARAMETER-REAL-INTEGER-CONVERSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Specialize the same member typedef with different type and size arguments and declare objects of each resulting type."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Define packed, unpacked, and aggregate typedef members depending on class type/value parameters and access them through specialized class scope."
+        ]
+      },
+      "id": "SV-2023-06-PARAMETERIZED-DATA-TYPE-CLASS-TYPEDEFS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Test explicit logic vectors against 4-state predefined types."
+        ],
+        "negative": [
+          "Change state domain, sign, width, or use an ascending/noncanonical range."
+        ],
+        "notes": [],
+        "positive": [
+          "Match byte with bit signed [7:0] and int with bit signed [31:0]."
+        ]
+      },
+      "id": "SV-2023-06-PREDEFINED-SIMPLE-VECTOR-MATCHING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Introduce a nested block to declare a variable after an outer statement."
+        ],
+        "negative": [
+          "Reference a variable before declaration or declare it after a statement in the same block."
+        ],
+        "notes": [],
+        "positive": [
+          "Place block declarations before statements and uses."
+        ]
+      },
+      "id": "SV-2023-06-PROCEDURAL-VARIABLE-DECLARATION-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use ascending and descending declared ranges."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare a ranged untyped parameter and override with values of differing width and signedness."
+        ]
+      },
+      "id": "SV-2023-06-RANGE-ONLY-PARAMETER-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Pass real and realtime values through corresponding compatible declarations."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Check real and realtime assignment compatibility and precision behavior, and shortreal's narrower representation."
+        ]
+      },
+      "id": "SV-2023-06-REAL-SHORTREAL-REALTIME-TYPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify 1.5 becomes 2, -1.5 becomes -2, and nearby non-half fractions round nearest."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Convert positive and negative real values below, above, and exactly at half boundaries."
+        ]
+      },
+      "id": "SV-2023-06-REAL-TO-INTEGER-ROUNDING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use typedef aliases of redundantly qualified types."
+        ],
+        "negative": [
+          "Apply a modifier that changes the default signedness and expect matching."
+        ],
+        "notes": [],
+        "positive": [
+          "Match byte with byte signed and logic with logic unsigned."
+        ]
+      },
+      "id": "SV-2023-06-REDUNDANT-SIGNING-MATCHES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Observe caller and callee access to the same variable rather than copied values."
+        ],
+        "negative": [
+          "Attempt ref connection with an expression that is not a permissible variable actual."
+        ],
+        "notes": [],
+        "positive": [
+          "Pass a variable through a ref port and modify the shared object from the callee."
+        ]
+      },
+      "id": "SV-2023-06-REF-PORT-SHARES-VARIABLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare corresponding reg and logic declarations."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare scalar and ranged reg objects and store all four states."
+        ]
+      },
+      "id": "SV-2023-06-REG-TYPE-PROPERTIES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a static method from a parameterized class specialization."
+        ],
+        "negative": [
+          "Use a nonstatic instance method as a resolution function."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a class static method as a resolution function."
+        ]
+      },
+      "id": "SV-2023-06-RESOLUTION-CLASS-METHOD-STATIC"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an explicitly static function whose implementation demonstrably preserves no state."
+        ],
+        "negative": [
+          "Modify an input element, resize the input array, or update external state."
+        ],
+        "notes": [],
+        "positive": [
+          "Use an automatic resolution function that only reads its driver array."
+        ]
+      },
+      "id": "SV-2023-06-RESOLUTION-FUNCTION-PURE-NONMUTATING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Invoke resolution through nets having different numbers of drivers."
+        ],
+        "negative": [
+          "Use a mismatched return type, scalar argument, or extra argument."
+        ],
+        "notes": [],
+        "positive": [
+          "Define a T-returning resolution function taking input T drivers[]."
+        ]
+      },
+      "id": "SV-2023-06-RESOLUTION-FUNCTION-SIGNATURE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a typedef matching logic and verify ranged versus unranged width behavior."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare an unranged logic scalar and a ranged logic vector and compare their bit widths."
+        ]
+      },
+      "id": "SV-2023-06-SCALAR-AND-VECTOR-WIDTH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast scalar logic with one-bit and multibit packed logic vectors."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Verify $bits(logic) and $bits of a scalar logic object are 1."
+        ]
+      },
+      "id": "SV-2023-06-SCALAR-LOGIC-BIT-SIZE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Access boundary bit-selects and part-selects in both range directions."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Read and drive bit-selects and part-selects of a scalared vector net."
+        ]
+      },
+      "id": "SV-2023-06-SCALARED-VECTOR-ACCESSIBILITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Assign x or z and observe conversion to the 2-state domain."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Check $bits(shortint) is 16 and exercise signed arithmetic."
+        ]
+      },
+      "id": "SV-2023-06-SHORTINT-TYPE-PROPERTIES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise NaN, signed zero, subnormal, and fractional values without assuming NaN payload canonicalization."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare numeric cast with bit-preserving system-function round trips for representative shortreal values."
+        ]
+      },
+      "id": "SV-2023-06-SHORTREAL-NUMERIC-VERSUS-BIT-CONVERSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a one-bit signed range and a noncanonical range direction."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Override a signed ranged parameter with wider, narrower, signed, and unsigned values and verify fixed declaration characteristics."
+        ]
+      },
+      "id": "SV-2023-06-SIGNED-RANGED-PARAMETER-FIXED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use equal-width objects to isolate signedness from width conversion."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Assign the same negative literal to signed and unsigned objects and compare sign-sensitive expression behavior."
+        ]
+      },
+      "id": "SV-2023-06-SIGNED-TYPES-RETAIN-NEGATIVE-SIGN"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare one-dimensional and multidimensional packed arrays for category membership."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Convert a packed structure, packed union, and multidimensional packed array to an equal-width simple bit vector and back."
+        ]
+      },
+      "id": "SV-2023-06-SIMPLE-BIT-VECTOR-TYPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast a pure rename with a newly defined enum or aggregate type."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use a simple alias and its target interchangeably in a matching-required context."
+        ]
+      },
+      "id": "SV-2023-06-SIMPLE-TYPEDEF-OVERRIDE-MATCHES-TARGET"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast a packed array, which is singular, with an unpacked array, which is aggregate."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use an unpacked structure or unpacked array where an aggregate is accepted.",
+          "Use a packed integral vector or string where a singular value is required."
+        ]
+      },
+      "id": "SV-2023-06-SINGULAR-AGGREGATE-CATEGORIES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Chain multiple specparam declarations."
+        ],
+        "negative": [
+          "Reference a specparam in parameter or localparam initialization."
+        ],
+        "notes": [],
+        "positive": [
+          "Define a specparam from literals, a parameter, and a prior specparam."
+        ]
+      },
+      "id": "SV-2023-06-SPECPARAM-CONSTANT-EXPRESSION-SOURCES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a module-body specparam in an allowed module expression."
+        ],
+        "negative": [
+          "Declare a specparam outside a module, use one outside its module/specify context, use parameter inside specify, or use specparam in a parameter initializer/range."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare/use specparams in module bodies and specify blocks and use ordinary parameters outside specify blocks."
+        ]
+      },
+      "id": "SV-2023-06-SPECPARAM-CONTEXT-AND-USE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast references among declarations inside and outside a specify block."
+        ],
+        "negative": [
+          "Reference a module-body specparam before its declaration."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a module-body specparam before its use."
+        ]
+      },
+      "id": "SV-2023-06-SPECPARAM-DECLARATION-BEFORE-USE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Declare multiple specparams in one declaration."
+        ],
+        "negative": [
+          "Omit the required specparam assignment."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare scalar, packed, mintypmax, and pulse-control specparams in valid specify contexts."
+        ]
+      },
+      "id": "SV-2023-06-SPECPARAM-DECLARATION-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare default and SDF-overridden final values."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Annotate ranged and unranged specparams with differently sized values and inspect resulting range behavior."
+        ]
+      },
+      "id": "SV-2023-06-SPECPARAM-RANGE-RULES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare otherwise similar timing values declared as specparam and parameter."
+        ],
+        "negative": [
+          "Target a specparam with defparam or instance parameter assignment."
+        ],
+        "notes": [],
+        "positive": [
+          "Apply SDF annotation to a specparam and use instance assignment for an ordinary parameter."
+        ]
+      },
+      "id": "SV-2023-06-SPECPARAM-SDF-ONLY-OVERRIDE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise enum and bit-stream targets through their separately defined behavior."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare explicit casts against assignments to target-typed temporaries across sizing, signedness, and real/integer conversions."
+        ]
+      },
+      "id": "SV-2023-06-STATIC-CAST-ASSIGNMENT-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a constant function combining a hierarchical constant and parameter."
+        ],
+        "negative": [
+          "Use an otherwise disallowed mutable run-time expression for static const initialization."
+        ],
+        "notes": [],
+        "positive": [
+          "Initialize static const objects from each permitted source, including a hierarchical reference."
+        ]
+      },
+      "id": "SV-2023-06-STATIC-CONST-INITIALIZER-SOURCES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast static declaration initialization timing with automatic variable initialization on entry."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Initialize a static variable and read it from an initial block at time zero.",
+          "Initialize a static class member and inspect it from the first process."
+        ]
+      },
+      "id": "SV-2023-06-STATIC-DECLARATION-INITIALIZATION-BEFORE-PROCESSES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast static success with dynamic cast return 0 for the same unnamed value."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Statically cast an unnamed representable value and observe assignment succeeds."
+        ]
+      },
+      "id": "SV-2023-06-STATIC-ENUM-CAST-NO-VALUE-VALIDATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast a design-scope variable with a variable inside an automatic task."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Retain values across simulation in compilation-unit and module/interface/program/checker variables."
+        ]
+      },
+      "id": "SV-2023-06-STATIC-LIFETIME-DESIGN-SCOPE-VARIABLES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Explicitly mark only one variable automatic inside a static subroutine."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Show default static retention across calls and separate automatic values per recursive or concurrent activation."
+        ]
+      },
+      "id": "SV-2023-06-STATIC-SUBROUTINE-BLOCK-LIFETIME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use digit 2 as the first invalid character and use literal-like prefixes."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Parse binary digits with underscores and trailing nondigits."
+        ]
+      },
+      "id": "SV-2023-06-STRING-ATOBIN-METHOD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use empty, no-hex-digit, 0x-prefixed, and apostrophe-base strings."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Parse mixed-case hexadecimal digits with underscores and trailing nondigits."
+        ]
+      },
+      "id": "SV-2023-06-STRING-ATOHEX-METHOD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use empty, no-digit, signed, sized-literal-like, and leading-nondigit strings."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Parse decimal digit strings with embedded underscores and trailing nondigits."
+        ]
+      },
+      "id": "SV-2023-06-STRING-ATOI-METHOD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use digit 8 or 9 as the first invalid character and use literal-like prefixes."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Parse octal digits with underscores and trailing nondigits."
+        ]
+      },
+      "id": "SV-2023-06-STRING-ATOOCT-METHOD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use empty, no-digit, partially valid, and end-of-string-terminated inputs."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Parse decimal, fractional, signed, and exponent real constants with trailing nondigits."
+        ]
+      },
+      "id": "SV-2023-06-STRING-ATOREAL-METHOD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise zero and values with leading or internal zero bits."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Convert representative integer bit patterns to binary strings and parse them back with atobin."
+        ]
+      },
+      "id": "SV-2023-06-STRING-BINTOA-SIGNATURE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Select the first and last valid characters."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Read a string character into a byte and overwrite a selected character."
+        ]
+      },
+      "id": "SV-2023-06-STRING-CHARACTER-SELECT-BYTE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare prefixes, empty strings, and values differing at the final character."
+        ],
+        "negative": [],
+        "notes": [
+          "Test return sign rather than a particular nonzero magnitude unless required by strcmp semantics."
+        ],
+        "positive": [
+          "Compare equal strings and strings ordered before and after one another; verify zero, negative, and positive results."
+        ]
+      },
+      "id": "SV-2023-06-STRING-COMPARE-METHOD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an all-literal concatenation in a later string expression and contrast its intermediate semantics with mixed concatenation."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Concatenate all literals, mixed literals/string expressions, and only string expressions."
+        ]
+      },
+      "id": "SV-2023-06-STRING-CONCATENATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Initialize from another string variable and from \"\"."
+        ],
+        "negative": [
+          "Initialize a string from an expression lacking an applicable string conversion."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare strings uninitialized and initialized from each permitted initializer category."
+        ]
+      },
+      "id": "SV-2023-06-STRING-DECLARATION-INITIALIZER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Transition between empty and nonempty strings."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Grow and shrink a string and observe length track character count."
+        ]
+      },
+      "id": "SV-2023-06-STRING-DYNAMIC-CHARACTER-COLLECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare two literals separately from comparisons where at least one operand has string type."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare equal and unequal string variables and mixed string-variable/string-literal operands."
+        ]
+      },
+      "id": "SV-2023-06-STRING-EQUALITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call getc with -1, length, and on an empty string and observe zero."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Call getc for first, middle, and last characters and compare with indexed reads."
+        ]
+      },
+      "id": "SV-2023-06-STRING-GETC-METHOD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise zero and values using alphabetic hex digits."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Convert representative integer bit patterns to hexadecimal strings and parse them back with atohex."
+        ]
+      },
+      "id": "SV-2023-06-STRING-HEXTOA-METHOD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Mix case differences with a later substantive character difference."
+        ],
+        "negative": [],
+        "notes": [
+          "Test return sign rather than unspecified nonzero magnitude."
+        ],
+        "positive": [
+          "Compare strings differing only in case and observe zero; compare case-insensitively ordered unequal strings for negative/positive results."
+        ]
+      },
+      "id": "SV-2023-06-STRING-ICOMPARE-METHOD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Check one-character strings where first and last index are both zero."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Index every character of a known string and verify left-to-right numbering."
+        ]
+      },
+      "id": "SV-2023-06-STRING-INDEX-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Read index -1, N, and any index of an empty string and observe zero."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Read first, middle, and last valid characters and compare their byte codes."
+        ]
+      },
+      "id": "SV-2023-06-STRING-INDEX-OUT-OF-RANGE-ZERO"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use empty strings and strings differing only in one character."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare equal and unequal strings with != and verify results complement ==."
+        ]
+      },
+      "id": "SV-2023-06-STRING-INEQUALITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Convert minimum and maximum representable integer values."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Convert zero, positive, and negative integers to decimal strings and parse them back with atoi."
+        ]
+      },
+      "id": "SV-2023-06-STRING-ITOA-METHOD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change a string's length dynamically and call len after each change."
+        ],
+        "negative": [
+          "Pass an argument to len."
+        ],
+        "notes": [],
+        "positive": [
+          "Call len on empty, one-character, and multicharacter strings."
+        ]
+      },
+      "id": "SV-2023-06-STRING-LEN-METHOD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Convert a literal consisting entirely of NUL characters and observe empty string."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Convert literals with embedded, leading, and trailing NUL bytes and verify only nonzero characters remain."
+        ]
+      },
+      "id": "SV-2023-06-STRING-LITERAL-NUL-REMOVAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multidimensional packed destinations and widths not divisible by eight."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Assign literals to narrower and wider packed integrals and verify left truncation and zero-fill."
+        ]
+      },
+      "id": "SV-2023-06-STRING-LITERAL-PACKED-ASSIGNMENT-SIZING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast the same literal assigned to dynamic string and a narrow packed vector."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Assign literals and string expressions directly to string and use a literal with a string operand."
+        ]
+      },
+      "id": "SV-2023-06-STRING-LITERAL-TO-DYNAMIC-STRING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call a no-argument method and a method with multiple arguments."
+        ],
+        "negative": [
+          "Invoke a nonexistent string method."
+        ],
+        "notes": [],
+        "positive": [
+          "Invoke len, putc, and other string methods with dot notation."
+        ]
+      },
+      "id": "SV-2023-06-STRING-METHOD-DOT-INVOKE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Assign zero to a character in the middle of a string and verify content and length remain unchanged."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Assign nonzero byte values to string characters."
+        ]
+      },
+      "id": "SV-2023-06-STRING-NO-NUL-CHARACTER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise zero and values crossing octal digit boundaries."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Convert representative integer bit patterns to octal strings and parse them back with atooct."
+        ]
+      },
+      "id": "SV-2023-06-STRING-OCTTOA-METHOD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use negative and length-or-greater indices and zero replacement byte, verifying no change."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Replace valid first, middle, and last characters with nonzero bytes."
+        ]
+      },
+      "id": "SV-2023-06-STRING-PUTC-METHOD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise zero and values naturally represented with an exponent."
+        ],
+        "negative": [],
+        "notes": [
+          "Compare numerical round trip within representation precision rather than requiring one textual formatting style unless separately specified."
+        ],
+        "positive": [
+          "Convert representative positive, negative, integral-valued, and fractional reals and parse them back with atoreal."
+        ]
+      },
+      "id": "SV-2023-06-STRING-REALTOA-METHOD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare prefixes, empty strings, mixed string/literal operands, and two literal operands."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare strings that differ at the first, middle, or final character with all four relational operators."
+        ]
+      },
+      "id": "SV-2023-06-STRING-RELATIONAL-OPERATORS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a variable multiplier whose value changes before evaluation."
+        ],
+        "negative": [
+          "Use no inner operand, a negative multiplier, or an x/z-containing multiplier."
+        ],
+        "notes": [],
+        "positive": [
+          "Replicate one or several string operands using constant and run-time integral multipliers."
+        ]
+      },
+      "id": "SV-2023-06-STRING-REPLICATION-OPERANDS-MULTIPLIER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use i=-1, j<i, j=length, and an empty source and observe empty string."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Extract one-character, prefix, suffix, and full-string inclusive ranges."
+        ]
+      },
+      "id": "SV-2023-06-STRING-SUBSTR-METHOD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify the source remains unchanged and only uppercase characters transform."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Apply tolower to mixed-case letters, digits, punctuation, and empty string."
+        ]
+      },
+      "id": "SV-2023-06-STRING-TOLOWER-METHOD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify the source remains unchanged and only lowercase characters are transformed."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Apply toupper to mixed-case letters, digits, punctuation, and empty string."
+        ]
+      },
+      "id": "SV-2023-06-STRING-TOUPPER-METHOD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Resolve a supply net against a weaker opposing driver."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare supply0 and supply1 nets and inspect their driven values at supply strength."
+        ]
+      },
+      "id": "SV-2023-06-SUPPLY-NET-STRENGTH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Store x and compare sign-sensitive behavior with longint."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Check $bits(time) is 64 and verify unsigned four-state storage."
+        ]
+      },
+      "id": "SV-2023-06-TIME-TYPE-PROPERTIES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare z/z yielding pull 0 with 1/z yielding strong 1."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Exercise all pairs of strong 0, 1, x, and z drivers on tri0."
+        ]
+      },
+      "id": "SV-2023-06-TRI0-IMPLICIT-PULLDOWN"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use conflicting strong explicit values before comparing the all-z case."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Drive a tri0 or tri1 with a strong non-z value and inspect strong result strength.",
+          "Set all explicit drivers to z and inspect pull result strength."
+        ]
+      },
+      "id": "SV-2023-06-TRI0-TRI1-STRONG-DRIVER-RESULT-STRENGTH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare z/z yielding pull 1 with 0/z yielding strong 0."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Exercise all pairs of strong 0, 1, x, and z drivers on tri1."
+        ]
+      },
+      "id": "SV-2023-06-TRI1-IMPLICIT-PULLUP"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the default medium charge size and compare it with explicit medium."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Release explicitly small, medium, and large triregs from their drivers and inspect retained charge strengths."
+        ]
+      },
+      "id": "SV-2023-06-TRIREG-CAPACITIVE-STRENGTH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use distinct rise, fall, and decay delay entries so the third entry controls decay."
+        ],
+        "negative": [],
+        "notes": [
+          "Runtime cases must account for time-unit and scheduling semantics."
+        ],
+        "positive": [
+          "Release a trireg with no decay delay and observe indefinite retention.",
+          "Declare a decay delay, release the driver, and observe decay after that interval."
+        ]
+      },
+      "id": "SV-2023-06-TRIREG-DECAY-DELAY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an omitted charge strength and observe the separately defined medium default."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Observe initial x on undriven triregs declared small, medium, and large."
+        ]
+      },
+      "id": "SV-2023-06-TRIREG-DEFAULT-X-AND-CHARGE-STRENGTH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Drive x before releasing all drivers to z and observe retained x."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Drive a trireg to 1, change every driver to z, and observe retained 1.",
+          "While capacitive, apply a 0 driver and observe transition to driven 0."
+        ]
+      },
+      "id": "SV-2023-06-TRIREG-DRIVEN-AND-CAPACITIVE-STATES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast driven strength with the declared capacitive strength after all drivers become z."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Drive a trireg with sources of differing strengths and observe the driven value carry the resolved driver strength."
+        ]
+      },
+      "id": "SV-2023-06-TRIREG-DRIVEN-STRENGTH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Assign x or z to a 2-state bit and observe conversion to its permitted 2-state value under the applicable assignment conversion rules."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Assign a mixed 4-state pattern to a logic vector and observe each bit independently.",
+          "Assign ordinary 0/1 patterns to a bit vector."
+        ]
+      },
+      "id": "SV-2023-06-TWO-AND-FOUR-STATE-STORAGE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a partially unknown vector value."
+        ],
+        "negative": [
+          "Assign x or z to a member of an omitted-base or bit-based enum."
+        ],
+        "notes": [],
+        "positive": [
+          "Assign only known values to int- or bit-based enum members."
+        ]
+      },
+      "id": "SV-2023-06-TWO-STATE-ENUM-NO-XZ-NAMED-VALUE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast equal-width int and integer values containing unknown bits."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Assign x and z to each named 4-state type and compare with bit and int conversions."
+        ]
+      },
+      "id": "SV-2023-06-TWO-STATE-FOUR-STATE-TYPE-SETS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Distinguish legal class inheritance/interface compatibility from unrelated categories."
+        ],
+        "negative": [
+          "Assign or cast class handles, interface-class handles, or chandles to unrelated types."
+        ],
+        "notes": [],
+        "positive": [
+          "Use each handle only with its defined same-family operations and assignments."
+        ]
+      },
+      "id": "SV-2023-06-TYPE-INCOMPATIBLE-CATEGORY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast signed type-only with an explicitly ranged signed parameter."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare a signed type-only parameter and override with differently sized values."
+        ]
+      },
+      "id": "SV-2023-06-TYPE-ONLY-PARAMETER-RANGE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use local fixed-array elements and purely local expression operands."
+        ],
+        "negative": [
+          "Use a hierarchical reference or dynamic-array/queue element reference inside type()."
+        ],
+        "notes": [],
+        "positive": [
+          "Apply type to a side-effecting local expression and verify no evaluation occurs."
+        ]
+      },
+      "id": "SV-2023-06-TYPE-OPERATOR-EXPRESSION-RESTRICTIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Reference a complex self-determined expression type."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use type references from expressions and data types in declarations, casts, localparams, and parameter overrides."
+        ]
+      },
+      "id": "SV-2023-06-TYPE-OPERATOR-REFERENCE-USAGE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare constrained and unconstrained type parameters."
+        ],
+        "negative": [
+          "Override a category-constrained parameter with a mismatching type category."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare each category-constrained type parameter and override it with a matching type."
+        ]
+      },
+      "id": "SV-2023-06-TYPE-PARAMETER-CATEGORY-RESTRICTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Alias the selected type first, then use the alias normally."
+        ],
+        "negative": [
+          "Use the selection directly as an ordinary variable type or bind the prefix to a nonclass type."
+        ],
+        "notes": [],
+        "positive": [
+          "Select a nested class type through a type parameter in each permitted context."
+        ]
+      },
+      "id": "SV-2023-06-TYPE-PARAMETER-CLASS-SCOPE-RESTRICTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the type parameter in both a port and internal data declaration."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Instantiate one parameterized design with different scalar, vector, and user-defined type overrides."
+        ]
+      },
+      "id": "SV-2023-06-TYPE-PARAMETER-CONTROLS-INSTANCE-TYPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast package scope resolution with instance hierarchy."
+        ],
+        "negative": [
+          "Override with a value expression or an instance-hierarchical type path."
+        ],
+        "notes": [],
+        "positive": [
+          "Override with built-in, typedef, and package-qualified data types."
+        ]
+      },
+      "id": "SV-2023-06-TYPE-PARAMETER-DATA-TYPE-ONLY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Assign an incomplete class-scoped type as a type default."
+        ],
+        "negative": [
+          "Use an unsupported forward type category."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare type parameters with defaults, without defaults where allowed, and with forward categories."
+        ]
+      },
+      "id": "SV-2023-06-TYPE-PARAMETER-DECLARATION-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Override T with scalar, packed, and user-defined types."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare a parameter type T and use T for variables and nested aliases."
+        ]
+      },
+      "id": "SV-2023-06-TYPE-PARAMETER-DECLARES-TYPE-IDENTIFIER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare equivalent but nonmatching types and observe inequality."
+        ],
+        "negative": [
+          "Compare a type reference with a value expression."
+        ],
+        "notes": [],
+        "positive": [
+          "Compare matching and nonmatching type references in generate if/case contexts with all equality forms."
+        ]
+      },
+      "id": "SV-2023-06-TYPE-REFERENCE-COMPARISON"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the same type reference in casts, where these declaration prefixes do not apply."
+        ],
+        "negative": [
+          "Use type(expr) in a declaration without the required net-type or var prefix."
+        ],
+        "notes": [],
+        "positive": [
+          "Use wire type(expr) for a net and var type(expr) for a variable."
+        ]
+      },
+      "id": "SV-2023-06-TYPE-REFERENCE-DECLARATION-PREFIX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise parameterized base classes and subclasses."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use type(this) as return/local type in base and derived class methods and verify derived calls use the derived type."
+        ]
+      },
+      "id": "SV-2023-06-TYPE-THIS-ENCLOSING-CLASS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise compatible implicit conversions separately from incompatible type categories."
+        ],
+        "negative": [
+          "Override a typed parameter with an incompatible aggregate, handle, or other value."
+        ],
+        "notes": [],
+        "positive": [
+          "Initialize and override typed parameters with assignment-compatible expressions."
+        ]
+      },
+      "id": "SV-2023-06-TYPED-PARAMETER-ASSIGNMENT-COMPATIBLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place variable dimensions after the typedef identifier."
+        ],
+        "negative": [
+          "Omit the new type identifier or terminating semicolon."
+        ],
+        "notes": [],
+        "positive": [
+          "Create aliases of scalar, packed, unpacked, and incomplete class-scoped types."
+        ]
+      },
+      "id": "SV-2023-06-TYPEDEF-DATA-TYPE-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a valid forward typedef before references and complete the type later."
+        ],
+        "negative": [
+          "Use a type identifier before its typedef without a valid forward declaration."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a typedef before variables using it."
+        ]
+      },
+      "id": "SV-2023-06-TYPEDEF-DECLARATION-BEFORE-REFERENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Cast to an alias of a nested packed composite."
+        ],
+        "negative": [
+          "Place an unsupported inline complex type definition directly in cast type syntax."
+        ],
+        "notes": [],
+        "positive": [
+          "typedef a complex packed or unpacked type and use the alias in a cast."
+        ]
+      },
+      "id": "SV-2023-06-TYPEDEF-FOR-COMPLEX-CAST-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multidimensional unpacked array aliases."
+        ],
+        "negative": [
+          "Attempt to provide an inline unpacked array type where a type-parameter value requires a name."
+        ],
+        "notes": [],
+        "positive": [
+          "typedef an unpacked array type and pass that alias as a type parameter value."
+        ]
+      },
+      "id": "SV-2023-06-TYPEDEF-UNPACKED-TYPE-PARAMETER-VALUE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast matching, structurally equivalent packed, and unrelated types."
+        ],
+        "negative": [
+          "Use representative type pairs that satisfy none of the equivalence rules in a context requiring equivalent types."
+        ],
+        "notes": [],
+        "positive": [
+          "Use type pairs covered by a specific equivalence rule as controls."
+        ]
+      },
+      "id": "SV-2023-06-TYPES-NONEQUIVALENT-BY-DEFAULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare initially undriven ordinary and trireg nets."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Observe z on an undriven wire.",
+          "Drive then disconnect a trireg and observe its prior value persist."
+        ]
+      },
+      "id": "SV-2023-06-UNDRIVEN-NET-VALUE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use equal-largest members and nested packed members."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use $bits on unions with differently sized members and compare with the largest member."
+        ]
+      },
+      "id": "SV-2023-06-UNION-BIT-SIZE-LARGEST-MEMBER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Shadow the name in a sibling block."
+        ],
+        "negative": [
+          "Attempt a hierarchical reference to the unnamed-block variable."
+        ],
+        "notes": [],
+        "positive": [
+          "Reference an unnamed-block variable from a nested lexical block."
+        ]
+      },
+      "id": "SV-2023-06-UNNAMED-BLOCK-VARIABLE-SCOPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use nested eligible aggregates and mixed field widths."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Round-trip eligible structures and unpacked arrays through packed vectors and verify first item occupies the most-significant bits."
+        ]
+      },
+      "id": "SV-2023-06-UNPACKED-BITSTREAM-CAST-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place the invalid element inside a nested aggregate."
+        ],
+        "negative": [
+          "Cast an unpacked aggregate containing an element invalid for packed representation to a packed type or a different unpacked type."
+        ],
+        "notes": [],
+        "positive": [
+          "Cast otherwise eligible structures and unpacked arrays to corresponding packed representations."
+        ]
+      },
+      "id": "SV-2023-06-UNPACKED-BITSTREAM-INVALID-ELEMENT-PROHIBITION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use nested arrays where outer sizes agree but inner dimensions differ."
+        ],
+        "negative": [
+          "Vary element count or element equivalence."
+        ],
+        "notes": [],
+        "positive": [
+          "Compare arrays with equal sizes/equivalent elements but shifted or reversed bounds."
+        ]
+      },
+      "id": "SV-2023-06-UNPACKED-FIXED-ARRAY-EQUIVALENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast two nettypes sharing data type T, one resolved and one unresolved."
+        ],
+        "negative": [
+          "Attach two drivers to a user-nettype net lacking a resolution function."
+        ],
+        "notes": [],
+        "positive": [
+          "Drive an unresolved user-nettype net from one source."
+        ]
+      },
+      "id": "SV-2023-06-UNRESOLVED-USER-NETTYPE-SINGLE-DRIVER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare unsized and explicitly sized values of the same magnitude."
+        ],
+        "negative": [],
+        "notes": [
+          "Accept implementation widths greater than 32."
+        ],
+        "positive": [
+          "Initialize such parameters with unsized values and verify width is at least 32."
+        ]
+      },
+      "id": "SV-2023-06-UNSIZED-PARAMETER-IMPLIED-MINIMUM-WIDTH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare default and overridden final-value inference."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Override an untyped parameter with differently sized integral and real values and inspect resulting type and width."
+        ]
+      },
+      "id": "SV-2023-06-UNTYPED-UNRANGED-PARAMETER-INFERENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast an atomic aggregate user nettype with an ordinary logic vector resolved bit by bit."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use an aggregate-valued user nettype and observe its resolution function receive whole aggregate driver values."
+        ]
+      },
+      "id": "SV-2023-06-USER-NETTYPE-ATOMIC-NET"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare resolved and unresolved nettypes sharing the same underlying type."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Observe x for an undriven unresolved logic-based user nettype and 0 for a 2-state-based valid user nettype."
+        ]
+      },
+      "id": "SV-2023-06-USER-NETTYPE-DATA-TYPE-DEFAULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change drivers while the force is active before release."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Force a resolved user-nettype net, release it, and observe its resolution-function result return."
+        ]
+      },
+      "id": "SV-2023-06-USER-NETTYPE-FORCE-RELEASE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a resolved net whose first resolution result differs from its data-type default."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Read an unresolved user-nettype net from an initial procedure and observe its initialized value."
+        ]
+      },
+      "id": "SV-2023-06-USER-NETTYPE-INITIAL-VALUE-TIMING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use package qualification where allowed by identifier resolution."
+        ],
+        "negative": [
+          "Insert a built-in drive-strength production after the user nettype identifier."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare multiple nets of one user nettype with an optional delay control."
+        ]
+      },
+      "id": "SV-2023-06-USER-NETTYPE-NET-DECLARATION-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast a nettype declaration with a typedef of the same underlying data type."
+        ],
+        "negative": [
+          "Use a user-defined nettype as the type of a variable declaration."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a net using a user-defined nettype."
+        ]
+      },
+      "id": "SV-2023-06-USER-NETTYPE-NETS-ONLY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Mix initialized and uninitialized members and observe each use its applicable initial value."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Define a valid struct nettype with a member initializer and observe that member's initial value."
+        ]
+      },
+      "id": "SV-2023-06-USER-NETTYPE-STRUCT-MEMBER-INITIALIZERS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Add a time-zero driver change while making acceptance independent of whether it precedes the guaranteed call."
+        ],
+        "negative": [],
+        "notes": [
+          "Do not require ordering between the guaranteed call and time-zero driver updates."
+        ],
+        "positive": [
+          "Use a side-effect-free observable resolved value to show an undriven resolved net receives a time-zero call."
+        ]
+      },
+      "id": "SV-2023-06-USER-NETTYPE-TIME-ZERO-RESOLUTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place competing drivers in separate hierarchy branches."
+        ],
+        "negative": [
+          "Introduce multiple hierarchical drivers to one uwire bit and require rejection or warning."
+        ],
+        "notes": [
+          "Accept either enforcement or warning without relying on warning wording."
+        ],
+        "positive": [
+          "Connect a single driver to a uwire through a module port."
+        ]
+      },
+      "id": "SV-2023-06-UWIRE-HIERARCHICAL-ENFORCEMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast a unidirectional primitive connection with a bidirectional pass-switch connection."
+        ],
+        "negative": [
+          "Connect a uwire to either bidirectional terminal of a tran primitive."
+        ],
+        "notes": [],
+        "positive": [
+          "Use an ordinary resolved net on a bidirectional pass-switch terminal."
+        ]
+      },
+      "id": "SV-2023-06-UWIRE-NO-BIDIRECTIONAL-PASS-TERMINAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use overlapping part-select drivers where only some uwire bits overlap."
+        ],
+        "negative": [
+          "Connect two continuous assignments to the same uwire bit."
+        ],
+        "notes": [],
+        "positive": [
+          "Drive distinct bits of a uwire vector from separate single drivers."
+        ]
+      },
+      "id": "SV-2023-06-UWIRE-SINGLE-DRIVER-PER-BIT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use package-qualified constants inside a constant function."
+        ],
+        "negative": [
+          "Use a hierarchical name or run-time variable."
+        ],
+        "notes": [],
+        "positive": [
+          "Initialize constants from each permitted source and initialize specparams from other specparams."
+        ]
+      },
+      "id": "SV-2023-06-VALUE-PARAMETER-CONSTANT-SOURCES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use signing and packed dimensions as an implicit parameter type."
+        ],
+        "negative": [
+          "Use a nonconstant parameter initializer."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare typed and implicit value parameters/localparams with dimensions and multiple assignments."
+        ]
+      },
+      "id": "SV-2023-06-VALUE-PARAMETER-DECLARATION-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Declare multiple instances with differing variable dimensions in one declaration."
+        ],
+        "negative": [
+          "Use a class-new initializer on an ordinary nonclass declarator."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare ordinary, dynamic-array, and class variables using their respective optional initializers."
+        ]
+      },
+      "id": "SV-2023-06-VARIABLE-DECLARATION-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Release a force while a procedural assign remains active and observe that source regain control."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Apply normal assignment, procedural assign, and force in sequence and observe the stated precedence."
+        ]
+      },
+      "id": "SV-2023-06-VARIABLE-FORCE-PRECEDENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use dynamic versus constant indices to exercise longest-static-prefix expansion."
+        ],
+        "negative": [
+          "Continuously and procedurally write terms sharing the same longest static prefix.",
+          "Apply two continuous assignments to the same array element."
+        ],
+        "notes": [],
+        "positive": [
+          "Continuously drive one structure member and procedurally write a different member.",
+          "Use separate continuous assignments for distinct packed bits."
+        ]
+      },
+      "id": "SV-2023-06-VARIABLE-INDEPENDENT-ELEMENT-DRIVERS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast identical declaration-assignment syntax on a wire and on a logic variable."
+        ],
+        "negative": [
+          "Combine declaration initialization with a continuous assignment where both target the same longest static prefix."
+        ],
+        "notes": [],
+        "positive": [
+          "Initialize a variable in its declaration and subsequently procedurally assign it."
+        ]
+      },
+      "id": "SV-2023-06-VARIABLE-INITIALIZATION-IS-PROCEDURAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change the variable multiple times and verify each value reaches the connected net."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Connect an output variable through a port to a net and observe updates propagate continuously."
+        ]
+      },
+      "id": "SV-2023-06-VARIABLE-PORT-IMPLIES-NET-CONTINUOUS-ASSIGNMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Write the same variable from sequential statements in one time slot with deterministic execution order."
+        ],
+        "negative": [],
+        "notes": [
+          "Avoid races between unordered processes."
+        ],
+        "positive": [
+          "Perform ordered procedural writes to a variable and observe the final write's value."
+        ]
+      },
+      "id": "SV-2023-06-VARIABLE-PROCEDURAL-LAST-WRITE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast variable retention with an ordinary net following its current drivers."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Assign a variable, advance simulation without another write, and observe retention."
+        ]
+      },
+      "id": "SV-2023-06-VARIABLE-RETAINS-STORED-VALUE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast separate independently driven elements with overlapping writes to one element."
+        ],
+        "negative": [
+          "Drive the same variable from two continuous assignments."
+        ],
+        "notes": [],
+        "positive": [
+          "Drive a variable from one continuous assignment."
+        ]
+      },
+      "id": "SV-2023-06-VARIABLE-SINGLE-CONTINUOUS-OR-PORT-DRIVER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise small-width underflow."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Increment an all-ones vector and observe wrap to zero."
+        ]
+      },
+      "id": "SV-2023-06-VECTOR-ARITHMETIC-MODULO-WIDTH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Connect through a signed port."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare unqualified and signed logic vectors."
+        ]
+      },
+      "id": "SV-2023-06-VECTOR-DEFAULT-UNSIGNED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use [-1:4], [4:-1], and [0:0]."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare ascending, descending, negative-bound, and equal-bound ranges."
+        ]
+      },
+      "id": "SV-2023-06-VECTOR-RANGE-ANY-DIRECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use negative range bounds."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Verify addressing and significance on descending and ascending vectors."
+        ]
+      },
+      "id": "SV-2023-06-VECTOR-RANGE-BIT-ADDRESSING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use zero and negative bounds."
+        ],
+        "negative": [
+          "Use variable or x/z-containing bounds."
+        ],
+        "notes": [],
+        "positive": [
+          "Use parameter-derived integer bounds."
+        ]
+      },
+      "id": "SV-2023-06-VECTOR-RANGE-CONSTANT-KNOWN-INTEGERS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use packed and unpacked dimensions together and verify the packed dimension satisfies the condition."
+        ],
+        "negative": [
+          "Apply vectored or scalared to a scalar net without a packed dimension."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a packed wire vector as vectored or scalared."
+        ]
+      },
+      "id": "SV-2023-06-VECTORED-SCALARED-REQUIRES-PACKED-DIMENSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast member-type access with object construction and with a nonvirtual equivalent class."
+        ],
+        "negative": [
+          "Attempt to construct an object of the virtual typedef-container class."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a virtual parameterized class with typedef members and use specialized member types."
+        ]
+      },
+      "id": "SV-2023-06-VIRTUAL-CLASS-TYPEDEF-CONTAINER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast the null default with a virtual-interface handle after assigning an interface instance."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare an uninitialized virtual-interface handle with null."
+        ]
+      },
+      "id": "SV-2023-06-VIRTUAL-INTERFACE-HANDLE-DEFAULT-NULL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast void function and task invocation contexts."
+        ],
+        "negative": [
+          "Use a void function call where a value expression is required."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare and call a void function for its side effects."
+        ]
+      },
+      "id": "SV-2023-06-VOID-FUNCTION-NO-RETURN-VALUE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Switch between a void tag and a payload-bearing tag."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare and construct a tagged union with a void member."
+        ]
+      },
+      "id": "SV-2023-06-VOID-TAGGED-UNION-MEMBER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multiple four-state drivers on each synonym."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Apply corresponding declarations and drivers to wand and triand and observe identical results."
+        ]
+      },
+      "id": "SV-2023-06-WAND-TRIAND-EQUIVALENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Check z/z, x/z, and 0/1 as distinct resolution boundaries."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Exercise all unordered pairs of 0, 1, x, and z on two equal-strength wire drivers."
+        ]
+      },
+      "id": "SV-2023-06-WIRE-TRI-EQUAL-STRENGTH-CONFLICT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multiple drivers on both wire and tri to demonstrate that the naming suggestion is not a legality distinction."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Apply identical declarations and drivers to corresponding wire and tri nets and observe equal behavior."
+        ]
+      },
+      "id": "SV-2023-06-WIRE-TRI-EQUIVALENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Distinguish 0/x, 1/x, 1/z, and z/z outcomes."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Exercise every unordered pair of 0, 1, x, and z on equal-strength wand drivers."
+        ]
+      },
+      "id": "SV-2023-06-WIRED-AND-RESOLUTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Distinguish 1/x, 0/x, 0/z, and z/z outcomes."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Exercise every unordered pair of 0, 1, x, and z on equal-strength wor drivers."
+        ]
+      },
+      "id": "SV-2023-06-WIRED-OR-RESOLUTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multiple four-state drivers on each synonym."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Apply corresponding declarations and drivers to wor and trior and observe identical results."
+        ]
+      },
+      "id": "SV-2023-06-WOR-TRIOR-EQUIVALENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use explicitly one-bit operands to isolate complement behavior from reduction or truth conversion."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Apply logical negation to 1'b0 and 1'b1 and observe 1 and 0 respectively."
+        ]
+      },
+      "id": "SV-2023-06-ZERO-ONE-COMPLEMENTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a run-time multiplier evaluating to zero."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Replicate a nonempty string expression zero times and verify string type, empty value, and zero length."
+        ]
+      },
+      "id": "SV-2023-06-ZERO-STRING-REPLICATION-EMPTY"
+    }
+  ],
+  "schema_version": 1
+}
