@@ -101,6 +101,7 @@ describe("RequirementsView", () => {
     });
     const inspectCase = vi.fn();
     const inspectEvidence = vi.fn();
+    const toggleTag = vi.fn();
 
     render(
       <RequirementsView
@@ -109,6 +110,8 @@ describe("RequirementsView", () => {
         standardSections={dataset.standard_sections}
         selectedSections={[]}
         onSelectedSectionsChange={() => undefined}
+        selectedTags={["scheduling"]}
+        onToggleTag={toggleTag}
         cases={dataset.cases}
         campaign={campaign}
         toolFilter=""
@@ -129,8 +132,13 @@ describe("RequirementsView", () => {
     expect(within(applicability).getByText("1800-2012")).toBeTruthy();
     expect(within(applicability).getByText("1800-2017")).toBeTruthy();
     expect(within(applicability).getByText("1800-2023")).toBeTruthy();
-    expect(within(card).getByText("clocking")).toBeTruthy();
-    expect(within(card).getByText("scheduling")).toBeTruthy();
+    const clockingTag = within(card).getByRole("button", { name: "clocking" });
+    const schedulingTag = within(card).getByRole("button", {
+      name: "scheduling",
+    });
+    expect(schedulingTag.getAttribute("aria-pressed")).toBe("true");
+    fireEvent.click(clockingTag);
+    expect(toggleTag).toHaveBeenCalledWith("clocking");
     expect(within(card).getByRole("button", { name: "Copy link" })).toBeTruthy();
 
     const details = card.querySelectorAll("details");

@@ -24,6 +24,33 @@ import type { Campaign, MetricPoint, Result } from "./types";
 const dataset = makeTestDataset();
 
 describe("Requirements filters", () => {
+  it("combines selected Requirement tags with AND semantics", () => {
+    const source = makeTestDataset();
+    const first = source.requirements[0];
+    if (!first) throw new Error("incomplete test dataset");
+    const copyOutOnly = {
+      ...first,
+      id: "SV-2023-13-COPY-OUT-ONLY",
+      tags: ["copy-out"],
+    };
+    const tagged = { ...source, requirements: [first, copyOutOnly] };
+
+    expect(
+      filterCorpus(
+        tagged,
+        { ...EMPTY_FILTERS, requirementTags: "copy-out,output" },
+        tagged.campaigns[0],
+      ).requirements.map((requirement) => requirement.id),
+    ).toEqual([first.id]);
+    expect(
+      filterCorpus(
+        tagged,
+        { ...EMPTY_FILTERS, requirementTags: "copy-out" },
+        tagged.campaigns[0],
+      ).requirements,
+    ).toHaveLength(2);
+  });
+
   it("keeps quick facets and ignores Cases-only advanced values", () => {
     const projected = requirementsQuickFilters({
       ...EMPTY_FILTERS,
@@ -73,12 +100,23 @@ describe("URL-backed filters", () => {
       caseId: "ch13-output-copyout-width",
       requirementId: "SV-2023-13-OUTPUT-COPYOUT",
       sections: "13.5,=14",
+      requirementTags: "copy-out,output",
       changed: true,
       disagreement: true,
     };
     const encoded = filtersToSearch(value, "evidence");
     expect(encoded).toContain("view=evidence");
     expect(filtersFromSearch(encoded)).toEqual(value);
+  });
+
+  it("canonicalizes Requirement tags from direct URLs", () => {
+    const parsed = filtersFromSearch(
+      "?view=matrix&requirementTags=output%2Ccopy-out%2Coutput",
+    );
+    expect(parsed.requirementTags).toBe("copy-out,output");
+    expect(filtersToSearch(parsed, "matrix")).toContain(
+      "requirementTags=copy-out%2Coutput",
+    );
   });
 
   it("round-trips strict trend state and rejects unknown values", () => {

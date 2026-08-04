@@ -20,9 +20,11 @@ import { RequirementsView } from "./RequirementsView";
 import {
   EMPTY_FILTERS,
   filterCorpus,
+  filterValueList,
   filtersFromSearch,
   filtersToSearch,
   requirementsQuickFilters,
+  toggleFilterValue,
   corpusTrendPointKey,
   toolTrendPointKey,
   trendStateFromSearch,
@@ -345,20 +347,26 @@ export default function App() {
       setTrend((current) => ({ ...current, parts, point: "" })),
     [],
   );
+  const selectedRequirementTags = useMemo(
+    () => filterValueList(filters.requirementTags),
+    [filters.requirementTags],
+  );
   const corpusFilterDependency =
     view === "matrix"
       ? JSON.stringify([
           filters.tool,
           filters.profile,
           filters.statusGroup,
+          filters.requirementTags,
           filters.changed,
           filters.disagreement,
         ])
       : filters;
-  const corpusFilters = useMemo(
-    () => (view === "matrix" ? requirementsQuickFilters(filters) : filters),
-    [corpusFilterDependency, view],
-  );
+  const corpusFilters = useMemo(() => {
+    if (view === "matrix") return requirementsQuickFilters(filters);
+    if (view === "evidence") return { ...filters, requirementTags: "" };
+    return filters;
+  }, [corpusFilterDependency, view]);
   const selectedCampaign = useMemo(
     () =>
       state.dataset?.campaigns.find((item) => item.id === state.selectedId),
@@ -425,6 +433,13 @@ export default function App() {
     setFilters((current) => ({
       ...current,
       sections: sections.join(","),
+      requirementId: "",
+    }));
+  }, []);
+  const toggleRequirementTag = useCallback((tag: string) => {
+    setFilters((current) => ({
+      ...current,
+      requirementTags: toggleFilterValue(current.requirementTags, tag),
       requirementId: "",
     }));
   }, []);
@@ -747,6 +762,8 @@ export default function App() {
                 .split(",")
                 .filter(Boolean)}
               onSelectedSectionsChange={changeSelectedSections}
+              selectedTags={selectedRequirementTags}
+              onToggleTag={toggleRequirementTag}
               cases={filtered.requirementCases}
               evidenceCasesByProfile={requirementEvidenceCases}
               campaign={campaign}

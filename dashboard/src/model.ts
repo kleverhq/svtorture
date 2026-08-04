@@ -112,6 +112,7 @@ export interface Filters {
   expectation: string;
   casePresence: string;
   tag: string;
+  requirementTags: string;
   requirement: string;
   tool: string;
   profile: string;
@@ -145,6 +146,17 @@ export function requirementsQuickFilters(filters: Filters): Filters {
   };
 }
 
+export function filterValueList(value: string): string[] {
+  return [...new Set(value.split(",").filter(Boolean))].sort();
+}
+
+export function toggleFilterValue(value: string, item: string): string {
+  const selected = new Set(filterValueList(value));
+  if (selected.has(item)) selected.delete(item);
+  else selected.add(item);
+  return [...selected].sort().join(",");
+}
+
 export const EMPTY_FILTERS: Filters = {
   search: "",
   revision: "",
@@ -154,6 +166,7 @@ export const EMPTY_FILTERS: Filters = {
   expectation: "",
   casePresence: "",
   tag: "",
+  requirementTags: "",
   requirement: "",
   tool: "",
   profile: "",
@@ -322,6 +335,7 @@ export function filtersFromSearch(search: string): Filters {
       result[key] = parameters.get(key) ?? "";
     }
   }
+  result.requirementTags = filterValueList(result.requirementTags).join(",");
   return result;
 }
 
@@ -587,6 +601,7 @@ export function filterCorpus(
     }
   }
   const needle = filters.search.toLocaleLowerCase();
+  const requirementTags = filterValueList(filters.requirementTags);
   const candidateResultsByCase = new Map<string, Result[]>();
   for (const result of resultMap.values()) {
     if (
@@ -715,6 +730,7 @@ export function filterCorpus(
       (!filters.tag ||
         requirement.tags.includes(filters.tag) ||
         matchingCases.some((testCase) => testCase.tags.includes(filters.tag))) &&
+      requirementTags.every((tag) => requirement.tags.includes(tag)) &&
       (!caseSpecificFilter || matchingCases.length > 0)
     );
   });

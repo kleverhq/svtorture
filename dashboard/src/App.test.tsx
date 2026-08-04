@@ -257,6 +257,43 @@ describe("App overview navigation", () => {
     ).toBeTruthy();
   });
 
+  it("filters Requirements by clickable tags with AND semantics", async () => {
+    const dataset = makeTestDataset();
+    const original = dataset.requirements[0];
+    if (!original) throw new Error("incomplete test dataset");
+    dataset.requirements.push(
+      {
+        ...original,
+        id: "SV-2023-13-COPY-OUT-TAG",
+        summary: "Copy-out tag only",
+        tags: ["copy-out"],
+      },
+      {
+        ...original,
+        id: "SV-2023-13-OUTPUT-TAG",
+        summary: "Output tag only",
+        tags: ["output"],
+      },
+    );
+    window.history.replaceState(null, "", "/?view=matrix");
+    mockDataset(dataset);
+
+    render(<App />);
+    const originalCard = await screen.findByRole("article", {
+      name: `Requirement ${original.id}`,
+    });
+    fireEvent.click(within(originalCard).getByRole("button", { name: "copy-out" }));
+    expect(await screen.findAllByRole("article")).toHaveLength(2);
+    fireEvent.click(within(originalCard).getByRole("button", { name: "output" }));
+
+    await waitFor(() => {
+      expect(screen.getAllByRole("article")).toHaveLength(1);
+      expect(
+        new URLSearchParams(window.location.search).get("requirementTags"),
+      ).toBe("copy-out,output");
+    });
+  });
+
   it("opens case details from a direct link", async () => {
     const dataset = makeTestDataset();
     const original = dataset.cases[0];

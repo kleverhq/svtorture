@@ -23,6 +23,7 @@ This work does not redesign the Cases tab, remove its Advanced filters, change c
 - [x] (2026-08-03 18:04Z) Milestone 2: removed Advanced filters only from Requirements, made Requirements ignore stale Cases-only advanced URL values, retained all quick filters, and added the coverage context label and exact threshold row tones; 46 focused frontend tests and type checking passed.
 - [x] (2026-08-03 18:19Z) Milestone 3: replaced the one-item selector with the complete expandable hierarchy and all-card scroller, added URL-backed tri-state subtree filtering, one-tool worst-status tones, applicability and tags, lazy collapsed evidence, responsive layout, and focused tests; all 91 frontend tests, type checking, production build, and desktop/mobile headless visual checks passed.
 - [x] (2026-08-03 19:04Z) Milestone 4: passed authoritative annotation regeneration, `just smoke`, full Docker/network `just ci`, final production build, visual checks, and all delayed read-only review lanes; fixed every substantive correctness, accessibility, contract, and scaling finding and audited every acceptance criterion.
+- [x] (2026-08-04 08:55Z) Follow-up: changed wide Requirements to global card scrolling with sticky TOC and evidence headers below the sticky quick filters, added a collapsed URL-backed tag cloud and clickable card tags with AND semantics, and fixed sticky-header scroll offsets and direct-URL tag canonicalization after focused review.
 
 ## Surprises & Discoveries
 
@@ -108,11 +109,19 @@ This work does not redesign the Cases tab, remove its Advanced filters, change c
   Rationale: Hidden filters must not silently remove Requirements, and the user explicitly limited this refactor to Requirements.
   Date/Author: 2026-08-03 / pi
 
+- Decision: On wide screens, requirement cards use global page scrolling; the TOC column and Requirement evidence header stick below the sticky filter panel. Cases retains its independent evidence scrollers, and narrow screens retain normal flow.
+  Rationale: A single global scroll is the observed browsing path, so table context must remain visible instead of sliding beneath the quick filters.
+  Date/Author: 2026-08-04 / pi
+
+- Decision: Requirement tags use a dedicated canonical URL field and combine with AND semantics. Cases ignores this field. Both the tag cloud and card tag buttons toggle the same state.
+  Rationale: Selecting multiple traits should narrow to requirements carrying every chosen tag, while preserving shareable URLs and avoiding a behavior change to Cases.
+  Date/Author: 2026-08-04 / pi
+
 ## Outcomes & Retrospective
 
 All milestones are complete. The committed runtime index contains 1,740 source-derived section names and strict validation proves a one-to-one canonical match with every heading anchor. New campaign catalogs publish the hierarchy, old version-6 catalogs remain readable, the generated public schema describes the projection, and the dashboard loader carries it into `Dataset.standard_sections`. Requirements has only the accepted quick filters and ignores hidden Cases-only values; Cases retains Advanced filters. Requirements Coverage has the explanatory context and exact neutral/red/yellow/green boundaries. The Requirements browser presents the full expandable standard tree beside every matching compact card, with URL-backed subtree selection, one-tool raw-result status grouping, non-color status symbols, applicability, tags, and lazily mounted detail disclosures.
 
-Final evidence is complete: `just annotate-check` regenerated 58 parts and 16,963 unique anchors and found the committed hierarchy byte-identical; `just ci` passed 187 non-Docker Python tests, 11 Docker tests, all metadata/type/lint gates, 91 frontend tests, a production build, and a real five-case Icarus campaign. After every early and delayed review fix, final `just smoke` passed 121 focused Python tests, all annotator checks, and 92 frontend tests, and a final production build passed. Desktop 1440×1000 and narrow 430×932 headless screenshots confirmed the two-column and normal-flow layouts. Correctness, performance, data-contract, accessibility, impacted-lane, and final control reviewers were run; every substantive finding was fixed and retested. No required work remains.
+Final evidence is complete: `just annotate-check` regenerated 58 parts and 16,963 unique anchors and found the committed hierarchy byte-identical; `just ci` passed 187 non-Docker Python tests, 11 Docker tests, all metadata/type/lint gates, 91 frontend tests, a production build, and a real five-case Icarus campaign. After every early and delayed review fix, the tag/sticky follow-up's final `just smoke` passed 121 focused Python tests, all annotator checks, and 96 frontend tests. The follow-up also passed 54 focused frontend tests, type checking, production build, refreshed local campaign export, and a 1440×800 visual check. Correctness, performance, data-contract, accessibility, impacted-lane, sticky-layout, and final control reviewers were run; every substantive finding was fixed and retested. No required work remains.
 
 ## Context and Orientation
 
@@ -235,3 +244,5 @@ Revision note (2026-08-03 18:19Z): Updated after Milestone 3 to record the compl
 Revision note (2026-08-03 18:52Z): Completed the initial Milestone 4 audit after full local CI, authoritative annotation comparison, and two control review passes. Recorded and resolved raw-status aggregation, unknown URL tokens, accessible status naming, and non-color status-symbol findings.
 
 Revision note (2026-08-03 19:04Z): Reopened and completed Milestone 4 when delayed independent review lanes returned. Recorded and resolved repeated corpus filtering, large-card rerenders, offscreen rendering, scroll targeting/effects, native list semantics, live-region scope, reduced motion, nested indentation, complete-present catalog enforcement, and historical bundle integration coverage.
+
+Revision note (2026-08-04 08:55Z): Added the requested global-scroll sticky table context and multi-tag filtering follow-up. Recorded AND semantics, shared cloud/card controls, Cases isolation, canonical URLs, sticky scroll margins, focused review, and refreshed local viewing data.

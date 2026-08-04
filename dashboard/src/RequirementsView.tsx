@@ -40,6 +40,8 @@ interface RequirementsProps {
   standardSections: StandardSection[];
   selectedSections: string[];
   onSelectedSectionsChange: (sections: string[]) => void;
+  selectedTags?: string[] | undefined;
+  onToggleTag?: ((tag: string) => void) | undefined;
   cases: CaseDefinition[];
   evidenceCasesByProfile?: ReadonlyMap<string, CaseDefinition[]> | undefined;
   campaign?: Campaign | undefined;
@@ -272,6 +274,8 @@ interface RequirementCardProps {
   evidence: ProfileEvidence[];
   supporting: CaseDefinition[];
   campaign?: Campaign | undefined;
+  selectedTags: ReadonlySet<string>;
+  onToggleTag: (tag: string) => void;
   onInspectCase: (caseId: string) => void;
   onInspectEvidence: (
     toolId: string,
@@ -285,6 +289,8 @@ const RequirementCard = memo(function RequirementCard({
   evidence,
   supporting,
   campaign,
+  selectedTags,
+  onToggleTag,
   onInspectCase,
   onInspectEvidence,
 }: RequirementCardProps) {
@@ -343,7 +349,16 @@ const RequirementCard = memo(function RequirementCard({
         <h4>Tags</h4>
         <div>
           {requirement.tags.length ? (
-            requirement.tags.map((tag) => <span key={tag}>{tag}</span>)
+            requirement.tags.map((tag) => (
+              <button
+                type="button"
+                aria-pressed={selectedTags.has(tag)}
+                key={tag}
+                onClick={() => onToggleTag(tag)}
+              >
+                {tag}
+              </button>
+            ))
           ) : (
             <span className="requirement-card__empty">No tags</span>
           )}
@@ -434,6 +449,8 @@ export function RequirementsView({
   standardSections,
   selectedSections,
   onSelectedSectionsChange,
+  selectedTags = [],
+  onToggleTag = () => undefined,
   cases,
   evidenceCasesByProfile,
   campaign,
@@ -463,6 +480,7 @@ export function RequirementsView({
     () => decodeSectionSelection(selectedSections, tree),
     [selectedSections, tree],
   );
+  const selectedTagSet = useMemo(() => new Set(selectedTags), [selectedTags]);
   const profiles = useMemo(
     () =>
       profileKeys(campaign).filter((key) => {
@@ -707,6 +725,8 @@ export function RequirementsView({
                     casesByRequirement.get(requirement.id) ?? EMPTY_CASES
                   }
                   campaign={campaign}
+                  selectedTags={selectedTagSet}
+                  onToggleTag={onToggleTag}
                   onInspectCase={onInspectCase}
                   onInspectEvidence={onInspectEvidence}
                 />

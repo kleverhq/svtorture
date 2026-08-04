@@ -4,7 +4,9 @@ import {
   STATUS_GROUP_LABELS,
   STATUS_GROUP_ORDER,
   STATUS_LABELS,
+  filterValueList,
   statusGroup,
+  toggleFilterValue,
 } from "./model";
 import type {
   Filters as FilterValues,
@@ -93,10 +95,22 @@ export function Filters({
     campaign?.results.map((result) => result.status) ?? [],
   ) as Status[];
   const reasons = choices(campaign?.results.map((result) => result.reason) ?? []);
+  const requirementTags = choices(
+    (dataset?.requirements ?? []).flatMap((requirement) => requirement.tags),
+  );
   const tags = choices([
-    ...(dataset?.requirements ?? []).flatMap((requirement) => requirement.tags),
+    ...requirementTags,
     ...(dataset?.cases ?? []).flatMap((testCase) => testCase.tags),
   ]);
+  const selectedRequirementTags = filterValueList(filters.requirementTags);
+  const requirementTagCounts = new Map(
+    requirementTags.map((tag) => [
+      tag,
+      (dataset?.requirements ?? []).filter((requirement) =>
+        requirement.tags.includes(tag),
+      ).length,
+    ]),
+  );
   const scopedResults =
     campaign?.results.filter(
       (result) =>
@@ -361,6 +375,35 @@ export function Filters({
             </button>
           </div>
         </div>
+      )}
+
+      {mode === "requirements" && requirementTags.length > 0 && (
+        <details className="filters__tag-cloud">
+          <summary>
+            Tags
+            {selectedRequirementTags.length > 0 && (
+              <span>{selectedRequirementTags.length} selected</span>
+            )}
+          </summary>
+          <div role="group" aria-label="Requirement tags">
+            {requirementTags.map((tag) => (
+              <button
+                type="button"
+                className="filter-chip"
+                aria-pressed={selectedRequirementTags.includes(tag)}
+                key={tag}
+                onClick={() =>
+                  update(
+                    "requirementTags",
+                    toggleFilterValue(filters.requirementTags, tag),
+                  )
+                }
+              >
+                {tag} <b>{requirementTagCounts.get(tag)}</b>
+              </button>
+            ))}
+          </div>
+        </details>
       )}
 
       {mode === "cases" && (
