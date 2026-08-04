@@ -14,16 +14,19 @@ function FilterHarness({
   dataset = makeTestDataset(),
   trendKind = "pass-rate",
   requirement = "",
+  caseTags = "",
 }: {
   mode?: FilterMode;
   dataset?: Dataset;
   trendKind?: TrendKind;
   requirement?: string;
+  caseTags?: string;
 }) {
   const [filters, setFilters] = useState({
     ...EMPTY_FILTERS,
     status: "conforming",
     requirement,
+    caseTags,
   });
   const [selectedParts, setSelectedParts] = useState<string[]>([]);
   return (
@@ -72,6 +75,18 @@ describe("Filters", () => {
     ).toBeTruthy();
   });
 
+  it("exposes and clears a Requirement navigation scope on Cases", () => {
+    render(<FilterHarness requirement="SV-2023-13-OUTPUT-COPYOUT" />);
+
+    const scope = screen.getByRole("group", { name: "Requirement scope" });
+    fireEvent.click(
+      within(scope).getByRole("button", {
+        name: "SV-2023-13-OUTPUT-COPYOUT · Clear",
+      }),
+    );
+    expect(screen.queryByRole("group", { name: "Requirement scope" })).toBeNull();
+  });
+
   it("keeps quick filters but removes Advanced filters from Requirements", () => {
     render(<FilterHarness mode="requirements" />);
 
@@ -114,6 +129,20 @@ describe("Filters", () => {
     expect(output.getAttribute("aria-pressed")).toBe("true");
     expect(screen.queryByText("Advanced filters")).toBeNull();
     expect(screen.queryByLabelText("Phase")).toBeNull();
+  });
+
+  it("keeps stale selected Case tags visible and clearable", () => {
+    render(<FilterHarness caseTags="removed-tag" />);
+
+    fireEvent.click(screen.getByText("Tags"));
+    const staleTag = within(
+      screen.getByRole("group", { name: "Case tags" }),
+    ).getByRole("button", { name: "removed-tag 0" });
+    expect(staleTag.getAttribute("aria-pressed")).toBe("true");
+    fireEvent.click(staleTag);
+    expect(
+      screen.queryByRole("button", { name: "removed-tag 0" }),
+    ).toBeNull();
   });
 
   it("shows quick trend facets without Advanced filters", () => {

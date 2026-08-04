@@ -128,6 +128,7 @@ function TreeItem({
         <button
           type="button"
           className="requirement-toc__link"
+          aria-label={`${node.clause} ${node.title}`}
           onClick={() => onNavigate(node.clause)}
           disabled={visible === 0}
         >
@@ -288,7 +289,7 @@ export function StandardTree({
       </header>
       <label className="requirement-toc__all">
         <input
-          type="radio"
+          type="checkbox"
           checked={selected.size === 0}
           onChange={() => onSelectedSectionsChange([])}
         />

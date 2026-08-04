@@ -17,9 +17,10 @@ import {
 import {
   buildSectionTree,
   decodeSectionSelection,
+  fallbackSections,
   sectionContains,
 } from "./requirementHierarchy";
-import { StandardTree, standardTreeTone } from "./StandardTree";
+import { StandardTree } from "./StandardTree";
 import { ToolEvidenceRow } from "./ToolEvidence";
 import type {
   Campaign,
@@ -66,22 +67,6 @@ interface ProfileEvidence {
 const EMPTY_CASES: CaseDefinition[] = [];
 const EMPTY_EVIDENCE: ProfileEvidence[] = [];
 const NOOP = () => undefined;
-
-export function requirementTreeTone(statuses: Status[]) {
-  return standardTreeTone(statuses);
-}
-
-function fallbackSections(requirements: Requirement[]): StandardSection[] {
-  const sections = new Map<string, StandardSection>();
-  for (const requirement of requirements) {
-    const parts = requirement.clause.split(".");
-    for (let length = 1; length <= parts.length; length += 1) {
-      const clause = parts.slice(0, length).join(".");
-      if (!sections.has(clause)) sections.set(clause, { clause, title: clause });
-    }
-  }
-  return [...sections.values()];
-}
 
 function applicabilityLabel(status: string): string {
   return status
@@ -314,7 +299,6 @@ export function RequirementsView({
   focusRequirementId = "",
   onFocusedRequirement = NOOP,
 }: RequirementsProps) {
-  const cardRefs = useRef(new Map<string, HTMLElement>());
   const navigationScrollId = useRef("");
   const focusedRequirementId = useRef("");
   const suppressNextFocusClearScroll = useRef(false);
@@ -444,7 +428,9 @@ export function RequirementsView({
       !focusRequirementId && suppressNextFocusClearScroll.current;
     if (suppressScroll) suppressNextFocusClearScroll.current = false;
     window.requestAnimationFrame(() => {
-      const card = cardRefs.current.get(selectedRequirement.id);
+      const card = document.getElementById(
+        `requirement-card-${selectedRequirement.id}`,
+      );
       if (!navigatedInView && !suppressScroll) {
         card?.scrollIntoView?.({ block: "start" });
       }
@@ -474,7 +460,7 @@ export function RequirementsView({
     onSelectRequirement(requirement.id);
     const reduceMotion =
       window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
-    const card = cardRefs.current.get(requirement.id);
+    const card = document.getElementById(`requirement-card-${requirement.id}`);
     card?.scrollIntoView?.({
       block: "start",
       behavior: reduceMotion ? "auto" : "smooth",
@@ -518,12 +504,9 @@ export function RequirementsView({
           {visibleRequirements.length ? (
             visibleRequirements.map((requirement) => (
               <div
+                id={`requirement-card-${requirement.id}`}
                 className="requirement-card-anchor"
                 key={requirement.id}
-                ref={(element) => {
-                  if (element) cardRefs.current.set(requirement.id, element);
-                  else cardRefs.current.delete(requirement.id);
-                }}
               >
                 <RequirementCard
                   requirement={requirement}

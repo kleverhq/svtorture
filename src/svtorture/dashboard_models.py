@@ -287,6 +287,16 @@ class CampaignCatalog(StrictModel):
             section_locations
         ) != len(set(section_locations)):
             raise ValueError("standard sections must be unique and canonically sorted")
+        if self.standard_sections:
+            missing_clauses = sorted(
+                {requirement.clause for requirement in self.requirements} - set(section_locations),
+                key=standard_location_sort_key,
+            )
+            if missing_clauses:
+                raise ValueError(
+                    "standard sections must contain every requirement clause: "
+                    + ", ".join(missing_clauses)
+                )
         return self
 
 

@@ -223,6 +223,7 @@ export default function App() {
   );
   const [workspaceHeight, setWorkspaceHeight] = useState(0);
   const [focusRequirementId, setFocusRequirementId] = useState("");
+  const [focusCaseTarget, setFocusCaseTarget] = useState("");
   const workspaceRef = useRef<HTMLElement>(null);
   const availableIds = new Set(state.index?.campaigns.map((campaign) => campaign.id) ?? []);
   const rangedCampaigns = (state.trends?.campaigns ?? [])
@@ -361,32 +362,11 @@ export default function App() {
     () => filters.sections.split(",").filter(Boolean),
     [filters.sections],
   );
-  const corpusFilterDependency =
-    view === "matrix"
-      ? JSON.stringify([
-          filters.tool,
-          filters.profile,
-          filters.statusGroup,
-          filters.requirementTags,
-          filters.changed,
-          filters.disagreement,
-        ])
-      : view === "evidence"
-        ? JSON.stringify([
-            filters.tool,
-            filters.profile,
-            filters.statusGroup,
-            filters.changed,
-            filters.disagreement,
-            filters.caseTags,
-            filters.requirement,
-          ])
-        : filters;
   const corpusFilters = useMemo(() => {
     if (view === "matrix") return requirementsQuickFilters(filters);
     if (view === "evidence") return casesFilters(filters);
     return filters;
-  }, [corpusFilterDependency, view]);
+  }, [filters, view]);
   const selectedCampaign = useMemo(
     () =>
       state.dataset?.campaigns.find((item) => item.id === state.selectedId),
@@ -427,9 +407,11 @@ export default function App() {
         tool,
         profile,
         requirement,
+        sections: "",
         caseId: "",
         requirementId: "",
       }));
+      setFocusCaseTarget("results");
       setView("evidence");
     },
     [],
@@ -444,6 +426,7 @@ export default function App() {
       profile: current.profile,
       caseId,
     }));
+    setFocusCaseTarget(caseId);
     setView("evidence");
   }, []);
   const selectRequirement = useCallback((requirementId: string) => {
@@ -466,6 +449,7 @@ export default function App() {
     () => setFocusRequirementId(""),
     [],
   );
+  const clearFocusedCase = useCallback(() => setFocusCaseTarget(""), []);
   const changeSelectedSections = useCallback((sections: string[]) => {
     setFilters((current) => ({
       ...current,
@@ -813,6 +797,8 @@ export default function App() {
               toolFilter={filters.tool}
               profileFilter={filters.profile}
               selectedCaseId={filters.caseId}
+              focusTarget={focusCaseTarget}
+              onFocusedTarget={clearFocusedCase}
               onSelectCase={(caseId) =>
                 setFilters((current) => ({ ...current, caseId }))
               }

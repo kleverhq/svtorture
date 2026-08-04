@@ -292,10 +292,6 @@ def _standard_parts(path: Path) -> tuple[_StandardPart, ...]:
     return _standard_index(path).parts
 
 
-def _standard_anchors(path: Path) -> frozenset[str]:
-    return frozenset(anchor for part in _standard_parts(path) for anchor in part.anchors)
-
-
 def _parse(path: Path, model_type: type[Any]) -> Any:
     try:
         return model_type.model_validate(_read_toml(path))
@@ -303,7 +299,7 @@ def _parse(path: Path, model_type: type[Any]) -> Any:
         raise CatalogError(f"{path}: {error}") from error
 
 
-def _load_requirements(root: Path, anchor_index: Path) -> RequirementInventory:
+def _load_requirements(root: Path, standard_index: _StandardIndex) -> RequirementInventory:
     standards = root / "standards"
     index = _parse(standards / "index.toml", StandardsIndex)
     requirements_directory = standards / "requirements"
@@ -340,7 +336,9 @@ def _load_requirements(root: Path, anchor_index: Path) -> RequirementInventory:
     except ValidationError as error:
         raise CatalogError(f"{standards}: {error}") from error
 
-    available_anchors = _standard_anchors(anchor_index)
+    available_anchors = frozenset(
+        anchor for part in standard_index.parts for anchor in part.anchors
+    )
     for requirement in inventory.requirements:
         unknown = [anchor for anchor in requirement.anchors if anchor not in available_anchors]
         if unknown:
@@ -511,7 +509,8 @@ def _load_case(path: Path, requirements: dict[str, Requirement]) -> LoadedCase:
 def load_catalog(root: Path, *, anchor_index: Path | None = None) -> Catalog:
     root = root.resolve()
     anchor_index = (anchor_index or root / "standards" / "ieee-1800-2023-anchors.json").resolve()
-    inventory = _load_requirements(root, anchor_index)
+    standard_index = _standard_index(anchor_index)
+    inventory = _load_requirements(root, standard_index)
     tags = _parse(root / "standards" / "tags.toml", TagRegistry)
     requirements = {item.id: item for item in inventory.requirements}
 
@@ -641,7 +640,7 @@ def load_catalog(root: Path, *, anchor_index: Path | None = None) -> Catalog:
         suites=suites,
         suite_cases=suite_cases,
         tools=tools,
-        standard_sections=_standard_index(anchor_index).sections,
+        standard_sections=standard_index.sections,
     )
 
 

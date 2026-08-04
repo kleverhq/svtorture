@@ -45,10 +45,6 @@ function choices(values: Array<string | undefined>): string[] {
 
 const PROFILE_ORDER = ["preprocessor", "parser", "elaborator", "simulator"];
 
-function standardPartLabel(part: string): string {
-  return /^[A-Q]$/.test(part) ? `Annex ${part}` : `Chapter ${part}`;
-}
-
 function displayFilterValue(value: string): string {
   return value
     .replaceAll(/[-_]+/g, " ")
@@ -85,9 +81,10 @@ export function Filters({
     (dataset?.cases ?? []).flatMap((testCase) => testCase.tags),
   );
   const tagCorpus = mode === "cases" ? dataset?.cases ?? [] : dataset?.requirements ?? [];
-  const tagChoices = mode === "cases" ? caseTags : requirementTags;
+  const availableTags = mode === "cases" ? caseTags : requirementTags;
   const tagField = mode === "cases" ? "caseTags" : "requirementTags";
   const selectedTags = filterValueList(filters[tagField]);
+  const tagChoices = choices([...availableTags, ...selectedTags]);
   const tagCounts = new Map(
     tagChoices.map((tag) => [
       tag,
@@ -347,6 +344,23 @@ export function Filters({
               Cross-tool disagreement
             </button>
           </div>
+        </div>
+      )}
+
+      {mode === "cases" && filters.requirement && (
+        <div
+          className="filters__quick"
+          role="group"
+          aria-label="Requirement scope"
+        >
+          <span className="filters__quick-label">Requirement</span>
+          <button
+            type="button"
+            className="filter-chip"
+            onClick={() => update("requirement", "")}
+          >
+            {filters.requirement} · Clear
+          </button>
         </div>
       )}
 

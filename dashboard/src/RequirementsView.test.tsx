@@ -9,7 +9,8 @@ import {
 import { useState } from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-import { RequirementsView, requirementTreeTone } from "./RequirementsView";
+import { RequirementsView } from "./RequirementsView";
+import { standardTreeTone } from "./StandardTree";
 import { makeTestDataset } from "./testDataset";
 import type { Requirement } from "./types";
 
@@ -67,14 +68,14 @@ function SelectionHarness({ requirements }: { requirements: Requirement[] }) {
 
 describe("RequirementsView", () => {
   it("uses the accepted worst-status hierarchy", () => {
-    expect(requirementTreeTone(["conforming", "not-run"])).toBe("green");
-    expect(requirementTreeTone(["conforming", "unsupported-capability"])).toBe(
+    expect(standardTreeTone(["conforming", "not-run"])).toBe("green");
+    expect(standardTreeTone(["conforming", "unsupported-capability"])).toBe(
       "green",
     );
-    expect(requirementTreeTone(["not-applicable", "not-run"])).toBe("gray");
-    expect(requirementTreeTone(["conforming", "inconclusive"])).toBe("yellow");
-    expect(requirementTreeTone(["conforming", "nonconforming"])).toBe("red");
-    expect(requirementTreeTone(["harness-error"])).toBe("red");
+    expect(standardTreeTone(["not-applicable", "not-run"])).toBe("gray");
+    expect(standardTreeTone(["conforming", "inconclusive"])).toBe("yellow");
+    expect(standardTreeTone(["conforming", "nonconforming"])).toBe("red");
+    expect(standardTreeTone(["harness-error"])).toBe("red");
   });
 
   it("renders every compact card with applicability and expandable evidence", async () => {
@@ -186,7 +187,7 @@ describe("RequirementsView", () => {
     );
 
     expect(
-      (screen.getByRole("radio", { name: /^All/ }) as HTMLInputElement).checked,
+      (screen.getByRole("checkbox", { name: /^All/ }) as HTMLInputElement).checked,
     ).toBe(true);
     fireEvent.click(
       screen.getByRole("button", {
@@ -218,7 +219,7 @@ describe("RequirementsView", () => {
       screen.getByRole("article", { name: `Requirement ${byReference.id}` }),
     ).toBeTruthy();
 
-    fireEvent.click(screen.getByRole("radio", { name: /^All/ }));
+    fireEvent.click(screen.getByRole("checkbox", { name: /^All/ }));
     expect(screen.getAllByRole("article")).toHaveLength(3);
   });
 
@@ -351,7 +352,7 @@ describe("RequirementsView", () => {
 
     expect(screen.getAllByRole("article")).toHaveLength(1);
     expect(
-      (screen.getByRole("radio", { name: /^All/ }) as HTMLInputElement).checked,
+      (screen.getByRole("checkbox", { name: /^All/ }) as HTMLInputElement).checked,
     ).toBe(true);
   });
 

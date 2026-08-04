@@ -24,6 +24,7 @@ This work does not change case metadata, case execution, conformance judgments, 
 - [x] (2026-08-04 10:20Z) Follow-up: extracted one shared `ToolEvidenceRow` and migrated Requirements from its bespoke profile buttons to the same expandable profile/status/reason rows used by Cases, retaining aggregated requirement semantics and the supporting-case navigation action.
 - [x] (2026-08-04 10:25Z) Follow-up: replaced full-panel `empty-state` treatment inside Tool evidence with a compact inline message for unavailable, loading, and absent detailed results.
 - [x] (2026-08-04 10:32Z) Follow-up: removed the complete Cases Advanced filters disclosure, deleted obsolete control code/styles, and made Cases ignore all removed Advanced fields so hidden URL state cannot silently filter cards.
+- [x] (2026-08-04 22:45Z) PR review follow-up: addressed Codex and four independent correctness, KISS/YAGNI, accessibility, and scaling reviews. Exposed and cleared Requirement scope, retained stale tags as clearable zero-count choices, cleared incompatible hierarchy state on supporting-case navigation, simplified filter dependencies/fallbacks/catalog parsing, corrected tree semantics/names, added destination focus, strengthened hierarchy validation, and removed card ref churn.
 
 ## Surprises & Discoveries
 
@@ -65,7 +66,7 @@ This work does not change case metadata, case execution, conformance judgments, 
   Rationale: The user asked for symmetric multi-tag behavior, while separate fields prevent stale tag selections from one corpus hiding the other corpus. AND semantics match the accepted Requirements interaction.
   Date/Author: 2026-08-04 / pi
 
-- Decision: Remove the complete Advanced filters disclosure from Cases. The Cases corpus projection ignores Search, Revision, Standard part, Clause, Phase, Expectation, Case presence, Exact result, Reason, and legacy Tag state. An exact Requirement ID remains an internal navigation context for `View supporting cases`, while visible Tools, Profile, Result group, Compare, Tags, and hierarchy selection remain active.
+- Decision: Remove the complete Advanced filters disclosure from Cases. The Cases corpus projection ignores Search, Revision, Standard part, Clause, Phase, Expectation, Case presence, Exact result, Reason, and legacy Tag state. An exact Requirement ID remains a visible, dismissible navigation context for `View supporting cases`, while Tools, Profile, Result group, Compare, Tags, and hierarchy selection remain active.
   Rationale: Cases must be symmetric with Requirements and hidden controls must not silently filter cards. Keeping exact Requirement navigation preserves the explicit cross-tab action without restoring an Advanced panel.
   Date/Author: 2026-08-04 / pi
 
@@ -93,7 +94,7 @@ This work does not change case metadata, case execution, conformance judgments, 
 
 All milestones are complete. Requirements and Cases consume the same corpus-neutral `StandardTree`; Cases has an independently URL-backed AND tag cloud and no Advanced filters disclosure. The old selected-list inspector and split-workspace code are gone. All matching cases render as aligned compact cards with lazy Requirements, Oracle and sources, and Tool evidence sections. Detailed evidence loads only on opening, retries transient failures, refetches for an open disclosure after campaign changes, and rejects stale campaign responses. Tree navigation and cross-tab requirement navigation move focus to the destination without later focus stealing.
 
-The Cases summary reads `Requirements vs cases:` and uses shared threshold colors. Tool evidence profile rows now use one shared component in both card types; Requirements retains aggregate case evidence while matching Cases interaction and presentation exactly. After removing Cases Advanced filters, final `just smoke` passed 121 focused Python tests, all annotator checks, type checking, 103 frontend tests, and production build. `just ci` additionally passed 188 non-Docker tests and 11 Docker tests before the final real Icarus smoke was blocked solely by a Docker Hub network timeout. Desktop 1450×900 and mobile 430×932 screenshots passed, the local campaign export was refreshed, all multi-lane findings were fixed and retested, and an independent final control review reported `No substantive findings.` No required work remains.
+The Cases summary reads `Requirements vs cases:` and uses shared threshold colors. Tool evidence profile rows now use one shared component in both card types; Requirements retains aggregate case evidence while matching Cases interaction and presentation exactly. After removing Cases Advanced filters and adding the dismissible Requirement scope, final `just smoke` passed 121 focused Python tests, all annotator checks, type checking, 104 frontend tests, and production build. `just ci` additionally passed 188 non-Docker tests and 11 Docker tests before the final real Icarus smoke was blocked solely by a Docker Hub network timeout. Desktop 1450×900 and mobile 430×932 screenshots passed, the local campaign export was refreshed, all multi-lane findings were fixed and retested, and an independent final control review reported `No substantive findings.` No required work remains.
 
 ## Context and Orientation
 
@@ -221,3 +222,7 @@ Revision note (2026-08-04 10:20Z): Added the requested exact Tool evidence row s
 Revision note (2026-08-04 10:25Z): Reduced Tool evidence absence/loading messages from the global large empty-state presentation to a compact local line while retaining explicit evidence-state wording.
 
 Revision note (2026-08-04 10:32Z): Removed the complete Cases Advanced filters disclosure at user request. Updated the corpus projection to ignore every now-hidden Advanced field, retained exact Requirement only as explicit cross-tab navigation context, deleted obsolete control code/styles, and updated acceptance language.
+
+Revision note (2026-08-04 22:29Z): Addressed PR review by exposing the exact Requirement navigation scope as a compact dismissible Cases filter row, so users can return to the full corpus without restoring Advanced filters.
+
+Revision note (2026-08-04 22:45Z): Recorded the broader PR review fixes: stale tag recovery, cross-corpus section clearing, KISS/YAGNI simplifications, accessible tree semantics and navigation focus, complete hierarchy validation, and stable DOM-anchor navigation.

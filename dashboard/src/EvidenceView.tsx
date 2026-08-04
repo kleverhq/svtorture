@@ -17,6 +17,7 @@ import {
 import {
   buildSectionTree,
   decodeSectionSelection,
+  fallbackSections,
   sectionContains,
 } from "./requirementHierarchy";
 import { StandardTree } from "./StandardTree";
@@ -615,18 +616,6 @@ const CaseCard = memo(function CaseCard({
   );
 });
 
-function fallbackSections(requirements: Requirement[]): StandardSection[] {
-  const sections = new Map<string, StandardSection>();
-  for (const requirement of requirements) {
-    const parts = requirement.clause.split(".");
-    for (let length = 1; length <= parts.length; length += 1) {
-      const clause = parts.slice(0, length).join(".");
-      if (!sections.has(clause)) sections.set(clause, { clause, title: clause });
-    }
-  }
-  return [...sections.values()];
-}
-
 export function EvidenceView({
   cases,
   allCases,
@@ -640,6 +629,8 @@ export function EvidenceView({
   toolFilter,
   profileFilter,
   selectedCaseId,
+  focusTarget = "",
+  onFocusedTarget = () => undefined,
   onSelectCase,
   onInspectRequirement,
   loadCaseEvidence,
@@ -656,6 +647,8 @@ export function EvidenceView({
   toolFilter: string;
   profileFilter: string;
   selectedCaseId: string;
+  focusTarget?: string | undefined;
+  onFocusedTarget?: (() => void) | undefined;
   onSelectCase: (caseId: string) => void;
   onInspectRequirement: (requirementId: string) => void;
   loadCaseEvidence?: ((caseId: string) => Promise<Result[]>) | undefined;
@@ -663,8 +656,8 @@ export function EvidenceView({
   const completeCases = allCases ?? cases;
   const sectionSelection = selectedSections ?? [];
   const changeSections = onSelectedSectionsChange ?? (() => undefined);
-  const cardRefs = useRef(new Map<string, HTMLElement>());
   const navigationScrollId = useRef("");
+  const resultsHeadingRef = useRef<HTMLHeadingElement>(null);
   const requirementMap = useMemo(
     () => new Map(requirements.map((item) => [item.id, item])),
     [requirements],
@@ -765,9 +758,29 @@ export function EvidenceView({
       return;
     }
     window.requestAnimationFrame(() => {
-      cardRefs.current.get(selectedCase.id)?.scrollIntoView?.({ block: "start" });
+      document
+        .getElementById(`case-card-${selectedCase.id}`)
+        ?.scrollIntoView?.({ block: "start" });
     });
   }, [selectedCase]);
+
+  useEffect(() => {
+    if (!focusTarget) return;
+    window.requestAnimationFrame(() => {
+      const target =
+        focusTarget === "results"
+          ? resultsHeadingRef.current
+          : selectedCase?.id === focusTarget
+            ? document
+                .getElementById(`case-card-${selectedCase.id}`)
+                ?.querySelector("h3")
+            : null;
+      if (!(target instanceof HTMLElement)) return;
+      target.tabIndex = -1;
+      target.focus({ preventScroll: true });
+      onFocusedTarget();
+    });
+  }, [focusTarget, onFocusedTarget, selectedCase]);
 
   const navigateToSection = (clause: string) => {
     const testCase = visibleCases.find((item) => {
@@ -779,7 +792,7 @@ export function EvidenceView({
     onSelectCase(testCase.id);
     const reduceMotion =
       window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
-    const card = cardRefs.current.get(testCase.id);
+    const card = document.getElementById(`case-card-${testCase.id}`);
     card?.scrollIntoView?.({
       block: "start",
       behavior: reduceMotion ? "auto" : "smooth",
@@ -816,7 +829,7 @@ export function EvidenceView({
           <header className="requirement-cards__header">
             <div>
               <span className="section-label">Case evidence</span>
-              <h2 aria-live="polite" aria-atomic="true">
+              <h2 ref={resultsHeadingRef} aria-live="polite" aria-atomic="true">
                 {visibleCases.length} case{visibleCases.length === 1 ? "" : "s"}
               </h2>
             </div>
@@ -833,12 +846,9 @@ export function EvidenceView({
                 relatedRequirementsByCase.get(testCase.id) ?? [];
               return (
                 <div
+                  id={`case-card-${testCase.id}`}
                   className="requirement-card-anchor"
                   key={testCase.id}
-                  ref={(element) => {
-                    if (element) cardRefs.current.set(testCase.id, element);
-                    else cardRefs.current.delete(testCase.id);
-                  }}
                 >
                   <CaseCard
                     testCase={testCase}

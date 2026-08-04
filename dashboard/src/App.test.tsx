@@ -326,6 +326,31 @@ describe("App overview navigation", () => {
     await waitFor(() => expect(document.activeElement).not.toBe(returnedHeading));
   });
 
+  it("moves focus to a Case opened from a Requirement card", async () => {
+    const dataset = makeTestDataset();
+    const testCase = dataset.cases[0];
+    const requirement = dataset.requirements[0];
+    if (!testCase || !requirement) throw new Error("incomplete test dataset");
+    window.history.replaceState(null, "", "/?view=matrix");
+    mockDataset(dataset);
+
+    render(<App />);
+    const requirementCard = await screen.findByRole("article", {
+      name: `Requirement ${requirement.id}`,
+    });
+    fireEvent.click(within(requirementCard).getByText(/Supporting cases/));
+    fireEvent.click(
+      await within(requirementCard).findByRole("button", {
+        name: new RegExp(testCase.title),
+      }),
+    );
+
+    const caseHeading = await screen.findByRole("heading", {
+      name: testCase.title,
+    });
+    await waitFor(() => expect(document.activeElement).toBe(caseHeading));
+  });
+
   it("filters Cases by clickable tags with AND semantics", async () => {
     const dataset = makeTestDataset();
     const original = dataset.cases[0];
@@ -510,7 +535,7 @@ describe("App overview navigation", () => {
     window.history.replaceState(
       null,
       "",
-      `/?view=matrix&requirementId=${related.id}&phase=simulate&statusGroup=pass`,
+      `/?view=matrix&requirementId=${related.id}&phase=simulate&statusGroup=pass&sections=5`,
     );
     mockDataset(dataset);
 
@@ -542,7 +567,8 @@ describe("App overview navigation", () => {
     const caseHeading = screen.getByRole("heading", { name: testCase.title });
     const caseDetail = caseHeading.closest("article");
     if (!caseDetail) throw new Error("missing Case detail");
-    expect(caseHeading).toBeTruthy();
+    const casesHeading = screen.getByRole("heading", { name: "1 case" });
+    await waitFor(() => expect(document.activeElement).toBe(casesHeading));
     fireEvent.click(within(caseDetail).getByText(/Requirements/));
     expect(await within(caseDetail).findByText(original.summary)).toBeTruthy();
     expect(within(caseDetail).getByText(related.summary)).toBeTruthy();
@@ -556,7 +582,20 @@ describe("App overview navigation", () => {
       expect(parameters.get("profile")).toBe("simulator");
       expect(parameters.get("requirement")).toBe(related.id);
       expect(parameters.get("phase")).toBeNull();
+      expect(parameters.get("sections")).toBeNull();
       expect(parameters.get("statusGroup")).toBe("pass");
+    });
+
+    fireEvent.click(
+      within(screen.getByRole("group", { name: "Requirement scope" })).getByRole(
+        "button",
+        { name: `${related.id} · Clear` },
+      ),
+    );
+    await waitFor(() => {
+      expect(
+        new URLSearchParams(window.location.search).get("requirement"),
+      ).toBeNull();
     });
   });
 

@@ -1,7 +1,19 @@
-import type { StandardSection } from "./types";
+import type { Requirement, StandardSection } from "./types";
 
 export interface RequirementSectionNode extends StandardSection {
   children: RequirementSectionNode[];
+}
+
+export function fallbackSections(requirements: Requirement[]): StandardSection[] {
+  const sections = new Map<string, StandardSection>();
+  for (const requirement of requirements) {
+    const parts = requirement.clause.split(".");
+    for (let length = 1; length <= parts.length; length += 1) {
+      const clause = parts.slice(0, length).join(".");
+      if (!sections.has(clause)) sections.set(clause, { clause, title: clause });
+    }
+  }
+  return [...sections.values()];
 }
 
 function parentClause(clause: string): string | undefined {

@@ -226,7 +226,7 @@ describe("EvidenceView", () => {
     fireEvent.click(screen.getByLabelText(/Select 13 Tasks and functions/));
     expect(changeSections).toHaveBeenCalledWith(["13"]);
     fireEvent.click(
-      screen.getByRole("button", { name: "13Tasks and functions" }),
+      screen.getByRole("button", { name: "13 Tasks and functions" }),
     );
     expect(document.activeElement).toBe(
       within(firstCard).getByRole("heading", { name: firstCase.title }),

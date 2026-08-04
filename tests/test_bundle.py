@@ -41,6 +41,7 @@ from svtorture.models import (
     Phase,
     ReasonCode,
     ResultStatus,
+    standard_location_sort_key,
 )
 from svtorture.publish import PublicationError
 from tests.helpers import campaign_tool, make_campaign, normalized, observation
@@ -105,6 +106,20 @@ def test_bundle_export_is_compact_complete_and_deterministic(
     )
     with pytest.raises(ValidationError, match="canonically sorted"):
         CampaignCatalog.model_validate(malformed_catalog)
+
+    missing_requirement_clause = exported_catalog.model_dump(mode="json")
+    required_clause = missing_requirement_clause["requirements"][0]["clause"]
+    section = next(
+        item
+        for item in missing_requirement_clause["standard_sections"]
+        if item["clause"] == required_clause
+    )
+    section["clause"] = "41.999.999"
+    missing_requirement_clause["standard_sections"].sort(
+        key=lambda item: standard_location_sort_key(item["clause"])
+    )
+    with pytest.raises(ValidationError, match="contain every requirement clause"):
+        CampaignCatalog.model_validate(missing_requirement_clause)
 
     first_files = {
         path.relative_to(first).as_posix(): path.read_bytes()
