@@ -468,6 +468,11 @@ const CaseCard = memo(function CaseCard({
       <LazyDetails
         label="Oracle and sources"
         count={testCase.sources.length}
+        onOpenChange={(open) => {
+          if (open) return;
+          setOpenSource(undefined);
+          sourceTriggerRef.current = null;
+        }}
         renderContent={() => (
           <div className="case-card__definition">
             <dl className="fact-grid case-facts">

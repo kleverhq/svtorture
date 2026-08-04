@@ -78,6 +78,64 @@ describe("RequirementsView", () => {
     expect(standardTreeTone(["harness-error"])).toBe("red");
   });
 
+  it("mounts large result sets in batches while retaining a selected target", () => {
+    const dataset = makeTestDataset();
+    const first = dataset.requirements[0];
+    if (!first) throw new Error("incomplete test dataset");
+    const requirements = Array.from({ length: 105 }, (_, index) => ({
+      ...first,
+      id: `SV-2023-13-BATCH-${String(index).padStart(3, "0")}`,
+      summary: `Batch requirement ${index}`,
+    }));
+
+    const view = render(
+      <RequirementsView
+        requirements={requirements}
+        allRequirements={requirements}
+        standardSections={dataset.standard_sections}
+        selectedSections={[]}
+        onSelectedSectionsChange={() => undefined}
+        cases={[]}
+        campaign={dataset.campaigns[0]}
+        toolFilter=""
+        profileFilter=""
+        selectedRequirementId={requirements[104]!.id}
+        onSelectRequirement={() => undefined}
+        onInspectCase={() => undefined}
+        onInspectEvidence={() => undefined}
+      />,
+    );
+
+    expect(screen.getAllByRole("article")).toHaveLength(101);
+    fireEvent.click(
+      screen.getByRole("button", {
+        name: "Show more requirements · 101 of 105",
+      }),
+    );
+    expect(screen.getAllByRole("article")).toHaveLength(105);
+    expect(screen.queryByText(/Show more requirements/)).toBeNull();
+
+    const revised = requirements.map((requirement) => ({ ...requirement }));
+    view.rerender(
+      <RequirementsView
+        requirements={revised}
+        allRequirements={revised}
+        standardSections={dataset.standard_sections}
+        selectedSections={[]}
+        onSelectedSectionsChange={() => undefined}
+        cases={[]}
+        campaign={dataset.campaigns[0]}
+        toolFilter=""
+        profileFilter=""
+        selectedRequirementId={revised[104]!.id}
+        onSelectRequirement={() => undefined}
+        onInspectCase={() => undefined}
+        onInspectEvidence={() => undefined}
+      />,
+    );
+    expect(screen.getAllByRole("article")).toHaveLength(101);
+  });
+
   it("renders every compact card with applicability and expandable evidence", async () => {
     const dataset = makeTestDataset();
     const first = dataset.requirements[0];
@@ -162,7 +220,10 @@ describe("RequirementsView", () => {
     fireEvent.click(await within(firstCard).findByText(testCase.title));
     expect(inspectCase).toHaveBeenCalledWith(testCase.id);
     await waitFor(() =>
-      expect(scrollIntoView).toHaveBeenCalledWith({ block: "start" }),
+      expect(scrollIntoView).toHaveBeenCalledWith({
+        block: "start",
+        behavior: "auto",
+      }),
     );
   });
 

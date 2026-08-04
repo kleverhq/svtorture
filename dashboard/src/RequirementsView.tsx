@@ -66,6 +66,7 @@ interface ProfileEvidence {
 
 const EMPTY_CASES: CaseDefinition[] = [];
 const EMPTY_EVIDENCE: ProfileEvidence[] = [];
+const CARD_BATCH_SIZE = 100;
 const NOOP = () => undefined;
 
 function applicabilityLabel(status: string): string {
@@ -300,8 +301,9 @@ export function RequirementsView({
   onFocusedRequirement = NOOP,
 }: RequirementsProps) {
   const navigationScrollId = useRef("");
+  const loadMoreRef = useRef<HTMLButtonElement>(null);
   const focusedRequirementId = useRef("");
-  const suppressNextFocusClearScroll = useRef(false);
+  const suppressNextSelectedScroll = useRef(false);
   const sections = useMemo(
     () =>
       standardSections.length
@@ -314,6 +316,15 @@ export function RequirementsView({
     () => decodeSectionSelection(selectedSections, tree),
     [selectedSections, tree],
   );
+  const [cardBatch, setCardBatch] = useState(() => ({
+    requirements,
+    selected,
+    limit: CARD_BATCH_SIZE,
+  }));
+  const cardLimit =
+    cardBatch.requirements === requirements && cardBatch.selected === selected
+      ? cardBatch.limit
+      : CARD_BATCH_SIZE;
   const selectedTagSet = useMemo(() => new Set(selectedTags), [selectedTags]);
   const profiles = useMemo(
     () =>
@@ -419,23 +430,55 @@ export function RequirementsView({
       visibleRequirements.find((item) => item.id === selectedRequirementId),
     [selectedRequirementId, visibleRequirements],
   );
+  const renderedRequirements = useMemo(() => {
+    const rendered = visibleRequirements.slice(0, cardLimit);
+    if (
+      selectedRequirement &&
+      !rendered.some((item) => item.id === selectedRequirement.id)
+    ) {
+      rendered.push(selectedRequirement);
+    }
+    return rendered;
+  }, [cardLimit, selectedRequirement, visibleRequirements]);
+  const hasMoreCards = cardLimit < visibleRequirements.length;
+
+  useEffect(() => {
+    const target = loadMoreRef.current;
+    if (!target || !hasMoreCards || !("IntersectionObserver" in window)) return;
+    const observer = new IntersectionObserver((entries) => {
+      if (entries.some((entry) => entry.isIntersecting)) {
+        setCardBatch({
+          requirements,
+          selected,
+          limit: cardLimit + CARD_BATCH_SIZE,
+        });
+      }
+    });
+    observer.observe(target);
+    return () => observer.disconnect();
+  }, [cardLimit, hasMoreCards, requirements, selected]);
 
   useEffect(() => {
     if (!selectedRequirement) return;
     const navigatedInView = navigationScrollId.current === selectedRequirement.id;
     if (navigatedInView) navigationScrollId.current = "";
     const suppressScroll =
-      !focusRequirementId && suppressNextFocusClearScroll.current;
-    if (suppressScroll) suppressNextFocusClearScroll.current = false;
+      !focusRequirementId && suppressNextSelectedScroll.current;
+    if (suppressScroll) suppressNextSelectedScroll.current = false;
     window.requestAnimationFrame(() => {
       const card = document.getElementById(
         `requirement-card-${selectedRequirement.id}`,
       );
-      if (!navigatedInView && !suppressScroll) {
-        card?.scrollIntoView?.({ block: "start" });
+      if (!suppressScroll) {
+        const reduceMotion =
+          window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
+        card?.scrollIntoView?.({
+          block: "start",
+          behavior: navigatedInView && !reduceMotion ? "smooth" : "auto",
+        });
       }
       if (
-        focusRequirementId === selectedRequirement.id &&
+        (navigatedInView || focusRequirementId === selectedRequirement.id) &&
         focusedRequirementId.current !== selectedRequirement.id
       ) {
         const heading = card?.querySelector("h3");
@@ -443,7 +486,7 @@ export function RequirementsView({
           heading.tabIndex = -1;
           heading.focus({ preventScroll: true });
           focusedRequirementId.current = selectedRequirement.id;
-          suppressNextFocusClearScroll.current = true;
+          suppressNextSelectedScroll.current = true;
           onFocusedRequirement();
         }
       }
@@ -455,12 +498,14 @@ export function RequirementsView({
       sectionContains(clause, item.clause),
     );
     if (!requirement) return;
-    navigationScrollId.current =
-      requirement.id === selectedRequirementId ? "" : requirement.id;
+    const card = document.getElementById(`requirement-card-${requirement.id}`);
+    navigationScrollId.current = card ? "" : requirement.id;
+    if (card && requirement.id !== selectedRequirementId) {
+      suppressNextSelectedScroll.current = true;
+    }
     onSelectRequirement(requirement.id);
     const reduceMotion =
       window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
-    const card = document.getElementById(`requirement-card-${requirement.id}`);
     card?.scrollIntoView?.({
       block: "start",
       behavior: reduceMotion ? "auto" : "smooth",
@@ -502,7 +547,7 @@ export function RequirementsView({
             )}
           </header>
           {visibleRequirements.length ? (
-            visibleRequirements.map((requirement) => (
+            renderedRequirements.map((requirement) => (
               <div
                 id={`requirement-card-${requirement.id}`}
                 className="requirement-card-anchor"
@@ -530,6 +575,23 @@ export function RequirementsView({
                 ? "No requirements belong to the selected standard sections."
                 : "No requirements match the current quick filters."}
             </div>
+          )}
+          {hasMoreCards && (
+            <button
+              ref={loadMoreRef}
+              type="button"
+              className="button button--quiet requirement-cards__more"
+              onClick={() =>
+                setCardBatch({
+                  requirements,
+                  selected,
+                  limit: cardLimit + CARD_BATCH_SIZE,
+                })
+              }
+            >
+              Show more requirements · {renderedRequirements.length} of{" "}
+              {visibleRequirements.length}
+            </button>
           )}
         </div>
       </div>

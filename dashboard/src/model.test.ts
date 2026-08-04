@@ -67,6 +67,9 @@ describe("Requirements filters", () => {
       statusGroup: "pass",
       changed: true,
       disagreement: true,
+      caseId: "case-navigation",
+      requirementId: "requirement-navigation",
+      sections: "13",
     });
 
     expect(projected).toMatchObject({
@@ -82,6 +85,9 @@ describe("Requirements filters", () => {
       statusGroup: "pass",
       changed: true,
       disagreement: true,
+      caseId: "",
+      requirementId: "",
+      sections: "",
     });
   });
 });
@@ -126,6 +132,9 @@ describe("Cases filters", () => {
       reason: "expectation-met",
       statusGroup: "pass",
       requirement: "SV-2023-13-OUTPUT-COPYOUT",
+      caseId: "case-navigation",
+      requirementId: "requirement-navigation",
+      sections: "13",
     });
 
     expect(projected.requirementTags).toBe("");
@@ -137,6 +146,9 @@ describe("Cases filters", () => {
     expect(projected.reason).toBe("");
     expect(projected.statusGroup).toBe("pass");
     expect(projected.requirement).toBe("SV-2023-13-OUTPUT-COPYOUT");
+    expect(projected.caseId).toBe("");
+    expect(projected.requirementId).toBe("");
+    expect(projected.sections).toBe("");
   });
 });
 

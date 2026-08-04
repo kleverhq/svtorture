@@ -372,12 +372,13 @@ export default function App() {
       state.dataset?.campaigns.find((item) => item.id === state.selectedId),
     [state.dataset, state.selectedId],
   );
+  const corpusFilterKey = JSON.stringify(corpusFilters);
   const filteredCorpus = useMemo(
     () =>
       state.dataset && view !== "about" && view !== "trends"
         ? filterCorpus(state.dataset, corpusFilters, selectedCampaign)
         : undefined,
-    [corpusFilters, selectedCampaign, state.dataset, view],
+    [corpusFilterKey, selectedCampaign, state.dataset, view],
   );
   const requirementEvidenceCases = useMemo(() => {
     const result = new Map<string, CaseDefinition[]>();
@@ -399,7 +400,7 @@ export default function App() {
       }
     }
     return result;
-  }, [corpusFilters, selectedCampaign, state.dataset, view]);
+  }, [corpusFilterKey, selectedCampaign, state.dataset, view]);
   const inspectRequirementToolCases = useCallback(
     (tool: string, profile: string, requirement: string) => {
       setFilters((current) => ({

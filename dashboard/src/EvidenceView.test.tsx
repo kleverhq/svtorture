@@ -357,6 +357,13 @@ describe("EvidenceView", () => {
     expect(screen.queryByLabelText("Source top.sv")).toBeNull();
 
     fireEvent.click(source);
+    fireEvent.click(screen.getByText(/Oracle and sources/));
+    await waitFor(() =>
+      expect(screen.queryByLabelText("Source top.sv")).toBeNull(),
+    );
+    fireEvent.click(screen.getByText(/Oracle and sources/));
+    expect(screen.queryByLabelText("Source top.sv")).toBeNull();
+    fireEvent.click(await screen.findByRole("button", { name: "top.sv" }));
     view.rerender(
       <EvidenceView
         cases={dataset.cases}

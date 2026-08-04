@@ -145,6 +145,12 @@ export function requirementsQuickFilters(filters: Filters): Filters {
     requirement: "",
     status: "",
     reason: "",
+    campaign: "",
+    dateFrom: "",
+    dateTo: "",
+    caseId: "",
+    requirementId: "",
+    sections: "",
   };
 }
 
@@ -162,6 +168,12 @@ export function casesFilters(filters: Filters): Filters {
     tag: "",
     reason: "",
     requirementTags: "",
+    campaign: "",
+    dateFrom: "",
+    dateTo: "",
+    caseId: "",
+    requirementId: "",
+    sections: "",
   };
 }
 
