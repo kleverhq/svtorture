@@ -20,7 +20,7 @@ import {
   sectionContains,
 } from "./requirementHierarchy";
 import { StandardTree } from "./StandardTree";
-import { StatusBadge } from "./StatusBadge";
+import { ToolEvidenceRow } from "./ToolEvidence";
 import type {
   Campaign,
   CampaignTool,
@@ -580,16 +580,13 @@ const CaseCard = memo(function CaseCard({
                   (item) => item.definition.id === profile.toolId,
                 );
                 return (
-                  <details key={profile.key}>
-                    <summary>
-                      <strong>{profile.key}</strong>
-                      <StatusBadge
-                        status={compactResult?.status ?? "not-run"}
-                        reason={compactResult?.reason}
-                        knownIssue={compactResult?.known_issue}
-                      />
-                      <span>{compactResult?.reason ?? "no observation"}</span>
-                    </summary>
+                  <ToolEvidenceRow
+                    key={profile.key}
+                    profileKey={profile.key}
+                    status={compactResult?.status ?? "not-run"}
+                    reason={compactResult?.reason}
+                    knownIssue={compactResult?.known_issue ?? undefined}
+                  >
                     {result ? (
                       <ObservationDetail result={result} tool={tool} />
                     ) : detail?.error ? (
@@ -599,7 +596,7 @@ const CaseCard = memo(function CaseCard({
                     ) : (
                       <p className="empty-state">No detailed result was recorded.</p>
                     )}
-                  </details>
+                  </ToolEvidenceRow>
                 );
               })
             ) : (

@@ -12,9 +12,7 @@ import {
   aggregateStatus,
   profileKeys,
   resultsByKey,
-  STATUS_GROUP_LABELS,
   standardLocationLabel,
-  statusGroup,
 } from "./model";
 import {
   buildSectionTree,
@@ -22,7 +20,7 @@ import {
   sectionContains,
 } from "./requirementHierarchy";
 import { StandardTree, standardTreeTone } from "./StandardTree";
-import { StatusBadge } from "./StatusBadge";
+import { ToolEvidenceRow } from "./ToolEvidence";
 import type {
   Campaign,
   CaseDefinition,
@@ -62,6 +60,7 @@ interface ProfileEvidence {
   status: Status;
   statuses: Status[];
   reason: string;
+  caseCount: number;
 }
 
 const EMPTY_CASES: CaseDefinition[] = [];
@@ -230,27 +229,33 @@ const RequirementCard = memo(function RequirementCard({
         count={evidence.length}
         renderContent={() =>
           evidence.length ? (
-            <div className="requirement-profile-list">
+            <div className="tool-judgments">
               {evidence.map((item) => {
                 const [toolId = "", profileId = ""] = item.key.split("/");
                 return (
-                  <button
-                    type="button"
-                    className="requirement-profile"
+                  <ToolEvidenceRow
                     key={item.key}
-                    aria-label={`View cases for ${requirement.id} with ${item.key} — ${STATUS_GROUP_LABELS[statusGroup(item.status)]}${item.reason ? `: ${item.reason}` : ""}`}
-                    onClick={() =>
-                      onInspectEvidence(toolId, profileId, requirement.id)
-                    }
+                    profileKey={item.key}
+                    status={item.status}
+                    reason={item.reason || undefined}
                   >
-                    <code>{item.key}</code>
-                    <StatusBadge
-                      status={item.status}
-                      reason={item.reason}
-                      grouped
-                    />
-                    {item.reason && <small>{item.reason}</small>}
-                  </button>
+                    <div className="evidence-detail requirement-evidence-detail">
+                      <p>
+                        Aggregated from {item.caseCount} mapped case
+                        {item.caseCount === 1 ? "" : "s"} for this profile.
+                      </p>
+                      <button
+                        type="button"
+                        className="button button--quiet"
+                        aria-label={`View cases for ${requirement.id} with ${item.key}`}
+                        onClick={() =>
+                          onInspectEvidence(toolId, profileId, requirement.id)
+                        }
+                      >
+                        View supporting cases
+                      </button>
+                    </div>
+                  </ToolEvidenceRow>
                 );
               })}
             </div>
@@ -394,6 +399,7 @@ export function RequirementsView({
             status: aggregateStatus(results),
             statuses: statuses.length ? statuses : ["not-run"],
             reason: [...new Set(reasons)].join(", "),
+            caseCount: supporting.length,
           };
         }),
       );

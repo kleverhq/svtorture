@@ -519,18 +519,20 @@ describe("App overview navigation", () => {
       name: `Requirement ${related.id}`,
     });
     fireEvent.click(within(relatedCard).getByText(/Tool evidence/));
+    const alternateProfile = await within(relatedCard).findByText("fake/alternate");
+    expect(alternateProfile.closest("summary")?.textContent).toContain(
+      "Not evaluated",
+    );
+    fireEvent.click(alternateProfile);
     expect(
       await within(relatedCard).findByRole("button", {
-        name: new RegExp(
-          `^View cases for ${related.id} with fake/alternate — Not evaluated`,
-        ),
+        name: `View cases for ${related.id} with fake/alternate`,
       }),
     ).toBeTruthy();
+    fireEvent.click(within(relatedCard).getByText("fake/simulator"));
     fireEvent.click(
       within(relatedCard).getByRole("button", {
-        name: new RegExp(
-          `^View cases for ${related.id} with fake/simulator —`,
-        ),
+        name: `View cases for ${related.id} with fake/simulator`,
       }),
     );
 

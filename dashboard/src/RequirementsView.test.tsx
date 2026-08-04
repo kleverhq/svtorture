@@ -145,6 +145,9 @@ describe("RequirementsView", () => {
     expect(details).toHaveLength(3);
     expect([...details].every((item) => !item.open)).toBe(true);
     fireEvent.click(within(card).getByText(/Tool evidence/));
+    const profile = await within(card).findByText("fake/simulator");
+    expect(profile.closest(".tool-judgments > details")).toBeTruthy();
+    fireEvent.click(profile);
     const evidence = await within(card).findByRole("button", {
       name: new RegExp(`^View cases for ${second.id} with fake/simulator`),
     });

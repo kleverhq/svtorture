@@ -21,6 +21,7 @@ This work does not change case metadata, case execution, conformance judgments, 
 - [x] (2026-08-04 09:32Z) Milestone 2: replaced the selected-case split inspector with the complete case hierarchy and all matching compact cards; preserved requirements, oracle/source viewing, statuses, observations, reproduction, campaign links, and direct links behind lazy disclosures; detailed evidence now fetches only when opened.
 - [x] (2026-08-04 09:32Z) Milestone 3: aligned Cases with Requirements card, tree, global-scroll, sticky, responsive, tag, and coverage presentation; removed the obsolete split-workspace hook and styles; passed 73 focused tests, type checking, production build, refreshed campaign export, and desktop/mobile visual checks.
 - [x] (2026-08-04 10:09Z) Milestone 4: passed final `just smoke` with 121 focused Python and 105 frontend tests, type checking, production build and refreshed export; passed 188 non-Docker and 11 Docker tests in `just ci` before its network-only real-tool pull failure; completed correctness, accessibility, scaling, impacted-lane, and independent control reviews with every substantive finding fixed and no final findings.
+- [x] (2026-08-04 10:20Z) Follow-up: extracted one shared `ToolEvidenceRow` and migrated Requirements from its bespoke profile buttons to the same expandable profile/status/reason rows used by Cases, retaining aggregated requirement semantics and the supporting-case navigation action.
 
 ## Surprises & Discoveries
 
@@ -78,6 +79,10 @@ This work does not change case metadata, case execution, conformance judgments, 
   Rationale: Thousands of visible cards must not trigger thousands of network requests, but opening evidence must preserve the existing observation and reproduction UI.
   Date/Author: 2026-08-04 / pi
 
+- Decision: Requirements and Cases render each Tool evidence profile through the same `ToolEvidenceRow` component. A Case row expands to its detailed observation; a Requirement row expands to its aggregate case count and existing `View supporting cases` navigation.
+  Rationale: Profile, status, and reason presentation must be exactly consistent, while the body must remain honest about the different evidence granularity.
+  Date/Author: 2026-08-04 / pi
+
 - Decision: With one tool explicitly selected, the Cases tree uses the same red/yellow/green/gray worst-status rule and non-color symbols as Requirements, derived directly from case results in selected profiles.
   Rationale: Symmetric navigation should communicate result state identically, including pass plus gray remaining green.
   Date/Author: 2026-08-04 / pi
@@ -86,7 +91,7 @@ This work does not change case metadata, case execution, conformance judgments, 
 
 All milestones are complete. Requirements and Cases consume the same corpus-neutral `StandardTree`; Cases has an independently URL-backed AND tag cloud and retains every non-tag Advanced filter. The old selected-list inspector and split-workspace code are gone. All matching cases render as aligned compact cards with lazy Requirements, Oracle and sources, and Tool evidence sections. Detailed evidence loads only on opening, retries transient failures, refetches for an open disclosure after campaign changes, and rejects stale campaign responses. Tree navigation and cross-tab requirement navigation move focus to the destination without later focus stealing.
 
-The Cases summary reads `Requirements vs cases:` and uses shared threshold colors. Final `just smoke` passed 121 focused Python tests, all annotator checks, type checking, 105 frontend tests, and production build. `just ci` additionally passed 188 non-Docker tests and 11 Docker tests before the final real Icarus smoke was blocked solely by a Docker Hub network timeout. Desktop 1450×900 and mobile 430×932 screenshots passed, the local campaign export was refreshed, all multi-lane findings were fixed and retested, and an independent final control review reported `No substantive findings.` No required work remains.
+The Cases summary reads `Requirements vs cases:` and uses shared threshold colors. Tool evidence profile rows now use one shared component in both card types; Requirements retains aggregate case evidence while matching Cases interaction and presentation exactly. Final `just smoke` passed 121 focused Python tests, all annotator checks, type checking, 105 frontend tests, and production build. `just ci` additionally passed 188 non-Docker tests and 11 Docker tests before the final real Icarus smoke was blocked solely by a Docker Hub network timeout. Desktop 1450×900 and mobile 430×932 screenshots passed, the local campaign export was refreshed, all multi-lane findings were fixed and retested, and an independent final control review reported `No substantive findings.` No required work remains.
 
 ## Context and Orientation
 
@@ -208,3 +213,5 @@ Revision note (2026-08-04 09:32Z): Updated after Milestones 2 and 3 to record th
 Revision note (2026-08-04 10:09Z): Completed Milestone 4 after correctness, accessibility, scaling, impacted-lane, and independent control review. Recorded fixes for corpus memo churn, unstable callbacks, campaign-safe request retry/refetch, accessible loading state, focus movement/consumption, tree semantics, final smoke/build/export evidence, and the network-only `just ci` real-tool pull failure.
 
 Revision note (2026-08-04 10:15Z): Incorporated the delayed initial design-path report after completion. Its implementation recommendations were already covered; removed the remaining nested-article semantics in observation rows and recorded the evidence without changing behavior.
+
+Revision note (2026-08-04 10:20Z): Added the requested exact Tool evidence row symmetry. Recorded the shared component decision, preserved different Requirement aggregate versus Case observation bodies, and removed the obsolete Requirements-only profile styling.
