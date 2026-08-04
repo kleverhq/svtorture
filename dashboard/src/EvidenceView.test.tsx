@@ -260,6 +260,9 @@ describe("EvidenceView", () => {
     const summary = screen.getByText(/Tool evidence/);
     fireEvent.click(summary);
     expect(await screen.findAllByText(/temporary outage/)).toHaveLength(2);
+    const failureMessage = document.querySelector(".tool-evidence-message");
+    expect(failureMessage?.textContent).toContain("temporary outage");
+    expect(failureMessage?.classList.contains("empty-state")).toBe(false);
     fireEvent.click(summary);
     await waitFor(() => expect(summary.closest("details")?.open).toBe(false));
     fireEvent.click(summary);

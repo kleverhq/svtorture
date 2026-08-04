@@ -22,6 +22,7 @@ This work does not change case metadata, case execution, conformance judgments, 
 - [x] (2026-08-04 09:32Z) Milestone 3: aligned Cases with Requirements card, tree, global-scroll, sticky, responsive, tag, and coverage presentation; removed the obsolete split-workspace hook and styles; passed 73 focused tests, type checking, production build, refreshed campaign export, and desktop/mobile visual checks.
 - [x] (2026-08-04 10:09Z) Milestone 4: passed final `just smoke` with 121 focused Python and 105 frontend tests, type checking, production build and refreshed export; passed 188 non-Docker and 11 Docker tests in `just ci` before its network-only real-tool pull failure; completed correctness, accessibility, scaling, impacted-lane, and independent control reviews with every substantive finding fixed and no final findings.
 - [x] (2026-08-04 10:20Z) Follow-up: extracted one shared `ToolEvidenceRow` and migrated Requirements from its bespoke profile buttons to the same expandable profile/status/reason rows used by Cases, retaining aggregated requirement semantics and the supporting-case navigation action.
+- [x] (2026-08-04 10:25Z) Follow-up: replaced full-panel `empty-state` treatment inside Tool evidence with a compact inline message for unavailable, loading, and absent detailed results.
 
 ## Surprises & Discoveries
 
@@ -215,3 +216,5 @@ Revision note (2026-08-04 10:09Z): Completed Milestone 4 after correctness, acce
 Revision note (2026-08-04 10:15Z): Incorporated the delayed initial design-path report after completion. Its implementation recommendations were already covered; removed the remaining nested-article semantics in observation rows and recorded the evidence without changing behavior.
 
 Revision note (2026-08-04 10:20Z): Added the requested exact Tool evidence row symmetry. Recorded the shared component decision, preserved different Requirement aggregate versus Case observation bodies, and removed the obsolete Requirements-only profile styling.
+
+Revision note (2026-08-04 10:25Z): Reduced Tool evidence absence/loading messages from the global large empty-state presentation to a compact local line while retaining explicit evidence-state wording.

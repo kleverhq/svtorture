@@ -567,7 +567,7 @@ const CaseCard = memo(function CaseCard({
                     : ""}
             </p>
             {detail?.error && (
-              <p className="empty-state">
+              <p className="tool-evidence-message">
                 Evidence unavailable: {detail.error}. Close and reopen this section to retry.
               </p>
             )}
@@ -590,11 +590,17 @@ const CaseCard = memo(function CaseCard({
                     {result ? (
                       <ObservationDetail result={result} tool={tool} />
                     ) : detail?.error ? (
-                      <p className="empty-state">Detailed evidence unavailable.</p>
+                      <p className="tool-evidence-message">
+                        Detailed evidence unavailable.
+                      </p>
                     ) : compactResult && loadCaseEvidence && !detail?.results ? (
-                      <p className="empty-state">Loading detailed evidence…</p>
+                      <p className="tool-evidence-message">
+                        Loading detailed evidence…
+                      </p>
                     ) : (
-                      <p className="empty-state">No detailed result was recorded.</p>
+                      <p className="tool-evidence-message">
+                        No detailed result was recorded.
+                      </p>
                     )}
                   </ToolEvidenceRow>
                 );
