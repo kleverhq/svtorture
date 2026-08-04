@@ -98,17 +98,17 @@ export function Filters({
   const requirementTags = choices(
     (dataset?.requirements ?? []).flatMap((requirement) => requirement.tags),
   );
-  const tags = choices([
-    ...requirementTags,
-    ...(dataset?.cases ?? []).flatMap((testCase) => testCase.tags),
-  ]);
-  const selectedRequirementTags = filterValueList(filters.requirementTags);
-  const requirementTagCounts = new Map(
-    requirementTags.map((tag) => [
+  const caseTags = choices(
+    (dataset?.cases ?? []).flatMap((testCase) => testCase.tags),
+  );
+  const tagCorpus = mode === "cases" ? dataset?.cases ?? [] : dataset?.requirements ?? [];
+  const tagChoices = mode === "cases" ? caseTags : requirementTags;
+  const tagField = mode === "cases" ? "caseTags" : "requirementTags";
+  const selectedTags = filterValueList(filters[tagField]);
+  const tagCounts = new Map(
+    tagChoices.map((tag) => [
       tag,
-      (dataset?.requirements ?? []).filter((requirement) =>
-        requirement.tags.includes(tag),
-      ).length,
+      tagCorpus.filter((item) => item.tags.includes(tag)).length,
     ]),
   );
   const scopedResults =
@@ -377,34 +377,35 @@ export function Filters({
         </div>
       )}
 
-      {mode === "requirements" && requirementTags.length > 0 && (
-        <details className="filters__tag-cloud">
-          <summary>
-            Tags
-            {selectedRequirementTags.length > 0 && (
-              <span>{selectedRequirementTags.length} selected</span>
-            )}
-          </summary>
-          <div role="group" aria-label="Requirement tags">
-            {requirementTags.map((tag) => (
-              <button
-                type="button"
-                className="filter-chip"
-                aria-pressed={selectedRequirementTags.includes(tag)}
-                key={tag}
-                onClick={() =>
-                  update(
-                    "requirementTags",
-                    toggleFilterValue(filters.requirementTags, tag),
-                  )
-                }
-              >
-                {tag} <b>{requirementTagCounts.get(tag)}</b>
-              </button>
-            ))}
-          </div>
-        </details>
-      )}
+      {(mode === "requirements" || mode === "cases") &&
+        tagChoices.length > 0 && (
+          <details className="filters__tag-cloud">
+            <summary>
+              Tags
+              {selectedTags.length > 0 && (
+                <span>{selectedTags.length} selected</span>
+              )}
+            </summary>
+            <div
+              role="group"
+              aria-label={mode === "cases" ? "Case tags" : "Requirement tags"}
+            >
+              {tagChoices.map((tag) => (
+                <button
+                  type="button"
+                  className="filter-chip"
+                  aria-pressed={selectedTags.includes(tag)}
+                  key={tag}
+                  onClick={() =>
+                    update(tagField, toggleFilterValue(filters[tagField], tag))
+                  }
+                >
+                  {tag} <b>{tagCounts.get(tag)}</b>
+                </button>
+              ))}
+            </div>
+          </details>
+        )}
 
       {mode === "cases" && (
         <details className="filters__advanced" ref={advancedFiltersRef}>
@@ -492,18 +493,6 @@ export function Filters({
                   <option value="">Any</option>
                   <option value="with-cases">With cases</option>
                   <option value="without-cases">Without cases</option>
-                </select>
-              </label>
-              <label>
-                <span>Tag</span>
-                <select
-                  value={filters.tag}
-                  onChange={(event) => update("tag", event.target.value)}
-                >
-                  <option value="">Any</option>
-                  {tags.map((tag) => (
-                    <option key={tag}>{tag}</option>
-                  ))}
                 </select>
               </label>
               <label>

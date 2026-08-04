@@ -114,6 +114,23 @@ describe("Filters", () => {
     expect(screen.getByText("2 selected")).toBeTruthy();
   });
 
+  it("uses a multi-select Case tag cloud instead of the legacy Tag select", () => {
+    render(<FilterHarness mode="cases" />);
+
+    fireEvent.click(screen.getByText("Tags"));
+    const cloud = within(screen.getByRole("group", { name: "Case tags" }));
+    const copyOut = cloud.getByRole("button", { name: /copy-out/ });
+    const output = cloud.getByRole("button", { name: /output/ });
+    fireEvent.click(copyOut);
+    fireEvent.click(output);
+
+    expect(copyOut.getAttribute("aria-pressed")).toBe("true");
+    expect(output.getAttribute("aria-pressed")).toBe("true");
+    fireEvent.click(screen.getByText("Advanced filters"));
+    expect(screen.queryByLabelText("Tag")).toBeNull();
+    expect(screen.getByLabelText("Phase")).toBeTruthy();
+  });
+
   it("opens Advanced filters for an exact Requirement on Cases", () => {
     const dataset = makeTestDataset();
     const requirement = dataset.requirements[0];

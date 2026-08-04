@@ -17,7 +17,7 @@ This work does not change case metadata, case execution, conformance judgments, 
 ## Progress
 
 - [x] (2026-08-04 09:05Z) Inspected the current selected-case list/detail path, Requirements tree/card path, filters, URL state, corpus summary, styles, and tests; resolved the intended symmetric Cases behavior in this plan.
-- [ ] Milestone 1: share the hierarchy presentation and add URL-backed Cases tag and section filtering without regressing Requirements or advanced Cases filters.
+- [x] (2026-08-04 09:17Z) Milestone 1: extracted the complete hierarchy presentation and tone logic into `StandardTree`, migrated Requirements without behavior changes, added canonical URL-backed Cases tags with AND semantics and cross-corpus isolation, replaced the legacy Cases Tag select with the emphasized cloud, and passed 60 focused tests plus type checking.
 - [ ] Milestone 2: replace the selected-case inspector with scalable compact case cards while preserving sources, relationships, detailed evidence, and direct links.
 - [ ] Milestone 3: align coverage wording, coverage tones, sticky/global scrolling, card styling, accessibility, and responsive behavior.
 - [ ] Milestone 4: run focused and repository-wide validation, independent review, production export, visual checks, and completion audit.
@@ -72,7 +72,7 @@ This work does not change case metadata, case execution, conformance judgments, 
 
 ## Outcomes & Retrospective
 
-Implementation has not started. The expected outcome is a complete Cases tree and compact-card browser with no loss of advanced filtering, source inspection, requirement navigation, evidence detail, direct links, or responsive accessibility. This section will record test counts, visual evidence, review findings, and remaining gaps after each milestone.
+Milestone 1 is complete. Requirements now consumes a corpus-neutral shared `StandardTree`, and Cases has an independently URL-backed multi-tag cloud while all non-tag Advanced filters remain intact. Sixty focused tests and frontend type checking pass. The Cases body still uses the old selected-list inspector; Milestone 2 will connect the shared tree and replace that inspector with compact cards without losing detail behavior.
 
 ## Context and Orientation
 
@@ -186,3 +186,5 @@ At the end of Milestone 1, `Filters` in `dashboard/src/model.ts` contains `caseT
 At the end of Milestone 2, `EvidenceView` accepts `allCases`, `standardSections`, `selectedSections`, `onSelectedSectionsChange`, `selectedTags`, and `onToggleTag` in addition to its existing campaign/navigation/evidence inputs. It renders every section-filtered card and uses `selectedCaseId` only as a deep-link/navigation target, not as permission to hide other cards. Detailed evidence loads only from a user-opened card disclosure.
 
 Revision note (2026-08-04 09:05Z): Initial Cases redesign plan created after inspecting the completed Requirements browser and current Cases inspector. It resolves hierarchy placement, shared navigation, tag isolation, retained advanced filters, compact card content, lazy evidence loading, coverage wording, sticky behavior, validation, and recovery before implementation begins.
+
+Revision note (2026-08-04 09:17Z): Updated after Milestone 1 to record the shared tree extraction, Requirements migration, canonical Cases tag field, AND filtering, removal of the superseded single-tag control, cross-corpus isolation, and focused validation evidence.

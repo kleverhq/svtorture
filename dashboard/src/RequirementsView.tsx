@@ -20,10 +20,8 @@ import {
   buildSectionTree,
   decodeSectionSelection,
   sectionContains,
-  sectionSelectionState,
-  toggleSectionSelection,
-  type RequirementSectionNode,
 } from "./requirementHierarchy";
+import { StandardTree, standardTreeTone } from "./StandardTree";
 import { StatusBadge } from "./StatusBadge";
 import type {
   Campaign,
@@ -64,46 +62,11 @@ interface ProfileEvidence {
   reason: string;
 }
 
-type TreeTone = "red" | "yellow" | "green" | "gray";
-
 const EMPTY_CASES: CaseDefinition[] = [];
 const EMPTY_EVIDENCE: ProfileEvidence[] = [];
 
-const TREE_TONE_LABELS: Record<TreeTone, string> = {
-  red: "Failing or infrastructure error",
-  yellow: "Unclear",
-  green: "Passing",
-  gray: "Not evaluated or not applicable",
-};
-
-const TREE_TONE_SYMBOLS: Record<TreeTone, string> = {
-  red: "✕",
-  yellow: "!",
-  green: "✓",
-  gray: "–",
-};
-
-const TREE_TONE_PRIORITY: Record<TreeTone, number> = {
-  gray: 0,
-  green: 1,
-  yellow: 2,
-  red: 3,
-};
-
-function mergeTreeTone(left: TreeTone | undefined, right: TreeTone): TreeTone {
-  if (!left || TREE_TONE_PRIORITY[right] > TREE_TONE_PRIORITY[left]) return right;
-  return left;
-}
-
-export function requirementTreeTone(statuses: Status[]): TreeTone {
-  let tone: TreeTone = "gray";
-  for (const status of statuses) {
-    const group = statusGroup(status);
-    if (group === "fail" || group === "infra") return "red";
-    if (group === "unclear") tone = mergeTreeTone(tone, "yellow");
-    else if (group === "pass") tone = mergeTreeTone(tone, "green");
-  }
-  return tone;
+export function requirementTreeTone(statuses: Status[]) {
+  return standardTreeTone(statuses);
 }
 
 function fallbackSections(requirements: Requirement[]): StandardSection[] {
@@ -118,131 +81,11 @@ function fallbackSections(requirements: Requirement[]): StandardSection[] {
   return [...sections.values()];
 }
 
-function countsBySection(
-  requirements: Requirement[],
-  sections: ReadonlySet<string>,
-): Map<string, number> {
-  const counts = new Map<string, number>();
-  for (const requirement of requirements) {
-    const parts = requirement.clause.split(".");
-    for (let length = 1; length <= parts.length; length += 1) {
-      const clause = parts.slice(0, length).join(".");
-      if (sections.has(clause)) counts.set(clause, (counts.get(clause) ?? 0) + 1);
-    }
-  }
-  return counts;
-}
-
 function applicabilityLabel(status: string): string {
   return status
     .split("-")
     .map((part) => `${part.slice(0, 1).toUpperCase()}${part.slice(1)}`)
     .join(" ");
-}
-
-interface SectionTreeItemProps {
-  node: RequirementSectionNode;
-  expanded: ReadonlySet<string>;
-  selected: ReadonlySet<string>;
-  totalCounts: ReadonlyMap<string, number>;
-  visibleCounts: ReadonlyMap<string, number>;
-  tones: ReadonlyMap<string, TreeTone>;
-  onToggleExpanded: (clause: string) => void;
-  onToggleSelected: (clause: string, checked: boolean) => void;
-  onNavigate: (clause: string) => void;
-}
-
-function SectionTreeItem({
-  node,
-  expanded,
-  selected,
-  totalCounts,
-  visibleCounts,
-  tones,
-  onToggleExpanded,
-  onToggleSelected,
-  onNavigate,
-}: SectionTreeItemProps) {
-  const hasChildren = node.children.length > 0;
-  const isExpanded = expanded.has(node.clause);
-  const state = sectionSelectionState(node, selected);
-  const visible = visibleCounts.get(node.clause) ?? 0;
-  const total = totalCounts.get(node.clause) ?? 0;
-  const tone = tones.get(node.clause);
-  return (
-    <li className="requirement-toc__item">
-      <div
-        className={`requirement-toc__row${tone ? ` requirement-toc__row--${tone}` : ""}${visible === 0 ? " is-empty" : ""}`}
-      >
-        {hasChildren ? (
-          <button
-            type="button"
-            className="requirement-toc__toggle"
-            aria-label={`${isExpanded ? "Collapse" : "Expand"} ${node.clause} ${node.title}`}
-            aria-expanded={isExpanded}
-            onClick={() => onToggleExpanded(node.clause)}
-          >
-            {isExpanded ? "▾" : "▸"}
-          </button>
-        ) : (
-          <span className="requirement-toc__toggle" aria-hidden="true" />
-        )}
-        <input
-          type="checkbox"
-          aria-label={`Select ${node.clause} ${node.title}`}
-          checked={state.checked}
-          ref={(element) => {
-            if (element) element.indeterminate = state.indeterminate;
-          }}
-          onChange={(event) => onToggleSelected(node.clause, event.target.checked)}
-        />
-        <button
-          type="button"
-          className="requirement-toc__link"
-          onClick={() => onNavigate(node.clause)}
-          disabled={visible === 0}
-        >
-          <code>{node.clause}</code>
-          <span>{node.title}</span>
-        </button>
-        {tone ? (
-          <span
-            className="requirement-toc__status"
-            aria-label={`Section result: ${TREE_TONE_LABELS[tone]}`}
-            title={TREE_TONE_LABELS[tone]}
-          >
-            {TREE_TONE_SYMBOLS[tone]}
-          </span>
-        ) : (
-          <span className="requirement-toc__status" aria-hidden="true" />
-        )}
-        <span
-          className="requirement-toc__count"
-          aria-label={`${visible} of ${total} requirements`}
-        >
-          {visible}/{total}
-        </span>
-      </div>
-      {hasChildren && isExpanded && (
-        <ul>
-          {node.children.map((child) => (
-            <SectionTreeItem
-              key={child.clause}
-              node={child}
-              expanded={expanded}
-              selected={selected}
-              totalCounts={totalCounts}
-              visibleCounts={visibleCounts}
-              tones={tones}
-              onToggleExpanded={onToggleExpanded}
-              onToggleSelected={onToggleSelected}
-              onNavigate={onNavigate}
-            />
-          ))}
-        </ul>
-      )}
-    </li>
-  );
 }
 
 function LazyDetails({
@@ -461,7 +304,6 @@ export function RequirementsView({
   onInspectCase,
   onInspectEvidence,
 }: RequirementsProps) {
-  const [expanded, setExpanded] = useState<Set<string>>(() => new Set());
   const cardRefs = useRef(new Map<string, HTMLElement>());
   const navigationScrollId = useRef("");
   const sections = useMemo(
@@ -470,10 +312,6 @@ export function RequirementsView({
         ? standardSections
         : fallbackSections(allRequirements),
     [allRequirements, standardSections],
-  );
-  const sectionClauses = useMemo(
-    () => new Set(sections.map((section) => section.clause)),
-    [sections],
   );
   const tree = useMemo(() => buildSectionTree(sections), [sections]);
   const selected = useMemo(
@@ -555,33 +393,22 @@ export function RequirementsView({
     }
     return evidence;
   }, [evidenceCasesByRequirement, profiles, requirements, resultMap]);
-  const totalCounts = useMemo(
-    () => countsBySection(allRequirements, sectionClauses),
-    [allRequirements, sectionClauses],
+  const treeItems = useMemo(
+    () =>
+      requirements.map((requirement) => ({
+        clause: requirement.clause,
+        statuses: toolFilter
+          ? (evidenceByRequirement.get(requirement.id) ?? []).flatMap(
+              (item) => item.statuses,
+            )
+          : undefined,
+      })),
+    [evidenceByRequirement, requirements, toolFilter],
   );
-  const visibleCounts = useMemo(
-    () => countsBySection(requirements, sectionClauses),
-    [requirements, sectionClauses],
+  const totalClauses = useMemo(
+    () => allRequirements.map((requirement) => requirement.clause),
+    [allRequirements],
   );
-  const tones = useMemo(() => {
-    const values = new Map<string, TreeTone>();
-    if (!toolFilter) return values;
-    for (const requirement of requirements) {
-      const tone = requirementTreeTone(
-        (evidenceByRequirement.get(requirement.id) ?? []).flatMap(
-          (item) => item.statuses,
-        ),
-      );
-      const parts = requirement.clause.split(".");
-      for (let length = 1; length <= parts.length; length += 1) {
-        const clause = parts.slice(0, length).join(".");
-        if (sectionClauses.has(clause)) {
-          values.set(clause, mergeTreeTone(values.get(clause), tone));
-        }
-      }
-    }
-    return values;
-  }, [evidenceByRequirement, requirements, sectionClauses, toolFilter]);
   const visibleRequirements = useMemo(
     () =>
       selected.size === 0
@@ -598,19 +425,6 @@ export function RequirementsView({
 
   useEffect(() => {
     if (!selectedRequirement) return;
-    const ancestors = selectedRequirement.clause.split(".");
-    setExpanded((current) => {
-      let changed = false;
-      const next = new Set(current);
-      for (let length = 1; length < ancestors.length; length += 1) {
-        const ancestor = ancestors.slice(0, length).join(".");
-        if (!next.has(ancestor)) {
-          next.add(ancestor);
-          changed = true;
-        }
-      }
-      return changed ? next : current;
-    });
     if (navigationScrollId.current === selectedRequirement.id) {
       navigationScrollId.current = "";
       return;
@@ -637,59 +451,20 @@ export function RequirementsView({
       behavior: reduceMotion ? "auto" : "smooth",
     });
   };
-  const toggleExpanded = (clause: string) => {
-    setExpanded((current) => {
-      const next = new Set(current);
-      if (next.has(clause)) next.delete(clause);
-      else next.add(clause);
-      return next;
-    });
-  };
-  const toggleSelected = (clause: string, checked: boolean) => {
-    onSelectedSectionsChange(
-      toggleSectionSelection(selectedSections, clause, checked, tree),
-    );
-  };
-
   return (
     <section className="panel requirements" aria-label="Requirement evidence">
       <div className="requirements-workspace">
-        <nav className="requirement-toc" aria-label="Standard table of contents">
-          <header className="requirement-toc__header">
-            <div>
-              <span className="section-label">IEEE Std 1800-2023</span>
-              <h3>Table of contents</h3>
-            </div>
-            <span>{requirements.length} matching</span>
-          </header>
-          <label className="requirement-toc__all">
-            <input
-              type="checkbox"
-              checked={selected.size === 0}
-              onChange={() => onSelectedSectionsChange([])}
-            />
-            <strong>All</strong>
-            <span>
-              {requirements.length}/{allRequirements.length}
-            </span>
-          </label>
-          <ul aria-label="Standard sections">
-            {tree.map((node) => (
-              <SectionTreeItem
-                key={node.clause}
-                node={node}
-                expanded={expanded}
-                selected={selected}
-                totalCounts={totalCounts}
-                visibleCounts={visibleCounts}
-                tones={tones}
-                onToggleExpanded={toggleExpanded}
-                onToggleSelected={toggleSelected}
-                onNavigate={navigateToSection}
-              />
-            ))}
-          </ul>
-        </nav>
+        <StandardTree
+          sections={sections}
+          totalClauses={totalClauses}
+          visibleItems={treeItems}
+          selectedSections={selectedSections}
+          onSelectedSectionsChange={onSelectedSectionsChange}
+          onNavigate={navigateToSection}
+          itemNoun="requirement"
+          autoExpandClause={selectedRequirement?.clause}
+          showTones={Boolean(toolFilter)}
+        />
 
         <div className="requirement-cards">
           <header className="requirement-cards__header">

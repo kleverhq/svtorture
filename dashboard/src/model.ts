@@ -113,6 +113,7 @@ export interface Filters {
   casePresence: string;
   tag: string;
   requirementTags: string;
+  caseTags: string;
   requirement: string;
   tool: string;
   profile: string;
@@ -140,9 +141,18 @@ export function requirementsQuickFilters(filters: Filters): Filters {
     expectation: "",
     casePresence: "",
     tag: "",
+    caseTags: "",
     requirement: "",
     status: "",
     reason: "",
+  };
+}
+
+export function casesFilters(filters: Filters): Filters {
+  return {
+    ...filters,
+    tag: "",
+    requirementTags: "",
   };
 }
 
@@ -167,6 +177,7 @@ export const EMPTY_FILTERS: Filters = {
   casePresence: "",
   tag: "",
   requirementTags: "",
+  caseTags: "",
   requirement: "",
   tool: "",
   profile: "",
@@ -336,6 +347,7 @@ export function filtersFromSearch(search: string): Filters {
     }
   }
   result.requirementTags = filterValueList(result.requirementTags).join(",");
+  result.caseTags = filterValueList(result.caseTags).join(",");
   return result;
 }
 
@@ -602,6 +614,7 @@ export function filterCorpus(
   }
   const needle = filters.search.toLocaleLowerCase();
   const requirementTags = filterValueList(filters.requirementTags);
+  const caseTags = filterValueList(filters.caseTags);
   const candidateResultsByCase = new Map<string, Result[]>();
   for (const result of resultMap.values()) {
     if (
@@ -654,6 +667,7 @@ export function filterCorpus(
         )) &&
       (!filters.phase || testCase.target_phase === filters.phase) &&
       (!filters.expectation || testCase.expectation === filters.expectation) &&
+      caseTags.every((tag) => testCase.tags.includes(tag)) &&
       (!filters.tag ||
         testCase.tags.includes(filters.tag) ||
         contextRequirements.some((requirement) =>

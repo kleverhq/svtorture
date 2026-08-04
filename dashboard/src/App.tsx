@@ -19,6 +19,7 @@ import { TrendsView } from "./TrendsView";
 import { RequirementsView } from "./RequirementsView";
 import {
   EMPTY_FILTERS,
+  casesFilters,
   filterCorpus,
   filterValueList,
   filtersFromSearch,
@@ -364,7 +365,7 @@ export default function App() {
       : filters;
   const corpusFilters = useMemo(() => {
     if (view === "matrix") return requirementsQuickFilters(filters);
-    if (view === "evidence") return { ...filters, requirementTags: "" };
+    if (view === "evidence") return casesFilters(filters);
     return filters;
   }, [corpusFilterDependency, view]);
   const selectedCampaign = useMemo(

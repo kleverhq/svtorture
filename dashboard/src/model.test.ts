@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 import {
   aggregateStatus,
   campaignsInDateRange,
+  casesFilters,
   changedCaseKeys,
   compareCampaigns,
   EMPTY_FILTERS,
@@ -85,6 +86,50 @@ describe("Requirements filters", () => {
   });
 });
 
+describe("Cases filters", () => {
+  it("combines selected Case tags with AND semantics", () => {
+    const source = makeTestDataset();
+    const first = source.cases[0];
+    if (!first) throw new Error("incomplete test dataset");
+    const copyOutOnly = {
+      ...first,
+      id: "ch13-copy-out-only",
+      tags: ["copy-out"],
+    };
+    const tagged = { ...source, cases: [first, copyOutOnly] };
+
+    expect(
+      filterCorpus(
+        tagged,
+        { ...EMPTY_FILTERS, caseTags: "copy-out,output" },
+        tagged.campaigns[0],
+      ).cases.map((testCase) => testCase.id),
+    ).toEqual([first.id]);
+    expect(
+      filterCorpus(
+        tagged,
+        { ...EMPTY_FILTERS, caseTags: "copy-out" },
+        tagged.campaigns[0],
+      ).cases,
+    ).toHaveLength(2);
+  });
+
+  it("ignores corpus-specific Requirement tags and the legacy tag field", () => {
+    const projected = casesFilters({
+      ...EMPTY_FILTERS,
+      requirementTags: "requirement-only",
+      tag: "legacy",
+      caseTags: "copy-out",
+      search: "case search",
+    });
+
+    expect(projected.requirementTags).toBe("");
+    expect(projected.tag).toBe("");
+    expect(projected.caseTags).toBe("copy-out");
+    expect(projected.search).toBe("case search");
+  });
+});
+
 describe("URL-backed filters", () => {
   it("round-trips meaningful filter state", () => {
     const value = {
@@ -101,6 +146,7 @@ describe("URL-backed filters", () => {
       requirementId: "SV-2023-13-OUTPUT-COPYOUT",
       sections: "13.5,=14",
       requirementTags: "copy-out,output",
+      caseTags: "runtime,simulation",
       changed: true,
       disagreement: true,
     };
@@ -109,14 +155,15 @@ describe("URL-backed filters", () => {
     expect(filtersFromSearch(encoded)).toEqual(value);
   });
 
-  it("canonicalizes Requirement tags from direct URLs", () => {
+  it("canonicalizes corpus tags from direct URLs", () => {
     const parsed = filtersFromSearch(
-      "?view=matrix&requirementTags=output%2Ccopy-out%2Coutput",
+      "?view=evidence&requirementTags=output%2Ccopy-out%2Coutput&caseTags=simulation%2Cruntime%2Csimulation",
     );
     expect(parsed.requirementTags).toBe("copy-out,output");
-    expect(filtersToSearch(parsed, "matrix")).toContain(
-      "requirementTags=copy-out%2Coutput",
-    );
+    expect(parsed.caseTags).toBe("runtime,simulation");
+    const encoded = filtersToSearch(parsed, "evidence");
+    expect(encoded).toContain("requirementTags=copy-out%2Coutput");
+    expect(encoded).toContain("caseTags=runtime%2Csimulation");
   });
 
   it("round-trips strict trend state and rejects unknown values", () => {
