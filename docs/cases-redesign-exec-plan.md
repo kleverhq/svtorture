@@ -45,6 +45,9 @@ This work does not change case metadata, case execution, conformance judgments, 
 - Observation: Full `just ci` reached the final real-tool smoke after all deterministic, frontend, build, and Docker-fake gates passed, but Docker Hub token retrieval timed out.
   Evidence: `docker pull --platform=linux/amd64 ubuntu:24.04` failed with `unable to decode token response: context cancellation while reading body`; this is an external network failure after 188 non-Docker tests, 105 frontend tests, production build, and 11 Docker tests passed.
 
+- Observation: Moving observations inside semantic case-card articles made the old observation `<article>` elements nested articles without independent headings.
+  Evidence: The delayed design-path research identified the semantic nesting; observations now use neutral `<div className="observation">` containers while preserving all content and styles.
+
 ## Decision Log
 
 - Decision: Use each case's primary requirement clause as its single hierarchy location. Related requirements remain visible relationships but do not place one case in multiple branches.
@@ -203,3 +206,5 @@ Revision note (2026-08-04 09:17Z): Updated after Milestone 1 to record the share
 Revision note (2026-08-04 09:32Z): Updated after Milestones 2 and 3 to record the all-card Cases browser, primary-clause hierarchy placement, lazy per-card evidence, retained source and relationship behavior, shared coverage wording/tones, obsolete split-layout deletion, focused test/build evidence, and desktop/mobile visual checks.
 
 Revision note (2026-08-04 10:09Z): Completed Milestone 4 after correctness, accessibility, scaling, impacted-lane, and independent control review. Recorded fixes for corpus memo churn, unstable callbacks, campaign-safe request retry/refetch, accessible loading state, focus movement/consumption, tree semantics, final smoke/build/export evidence, and the network-only `just ci` real-tool pull failure.
+
+Revision note (2026-08-04 10:15Z): Incorporated the delayed initial design-path report after completion. Its implementation recommendations were already covered; removed the remaining nested-article semantics in observation rows and recorded the evidence without changing behavior.

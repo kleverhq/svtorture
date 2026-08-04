@@ -198,7 +198,7 @@ function ObservationDetail({
         </p>
       )}
       {result.observations.map((observation) => (
-        <article className="observation" key={observation.stage_id}>
+        <div className="observation" key={observation.stage_id}>
           <div className="observation__facts">
             <strong>{observation.stage_id}</strong>
             <span>through {observation.attempted_through_phase}</span>
@@ -231,7 +231,7 @@ function ObservationDetail({
               </details>
             );
           })}
-        </article>
+        </div>
       ))}
       {reproduce && (
         <div className="reproduce">
