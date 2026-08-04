@@ -294,6 +294,43 @@ describe("App overview navigation", () => {
     });
   });
 
+  it("filters Cases by clickable tags with AND semantics", async () => {
+    const dataset = makeTestDataset();
+    const original = dataset.cases[0];
+    if (!original) throw new Error("incomplete test dataset");
+    dataset.cases.push(
+      {
+        ...original,
+        id: "ch13-copy-out-case-tag",
+        title: "Copy-out case tag only",
+        tags: ["copy-out"],
+      },
+      {
+        ...original,
+        id: "ch13-output-case-tag",
+        title: "Output case tag only",
+        tags: ["output"],
+      },
+    );
+    window.history.replaceState(null, "", "/?view=evidence");
+    mockDataset(dataset);
+
+    render(<App />);
+    const originalCard = await screen.findByRole("article", {
+      name: `Case ${original.id}`,
+    });
+    fireEvent.click(within(originalCard).getByRole("button", { name: "copy-out" }));
+    expect(await screen.findAllByRole("article", { name: /^Case / })).toHaveLength(2);
+    fireEvent.click(within(originalCard).getByRole("button", { name: "output" }));
+
+    await waitFor(() => {
+      expect(screen.getAllByRole("article", { name: /^Case / })).toHaveLength(1);
+      const parameters = new URLSearchParams(window.location.search);
+      expect(parameters.get("caseTags")).toBe("copy-out,output");
+      expect(parameters.get("tag")).toBeNull();
+    });
+  });
+
   it("opens case details from a direct link", async () => {
     const dataset = makeTestDataset();
     const original = dataset.cases[0];
@@ -327,11 +364,14 @@ describe("App overview navigation", () => {
         "aria-selected",
       ),
     ).toBe("true");
-    expect(screen.getByRole("heading", { name: testCase.title })).toBeTruthy();
+    const linkedCard = screen
+      .getByRole("heading", { name: testCase.title })
+      .closest("article");
+    if (!linkedCard) throw new Error("missing linked Case card");
     expect((screen.getByLabelText("Campaign") as HTMLSelectElement).value).toBe(
       olderCampaign.id,
     );
-    expect(screen.getByRole("button", { name: "Copy link" })).toBeTruthy();
+    expect(within(linkedCard).getByRole("button", { name: "Copy link" })).toBeTruthy();
   });
 
   it("opens Cases with the clicked Overview tool profile selected", async () => {
@@ -469,7 +509,8 @@ describe("App overview navigation", () => {
     const caseDetail = caseHeading.closest("article");
     if (!caseDetail) throw new Error("missing Case detail");
     expect(caseHeading).toBeTruthy();
-    expect(within(caseDetail).getByText(original.summary)).toBeTruthy();
+    fireEvent.click(within(caseDetail).getByText(/Requirements/));
+    expect(await within(caseDetail).findByText(original.summary)).toBeTruthy();
     expect(within(caseDetail).getByText(related.summary)).toBeTruthy();
     expect(screen.queryByText(failingCase.title)).toBeNull();
     const requirementFilter = screen.getByLabelText(

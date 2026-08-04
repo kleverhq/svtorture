@@ -188,6 +188,8 @@ interface StandardTreeProps {
   onSelectedSectionsChange: (sections: string[]) => void;
   onNavigate: (clause: string) => void;
   itemNoun: string;
+  matchingCount?: number | undefined;
+  totalCount?: number | undefined;
   autoExpandClause?: string | undefined;
   showTones?: boolean | undefined;
 }
@@ -200,6 +202,8 @@ export function StandardTree({
   onSelectedSectionsChange,
   onNavigate,
   itemNoun,
+  matchingCount = visibleItems.length,
+  totalCount = totalClauses.length,
   autoExpandClause,
   showTones = false,
 }: StandardTreeProps) {
@@ -279,7 +283,7 @@ export function StandardTree({
           <span className="section-label">IEEE Std 1800-2023</span>
           <h3>Table of contents</h3>
         </div>
-        <span>{visibleItems.length} matching</span>
+        <span>{matchingCount} matching</span>
       </header>
       <label className="requirement-toc__all">
         <input
@@ -289,7 +293,7 @@ export function StandardTree({
         />
         <strong>All</strong>
         <span>
-          {visibleItems.length}/{totalClauses.length}
+          {matchingCount}/{totalCount}
         </span>
       </label>
       <ul aria-label="Standard sections">

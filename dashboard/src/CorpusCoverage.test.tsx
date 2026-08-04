@@ -109,6 +109,7 @@ describe("CorpusCoverage", () => {
     if (!summary) throw new Error("coverage disclosure is missing");
 
     expect(within(summary).getByText("100%")).toBeTruthy();
+    expect(within(summary).getByText("Requirements vs cases:")).toBeTruthy();
     expect(
       within(summary).queryByText("Standard anchors vs requirements:"),
     ).toBeNull();
@@ -125,5 +126,6 @@ describe("CorpusCoverage", () => {
     });
     expect(within(annex).getAllByText("—")).toHaveLength(2);
     expect(within(annex).getAllByText("0 / 0")).toHaveLength(2);
+    expect(annex.classList.contains("corpus-coverage__row--zero")).toBe(true);
   });
 });

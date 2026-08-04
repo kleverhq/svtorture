@@ -81,11 +81,11 @@ export function CorpusCoverage({ kind, metric }: CorpusCoverageProps) {
       </span>
       <details>
         <summary aria-describedby={formulaId}>
-          {kind === "requirements" && (
-            <span className="corpus-coverage__context">
-              Standard anchors vs requirements:
-            </span>
-          )}
+          <span className="corpus-coverage__context">
+            {kind === "requirements"
+              ? "Standard anchors vs requirements:"
+              : "Requirements vs cases:"}
+          </span>
           <span
             className="corpus-coverage__metric"
             title={formulas.coverage}
@@ -119,11 +119,7 @@ export function CorpusCoverage({ kind, metric }: CorpusCoverageProps) {
             <tbody>
               {metric.breakdown.map((part) => (
                 <tr
-                  className={
-                    kind === "requirements"
-                      ? `corpus-coverage__row--${coverageTone(part.coverage)}`
-                      : undefined
-                  }
+                  className={`corpus-coverage__row--${coverageTone(part.coverage)}`}
                   key={`${part.kind}:${part.id}`}
                 >
                   <th

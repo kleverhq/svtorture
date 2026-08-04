@@ -18,8 +18,8 @@ This work does not change case metadata, case execution, conformance judgments, 
 
 - [x] (2026-08-04 09:05Z) Inspected the current selected-case list/detail path, Requirements tree/card path, filters, URL state, corpus summary, styles, and tests; resolved the intended symmetric Cases behavior in this plan.
 - [x] (2026-08-04 09:17Z) Milestone 1: extracted the complete hierarchy presentation and tone logic into `StandardTree`, migrated Requirements without behavior changes, added canonical URL-backed Cases tags with AND semantics and cross-corpus isolation, replaced the legacy Cases Tag select with the emphasized cloud, and passed 60 focused tests plus type checking.
-- [ ] Milestone 2: replace the selected-case inspector with scalable compact case cards while preserving sources, relationships, detailed evidence, and direct links.
-- [ ] Milestone 3: align coverage wording, coverage tones, sticky/global scrolling, card styling, accessibility, and responsive behavior.
+- [x] (2026-08-04 09:32Z) Milestone 2: replaced the selected-case split inspector with the complete case hierarchy and all matching compact cards; preserved requirements, oracle/source viewing, statuses, observations, reproduction, campaign links, and direct links behind lazy disclosures; detailed evidence now fetches only when opened.
+- [x] (2026-08-04 09:32Z) Milestone 3: aligned Cases with Requirements card, tree, global-scroll, sticky, responsive, tag, and coverage presentation; removed the obsolete split-workspace hook and styles; passed 73 focused tests, type checking, production build, refreshed campaign export, and desktop/mobile visual checks.
 - [ ] Milestone 4: run focused and repository-wide validation, independent review, production export, visual checks, and completion audit.
 
 ## Surprises & Discoveries
@@ -33,8 +33,11 @@ This work does not change case metadata, case execution, conformance judgments, 
 - Observation: Cases already has a single tag selector inside Advanced filters, so adding a second tag control without removing or ignoring the first would create conflicting hidden filter state.
   Evidence: `dashboard/src/Filters.tsx` renders `<select value={filters.tag}>` only in Cases Advanced filters, and `filterCorpus()` applies it to requirement and case tags.
 
-- Observation: Detailed evidence can be fetched lazily per case, but the current selected-pane effect fetches immediately whenever selection changes.
-  Evidence: `EvidenceView` calls `loadCaseEvidence(selected.id)` from an effect. Rendering thousands of cards requires moving that fetch behind each card's Tool evidence disclosure.
+- Observation: Detailed evidence can be fetched lazily per case, but the former selected-pane effect fetched immediately whenever selection changed.
+  Evidence: The rewritten `CaseCard` keeps a per-card request guard and invokes `loadCaseEvidence(testCase.id)` only from the Tool evidence disclosure's opening callback; `EvidenceView.test.tsx` proves no request occurs before opening.
+
+- Observation: Once Cases adopted the Requirements workspace, `useSplitWorkspace.ts` and all `.case-list`, `.evidence-pane`, and `.evidence-workspace` styles had no consumers.
+  Evidence: Repository search after the rewrite returned no TypeScript/TSX references, so the hook and obsolete selectors were deleted rather than retained as dead compatibility code.
 
 ## Decision Log
 
@@ -72,7 +75,7 @@ This work does not change case metadata, case execution, conformance judgments, 
 
 ## Outcomes & Retrospective
 
-Milestone 1 is complete. Requirements now consumes a corpus-neutral shared `StandardTree`, and Cases has an independently URL-backed multi-tag cloud while all non-tag Advanced filters remain intact. Sixty focused tests and frontend type checking pass. The Cases body still uses the old selected-list inspector; Milestone 2 will connect the shared tree and replace that inspector with compact cards without losing detail behavior.
+Milestones 1–3 are complete. Requirements and Cases consume the same corpus-neutral `StandardTree`; Cases has an independently URL-backed multi-tag cloud and retains every non-tag Advanced filter. The old selected-list inspector is gone. All matching cases render as aligned compact cards with lazy Requirements, Oracle and sources, and Tool evidence sections; detailed evidence is fetched only on first opening. The Cases summary reads `Requirements vs cases:` and uses the shared threshold colors. Seventy-three focused tests, type checking, production build, refreshed campaign export, and 1450×900 desktop plus 430×932 mobile screenshots pass. Independent review and repository-wide validation remain in Milestone 4.
 
 ## Context and Orientation
 
@@ -188,3 +191,5 @@ At the end of Milestone 2, `EvidenceView` accepts `allCases`, `standardSections`
 Revision note (2026-08-04 09:05Z): Initial Cases redesign plan created after inspecting the completed Requirements browser and current Cases inspector. It resolves hierarchy placement, shared navigation, tag isolation, retained advanced filters, compact card content, lazy evidence loading, coverage wording, sticky behavior, validation, and recovery before implementation begins.
 
 Revision note (2026-08-04 09:17Z): Updated after Milestone 1 to record the shared tree extraction, Requirements migration, canonical Cases tag field, AND filtering, removal of the superseded single-tag control, cross-corpus isolation, and focused validation evidence.
+
+Revision note (2026-08-04 09:32Z): Updated after Milestones 2 and 3 to record the all-card Cases browser, primary-clause hierarchy placement, lazy per-card evidence, retained source and relationship behavior, shared coverage wording/tones, obsolete split-layout deletion, focused test/build evidence, and desktop/mobile visual checks.

@@ -352,6 +352,14 @@ export default function App() {
     () => filterValueList(filters.requirementTags),
     [filters.requirementTags],
   );
+  const selectedCaseTags = useMemo(
+    () => filterValueList(filters.caseTags),
+    [filters.caseTags],
+  );
+  const selectedSections = useMemo(
+    () => filters.sections.split(",").filter(Boolean),
+    [filters.sections],
+  );
   const corpusFilterDependency =
     view === "matrix"
       ? JSON.stringify([
@@ -435,6 +443,7 @@ export default function App() {
       ...current,
       sections: sections.join(","),
       requirementId: "",
+      caseId: "",
     }));
   }, []);
   const toggleRequirementTag = useCallback((tag: string) => {
@@ -442,6 +451,13 @@ export default function App() {
       ...current,
       requirementTags: toggleFilterValue(current.requirementTags, tag),
       requirementId: "",
+    }));
+  }, []);
+  const toggleCaseTag = useCallback((tag: string) => {
+    setFilters((current) => ({
+      ...current,
+      caseTags: toggleFilterValue(current.caseTags, tag),
+      caseId: "",
     }));
   }, []);
   const selectableCampaigns =
@@ -759,9 +775,7 @@ export default function App() {
               requirements={filtered.requirements}
               allRequirements={dataset.requirements}
               standardSections={dataset.standard_sections}
-              selectedSections={filters.sections
-                .split(",")
-                .filter(Boolean)}
+              selectedSections={selectedSections}
               onSelectedSectionsChange={changeSelectedSections}
               selectedTags={selectedRequirementTags}
               onToggleTag={toggleRequirementTag}
@@ -780,6 +794,12 @@ export default function App() {
             <EvidenceView
               requirements={dataset.requirements}
               cases={filtered.cases}
+              allCases={dataset.cases}
+              standardSections={dataset.standard_sections}
+              selectedSections={selectedSections}
+              onSelectedSectionsChange={changeSelectedSections}
+              selectedTags={selectedCaseTags}
+              onToggleTag={toggleCaseTag}
               campaign={campaign}
               toolFilter={filters.tool}
               profileFilter={filters.profile}

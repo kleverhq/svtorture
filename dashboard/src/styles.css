@@ -981,19 +981,11 @@ details summary {
   text-align: center;
 }
 
-.requirements-workspace,
-.evidence-workspace {
+.requirements-workspace {
   display: grid;
   min-width: 0;
-  align-items: start;
-}
-
-.requirements-workspace {
   grid-template-columns: minmax(300px, 0.8fr) minmax(0, 2.2fr);
-}
-
-.evidence-workspace {
-  grid-template-columns: minmax(320px, 1fr) minmax(0, 2fr);
+  align-items: start;
 }
 
 .requirement-toc {
@@ -1214,6 +1206,21 @@ button.requirement-toc__toggle,
   line-height: 1.35;
 }
 
+.case-card__description {
+  margin: 10px 0 0;
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  line-height: 1.5;
+}
+
+.case-card__definition {
+  padding: 2px 0 4px;
+}
+
+.case-card__definition .case-facts {
+  margin: 0;
+}
+
 .requirement-card__applicability,
 .requirement-card__tags {
   margin-top: 13px;
@@ -1431,95 +1438,6 @@ button.requirement-profile:hover {
   line-height: 1.4;
 }
 
-.case-list {
-  border-right: 1px solid var(--line);
-  background: var(--surface-subtle);
-}
-
-.case-list > button {
-  position: relative;
-  display: grid;
-  width: 100%;
-  min-width: 0;
-  gap: 3px;
-  padding: 10px 12px;
-  border: 0;
-  border-bottom: 1px solid var(--line);
-  color: var(--text);
-  background: transparent;
-  text-align: left;
-  cursor: pointer;
-}
-
-.case-list > button:hover {
-  background: var(--surface-hover);
-}
-
-.case-list > button.is-selected {
-  background: var(--surface-selected);
-  box-shadow: inset 3px 0 var(--accent);
-}
-
-.case-list > button strong,
-.case-list > button code {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.case-list > button strong {
-  font-size: 0.74rem;
-}
-
-.case-list > button code,
-.case-list__clause {
-  color: var(--text-muted);
-  font-size: 0.6rem;
-}
-
-.case-list__verdicts {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
-  margin-top: 3px;
-}
-
-.verdict-dot {
-  display: grid;
-  width: 18px;
-  height: 18px;
-  place-items: center;
-  border-radius: 4px;
-  font-size: 0.64rem;
-  font-weight: 700;
-}
-
-.evidence-pane {
-  min-width: 0;
-  overflow-x: hidden;
-  padding: 16px 18px 30px;
-}
-
-.evidence-pane__header {
-  display: flex;
-  align-items: start;
-  justify-content: space-between;
-  gap: 20px;
-}
-
-.evidence-pane__header h3 {
-  margin-bottom: 3px;
-  font-size: 1.25rem;
-}
-
-.evidence-pane__meta {
-  display: flex;
-  align-items: flex-end;
-  flex: 0 0 auto;
-  flex-direction: column;
-  gap: 7px;
-}
-
 .copy-link-button {
   min-width: 82px;
   min-height: 30px;
@@ -1535,29 +1453,6 @@ button.requirement-profile:hover {
 .copy-link-button[data-status="failed"] {
   color: var(--fail);
   border-color: var(--fail);
-}
-
-.evidence-pane__description {
-  max-width: 900px;
-  margin: 14px 0;
-  color: var(--text-secondary);
-  font-size: 0.8rem;
-  line-height: 1.55;
-}
-
-.tag-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
-  justify-content: end;
-}
-
-.tag-list span {
-  padding: 3px 6px;
-  border-radius: 4px;
-  color: var(--text-muted);
-  background: var(--surface-subtle);
-  font-size: 0.62rem;
 }
 
 .fact-grid {
@@ -2352,22 +2247,6 @@ footer {
     top: var(--content-sticky-top);
   }
 
-  .evidence-workspace {
-    height: var(
-      --split-workspace-height,
-      calc(100dvh - var(--content-sticky-top) - 16px)
-    );
-    min-height: 0;
-    align-items: stretch;
-  }
-
-  .case-list,
-  .evidence-pane {
-    min-height: 0;
-    overflow-y: auto;
-    overscroll-behavior-y: contain;
-    scrollbar-gutter: stable;
-  }
 }
 
 @media (max-width: 1200px) {
@@ -2392,14 +2271,12 @@ footer {
     position: static;
   }
 
-  .requirements-workspace,
-  .evidence-workspace {
+  .requirements-workspace {
     grid-template-columns: 1fr;
     height: auto;
   }
 
-  .requirement-toc,
-  .case-list {
+  .requirement-toc {
     border-right: 0;
     border-bottom: 1px solid var(--line);
   }
@@ -2596,26 +2473,13 @@ footer {
     padding: 8px;
   }
 
-  .evidence-pane {
-    padding-inline: 12px;
-  }
-
   .requirement-card {
     padding-inline: 12px;
   }
 
-  .requirement-card__header,
-  .evidence-pane__header {
+  .requirement-card__header {
     flex-direction: column;
     gap: 8px;
-  }
-
-  .evidence-pane__meta {
-    align-items: flex-start;
-  }
-
-  .tag-list {
-    justify-content: start;
   }
 
   .tool-judgments > details > summary {
@@ -2694,16 +2558,6 @@ footer {
   .overview-table th,
   .campaign-row__header {
     position: static;
-  }
-
-  .evidence-workspace {
-    grid-template-columns: 1fr;
-    height: auto;
-  }
-
-  .case-list {
-    border-right: 0;
-    border-bottom: 1px solid var(--line);
   }
 
   .requirement-toc {

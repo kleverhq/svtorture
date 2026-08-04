@@ -4,6 +4,7 @@ import {
   render,
   screen,
   waitFor,
+  within,
 } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
@@ -60,7 +61,7 @@ describe("EvidenceView", () => {
       />,
     );
 
-    expect(screen.getAllByText(/Annex A\.1/)).toHaveLength(2);
+    expect(screen.getByText(/Annex A\.1/)).toBeTruthy();
   });
 
   it("reveals the selected case initially and when selection changes", async () => {
@@ -74,10 +75,9 @@ describe("EvidenceView", () => {
     };
     dataset.cases.push(second);
     const scrollIntoView = vi.fn();
-    const scrollTo = vi.fn();
-    Object.defineProperties(HTMLElement.prototype, {
-      scrollIntoView: { configurable: true, value: scrollIntoView },
-      scrollTo: { configurable: true, value: scrollTo },
+    Object.defineProperty(HTMLElement.prototype, "scrollIntoView", {
+      configurable: true,
+      value: scrollIntoView,
     });
 
     const props = {
@@ -91,30 +91,18 @@ describe("EvidenceView", () => {
     };
     const view = render(<EvidenceView {...props} selectedCaseId={second.id} />);
 
-    await waitFor(() => {
-      expect(scrollIntoView).toHaveBeenCalledWith({
-        block: "nearest",
-        inline: "nearest",
-      });
-    });
+    await waitFor(() =>
+      expect(scrollIntoView).toHaveBeenCalledWith({ block: "start" }),
+    );
     expect(
       screen.getByRole("heading", { name: "Case selected from a deep link" }),
     ).toBeTruthy();
-    expect(scrollTo).toHaveBeenCalledWith({ top: 0 });
 
     scrollIntoView.mockReset();
-    scrollTo.mockReset();
-    view.rerender(
-      <EvidenceView {...props} cases={[second]} selectedCaseId={second.id} />,
-    );
-    await waitFor(() => expect(scrollIntoView).toHaveBeenCalledOnce());
-    expect(scrollTo).toHaveBeenCalledWith({ top: 0 });
-
-    scrollIntoView.mockReset();
-    scrollTo.mockReset();
     view.rerender(<EvidenceView {...props} selectedCaseId={first.id} />);
-    await waitFor(() => expect(scrollIntoView).toHaveBeenCalledOnce());
-    expect(scrollTo).toHaveBeenCalledWith({ top: 0 });
+    await waitFor(() =>
+      expect(scrollIntoView).toHaveBeenCalledWith({ block: "start" }),
+    );
   });
 
   it("copies the selected campaign in a case deep link", async () => {
@@ -150,7 +138,94 @@ describe("EvidenceView", () => {
     );
   });
 
-  it("opens embedded source and navigates back to its requirement", () => {
+  it("loads detailed evidence only after its disclosure opens", async () => {
+    const dataset = makeTestDataset();
+    const testCase = dataset.cases[0];
+    const campaign = dataset.campaigns[0];
+    if (!testCase || !campaign) throw new Error("incomplete test dataset");
+    const loadCaseEvidence = vi.fn().mockResolvedValue(campaign.results);
+
+    render(
+      <EvidenceView
+        cases={dataset.cases}
+        requirements={dataset.requirements}
+        campaign={campaign}
+        toolFilter=""
+        profileFilter=""
+        selectedCaseId=""
+        onSelectCase={() => undefined}
+        onInspectRequirement={() => undefined}
+        loadCaseEvidence={loadCaseEvidence}
+      />,
+    );
+
+    expect(loadCaseEvidence).not.toHaveBeenCalled();
+    fireEvent.click(screen.getByText(/Tool evidence/));
+    await waitFor(() =>
+      expect(loadCaseEvidence).toHaveBeenCalledWith(testCase.id),
+    );
+    expect(await screen.findByText("fake/simulator")).toBeTruthy();
+  });
+
+  it("connects case cards to hierarchy and tag actions", () => {
+    const dataset = makeTestDataset();
+    const firstCase = dataset.cases[0];
+    const firstRequirement = dataset.requirements[0];
+    if (!firstCase || !firstRequirement) {
+      throw new Error("incomplete test dataset");
+    }
+    const secondRequirement = {
+      ...firstRequirement,
+      id: "SV-2023-14-SECOND-CASE",
+      part: "14",
+      clause: "14.2",
+      summary: "A second case requirement",
+    };
+    const secondCase = {
+      ...firstCase,
+      id: "ch14-second-case",
+      title: "A second case card",
+      primary_requirement: secondRequirement.id,
+      tags: ["second"],
+    };
+    const changeSections = vi.fn();
+    const toggleTag = vi.fn();
+
+    render(
+      <EvidenceView
+        cases={[firstCase, secondCase]}
+        allCases={[firstCase, secondCase]}
+        requirements={[firstRequirement, secondRequirement]}
+        standardSections={[
+          { clause: "13", title: "Tasks and functions" },
+          { clause: "13.5", title: "Arguments" },
+          { clause: "14", title: "Clocking blocks" },
+          { clause: "14.2", title: "Clocking declarations" },
+        ]}
+        selectedSections={[]}
+        onSelectedSectionsChange={changeSections}
+        selectedTags={["copy-out"]}
+        onToggleTag={toggleTag}
+        campaign={dataset.campaigns[0]}
+        toolFilter=""
+        profileFilter=""
+        selectedCaseId=""
+        onSelectCase={() => undefined}
+        onInspectRequirement={() => undefined}
+      />,
+    );
+
+    expect(screen.getAllByRole("article", { name: /^Case / })).toHaveLength(2);
+    const firstCard = screen.getByRole("article", { name: `Case ${firstCase.id}` });
+    const copyOut = within(firstCard).getByRole("button", { name: "copy-out" });
+    expect(copyOut.getAttribute("aria-pressed")).toBe("true");
+    fireEvent.click(copyOut);
+    expect(toggleTag).toHaveBeenCalledWith("copy-out");
+    fireEvent.click(screen.getByLabelText(/Select 13 Tasks and functions/));
+    expect(changeSections).toHaveBeenCalledWith(["13"]);
+  });
+
+  it("opens embedded source and navigates back to its requirement", async () => {
     const dataset = makeTestDataset();
     const testCase = dataset.cases[0];
     const campaign = dataset.campaigns[0];
@@ -174,7 +249,8 @@ describe("EvidenceView", () => {
       />,
     );
 
-    const source = screen.getByRole("button", { name: "top.sv" });
+    fireEvent.click(screen.getByText(/Oracle and sources/));
+    const source = await screen.findByRole("button", { name: "top.sv" });
     expect(source.getAttribute("aria-expanded")).toBe("false");
     fireEvent.click(source);
     const viewer = screen.getByLabelText("Source top.sv");
@@ -201,9 +277,11 @@ describe("EvidenceView", () => {
     );
     expect(screen.queryByLabelText("Source top.sv")).toBeNull();
 
-    expect(screen.getByText("Target phase").parentElement?.textContent).toContain(
-      "simulate",
-    );
+    fireEvent.click(screen.getByText(/Tool evidence/));
+    fireEvent.click(await screen.findByText("fake/simulator"));
+    expect(
+      screen.getAllByText("Target phase").at(-1)?.parentElement?.textContent,
+    ).toContain("simulate");
     expect(screen.getByText("Evidence mode").parentElement?.textContent).toContain(
       "direct",
     );
@@ -211,13 +289,14 @@ describe("EvidenceView", () => {
       "simulate",
     );
 
+    fireEvent.click(screen.getByText(/Requirements/));
     fireEvent.click(
-      screen.getByRole("button", { name: /SV-2023-13-OUTPUT-COPYOUT/ }),
+      await screen.findByRole("button", { name: /SV-2023-13-OUTPUT-COPYOUT/ }),
     );
     expect(inspectRequirement).toHaveBeenCalledWith("SV-2023-13-OUTPUT-COPYOUT");
   });
 
-  it("shows unsupported tool capability simply as Not applicable", () => {
+  it("shows unsupported tool capability simply as Not applicable", async () => {
     const dataset = makeTestDataset();
     const campaign = dataset.campaigns[0];
     const result = campaign?.results[0];
@@ -241,12 +320,13 @@ describe("EvidenceView", () => {
       />,
     );
 
-    expect(screen.getByText("Not applicable")).toBeTruthy();
+    fireEvent.click(screen.getByText(/Tool evidence/));
+    expect(await screen.findByText("Not applicable")).toBeTruthy();
     expect(screen.queryByText("Not applicable · profile scope")).toBeNull();
     expect(screen.getByText("unsupported-phase")).toBeTruthy();
   });
 
-  it("shows cumulative evidence through a later phase", () => {
+  it("shows cumulative evidence through a later phase", async () => {
     const dataset = makeTestDataset();
     const testCase = dataset.cases[0];
     const campaign = dataset.campaigns[0];
@@ -292,7 +372,11 @@ describe("EvidenceView", () => {
       />,
     );
 
-    expect(screen.getByText("Target phase").parentElement?.textContent).toContain(
+    fireEvent.click(screen.getByText(/Tool evidence/));
+    fireEvent.click(await screen.findByText("fake/simulator"));
+    expect(
+      (await screen.findByText("Target phase")).parentElement?.textContent,
+    ).toContain(
       "parse",
     );
     expect(screen.getByText("Evidence mode").parentElement?.textContent).toContain(
@@ -304,7 +388,7 @@ describe("EvidenceView", () => {
     expect(screen.getByText("through elaborate")).toBeTruthy();
   });
 
-  it("does not navigate to malformed or untrusted source links", () => {
+  it("does not navigate to malformed or untrusted source links", async () => {
     const dataset = makeTestDataset();
     const testCase = dataset.cases[0];
     const campaign = dataset.campaigns[0];
@@ -326,8 +410,9 @@ describe("EvidenceView", () => {
       />,
     );
 
+    fireEvent.click(screen.getByText(/Oracle and sources/));
+    expect(await screen.findByText("top.sv · unavailable")).toBeTruthy();
     expect(screen.queryByRole("button", { name: "top.sv" })).toBeNull();
     expect(screen.queryByRole("link", { name: /top\.sv/ })).toBeNull();
-    expect(screen.getByText("top.sv · unavailable")).toBeTruthy();
   });
 });
