@@ -1,5 +1,6 @@
 import {
   memo,
+  useCallback,
   useEffect,
   useId,
   useMemo,
@@ -248,11 +249,13 @@ function LazyDetails({
   label,
   count,
   onOpen,
+  onOpenChange,
   renderContent,
 }: {
   label: string;
   count: number;
   onOpen?: (() => void) | undefined;
+  onOpenChange?: ((open: boolean) => void) | undefined;
   renderContent: () => ReactNode;
 }) {
   const [open, setOpen] = useState(false);
@@ -263,6 +266,7 @@ function LazyDetails({
       onToggle={(event) => {
         const nextOpen = event.currentTarget.open;
         setOpen(nextOpen);
+        onOpenChange?.(nextOpen);
         if (nextOpen) onOpen?.();
       }}
     >
@@ -310,31 +314,43 @@ const CaseCard = memo(function CaseCard({
   const sourceTriggerRef = useRef<HTMLButtonElement | null>(null);
   const sourceViewerId = useId();
   const evidenceRequested = useRef(false);
+  const evidenceRequestGeneration = useRef(0);
+  const [toolEvidenceOpen, setToolEvidenceOpen] = useState(false);
   const [detail, setDetail] = useState<{
     results?: Result[];
     error?: string;
   }>();
   const campaignId = campaign?.id ?? "";
 
+  const requestEvidence = useCallback(() => {
+    if (!loadCaseEvidence || evidenceRequested.current) return;
+    evidenceRequested.current = true;
+    const generation = ++evidenceRequestGeneration.current;
+    setDetail({});
+    loadCaseEvidence(testCase.id)
+      .then((results) => {
+        if (generation === evidenceRequestGeneration.current) {
+          setDetail({ results });
+        }
+      })
+      .catch((error: unknown) => {
+        if (generation !== evidenceRequestGeneration.current) return;
+        evidenceRequested.current = false;
+        setDetail({
+          error: error instanceof Error ? error.message : String(error),
+        });
+      });
+  }, [loadCaseEvidence, testCase.id]);
+
   useEffect(() => {
     setOpenSource(undefined);
     sourceTriggerRef.current = null;
     evidenceRequested.current = false;
+    evidenceRequestGeneration.current += 1;
     setDetail(undefined);
+    if (toolEvidenceOpen) requestEvidence();
   }, [campaignId]);
 
-  const requestEvidence = () => {
-    if (!loadCaseEvidence || evidenceRequested.current) return;
-    evidenceRequested.current = true;
-    setDetail({});
-    loadCaseEvidence(testCase.id)
-      .then((results) => setDetail({ results }))
-      .catch((error: unknown) =>
-        setDetail({
-          error: error instanceof Error ? error.message : String(error),
-        }),
-      );
-  };
   const detailResults = useMemo(
     () =>
       loadCaseEvidence
@@ -530,8 +546,31 @@ const CaseCard = memo(function CaseCard({
         label="Tool evidence"
         count={profiles.length}
         onOpen={requestEvidence}
+        onOpenChange={setToolEvidenceOpen}
         renderContent={() => (
-          <div className="tool-judgments">
+          <div
+            className="tool-judgments"
+            aria-busy={Boolean(
+              loadCaseEvidence &&
+                evidenceRequested.current &&
+                !detail?.results &&
+                !detail?.error,
+            )}
+          >
+            <p className="visually-hidden" role="status">
+              {detail?.error
+                ? `Detailed evidence unavailable: ${detail.error}`
+                : detail?.results
+                  ? "Detailed evidence loaded"
+                  : loadCaseEvidence && evidenceRequested.current
+                    ? "Loading detailed evidence"
+                    : ""}
+            </p>
+            {detail?.error && (
+              <p className="empty-state">
+                Evidence unavailable: {detail.error}. Close and reopen this section to retry.
+              </p>
+            )}
             {profiles.length ? (
               profiles.map((profile) => {
                 const key = `${testCase.id}:${profile.toolId}:${profile.profileId}`;
@@ -551,12 +590,10 @@ const CaseCard = memo(function CaseCard({
                       />
                       <span>{compactResult?.reason ?? "no observation"}</span>
                     </summary>
-                    {detail?.error ? (
-                      <p className="empty-state">
-                        Evidence unavailable: {detail.error}
-                      </p>
-                    ) : result ? (
+                    {result ? (
                       <ObservationDetail result={result} tool={tool} />
+                    ) : detail?.error ? (
+                      <p className="empty-state">Detailed evidence unavailable.</p>
                     ) : compactResult && loadCaseEvidence && !detail?.results ? (
                       <p className="empty-state">Loading detailed evidence…</p>
                     ) : (
@@ -739,10 +776,16 @@ export function EvidenceView({
     onSelectCase(testCase.id);
     const reduceMotion =
       window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
-    cardRefs.current.get(testCase.id)?.scrollIntoView?.({
+    const card = cardRefs.current.get(testCase.id);
+    card?.scrollIntoView?.({
       block: "start",
       behavior: reduceMotion ? "auto" : "smooth",
     });
+    const heading = card?.querySelector("h3");
+    if (heading instanceof HTMLElement) {
+      heading.tabIndex = -1;
+      heading.focus({ preventScroll: true });
+    }
   };
 
   return (

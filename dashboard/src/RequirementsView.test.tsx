@@ -183,7 +183,7 @@ describe("RequirementsView", () => {
     );
 
     expect(
-      (screen.getByRole("checkbox", { name: /^All/ }) as HTMLInputElement).checked,
+      (screen.getByRole("radio", { name: /^All/ }) as HTMLInputElement).checked,
     ).toBe(true);
     fireEvent.click(
       screen.getByRole("button", {
@@ -215,7 +215,7 @@ describe("RequirementsView", () => {
       screen.getByRole("article", { name: `Requirement ${byReference.id}` }),
     ).toBeTruthy();
 
-    fireEvent.click(screen.getByRole("checkbox", { name: /^All/ }));
+    fireEvent.click(screen.getByRole("radio", { name: /^All/ }));
     expect(screen.getAllByRole("article")).toHaveLength(3);
   });
 
@@ -348,7 +348,7 @@ describe("RequirementsView", () => {
 
     expect(screen.getAllByRole("article")).toHaveLength(1);
     expect(
-      (screen.getByRole("checkbox", { name: /^All/ }) as HTMLInputElement).checked,
+      (screen.getByRole("radio", { name: /^All/ }) as HTMLInputElement).checked,
     ).toBe(true);
   });
 

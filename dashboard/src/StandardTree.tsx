@@ -137,6 +137,7 @@ function TreeItem({
         {tone ? (
           <span
             className="requirement-toc__status"
+            role="img"
             aria-label={`Section result: ${TONE_LABELS[tone]}`}
             title={TONE_LABELS[tone]}
           >
@@ -287,7 +288,7 @@ export function StandardTree({
       </header>
       <label className="requirement-toc__all">
         <input
-          type="checkbox"
+          type="radio"
           checked={selected.size === 0}
           onChange={() => onSelectedSectionsChange([])}
         />

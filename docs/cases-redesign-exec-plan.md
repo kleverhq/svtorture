@@ -20,7 +20,7 @@ This work does not change case metadata, case execution, conformance judgments, 
 - [x] (2026-08-04 09:17Z) Milestone 1: extracted the complete hierarchy presentation and tone logic into `StandardTree`, migrated Requirements without behavior changes, added canonical URL-backed Cases tags with AND semantics and cross-corpus isolation, replaced the legacy Cases Tag select with the emphasized cloud, and passed 60 focused tests plus type checking.
 - [x] (2026-08-04 09:32Z) Milestone 2: replaced the selected-case split inspector with the complete case hierarchy and all matching compact cards; preserved requirements, oracle/source viewing, statuses, observations, reproduction, campaign links, and direct links behind lazy disclosures; detailed evidence now fetches only when opened.
 - [x] (2026-08-04 09:32Z) Milestone 3: aligned Cases with Requirements card, tree, global-scroll, sticky, responsive, tag, and coverage presentation; removed the obsolete split-workspace hook and styles; passed 73 focused tests, type checking, production build, refreshed campaign export, and desktop/mobile visual checks.
-- [ ] Milestone 4: run focused and repository-wide validation, independent review, production export, visual checks, and completion audit.
+- [x] (2026-08-04 10:09Z) Milestone 4: passed final `just smoke` with 121 focused Python and 105 frontend tests, type checking, production build and refreshed export; passed 188 non-Docker and 11 Docker tests in `just ci` before its network-only real-tool pull failure; completed correctness, accessibility, scaling, impacted-lane, and independent control reviews with every substantive finding fixed and no final findings.
 
 ## Surprises & Discoveries
 
@@ -38,6 +38,12 @@ This work does not change case metadata, case execution, conformance judgments, 
 
 - Observation: Once Cases adopted the Requirements workspace, `useSplitWorkspace.ts` and all `.case-list`, `.evidence-pane`, and `.evidence-workspace` styles had no consumers.
   Evidence: Repository search after the rewrite returned no TypeScript/TSX references, so the hook and obsolete selectors were deleted rather than retained as dead compatibility code.
+
+- Observation: Lazy per-card requests need both retry semantics and campaign generations; merely clearing state on campaign change can either admit stale results or leave an open disclosure without a new request.
+  Evidence: Review-driven tests now prove a transient rejection retries after close/reopen and an open disclosure automatically requests the new campaign while ignoring the older promise.
+
+- Observation: Full `just ci` reached the final real-tool smoke after all deterministic, frontend, build, and Docker-fake gates passed, but Docker Hub token retrieval timed out.
+  Evidence: `docker pull --platform=linux/amd64 ubuntu:24.04` failed with `unable to decode token response: context cancellation while reading body`; this is an external network failure after 188 non-Docker tests, 105 frontend tests, production build, and 11 Docker tests passed.
 
 ## Decision Log
 
@@ -75,7 +81,9 @@ This work does not change case metadata, case execution, conformance judgments, 
 
 ## Outcomes & Retrospective
 
-Milestones 1–3 are complete. Requirements and Cases consume the same corpus-neutral `StandardTree`; Cases has an independently URL-backed multi-tag cloud and retains every non-tag Advanced filter. The old selected-list inspector is gone. All matching cases render as aligned compact cards with lazy Requirements, Oracle and sources, and Tool evidence sections; detailed evidence is fetched only on first opening. The Cases summary reads `Requirements vs cases:` and uses the shared threshold colors. Seventy-three focused tests, type checking, production build, refreshed campaign export, and 1450×900 desktop plus 430×932 mobile screenshots pass. Independent review and repository-wide validation remain in Milestone 4.
+All milestones are complete. Requirements and Cases consume the same corpus-neutral `StandardTree`; Cases has an independently URL-backed AND tag cloud and retains every non-tag Advanced filter. The old selected-list inspector and split-workspace code are gone. All matching cases render as aligned compact cards with lazy Requirements, Oracle and sources, and Tool evidence sections. Detailed evidence loads only on opening, retries transient failures, refetches for an open disclosure after campaign changes, and rejects stale campaign responses. Tree navigation and cross-tab requirement navigation move focus to the destination without later focus stealing.
+
+The Cases summary reads `Requirements vs cases:` and uses shared threshold colors. Final `just smoke` passed 121 focused Python tests, all annotator checks, type checking, 105 frontend tests, and production build. `just ci` additionally passed 188 non-Docker tests and 11 Docker tests before the final real Icarus smoke was blocked solely by a Docker Hub network timeout. Desktop 1450×900 and mobile 430×932 screenshots passed, the local campaign export was refreshed, all multi-lane findings were fixed and retested, and an independent final control review reported `No substantive findings.` No required work remains.
 
 ## Context and Orientation
 
@@ -193,3 +201,5 @@ Revision note (2026-08-04 09:05Z): Initial Cases redesign plan created after ins
 Revision note (2026-08-04 09:17Z): Updated after Milestone 1 to record the shared tree extraction, Requirements migration, canonical Cases tag field, AND filtering, removal of the superseded single-tag control, cross-corpus isolation, and focused validation evidence.
 
 Revision note (2026-08-04 09:32Z): Updated after Milestones 2 and 3 to record the all-card Cases browser, primary-clause hierarchy placement, lazy per-card evidence, retained source and relationship behavior, shared coverage wording/tones, obsolete split-layout deletion, focused test/build evidence, and desktop/mobile visual checks.
+
+Revision note (2026-08-04 10:09Z): Completed Milestone 4 after correctness, accessibility, scaling, impacted-lane, and independent control review. Recorded fixes for corpus memo churn, unstable callbacks, campaign-safe request retry/refetch, accessible loading state, focus movement/consumption, tree semantics, final smoke/build/export evidence, and the network-only `just ci` real-tool pull failure.

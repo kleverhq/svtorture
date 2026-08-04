@@ -294,6 +294,38 @@ describe("App overview navigation", () => {
     });
   });
 
+  it("moves focus to a Requirement opened from a Case card", async () => {
+    const dataset = makeTestDataset();
+    const testCase = dataset.cases[0];
+    const requirement = dataset.requirements[0];
+    if (!testCase || !requirement) throw new Error("incomplete test dataset");
+    window.history.replaceState(null, "", "/?view=evidence");
+    mockDataset(dataset);
+
+    render(<App />);
+    const caseCard = await screen.findByRole("article", {
+      name: `Case ${testCase.id}`,
+    });
+    fireEvent.click(within(caseCard).getByText(/Requirements/));
+    fireEvent.click(
+      await within(caseCard).findByRole("button", { name: new RegExp(requirement.id) }),
+    );
+
+    const requirementHeading = await screen.findByRole("heading", {
+      name: requirement.summary,
+    });
+    await waitFor(() => expect(document.activeElement).toBe(requirementHeading));
+
+    fireEvent.click(screen.getByRole("tab", { name: "Cases" }));
+    await screen.findByRole("heading", { name: "1 case" });
+    const requirementsTab = screen.getByRole("tab", { name: "Requirements" });
+    fireEvent.click(requirementsTab);
+    const returnedHeading = await screen.findByRole("heading", {
+      name: requirement.summary,
+    });
+    await waitFor(() => expect(document.activeElement).not.toBe(returnedHeading));
+  });
+
   it("filters Cases by clickable tags with AND semantics", async () => {
     const dataset = makeTestDataset();
     const original = dataset.cases[0];

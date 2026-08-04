@@ -222,6 +222,7 @@ export default function App() {
     trendStateFromSearch(window.location.search),
   );
   const [workspaceHeight, setWorkspaceHeight] = useState(0);
+  const [focusRequirementId, setFocusRequirementId] = useState("");
   const workspaceRef = useRef<HTMLElement>(null);
   const availableIds = new Set(state.index?.campaigns.map((campaign) => campaign.id) ?? []);
   const rangedCampaigns = (state.trends?.campaigns ?? [])
@@ -370,7 +371,26 @@ export default function App() {
           filters.changed,
           filters.disagreement,
         ])
-      : filters;
+      : view === "evidence"
+        ? JSON.stringify([
+            filters.search,
+            filters.tool,
+            filters.profile,
+            filters.status,
+            filters.statusGroup,
+            filters.changed,
+            filters.disagreement,
+            filters.revision,
+            filters.part,
+            filters.clause,
+            filters.phase,
+            filters.expectation,
+            filters.casePresence,
+            filters.caseTags,
+            filters.requirement,
+            filters.reason,
+          ])
+        : filters;
   const corpusFilters = useMemo(() => {
     if (view === "matrix") return requirementsQuickFilters(filters);
     if (view === "evidence") return casesFilters(filters);
@@ -438,6 +458,23 @@ export default function App() {
   const selectRequirement = useCallback((requirementId: string) => {
     setFilters((current) => ({ ...current, requirementId }));
   }, []);
+  const inspectRequirement = useCallback((requirementId: string) => {
+    setFilters((current) => ({
+      ...EMPTY_FILTERS,
+      campaign: current.campaign,
+      dateFrom: current.dateFrom,
+      dateTo: current.dateTo,
+      tool: current.tool,
+      profile: current.profile,
+      requirementId,
+    }));
+    setFocusRequirementId(requirementId);
+    setView("matrix");
+  }, []);
+  const clearFocusedRequirement = useCallback(
+    () => setFocusRequirementId(""),
+    [],
+  );
   const changeSelectedSections = useCallback((sections: string[]) => {
     setFilters((current) => ({
       ...current,
@@ -680,18 +717,6 @@ export default function App() {
     }));
     setView("evidence");
   };
-  const inspectRequirement = (requirementId: string) => {
-    setFilters((current) => ({
-      ...EMPTY_FILTERS,
-      campaign: current.campaign,
-      dateFrom: current.dateFrom,
-      dateTo: current.dateTo,
-      tool: current.tool,
-      profile: current.profile,
-      requirementId,
-    }));
-    setView("matrix");
-  };
   return (
     <>
       <SiteHeader
@@ -788,6 +813,8 @@ export default function App() {
               onSelectRequirement={selectRequirement}
               onInspectCase={inspectCase}
               onInspectEvidence={inspectRequirementToolCases}
+              focusRequirementId={focusRequirementId}
+              onFocusedRequirement={clearFocusedRequirement}
             />
           )}
           {view === "evidence" && (

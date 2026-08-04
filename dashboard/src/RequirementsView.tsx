@@ -53,6 +53,8 @@ interface RequirementsProps {
     profileId: string,
     requirementId: string,
   ) => void;
+  focusRequirementId?: string | undefined;
+  onFocusedRequirement?: (() => void) | undefined;
 }
 
 interface ProfileEvidence {
@@ -64,6 +66,7 @@ interface ProfileEvidence {
 
 const EMPTY_CASES: CaseDefinition[] = [];
 const EMPTY_EVIDENCE: ProfileEvidence[] = [];
+const NOOP = () => undefined;
 
 export function requirementTreeTone(statuses: Status[]) {
   return standardTreeTone(statuses);
@@ -293,7 +296,7 @@ export function RequirementsView({
   selectedSections,
   onSelectedSectionsChange,
   selectedTags = [],
-  onToggleTag = () => undefined,
+  onToggleTag = NOOP,
   cases,
   evidenceCasesByProfile,
   campaign,
@@ -303,9 +306,13 @@ export function RequirementsView({
   onSelectRequirement,
   onInspectCase,
   onInspectEvidence,
+  focusRequirementId = "",
+  onFocusedRequirement = NOOP,
 }: RequirementsProps) {
   const cardRefs = useRef(new Map<string, HTMLElement>());
   const navigationScrollId = useRef("");
+  const focusedRequirementId = useRef("");
+  const suppressNextFocusClearScroll = useRef(false);
   const sections = useMemo(
     () =>
       standardSections.length
@@ -425,16 +432,31 @@ export function RequirementsView({
 
   useEffect(() => {
     if (!selectedRequirement) return;
-    if (navigationScrollId.current === selectedRequirement.id) {
-      navigationScrollId.current = "";
-      return;
-    }
+    const navigatedInView = navigationScrollId.current === selectedRequirement.id;
+    if (navigatedInView) navigationScrollId.current = "";
+    const suppressScroll =
+      !focusRequirementId && suppressNextFocusClearScroll.current;
+    if (suppressScroll) suppressNextFocusClearScroll.current = false;
     window.requestAnimationFrame(() => {
-      cardRefs.current
-        .get(selectedRequirement.id)
-        ?.scrollIntoView?.({ block: "start" });
+      const card = cardRefs.current.get(selectedRequirement.id);
+      if (!navigatedInView && !suppressScroll) {
+        card?.scrollIntoView?.({ block: "start" });
+      }
+      if (
+        focusRequirementId === selectedRequirement.id &&
+        focusedRequirementId.current !== selectedRequirement.id
+      ) {
+        const heading = card?.querySelector("h3");
+        if (heading instanceof HTMLElement) {
+          heading.tabIndex = -1;
+          heading.focus({ preventScroll: true });
+          focusedRequirementId.current = selectedRequirement.id;
+          suppressNextFocusClearScroll.current = true;
+          onFocusedRequirement();
+        }
+      }
     });
-  }, [selectedRequirement]);
+  }, [focusRequirementId, onFocusedRequirement, selectedRequirement]);
 
   const navigateToSection = (clause: string) => {
     const requirement = visibleRequirements.find((item) =>
@@ -446,10 +468,16 @@ export function RequirementsView({
     onSelectRequirement(requirement.id);
     const reduceMotion =
       window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
-    cardRefs.current.get(requirement.id)?.scrollIntoView?.({
+    const card = cardRefs.current.get(requirement.id);
+    card?.scrollIntoView?.({
       block: "start",
       behavior: reduceMotion ? "auto" : "smooth",
     });
+    const heading = card?.querySelector("h3");
+    if (heading instanceof HTMLElement) {
+      heading.tabIndex = -1;
+      heading.focus({ preventScroll: true });
+    }
   };
   return (
     <section className="panel requirements" aria-label="Requirement evidence">

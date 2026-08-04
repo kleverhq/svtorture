@@ -1,4 +1,5 @@
 import {
+  act,
   cleanup,
   fireEvent,
   render,
@@ -10,6 +11,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { EvidenceView } from "./EvidenceView";
 import { makeTestDataset } from "./testDataset";
+import type { Result } from "./types";
 
 const originalScrollIntoView = Object.getOwnPropertyDescriptor(
   HTMLElement.prototype,
@@ -223,6 +225,95 @@ describe("EvidenceView", () => {
     expect(toggleTag).toHaveBeenCalledWith("copy-out");
     fireEvent.click(screen.getByLabelText(/Select 13 Tasks and functions/));
     expect(changeSections).toHaveBeenCalledWith(["13"]);
+    fireEvent.click(
+      screen.getByRole("button", { name: "13Tasks and functions" }),
+    );
+    expect(document.activeElement).toBe(
+      within(firstCard).getByRole("heading", { name: firstCase.title }),
+    );
+  });
+
+  it("retries a failed detailed evidence request", async () => {
+    const dataset = makeTestDataset();
+    const testCase = dataset.cases[0];
+    const campaign = dataset.campaigns[0];
+    if (!testCase || !campaign) throw new Error("incomplete test dataset");
+    const loadCaseEvidence = vi
+      .fn()
+      .mockRejectedValueOnce(new Error("temporary outage"))
+      .mockResolvedValueOnce(campaign.results);
+
+    render(
+      <EvidenceView
+        cases={dataset.cases}
+        requirements={dataset.requirements}
+        campaign={campaign}
+        toolFilter=""
+        profileFilter=""
+        selectedCaseId=""
+        onSelectCase={() => undefined}
+        onInspectRequirement={() => undefined}
+        loadCaseEvidence={loadCaseEvidence}
+      />,
+    );
+
+    const summary = screen.getByText(/Tool evidence/);
+    fireEvent.click(summary);
+    expect(await screen.findAllByText(/temporary outage/)).toHaveLength(2);
+    fireEvent.click(summary);
+    await waitFor(() => expect(summary.closest("details")?.open).toBe(false));
+    fireEvent.click(summary);
+    await waitFor(() => expect(loadCaseEvidence).toHaveBeenCalledTimes(2));
+    expect(await screen.findByText("Detailed evidence loaded")).toBeTruthy();
+  });
+
+  it("ignores an in-flight detail response after campaign changes", async () => {
+    const dataset = makeTestDataset();
+    const testCase = dataset.cases[0];
+    const campaign = dataset.campaigns[0];
+    const result = campaign?.results[0];
+    if (!testCase || !campaign || !result) {
+      throw new Error("incomplete test dataset");
+    }
+    let resolveOld: ((results: Result[]) => void) | undefined;
+    const loadCaseEvidence = vi.fn(
+      () =>
+        new Promise<Result[]>((resolve) => {
+          resolveOld = resolve;
+        }),
+    );
+    const props = {
+      cases: dataset.cases,
+      requirements: dataset.requirements,
+      toolFilter: "",
+      profileFilter: "",
+      selectedCaseId: "",
+      onSelectCase: () => undefined,
+      onInspectRequirement: () => undefined,
+      loadCaseEvidence,
+    };
+    const view = render(<EvidenceView {...props} campaign={campaign} />);
+
+    fireEvent.click(screen.getByText(/Tool evidence/));
+    await waitFor(() => expect(loadCaseEvidence).toHaveBeenCalledOnce());
+    const resolveFirstRequest = resolveOld;
+    view.rerender(
+      <EvidenceView
+        {...props}
+        campaign={{ ...campaign, id: "20251201T000000Z-new-campaign" }}
+      />,
+    );
+    await waitFor(() => expect(loadCaseEvidence).toHaveBeenCalledTimes(2));
+    await act(async () => {
+      resolveFirstRequest?.([{ ...result, summary: "stale campaign evidence" }]);
+      await Promise.resolve();
+    });
+    expect(screen.queryByText("Detailed evidence loaded")).toBeNull();
+    expect(
+      screen.getByText("Loading detailed evidence").closest("div")?.getAttribute(
+        "aria-busy",
+      ),
+    ).toBe("true");
   });
 
   it("opens embedded source and navigates back to its requirement", async () => {
