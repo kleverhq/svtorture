@@ -1,0 +1,2426 @@
+schema_version = 3
+part = "31"
+
+[[requirements]]
+id = "SV-2023-31-ADJUSTED-LIMIT-ZERO-CLAMP-WARNING"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.9.1"
+anchors = [
+    "[2023:31.9.1:P010:p921]",
+]
+summary = "When a timing check's adjusted limit is less than or equal to zero, the simulator shall set that limit to zero and issue a warning."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.9.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.9.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.9.1"
+
+[[requirements]]
+id = "SV-2023-31-CLOCK-CONTROL-CHECK-ELAPSED-TIME"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.4"
+anchors = [
+    "[2023:31.4:P002:p905]",
+    "[2023:31.4:L001:p905]",
+    "[2023:31.4:L002:p905]",
+    "[2023:31.4:L003:p905]",
+]
+summary = "Clock/control timing checks derive their events from one or two signal arguments, determine elapsed time between the applicable events, compare it with the specified limit, and report a violation when the check-specific limit relation is violated."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.4"
+
+[[requirements]]
+id = "SV-2023-31-CONDITION-SCALAR-AND-LSB"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.7"
+anchors = [
+    "[2023:31.7:P003:p917]",
+]
+summary = "A timing-check conditioning signal is scalar; if a vector net or multibit expression is supplied, only its least-significant bit is used as the condition."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.7"
+
+[[requirements]]
+id = "SV-2023-31-CONDITION-SIGNALS-NOT-IMPLICITLY-DELAYED"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.9.2"
+anchors = [
+    "[2023:31.9.2:P006:p922]",
+]
+summary = "The simulator creates delayed versions only of reference and data signals, not their condition signals; a delayed condition must be explicitly formed as a function of delayed signals."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.9.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.9.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.9.2"
+
+[[requirements]]
+id = "SV-2023-31-CONDITION-X-COMPARISON-ENABLEMENT"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.7"
+anchors = [
+    "[2023:31.7:P002:p917]",
+]
+summary = "An x conditioning value shall not enable a timing check under deterministic condition forms (===, !==, ~, or no comparison), but shall enable it under nondeterministic == or != comparisons."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.7"
+
+[[requirements]]
+id = "SV-2023-31-CONDITIONAL-EVENT-DETECTION"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.2"
+anchors = [
+    "[2023:31.2:P007:p897]",
+]
+summary = "A timing check shall detect a reference or data event only when that event's associated Boolean condition is true."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.2"
+
+[[requirements]]
+id = "SV-2023-31-DELAYED-SIGNAL-APPLICABLE-CHECKS"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.9.1"
+anchors = [
+    "[2023:31.9.1:P010:p921]",
+]
+summary = "Implicit or explicit delayed signals shall be used by $setup, $hold, $setuphold, $recovery, $removal, $recrem, $width, $period, and $nochange, with each check's limit adjusted so notifier timing remains correct."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.9.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.9.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.9.1"
+
+[[requirements]]
+id = "SV-2023-31-DELAYED-SIGNAL-OUTPUT-TRANSITION"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.9.1"
+anchors = [
+    "[2023:31.9.1:P013:p921-922]",
+    "[2023:31.9.1:P015:p922]",
+]
+summary = "Delayed timing-check signals are actually delayed only when negative limits exist; if such delay exceeds the signal-to-output propagation delay, the output transitions with the delayed timing-check signal instead, behaving as though its path delay equaled that larger delay."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.9.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.9.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.9.1"
+
+[[requirements]]
+id = "SV-2023-31-EDGE-CONTROL-DESCRIPTOR-COUNT"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.5"
+anchors = [
+    "[2023:31.5:P002:p914]",
+]
+summary = "An edge-control specifier shall contain edge followed by a square-bracketed list of one through six edge-transition descriptors."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.5"
+
+[[requirements]]
+id = "SV-2023-31-EDGE-CONTROL-TRANSITION-MATCHING"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.5"
+anchors = [
+    "[2023:31.5:C001:p914]",
+    "[2023:31.5:P003:p915]",
+]
+summary = "Edge descriptors select the named 0-to-1, 0-to-x, 1-to-0, 1-to-x, x-to-0, or x-to-1 transitions, and transitions involving z are treated the same as corresponding transitions involving x."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.5"
+
+[[requirements]]
+id = "SV-2023-31-EDGE-DESCRIPTOR-LEXICAL-FORMS"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.2"
+anchors = [
+    "[2023:31.2:G002:p896-897]",
+    "[2023:31.5:G001:p914]",
+]
+summary = "An edge descriptor shall be 01, 10, or a two-character transition pairing x/X/z/Z with 0 or 1 in either order, with no embedded spaces."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.2"
+
+[[requirements]]
+id = "SV-2023-31-EDGE-KEYWORD-EQUIVALENCE"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.5"
+anchors = [
+    "[2023:31.5:P004:p915]",
+    "[2023:31.5:C002:p915]",
+    "[2023:31.5:P005:p915]",
+    "[2023:31.5:C003:p915]",
+    "[2023:31.5:C004:p915]",
+    "[2023:31.5:P007:p915]",
+    "[2023:31.5:C005:p915]",
+]
+summary = "For timing-check edge control, posedge is equivalent to edge[01,0x,x1], and negedge is equivalent to edge[10,x0,1x], with z transitions treated as their x counterparts."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.5"
+
+[[requirements]]
+id = "SV-2023-31-EXPLICIT-DELAYED-SIGNAL-PRECEDENCE"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.9.1"
+anchors = [
+    "[2023:31.9.1:P008:p921]",
+    "[2023:31.9.1:P009:p921]",
+]
+summary = "A source signal has one delayed version shared across timing checks; if any check explicitly declares that delayed signal, the explicit delayed signal is used also by checks that omit it instead of creating another implicit copy."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.9.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.9.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.9.1"
+
+[[requirements]]
+id = "SV-2023-31-FULLSKEW-DEFAULT-TIMER-LIFECYCLE"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.4.3"
+anchors = [
+    "[2023:31.4.3:P007:p909]",
+    "[2023:31.4.3:P008:p909]",
+]
+summary = "By default $fullskew is timer-based: either event starts a timing window as timestamp; absent a timecheck within its directional limit it violates at expiration and becomes dormant, while a timecheck within the limit causes no violation and immediate dormancy."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.4.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.4.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.4.3"
+
+[[requirements]]
+id = "SV-2023-31-FULLSKEW-DORMANT-ACTIVATION"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.4.3"
+anchors = [
+    "[2023:31.4.3:P012:p910]",
+]
+summary = "In timer-based and event-based modes, a dormant $fullskew check becomes active when a timestamp event has no condition or has a true condition."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.4.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.4.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.4.3"
+
+[[requirements]]
+id = "SV-2023-31-FULLSKEW-EVENT-BASED-LIFECYCLE"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.4.3"
+anchors = [
+    "[2023:31.4.3:P010:p910]",
+]
+summary = "With event_based_flag set, $fullskew reports only when a timecheck event arrives after the limit, then uses that event as the timestamp of a new window; an in-limit timecheck ends the window, reports no violation, and makes the check dormant."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.4.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.4.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.4.3"
+
+[[requirements]]
+id = "SV-2023-31-FULLSKEW-EVENT-ROLES"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.4.3"
+anchors = [
+    "[2023:31.4.3:T31-9.R01:p909]",
+    "[2023:31.4.3:T31-9.R02:p909]",
+    "[2023:31.4.3:P004:p909]",
+]
+summary = "For $fullskew, the event occurring first is the timestamp event and the event occurring second is the timecheck event: reference-first maps reference to timestamp, while data-first maps data to timestamp."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.4.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.4.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.4.3"
+
+[[requirements]]
+id = "SV-2023-31-FULLSKEW-LIMITS-AND-FLAGS"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.4.3"
+anchors = [
+    "[2023:31.4.3:T31-9.R03:p909]",
+    "[2023:31.4.3:T31-9.R04:p909]",
+    "[2023:31.4.3:T31-9.R06:p909]",
+    "[2023:31.4.3:T31-9.R07:p909]",
+    "[2023:31.4.3:P003:p909]",
+]
+summary = "$fullskew limit1 and limit2 shall be non-negative constant expressions; limit1 governs data following reference and limit2 governs reference following data, while optional event_based_flag and remain_active_flag are constant expressions."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.4.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.4.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.4.3"
+
+[[requirements]]
+id = "SV-2023-31-FULLSKEW-REPLACEMENT-TIMESTAMP"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.4.3"
+anchors = [
+    "[2023:31.4.3:P009:p909-910]",
+    "[2023:31.4.3:P011:p910]",
+]
+summary = "In either $fullskew mode, a second timestamp before completion replaces the current window; if its condition is false, remain_active set causes it to be ignored, while remain_active clear makes an active check dormant."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.4.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.4.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.4.3"
+
+[[requirements]]
+id = "SV-2023-31-FULLSKEW-VIOLATION-RELATION"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.4.3"
+anchors = [
+    "[2023:31.4.3:P005:p909]",
+    "[2023:31.4.3:C001:p909]",
+    "[2023:31.4.3:P006:p909]",
+]
+summary = "$fullskew violates only when elapsed time exceeds limit1 for reference-first order or limit2 for data-first order; simultaneous transitions and a new timestamp exactly at expiration do not violate."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.4.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.4.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.4.3"
+
+[[requirements]]
+id = "SV-2023-31-HOLD-CHECK-SEMANTICS"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.3.2"
+anchors = [
+    "[2023:31.3.2:T31-2.R01:p899]",
+    "[2023:31.3.2:T31-2.R02:p899]",
+    "[2023:31.3.2:T31-2.R03:p899]",
+    "[2023:31.3.2:C001:p899]",
+    "[2023:31.3.2:C002:p899]",
+    "[2023:31.3.2:P006:p900]",
+]
+summary = "For $hold, reference_event is the timestamp event, data_event is the timecheck event, and limit is a non-negative constant expression; a violation occurs from timestamp_time inclusive to timestamp_time+limit exclusive, and a zero limit never produces a violation."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.3.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.3.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.3.2"
+
+[[requirements]]
+id = "SV-2023-31-IMPLICIT-DELAYED-SIGNAL-SHARING"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.9.1"
+anchors = [
+    "[2023:31.9.1:P007:p921]",
+]
+summary = "Implicit delayed signals are created once per distinct referenced signal and shared by multiple negative timing checks that reference that same signal."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.9.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.9.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.9.1"
+
+[[requirements]]
+id = "SV-2023-31-INCONSISTENT-NEGATIVE-LIMIT-RESOLUTION"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.9.1"
+anchors = [
+    "[2023:31.9.1:P012:p921]",
+]
+summary = "If negative timing values have no consistent delayed-signal solution, the simulator shall warn, change the smallest negative limit to zero, recalculate delays, and repeat until a solution is reached."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.9.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.9.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.9.1"
+
+[[requirements]]
+id = "SV-2023-31-MULTIPLE-CONDITIONS-EXTERNAL-LOGIC"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.7"
+anchors = [
+    "[2023:31.7:P004:p918]",
+]
+summary = "When a timing check requires multiple conditioning signals, their logic shall be combined into a separate signal outside the specify block, and that signal is used as the timing-check condition."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.7"
+
+[[requirements]]
+id = "SV-2023-31-NEGATIVE-CHECK-CONDITION-EVENT-ASSOCIATION"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.9.2"
+anchors = [
+    "[2023:31.9.2:P005:p922]",
+]
+summary = "For negative checks, timestamp_condition applies to whichever delayed reference/data signal transitions first, while timecheck_condition applies to whichever delayed signal transitions second."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.9.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.9.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.9.2"
+
+[[requirements]]
+id = "SV-2023-31-NEGATIVE-CHECK-DELAYED-SIGNAL-DECLARATION"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.9.1"
+anchors = [
+    "[2023:31.9.1:P003:p920-921]",
+]
+summary = "A negative-capable timing check may declare delayed data and reference signals for use by functional model code; if negative setup or hold is present and no delayed signals are declared, implicit inaccessible delayed signals shall be created for check evaluation."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.9.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.9.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.9.1"
+
+[[requirements]]
+id = "SV-2023-31-NEGATIVE-CHECK-INTERNAL-DELAYED-EVALUATION"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.9.1"
+anchors = [
+    "[2023:31.9.1:P002:p920]",
+]
+summary = "Negative timing checks shall evaluate using delayed copies of data and reference signals and internally adjusted setup/hold values that shift the violation window to overlap the reference signal."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.9.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.9.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.9.1"
+
+[[requirements]]
+id = "SV-2023-31-NEGATIVE-CHECK-OPTION-APPLICABILITY"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.9"
+anchors = [
+    "[2023:31.9:P001:p919]",
+]
+summary = "When the negative timing check option is enabled, $setuphold and $recrem accept negative limits and shall have identical behavior with respect to those negative values."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.9"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.9"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.9"
+
+[[requirements]]
+id = "SV-2023-31-NEGATIVE-CHECK-STABILITY-WINDOW"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.9"
+anchors = [
+    "[2023:31.9:P002:p919]",
+]
+summary = "For negative-capable combined checks, setup and hold/recovery-removal values define a reference-edge-relative window during which data shall remain constant; any data change within that window causes a timing violation."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.9"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.9"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.9"
+
+[[requirements]]
+id = "SV-2023-31-NEGATIVE-NOTIFIER-DETECTION-TIME"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.9.3"
+anchors = [
+    "[2023:31.9.3:P001:p923]",
+]
+summary = "A negative timing-check notifier shall toggle when the adjusted check detects a violation using delayed signals and adjusted values, not at the violation time implied by undelayed inputs and original values."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.9.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.9.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.9.3"
+
+[[requirements]]
+id = "SV-2023-31-NEGATIVE-OPTION-DISABLED-DELAYED-COPIES"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.9.4"
+anchors = [
+    "[2023:31.9.4:P001:p923]",
+]
+summary = "Negative $setuphold/$recrem handling shall require an invocation option; when a model declaring delayed reference/data is run without that option, or with all timing checks disabled, each delayed signal becomes an undelayed copy of its original signal."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.9.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.9.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.9.4"
+
+[[requirements]]
+id = "SV-2023-31-NEGATIVE-WINDOW-LATCHED-VALUE"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.9.1"
+anchors = [
+    "[2023:31.9.1:L002:p920]",
+]
+summary = "The latched data value for negative timing-check simulation shall be the value stable during the open violation window, excluding its endpoints."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.9.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.9.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.9.1"
+
+[[requirements]]
+id = "SV-2023-31-NEGATIVE-WINDOW-VIOLATION-PRECISION"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.9.1"
+anchors = [
+    "[2023:31.9.1:L001:p920]",
+]
+summary = "A negative timing check shall trigger a violation for a signal change strictly inside its violation window, excluding endpoints; a window narrower than two simulation-precision units cannot produce a violation."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.9.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.9.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.9.1"
+
+[[requirements]]
+id = "SV-2023-31-NOCHANGE-ARGUMENTS"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.4.6"
+anchors = [
+    "[2023:31.4.6:T31-12.R01:p913]",
+    "[2023:31.4.6:T31-12.R02:p913]",
+    "[2023:31.4.6:T31-12.R03:p913]",
+    "[2023:31.4.6:T31-12.R04:p913]",
+]
+summary = "For $nochange, reference_event is an edge-triggered timestamp and/or timecheck event, data_event is timestamp or timecheck, and start_edge_offset and end_edge_offset shall be constant expressions."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.4.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.4.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.4.6"
+
+[[requirements]]
+id = "SV-2023-31-NOCHANGE-OFFSET-WINDOW"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.4.6"
+anchors = [
+    "[2023:31.4.6:P004:p913-914]",
+    "[2023:31.4.6:P005:p914]",
+    "[2023:31.4.6:C001:p914]",
+    "[2023:31.4.6:C002:p914]",
+    "[2023:31.4.6:P008:p914]",
+]
+summary = "$nochange defines an open violation window from leading_reference_edge_time minus start_edge_offset to trailing_reference_edge_time plus end_edge_offset; positive offsets extend and negative offsets shrink the respective boundaries, zero offsets leave the reference-level duration unchanged, and data strictly inside violates while endpoints do not."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.4.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.4.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.4.6"
+
+[[requirements]]
+id = "SV-2023-31-NOCHANGE-REFERENCE-CONTROL"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.4.6"
+anchors = [
+    "[2023:31.4.6:P003:p913]",
+]
+summary = "A $nochange reference event may use posedge or negedge but shall not use an edge-control specifier; a data event during the controlled reference-signal level violates."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.4.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.4.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.4.6"
+
+[[requirements]]
+id = "SV-2023-31-NOTIFIER-DECLARATION-AND-ARGUMENT"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.6"
+anchors = [
+    "[2023:31.6:P002:p915]",
+]
+summary = "A timing-check notifier shall be a variable declared in the module containing the timing-check invocation and is passed in the notifier argument position at the end of the timing check."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.6"
+
+[[requirements]]
+id = "SV-2023-31-NOTIFIER-ON-VIOLATION"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.2"
+anchors = [
+    "[2023:31.2:P010:p898]",
+    "[2023:31.6:P002:p915]",
+    "[2023:31.6:T31-13.R01:p915]",
+    "[2023:31.6:T31-13.R02:p915]",
+    "[2023:31.6:T31-13.R03:p915]",
+    "[2023:31.6:T31-13.R04:p915]",
+]
+summary = "On a timing violation, a notifier value changes from 0 to 1 or 1 to 0; an x notifier becomes either 0 or 1, and a z notifier remains z."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.2"
+
+[[requirements]]
+id = "SV-2023-31-NOTIFIER-OPTIONALITY"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.6"
+anchors = [
+    "[2023:31.6:P003:p915]",
+]
+summary = "The notifier argument is optional for every system timing check, and omitting it shall not otherwise alter the timing check's operation."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.6"
+
+[[requirements]]
+id = "SV-2023-31-PERIOD-ARGUMENT-ROLES"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.4.5"
+anchors = [
+    "[2023:31.4.5:T31-11.R01:p912]",
+    "[2023:31.4.5:T31-11.R02:p912]",
+    "[2023:31.4.5:T31-11.R03:p912]",
+]
+summary = "For $period, the controlled reference event is the timestamp edge-triggered event, the implicitly derived data event is the timecheck edge-triggered event, and limit shall be a non-negative constant expression."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.4.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.4.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.4.5"
+
+[[requirements]]
+id = "SV-2023-31-PERIOD-REQUIRES-EDGE-REFERENCE"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.4.5"
+anchors = [
+    "[2023:31.4.5:P004:p913]",
+]
+summary = "The $period reference event shall be an edge-triggered specification; otherwise compilation shall fail."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.4.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.4.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.4.5"
+
+[[requirements]]
+id = "SV-2023-31-PERIOD-SAME-EDGE-DERIVATION"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.4.5"
+anchors = [
+    "[2023:31.4.5:P003:p913]",
+    "[2023:31.4.5:C001:p913]",
+]
+summary = "$period derives its implicit data event from the next occurrence of the same edge on the reference-event signal."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.4.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.4.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.4.5"
+
+[[requirements]]
+id = "SV-2023-31-PERIOD-VIOLATION-RELATION"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.4.5"
+anchors = [
+    "[2023:31.4.5:P005:p913]",
+    "[2023:31.4.5:C002:p913]",
+]
+summary = "$period reports a violation when timecheck_time minus timestamp_time is strictly less than limit."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.4.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.4.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.4.5"
+
+[[requirements]]
+id = "SV-2023-31-RECOVERY-CHECK-SEMANTICS"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.3.5"
+anchors = [
+    "[2023:31.3.5:T31-5.R01:p903]",
+    "[2023:31.3.5:T31-5.R02:p903]",
+    "[2023:31.3.5:T31-5.R03:p903]",
+    "[2023:31.3.5:C001:p903]",
+    "[2023:31.3.5:P005:p903]",
+    "[2023:31.3.5:C002:p903]",
+    "[2023:31.3.5:P006:p903]",
+]
+summary = "For $recovery, reference_event is timestamp, data_event is timecheck, and limit is a non-negative constant expression; a violation occurs from timestamp_time inclusive to timestamp_time+limit exclusive, and a zero limit never violates."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.3.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.3.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.3.5"
+
+[[requirements]]
+id = "SV-2023-31-RECREM-DATA-EVENT-ROLE"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.3.6"
+anchors = [
+    "[2023:31.3.6:T31-6.R03:p904]",
+    "[2023:31.3.6:T31-6.R04:p904]",
+]
+summary = "In $recrem, when recovery_limit is positive the data event may be either the timecheck or timestamp event; when recovery_limit is negative, the data event is the timestamp event."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.3.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.3.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.3.6"
+
+[[requirements]]
+id = "SV-2023-31-RECREM-DATA-FIRST-WINDOW"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.3.6"
+anchors = [
+    "[2023:31.3.6:P008:p904]",
+    "[2023:31.3.6:C004:p904]",
+    "[2023:31.3.6:P009:p904]",
+    "[2023:31.3.6:C005:p904]",
+    "[2023:31.3.6:P010:p904]",
+]
+summary = "When both $recrem limits are positive and data occurs first, the violation interval is greater than timecheck_time-removal_limit and less than or equal to timecheck_time; simultaneous events shall violate."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.3.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.3.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.3.6"
+
+[[requirements]]
+id = "SV-2023-31-RECREM-DATA-SECOND-WINDOW"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.3.6"
+anchors = [
+    "[2023:31.3.6:P011:p905]",
+    "[2023:31.3.6:C006:p905]",
+    "[2023:31.3.6:P012:p905]",
+    "[2023:31.3.6:C007:p905]",
+    "[2023:31.3.6:P013:p905]",
+]
+summary = "When both $recrem limits are positive and data occurs second, the violation interval begins at timestamp_time inclusive and ends at timestamp_time+recovery_limit exclusive; simultaneous events shall violate."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.3.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.3.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.3.6"
+
+[[requirements]]
+id = "SV-2023-31-RECREM-LIMITS"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.3.6"
+anchors = [
+    "[2023:31.3.6:T31-6.R05:p904]",
+    "[2023:31.3.6:T31-6.R06:p904]",
+    "[2023:31.3.6:P003:p904]",
+]
+summary = "The $recrem recovery and removal limits shall be constant expressions; with the negative timing-check option enabled they may be negative subject to the restrictions of 31.9."
+related_clauses = [
+    "31.9",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.3.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.3.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.3.6"
+
+[[requirements]]
+id = "SV-2023-31-RECREM-NEGATIVE-CHECK-AUXILIARIES"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.3.6"
+anchors = [
+    "[2023:31.3.6:T31-6.R08:p904]",
+    "[2023:31.3.6:T31-6.R09:p904]",
+    "[2023:31.3.6:T31-6.R10:p904]",
+    "[2023:31.3.6:T31-6.R11:p904]",
+]
+summary = "For negative $recrem checks, optional timestamp_condition and timecheck_condition respectively condition timestamp and timecheck events, and optional delayed_reference and delayed_data identify the corresponding delayed signals."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.3.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.3.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.3.6"
+
+[[requirements]]
+id = "SV-2023-31-RECREM-NEGATIVE-LIMIT-SUM"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.3.6"
+anchors = [
+    "[2023:31.3.6:P005:p904]",
+    "[2023:31.3.6:C001:p904]",
+]
+summary = "If either $recrem limit is negative, removal_limit plus recovery_limit shall be greater than one simulation unit of precision."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.3.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.3.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.3.6"
+
+[[requirements]]
+id = "SV-2023-31-RECREM-NONNEGATIVE-EQUIVALENCE"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.3.6"
+anchors = [
+    "[2023:31.3.6:P006:p904]",
+    "[2023:31.3.6:C002:p904]",
+    "[2023:31.3.6:P007:p904]",
+    "[2023:31.3.6:C003:p904]",
+]
+summary = "With non-negative recovery and removal limits, $recrem(reference,data,recovery,removal) is functionally equivalent to corresponding $removal(reference,data,removal) and $recovery(reference,data,recovery) checks."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.3.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.3.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.3.6"
+
+[[requirements]]
+id = "SV-2023-31-RECREM-POSITIVE-EVENT-SELECTION"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.3.6"
+anchors = [
+    "[2023:31.3.6:P004:p904]",
+]
+summary = "When both $recrem limits are positive, whichever of the reference event and data event occurs first is the timestamp event and the event occurring second is the timecheck event."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.3.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.3.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.3.6"
+
+[[requirements]]
+id = "SV-2023-31-RECREM-REFERENCE-EVENT-ROLE"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.3.6"
+anchors = [
+    "[2023:31.3.6:T31-6.R01:p904]",
+    "[2023:31.3.6:T31-6.R02:p904]",
+]
+summary = "In $recrem, when removal_limit is positive the reference event may be either the timecheck or timestamp event; when removal_limit is negative, the reference event is the timestamp event."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.3.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.3.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.3.6"
+
+[[requirements]]
+id = "SV-2023-31-RECREM-ZERO-LIMITS"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.3.6"
+anchors = [
+    "[2023:31.3.6:P014:p905]",
+]
+summary = "When both $recrem limits are zero, the check shall never issue a timing violation."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.3.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.3.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.3.6"
+
+[[requirements]]
+id = "SV-2023-31-REMOVAL-CHECK-SEMANTICS"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.3.4"
+anchors = [
+    "[2023:31.3.4:T31-4.R01:p902]",
+    "[2023:31.3.4:T31-4.R02:p902]",
+    "[2023:31.3.4:T31-4.R03:p902]",
+    "[2023:31.3.4:C001:p902]",
+    "[2023:31.3.4:P005:p902]",
+    "[2023:31.3.4:C002:p902]",
+    "[2023:31.3.4:P006:p902]",
+]
+summary = "For $removal, reference_event is the timecheck event, data_event is the timestamp event, and limit is a non-negative constant expression; a violation occurs strictly between timecheck_time-limit and timecheck_time, neither endpoint violates, and a zero limit never produces a violation."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.3.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.3.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.3.4"
+
+[[requirements]]
+id = "SV-2023-31-SETUP-CHECK-SEMANTICS"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.3.1"
+anchors = [
+    "[2023:31.3.1:T31-1.R01:p898]",
+    "[2023:31.3.1:T31-1.R02:p898]",
+    "[2023:31.3.1:T31-1.R03:p898]",
+    "[2023:31.3.1:C001:p899]",
+    "[2023:31.3.1:C002:p899]",
+    "[2023:31.3.1:P006:p899]",
+]
+summary = "For $setup, data_event is the timestamp event, reference_event is the timecheck event, and limit is a non-negative constant expression; the open violation window is strictly between timecheck_time-limit and timecheck_time, so neither endpoint violates and a zero limit never produces a violation."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.3.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.3.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.3.1"
+
+[[requirements]]
+id = "SV-2023-31-SETUPHOLD-CONDITION-EQUIVALENCE"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.9.2"
+anchors = [
+    "[2023:31.9.2:P002:p922]",
+    "[2023:31.9.2:C001:p922]",
+    "[2023:31.9.2:P003:p922]",
+    "[2023:31.9.2:C002:p922]",
+    "[2023:31.9.2:P004:p922]",
+]
+summary = "The setuphold timestamp_condition and timecheck_condition arguments immediately follow notifier and permit condition behavior equivalent to separate $setup and $hold checks; omitted condition positions remain null and require their positional comma placeholders."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.9.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.9.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.9.2"
+
+[[requirements]]
+id = "SV-2023-31-SETUPHOLD-DATA-EVENT-ROLE"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.3.3"
+anchors = [
+    "[2023:31.3.3:T31-3.R03:p900]",
+    "[2023:31.3.3:T31-3.R04:p900]",
+]
+summary = "In $setuphold, when hold_limit is positive the data event may be either the timecheck or timestamp event; when hold_limit is negative, the data event is the timestamp event."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.3.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.3.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.3.3"
+
+[[requirements]]
+id = "SV-2023-31-SETUPHOLD-DATA-FIRST-WINDOW"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.3.3"
+anchors = [
+    "[2023:31.3.3:P009:p901]",
+    "[2023:31.3.3:C004:p901]",
+    "[2023:31.3.3:P010:p901]",
+    "[2023:31.3.3:C005:p901]",
+    "[2023:31.3.3:P011:p901]",
+]
+summary = "When both $setuphold limits are positive and the data event occurs first, the violation interval is greater than timecheck_time-setup_limit and less than or equal to timecheck_time; simultaneous reference and data events shall report a violation."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.3.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.3.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.3.3"
+
+[[requirements]]
+id = "SV-2023-31-SETUPHOLD-DATA-SECOND-WINDOW"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.3.3"
+anchors = [
+    "[2023:31.3.3:P012:p901]",
+    "[2023:31.3.3:C006:p901]",
+    "[2023:31.3.3:P013:p901]",
+    "[2023:31.3.3:C007:p901]",
+    "[2023:31.3.3:P014:p901]",
+]
+summary = "When both $setuphold limits are positive and the data event occurs second, the violation interval begins at timestamp_time inclusive and ends at timestamp_time+hold_limit exclusive; simultaneous reference and data events shall report a violation."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.3.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.3.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.3.3"
+
+[[requirements]]
+id = "SV-2023-31-SETUPHOLD-LIMITS"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.3.3"
+anchors = [
+    "[2023:31.3.3:T31-3.R05:p900]",
+    "[2023:31.3.3:T31-3.R06:p900]",
+    "[2023:31.3.3:P003:p900]",
+]
+summary = "The $setuphold setup and hold limits shall be constant expressions; with the negative timing-check option enabled they may be negative subject to the restrictions of 31.9."
+related_clauses = [
+    "31.9",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.3.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.3.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.3.3"
+
+[[requirements]]
+id = "SV-2023-31-SETUPHOLD-NEGATIVE-CHECK-AUXILIARIES"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.3.3"
+anchors = [
+    "[2023:31.3.3:T31-3.R08:p900]",
+    "[2023:31.3.3:T31-3.R09:p900]",
+    "[2023:31.3.3:T31-3.R10:p900]",
+    "[2023:31.3.3:T31-3.R11:p900]",
+]
+summary = "For negative $setuphold checks, optional timestamp_condition and timecheck_condition respectively condition timestamp and timecheck events, and optional delayed_reference and delayed_data identify the corresponding delayed signals."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.3.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.3.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.3.3"
+
+[[requirements]]
+id = "SV-2023-31-SETUPHOLD-NEGATIVE-LIMIT-SUM"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.3.3"
+anchors = [
+    "[2023:31.3.3:P006:p901]",
+    "[2023:31.3.3:C001:p901]",
+]
+summary = "If either $setuphold limit is negative, the sum of setup_limit and hold_limit shall be greater than one simulation unit of precision."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.3.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.3.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.3.3"
+
+[[requirements]]
+id = "SV-2023-31-SETUPHOLD-NONNEGATIVE-EQUIVALENCE"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.3.3"
+anchors = [
+    "[2023:31.3.3:P007:p901]",
+    "[2023:31.3.3:C002:p901]",
+    "[2023:31.3.3:P008:p901]",
+    "[2023:31.3.3:C003:p901]",
+]
+summary = "With non-negative setup and hold limits, $setuphold(reference,data,setup,hold) is functionally equivalent to the corresponding $setup(data,reference,setup) and $hold(reference,data,hold) checks."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.3.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.3.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.3.3"
+
+[[requirements]]
+id = "SV-2023-31-SETUPHOLD-POSITIVE-EVENT-SELECTION"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.3.3"
+anchors = [
+    "[2023:31.3.3:P005:p901]",
+]
+summary = "When both $setuphold limits are positive, whichever of the reference event and data event occurs first is the timestamp event and the event occurring second is the timecheck event."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.3.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.3.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.3.3"
+
+[[requirements]]
+id = "SV-2023-31-SETUPHOLD-REFERENCE-EVENT-ROLE"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.3.3"
+anchors = [
+    "[2023:31.3.3:T31-3.R01:p900]",
+    "[2023:31.3.3:T31-3.R02:p900]",
+]
+summary = "In $setuphold, when setup_limit is positive the reference event may be either the timecheck or timestamp event; when setup_limit is negative, the reference event is the timestamp event."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.3.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.3.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.3.3"
+
+[[requirements]]
+id = "SV-2023-31-SETUPHOLD-ZERO-LIMITS"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.3.3"
+anchors = [
+    "[2023:31.3.3:P015:p901]",
+]
+summary = "When both $setuphold limits are zero, the check shall never issue a timing violation."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.3.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.3.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.3.3"
+
+[[requirements]]
+id = "SV-2023-31-SKEW-ARGUMENT-ROLES"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.4.1"
+anchors = [
+    "[2023:31.4.1:T31-7.R01:p906]",
+    "[2023:31.4.1:T31-7.R02:p906]",
+    "[2023:31.4.1:T31-7.R03:p906]",
+]
+summary = "For $skew, reference_event is the timestamp event, data_event is the timecheck event, and limit shall be a non-negative constant expression."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.4.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.4.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.4.1"
+
+[[requirements]]
+id = "SV-2023-31-SKEW-CHECKS-EXCLUDE-DELAYED-SIGNALS"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.9.1"
+anchors = [
+    "[2023:31.9.1:P011:p921]",
+]
+summary = "Delayed timing-check signal versions shall not be used by $skew, $timeskew, or $fullskew."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.9.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.9.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.9.1"
+
+[[requirements]]
+id = "SV-2023-31-SKEW-DETECTION-MECHANISMS"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.4"
+anchors = [
+    "[2023:31.4:P003:p905]",
+]
+summary = "Event-based skew checking evaluates only upon a signal transition, whereas timer-based skew checking evaluates as soon as simulation time equal to the skew limit has elapsed."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.4"
+
+[[requirements]]
+id = "SV-2023-31-SKEW-EVENT-BASED-WAIT"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.4.1"
+anchors = [
+    "[2023:31.4.1:P005:p906]",
+    "[2023:31.4.1:P006:p906]",
+]
+summary = "$skew evaluates only after a data event, waits indefinitely after a reference without reporting before data occurs, and a new consecutive reference cancels the prior wait and starts a new one."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.4.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.4.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.4.1"
+
+[[requirements]]
+id = "SV-2023-31-SKEW-REMAINS-ACTIVE"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.4.1"
+anchors = [
+    "[2023:31.4.1:P007:p906]",
+]
+summary = "After a reference event, $skew continues checking indefinitely and shall report violations for every data event occurring beyond the limit."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.4.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.4.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.4.1"
+
+[[requirements]]
+id = "SV-2023-31-SKEW-VIOLATION-RELATION"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.4.1"
+anchors = [
+    "[2023:31.4.1:P003:p906]",
+    "[2023:31.4.1:C001:p906]",
+    "[2023:31.4.1:P004:p906]",
+]
+summary = "$skew reports a violation only when timecheck_time minus timestamp_time is greater than limit; simultaneous reference and data transitions shall not violate, including with a zero limit."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.4.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.4.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.4.1"
+
+[[requirements]]
+id = "SV-2023-31-STABILITY-WINDOW-VIOLATION"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.3"
+anchors = [
+    "[2023:31.3:P002:p898]",
+    "[2023:31.3:L001:p898]",
+    "[2023:31.3:L002:p898]",
+    "[2023:31.3:L003:p898]",
+]
+summary = "Each stability-window timing check defines a window relative to its reference event from the specified limit or limits, checks the data-event transition time against that window, and reports a timing violation when the data signal transitions within the window."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.3"
+
+[[requirements]]
+id = "SV-2023-31-SYSTEM-TASK-SPECIFY-PROHIBITION"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.2"
+anchors = [
+    "[2023:31.2:P005:p897]",
+]
+summary = "A system task shall not appear in a specify block."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.2"
+
+[[requirements]]
+id = "SV-2023-31-SYSTEM-TIMING-CHECK-SYNTAX"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.2"
+anchors = [
+    "[2023:31.2:G001:p895-896]",
+    "[2023:31.3.1:G001:p898]",
+    "[2023:31.3.2:G001:p899]",
+    "[2023:31.3.3:G001:p900]",
+    "[2023:31.3.4:G001:p901-902]",
+    "[2023:31.3.5:G001:p902]",
+    "[2023:31.3.6:G001:p903]",
+    "[2023:31.4.1:G001:p905]",
+    "[2023:31.4.2:G001:p906]",
+    "[2023:31.4.3:G001:p908-909]",
+    "[2023:31.4.4:G001:p911]",
+    "[2023:31.4.5:G001:p912]",
+    "[2023:31.4.6:G001:p913]",
+]
+summary = "A system timing check statement shall use one of the defined timing-check system task productions, with its production-specific argument order, required and optional positional arguments, punctuation, and terminating semicolon."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.2"
+
+[[requirements]]
+id = "SV-2023-31-TIMESKEW-ARGUMENTS"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.4.2"
+anchors = [
+    "[2023:31.4.2:T31-8.R01:p907]",
+    "[2023:31.4.2:T31-8.R02:p907]",
+    "[2023:31.4.2:T31-8.R03:p907]",
+    "[2023:31.4.2:T31-8.R05:p907]",
+    "[2023:31.4.2:T31-8.R06:p907]",
+]
+summary = "For $timeskew, reference_event is timestamp, data_event is timecheck, limit is a non-negative constant expression, and optional event_based_flag and remain_active_flag are constant expressions."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.4.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.4.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.4.2"
+
+[[requirements]]
+id = "SV-2023-31-TIMESKEW-DEFAULT-TIMER"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.4.2"
+anchors = [
+    "[2023:31.4.2:P005:p907]",
+]
+summary = "By default $timeskew is timer-based: absent an earlier data event, it reports at elapsed time equal to limit and then becomes dormant until the next reference; a data event within limit causes no violation and immediate dormancy."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.4.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.4.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.4.2"
+
+[[requirements]]
+id = "SV-2023-31-TIMESKEW-EVENT-BASED-MODES"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.4.2"
+anchors = [
+    "[2023:31.4.2:P006:p907]",
+]
+summary = "Setting event_based_flag makes $timeskew event-based; with remain_active_flag also set it behaves as $skew, while without remain_active it becomes dormant after its first violation."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.4.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.4.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.4.2"
+
+[[requirements]]
+id = "SV-2023-31-TIMESKEW-FALSE-REFERENCE-DORMANCY"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.4.2"
+anchors = [
+    "[2023:31.4.2:P005:p907]",
+    "[2023:31.4.2:P006:p907]",
+]
+summary = "When remain_active_flag is not set, a conditioned reference event whose condition is false makes $timeskew dormant; this also applies to its event-based mode."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.4.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.4.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.4.2"
+
+[[requirements]]
+id = "SV-2023-31-TIMESKEW-VIOLATION-RELATION"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.4.2"
+anchors = [
+    "[2023:31.4.2:P003:p907]",
+    "[2023:31.4.2:C001:p907]",
+    "[2023:31.4.2:P004:p907]",
+]
+summary = "$timeskew can violate only when timecheck_time minus timestamp_time exceeds limit; simultaneous transitions do not violate even at zero limit, and a new timestamp exactly at limit expiration suppresses violation."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.4.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.4.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.4.2"
+
+[[requirements]]
+id = "SV-2023-31-TIMESTAMP-TIMECHECK-EVALUATION"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.2"
+anchors = [
+    "[2023:31.2:P008:p897]",
+]
+summary = "A timestamp-event transition records its transition time for later use, while a timecheck-event transition evaluates the timing check and determines whether a violation occurred."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.2"
+
+[[requirements]]
+id = "SV-2023-31-TIMING-CHECK-AUXILIARY-ARGUMENT-SYNTAX"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.2"
+anchors = [
+    "[2023:31.2:G002:p896-897]",
+]
+summary = "Timing-check auxiliaries shall use their defined categories: delayed_reference and delayed_data are terminal identifiers with optional constant mintypmax indices; notifier is a variable identifier; timing_check_limit is an expression; event_based_flag and threshold are constant expressions; remain_active_flag, timestamp_condition, timecheck_condition, and the edge offsets are mintypmax expressions."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.2"
+
+[[requirements]]
+id = "SV-2023-31-TIMING-CHECK-CONDITION-SYNTAX"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.2"
+anchors = [
+    "[2023:31.2:G002:p896-897]",
+    "[2023:31.7:G001:p917]",
+]
+summary = "A timing-check condition shall be an optionally parenthesized scalar condition: an expression, its bitwise negation, or comparison by ==, ===, !=, or !== with a defined scalar 0 or 1 literal."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.2"
+
+[[requirements]]
+id = "SV-2023-31-TIMING-CHECK-CONTEXT"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.2"
+anchors = [
+    "[2023:31.2:P005:p897]",
+]
+summary = "A timing check is a specify-block construct and shall not appear in procedural code."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.2"
+
+[[requirements]]
+id = "SV-2023-31-TIMING-CHECK-EVENT-SYNTAX"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.2"
+anchors = [
+    "[2023:31.2:G002:p896-897]",
+    "[2023:31.7:G001:p917]",
+]
+summary = "A timing-check event shall contain an optional event control, a specify terminal descriptor, and an optional &&& condition; a controlled timing-check event requires the event control."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.2"
+
+[[requirements]]
+id = "SV-2023-31-TIMING-EVENT-CONTROL-SYNTAX"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.2"
+anchors = [
+    "[2023:31.2:G002:p896-897]",
+    "[2023:31.5:G001:p914]",
+]
+summary = "A timing-check event control shall be posedge, negedge, edge, or an edge control specifier; an edge control specifier uses edge followed by a bracketed comma-separated descriptor list."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.2"
+
+[[requirements]]
+id = "SV-2023-31-TIMING-LIMIT-CONSTANT-EXPRESSION"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.2"
+anchors = [
+    "[2023:31.2:P011:p898]",
+]
+summary = "A timing-check limit shall be a constant expression and may include specparams."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.2"
+
+[[requirements]]
+id = "SV-2023-31-VECTOR-TIMING-CHECK-TRANSITION"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.8"
+anchors = [
+    "[2023:31.8:P001:p918]",
+    "[2023:31.8:P003:p918]",
+]
+summary = "Either or both timing-check signals may be vectors; each vector is treated as one signal, and a transition of one or more of its bits is one transition of that vector for the single timing check."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.8"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.8"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.8"
+
+[[requirements]]
+id = "SV-2023-31-WIDTH-EVENT-ROLES"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.4.4"
+anchors = [
+    "[2023:31.4.4:T31-10.R01:p911]",
+    "[2023:31.4.4:T31-10.R02:p911]",
+]
+summary = "For $width, the explicitly controlled reference event is the timestamp edge-triggered event, and the implicitly derived data event is the timecheck edge-triggered event."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.4.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.4.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.4.4"
+
+[[requirements]]
+id = "SV-2023-31-WIDTH-IMPLICIT-OPPOSITE-EDGE"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.4.4"
+anchors = [
+    "[2023:31.4.4:P003:p911]",
+    "[2023:31.4.4:C001:p911]",
+    "[2023:31.4.4:P008:p912]",
+]
+summary = "$width derives its implicit data event from the opposite edge of the reference-event signal and measures from reference timestamp to that data timecheck; the opposite-edge events cannot occur at the same simulation time."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.4.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.4.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.4.4"
+
+[[requirements]]
+id = "SV-2023-31-WIDTH-LIMIT-THRESHOLD-CONSTANTS"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.4.4"
+anchors = [
+    "[2023:31.4.4:T31-10.R03:p911]",
+    "[2023:31.4.4:T31-10.R04:p911]",
+]
+summary = "The $width limit and optional threshold shall be non-negative constant expressions."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.4.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.4.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.4.4"
+
+[[requirements]]
+id = "SV-2023-31-WIDTH-OPTIONAL-ARGUMENT-DEPENDENCY"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.4.4"
+anchors = [
+    "[2023:31.4.4:P007:p912]",
+]
+summary = "If a $width notifier is present, a non-null threshold argument shall also be present; omitting both is permitted and gives threshold the default value zero."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.4.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.4.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.4.4"
+
+[[requirements]]
+id = "SV-2023-31-WIDTH-REQUIRES-EDGE-REFERENCE"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.4.4"
+anchors = [
+    "[2023:31.4.4:P004:p911]",
+]
+summary = "The $width reference event shall be an edge specification; otherwise compilation shall fail."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.4.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.4.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.4.4"
+
+[[requirements]]
+id = "SV-2023-31-WIDTH-VIOLATION-RANGE"
+standard_revision = "1800-2023"
+part = "31"
+clause = "31.4.4"
+anchors = [
+    "[2023:31.4.4:P005:p912]",
+    "[2023:31.4.4:C002:p912]",
+    "[2023:31.4.4:P006:p912]",
+]
+summary = "$width reports a violation only when pulse width is strictly greater than threshold and strictly less than limit; widths at least limit and glitches no greater than threshold do not violate."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "31.4.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "31.4.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "31.4.4"

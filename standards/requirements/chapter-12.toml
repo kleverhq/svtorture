@@ -2,23 +2,2615 @@ schema_version = 3
 part = "12"
 
 [[requirements]]
-id = "SV-2023-12-IF-X-FALSE"
+id = "SV-2023-12-BREAK-LOOP-CONTEXT"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.8"
+anchors = [
+    "[2023:12.8:P002:p334]",
+]
+summary = "A break statement is legal only within a loop."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.8"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.8"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.8"
+
+[[requirements]]
+id = "SV-2023-12-BREAK-LOOP-EXIT"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.8"
+anchors = [
+    "[2023:12.8:P002:p334]",
+]
+summary = "When break executes in a loop, it immediately exits that loop; in a multidimensional foreach it exits the entire foreach rather than only the current dimension."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.8"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.8"
+note = "The 2017 rule states that break jumps out of the loop; because a multidimensional foreach is one loop, this also exits the entire foreach."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.8"
+
+[[requirements]]
+id = "SV-2023-12-CASE-COMPARISON-SIGNEDNESS"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.5"
+anchors = [
+    "[2023:12.5:P007:p321]",
+]
+summary = "For ordinary case comparison, all controlling and item expressions are treated as unsigned if any is unsigned; they are treated as signed only when all are signed."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.5"
+
+[[requirements]]
+id = "SV-2023-12-CASE-COMPARISON-WIDTH"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.5"
+anchors = [
+    "[2023:12.5:P007:p321]",
+]
+summary = "Before ordinary case comparison, the case expression and every case-item expression shall be made the width of the longest of those expressions."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.5"
+
+[[requirements]]
+id = "SV-2023-12-CASE-CONSTANT-EXPRESSION-COMPARISON"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.5.2"
+anchors = [
+    "[2023:12.5.2:P001:p322]",
+]
+summary = "A case expression may be constant, and its value shall be compared against the case-item expressions using normal case selection semantics."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.5.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.5.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.5.2"
+
+[[requirements]]
+id = "SV-2023-12-CASE-DEFAULT-CARDINALITY"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.5"
+anchors = [
+    "[2023:12.5:P002:p320]",
+]
+summary = "A case statement may omit its default item, but shall not contain more than one default item."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.5"
+
+[[requirements]]
+id = "SV-2023-12-CASE-DONT-CARE-QUESTION-MARK"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.5.1"
+anchors = [
+    "[2023:12.5.1:P003:p322]",
+]
+summary = "Within casez and casex literal numbers, a question-mark digit is permitted in place of Z and denotes a do-not-care bit."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.5.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.5.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.5.1"
+
+[[requirements]]
+id = "SV-2023-12-CASE-EXPRESSION-EVALUATION-ORDER"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.5"
+anchors = [
+    "[2023:12.5:P005:p321]",
+]
+summary = "An ordinary case evaluates its case expression exactly once before evaluating and comparing case-item expressions in their source order; the default item is ignored during that search."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.5"
+
+[[requirements]]
+id = "SV-2023-12-CASE-FOUR-STATE-EXACT-MATCH"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.5"
+anchors = [
+    "[2023:12.5:P007:p321]",
+]
+summary = "An ordinary case item matches only when every compared bit is exactly equal among the four values 0, 1, X, and Z."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.5"
+
+[[requirements]]
+id = "SV-2023-12-CASE-INSIDE-ORDER-AND-DEFAULT"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.5.4"
+anchors = [
+    "[2023:12.5.4:P001:p324]",
+]
+summary = "A case-inside evaluates its case and range-list expressions in the order required by its normal, unique, or priority qualification, and executes its default item when all membership comparisons do not match."
+related_clauses = [
+    "12.5",
+    "12.5.3",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.5.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.5.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.5.4"
+
+[[requirements]]
+id = "SV-2023-12-CASE-INSIDE-SELECTION"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.5.4"
+anchors = [
+    "[2023:12.5.4:P001:p324]",
+]
+summary = "A case-inside applies asymmetric-wildcard inside comparison with the case expression as left operand and each range-list item as right operand; only 1'b1 selects an item, while 1'b0 and 1'bx do not."
+related_clauses = [
+    "11.4.6",
+    "11.4.13",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.5.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.5.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.5.4"
+
+[[requirements]]
+id = "SV-2023-12-CASE-LINEAR-SELECTION"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.5"
+anchors = [
+    "[2023:12.5:P005:p321]",
+]
+summary = "During ordinary case selection, the statement for the first matching item executes and the search terminates; if none matches, default executes when present and no item executes when absent."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.5"
+
+[[requirements]]
+id = "SV-2023-12-CASE-PATTERN-EVALUATION-ORDER"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.6.1"
+anchors = [
+    "[2023:12.6.1:P003:p326]",
+]
+summary = "A case-matches evaluates its tested expression exactly once and tests its value against nondefault items one at a time in source order."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.6.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.6.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.6.1"
+
+[[requirements]]
+id = "SV-2023-12-CASE-PATTERN-FILTER-SELECTION"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.6.1"
+anchors = [
+    "[2023:12.6.1:P004:p326]",
+]
+summary = "A case-matches item is selected only after its pattern matches and binds identifiers and its optional Boolean filter evaluates to a determined nonzero value."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.6.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.6.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.6.1"
+
+[[requirements]]
+id = "SV-2023-12-CASE-PATTERN-ITEM-SCOPE"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.6.1"
+anchors = [
+    "[2023:12.6.1:P001:p326]",
+]
+summary = "In a case-matches item, a pattern may be followed by &&& and a Boolean filter; the pattern's implicit identifier scope extends through that item's filter and statement only, allowing identifiers to be reused in other items."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.6.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.6.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.6.1"
+
+[[requirements]]
+id = "SV-2023-12-CASE-PATTERN-LINEAR-SELECTION"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.6.1"
+anchors = [
+    "[2023:12.6.1:P003:p326]",
+]
+summary = "A case-matches executes the statement of the first selected item and terminates its search; if no item is selected, default executes when present and no statement executes when absent."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.6.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.6.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.6.1"
+
+[[requirements]]
+id = "SV-2023-12-CASE-PATTERN-NO-MATCH-CHECK"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.6.1"
+anchors = [
+    "[2023:12.6.1:P014:p328]",
+]
+summary = "A priority or unique case-matches asserts that at least one case item is selected, so selecting no item is a qualifier violation."
+related_clauses = [
+    "12.5.3",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.6.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.6.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.6.1"
+
+[[requirements]]
+id = "SV-2023-12-CASE-PATTERN-TYPE-COMPATIBILITY"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.6.1"
+anchors = [
+    "[2023:12.6.1:P002:p326]",
+]
+summary = "A case-matches tested expression shall have a statically known type identical to the type of every case-item pattern."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.6.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.6.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.6.1"
+
+[[requirements]]
+id = "SV-2023-12-CASE-PATTERN-UNIQUE-OVERLAP"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.6.1"
+anchors = [
+    "[2023:12.6.1:P014:p328]",
+]
+summary = "A unique case-matches asserts that exactly one case item is selected, so selection of more than one item is a qualifier violation."
+related_clauses = [
+    "12.5.3",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.6.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.6.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.6.1"
+
+[[requirements]]
+id = "SV-2023-12-CASE-PATTERN-WILDCARD-FORMS"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.6.1"
+anchors = [
+    "[2023:12.6.1:P013:p328]",
+]
+summary = "A case-matches may use casez to ignore Z bits or casex to ignore both X and Z bits wherever pattern matching compares two bits, including tag bits and member bits."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.6.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.6.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.6.1"
+
+[[requirements]]
+id = "SV-2023-12-CASE-RUNTIME-EXPRESSIONS"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.5"
+anchors = [
+    "[2023:12.5:P003:p320]",
+]
+summary = "Both a case expression and ordinary case-item expressions may be nonconstant expressions."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.5"
+
+[[requirements]]
+id = "SV-2023-12-CASE-STATEMENT-SYNTAX"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.5"
+anchors = [
+    "[2023:12.5:G001:p320]",
+]
+summary = "A case statement shall match Syntax 12-3, using case, casez, or casex with ordinary items, a matches form with pattern items, or case-inside with range-list items, and may use unique, unique0, or priority where the selected grammar permits."
+related_clauses = [
+    "A.6.7",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.5"
+
+[[requirements]]
+id = "SV-2023-12-CASEZ-CASEX-DONT-CARE-MATCHING"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.5.1"
+anchors = [
+    "[2023:12.5.1:P001:p322]",
+    "[2023:12.5.1:P002:p322]",
+]
+summary = "In casez, a Z bit in either the case expression or an item is a do-not-care and that bit position is ignored; in casex, either X or Z in either operand makes the bit position a do-not-care."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.5.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.5.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.5.1"
+
+[[requirements]]
+id = "SV-2023-12-CONDITIONAL-PATTERN-BINDING-SCOPE"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.6.3"
+anchors = [
+    "[2023:12.6.3:P001:p329]",
+]
+summary = "An identifier bound by a pattern in a conditional-expression predicate is in scope in remaining predicate clauses and the consequent expression, but not in earlier clauses or the alternative expression."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.6.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.6.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.6.3"
+
+[[requirements]]
+id = "SV-2023-12-CONDITIONAL-PATTERN-RESULT"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.6.3"
+anchors = [
+    "[2023:12.6.3:P002:p329]",
+]
+summary = "When a pattern-enabled conditional predicate evaluates true, false, or ambiguously through its filters, the overall conditional expression shall apply the corresponding conditional-operator result semantics of 11.4.11."
+related_clauses = [
+    "11.4.11",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.6.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.6.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.6.3"
+
+[[requirements]]
+id = "SV-2023-12-CONDITIONAL-PATTERN-SEQUENTIAL-CONJUNCTION"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.6.3"
+anchors = [
+    "[2023:12.6.3:P001:p329]",
+]
+summary = "A conditional-expression predicate may combine Boolean and expression-matches-pattern clauses with &&&; clauses evaluate left to right, stop after the first failure, and all must succeed for a true predicate."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.6.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.6.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.6.3"
+
+[[requirements]]
+id = "SV-2023-12-CONTINUE-LOOP-CONTEXT"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.8"
+anchors = [
+    "[2023:12.8:P002:p334]",
+]
+summary = "A continue statement is legal only within a loop."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.8"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.8"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.8"
+
+[[requirements]]
+id = "SV-2023-12-CONTINUE-LOOP-CONTROL"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.8"
+anchors = [
+    "[2023:12.8:P002:p334]",
+]
+summary = "When continue executes in a loop, it transfers to that loop's end while still executing any loop control; in a multidimensional foreach it advances after the current complete tuple of index values."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.8"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.8"
+note = "The 2017 rule transfers to the loop end and executes loop control; for multidimensional foreach, the loop control advances after the current complete index tuple."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.8"
+
+[[requirements]]
+id = "SV-2023-12-DANGLING-ELSE-ASSOCIATION"
 standard_revision = "1800-2023"
 part = "12"
 clause = "12.4"
-anchors = ["[2023:12.4:P002:p315]"]
-summary = "An all-X conditional predicate is false and does not execute the then branch."
+anchors = [
+    "[2023:12.4:P004:p315]",
+    "[2023:12.4:P005:p316]",
+]
+summary = "In nested if statements, an else associates with the closest preceding if that lacks an else; a begin-end block shall delimit an inner if when association with an outer if is intended."
 related_clauses = []
-tags = ["conditional", "four-state"]
-revision_applicability = { "1800-2012" = { status = "applicable", clause = "12.4" }, "1800-2017" = { status = "applicable", clause = "12.4" }, "1800-2023" = { status = "applicable", clause = "12.4" } }
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.4"
 
 [[requirements]]
-id = "SV-2023-12-UNIQUE-NOMATCH-REPORT"
+id = "SV-2023-12-DO-WHILE-POST-TEST"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.7.5"
+anchors = [
+    "[2023:12.7.5:P001:p333]",
+    "[2023:12.7.5:P002:p333]",
+]
+summary = "A do-while loop executes its body before evaluating any expression usable as a Boolean at the end of each iteration, so the body executes at least once and repeats only while that expression is true."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.7.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.7.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.7.5"
+
+[[requirements]]
+id = "SV-2023-12-FOR-CONTROL-LIST-FORMS"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.7.1"
+anchors = [
+    "[2023:12.7.1:P006:p331]",
+]
+summary = "A for initialization may contain one or more comma-separated declarations or assignments, and its step may contain one or more comma-separated assignments, increment/decrement expressions, or function calls."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.7.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.7.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.7.1"
+
+[[requirements]]
+id = "SV-2023-12-FOR-EXTERNAL-CONTROL-VARIABLES"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.7.1"
+anchors = [
+    "[2023:12.7.1:P002:p330]",
+]
+summary = "A for loop may use control variables declared before the loop rather than declaring them in its initialization."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.7.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.7.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.7.1"
+
+[[requirements]]
+id = "SV-2023-12-FOR-INITIALIZATION-DECLARATION-CONSISTENCY"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.7.1"
+anchors = [
+    "[2023:12.7.1:P007:p331]",
+]
+summary = "Within one for-loop initialization, either every control variable shall be locally declared or none shall be locally declared; declarations and assignments to predeclared controls shall not be mixed."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.7.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.7.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.7.1"
+
+[[requirements]]
+id = "SV-2023-12-FOR-INITIALIZER-DECLARATION-ORDER"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.7.1"
+anchors = [
+    "[2023:12.7.1:P008:p331]",
+]
+summary = "In a for initialization containing multiple local declarations, a later variable's initializer may reference local variables declared earlier in that initialization list."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.7.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.7.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.7.1"
+
+[[requirements]]
+id = "SV-2023-12-FOR-LOCAL-DECLARATION-AUTOMATIC-LIFETIME"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.7.1"
+anchors = [
+    "[2023:12.7.1:P003:p330]",
+]
+summary = "Variables declared in a for-loop initialization have automatic lifetime within the loop's implicit block."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.7.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.7.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.7.1"
+
+[[requirements]]
+id = "SV-2023-12-FOR-LOCAL-DECLARATION-SCOPE"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.7.1"
+anchors = [
+    "[2023:12.7.1:P003:p330]",
+    "[2023:12.7.1:P005:p331]",
+]
+summary = "A for loop with declarations in its initialization creates an implicit begin-end block and loop-local hierarchical scope that a statement label may name; initialization without a declaration creates no such implicit block."
+related_clauses = [
+    "9.3.5",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.7.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.7.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.7.1"
+
+[[requirements]]
+id = "SV-2023-12-FOR-LOOP-EXECUTION-SEQUENCE"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.7.1"
+anchors = [
+    "[2023:12.7.1:L001:p330]",
+    "[2023:12.7.1:L002:p330]",
+    "[2023:12.7.1:L003:p330]",
+]
+summary = "A for loop executes its optional initialization once, then repeatedly evaluates the optional condition, exits when it is zero, X, or Z, otherwise executes the body followed by the optional step and repeats; an omitted condition does not cause exit."
+related_clauses = [
+    "12.4",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.7.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.7.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.7.1"
+
+[[requirements]]
+id = "SV-2023-12-FOREACH-ARRAY-AND-STRING-DOMAIN"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.7.3"
+anchors = [
+    "[2023:12.7.3:P001:p331-332]",
+]
+summary = "A foreach loop may iterate any packed or unpacked array; each listed loop variable corresponds to an array dimension, and a string is treated as a dynamic byte array indexed from 0 through N-1 for its N characters."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "changed-expectation"
+clause = "12.7.3"
+note = "The 2012 rule permits foreach over array types but does not treat a scalar string as a dynamic byte array indexed from 0 through N-1."
+
+[requirements.revision_applicability.1800-2017]
+status = "changed-expectation"
+clause = "12.7.3"
+note = "The 2017 clause permits foreach over arrays but does not specify the 2023 treatment of a string variable as a dynamic byte array indexed 0 through N-1."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.7.3"
+
+[[requirements]]
+id = "SV-2023-12-FOREACH-DIMENSION-VARIABLE-LIST"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.7.3"
+anchors = [
+    "[2023:12.7.3:P003:p332]",
+]
+summary = "A foreach loop shall list no more index-variable positions than the array has dimensions; a position may be omitted to skip iteration over that dimension, and omitted trailing positions need no trailing commas."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.7.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.7.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.7.3"
+
+[[requirements]]
+id = "SV-2023-12-FOREACH-IDENTIFIER-NO-FUNCTION-CALL"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.7.3"
+anchors = [
+    "[2023:12.7.3:P001:p331-332]",
+]
+summary = "The array identifier of a foreach statement shall not include a function call as an implicit variable declaration."
+related_clauses = [
+    "13.4.1",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "The 2012 standard has no foreach restriction forbidding a function call in the array-designating identifier as an implicit variable declaration."
+
+[requirements.revision_applicability.1800-2017]
+status = "same-rule-different-clause"
+clause = "12.7"
+note = "The 2017 foreach grammar restricts the designator to ps_or_hierarchical_array_identifier, excluding a function call."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.7.3"
+
+[[requirements]]
+id = "SV-2023-12-FOREACH-INDEX-AUTOMATIC-LIFETIME"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.7.3"
+anchors = [
+    "[2023:12.7.3:P003:p332]",
+]
+summary = "Index variables implicitly declared by a foreach loop have automatic lifetime in its implicit block."
+related_clauses = [
+    "12.7.1",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.7.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.7.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.7.3"
+
+[[requirements]]
+id = "SV-2023-12-FOREACH-INDEX-EXPRESSION-CAST"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.7.3"
+anchors = [
+    "[2023:12.7.3:P008:p332]",
+]
+summary = "When a foreach index variable is used other than to index its designated array, it is automatically cast to int for fixed-size or dynamic arrays, or to the declared associative index type for an associative array; an explicit cast may select another type."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.7.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.7.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.7.3"
+
+[[requirements]]
+id = "SV-2023-12-FOREACH-INDEX-NAME-DISTINCT"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.7.3"
+anchors = [
+    "[2023:12.7.3:P003:p332]",
+]
+summary = "No foreach loop variable shall have the same identifier as the array being iterated."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.7.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.7.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.7.3"
+
+[[requirements]]
+id = "SV-2023-12-FOREACH-INDEX-READ-ONLY"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.7.3"
+anchors = [
+    "[2023:12.7.3:P003:p332]",
+]
+summary = "A foreach loop index variable is read-only within the loop."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.7.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.7.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.7.3"
+
+[[requirements]]
+id = "SV-2023-12-FOREACH-INDEX-SCOPE"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.7.3"
+anchors = [
+    "[2023:12.7.3:P003:p332]",
+]
+summary = "A foreach creates an implicit begin-end hierarchical scope containing loop-local index variables; the scope is unnamed unless a statement label names it."
+related_clauses = [
+    "9.3.5",
+    "12.7.1",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.7.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.7.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.7.3"
+
+[[requirements]]
+id = "SV-2023-12-FOREACH-INDEX-TYPE"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.7.3"
+anchors = [
+    "[2023:12.7.3:P003:p332]",
+]
+summary = "Each foreach index variable is implicitly declared with a type consistent with the corresponding array index type."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.7.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.7.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.7.3"
+
+[[requirements]]
+id = "SV-2023-12-FOREACH-ITERATION-ORDER"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.7.3"
+anchors = [
+    "[2023:12.7.3:P004:p332]",
+    "[2023:12.7.3:P005:p332]",
+    "[2023:12.7.3:P007:p332]",
+]
+summary = "Foreach maps variables to dimensions by dimension cardinality and iterates each dimension in its declared index order; lower-cardinality dimensions form outer loops and higher-cardinality dimensions change more rapidly as inner loops."
+related_clauses = [
+    "20.7",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.7.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.7.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.7.3"
+
+[[requirements]]
+id = "SV-2023-12-FOREVER-LOOP-EXECUTION"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.7.6"
+anchors = [
+    "[2023:12.7.6:P001:p333]",
+]
+summary = "A forever loop repeatedly executes its associated statement without an intrinsic termination condition."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.7.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.7.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.7.6"
+
+[[requirements]]
+id = "SV-2023-12-FUNCTION-RETURN-EXPRESSION"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.8"
+anchors = [
+    "[2023:12.8:P004:p334]",
+]
+summary = "In a function that returns a value, every return statement shall provide an expression of the function's return type."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.8"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.8"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.8"
+
+[[requirements]]
+id = "SV-2023-12-IF-ELSE-BRANCH-SELECTION"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.4"
+anchors = [
+    "[2023:12.4:P002:p315]",
+    "[2023:12.6.2:P003:p328]",
+]
+summary = "For an if predicate, a nonzero known value executes its associated statement; zero, X, or Z does not execute that statement and instead executes the else statement when one is present."
+related_clauses = [
+    "12.6.2",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.4"
+
+[[requirements]]
+id = "SV-2023-12-IF-ELSE-IF-EVALUATION-ORDER"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.4.1"
+anchors = [
+    "[2023:12.4.1:P002:p316]",
+]
+summary = "The conditions of an if-else-if chain shall be evaluated in source order until selection terminates the chain."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.4.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.4.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.4.1"
+
+[[requirements]]
+id = "SV-2023-12-IF-ELSE-IF-ORDER"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.4.1"
+anchors = [
+    "[2023:12.4.1:P002:p316]",
+    "[2023:12.4.1:P003:p316]",
+]
+summary = "An if-else-if chain executes only the statement for the first true condition and then terminates; if none is true, an optional final else executes when present and no chain arm executes when absent."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.4.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.4.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.4.1"
+
+[[requirements]]
+id = "SV-2023-12-IF-ELSE-SYNTAX"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.4"
+anchors = [
+    "[2023:12.4:P001:p315]",
+    "[2023:12.4:G001:p315]",
+]
+summary = "An if statement shall have a parenthesized conditional predicate and statement-or-null, may have repeated else-if arms and a final else arm, and may be prefixed by unique, unique0, or priority; a predicate may combine expressions or matching patterns with &&&."
+related_clauses = [
+    "A.6.6",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.4"
+
+[[requirements]]
+id = "SV-2023-12-IF-PATTERN-BINDING-SCOPE"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.6.2"
+anchors = [
+    "[2023:12.6.2:P001:p328]",
+]
+summary = "An identifier bound by an if-predicate pattern is in scope in all remaining predicate clauses and in that if's true arm, but not in earlier clauses or the else arm."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.6.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.6.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.6.2"
+
+[[requirements]]
+id = "SV-2023-12-IF-PATTERN-SEQUENTIAL-CONJUNCTION"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.6.2"
+anchors = [
+    "[2023:12.6.2:P001:p328]",
+]
+summary = "An if pattern predicate consists of expression or expression-matches-pattern clauses separated by &&&, evaluated left to right with short-circuiting on the first failure; every clause must succeed for the predicate to be true."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.6.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.6.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.6.2"
+
+[[requirements]]
+id = "SV-2023-12-IF-PATTERN-TYPE-COMPATIBILITY"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.6.2"
+anchors = [
+    "[2023:12.6.2:P002:p328]",
+]
+summary = "In each expression-matches-pattern if clause, the expression and pattern shall have the same statically known type."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.6.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.6.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.6.2"
+
+[[requirements]]
+id = "SV-2023-12-IF-QUALIFIER-SCOPE"
 standard_revision = "1800-2023"
 part = "12"
 clause = "12.4.2"
-anchors = ["[2023:12.4.2:P002:p317]"]
-summary = "A unique-if chain with no true condition and no else produces a violation diagnostic."
+anchors = [
+    "[2023:12.4.2:P008:p318]",
+]
+summary = "A unique, unique0, or priority qualifier applies to the entire if-else-if series and shall not appear after an else within that series."
 related_clauses = []
-tags = ["conditional", "unique"]
-revision_applicability = { "1800-2012" = { status = "applicable", clause = "12.4.2" }, "1800-2017" = { status = "applicable", clause = "12.4.2" }, "1800-2023" = { status = "applicable", clause = "12.4.2" } }
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.4.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.4.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.4.2"
+
+[[requirements]]
+id = "SV-2023-12-JUMP-CANNOT-CROSS-FORK-JOIN"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.8"
+anchors = [
+    "[2023:12.8:P003:p334]",
+]
+summary = "A break or continue inside a fork-join block shall not target a loop outside that fork-join block."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.8"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.8"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.8"
+
+[[requirements]]
+id = "SV-2023-12-JUMP-STATEMENT-SYNTAX"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.8"
+anchors = [
+    "[2023:12.8:G001:p334]",
+    "[2023:12.8:P001:p334]",
+]
+summary = "A jump statement shall be break followed by a semicolon, continue followed by a semicolon, or return with an optional expression followed by a semicolon."
+related_clauses = [
+    "A.6.5",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.8"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.8"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.8"
+
+[[requirements]]
+id = "SV-2023-12-LOOP-STATEMENT-SYNTAX"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.7"
+anchors = [
+    "[2023:12.7:P001:p329]",
+    "[2023:12.7:G001:p329]",
+]
+summary = "A loop statement shall match Syntax 12-5 as forever, repeat, while, for, do-while, or foreach, with for initialization, step, and foreach index variables using the enumerated grammatical forms."
+related_clauses = [
+    "A.6.8",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.7"
+
+[[requirements]]
+id = "SV-2023-12-PATTERN-CONSTANT-INTEGRAL"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.6"
+anchors = [
+    "[2023:12.6:P003:p325]",
+]
+summary = "A constant-expression pattern shall have integral type and shall be statically type-checked against its known contextual type."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.6"
+
+[[requirements]]
+id = "SV-2023-12-PATTERN-CONSTANT-MATCH"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.6"
+anchors = [
+    "[2023:12.6:L006:p325]",
+]
+summary = "A constant-expression pattern succeeds exactly when the corresponding matched value equals the constant's value."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.6"
+
+[[requirements]]
+id = "SV-2023-12-PATTERN-IDENTIFIER-DECLARATION"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.6"
+anchors = [
+    "[2023:12.6:P004:p325]",
+]
+summary = "Each pattern creates a scope and implicitly declares every pattern identifier in that scope with the unique type determined by the identifier's pattern position."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.6"
+
+[[requirements]]
+id = "SV-2023-12-PATTERN-IDENTIFIER-UNIQUENESS"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.6"
+anchors = [
+    "[2023:12.6:P004:p325]",
+]
+summary = "An identifier shall occur as a binding in at most one position within a single pattern."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.6"
+
+[[requirements]]
+id = "SV-2023-12-PATTERN-IF-QUALIFIERS"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.6.2"
+anchors = [
+    "[2023:12.6.2:P007:p329]",
+]
+summary = "The priority and unique if qualifiers remain permitted when an if predicate contains pattern-matching clauses, with their normal qualified-if checks applying to the full chain."
+related_clauses = [
+    "12.4.2",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.6.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.6.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.6.2"
+
+[[requirements]]
+id = "SV-2023-12-PATTERN-MATCH-DETERMINED-RESULT"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.6"
+anchors = [
+    "[2023:12.6:L001:p325]",
+]
+summary = "Pattern matching returns a determined one-bit 0 or 1 result and never X or Z, even when the matched value or pattern contains X or Z bits."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.6"
+
+[[requirements]]
+id = "SV-2023-12-PATTERN-MATCH-TYPE-COMPATIBILITY"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.6"
+anchors = [
+    "[2023:12.6:P005:p325]",
+]
+summary = "A value and the pattern against which it is matched shall have the same statically checked type."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.6"
+
+[[requirements]]
+id = "SV-2023-12-PATTERN-STRUCTURE-MATCH"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.6"
+anchors = [
+    "[2023:12.6:L008:p325]",
+]
+summary = "A structure pattern succeeds only when every specified nested member pattern recursively matches; named members may appear in any order and omitted named members are ignored."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.6"
+
+[[requirements]]
+id = "SV-2023-12-PATTERN-SUCCESSFUL-BINDING"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.6"
+anchors = [
+    "[2023:12.6:L002:p325]",
+    "[2023:12.6:L004:p325]",
+]
+summary = "An identifier pattern always matches any corresponding value and, on a successful overall match, the identifier shall receive that value using ordinary procedural-assignment semantics."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.6"
+
+[[requirements]]
+id = "SV-2023-12-PATTERN-SYNTAX"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.6"
+anchors = [
+    "[2023:12.6:P002:p325]",
+    "[2023:12.6:G001:p325]",
+]
+summary = "A pattern shall use Syntax 12-4 forms, recursively nesting parenthesized, identifier-binding, wildcard, constant, tagged-member, positional-structure, or named-member patterns; a tagged void member omits its nested pattern."
+related_clauses = [
+    "A.6.7.1",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "changed-expectation"
+clause = "12.6"
+note = "The 2012 pattern grammar has the identifier, wildcard, constant, tagged-member, and structure forms but does not include the 2023 parenthesized-pattern alternative."
+
+[requirements.revision_applicability.1800-2017]
+status = "changed-expectation"
+clause = "12.6"
+note = "The 2017 Syntax 12-4 has the identifier, wildcard, constant, tagged-member, and structure forms but does not include the 2023 parenthesized-pattern alternative."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.6"
+
+[[requirements]]
+id = "SV-2023-12-PATTERN-TAGGED-UNION-MATCH"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.6"
+anchors = [
+    "[2023:12.6:L007:p325]",
+]
+summary = "A tagged-union pattern succeeds only when the value has the named tag and its member value recursively matches the nested pattern."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.6"
+
+[[requirements]]
+id = "SV-2023-12-PATTERN-WILDCARD-MATCH"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.6"
+anchors = [
+    "[2023:12.6:L005:p325]",
+]
+summary = "The wildcard pattern .* always succeeds for its corresponding value."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.6"
+
+[[requirements]]
+id = "SV-2023-12-PRIORITY-CASE-FIRST-MATCH"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.5.3"
+anchors = [
+    "[2023:12.5.3:P001:p323]",
+]
+summary = "A priority-qualified case, casez, or casex shall act only on the first matching case item."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.5.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.5.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.5.3"
+
+[[requirements]]
+id = "SV-2023-12-PRIORITY-IF-EVALUATION-ORDER"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.4.2"
+anchors = [
+    "[2023:12.4.2:P007:p317]",
+]
+summary = "A priority-if chain shall evaluate its conditions in source order and select according to that priority when conditions overlap."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.4.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.4.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.4.2"
+
+[[requirements]]
+id = "SV-2023-12-PROCEDURAL-STATEMENT-CONTAINMENT"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.2"
+anchors = [
+    "[2023:12.2:P001:p314]",
+    "[2023:12.2:L001:p314]",
+    "[2023:12.2:L002:p314]",
+    "[2023:12.2:L003:p314]",
+    "[2023:12.2:L004:p314]",
+    "[2023:12.2:L005:p314]",
+    "[2023:12.2:L006:p314]",
+    "[2023:12.2:L007:p314]",
+    "[2023:12.2:L008:p314]",
+    "[2023:12.2:L009:p314]",
+    "[2023:12.2:L010:p314]",
+]
+summary = "A procedural programming statement shall be contained in an initial, always, always_comb, always_latch, always_ff, or final automatically activated block, or in a task or function block that activates when called."
+related_clauses = [
+    "9",
+    "13",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.2"
+
+[[requirements]]
+id = "SV-2023-12-PROCEDURAL-STATEMENT-SYNTAX"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.3"
+anchors = [
+    "[2023:12.3:P001:p314]",
+    "[2023:12.3:G001:p314-315]",
+]
+summary = "A procedural statement or null statement shall match Syntax 12-1: an optional block label and attributes precede one of the enumerated statement-item forms, while a null statement consists of optional attributes followed by a semicolon."
+related_clauses = [
+    "A.6.4",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "changed-expectation"
+clause = "12.3"
+note = "The 2012 Syntax 12-1 additionally enumerates a standalone inc_or_dec_expression followed by a semicolon as a statement-item alternative."
+
+[requirements.revision_applicability.1800-2017]
+status = "changed-expectation"
+clause = "12.3"
+note = "The 2017 Syntax 12-1 additionally permits a standalone inc_or_dec_expression statement item, which is absent from the 2023 enumeration."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.3"
+
+[[requirements]]
+id = "SV-2023-12-QUALIFIED-CASE-ASSERTION-CONTROL"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.5.3.1"
+anchors = [
+    "[2023:12.5.3.1:P001:p324]",
+]
+summary = "Assertion control system tasks may control reporting of unique-case, unique0-case, and priority-case violations."
+related_clauses = [
+    "20.11",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.5.3.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.5.3.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.5.3.1"
+
+[[requirements]]
+id = "SV-2023-12-QUALIFIED-CASE-GLITCH-IMMUNITY"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.5.3.1"
+anchors = [
+    "[2023:12.5.3.1:P001:p324]",
+    "[2023:12.5.3.1:P002:p324]",
+]
+summary = "Unique-case, unique0-case, and priority-case violation checks shall not produce false reports from zero-delay glitches in the active region set, using the same glitch handling as qualified-if checks."
+related_clauses = [
+    "4.4.1",
+    "12.4.2.1",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.5.3.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.5.3.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.5.3.1"
+
+[[requirements]]
+id = "SV-2023-12-QUALIFIED-CASE-NO-MATCH-REPORT"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.5.3"
+anchors = [
+    "[2023:12.5.3:P004:p323]",
+]
+summary = "When no item matches a priority-case or unique-case, a violation report shall be issued; it may be issued at compile time if determinable there, otherwise it shall be issued at run time."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.5.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.5.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.5.3"
+
+[[requirements]]
+id = "SV-2023-12-QUALIFIED-CASE-PROCESS-INDEPENDENCE"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.5.3.2"
+anchors = [
+    "[2023:12.5.3.2:P001:p324]",
+]
+summary = "Qualified-case violation reports shall be associated, queued, flushed, and reported independently for each executing process in the same manner as qualified-if reports."
+related_clauses = [
+    "12.4.2.2",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.5.3.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.5.3.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.5.3.2"
+
+[[requirements]]
+id = "SV-2023-12-QUALIFIED-CASE-REPORT-FLUSH"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.5.3.1"
+anchors = [
+    "[2023:12.5.3.1:P002:p324]",
+]
+summary = "Qualified-case pending reports use the same per-process flush points as qualified-if reports and are discarded when the executing process reaches such a flush point before maturation."
+related_clauses = [
+    "12.4.2.1",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.5.3.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.5.3.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.5.3.1"
+
+[[requirements]]
+id = "SV-2023-12-QUALIFIED-CASE-REPORT-MATURATION"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.5.3.1"
+anchors = [
+    "[2023:12.5.3.1:P002:p324]",
+]
+summary = "A qualified-case pending report matures in the Observed region under the same mechanics as a qualified-if report, after which it is reported and cannot be flushed."
+related_clauses = [
+    "12.4.2.1",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.5.3.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.5.3.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.5.3.1"
+
+[[requirements]]
+id = "SV-2023-12-QUALIFIED-CASE-REPORT-SCHEDULING"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.5.3.1"
+anchors = [
+    "[2023:12.5.3.1:P002:p324]",
+]
+summary = "A qualified-case violation check is evaluated when its statement executes, but its report is deferred to the Observed region of the current time step, identically to a qualified-if check."
+related_clauses = [
+    "4.4",
+    "12.4.2.1",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.5.3.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.5.3.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.5.3.1"
+
+[[requirements]]
+id = "SV-2023-12-QUALIFIED-IF-ASSERTION-CONTROL"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.4.2.1"
+anchors = [
+    "[2023:12.4.2.1:P002:p318]",
+]
+summary = "Assertion control system tasks may control reporting of unique-if, unique0-if, and priority-if violations."
+related_clauses = [
+    "20.11",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.4.2.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.4.2.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.4.2.1"
+
+[[requirements]]
+id = "SV-2023-12-QUALIFIED-IF-GLITCH-IMMUNITY"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.4.2.1"
+anchors = [
+    "[2023:12.4.2.1:P001:p318]",
+]
+summary = "Violation checks for unique-if, unique0-if, and priority-if shall not generate false reports from zero-delay glitches within the active event region set."
+related_clauses = [
+    "4.4.1",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.4.2.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.4.2.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.4.2.1"
+
+[[requirements]]
+id = "SV-2023-12-QUALIFIED-IF-NO-MATCH-REPORT"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.4.2"
+anchors = [
+    "[2023:12.4.2:P002:p317]",
+]
+summary = "When no condition matches a unique-if or priority-if chain, a violation report shall be issued unless the chain has an explicit else."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.4.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.4.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.4.2"
+
+[[requirements]]
+id = "SV-2023-12-QUALIFIED-IF-PROCESS-INDEPENDENCE"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.4.2.2"
+anchors = [
+    "[2023:12.4.2.2:P001:p319]",
+    "[2023:12.4.2.2:P003:p319]",
+    "[2023:12.4.2.2:P004:p319]",
+    "[2023:12.4.2.2:P005:p320]",
+]
+summary = "Qualified-if checks and pending reports are associated independently with each calling process: separate callers produce separate reports, retriggering one caller flushes only that process's pending reports, and does not flush another caller's report."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.4.2.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.4.2.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.4.2.2"
+
+[[requirements]]
+id = "SV-2023-12-QUALIFIED-IF-REPORT-FLUSH"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.4.2.1"
+anchors = [
+    "[2023:12.4.2.1:P003:p318]",
+    "[2023:12.4.2.1:L001:p318]",
+    "[2023:12.4.2.1:L002:p318]",
+    "[2023:12.4.2.1:P004:p318]",
+]
+summary = "Before pending qualified-if reports mature, a process reaches a flush point when it resumes after an event control or wait, or when an always_comb/always_latch process resumes from a dependent-signal transition; at that point all pending reports in that process queue are discarded."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.4.2.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.4.2.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.4.2.1"
+
+[[requirements]]
+id = "SV-2023-12-QUALIFIED-IF-REPORT-MATURATION"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.4.2.1"
+anchors = [
+    "[2023:12.4.2.1:P005:p318]",
+]
+summary = "In the Observed region, every still-pending qualified-if violation report shall mature, become immune to later flushing, be reported through the tool's violation mechanism, and be removed from its process queue."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.4.2.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.4.2.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.4.2.1"
+
+[[requirements]]
+id = "SV-2023-12-QUALIFIED-IF-REPORT-SCHEDULING"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.4.2.1"
+anchors = [
+    "[2023:12.4.2.1:P002:p318]",
+    "[2023:12.4.2.1:P003:p318]",
+]
+summary = "A qualified-if violation check is evaluated when its statement executes; a detected violation is queued for its process and reporting is deferred to the Observed region of the same time step."
+related_clauses = [
+    "4.4",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.4.2.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.4.2.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.4.2.1"
+
+[[requirements]]
+id = "SV-2023-12-REPEAT-LOOP-COUNT"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.7.2"
+anchors = [
+    "[2023:12.7.2:P001:p331]",
+]
+summary = "A repeat loop evaluates its count expression exactly once before iteration and executes its body that fixed number of times."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.7.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "changed-expectation"
+clause = "12.7.2"
+note = "The 2017 clause says repeat executes a fixed number of times but does not provide the 2023 explicit guarantee that the count expression is evaluated once before the loop and unaffected by body changes."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.7.2"
+
+[[requirements]]
+id = "SV-2023-12-REPEAT-LOOP-NONPOSITIVE-UNKNOWN-COUNT"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.7.2"
+anchors = [
+    "[2023:12.7.2:P001:p331]",
+]
+summary = "A repeat-loop count that is negative, X, or Z shall be treated as zero, and the loop body shall not execute."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "changed-expectation"
+clause = "12.7.2"
+note = "The 2012 rule treats unknown and high-impedance repeat counts as zero but does not specify that a negative repeat count is treated as zero."
+
+[requirements.revision_applicability.1800-2017]
+status = "changed-expectation"
+clause = "12.7.2"
+note = "The 2017 clause treats X and Z repeat counts as zero but does not include the 2023 rule that a negative count is treated as zero."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.7.2"
+
+[[requirements]]
+id = "SV-2023-12-RETURN-SUBROUTINE-ONLY"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.8"
+anchors = [
+    "[2023:12.8:P004:p334]",
+]
+summary = "A return statement is legal only within a subroutine."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.8"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.8"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.8"
+
+[[requirements]]
+id = "SV-2023-12-TYPE-REFERENCE-NET-TYPE-PREFIX"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.7"
+anchors = [
+    "[2023:12.7:G001:p329]",
+]
+summary = "When a type_reference is used as the data type in a net declaration, an explicit net type keyword shall precede it."
+related_clauses = [
+    "6",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.7"
+
+[[requirements]]
+id = "SV-2023-12-TYPE-REFERENCE-VAR-PREFIX"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.7"
+anchors = [
+    "[2023:12.7:G001:p329]",
+]
+summary = "When a type_reference is used as the data type in a variable declaration, the var keyword shall precede it."
+related_clauses = [
+    "6",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.7"
+
+[[requirements]]
+id = "SV-2023-12-UNIQUE-CASE-CONTROLLING-EVALUATION"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.5.3"
+anchors = [
+    "[2023:12.5.3:P002:p323]",
+]
+summary = "A unique-case or unique0-case evaluates its case expression exactly once before evaluating any case-item expression."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.5.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.5.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.5.3"
+
+[[requirements]]
+id = "SV-2023-12-UNIQUE-CASE-OVERLAP-CHECK"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.5.3"
+anchors = [
+    "[2023:12.5.3:P001:p323]",
+    "[2023:12.5.3:P002:p323]",
+]
+summary = "A unique-case or unique0-case shall continue item evaluation after a match sufficiently to detect a second matching case item and shall issue a violation report when more than one item matches."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.5.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.5.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.5.3"
+
+[[requirements]]
+id = "SV-2023-12-UNIQUE-CASE-OVERLAP-EXECUTION"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.5.3"
+anchors = [
+    "[2023:12.5.3:P002:p323]",
+]
+summary = "When multiple items match a unique-case or unique0-case, only the statement of the source-first matching item executes; statements of other matching items do not."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.5.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.5.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.5.3"
+
+[[requirements]]
+id = "SV-2023-12-UNIQUE-CASE-SAME-ITEM-MULTIMATCH"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.5.3"
+anchors = [
+    "[2023:12.5.3:P003:p323]",
+]
+summary = "In unique-case or unique0-case, multiple matching expressions within one case item do not constitute a uniqueness violation."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.5.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.5.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.5.3"
+
+[[requirements]]
+id = "SV-2023-12-UNIQUE-IF-OVERLAP-CHECK"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.4.2"
+anchors = [
+    "[2023:12.4.2:P004:p317]",
+    "[2023:12.4.2:P005:p317]",
+]
+summary = "A unique-if or unique0-if shall continue evaluating conditions after one becomes true sufficiently to detect a second true condition and shall issue a violation report when more than one condition is true."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.4.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.4.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.4.2"
+
+[[requirements]]
+id = "SV-2023-12-UNIQUE-IF-OVERLAP-EXECUTION"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.4.2"
+anchors = [
+    "[2023:12.4.2:P005:p317]",
+]
+summary = "When multiple conditions are true in a unique-if or unique0-if, only the statement for the source-first true condition executes; statements for other true conditions do not."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.4.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.4.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.4.2"
+
+[[requirements]]
+id = "SV-2023-12-UNIQUE0-CASE-NO-MATCH-NO-REPORT"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.5.3"
+anchors = [
+    "[2023:12.5.3:P004:p323]",
+]
+summary = "When no item matches a unique0-case, the implementation shall not issue a no-match violation report."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.5.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.5.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.5.3"
+
+[[requirements]]
+id = "SV-2023-12-UNIQUE0-IF-NO-MATCH-NO-REPORT"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.4.2"
+anchors = [
+    "[2023:12.4.2:P003:p317]",
+]
+summary = "When no condition matches a unique0-if chain, the implementation shall not issue a no-match violation report."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.4.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.4.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.4.2"
+
+[[requirements]]
+id = "SV-2023-12-WHILE-LOOP-EXECUTION"
+standard_revision = "1800-2023"
+part = "12"
+clause = "12.7.4"
+anchors = [
+    "[2023:12.7.4:P001:p333]",
+]
+summary = "A while loop tests its control expression before each iteration and repeatedly executes its body only while that expression is true; if initially false, including zero, X, or Z under if truth semantics, the body executes zero times."
+related_clauses = [
+    "12.4",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "12.7.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "12.7.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "12.7.4"

@@ -1,0 +1,319 @@
+{
+  "authority": "1800-2023",
+  "part": "K",
+  "requirements": [
+    {
+      "hints": {
+        "edge": [
+          "Include assignment, PLI-error, NBA, and end-of-time reasons."
+        ],
+        "negative": [
+          "Change a field/signature or callback reason."
+        ],
+        "notes": [],
+        "positive": [
+          "Type-check the callback record/function and assert every reason mapping."
+        ]
+      },
+      "id": "SV-2023-K-VPI-HEADER-CALLBACK-INTERFACE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Do not include vpi_compatibility.h directly in the test."
+        ],
+        "negative": [
+          "Omit or defer the compatibility include."
+        ],
+        "notes": [],
+        "positive": [
+          "Include only vpi_user.h and verify an applicable compatibility mapping is visible."
+        ]
+      },
+      "id": "SV-2023-K-VPI-HEADER-COMPATIBILITY-INCLUDE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Predefine SVPI_TYPES or PLI_TYPES with compatible caller definitions and separately verify the unconditional vpiHandle definition."
+        ],
+        "negative": [
+          "Check a header with a missing typedef or incompatible C type."
+        ],
+        "notes": [
+          "Check C type compatibility, not extra host-width assumptions."
+        ],
+        "positive": [
+          "Compile type-compatibility assertions for every PLI typedef and vpiHandle."
+        ]
+      },
+      "id": "SV-2023-K-VPI-HEADER-CORE-C-TYPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Check severity and state enumerations independently."
+        ],
+        "negative": [
+          "Change a member or state/severity mapping."
+        ],
+        "notes": [],
+        "positive": [
+          "Check every member/type and all state/severity values."
+        ]
+      },
+      "id": "SV-2023-K-VPI-HEADER-ERROR-INFO-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify both vpiBitXNor spellings and all vpiSysFunc aliases."
+        ],
+        "negative": [
+          "Check an absent alias, wrong subtype, or vpiUserDefn other than 45."
+        ],
+        "notes": [],
+        "positive": [
+          "Assert every listed mapping and compatibility alias."
+        ]
+      },
+      "id": "SV-2023-K-VPI-HEADER-EXPRESSION-CALLABLE-PROPERTIES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Include the deprecated vpiValid family and noncontiguous values."
+        ],
+        "negative": [
+          "Omit or renumber one listed property, subtype, control, or I/O macro."
+        ],
+        "notes": [],
+        "positive": [
+          "Assert all remaining properties and delay subtypes, indexed values, control operations, and VPI_MCD_STDOUT."
+        ]
+      },
+      "id": "SV-2023-K-VPI-HEADER-EXTENDED-PROPERTIES-CONTROL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Include the negative vpiUndefined value."
+        ],
+        "negative": [
+          "Check a missing property or wrong delay-mode value."
+        ],
+        "notes": [],
+        "positive": [
+          "Assert every generic/module property and delay-mode subtype."
+        ]
+      },
+      "id": "SV-2023-K-VPI-HEADER-GENERIC-MODULE-PROPERTIES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Check noncontiguous later-added values rather than assuming a dense enumeration."
+        ],
+        "negative": [
+          "Omit or renumber one object-type macro."
+        ],
+        "notes": [],
+        "positive": [
+          "Compile assertions for the complete object-type name-to-value map."
+        ]
+      },
+      "id": "SV-2023-K-VPI-HEADER-OBJECT-TYPE-CONSTANTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Include vpiNone, vpiUwire, nettype values, and vpiInterconnect."
+        ],
+        "negative": [
+          "Omit or renumber one standard mapping."
+        ],
+        "notes": [],
+        "positive": [
+          "Assert all port/net properties, directions, and net subtypes."
+        ]
+      },
+      "id": "SV-2023-K-VPI-HEADER-PORT-NET-PROPERTIES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Predefine permitted PLI type or import/export macros and verify they are preserved."
+        ],
+        "negative": [
+          "Use a header with a differing guard, platform branch, linkage wrapper, or cleanup."
+        ],
+        "notes": [],
+        "positive": [
+          "Preprocess C and C++ units that include the header twice and verify single inclusion and C linkage."
+        ]
+      },
+      "id": "SV-2023-K-VPI-HEADER-PREPROCESSING-LINKAGE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Evaluate vpiPosedge, vpiNegedge, and vpiAnyEdge from the standard masks."
+        ],
+        "negative": [
+          "Change one subtype, edge bit, or composite result."
+        ],
+        "notes": [],
+        "positive": [
+          "Assert all primitive, path, timing, elementary-edge, and composite-edge values."
+        ]
+      },
+      "id": "SV-2023-K-VPI-HEADER-PRIMITIVE-TIMING-PROPERTIES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Include vpiBaseExpr, vpiWidthExpr, and vpiAutomatics."
+        ],
+        "negative": [
+          "Omit or renumber one traversal macro."
+        ],
+        "notes": [],
+        "positive": [
+          "Compile assertions for the complete relationship macro map."
+        ]
+      },
+      "id": "SV-2023-K-VPI-HEADER-RELATIONSHIP-CONSTANTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Permit aliases normatively defined by Annex K within the range."
+        ],
+        "negative": [
+          "Detect a private header constant assigned a value from 1 through 299."
+        ],
+        "notes": [],
+        "positive": [
+          "Confirm private extension definitions do not consume the reserved range."
+        ]
+      },
+      "id": "SV-2023-K-VPI-HEADER-RESERVED-CONSTANT-RANGE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Include vpi_get64, array, va_list, variadic, and multi-index routines."
+        ],
+        "negative": [
+          "Remove one declaration or change one return/parameter signature."
+        ],
+        "notes": [
+          "Clause 38 owns runtime behavior; this record owns declarations."
+        ],
+        "positive": [
+          "Assign every routine to a pointer having its exact Annex K prototype."
+        ]
+      },
+      "id": "SV-2023-K-VPI-HEADER-ROUTINE-DECLARATIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Repeat with permitted caller-supplied PLI_VEXTERN and PLI_DLLESPEC definitions."
+        ],
+        "negative": [
+          "Remove the declaration or change its element type or macro-mediated declaration."
+        ],
+        "notes": [
+          "Clause 38.37.2 owns provision and NULL-terminated use."
+        ],
+        "positive": [
+          "Compile a type-compatible reference to vlog_startup_routines and an element under the default linkage macros."
+        ]
+      },
+      "id": "SV-2023-K-VPI-HEADER-STARTUP-ARRAY-DECLARATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Type-check calltf, compiletf, and sizetf independently."
+        ],
+        "negative": [
+          "Change a field, callback signature, or task/function value."
+        ],
+        "notes": [],
+        "positive": [
+          "Compile a complete initializer with correctly typed callback functions."
+        ]
+      },
+      "id": "SV-2023-K-VPI-HEADER-SYSTF-DATA-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Predefine VPI_TIME compatibly while checking the unguarded delay type."
+        ],
+        "negative": [
+          "Change a member name, order, type, or time value."
+        ],
+        "notes": [
+          "Do not assert host-dependent padding."
+        ],
+        "positive": [
+          "Compile member/type checks and assert all time constants."
+        ]
+      },
+      "id": "SV-2023-K-VPI-HEADER-TIME-DELAY-TYPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise VPI_VECVAL and raw two-/four-state array formats."
+        ],
+        "negative": [
+          "Change a union member, format/flag value, or aval/bval encoding."
+        ],
+        "notes": [
+          "Do not assert host-dependent padding."
+        ],
+        "positive": [
+          "Check every value member/type and associated constant mapping."
+        ]
+      },
+      "id": "SV-2023-K-VPI-HEADER-VALUE-TYPES-CONSTANTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Check argv as PLI_BYTE8 **."
+        ],
+        "negative": [
+          "Change a member name, order, or type."
+        ],
+        "notes": [],
+        "positive": [
+          "Compile an initializer and type-check all four members."
+        ]
+      },
+      "id": "SV-2023-K-VPI-HEADER-VLOG-INFO-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Check required vpi_user.h availability independently of optional private extension headers."
+        ],
+        "negative": [
+          "Check a simulator installation in which a VPI translation unit cannot locate vpi_user.h."
+        ],
+        "notes": [
+          "Separate K.2 requirements check header content."
+        ],
+        "positive": [
+          "Preprocess a C translation unit that includes vpi_user.h in the simulator's VPI development environment."
+        ]
+      },
+      "id": "SV-2023-K-VPI-USER-HEADER-PROVIDED"
+    }
+  ],
+  "schema_version": 1
+}

@@ -1,0 +1,1053 @@
+{
+  "authority": "1800-2023",
+  "part": "30",
+  "requirements": [
+    {
+      "hints": {
+        "edge": [
+          "Simultaneous transitions make multiple unconditional paths active.",
+          "The most recent path has a false condition."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Two input paths transition at different times, selecting the most recent condition-true path."
+        ]
+      },
+      "id": "SV-2023-30-ACTIVE-SPECIFY-PATH-SELECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "A constant data-source expression."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use differing data-source expressions on otherwise equivalent paths while internal module logic controls the destination."
+        ]
+      },
+      "id": "SV-2023-30-DATA-SOURCE-EXPRESSION-NONPROPAGATING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Transitions separated exactly by the path delay."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Schedule an input pulse whose resulting output transitions would be closer than the path delay."
+        ]
+      },
+      "id": "SV-2023-30-DEFAULT-INERTIAL-PULSE-REJECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Initial and final values differ."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use asymmetric delays that schedule a trailing edge before the leading edge and observe cancellation."
+        ]
+      },
+      "id": "SV-2023-30-DEFAULT-NEGATIVE-PULSE-CANCELLATION"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Without pulse-limit override, compare pulses just below and exactly at the path delay."
+        ]
+      },
+      "id": "SV-2023-30-DEFAULT-PULSE-LIMITS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Consistent matching part-select references."
+        ],
+        "negative": [
+          "One declaration references an entire port while another for the same path references its bit-select."
+        ],
+        "notes": [],
+        "positive": [
+          "Two qualified declarations both reference the same destination bit-select."
+        ]
+      },
+      "id": "SV-2023-30-DUPLICATE-EDGE-PATH-CONSISTENT-PORT-REFERENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Declarations differing in both edge and condition."
+        ],
+        "negative": [
+          "Two declarations for the same path with identical edge and condition."
+        ],
+        "notes": [],
+        "positive": [
+          "Two declarations for one path distinguished by posedge versus negedge.",
+          "Two declarations distinguished by mutually distinct conditions."
+        ]
+      },
+      "id": "SV-2023-30-DUPLICATE-EDGE-PATH-UNIQUE-QUALIFIER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Apply a negative source edge to a posedge-qualified path and verify that the path delay is not activated by that edge."
+        ],
+        "negative": [],
+        "notes": [
+          "Keep ordinary module logic propagation separate from activation of the annotated module-path delay."
+        ],
+        "positive": [
+          "Declare a posedge-qualified input-to-output path and cause the specified positive source edge."
+        ]
+      },
+      "id": "SV-2023-30-EDGE-SENSITIVE-PATH-ACTIVATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "A destination form omitting the data-source expression."
+        ],
+        "negative": [
+          "An unsupported edge keyword."
+        ],
+        "notes": [],
+        "positive": [
+          "A `posedge` parallel edge-sensitive path with a data-source expression.",
+          "A full edge-sensitive path without an edge qualifier."
+        ]
+      },
+      "id": "SV-2023-30-EDGE-SENSITIVE-PATH-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Declare one source and two destinations in one statement."
+        ],
+        "negative": [
+          "Use a parallel connection with multiple sources or multiple destinations."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a full connection from a comma-separated source list to a destination."
+        ]
+      },
+      "id": "SV-2023-30-FULL-CONNECTION-MULTIPLE-ENDPOINTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a scalar-to-vector full path."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use a full path between unequal-width vectors and observe every source-to-destination bit pairing."
+        ]
+      },
+      "id": "SV-2023-30-FULL-CONNECTION-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use vectors differing by one bit in width."
+        ],
+        "negative": [
+          "Declare a parallel connection between vectors of unequal widths."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a full connection from a two-bit input vector to a three-bit output vector."
+        ]
+      },
+      "id": "SV-2023-30-FULL-CONNECTION-UNEQUAL-VECTORS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a one-bit vector at one endpoint and a scalar at the other."
+        ],
+        "negative": [
+          "Declare a parallel connection between a vector and a scalar."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a full connection between a vector input and scalar output."
+        ]
+      },
+      "id": "SV-2023-30-FULL-CONNECTION-VECTOR-SCALAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "A one-element destination list."
+        ],
+        "negative": [
+          "A full edge path with an empty destination list."
+        ],
+        "notes": [],
+        "positive": [
+          "A full edge path to a list containing a vector output and a part-select."
+        ]
+      },
+      "id": "SV-2023-30-FULL-EDGE-PATH-DESTINATIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a mixture of simple and edge-sensitive conditional paths corresponding to one simple ifnone path."
+        ],
+        "negative": [],
+        "notes": [
+          "The ifnone declaration itself remains restricted to a simple module path."
+        ],
+        "positive": [
+          "Pair one simple ifnone path with conditionally selected edge-sensitive paths having the same source and destination."
+        ]
+      },
+      "id": "SV-2023-30-IFNONE-CORRESPONDING-PATH-FORMS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "One explicit condition true, so the ifnone delay does not apply."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Several conditional paths plus an ifnone path, with all explicit conditions false."
+        ]
+      },
+      "id": "SV-2023-30-IFNONE-DEFAULT-ACTIVATION"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "An ifnone path with a different destination from the conditional path."
+        ],
+        "notes": [],
+        "positive": [
+          "An ifnone path whose endpoints match its conditional paths."
+        ]
+      },
+      "id": "SV-2023-30-IFNONE-MATCHING-ENDPOINTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a simple ifnone path with no corresponding conditional paths."
+        ],
+        "negative": [
+          "Qualify an edge-sensitive path directly with ifnone."
+        ],
+        "notes": [
+          "Forms permitted for corresponding state-dependent paths are owned by SV-2023-30-IFNONE-CORRESPONDING-PATH-FORMS."
+        ],
+        "positive": [
+          "Declare an ifnone condition on a simple module path."
+        ]
+      },
+      "id": "SV-2023-30-IFNONE-SIMPLE-PATH-ONLY"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "An ifnone path and unconditional simple path with identical endpoints."
+        ],
+        "notes": [],
+        "positive": [
+          "An ifnone path with corresponding conditional paths but no unconditional duplicate."
+        ]
+      },
+      "id": "SV-2023-30-IFNONE-UNCONDITIONAL-CONFLICT"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "A lone ifnone simple path exercised without any conditional declaration."
+        ]
+      },
+      "id": "SV-2023-30-IFNONE-WITHOUT-CORRESPONDING-PATH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Equal candidate delays."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use unequal candidate delays for each of x\u21920, x\u21921, and x\u2192z and observe the maximum."
+        ]
+      },
+      "id": "SV-2023-30-IMPLICIT-FROM-X-DELAY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Equal candidate delays."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use unequal candidate delays for each of 0\u2192x, 1\u2192x, and z\u2192x and observe the minimum."
+        ]
+      },
+      "id": "SV-2023-30-IMPLICIT-TO-X-DELAY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Active paths have equal transition-specific delays."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Simultaneously activate two paths with unequal delays for the same output transition."
+        ]
+      },
+      "id": "SV-2023-30-MINIMUM-ACTIVE-PATH-DELAY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Equal delays."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Cases where either delay source is larger."
+        ]
+      },
+      "id": "SV-2023-30-MIXED-PATH-DISTRIBUTED-DELAY-MAXIMUM"
+    },
+    {
+      "hints": {
+        "edge": [
+          "A path whose source and destination are both bidirectional ports."
+        ],
+        "negative": [
+          "A module path using an output-only port as its source.",
+          "A module path using an input-only port as its destination."
+        ],
+        "notes": [],
+        "positive": [
+          "A module path from an input port to an output port.",
+          "A module path from an inout port to an inout port."
+        ]
+      },
+      "id": "SV-2023-30-MODULE-PATH-ENDPOINT-PORT-DIRECTIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare an input port with a specify parameter."
+        ],
+        "negative": [
+          "Use an operand that belongs to none of the permitted operand categories."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a constant number and a specify parameter as conditional-expression operands."
+        ]
+      },
+      "id": "SV-2023-30-MODULE-PATH-EXPRESSION-CONSTANT-OPERANDS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an entire locally defined scalar net."
+        ],
+        "negative": [
+          "Reference a nonlocal hierarchical variable as a condition operand."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a local net part-select and a local variable bit-select in a condition."
+        ]
+      },
+      "id": "SV-2023-30-MODULE-PATH-EXPRESSION-LOCAL-OPERANDS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Disambiguate unary reduction and binary bitwise uses of shared symbols."
+        ],
+        "negative": [
+          "A condition using an operator absent from Table 30-1."
+        ],
+        "notes": [],
+        "positive": [
+          "Conditions exercising each listed unary, binary, concatenation, replication, and conditional operator."
+        ]
+      },
+      "id": "SV-2023-30-MODULE-PATH-EXPRESSION-OPERATORS"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Use an output-only port as the condition operand when no other permitted category applies."
+        ],
+        "notes": [
+          "Additional permitted operand categories are cataloged separately as their source list continues."
+        ],
+        "positive": [
+          "Conditions using a scalar input, vector inout bit-select, and vector input part-select."
+        ]
+      },
+      "id": "SV-2023-30-MODULE-PATH-EXPRESSION-PORT-OPERANDS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an otherwise valid path immediately inside the specify/endspecify bounds."
+        ],
+        "negative": [
+          "Declare a module path directly in module scope outside a specify block."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare an input-to-output module path inside a specify block."
+        ]
+      },
+      "id": "SV-2023-30-MODULE-PATH-IN-SPECIFY-BLOCK"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Declare paths between two scalars and between equal-width vectors."
+        ],
+        "negative": [],
+        "notes": [
+          "The required full or parallel connection operator depends on endpoint widths."
+        ],
+        "positive": [
+          "Declare a scalar-source to vector-destination module path and a vector-source to scalar-destination path."
+        ]
+      },
+      "id": "SV-2023-30-MODULE-PATH-SCALAR-VECTOR-COMBINATIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "One source with multiple destinations."
+        ],
+        "negative": [
+          "Use `=>` between multiple-source and multiple-destination lists."
+        ],
+        "notes": [],
+        "positive": [
+          "Two sources and three destinations with mixed scalar/vector widths, yielding all six source-destination paths."
+        ]
+      },
+      "id": "SV-2023-30-MULTIPLE-PATH-DECLARATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use four sources sharing one destination, with a distinct delay on each path."
+        ],
+        "negative": [],
+        "notes": [
+          "Observe each path's delay independently; the illustrated signal names are not normative."
+        ],
+        "positive": [
+          "Declare two input-to-output module paths that share one output destination and assign different delays to the two paths."
+        ]
+      },
+      "id": "SV-2023-30-MULTIPLE-PATH-SOURCES-ONE-DESTINATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "An expression evaluating exactly zero."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "A constant path delay expression evaluating below zero and compare its timing with zero delay."
+        ]
+      },
+      "id": "SV-2023-30-NEGATIVE-PATH-DELAY-CLAMP"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Place `-` after the connection operator."
+        ],
+        "notes": [],
+        "positive": [
+          "Parallel `-=>` and full `-*>` paths."
+        ]
+      },
+      "id": "SV-2023-30-NEGATIVE-POLARITY-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare the same output with an explicit showcancelled declaration placed before its path declarations."
+        ],
+        "negative": [],
+        "notes": [
+          "Default on-event pulse style is owned separately."
+        ],
+        "positive": [
+          "Use paths with no showcancelled declaration and create a negative-width pulse whose initial and final values match."
+        ]
+      },
+      "id": "SV-2023-30-NOSHOWCANCELLED-DEFAULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise transitions involving unknown values."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Exercise both rising and falling transitions on an unqualified path."
+        ]
+      },
+      "id": "SV-2023-30-OMITTED-PATH-EDGE-MATCHES-ANY-TRANSITION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Detection coincides with the scheduled leading-edge time."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare on-detect and on-event for a pulse detected before its scheduled leading output edge."
+        ]
+      },
+      "id": "SV-2023-30-ON-DETECT-X-FILTERING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Asymmetric path delays."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Filter a pulse to x without selecting on-detect and observe x transitions at the original scheduled edge times."
+        ]
+      },
+      "id": "SV-2023-30-ON-EVENT-X-FILTERING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use one-bit vector endpoints."
+        ],
+        "negative": [
+          "Use a parallel path between unequal-width vectors or with multiple destinations."
+        ],
+        "notes": [],
+        "positive": [
+          "Connect equal-width vectors bit-for-corresponding-bit and connect two scalar endpoints with `=>`."
+        ]
+      },
+      "id": "SV-2023-30-PARALLEL-CONNECTION-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "A parallel edge path to an unselected vector output."
+        ],
+        "notes": [],
+        "positive": [
+          "A parallel edge path to a scalar output.",
+          "A parallel edge path to one bit of a vector inout."
+        ]
+      },
+      "id": "SV-2023-30-PARALLEL-EDGE-PATH-DESTINATION"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "A module path declaration without its terminating semicolon."
+        ],
+        "notes": [],
+        "positive": [
+          "One semicolon-terminated declaration of each permitted path form."
+        ]
+      },
+      "id": "SV-2023-30-PATH-DECLARATION-FORMS"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "A path delay using a runtime variable."
+        ],
+        "notes": [],
+        "positive": [
+          "Delay values using a literal and a specparam mintypmax expression."
+        ]
+      },
+      "id": "SV-2023-30-PATH-DELAY-CONSTANT-EXPRESSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Equal minimum, typical, and maximum values."
+        ],
+        "negative": [
+          "A two-component colon-separated delay expression."
+        ],
+        "notes": [],
+        "positive": [
+          "Single typical delay and `min:typ:max` delay expressions."
+        ]
+      },
+      "id": "SV-2023-30-PATH-DELAY-MINTYPMAX-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare a derived x delay under a short form with its dedicated 12-value delay."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Exercise every 0, 1, z, and x transition under each supported delay-list length."
+        ]
+      },
+      "id": "SV-2023-30-PATH-DELAY-TRANSITION-ASSOCIATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "A single unparenthesized delay expression."
+        ],
+        "negative": [
+          "An assignment containing four delay expressions."
+        ],
+        "notes": [],
+        "positive": [
+          "Assignments using each permitted expression count, with and without parentheses."
+        ]
+      },
+      "id": "SV-2023-30-PATH-DELAY-VALUE-FORMS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "A destination net connected to an inout port."
+        ],
+        "negative": [
+          "A path targeting an internal variable not connected to an output or inout port."
+        ],
+        "notes": [],
+        "positive": [
+          "A path targeting a variable connected to an output port."
+        ]
+      },
+      "id": "SV-2023-30-PATH-DESTINATION-CONNECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use omitted polarity on both full and parallel path forms."
+        ],
+        "negative": [
+          "Use a polarity annotation outside the three permitted alternatives."
+        ],
+        "notes": [
+          "Polarity annotation does not alter simulation propagation."
+        ],
+        "positive": [
+          "Declare paths with omitted, `+`, and `-` polarity annotations."
+        ]
+      },
+      "id": "SV-2023-30-PATH-POLARITY-ALTERNATIVES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use inverting internal logic with a noninverting polarity annotation."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare otherwise identical paths with positive, negative, and omitted polarity while internal logic controls propagation."
+        ]
+      },
+      "id": "SV-2023-30-PATH-POLARITY-NO-SIMULATION-EFFECT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "A source net connected to an inout port."
+        ],
+        "negative": [
+          "A path sourced by a variable connected to an input port."
+        ],
+        "notes": [],
+        "positive": [
+          "A path sourced by a net connected to an input port."
+        ]
+      },
+      "id": "SV-2023-30-PATH-SOURCE-NET-CONNECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a module containing exactly one path."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use a module-wide PATHPULSE$ declaration with two distinct module paths and exercise pulse filtering on each."
+        ]
+      },
+      "id": "SV-2023-30-PATHPULSE-MODULE-WIDE-SCOPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "A PATHPULSE$ naming a later pair and therefore having no effect."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "A multipath declaration controlled by PATHPULSE$ naming its first endpoint pair."
+        ]
+      },
+      "id": "SV-2023-30-PATHPULSE-MULTIPATH-FIRST-ENDPOINTS"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "PATHPULSE$ naming a vector bit-select or part-select."
+        ],
+        "notes": [],
+        "positive": [
+          "Path-specific PATHPULSE$ naming whole vector ports."
+        ]
+      },
+      "id": "SV-2023-30-PATHPULSE-NO-VECTOR-SELECT-ENDPOINTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use equal path-specific and module-wide limits while separately confirming applicability."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Give module-wide and path-specific declarations different limits, then exercise the named path and an unnamed path."
+        ]
+      },
+      "id": "SV-2023-30-PATHPULSE-PATH-SPECIFIC-PRECEDENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "A zero single limit."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "A one-value PATHPULSE$ declaration and pulses around that common boundary."
+        ]
+      },
+      "id": "SV-2023-30-PATHPULSE-SINGLE-LIMIT"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "A PATHPULSE$ limit using a runtime variable."
+        ],
+        "notes": [],
+        "positive": [
+          "Global and path-specific PATHPULSE$ declarations with one and two limit values."
+        ]
+      },
+      "id": "SV-2023-30-PATHPULSE-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Place `+` after the connection operator."
+        ],
+        "notes": [],
+        "positive": [
+          "Parallel `+=>` and full `+*>` paths."
+        ]
+      },
+      "id": "SV-2023-30-POSITIVE-POLARITY-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Equal error and reject limits."
+        ],
+        "negative": [
+          "Error limit smaller than reject limit."
+        ],
+        "notes": [],
+        "positive": [
+          "Error limit greater than or equal to reject limit."
+        ]
+      },
+      "id": "SV-2023-30-PULSE-LIMIT-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Leading and trailing transition types have equal limits."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use unequal rise and fall pulse limits and test both positive and negative pulses."
+        ]
+      },
+      "id": "SV-2023-30-PULSE-TRAILING-EDGE-LIMIT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Widths exactly equal to each limit."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Exercise widths in each of the pass, x, and reject ranges."
+        ]
+      },
+      "id": "SV-2023-30-PULSE-WIDTH-FILTER-RANGES"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Declare the path first and then pulse style for the same output, requiring a diagnostic."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare pulse style for an output before declaring paths to it."
+        ]
+      },
+      "id": "SV-2023-30-PULSESTYLE-BEFORE-PATH-DECLARATION"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "A pulse-style declaration missing its output list or semicolon."
+        ],
+        "notes": [],
+        "positive": [
+          "One-event and on-detect declarations naming one or multiple path outputs."
+        ]
+      },
+      "id": "SV-2023-30-PULSESTYLE-DECLARATION-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Declare a path first and then showcancelled for that output, requiring a diagnostic."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare showcancelled for an output before paths to it."
+        ]
+      },
+      "id": "SV-2023-30-SHOWCANCELLED-BEFORE-PATH-DECLARATION"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "A declaration missing its output list or semicolon."
+        ],
+        "notes": [],
+        "positive": [
+          "Showcancelled and noshowcancelled declarations naming multiple outputs."
+        ]
+      },
+      "id": "SV-2023-30-SHOWCANCELLED-DECLARATION-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Trailing-edge schedule equals rather than precedes the leading edge."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Generate a negative pulse under showcancelled with both on-event and on-detect styles."
+        ]
+      },
+      "id": "SV-2023-30-SHOWCANCELLED-NEGATIVE-PULSE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "A simple path with no polarity operator."
+        ],
+        "negative": [
+          "A simple path using an unsupported polarity symbol."
+        ],
+        "notes": [],
+        "positive": [
+          "A parallel path with `+ =>` and a delay value.",
+          "A full path with `*>` and a delay value."
+        ]
+      },
+      "id": "SV-2023-30-SIMPLE-PATH-FORMS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Single-element endpoint lists."
+        ],
+        "negative": [
+          "A path endpoint with a nonconstant range expression."
+        ],
+        "notes": [],
+        "positive": [
+          "A full path with multiple comma-separated inputs and outputs.",
+          "A path endpoint selecting a constant bit range of a port.",
+          "A path using an interface identifier and port identifier."
+        ]
+      },
+      "id": "SV-2023-30-SIMPLE-PATH-TERMINAL-DESCRIPTORS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "A specify block containing multiple permitted specify items."
+        ],
+        "negative": [
+          "A specify block missing its `endspecify` delimiter."
+        ],
+        "notes": [],
+        "positive": [
+          "An empty `specify endspecify` block."
+        ]
+      },
+      "id": "SV-2023-30-SPECIFY-BLOCK-DELIMITERS"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "A specify block placed outside every module declaration."
+        ],
+        "notes": [],
+        "positive": [
+          "A specify block directly within a module declaration."
+        ]
+      },
+      "id": "SV-2023-30-SPECIFY-BLOCK-MODULE-SCOPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "An empty specify block, because the item repetition permits zero items."
+        ],
+        "negative": [
+          "A specify block containing a procedural initial block as a specify item."
+        ],
+        "notes": [],
+        "positive": [
+          "A specify block containing one item of each grammar alternative."
+        ]
+      },
+      "id": "SV-2023-30-SPECIFY-ITEM-FORMS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Repeat while the condition is false and distinguish the conditional path delay from other applicable paths."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Toggle a path source while its state condition is true and observe the assigned delay."
+        ]
+      },
+      "id": "SV-2023-30-STATE-DEPENDENT-PATH-ACTIVATION"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "An `ifnone` edge-sensitive path declaration."
+        ],
+        "notes": [],
+        "positive": [
+          "An `if` simple path, an `if` edge-sensitive path, and an `ifnone` simple path."
+        ]
+      },
+      "id": "SV-2023-30-STATE-DEPENDENT-PATH-FORMS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a multibit result whose upper bits are 1 but LSB is 0."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use a multibit result whose LSB is 1 and upper bits are 0."
+        ]
+      },
+      "id": "SV-2023-30-STATE-PATH-CONDITION-LSB"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare a condition yielding 0."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Exercise conditions yielding 1, x, and z and observe conditional-delay activation."
+        ]
+      },
+      "id": "SV-2023-30-STATE-PATH-CONDITION-TRUTH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Toggle a non-LSB while the LSB remains stable."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Toggle only the LSB with the specified edge."
+        ]
+      },
+      "id": "SV-2023-30-VECTOR-PATH-EDGE-USES-LSB"
+    }
+  ],
+  "schema_version": 1
+}

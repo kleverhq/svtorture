@@ -1,0 +1,1326 @@
+{
+  "authority": "1800-2023",
+  "part": "17",
+  "requirements": [
+    {
+      "hints": {
+        "edge": [
+          "Cause two assume-set clock events in one simulation time step."
+        ],
+        "negative": [
+          "Require an explicit randomize() call to trigger checker assume-set solving."
+        ],
+        "notes": [],
+        "positive": [
+          "Use two assumptions with distinct clocks and trigger solving from each assume-set clock event."
+        ]
+      },
+      "id": "SV-2023-17-ASSUME-SET-CLOCK-TRIGGER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Reference an active variable\u2019s current value while solving."
+        ],
+        "negative": [
+          "Solve active free variables after Observed processing begins."
+        ],
+        "notes": [],
+        "positive": [
+          "Change an inactive input before Observed and verify solving uses its sampled value and checker properties see solved values."
+        ]
+      },
+      "id": "SV-2023-17-ASSUME-SOLVE-SCHEDULING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise the procedural concurrent-assertion treatment of an assertion inside the checker procedure."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Place one immediate, one deferred, and one concurrent assertion in otherwise legal checker always procedures."
+        ]
+      },
+      "id": "SV-2023-17-CHECKER-ALWAYS-ASSERTIONS"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Use a timing event control in checker always_comb or always_latch."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a legal timing event control in a checker always_ff procedure."
+        ]
+      },
+      "id": "SV-2023-17-CHECKER-ALWAYS-EVENT-CONTROL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify that variables in the always_ff event control are excluded from the sampling rule."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Change an operand around an always_ff event and observe sampled assignment and assertion expressions.",
+          "In always_comb and always_latch, observe assignments using current expression values."
+        ]
+      },
+      "id": "SV-2023-17-CHECKER-ALWAYS-EXPRESSION-SAMPLING"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare and use a let construct in a legal checker always procedure."
+        ]
+      },
+      "id": "SV-2023-17-CHECKER-ALWAYS-LET-DECLARATIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a loop containing another permitted checker-always statement."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use a finite for loop in a legal checker always procedure."
+        ]
+      },
+      "id": "SV-2023-17-CHECKER-ALWAYS-LOOP-STATEMENTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place all three procedure forms in one checker while giving each otherwise legal contents."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare one checker procedure of each of the always_comb, always_latch, and always_ff forms."
+        ]
+      },
+      "id": "SV-2023-17-CHECKER-ALWAYS-PROCEDURE-FORMS"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use an if statement and a case statement in a legal checker always procedure."
+        ]
+      },
+      "id": "SV-2023-17-CHECKER-ALWAYS-SELECTION-STATEMENTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call a task only where its own timing and argument rules remain legal for the containing always form."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Call a legal function from a checker always procedure."
+        ]
+      },
+      "id": "SV-2023-17-CHECKER-ALWAYS-SUBROUTINE-CALLS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a static function that demonstrably preserves no state."
+        ],
+        "negative": [
+          "Call functions having output, inout, or non-const ref arguments.",
+          "Call a state-preserving or side-effecting function."
+        ],
+        "notes": [],
+        "positive": [
+          "Call an automatic side-effect-free function with input and const-ref arguments from a checker assignment RHS."
+        ]
+      },
+      "id": "SV-2023-17-CHECKER-ASSIGNMENT-FUNCTION-RESTRICTIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use triggered in the right-hand expression of a permitted nonblocking assignment."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Assign a checker variable from a named sequence\u2019s triggered method."
+        ]
+      },
+      "id": "SV-2023-17-CHECKER-ASSIGNMENT-TRIGGERED-METHOD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an empty assume set in a procedural checker instance."
+        ],
+        "negative": [
+          "Create multiple assume sets for one checker instance."
+        ],
+        "notes": [],
+        "positive": [
+          "Instantiate the same checker twice and maintain one independent assume set per instance."
+        ]
+      },
+      "id": "SV-2023-17-CHECKER-ASSUME-SET-LIFETIME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Show that a child instance has its own assume-set membership even when its assumption is excluded from the parent set."
+        ],
+        "negative": [
+          "Include an assumption whose referenced formal is connected to a const-cast or automatic actual.",
+          "Include an assumption referencing no active free variable."
+        ],
+        "notes": [],
+        "positive": [
+          "Include a child-checker assumption whose formal actual depends on an active free variable."
+        ]
+      },
+      "id": "SV-2023-17-CHECKER-ASSUME-SET-MEMBERSHIP"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an assumption that an implementation also chooses to use for free-variable randomization; runtime violation checking remains required."
+        ],
+        "negative": [
+          "Cause a checker assume property to fail and verify that the violation is detected."
+        ],
+        "notes": [],
+        "positive": [
+          "Simulate a checker assume statement whose property remains satisfied."
+        ]
+      },
+      "id": "SV-2023-17-CHECKER-ASSUME-SIMULATION-CHECK"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise an unsatisfied or missed solution and permit arbitrary active values while reporting the attempt unsuccessful."
+        ],
+        "negative": [],
+        "notes": [
+          "Do not require solver completeness or dead-end avoidance."
+        ],
+        "positive": [
+          "Solve an assume set with a readily found satisfying active-variable assignment."
+        ]
+      },
+      "id": "SV-2023-17-CHECKER-ASSUME-SOLUTION-ATTEMPT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place the prohibited value in a subexpression rather than as the entire actual."
+        ],
+        "negative": [
+          "Use a formal bound to an automatic procedural value in checker procedural code.",
+          "Use a formal whose actual contains a const cast in a checker continuous assignment."
+        ],
+        "notes": [],
+        "positive": [
+          "Use an automatic procedural actual only in a checker assertion."
+        ]
+      },
+      "id": "SV-2023-17-CHECKER-AUTOMATIC-ACTUAL-USAGE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Instantiate a checker declared outside the enclosing checker."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Instantiate one checker directly in another checker body."
+        ]
+      },
+      "id": "SV-2023-17-CHECKER-BODY-CHECKER-INSTANTIATIONS"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Place a legal concurrent assertion directly in a checker body."
+        ]
+      },
+      "id": "SV-2023-17-CHECKER-BODY-CONCURRENT-ASSERTIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Override declaration-scope inherited defaults inside the checker."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare both default clocking and default disable iff directly in a checker body."
+        ]
+      },
+      "id": "SV-2023-17-CHECKER-BODY-DEFAULT-CONTEXT-DECLARATIONS"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Place a legal deferred assertion directly in a checker body."
+        ]
+      },
+      "id": "SV-2023-17-CHECKER-BODY-DEFERRED-ASSERTIONS"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare and call a legal function directly in a checker body."
+        ]
+      },
+      "id": "SV-2023-17-CHECKER-BODY-FUNCTION-DECLARATIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Nest a permitted checker declaration inside a checker generate block."
+        ],
+        "negative": [
+          "Use a checker generate block to contain an element that would be illegal directly in the checker declaration."
+        ],
+        "notes": [],
+        "positive": [
+          "Conditionally generate an assertion or other element permitted directly in a checker body."
+        ]
+      },
+      "id": "SV-2023-17-CHECKER-BODY-GENERATE-BLOCKS"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare and use a let construct directly in a checker body."
+        ]
+      },
+      "id": "SV-2023-17-CHECKER-BODY-LET-DECLARATIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Instantiate the nested checker from the enclosing checker."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare a checker inside another checker body."
+        ]
+      },
+      "id": "SV-2023-17-CHECKER-BODY-NESTED-CHECKER-DECLARATIONS"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare and assert a named property directly in a checker body."
+        ]
+      },
+      "id": "SV-2023-17-CHECKER-BODY-PROPERTY-DECLARATIONS"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare and use a named sequence directly in a checker body."
+        ]
+      },
+      "id": "SV-2023-17-CHECKER-BODY-SEQUENCE-DECLARATIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a rand-qualified checker variable with only a permitted assignment form."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare a checker variable and update it with a legal assignment form."
+        ]
+      },
+      "id": "SV-2023-17-CHECKER-BODY-VARIABLES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Override one context default while inferring another."
+        ],
+        "negative": [
+          "Omit such an actual where no legal context value can be inferred."
+        ],
+        "notes": [],
+        "positive": [
+          "Use $inferred_clock and $inferred_disable defaults and omit both actuals in a valid context."
+        ]
+      },
+      "id": "SV-2023-17-CHECKER-CONTEXT-VALUE-DEFAULTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place both the declaration and instance at checker-body scope while sampling variables updated by checker procedures."
+        ],
+        "negative": [
+          "Declare or instantiate a covergroup inside a checker initial or always procedure."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare and instantiate a covergroup directly in a checker body outside all procedures."
+        ]
+      },
+      "id": "SV-2023-17-CHECKER-COVERGROUP-PLACEMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare event-triggered sampling with an explicit sample() call while holding the sampled value known."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Call a checker covergroup's sample() from a sequence match item with a known coverpoint value and verify the corresponding bin is sampled."
+        ]
+      },
+      "id": "SV-2023-17-CHECKER-COVERGROUP-SAMPLE-CALL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast const and variable actuals connected to the same covered formal."
+        ],
+        "negative": [
+          "Reference in a checker covergroup a formal connected to a const actual."
+        ],
+        "notes": [],
+        "positive": [
+          "Cover a checker variable and a formal connected to a non-const actual."
+        ]
+      },
+      "id": "SV-2023-17-CHECKER-COVERGROUP-VISIBLE-VALUES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Override inherited default clocking and disable iff contexts inside the checker."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare a checker under default clocking and default disable iff contexts and use both without redeclaring them."
+        ]
+      },
+      "id": "SV-2023-17-CHECKER-DECLARATION-CONTEXT-INHERITANCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Parse both an absent formal-port parenthesis group and an empty parenthesized checker port list."
+        ],
+        "negative": [
+          "Omit a required declaration delimiter or use a body token that does not match checker declaration grammar."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse a named checker with a formal port, legal body item, and matching optional endchecker identifier."
+        ]
+      },
+      "id": "SV-2023-17-CHECKER-DECLARATION-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Give declaration and instantiation scopes different objects with the same name and verify the checker binds the declaration-scope object."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Reference a static variable visible from the checker declaration scope."
+        ]
+      },
+      "id": "SV-2023-17-CHECKER-DECLARATION-SCOPE-NAME-RESOLUTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Declare a nested checker inside another checker."
+        ],
+        "negative": [
+          "Attempt a checker declaration in a procedural block."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare one checker in each permitted enclosing scope."
+        ]
+      },
+      "id": "SV-2023-17-CHECKER-DECLARATION-SCOPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use $ as the default actual of a nested checker."
+        ],
+        "negative": [
+          "Pass $ to a typed formal.",
+          "Use the corresponding formal in an arithmetic expression."
+        ],
+        "notes": [],
+        "positive": [
+          "Pass $ to an untyped formal used solely as a cycle-delay range upper bound.",
+          "Forward a $-bound formal to a nested checker."
+        ]
+      },
+      "id": "SV-2023-17-CHECKER-DOLLAR-ACTUAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast an enclosing static variable with an automatic variable of the same type."
+        ],
+        "negative": [
+          "Reference an enclosing automatic variable or an enclosing member or element of a dynamic variable."
+        ],
+        "notes": [],
+        "positive": [
+          "Reference a permitted static object from the checker declaration's enclosing scope."
+        ]
+      },
+      "id": "SV-2023-17-CHECKER-ENCLOSING-AUTOMATIC-DYNAMIC-REFERENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise the restriction separately for fork-join, fork-join_any, and fork-join_none."
+        ],
+        "negative": [
+          "Reference an element declared in an enclosing fork block from a checker."
+        ],
+        "notes": [],
+        "positive": [
+          "Reference a permitted static object outside the enclosing fork block."
+        ]
+      },
+      "id": "SV-2023-17-CHECKER-ENCLOSING-FORK-BLOCK-REFERENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast explicit input without a type with a first formal having neither direction nor type."
+        ],
+        "negative": [
+          "Declare input or output explicitly while omitting that formal's type."
+        ],
+        "notes": [],
+        "positive": [
+          "Give an explicitly directed checker formal an explicit legal type."
+        ]
+      },
+      "id": "SV-2023-17-CHECKER-EXPLICIT-DIRECTION-REQUIRES-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Place a construct in a checker final procedure that is illegal in a non-checker final procedure."
+        ],
+        "notes": [],
+        "positive": [
+          "Use an immediate assertion and a legal reporting statement in a checker final procedure."
+        ]
+      },
+      "id": "SV-2023-17-CHECKER-FINAL-CONTENTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare static and procedural checker instantiations; each instance's final procedure still executes once."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Instantiate a checker twice and count one final-procedure execution per instance at simulation end."
+        ]
+      },
+      "id": "SV-2023-17-CHECKER-FINAL-PER-INSTANCE-EXECUTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast it with an explicitly directed typeless first formal, which is erroneous."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare a first checker formal with neither direction nor type and use it under input-untyped rules."
+        ]
+      },
+      "id": "SV-2023-17-CHECKER-FIRST-FORMAL-OMITTED-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Distinguish a nested checker declaration from a nested module declaration."
+        ],
+        "negative": [
+          "Attempt each of module, interface, program, and package declarations inside a checker."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a nested checker, which is permitted, rather than a forbidden design-unit kind."
+        ]
+      },
+      "id": "SV-2023-17-CHECKER-FORBIDDEN-DESIGN-UNIT-DECLARATIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Do not infer a package-instantiation case because packages have no corresponding instantiation syntax."
+        ],
+        "negative": [
+          "Instantiate a module, interface, or program inside a checker."
+        ],
+        "notes": [],
+        "positive": [
+          "Instantiate another checker inside a checker."
+        ]
+      },
+      "id": "SV-2023-17-CHECKER-FORBIDDEN-DESIGN-UNIT-INSTANTIATIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise a property-formal-only category on an input checker formal."
+        ],
+        "negative": [
+          "Use a checker formal type that is not legal for a property formal."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare checker formals using representative data, event, sequence, property, and untyped forms permitted for property formals, subject to output restrictions."
+        ]
+      },
+      "id": "SV-2023-17-CHECKER-FORMAL-PROPERTY-TYPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast passing a free actual with declaring the receiving formal free."
+        ],
+        "negative": [
+          "Declare a function formal or local variable with the free-variable rand usage prohibited here."
+        ],
+        "notes": [],
+        "positive": [
+          "Pass a checker free variable as an actual to a function with an ordinary formal."
+        ]
+      },
+      "id": "SV-2023-17-CHECKER-FUNCTION-FREE-VARIABLES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an event control as the sole permitted procedural timing-control form."
+        ],
+        "negative": [
+          "Use a delay control in a checker initial procedure."
+        ],
+        "notes": [],
+        "positive": [
+          "Put each permitted assertion kind, a let declaration, and an event control in a checker initial procedure."
+        ]
+      },
+      "id": "SV-2023-17-CHECKER-INITIAL-CONTENTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast assignment to an output formal with assignment to an otherwise same-typed input formal."
+        ],
+        "negative": [
+          "Assign to an input checker formal from checker code."
+        ],
+        "notes": [],
+        "positive": [
+          "Read an input checker formal in assertions and expressions without assigning to it."
+        ]
+      },
+      "id": "SV-2023-17-CHECKER-INPUT-FORMAL-IMMUTABILITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Override the declared default with an explicit actual."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Give a singular checker input a default and omit its actual at instantiation."
+        ]
+      },
+      "id": "SV-2023-17-CHECKER-INPUT-PORT-DEFAULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use identically spelled names in declaration and instantiation scopes to exercise name resolution before substitution."
+        ],
+        "negative": [
+          "Pass an actual whose substitution makes a construct in the flattened checker illegal."
+        ],
+        "notes": [],
+        "positive": [
+          "Instantiate a checker with an input expression whose substitution leaves the flattened checker legal."
+        ]
+      },
+      "id": "SV-2023-17-CHECKER-INPUT-SUBSTITUTION-LEGALITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Reach a procedural checker instance conditionally while its non-static-assertion contents continue to exist on unvisited time steps."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Instantiate a checker twice and observe independent internal state persisting across time steps."
+        ]
+      },
+      "id": "SV-2023-17-CHECKER-INSTANCE-CONTENT-LIFETIME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast direct nesting in a checker body, which is permitted, with nesting inside that checker's procedure."
+        ],
+        "negative": [
+          "Instantiate a checker inside an initial or always procedure belonging to another checker."
+        ],
+        "notes": [],
+        "positive": [
+          "Instantiate a checker in an ordinary module procedure at a concurrent-assertion-legal location."
+        ]
+      },
+      "id": "SV-2023-17-CHECKER-INSTANTIATION-CHECKER-PROCEDURE-PROHIBITION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Keep fork-block and another checker's procedure exclusions out of the otherwise permitted location scenario."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Instantiate a checker at representative static and ordinary procedural locations where concurrent assertions are permitted."
+        ]
+      },
+      "id": "SV-2023-17-CHECKER-INSTANTIATION-CONCURRENT-ASSERTION-LOCATIONS"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Instantiate a checker separately in fork-join, fork-join_any, and fork-join_none blocks."
+        ],
+        "notes": [],
+        "positive": [
+          "Instantiate a checker in otherwise legal procedural code outside a fork block."
+        ]
+      },
+      "id": "SV-2023-17-CHECKER-INSTANTIATION-FORK-PROHIBITION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an omitted ordered actual and an empty named actual connection."
+        ],
+        "negative": [
+          "Omit a required checker-instantiation delimiter or mix connection tokens outside the grammar alternatives."
+        ],
+        "notes": [],
+        "positive": [
+          "Instantiate a package-scoped checker once with ordered property actuals and once with named property actuals."
+        ]
+      },
+      "id": "SV-2023-17-CHECKER-INSTANTIATION-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Combine one wildcard with explicit named checker connections."
+        ],
+        "negative": [
+          "Use .* twice in one checker port connection list."
+        ],
+        "notes": [],
+        "positive": [
+          "Use one .* wildcard in an otherwise legal named checker connection list."
+        ]
+      },
+      "id": "SV-2023-17-CHECKER-INSTANTIATION-WILDCARD-LIMIT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use several consecutive omitted types after changing the preceding formal's explicit type."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare a typed directionless formal followed by a directionless typeless formal and exercise the inferred type."
+        ]
+      },
+      "id": "SV-2023-17-CHECKER-LATER-FORMAL-OMITTED-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the same local name in two distinct checker declarations without creating a shared declaration."
+        ],
+        "negative": [
+          "Attempt to reference a checker-local type or variable unqualified from the enclosing scope."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a type and variable inside a checker and use them within that checker."
+        ]
+      },
+      "id": "SV-2023-17-CHECKER-LOCAL-DECLARATION-SCOPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Reach a procedural checker instantiation intermittently while its checker-local state persists."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Update an internal checker variable across clock events and observe its value persist."
+        ]
+      },
+      "id": "SV-2023-17-CHECKER-LOCAL-DECLARATION-STATIC-LIFETIME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Schedule Reactive work and a Re-Inactive event before the checker-variable Re-NBA update."
+        ],
+        "negative": [
+          "Apply a checker nonblocking update in Active or Reactive."
+        ],
+        "notes": [],
+        "positive": [
+          "Capture a sequence triggered value in a checker nonblocking assignment and observe the checker-variable update in Re-NBA."
+        ]
+      },
+      "id": "SV-2023-17-CHECKER-NONBLOCKING-RENBA-UPDATE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Connect to a legal selected lvalue."
+        ],
+        "negative": [
+          "Connect a checker output to a non-lvalue expression."
+        ],
+        "notes": [],
+        "positive": [
+          "Connect checker outputs to a variable lvalue and a net lvalue."
+        ]
+      },
+      "id": "SV-2023-17-CHECKER-OUTPUT-ACTUAL-LVALUE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a sequence-typed input formal as a contrast to the prohibited sequence-typed output."
+        ],
+        "negative": [
+          "Declare checker outputs separately as untyped, sequence, and property."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a checker output using a legal explicit data type."
+        ]
+      },
+      "id": "SV-2023-17-CHECKER-OUTPUT-FORMAL-TYPE-RESTRICTIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the same syntactic placement for an input default and an output initial value while observing their distinct semantics."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Give a singular checker output an initial value and observe it before subsequent checker updates."
+        ]
+      },
+      "id": "SV-2023-17-CHECKER-OUTPUT-PORT-INITIALIZATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use always_comb, always_latch, and always_ff only under the specialized form and content rules that follow in 17.5."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Place an otherwise legal initial procedure, always procedure, and final procedure in a checker body."
+        ]
+      },
+      "id": "SV-2023-17-CHECKER-PERMITTED-PROCEDURES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an implicit named connection where the matching actual is visible in the instantiation scope."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Instantiate equivalent checkers using positional, explicit named, and implicit named connections."
+        ]
+      },
+      "id": "SV-2023-17-CHECKER-PORT-CONNECTION-FORMS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Omit the first formal's direction and verify it defaults to input, then change direction explicitly for later inheritance."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Omit directions on formals following an explicit output and verify they inherit output."
+        ]
+      },
+      "id": "SV-2023-17-CHECKER-PORT-DIRECTION-INFERENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a checker continuous assignment and a blocking statement in the same time step."
+        ],
+        "negative": [
+          "Execute a change-sensitive checker construct or checker blocking statement in Active rather than Reactive."
+        ],
+        "notes": [],
+        "positive": [
+          "Trigger a checker blocking statement from a clock change and distinguish its Reactive execution from design Active execution."
+        ]
+      },
+      "id": "SV-2023-17-CHECKER-REACTIVE-EXECUTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a nonblocking assignment in each checker always form subject to that form's general rules."
+        ],
+        "negative": [
+          "Use a blocking assignment in checker always_ff."
+        ],
+        "notes": [],
+        "positive": [
+          "Assign ordinary checker variables using continuous assignment, blocking assignment in always_comb or always_latch, and nonblocking assignment in always_ff."
+        ]
+      },
+      "id": "SV-2023-17-CHECKER-VARIABLE-ASSIGNMENT-FORMS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast hierarchical reading in a nonassignment context with hierarchical use in an assignment."
+        ],
+        "negative": [
+          "Assign a checker instance variable through its hierarchical name from enclosing code."
+        ],
+        "notes": [],
+        "positive": [
+          "Assign a checker variable from within its checker using an unqualified name."
+        ]
+      },
+      "id": "SV-2023-17-CHECKER-VARIABLE-HIERARCHICAL-ASSIGNMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare declaration initialization with an equivalent initial assignment."
+        ],
+        "negative": [
+          "Assign a checker variable in a checker initial procedure."
+        ],
+        "notes": [],
+        "positive": [
+          "Initialize a checker variable in its declaration."
+        ]
+      },
+      "id": "SV-2023-17-CHECKER-VARIABLE-INITIALIZATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Distinguish a checker formal from a checker-body net declaration."
+        ],
+        "negative": [
+          "Declare a net in a checker body."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare and use an ordinary variable in a checker body."
+        ]
+      },
+      "id": "SV-2023-17-CHECKER-VARIABLES-NOT-NETS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use sampled values and an action block to expose scheduling equivalence."
+        ],
+        "negative": [
+          "Schedule the checker-contained assertion in a checker-specific region."
+        ],
+        "notes": [],
+        "positive": [
+          "Run equivalent concurrent assertions inside a checker and directly in design code and compare scheduling-visible results."
+        ]
+      },
+      "id": "SV-2023-17-CONCURRENT-ASSERTION-SCHEDULING-INVARIANCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast rand const with a non-const rand checker variable."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare both initialized and uninitialized rand const checker variables."
+        ]
+      },
+      "id": "SV-2023-17-CONSTANT-FREE-VARIABLE-DECLARATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an empty assume set explicitly and by absence of assumptions."
+        ],
+        "negative": [
+          "Change that value again before the end of the same time step."
+        ],
+        "notes": [],
+        "positive": [
+          "Use an active free variable with an empty assume set and permit a new random value each time step."
+        ]
+      },
+      "id": "SV-2023-17-EMPTY-ASSUME-SET-RANDOMIZATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare otherwise equivalent rand and non-rand checker variables."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare a rand checker variable and use it in an assumption."
+        ]
+      },
+      "id": "SV-2023-17-FREE-CHECKER-VARIABLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast packed aggregate classification with separate unpacked-element classification."
+        ],
+        "negative": [
+          "Treat an assigned free variable or checker formal as active."
+        ],
+        "notes": [],
+        "positive": [
+          "Randomize an unassigned non-const free variable as active."
+        ]
+      },
+      "id": "SV-2023-17-FREE-VARIABLE-ACTIVE-CLASSIFICATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Apply each assignment form to otherwise identical free and non-free checker variables."
+        ],
+        "negative": [
+          "Continuously assign a free checker variable.",
+          "Use a blocking procedural assignment to a free checker variable."
+        ],
+        "notes": [],
+        "positive": [
+          "Assign a free checker variable using a nonblocking assignment."
+        ]
+      },
+      "id": "SV-2023-17-FREE-VARIABLE-ASSIGNMENT-KINDS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Constrain the free variable to a singleton allowed behavior."
+        ],
+        "negative": [
+          "Collapse an unconstrained free checker variable to one fixed formal behavior."
+        ],
+        "notes": [],
+        "positive": [
+          "Constrain a const or non-const free checker variable to several allowed behaviors and verify formal analysis retains all of them."
+        ]
+      },
+      "id": "SV-2023-17-FREE-VARIABLE-FORMAL-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Initialize one element explicitly while leaving a separately classified element uninitialized."
+        ],
+        "negative": [
+          "Replace an explicit declaration initializer with an unconstrained random value."
+        ],
+        "notes": [],
+        "positive": [
+          "Observe initialization of active, inactive, const, and non-const uninitialized free variables."
+        ]
+      },
+      "id": "SV-2023-17-FREE-VARIABLE-INITIAL-RANDOMIZATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use assumptions that restrict, but do not uniquely determine, allowed non-const values."
+        ],
+        "negative": [
+          "Treat an uninitialized non-const free variable as permanently fixed or rerandomize a const free variable after initialization."
+        ],
+        "notes": [],
+        "positive": [
+          "Simulate const and non-const free checker variables and exercise their respective random assignment events under 17.7.2."
+        ]
+      },
+      "id": "SV-2023-17-FREE-VARIABLE-SIMULATION-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Have another assume-set event occur within the same time step and permit a new solved value then."
+        ],
+        "negative": [
+          "Change a solved free variable before another assume-set event or time-step end."
+        ],
+        "notes": [],
+        "positive": [
+          "Solve a free variable and observe it remain fixed until the next assume-set event."
+        ]
+      },
+      "id": "SV-2023-17-FREE-VARIABLE-SOLVED-VALUE-STABILITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare against a non-const free variable with the same declaration initializer."
+        ],
+        "negative": [
+          "Change an initialized constant free variable after initialization."
+        ],
+        "notes": [],
+        "positive": [
+          "Initialize a rand const checker variable and observe the declared value throughout simulation."
+        ]
+      },
+      "id": "SV-2023-17-INITIALIZED-CONSTANT-FREE-VARIABLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multiple levels of statically nested checkers under one procedural top-level instance."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Statically nest a checker with concurrent and deferred assertions, then instantiate the top-level checker procedurally."
+        ]
+      },
+      "id": "SV-2023-17-NESTED-CHECKER-ASSERTION-CONTEXT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Add a declaration initializer and restrict only the first formal time step to it."
+        ],
+        "negative": [
+          "Permanently fix an unassigned non-const free variable to one formal value."
+        ],
+        "notes": [],
+        "positive": [
+          "Leave a non-const free variable uninitialized and retain all possible values at every formal time step."
+        ]
+      },
+      "id": "SV-2023-17-NONCONSTANT-FREE-VARIABLE-FORMAL-TIME-VALUES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare with an uninitialized non-const free variable, which is unconstrained or randomized from the first step."
+        ],
+        "negative": [
+          "Ignore or replace the declared initializer at the first time step."
+        ],
+        "notes": [],
+        "positive": [
+          "Initialize an otherwise unassigned non-const free variable and observe the initializer at the first time step."
+        ]
+      },
+      "id": "SV-2023-17-NONCONSTANT-FREE-VARIABLE-INITIALIZED-FIRST-STEP"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Instantiate the checker statically, but place the assertion itself inside a checker procedure; verify that the assertion remains procedural rather than acquiring the static-assertion treatment used elsewhere in the same checker."
+        ],
+        "negative": [],
+        "notes": [
+          "Use the queueing, maturation, and clock-inference rules owned by 16.14.6 for the runtime oracle."
+        ],
+        "positive": [
+          "Place a concurrent assertion in an always procedure inside a checker and reach it before its leading clock event; exercise the procedural assertion queue and subsequent clocked evaluation."
+        ]
+      },
+      "id": "SV-2023-17-PROCEDURAL-CHECKER-ASSERTION-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Reach the instance and then trigger a procedural assertion flush point before maturation."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Reach a procedural checker instance and allow its static concurrent assertion to mature from the procedural assertion queue."
+        ]
+      },
+      "id": "SV-2023-17-PROCEDURAL-CHECKER-STATIC-CONCURRENT-ACTIVATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Reach the instance and then flush the pending deferred assertion report under the procedural deferred-assertion rules."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Reach a procedural checker instance and allow its static deferred assertion report to mature."
+        ]
+      },
+      "id": "SV-2023-17-PROCEDURAL-CHECKER-STATIC-DEFERRED-ACTIVATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use nonmatching time steps before the first matching clock event and verify no assertion attempt begins there."
+        ],
+        "negative": [
+          "Require procedural visitation before monitoring a static checker concurrent assertion."
+        ],
+        "notes": [],
+        "positive": [
+          "Statically instantiate a checker and trigger its static concurrent assertion on a matching initial clock event."
+        ]
+      },
+      "id": "SV-2023-17-STATIC-CHECKER-CONCURRENT-ASSERTION-ACTIVATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change the expression without any concurrent assertion clock event."
+        ],
+        "negative": [
+          "Require a concurrent assertion clock event before monitoring the changed deferred expression."
+        ],
+        "notes": [],
+        "positive": [
+          "Statically instantiate a checker and change a static deferred assertion's expression to trigger monitoring."
+        ]
+      },
+      "id": "SV-2023-17-STATIC-CHECKER-DEFERRED-ASSERTION-ACTIVATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast its fixed chosen value with per-time-step values of an uninitialized non-const free variable."
+        ],
+        "negative": [
+          "Allow an uninitialized constant free variable to change after its initialization value is chosen."
+        ],
+        "notes": [],
+        "positive": [
+          "Leave a rand const checker variable uninitialized and observe one value remain fixed."
+        ]
+      },
+      "id": "SV-2023-17-UNINITIALIZED-CONSTANT-FREE-VARIABLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast with an implicitly clocked active variable in an empty assume set."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Place one active free variable outside all properties of a nonempty assume set and update it at each set event."
+        ]
+      },
+      "id": "SV-2023-17-UNREFERENCED-ACTIVE-FREE-VARIABLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multiple assume properties with different clocks after one unsuccessful attempt."
+        ],
+        "negative": [
+          "Report assumption failure immediately at solution-attempt time before the property is checked."
+        ],
+        "notes": [],
+        "positive": [
+          "Force an unsuccessful solution and observe failure only at the unsatisfied property\u2019s Observed-region check."
+        ]
+      },
+      "id": "SV-2023-17-UNSUCCESSFUL-ASSUME-FAILURE-TIMING"
+    }
+  ],
+  "schema_version": 1
+}

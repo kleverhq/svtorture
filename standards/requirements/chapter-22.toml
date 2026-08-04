@@ -2,12 +2,2966 @@ schema_version = 3
 part = "22"
 
 [[requirements]]
-id = "SV-2023-22-INCLUDE-COMMENT"
+id = "SV-2023-22-CELLDEFINE-PLACEMENT"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.10"
+anchors = [
+    "[2023:22.10:P002:p718]",
+]
+summary = "`celldefine and `endcelldefine may appear anywhere in the source description, including within a design element; placing them outside design elements is only a recommendation."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.10"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.10"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.10"
+
+[[requirements]]
+id = "SV-2023-22-CELLDEFINE-TAGGING-SCOPE"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.10"
+anchors = [
+    "[2023:22.10:P001:p718]",
+]
+summary = "`celldefine causes subsequently encountered modules to be tagged as cell modules until `endcelldefine is the most recent of the two; the directives are independent, need not be paired, and may transition state multiple times."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.10"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.10"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.10"
+
+[[requirements]]
+id = "SV-2023-22-CONDITIONAL-BLOCK-TERMINATION"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.6"
+anchors = [
+    "[2023:22.6:P006:p713]",
+    "[2023:22.6:L004:p713]",
+    "[2023:22.6:L005:p713]",
+    "[2023:22.6:L006:p713]",
+]
+summary = "An `ifdef or `elsif text block ends at the next recognized `elsif, `else, or `endif, and an `else block ends at the next recognized `endif; directive spellings inside comments, string literals, or macro definitions are hidden and do not terminate a block."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "changed-expectation"
+clause = "22.6"
+note = "The 2012 rule uses line-group productions and does not state the 2023 block-of-text termination and hidden-directive semantics."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "The historical conditional-compilation rules use groups of lines and do not define the 2023 block_of_text termination rule or its explicit hiding of directive spellings in comments, strings, and macro definitions."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.6"
+
+[[requirements]]
+id = "SV-2023-22-CONDITIONAL-COMPILATION-GRAMMAR"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.6"
+anchors = [
+    "[2023:22.6:G001:p713]",
+    "[2023:22.6:P004:p713]",
+]
+summary = "A conditional-compilation construct begins with `ifdef or `ifndef and a SystemVerilog macro identifier or parenthesized condition, permits optional source-text blocks, zero or more `elsif blocks, and an optional `else block, and ends with `endif; condition expressions may combine identifiers using `!`, `&&`, `||`, `->`, `<->`, and parentheses."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "changed-expectation"
+clause = "22.6"
+note = "The 2012 grammar permits only a bare text macro identifier after `ifdef, `ifndef, and `elsif; it has no parenthesized condition-expression grammar or logical operators."
+
+[requirements.revision_applicability.1800-2017]
+status = "changed-expectation"
+clause = "22.6"
+note = "The historical grammar permits only a bare text macro identifier after `ifdef, `ifndef, and `elsif; it does not permit parenthesized macro expressions or the 2023 logical operators."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.6"
+
+[[requirements]]
+id = "SV-2023-22-CONDITIONAL-DIRECTIVE-PLACEMENT"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.6"
+anchors = [
+    "[2023:22.6:P001:p712]",
+]
+summary = "Conditional-compilation directives may appear anywhere in a source description and select which blocks of source text are included for compilation."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.6"
+
+[[requirements]]
+id = "SV-2023-22-CONDITIONAL-DIRECTIVE-WHITESPACE"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.6"
+anchors = [
+    "[2023:22.6:P007:p713]",
+]
+summary = "Whitespace does not affect conditional-block termination, and conditional directives require no whitespace beyond what is needed to separate lexical tokens."
+related_clauses = [
+    "5.2",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "The 2012 conditional-compilation clause has no corresponding whitespace-insensitive block-termination guarantee."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "The historical standard has no corresponding conditional-block termination whitespace guarantee."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.6"
+
+[[requirements]]
+id = "SV-2023-22-CONDITIONAL-EMBEDDED-DIRECTIVE"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.2"
+anchors = [
+    "[2023:22.2:P004:p704]",
+]
+summary = "A compiler directive embedded in a conditional-compilation block is processed when that block is not ignored and has no effect when the block is ignored."
+related_clauses = [
+    "22.6",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "same-rule-different-clause"
+clause = "22.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "The historical standard does not define processing versus suppression of compiler directives embedded in selected versus ignored conditional-compilation text."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.2"
+
+[[requirements]]
+id = "SV-2023-22-CONDITIONAL-EXPRESSION-EVALUATION"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.6"
+anchors = [
+    "[2023:22.6:P008:p713]",
+    "[2023:22.6:L007:p713]",
+    "[2023:22.6:L008:p713]",
+    "[2023:22.6:L009:p713]",
+    "[2023:22.6:P009:p713]",
+]
+summary = "A conditional-compilation expression contains identifiers, logical operators, and parentheses; each identifier is replaced by 1 when its text macro is currently defined and by 0 otherwise, after which the expression resolves to 1 or 0 under the expression rules of 11.8."
+related_clauses = [
+    "5.6",
+    "11.4.7",
+    "11.8",
+    "22.5",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no ifdef macro-expression construct or rule replacing identifiers with Boolean values for expression evaluation."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "The historical standard has no ifdef_macro_expression construct or corresponding identifier-to-Boolean and logical-expression evaluation rule."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.6"
+
+[[requirements]]
+id = "SV-2023-22-CONDITIONAL-FIRST-SUCCESSFUL-BRANCH"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.6"
+anchors = [
+    "[2023:22.6:P011:p714]",
+    "[2023:22.6:L010:p714]",
+    "[2023:22.6:L011:p714]",
+    "[2023:22.6:L012:p714]",
+]
+summary = "An `ifdef or `elsif succeeds when its bare macro identifier is currently defined or its parenthesized expression resolves to 1; the first successful branch is processed and all later `elsif and `else branches are ignored, while failed branches are ignored and evaluation proceeds in source order, with `else processed only if none succeeded."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "changed-expectation"
+clause = "22.6"
+note = "The 2012 branch-selection rule tests only bare text macro identifiers; parenthesized Boolean conditional expressions are not supported."
+
+[requirements.revision_applicability.1800-2017]
+status = "changed-expectation"
+clause = "22.6"
+note = "The historical rule selects the first successful branch using definedness of bare macro identifiers only; parenthesized conditional expressions are not supported."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.6"
+
+[[requirements]]
+id = "SV-2023-22-DEFAULT-NETTYPE-NONE-REQUIRES-DECLARATION"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.8"
+anchors = [
+    "[2023:22.8:P002:p718]",
+]
+summary = "While `default_nettype none is in effect, every net must be explicitly declared and any otherwise implicit undeclared net is an error."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.8"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.8"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.8"
+
+[[requirements]]
+id = "SV-2023-22-DEFAULT-NETTYPE-STATE"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.8"
+anchors = [
+    "[2023:22.8:P001:p718]",
+    "[2023:22.8:P002:p718]",
+]
+summary = "Multiple `default_nettype directives are permitted and the latest processed occurrence controls the type of subsequently created implicit nets; when no such directive has occurred, implicit nets default to wire."
+related_clauses = [
+    "6.10",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.8"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.8"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.8"
+
+[[requirements]]
+id = "SV-2023-22-DEFAULT-NETTYPE-SYNTAX-PLACEMENT"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.8"
+anchors = [
+    "[2023:22.8:P001:p718]",
+    "[2023:22.8:G001:p718]",
+]
+summary = "`default_nettype is legal only outside design elements and its value shall be wire, tri, tri0, tri1, wand, triand, wor, trior, trireg, uwire, or none."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.8"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.8"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.8"
+
+[[requirements]]
+id = "SV-2023-22-DIRECTIVE-COMPILATION-UNIT-SCOPE"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.2"
+anchors = [
+    "[2023:22.2:P001:p704]",
+]
+summary = "A compiler directive takes effect when processed and remains in effect across every file in the current compilation unit until a superseding directive is processed or that compilation unit ends."
+related_clauses = [
+    "3.12.1",
+    "5.6.4",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.2"
+
+[[requirements]]
+id = "SV-2023-22-DIRECTIVE-GRAVE-ACCENT-PREFIX"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.2"
+anchors = [
+    "[2023:22.2:P001:p704]",
+]
+summary = "A compiler directive is introduced by the grave accent character (ASCII 0x60); the apostrophe character (ASCII 0x27) does not serve as the compiler-directive prefix."
+related_clauses = [
+    "3.12.1",
+    "5.6.4",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.2"
+
+[[requirements]]
+id = "SV-2023-22-DIRECTIVE-KEYWORD-NAMESPACE"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.5.1"
+anchors = [
+    "[2023:22.5.1:P031:p710]",
+    "[2023:22.5.1:L008:p710]",
+]
+summary = "Compiler-directive keywords are not ordinary SystemVerilog keywords; an ordinary identifier may have the same spelling as a directive keyword or macro name, and an unprefixed identifier remains distinct from the corresponding grave-accent-prefixed macro use."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.5.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.5.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.5.1"
+
+[[requirements]]
+id = "SV-2023-22-DIRECTIVE-NAMES-UNDEFINED-IN-CONDITIONS"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.6"
+anchors = [
+    "[2023:22.6:P012:p714]",
+]
+summary = "A compiler-directive keyword by itself is considered undefined when tested by `ifdef or `elsif, even though directive names and text-macro names share a name space."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.6"
+
+[[requirements]]
+id = "SV-2023-22-DIRECTIVE-SAME-LINE-FOLLOWING-ELEMENT"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.2"
+anchors = [
+    "[2023:22.2:P002:p704]",
+]
+summary = "Unless a directive-specific rule says otherwise, a directive with a defined end may be followed on that same line by another valid language element; directives with indeterminate text permit this only when their defined termination does not require a newline."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no general rule permitting another language element after a terminated directive on the same line."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "The historical standard has no general rule permitting a language element after a completed compiler directive on the same line."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.2"
+
+[[requirements]]
+id = "SV-2023-22-DIRECTIVE-SAME-LINE-PRECEDING-ELEMENT"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.2"
+anchors = [
+    "[2023:22.2:P003:p704]",
+]
+summary = "A valid language element may precede a compiler directive on the same line when both the element and directive satisfy their respective placement rules."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no general guarantee permitting a language element before a directive on the same line."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "The historical standard has no general rule permitting a language element before a compiler directive on the same line."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.2"
+
+[[requirements]]
+id = "SV-2023-22-DIRECTIVE-SINGLE-LINE"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.2"
+anchors = [
+    "[2023:22.2:P006:p705]",
+]
+summary = "A compiler directive shall occupy one line unless its directive-specific rules explicitly support multiple lines."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no general one-line requirement for all directives subject to directive-specific multiline exceptions."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "The historical standard does not impose the 2023 general one-line rule across compiler directives; only directive-specific line rules are stated."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.2"
+
+[[requirements]]
+id = "SV-2023-22-EMPTY-MACRO-ACTUAL"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.5.1"
+anchors = [
+    "[2023:22.5.1:P021:p708]",
+]
+summary = "An actual macro argument may be empty or whitespace-only; it substitutes the formal's default when present, otherwise it substitutes no text."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.5.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.5.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.5.1"
+
+[[requirements]]
+id = "SV-2023-22-EMPTY-MACRO-BYPASSES-DEFAULT"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.5.1"
+anchors = [
+    "[2023:22.5.1:P034:p710]",
+]
+summary = "An omitted or empty actual for a nonempty-defaulted formal selects the default, but an actual consisting of a use of an empty macro first occupies the argument and then expands to empty text, thereby substituting no text instead of the default."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.5.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.5.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.5.1"
+
+[[requirements]]
+id = "SV-2023-22-EMPTY-MACRO-TEXT"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.5.1"
+anchors = [
+    "[2023:22.5.1:P016:p708]",
+]
+summary = "A macro definition may have blank replacement text; invoking such a macro substitutes no text."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.5.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.5.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.5.1"
+
+[[requirements]]
+id = "SV-2023-22-FILE-PREDEFINED-MACRO"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.13"
+anchors = [
+    "[2023:22.13:P001:p720]",
+]
+summary = "`__FILE__ expands to a string literal containing the path by which the tool opened the current input file, rather than the short spelling supplied to `include or as an input argument; the path format is implementation-dependent."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.13"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.13"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.13"
+
+[[requirements]]
+id = "SV-2023-22-IFNDEF-NEGATED-IFDEF"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.6"
+anchors = [
+    "[2023:22.6:P005:p713]",
+]
+summary = "`ifndef with a macro identifier has the same conditional meaning as `ifdef applied to its logical negation, and `ifndef with a parenthesized condition has the same meaning as `ifdef applied to the negation of that entire condition."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "changed-expectation"
+clause = "22.6"
+note = "The 2012 rule gives `ifndef the inverse bare-identifier test but has no parenthesized condition expressions or whole-expression negation form."
+
+[requirements.revision_applicability.1800-2017]
+status = "changed-expectation"
+clause = "22.6"
+note = "The historical `ifndef rule is the inverse of bare macro definedness, but it has no parenthesized conditional-expression form to negate."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.6"
+
+[[requirements]]
+id = "SV-2023-22-IGNORED-CONDITIONAL-TEXT-LEXICAL"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.6"
+anchors = [
+    "[2023:22.6:P013:p714]",
+]
+summary = "Source text in an ignored conditional-compilation block must still conform to SystemVerilog lexical conventions of Clause 5, even though it is not otherwise compiled."
+related_clauses = [
+    "5",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.6"
+
+[[requirements]]
+id = "SV-2023-22-INCLUDE-ABSOLUTE-PATH"
 standard_revision = "1800-2023"
 part = "22"
 clause = "22.4"
-anchors = ["[2023:22.4:P004:p705]"]
-summary = "A block comment may follow an include directive on the same source line."
-related_clauses = ["22.5.1"]
-tags = ["include", "macro", "preprocessor"]
-revision_applicability = { "1800-2012" = { status = "applicable", clause = "22.4" }, "1800-2017" = { status = "applicable", clause = "22.4" }, "1800-2023" = { status = "applicable", clause = "22.4" } }
+anchors = [
+    "[2023:22.4:P007:p705]",
+]
+summary = "An absolute-path `include names exactly the file to include and is legal only in the double-quoted form, not the angle-bracket form."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.4"
+
+[[requirements]]
+id = "SV-2023-22-INCLUDE-ANGLE-SEARCH"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.4"
+anchors = [
+    "[2023:22.4:P006:p705]",
+    "[2023:22.4:L002:p705]",
+]
+summary = "For an angle-bracket filename, `include searches only an implementation-dependent location containing language-standard files, and interprets a relative path from that location."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.4"
+
+[[requirements]]
+id = "SV-2023-22-INCLUDE-LINE-CONTENTS"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.4"
+anchors = [
+    "[2023:22.4:P004:p705]",
+]
+summary = "On a line containing an `include directive, no other text is permitted except white space or a comment."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.4"
+
+[[requirements]]
+id = "SV-2023-22-INCLUDE-MINIMUM-NESTING-DEPTH"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.4"
+anchors = [
+    "[2023:22.4:P008:p705]",
+]
+summary = "An implementation may impose a maximum include-file nesting depth, but that maximum shall permit at least 15 nested levels."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.4"
+
+[[requirements]]
+id = "SV-2023-22-INCLUDE-NESTING"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.4"
+anchors = [
+    "[2023:22.4:P008:p705]",
+]
+summary = "An included file may itself contain `include directives, but the resulting include-file nesting chain shall be finite."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.4"
+
+[[requirements]]
+id = "SV-2023-22-INCLUDE-PLACEMENT"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.4"
+anchors = [
+    "[2023:22.4:P003:p705]",
+]
+summary = "An `include directive may be placed anywhere in a SystemVerilog source description, subject to its textual insertion semantics."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.4"
+
+[[requirements]]
+id = "SV-2023-22-INCLUDE-QUOTED-SEARCH"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.4"
+anchors = [
+    "[2023:22.4:P005:p705]",
+    "[2023:22.4:P006:p705]",
+    "[2023:22.4:L001:p705]",
+]
+summary = "For a relative filename in double quotes, `include searches the compiler current working directory and may also search user-specified locations; the filename may be a relative or full path."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.4"
+
+[[requirements]]
+id = "SV-2023-22-INCLUDE-SYNTAX"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.4"
+anchors = [
+    "[2023:22.4:G001:p705]",
+]
+summary = "An `include compiler directive consists of `include followed by a filename enclosed either in double quotes or in angle brackets."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.4"
+
+[[requirements]]
+id = "SV-2023-22-INCLUDE-TEXTUAL-SUBSTITUTION"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.4"
+anchors = [
+    "[2023:22.4:P001:p705]",
+]
+summary = "Processing an `include directive inserts the entire contents of its selected source file at the directive location, with semantics as if that text appeared there directly."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.4"
+
+[[requirements]]
+id = "SV-2023-22-KEYWORD-DIRECTIVE-ONLY-RESERVED-SET"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.14"
+anchors = [
+    "[2023:22.14:P003:p721]",
+]
+summary = "Within a keyword-directive block, only identifiers listed as reserved in the selected version are treated as reserved words; selecting a version does not change language semantics, token definitions, or other SystemVerilog behavior."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.14"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.14"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.14"
+
+[[requirements]]
+id = "SV-2023-22-KEYWORD-DIRECTIVE-PLACEMENT-SCOPE"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.14"
+anchors = [
+    "[2023:22.14:P005:p721]",
+]
+summary = "`begin_keywords and `end_keywords may be specified only outside design elements; a selected keyword set applies to all following source, across file boundaries, until the matching `end_keywords, and `resetall does not alter that state."
+related_clauses = [
+    "3.2",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.14"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.14"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.14"
+
+[[requirements]]
+id = "SV-2023-22-KEYWORD-DIRECTIVE-SYNTAX-VERSIONS"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.14"
+anchors = [
+    "[2023:22.14:G001:p721]",
+]
+summary = "`begin_keywords takes a quoted version specifier from 1800-2023, 1800-2017, 1800-2012, 1800-2009, 1800-2005, 1364-2005, 1364-2001, 1364-2001-noconfig, or 1364-1995, and `end_keywords takes no argument."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "changed-expectation"
+clause = "22.14"
+note = "The 2012 syntax lists versions only through 1800-2012 and therefore does not accept the later 1800-2017 or 1800-2023 specifiers."
+
+[requirements.revision_applicability.1800-2017]
+status = "changed-expectation"
+clause = "22.14"
+note = "The historical standardized version list ends at 1800-2017 and does not accept the 1800-2023 version specifier."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.14"
+
+[[requirements]]
+id = "SV-2023-22-KEYWORD-DIRECTIVES-PAIRED"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.14"
+anchors = [
+    "[2023:22.14:P001:p721]",
+]
+summary = "`begin_keywords and `end_keywords are distinct directives that shall be paired in source order, with `begin_keywords first and `end_keywords later, delimiting a source block whose reserved identifier set follows a selected IEEE 1364 or 1800 version."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "changed-expectation"
+clause = "22.14"
+note = "IEEE 1800-2012 does not require every `begin_keywords to have a later `end_keywords; its selected set can remain active to the end of the compilation unit."
+
+[requirements.revision_applicability.1800-2017]
+status = "changed-expectation"
+clause = "22.14"
+note = "The historical standard allows a `begin_keywords region to continue to the end of the compilation unit, rather than requiring every `begin_keywords to be followed by a matching `end_keywords."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.14"
+
+[[requirements]]
+id = "SV-2023-22-KEYWORDS-1364-1995-R19-R30"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.14.2"
+anchors = [
+    "[2023:22.14.2:T22-1.R19:p723]",
+    "[2023:22.14.2:T22-1.R20:p723]",
+    "[2023:22.14.2:T22-1.R21:p723]",
+    "[2023:22.14.2:T22-1.R22:p723]",
+    "[2023:22.14.2:T22-1.R23:p723]",
+    "[2023:22.14.2:T22-1.R24:p723]",
+    "[2023:22.14.2:T22-1.R25:p723]",
+    "[2023:22.14.2:T22-1.R26:p723]",
+    "[2023:22.14.2:T22-1.R27:p723]",
+    "[2023:22.14.2:T22-1.R28:p723]",
+    "[2023:22.14.2:T22-1.R29:p723]",
+    "[2023:22.14.2:T22-1.R30:p723]",
+]
+summary = "Under `begin_keywords \"1364-1995\", all identifiers listed in Table 22-1 rows R19 through R30 are reserved keywords, from endfunction/parameter/tri0 through function/reg/wire."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.14.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.14.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.14.2"
+
+[[requirements]]
+id = "SV-2023-22-KEYWORDS-1364-1995-R31-R33"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.14.2"
+anchors = [
+    "[2023:22.14.2:T22-1.R31:p723]",
+    "[2023:22.14.2:T22-1.R32:p723]",
+    "[2023:22.14.2:T22-1.R33:p723]",
+]
+summary = "Under `begin_keywords \"1364-1995\", highz0, release, wor, highz1, repeat, xnor, if, rnmos, and xor are reserved keywords."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.14.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.14.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.14.2"
+
+[[requirements]]
+id = "SV-2023-22-KEYWORDS-1364-1995-TABLE"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.14.2"
+anchors = [
+    "[2023:22.14.2:P001:p723]",
+    "[2023:22.14.2:T22-1:p723]",
+    "[2023:22.14.2:T22-1.R00:p723]",
+    "[2023:22.14.2:T22-1.R01:p723]",
+    "[2023:22.14.2:T22-1.R02:p723]",
+    "[2023:22.14.2:T22-1.R03:p723]",
+    "[2023:22.14.2:T22-1.R04:p723]",
+    "[2023:22.14.2:T22-1.R05:p723]",
+    "[2023:22.14.2:T22-1.R06:p723]",
+    "[2023:22.14.2:T22-1.R07:p723]",
+    "[2023:22.14.2:T22-1.R08:p723]",
+    "[2023:22.14.2:T22-1.R09:p723]",
+    "[2023:22.14.2:T22-1.R10:p723]",
+    "[2023:22.14.2:T22-1.R11:p723]",
+    "[2023:22.14.2:T22-1.R12:p723]",
+    "[2023:22.14.2:T22-1.R13:p723]",
+    "[2023:22.14.2:T22-1.R14:p723]",
+    "[2023:22.14.2:T22-1.R15:p723]",
+    "[2023:22.14.2:T22-1.R16:p723]",
+    "[2023:22.14.2:T22-1.R17:p723]",
+    "[2023:22.14.2:T22-1.R18:p723]",
+]
+summary = "Under `begin_keywords \"1364-1995\", every identifier listed in Table 22-1 rows R00 through R18 of the cited anchors is a reserved keyword."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.14.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.14.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.14.2"
+
+[[requirements]]
+id = "SV-2023-22-KEYWORDS-1364-2001-ADDITIONS-R00-R05"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.14.3"
+anchors = [
+    "[2023:22.14.3:P001:p723]",
+    "[2023:22.14.3:T22-2:p724]",
+    "[2023:22.14.3:T22-2.R00:p724]",
+    "[2023:22.14.3:T22-2.R01:p724]",
+    "[2023:22.14.3:T22-2.R02:p724]",
+    "[2023:22.14.3:T22-2.R03:p724]",
+    "[2023:22.14.3:T22-2.R04:p724]",
+    "[2023:22.14.3:T22-2.R05:p724]",
+]
+summary = "Under `begin_keywords \"1364-2001\", all 1364-1995 keywords remain reserved and the additional Table 22-2 identifiers in rows R00 through R05 are reserved, from automatic/incdir/pulsestyle_onevent through endgenerate/localparam."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.14.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.14.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.14.3"
+
+[[requirements]]
+id = "SV-2023-22-KEYWORDS-1364-2001-ADDITIONS-R06-R07"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.14.3"
+anchors = [
+    "[2023:22.14.3:T22-2.R06:p724]",
+    "[2023:22.14.3:T22-2.R07:p724]",
+]
+summary = "Under `begin_keywords \"1364-2001\", generate, noshowcancelled, genvar, and pulsestyle_ondetect are additional reserved keywords."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.14.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.14.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.14.3"
+
+[[requirements]]
+id = "SV-2023-22-KEYWORDS-1364-2001-NOCONFIG-EXCLUSIONS"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.14.4"
+anchors = [
+    "[2023:22.14.4:P001:p724]",
+    "[2023:22.14.4:C001:p724]",
+]
+summary = "The 1364-2001-noconfig keyword set equals 1364-2001 except that cell, config, design, endconfig, incdir, include, instance, liblist, library, and use are not reserved."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.14.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.14.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.14.4"
+
+[[requirements]]
+id = "SV-2023-22-KEYWORDS-1364-2005-UWIRE"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.14.5"
+anchors = [
+    "[2023:22.14.5:P001:p724]",
+    "[2023:22.14.5:T22-3:p724]",
+    "[2023:22.14.5:T22-3.R00:p724]",
+]
+summary = "The 1364-2005 keyword set includes all 1364-1995 and 1364-2001 reserved words and additionally reserves uwire."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.14.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.14.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.14.5"
+
+[[requirements]]
+id = "SV-2023-22-KEYWORDS-1800-2005-INHERITANCE"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.14.6"
+anchors = [
+    "[2023:22.14.6:P001:p724]",
+    "[2023:22.14.6:T22-4:p725]",
+]
+summary = "Under `begin_keywords \"1800-2005\", every reserved word from the 1364-1995, 1364-2001, and 1364-2005 keyword sets remains reserved."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.14.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.14.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.14.6"
+
+[[requirements]]
+id = "SV-2023-22-KEYWORDS-1800-2005-R00-R11"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.14.6"
+anchors = [
+    "[2023:22.14.6:T22-4.R00:p725]",
+    "[2023:22.14.6:T22-4.R01:p725]",
+    "[2023:22.14.6:T22-4.R02:p725]",
+    "[2023:22.14.6:T22-4.R03:p725]",
+    "[2023:22.14.6:T22-4.R04:p725]",
+    "[2023:22.14.6:T22-4.R05:p725]",
+    "[2023:22.14.6:T22-4.R06:p725]",
+    "[2023:22.14.6:T22-4.R07:p725]",
+    "[2023:22.14.6:T22-4.R08:p725]",
+    "[2023:22.14.6:T22-4.R09:p725]",
+    "[2023:22.14.6:T22-4.R10:p725]",
+    "[2023:22.14.6:T22-4.R11:p725]",
+]
+summary = "Under `begin_keywords \"1800-2005\", every Table 22-4 identifier in rows R00 through R11 is reserved, from alias/endsequence/pure through break/ignore_bins/static."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.14.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.14.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.14.6"
+
+[[requirements]]
+id = "SV-2023-22-KEYWORDS-1800-2005-R12-R23"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.14.6"
+anchors = [
+    "[2023:22.14.6:T22-4.R12:p725]",
+    "[2023:22.14.6:T22-4.R13:p725]",
+    "[2023:22.14.6:T22-4.R14:p725]",
+    "[2023:22.14.6:T22-4.R15:p725]",
+    "[2023:22.14.6:T22-4.R16:p725]",
+    "[2023:22.14.6:T22-4.R17:p725]",
+    "[2023:22.14.6:T22-4.R18:p725]",
+    "[2023:22.14.6:T22-4.R19:p725]",
+    "[2023:22.14.6:T22-4.R20:p725]",
+    "[2023:22.14.6:T22-4.R21:p725]",
+    "[2023:22.14.6:T22-4.R22:p725]",
+    "[2023:22.14.6:T22-4.R23:p725]",
+]
+summary = "Under `begin_keywords \"1800-2005\", every Table 22-4 identifier in rows R12 through R23 is reserved, from byte/illegal_bins/string through cross/matches/unique."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.14.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.14.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.14.6"
+
+[[requirements]]
+id = "SV-2023-22-KEYWORDS-1800-2005-R24-R32"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.14.6"
+anchors = [
+    "[2023:22.14.6:T22-4.R24:p725]",
+    "[2023:22.14.6:T22-4.R25:p725]",
+    "[2023:22.14.6:T22-4.R26:p725]",
+    "[2023:22.14.6:T22-4.R27:p725]",
+    "[2023:22.14.6:T22-4.R28:p725]",
+    "[2023:22.14.6:T22-4.R29:p725]",
+    "[2023:22.14.6:T22-4.R30:p725]",
+    "[2023:22.14.6:T22-4.R31:p725]",
+    "[2023:22.14.6:T22-4.R32:p725]",
+]
+summary = "Under `begin_keywords \"1800-2005\", every Table 22-4 identifier in rows R24 through R32 is reserved, from dist/modport/var through endproperty/protected."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.14.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.14.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.14.6"
+
+[[requirements]]
+id = "SV-2023-22-KEYWORDS-1800-2009-ADDITIONS"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.14.7"
+anchors = [
+    "[2023:22.14.7:T22-5.R00:p725]",
+    "[2023:22.14.7:T22-5.R01:p725]",
+    "[2023:22.14.7:T22-5.R02:p725]",
+    "[2023:22.14.7:T22-5.R03:p725]",
+    "[2023:22.14.7:T22-5.R04:p725]",
+    "[2023:22.14.7:T22-5.R05:p725]",
+    "[2023:22.14.7:T22-5.R06:p725]",
+    "[2023:22.14.7:T22-5.R07:p725]",
+]
+summary = "Under `begin_keywords \"1800-2009\", every Table 22-5 identifier is additionally reserved, from accept_on/reject_on/sync_accept_on through nexttime/strong."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.14.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.14.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.14.7"
+
+[[requirements]]
+id = "SV-2023-22-KEYWORDS-1800-2009-INHERITANCE"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.14.7"
+anchors = [
+    "[2023:22.14.7:P001:p725]",
+    "[2023:22.14.7:T22-5:p725]",
+]
+summary = "Under `begin_keywords \"1800-2009\", every identifier reserved by an earlier listed keyword version remains reserved."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.14.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.14.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.14.7"
+
+[[requirements]]
+id = "SV-2023-22-KEYWORDS-1800-2012-INHERITANCE-R00"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.14.8"
+anchors = [
+    "[2023:22.14.8:P001:p726]",
+    "[2023:22.14.8:T22-6:p726]",
+    "[2023:22.14.8:T22-6.R00:p726]",
+]
+summary = "Under `begin_keywords \"1800-2012\", every identifier reserved by previous versions remains reserved, and Table 22-6 row R00 additionally reserves implements and nettype."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.14.8"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.14.8"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.14.8"
+
+[[requirements]]
+id = "SV-2023-22-KEYWORDS-1800-2012-R01"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.14.8"
+anchors = [
+    "[2023:22.14.8:T22-6.R01:p726]",
+]
+summary = "Under `begin_keywords \"1800-2012\", interconnect and soft are reserved keywords."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.14.8"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.14.8"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.14.8"
+
+[[requirements]]
+id = "SV-2023-22-KEYWORDS-1800-2017-2023-INHERITED"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.14.9"
+anchors = [
+    "[2023:22.14.9:P001:p726]",
+]
+summary = "The 1800-2017 and 1800-2023 keyword sets each include all identifiers reserved by previous versions and add no new reserved keywords."
+related_clauses = [
+    "B",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no 1800-2017 or 1800-2023 version specifier or corresponding later-version keyword-set guarantee."
+
+[requirements.revision_applicability.1800-2017]
+status = "changed-expectation"
+clause = "22.14.9"
+note = "The historical rule defines the cumulative 1800-2017 keyword set with no new words, but has no 1800-2023 version specifier or corresponding keyword-set guarantee."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.14.9"
+
+[[requirements]]
+id = "SV-2023-22-LINE-DIRECTIVE-MAPPING"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.12"
+anchors = [
+    "[2023:22.12:P003:p719]",
+    "[2023:22.12:P004:p720]",
+]
+summary = "A `line directive sets the maintained source line number and file name for the immediately following line to its specified values, and that mapping is not changed by `resetall."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.12"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.12"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.12"
+
+[[requirements]]
+id = "SV-2023-22-LINE-DIRECTIVE-PLACEMENT-CONTENTS"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.12"
+anchors = [
+    "[2023:22.12:P004:p720]",
+]
+summary = "A `line directive may appear anywhere in a source description, but its line may contain only the directive and whitespace; comments or other text on that line are not allowed."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.12"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.12"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.12"
+
+[[requirements]]
+id = "SV-2023-22-LINE-DIRECTIVE-SYNTAX-PARAMETERS"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.12"
+anchors = [
+    "[2023:22.12:G001:p720]",
+    "[2023:22.12:P006:p720]",
+]
+summary = "A `line directive requires a positive integer line number, a string-literal full or relative filename, and level 0, 1, or 2; levels identify respectively an ordinary line, the first line after entering an include file, or the first line after exiting one."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.12"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.12"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.12"
+
+[[requirements]]
+id = "SV-2023-22-LINE-DOES-NOT-AFFECT-LIBRARY-SEARCH"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.12"
+anchors = [
+    "[2023:22.12:P008:p720]",
+]
+summary = "Source filename and line remapping by `line does not alter the mechanism used for library searching."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.12"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.12"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.12"
+
+[[requirements]]
+id = "SV-2023-22-LINE-PREDEFINED-MACRO"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.13"
+anchors = [
+    "[2023:22.13:P002:p720]",
+]
+summary = "`__LINE__ expands to the current input line number as a simple decimal number."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.13"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.13"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.13"
+
+[[requirements]]
+id = "SV-2023-22-MACRO-ACTUAL-DELIMITERS"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.5.1"
+anchors = [
+    "[2023:22.5.1:P019:p708]",
+    "[2023:22.5.1:P022:p708]",
+]
+summary = "A function-like macro use requires a parenthesized comma-separated actual list; commas and right parentheses may occur within an actual or default only when protected by matched parentheses, brackets, braces, double-quoted or triple-quoted strings, or an escaped identifier."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "changed-expectation"
+clause = "22.5.1"
+note = "The 2012 delimiter rule protects commas and right parentheses in matched delimiters, ordinary double-quoted strings, or escaped identifiers, but has no triple-quoted string form."
+
+[requirements.revision_applicability.1800-2017]
+status = "changed-expectation"
+clause = "22.5.1"
+note = "The historical delimiter rule protects commas and right parentheses inside matched delimiters, ordinary double-quoted strings, or escaped identifiers, but does not recognize the 2023 triple-quoted string form."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.5.1"
+
+[[requirements]]
+id = "SV-2023-22-MACRO-ACTUAL-SUBSTITUTION"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.5.1"
+anchors = [
+    "[2023:22.5.1:P018:p708]",
+    "[2023:22.5.1:P001:p706]",
+]
+summary = "Each object-like macro use substitutes its replacement text unchanged, while each function-like macro use replaces every formal with the corresponding actual expression."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.5.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.5.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.5.1"
+
+[[requirements]]
+id = "SV-2023-22-MACRO-CALL-ARITY-AND-DEFAULTS"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.5.1"
+anchors = [
+    "[2023:22.5.1:P022:p708]",
+]
+summary = "If fewer actual arguments are supplied than formals, every remaining formal shall have a default and those defaults are substituted; it is an error when any remaining formal lacks a default."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.5.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.5.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.5.1"
+
+[[requirements]]
+id = "SV-2023-22-MACRO-CALL-EXCESS-ACTUALS-ERROR"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.5.1"
+anchors = [
+    "[2023:22.5.1:P022:p708]",
+]
+summary = "It is an error for a function-like macro call to supply more actual arguments than the macro has formal arguments."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.5.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.5.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.5.1"
+
+[[requirements]]
+id = "SV-2023-22-MACRO-CALL-NAME-WHITESPACE"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.5.1"
+anchors = [
+    "[2023:22.5.1:P020:p708]",
+]
+summary = "Whitespace is permitted between a macro name and the opening parenthesis of a macro use, and is required there when the macro name is an escaped identifier."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.5.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.5.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.5.1"
+
+[[requirements]]
+id = "SV-2023-22-MACRO-COMMENT-REMOVAL-AND-CONTINUATION"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.5.1"
+anchors = [
+    "[2023:22.5.1:P012:p707]",
+]
+summary = "Comments in macro text do not become substituted text; a line comment ends before a following backslash-newline continuation, and newlines inside a multiline block comment need no preceding backslash."
+related_clauses = [
+    "5.4",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "changed-expectation"
+clause = "22.5.1"
+note = "IEEE 1800-2012 states removal only for one-line comments and does not provide the later block-comment and line-comment continuation rules."
+
+[requirements.revision_applicability.1800-2017]
+status = "changed-expectation"
+clause = "22.5.1"
+note = "The historical rule removes a one-line comment from macro text but does not specify removal and unescaped-newline handling for multiline block comments or continuation after a line comment."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.5.1"
+
+[[requirements]]
+id = "SV-2023-22-MACRO-COMPILATION-UNIT-VISIBILITY"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.5.1"
+anchors = [
+    "[2023:22.5.1:P025:p709]",
+]
+summary = "After definition, a text macro may be used anywhere subsequently processed within that compilation unit, without any narrower language scope restriction."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.5.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.5.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.5.1"
+
+[[requirements]]
+id = "SV-2023-22-MACRO-DEFINITION-GRAMMAR"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.5.1"
+anchors = [
+    "[2023:22.5.1:P003:p706]",
+    "[2023:22.5.1:G001:p706]",
+]
+summary = "A `define contains a macro identifier, an optional parenthesized comma-separated nonempty formal-argument list, and macro text; each formal is a simple identifier optionally followed by `=` and default text."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.5.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.5.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.5.1"
+
+[[requirements]]
+id = "SV-2023-22-MACRO-DEFINITION-PLACEMENT"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.5.1"
+anchors = [
+    "[2023:22.5.1:P001:p706]",
+]
+summary = "A `define directive may create a text-substitution macro either inside or outside a design element."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.5.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.5.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.5.1"
+
+[[requirements]]
+id = "SV-2023-22-MACRO-EMBEDDED-DIRECTIVE"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.5.1"
+anchors = [
+    "[2023:22.5.1:P033:p710]",
+    "[2023:22.2:P004:p704]",
+]
+summary = "A compiler directive appearing in macro replacement text is ignored when the macro is defined and is processed only when that macro is used."
+related_clauses = [
+    "22.2",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no rule delaying a compiler directive embedded in macro replacement text until macro use."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "The historical standard does not define deferred processing of a compiler directive embedded in macro replacement text."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.5.1"
+
+[[requirements]]
+id = "SV-2023-22-MACRO-EXPANSION-IN-DIRECTIVE"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.2"
+anchors = [
+    "[2023:22.2:P005:p704]",
+]
+summary = "Macro invocations within a compiler directive are expanded while that directive is processed."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no general guarantee that macro invocations are expanded within compiler directives."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "The historical standard has no general rule requiring macro expansion within a compiler directive while that directive is processed."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.2"
+
+[[requirements]]
+id = "SV-2023-22-MACRO-FORMAL-DEFAULT"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.5.1"
+anchors = [
+    "[2023:22.5.1:P010:p707]",
+    "[2023:22.5.1:P011:p707]",
+]
+summary = "A formal may have default text after `=`; omission of its corresponding actual substitutes that default, and a default may explicitly be empty when `=` is followed by the comma or closing parenthesis."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.5.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.5.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.5.1"
+
+[[requirements]]
+id = "SV-2023-22-MACRO-FORMAL-LIST-LEXICAL-RULES"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.5.1"
+anchors = [
+    "[2023:22.5.1:P009:p707]",
+]
+summary = "Macro formal names are comma-separated simple identifiers in parentheses immediately after the macro name: no whitespace may intervene after a simple-identifier name, while an escaped-identifier name is separated only by its single terminating whitespace character."
+related_clauses = [
+    "5.6.1",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "changed-expectation"
+clause = "22.5.1"
+note = "The 2012 rule requires the opening parenthesis to follow the macro name immediately and does not specify the later escaped-identifier terminating-space exception."
+
+[requirements.revision_applicability.1800-2017]
+status = "changed-expectation"
+clause = "22.5.1"
+note = "The historical rule requires the opening parenthesis to follow the macro name immediately and does not provide the 2023 exception allowing an escaped macro name's single terminating whitespace character."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.5.1"
+
+[[requirements]]
+id = "SV-2023-22-MACRO-FORMAL-SCOPE"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.5.1"
+anchors = [
+    "[2023:22.5.1:P008:p707]",
+]
+summary = "A macro formal argument is in scope through the end of the macro replacement text and may be referenced there like an identifier."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.5.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.5.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.5.1"
+
+[[requirements]]
+id = "SV-2023-22-MACRO-LITERAL-ACTUAL-SUBSTITUTION"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.5.1"
+anchors = [
+    "[2023:22.5.1:P028:p710]",
+]
+summary = "Each macro actual argument is substituted literally and in its entirety at every occurrence of its corresponding formal; if the resulting context evaluates multiple copies of an actual expression, that expression can be evaluated more than once."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.5.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.5.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.5.1"
+
+[[requirements]]
+id = "SV-2023-22-MACRO-MIXED-QUOTE-DELIMITERS"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.5.1"
+anchors = [
+    "[2023:22.5.1:P046:p711]",
+]
+summary = "Ordinary and grave-accent quote or triple-quote forms may be mixed in macro text, but each ordinary quote or triple quote starts a string literal requiring a matching terminator, and every character inside that literal, including grave accents, remains literal in the replaced text."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "changed-expectation"
+clause = "22.5.1"
+note = "The 2012 mixed-quote rule covers ordinary quote and grave-accent-quote forms only; triple-quoted literals and grave-accent-triple-quote forms are absent."
+
+[requirements.revision_applicability.1800-2017]
+status = "changed-expectation"
+clause = "22.5.1"
+note = "The historical rule covers mixing grave-accent quote with ordinary quote, but has no triple-quoted literal or grave-accent-triple-quote forms."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.5.1"
+
+[[requirements]]
+id = "SV-2023-22-MACRO-NAME-DIRECTIVE-PROHIBITION"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.5.1"
+anchors = [
+    "[2023:22.5.1:P002:p706]",
+    "[2023:22.5.1:L007:p710]",
+]
+summary = "It is illegal for a text macro name to be the same as a compiler-directive keyword."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.5.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.5.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.5.1"
+
+[[requirements]]
+id = "SV-2023-22-MACRO-NAME-IDENTIFIER-FORMS"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.5.1"
+anchors = [
+    "[2023:22.5.1:P002:p706]",
+]
+summary = "A text macro name may be either a simple_identifier or an escaped_identifier."
+related_clauses = [
+    "5.6",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.5.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.5.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.5.1"
+
+[[requirements]]
+id = "SV-2023-22-MACRO-QUOTE-CONSTRUCTION"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.5.1"
+anchors = [
+    "[2023:22.5.1:P041:p711]",
+    "[2023:22.5.1:P042:p711]",
+]
+summary = "Macro replacement text may contain the grave-accent-quote operator; it contributes a quotation mark while permitting formal substitution and embedded macro expansion within the resulting quoted text, enabling construction of string literals from macro arguments."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.5.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.5.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.5.1"
+
+[[requirements]]
+id = "SV-2023-22-MACRO-REDEFINITION-LATEST-PREVAILS"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.5.1"
+anchors = [
+    "[2023:22.5.1:L009:p710]",
+]
+summary = "A text macro may be redefined; each use expands according to the latest definition processed before that use."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.5.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.5.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.5.1"
+
+[[requirements]]
+id = "SV-2023-22-MACRO-STRING-CONTINUATION"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.5.1"
+anchors = [
+    "[2023:22.5.1:P007:p707]",
+]
+summary = "When backslash-newline occurs within a string literal in macro text, both characters are omitted from the expanded macro rather than producing a newline."
+related_clauses = [
+    "5.9",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "changed-expectation"
+clause = "22.5.1"
+note = "IEEE 1800-2012 generally preserves the newline while removing the continuation backslash and does not state the later string-literal exception that removes both characters."
+
+[requirements.revision_applicability.1800-2017]
+status = "changed-expectation"
+clause = "22.5.1"
+note = "The historical macro continuation rule replaces backslash-newline with a newline generally and does not state the 2023 string-literal exception that omits both characters."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.5.1"
+
+[[requirements]]
+id = "SV-2023-22-MACRO-TEXT-CANNOT-SPLIT-TOKEN"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.5.1"
+anchors = [
+    "[2023:22.5.1:P026:p709]",
+    "[2023:22.5.1:L001:p709]",
+    "[2023:22.5.1:L002:p709]",
+    "[2023:22.5.1:L003:p709]",
+    "[2023:22.5.1:L004:p709]",
+    "[2023:22.5.1:L005:p709]",
+    "[2023:22.5.1:L006:p709]",
+    "[2023:22.5.1:P027:p709]",
+]
+summary = "A macro definition boundary or continuation shall not split a comment, number, string literal, identifier, keyword, or operator lexical token."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.5.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.5.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.5.1"
+
+[[requirements]]
+id = "SV-2023-22-MACRO-TEXT-LINE-CONTINUATION"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.5.1"
+anchors = [
+    "[2023:22.5.1:P006:p706]",
+]
+summary = "Macro replacement text may be arbitrary same-line text; a newline outside a triple-quoted string literal or block comment ends it unless immediately preceded by backslash, while backslash-newline continues it and expands as a newline without the backslash."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "changed-expectation"
+clause = "22.5.1"
+note = "The 2012 rule ends macro text at the first unescaped newline and has no exceptions for block comments or triple-quoted strings."
+
+[requirements.revision_applicability.1800-2017]
+status = "changed-expectation"
+clause = "22.5.1"
+note = "The historical rule ends macro text at the first unescaped newline without the 2023 exceptions for newlines inside block comments and triple-quoted strings."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.5.1"
+
+[[requirements]]
+id = "SV-2023-22-MACRO-TOKEN-CONCATENATION"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.5.1"
+anchors = [
+    "[2023:22.5.1:P050:p712]",
+]
+summary = "The double-grave-accent macro operator delimits adjacent lexical tokens during replacement without inserting whitespace, allowing substituted arguments and adjacent text to form a single identifier token."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.5.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.5.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.5.1"
+
+[[requirements]]
+id = "SV-2023-22-MACRO-TRIPLE-QUOTE-CONSTRUCTION"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.5.1"
+anchors = [
+    "[2023:22.5.1:P043:p711]",
+]
+summary = "The grave-accent-triple-quote operator contributes a triple quotation mark and permits formal substitution and embedded macro expansion; unlike a literal triple-quoted string, an ordinary newline within this construction terminates the macro definition, while backslash-newline removes the backslash but preserves the newline in expansion."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no grave-accent-triple-quote macro operator or associated newline behavior."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "The historical standard has no grave-accent-triple-quote macro operator or triple-quoted string construction."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.5.1"
+
+[[requirements]]
+id = "SV-2023-22-MACRO-TRIPLE-QUOTED-NEWLINES"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.5.1"
+anchors = [
+    "[2023:22.5.1:P014:p707]",
+]
+summary = "Newlines inside a triple-quoted string literal in macro replacement text do not terminate the macro definition."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no triple-quoted string literal and therefore no macro-definition newline exception for that construct."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "The historical standard has no triple-quoted string literal form and therefore no rule allowing its internal newlines in macro text."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.5.1"
+
+[[requirements]]
+id = "SV-2023-22-MACRO-USAGE-GRAMMAR"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.5.1"
+anchors = [
+    "[2023:22.5.1:G002:p708]",
+]
+summary = "A text-macro use is a grave accent and macro identifier optionally followed by a parenthesized, comma-separated nonempty list of expression actual arguments."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.5.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.5.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.5.1"
+
+[[requirements]]
+id = "SV-2023-22-NESTED-CONDITIONAL-COMPILATION"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.6"
+anchors = [
+    "[2023:22.6:P010:p714]",
+]
+summary = "Conditional-compilation constructs may nest; until an inner construct's matching `endif, its conditional directives govern only that inner construct and cannot terminate the enclosing construct's text block."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.6"
+
+[[requirements]]
+id = "SV-2023-22-NESTED-KEYWORD-DIRECTIVES"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.14"
+anchors = [
+    "[2023:22.14:P006:p721]",
+]
+summary = "Keyword-directive pairs may nest as a stack; each `end_keywords restores the version specifier that was active before its matching `begin_keywords."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.14"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.14"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.14"
+
+[[requirements]]
+id = "SV-2023-22-NESTED-MACRO-DEFERRED-EXPANSION"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.5.1"
+anchors = [
+    "[2023:22.5.1:P032:p710]",
+]
+summary = "Macro uses contained in replacement text, actual arguments, or argument defaults are not expanded at outer-macro definition time; they expand only after their containing text is substituted into the outer replacement text."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.5.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.5.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.5.1"
+
+[[requirements]]
+id = "SV-2023-22-NESTED-MACRO-NO-FORMAL-CAPTURE"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.5.1"
+anchors = [
+    "[2023:22.5.1:P035:p710]",
+]
+summary = "Expanding a macro use supplied as an actual argument or default does not create new references to same-spelled formals of the containing top-level macro."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.5.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.5.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.5.1"
+
+[[requirements]]
+id = "SV-2023-22-NO-DIRECTIVE-WITHIN-DIRECTIVE"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.2"
+anchors = [
+    "[2023:22.2:P004:p704]",
+]
+summary = "A compiler directive shall not occur in the middle of another compiler directive, except that a macro usage is not itself considered a directive for this restriction."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no general prohibition on a compiler directive occurring in the middle of another directive with a macro-use exception."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "The historical standard has no general prohibition on recognizing one compiler directive in the middle of another or the associated macro-usage exception."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.2"
+
+[[requirements]]
+id = "SV-2023-22-NO-DIRECTIVES-IN-COMMENTS-OR-STRINGS"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.2"
+anchors = [
+    "[2023:22.2:P005:p704]",
+]
+summary = "Compiler-directive spellings inside comments or string literals are not recognized as directives."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 does not state the corresponding compiler-directive recognition guarantee for directive spellings inside comments or string literals."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "The historical standard has no corresponding explicit compiler-directive recognition rule for directive spellings inside comments or string literals."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.2"
+
+[[requirements]]
+id = "SV-2023-22-NO-MACRO-SUBSTITUTION-IN-STRING"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.5.1"
+anchors = [
+    "[2023:22.5.1:P039:p710]",
+]
+summary = "Ordinary macro substitution and formal-argument substitution do not occur within string literals."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.5.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.5.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.5.1"
+
+[[requirements]]
+id = "SV-2023-22-PRAGMA-GRAMMAR"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.11"
+anchors = [
+    "[2023:22.11:P001:p718]",
+    "[2023:22.11:G001:p719]",
+    "[2023:22.11:P002:p719]",
+]
+summary = "A `pragma consists of a simple-identifier pragma name and an optional comma-separated list of expressions; an expression may be a simple keyword, keyword `=` value, or value, and a value may be a parenthesized expression list, number, string, or identifier."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.11"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.11"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.11"
+
+[[requirements]]
+id = "SV-2023-22-PRAGMA-RESET-SEMANTICS"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.11.1"
+anchors = [
+    "[2023:22.11.1:P001:p719]",
+]
+summary = "The reset pragma restores tool-initial default values and state for every pragma name listed as its pragma keywords, while resetall restores tool-initial defaults for every pragma name recognized by the implementation."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.11.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.11.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.11.1"
+
+[[requirements]]
+id = "SV-2023-22-PREDEFINED-LOCATION-INCLUDE-AND-LINE"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.13"
+anchors = [
+    "[2023:22.13:P005:p720]",
+    "[2023:22.13:P006:p721]",
+]
+summary = "Within an included file, `__FILE__ and `__LINE__ reflect that included file; on return they restore the including-file values and advance `__LINE__ to the line after `include, while `line changes `__LINE__ and may change `__FILE__."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "same-rule-different-clause"
+clause = "22.12"
+note = "The include-context save, restoration, and line/file update rules are stated in 22.12; the predefined macros in 22.13 expose that maintained state."
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.13"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.13"
+
+[[requirements]]
+id = "SV-2023-22-RECURSIVE-MACRO-ERROR"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.5.1"
+anchors = [
+    "[2023:22.5.1:P038:p710]",
+]
+summary = "It is an error for a macro's replacement expansion to contain a direct or indirect use of that same macro; a self-use occurring only within an actual argument or default is permitted and is not replacement-text recursion."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.5.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.5.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.5.1"
+
+[[requirements]]
+id = "SV-2023-22-RESETALL-CELLDEFINE"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.10"
+anchors = [
+    "[2023:22.10:P003:p718]",
+    "[2023:22.3:P001:p705]",
+]
+summary = "Processing `resetall restores the non-cell-tagging state produced by `endcelldefine."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.10"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.10"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.10"
+
+[[requirements]]
+id = "SV-2023-22-RESETALL-DEFAULT-NETTYPE"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.8"
+anchors = [
+    "[2023:22.8:P002:p718]",
+    "[2023:22.3:P001:p705]",
+]
+summary = "Processing `resetall restores the default implicit net type to wire."
+related_clauses = [
+    "6.10",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.8"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.8"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.8"
+
+[[requirements]]
+id = "SV-2023-22-RESETALL-OUTSIDE-DESIGN-ELEMENT"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.3"
+anchors = [
+    "[2023:22.3:P003:p705]",
+]
+summary = "A `resetall directive is illegal within a design element."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.3"
+
+[[requirements]]
+id = "SV-2023-22-RESETALL-PRESERVES-NONDEFAULT-DIRECTIVES"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.3"
+anchors = [
+    "[2023:22.3:P002:p705]",
+    "[2023:22.5:P002:p706]",
+]
+summary = "`resetall does not affect compiler directives that have no default value; in particular, text macro definitions remain active."
+related_clauses = [
+    "22.5",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.3"
+
+[[requirements]]
+id = "SV-2023-22-RESETALL-TIMESCALE"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.7"
+anchors = [
+    "[2023:22.7:P006:p716]",
+    "[2023:22.3:P001:p705]",
+]
+summary = "Processing `resetall removes the previously selected `timescale state, after which the default time unit and precision are tool-specific rather than the prior explicit values."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.7"
+
+[[requirements]]
+id = "SV-2023-22-RESETALL-UNCONNECTED-DRIVE"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.9"
+anchors = [
+    "[2023:22.9:P003:p718]",
+    "[2023:22.3:P001:p705]",
+]
+summary = "Processing `resetall restores the same normal unconnected-input-port behavior as `nounconnected_drive."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.9"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.9"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.9"
+
+[[requirements]]
+id = "SV-2023-22-SOURCE-LOCATION-TRACKING"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.12"
+anchors = [
+    "[2023:22.12:P008:p720]",
+]
+summary = "Maintained source location increments its line number for each line read, resets the number to 1 and updates the name when a new file begins, saves the including file's location on include entry, restores it at include termination, and makes updated location information available through PLI."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.12"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.12"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.12"
+
+[[requirements]]
+id = "SV-2023-22-TIMESCALE-DELAY-CONVERSION-NOT-STORED-VALUE"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.7"
+anchors = [
+    "[2023:22.7:P018:p717]",
+    "[2023:22.7:P019:p717]",
+    "[2023:22.7:L005:p717]",
+    "[2023:22.7:L006:p717]",
+    "[2023:22.7:L007:p717]",
+]
+summary = "Using a numeric parameter as a delay under a timescale does not change the parameter's stored numeric value; after the converted delay determines scheduled event times, those times are not rounded again when the assignments are scheduled."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.7"
+
+[[requirements]]
+id = "SV-2023-22-TIMESCALE-DELAY-ROUNDING"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.7"
+anchors = [
+    "[2023:22.7:P008:p716]",
+    "[2023:22.7:P009:p716]",
+]
+summary = "A `timescale time-unit argument supplies the measurement unit for times and delays, and its time-precision argument determines how delay values are rounded before simulation uses them."
+related_clauses = [
+    "3.14",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.7"
+
+[[requirements]]
+id = "SV-2023-22-TIMESCALE-FOLLOWING-DESIGN-ELEMENTS"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.7"
+anchors = [
+    "[2023:22.7:P001:p716]",
+    "[2023:22.7:P004:p716]",
+]
+summary = "A `timescale directive sets the default time unit and time precision for each following design element that does not declare its own timeunit and timeprecision, governing measurement of time and delay values and delay accuracy until another `timescale is processed."
+related_clauses = [
+    "3.14.2.2",
+    "3.14.2.3",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.7"
+
+[[requirements]]
+id = "SV-2023-22-TIMESCALE-OUTSIDE-DESIGN-ELEMENT"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.7"
+anchors = [
+    "[2023:22.7:P002:p716]",
+]
+summary = "A `timescale directive is illegal within a design element."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 does not prohibit a `timescale directive from appearing within a design element."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "The historical `timescale clause does not prohibit placement of the directive within a design element."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.7"
+
+[[requirements]]
+id = "SV-2023-22-TIMESCALE-PRECISION-ORDER"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.7"
+anchors = [
+    "[2023:22.7:P010:p717]",
+]
+summary = "The time precision in a `timescale directive shall be at least as precise as its time unit and therefore cannot denote a longer time interval."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.7"
+
+[[requirements]]
+id = "SV-2023-22-TIMESCALE-SYNTAX-VALUES"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.7"
+anchors = [
+    "[2023:22.7:G001:p716]",
+    "[2023:22.7:P011:p717]",
+]
+summary = "A `timescale directive has a time-unit value, `/`, and a time-precision value; each value consists of magnitude 1, 10, or 100 and unit s, ms, us, ns, ps, or fs."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.7"
+
+[[requirements]]
+id = "SV-2023-22-UNCONNECTED-DRIVE-EFFECT"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.9"
+anchors = [
+    "[2023:22.9:P001:p718]",
+    "[2023:22.9:P002:p718]",
+]
+summary = "For modules, programs, or interfaces processed while `unconnected_drive pull1 or pull0 is the most recent of it and `nounconnected_drive, every unconnected input port is automatically pulled up or down respectively; `nounconnected_drive restores normal unconnected-port behavior, and the directives need not be paired."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.9"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.9"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.9"
+
+[[requirements]]
+id = "SV-2023-22-UNCONNECTED-DRIVE-OUTSIDE-DESIGN-ELEMENT"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.9"
+anchors = [
+    "[2023:22.9:P002:p718]",
+]
+summary = "`unconnected_drive and `nounconnected_drive shall be specified outside design element declarations."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.9"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.9"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.9"
+
+[[requirements]]
+id = "SV-2023-22-UNDEF-SYNTAX-AND-EFFECT"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.5.2"
+anchors = [
+    "[2023:22.5.2:P001:p712]",
+    "[2023:22.5.2:G001:p712]",
+    "[2023:22.5.2:P002:p712]",
+]
+summary = "An `undef directive followed by a text-macro identifier removes that macro's prior `define definition in the compilation unit, leaving it with no value as though never defined."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.5.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.5.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.5.2"
+
+[[requirements]]
+id = "SV-2023-22-UNDEFINEALL-EFFECT"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.5.3"
+anchors = [
+    "[2023:22.5.3:P001:p712]",
+]
+summary = "Processing `undefineall removes every text macro previously defined by `define in the current compilation unit."
+related_clauses = [
+    "22.5.1",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.5.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.5.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.5.3"
+
+[[requirements]]
+id = "SV-2023-22-UNDEFINEALL-SYNTAX-PLACEMENT"
+standard_revision = "1800-2023"
+part = "22"
+clause = "22.5.3"
+anchors = [
+    "[2023:22.5.3:P001:p712]",
+]
+summary = "`undefineall takes no arguments and may appear anywhere in the source description, including within a design element."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "22.5.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "22.5.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "22.5.3"

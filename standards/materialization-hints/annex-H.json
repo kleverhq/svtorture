@@ -1,0 +1,1790 @@
+{
+  "authority": "1800-2023",
+  "part": "H",
+  "requirements": [
+    {
+      "hints": {
+        "edge": [
+          "Use nested aggregates containing string members."
+        ],
+        "negative": [
+          "Represent an aggregate string member as an inline character array."
+        ],
+        "notes": [],
+        "positive": [
+          "Pass a structure containing a const char* member and follow input-string lifetime rules."
+        ]
+      },
+      "id": "SV-2023-H-DPI-AGGREGATE-STRING-MEMBERS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Access indices 31 and 32."
+        ],
+        "negative": [
+          "Interpret index zero as the MSB."
+        ],
+        "notes": [],
+        "positive": [
+          "Get and put bits at indices spanning two canonical words."
+        ]
+      },
+      "id": "SV-2023-H-DPI-BITSELECT-UTILITIES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a SystemVerilog type whose corresponding C representation differs in spelling and layout conventions."
+        ],
+        "negative": [
+          "Attempt to expose a foreign-language-only type directly in a SystemVerilog DPI declaration."
+        ],
+        "notes": [
+          "Pair with later type-mapping rules for a concrete C counterpart."
+        ],
+        "positive": [
+          "Import a C function with a SystemVerilog integral formal and pass a SystemVerilog integral value."
+        ]
+      },
+      "id": "SV-2023-H-DPI-BOUNDARY-SYSTEMVERILOG-TYPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Forward an existing by-reference formal as an actual."
+        ],
+        "negative": [
+          "Pass a by-reference value directly as T."
+        ],
+        "notes": [],
+        "positive": [
+          "Implement an output int as int * and a packed logic output as svLogicVecVal *."
+        ]
+      },
+      "id": "SV-2023-H-DPI-BY-REFERENCE-POINTER-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast with a structure containing a packed member."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Pass an unpacked structure containing only C-compatible unpacked members."
+        ]
+      },
+      "id": "SV-2023-H-DPI-C-COMPATIBLE-UNPACKED-VALUES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Represent a four-state value with its canonical C type."
+        ],
+        "negative": [
+          "Use a SystemVerilog-only type declaration in C."
+        ],
+        "notes": [],
+        "positive": [
+          "Use the prescribed C counterpart for a SystemVerilog formal."
+        ]
+      },
+      "id": "SV-2023-H-DPI-C-SIDE-USES-C-TYPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise defined truncation to a narrower formal."
+        ],
+        "negative": [
+          "Pass an actual that cannot conform."
+        ],
+        "notes": [],
+        "positive": [
+          "Pass a narrower packed actual and observe defined extension."
+        ]
+      },
+      "id": "SV-2023-H-DPI-CALL-ACTUAL-CONFORMANCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise output and inout formals."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Observe a matching input in C."
+        ]
+      },
+      "id": "SV-2023-H-DPI-CALLEE-FORMAL-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Include both VPI and DPI headers without duplicate s_vpi_vecval definition."
+        ],
+        "negative": [
+          "Define svLogicVecVal with fields of non-32-bit width."
+        ],
+        "notes": [],
+        "positive": [
+          "Compile code accessing aval and bval of svLogicVecVal and scalar words of svBitVecVal."
+        ]
+      },
+      "id": "SV-2023-H-DPI-CANONICAL-VECTOR-TYPEDEFS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "End a context chain by calling back into SystemVerilog."
+        ],
+        "negative": [
+          "Expect a noncontext import to have context instrumentation."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a context import and retrieve its declaration scope through nested C calls."
+        ]
+      },
+      "id": "SV-2023-H-DPI-CONTEXT-INSTRUMENTATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast otherwise identical context and noncontext imports."
+        ],
+        "negative": [
+          "Optimize across a context call as if it could affect only actuals."
+        ],
+        "notes": [],
+        "positive": [
+          "Preserve state accesses across a context import that invokes an export."
+        ]
+      },
+      "id": "SV-2023-H-DPI-CONTEXT-OPTIMIZATION-BARRIER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Keep a noncontext import limited to context-free operations."
+        ],
+        "negative": [],
+        "notes": [
+          "Unspecified noncontext behavior must not be tested for a particular failure mode."
+        ],
+        "positive": [
+          "Declare an import context before it calls an exported function."
+        ]
+      },
+      "id": "SV-2023-H-DPI-CONTEXT-REQUIRED-FOR-FOREIGN-APIS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare native and imported intermediate functions calling the same export."
+        ],
+        "negative": [
+          "Require explicit scope selection for a same-scope embedded export."
+        ],
+        "notes": [],
+        "positive": [
+          "From a context import, call an export declared in the same scope without svSetScope."
+        ]
+      },
+      "id": "SV-2023-H-DPI-CONTEXT-TRANSITIVITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Declare an import in an instantiated generate scope."
+        ],
+        "negative": [
+          "Place a DPI declaration in a procedural block scope."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare otherwise equivalent imports in each permitted scope category."
+        ]
+      },
+      "id": "SV-2023-H-DPI-DECLARATION-SCOPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Mix both declaration forms."
+        ],
+        "negative": [
+          "Apply opaque legacy semantics to DPI-C."
+        ],
+        "notes": [
+          "Legacy support is optional."
+        ],
+        "positive": [
+          "Contrast packed-array declarations using DPI and DPI-C when legacy support is advertised."
+        ]
+      },
+      "id": "SV-2023-H-DPI-DEPRECATED-INTERFACE-SELECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multiple sized unpacked dimensions."
+        ],
+        "negative": [
+          "Use original descending indices for a sized C formal."
+        ],
+        "notes": [],
+        "positive": [
+          "Access a fixed-size unpacked array with ordinary zero-based C indexing."
+        ]
+      },
+      "id": "SV-2023-H-DPI-DIRECT-UNPACKED-C-LAYOUT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Embed an unpacked array whose elements are packed values."
+        ],
+        "negative": [
+          "Lay out an embedded unpacked array differently from the corresponding C structure member."
+        ],
+        "notes": [],
+        "positive": [
+          "Pass a structure containing an unpacked array and inspect the matching C member layout."
+        ]
+      },
+      "id": "SV-2023-H-DPI-EMBEDDED-UNPACKED-ARRAY-C-LAYOUT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use integer or time as the enum base and apply four-state packed representation."
+        ],
+        "negative": [
+          "Choose a C representation based only on enumerator count rather than base type."
+        ],
+        "notes": [],
+        "positive": [
+          "Pass an enum with int base using the corresponding C integer mapping."
+        ]
+      },
+      "id": "SV-2023-H-DPI-ENUM-BASE-REPRESENTATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use two enum names with the same explicit base value."
+        ],
+        "negative": [
+          "Expect svdpi.h to expose SystemVerilog enumerator identifiers automatically."
+        ],
+        "notes": [],
+        "positive": [
+          "Compare a received enum value against a user-provided C constant."
+        ]
+      },
+      "id": "SV-2023-H-DPI-ENUM-NAMES-UNAVAILABLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare output and inout pointer formals in both directions."
+        ],
+        "negative": [
+          "Change argument passing convention solely because the direction is export."
+        ],
+        "notes": [],
+        "positive": [
+          "Generate matching C prototypes for equivalent import and export signatures."
+        ]
+      },
+      "id": "SV-2023-H-DPI-EXPORT-C-HEADER-EQUIVALENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call the same export from imports in two scopes without svSetScope."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Set scope before an export and observe the selected instance."
+        ]
+      },
+      "id": "SV-2023-H-DPI-EXPORT-CALL-CONTEXT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise both unchanged and replaced pointer outcomes."
+        ],
+        "negative": [
+          "Have SystemVerilog modify or free the caller's character storage."
+        ],
+        "notes": [],
+        "positive": [
+          "Pass caller-owned text and copy a replacement pointer returned by SystemVerilog."
+        ]
+      },
+      "id": "SV-2023-H-DPI-EXPORT-INOUT-STRING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Pass an empty string."
+        ],
+        "negative": [
+          "Have SystemVerilog modify caller-owned input characters."
+        ],
+        "notes": [],
+        "positive": [
+          "Call an export with a null-terminated const C string and verify it remains unchanged."
+        ]
+      },
+      "id": "SV-2023-H-DPI-EXPORT-INPUT-STRING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Return an empty string and copy it before another call."
+        ],
+        "negative": [
+          "Free the returned SystemVerilog string storage."
+        ],
+        "notes": [],
+        "positive": [
+          "Call an export with const char** and immediately copy the returned string."
+        ]
+      },
+      "id": "SV-2023-H-DPI-EXPORT-OUTPUT-STRING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Allocate enough words for a width not divisible by 32."
+        ],
+        "negative": [
+          "Pass unallocated or native-layout storage for a packed formal."
+        ],
+        "notes": [],
+        "positive": [
+          "Allocate and initialize canonical vector storage before calling an export."
+        ]
+      },
+      "id": "SV-2023-H-DPI-EXPORT-REFERENCE-CALLER-ALLOCATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise a task affected by disable processing and inspect status."
+        ],
+        "negative": [
+          "Declare an exported task C prototype as void."
+        ],
+        "notes": [],
+        "positive": [
+          "Call an exported task from C through an int-returning prototype."
+        ]
+      },
+      "id": "SV-2023-H-DPI-EXPORTED-TASK-STATUS-RETURN"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Return a scalar four-state logic using its scalar encoding."
+        ],
+        "negative": [
+          "Return a function result through an implicit output pointer."
+        ],
+        "notes": [],
+        "positive": [
+          "Return a SystemVerilog int result as C int."
+        ]
+      },
+      "id": "SV-2023-H-DPI-FUNCTION-RESULT-BY-VALUE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Return X or Z from a scalar logic result using svdpi.h encoding."
+        ],
+        "negative": [
+          "Declare a DPI function returning a packed vector or aggregate."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare imported functions returning int, string, and scalar logic."
+        ]
+      },
+      "id": "SV-2023-H-DPI-FUNCTION-RESULT-TYPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Check a one-word suffix after sv."
+        ],
+        "negative": [
+          "Provide a standardized function or type name with underscores between words."
+        ],
+        "notes": [],
+        "positive": [
+          "Check a standardized type such as svLogicVecVal for the required word capitalization."
+        ]
+      },
+      "id": "SV-2023-H-DPI-FUNCTION-TYPE-NAMING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call the import hierarchically from another design region."
+        ],
+        "negative": [
+          "Resolve unqualified context to a distant caller's scope."
+        ],
+        "notes": [],
+        "positive": [
+          "Place an import in two module instances and observe each declaration instance as context."
+        ]
+      },
+      "id": "SV-2023-H-DPI-IMPORT-DECLARATION-CONTEXT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Leave the pointer unchanged and preserve the original value."
+        ],
+        "negative": [
+          "Modify the incoming string characters in place or free their storage."
+        ],
+        "notes": [],
+        "positive": [
+          "Replace an inout pointer with a new null-terminated C string and observe copied contents after return."
+        ]
+      },
+      "id": "SV-2023-H-DPI-IMPORT-INOUT-STRING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Reassign the C local pointer and verify the SystemVerilog string is unchanged."
+        ],
+        "negative": [
+          "Free or retain the SystemVerilog-provided pointer for later use."
+        ],
+        "notes": [],
+        "positive": [
+          "Read an imported input string and discard its pointer on return."
+        ]
+      },
+      "id": "SV-2023-H-DPI-IMPORT-INPUT-STRING-LIFETIME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Return a pointer to an empty null-terminated string."
+        ],
+        "negative": [
+          "Return without initializing the output pointer."
+        ],
+        "notes": [],
+        "positive": [
+          "Assign a valid null-terminated C string pointer through an output const char**."
+        ]
+      },
+      "id": "SV-2023-H-DPI-IMPORT-OUTPUT-STRING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Enable aggressive optimization switches."
+        ],
+        "negative": [
+          "Optimize an import by changing the C formal signature."
+        ],
+        "notes": [],
+        "positive": [
+          "Compile an import and retain the declared C ABI."
+        ]
+      },
+      "id": "SV-2023-H-DPI-IMPORTED-FORMALS-IMMUTABLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Apply const to a scalar by-value input declaration as required by the generated prototype form."
+        ],
+        "negative": [
+          "Declare a pointer-form input without const."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare an imported packed input as const svLogicVecVal *."
+        ]
+      },
+      "id": "SV-2023-H-DPI-INPUT-C-CONST"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Pass an input array and attempt element modification."
+        ],
+        "negative": [
+          "Modify storage corresponding to an input formal from C."
+        ],
+        "notes": [],
+        "positive": [
+          "Read an input formal without writing through its representation."
+        ]
+      },
+      "id": "SV-2023-H-DPI-INPUT-NOT-MODIFIED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Check a multiword suffix."
+        ],
+        "negative": [
+          "Use lowercase words after SV_."
+        ],
+        "notes": [],
+        "positive": [
+          "Check SV_GET_UNSIGNED_BITS."
+        ]
+      },
+      "id": "SV-2023-H-DPI-MACRO-NAMING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Round-trip both 0 and 1."
+        ],
+        "negative": [
+          "Use the packed-vector representation for a scalar bit."
+        ],
+        "notes": [],
+        "positive": [
+          "Match a scalar bit input with unsigned char."
+        ]
+      },
+      "id": "SV-2023-H-DPI-MAP-BIT-SCALAR-UCHAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise negative byte values."
+        ],
+        "negative": [
+          "Implement a byte formal as C short."
+        ],
+        "notes": [],
+        "positive": [
+          "Import a C function taking char for a byte formal."
+        ]
+      },
+      "id": "SV-2023-H-DPI-MAP-BYTE-CHAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Round-trip a null pointer."
+        ],
+        "negative": [
+          "Declare the C counterpart as an integer."
+        ],
+        "notes": [],
+        "positive": [
+          "Return a C object pointer as chandle and pass it back."
+        ]
+      },
+      "id": "SV-2023-H-DPI-MAP-CHANDLE-VOID-POINTER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise the sign bit."
+        ],
+        "negative": [
+          "Match int with C short int."
+        ],
+        "notes": [],
+        "positive": [
+          "Match an int formal with C int."
+        ]
+      },
+      "id": "SV-2023-H-DPI-MAP-INT-INT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise all four scalar states."
+        ],
+        "negative": [
+          "Map scalar logic to a packed svLogicVecVal."
+        ],
+        "notes": [],
+        "positive": [
+          "Pass 0, 1, X, and Z scalar logic values to an unsigned char formal and decode with svdpi.h constants."
+        ]
+      },
+      "id": "SV-2023-H-DPI-MAP-LOGIC-SCALAR-UCHAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise values beyond 32 bits."
+        ],
+        "negative": [
+          "Match longint with C int."
+        ],
+        "notes": [],
+        "positive": [
+          "Match longint with C long long."
+        ]
+      },
+      "id": "SV-2023-H-DPI-MAP-LONGINT-LONG-LONG"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise infinity and signed zero where supported by the host representation."
+        ],
+        "negative": [
+          "Implement real with C float."
+        ],
+        "notes": [],
+        "positive": [
+          "Round-trip a real through a C double formal."
+        ]
+      },
+      "id": "SV-2023-H-DPI-MAP-REAL-DOUBLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise signed boundary values."
+        ],
+        "negative": [
+          "Match shortint with long long."
+        ],
+        "notes": [],
+        "positive": [
+          "Match a shortint formal with short int."
+        ]
+      },
+      "id": "SV-2023-H-DPI-MAP-SHORTINT-SHORT-INT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a value exposing float precision."
+        ],
+        "negative": [
+          "Implement shortreal with C double."
+        ],
+        "notes": [],
+        "positive": [
+          "Round-trip shortreal through a C float formal."
+        ]
+      },
+      "id": "SV-2023-H-DPI-MAP-SHORTREAL-FLOAT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Pass an empty string."
+        ],
+        "negative": [
+          "Declare the mapped input string as a scalar char."
+        ],
+        "notes": [
+          "Direction-specific string rules in later clauses may add pointer indirection."
+        ],
+        "positive": [
+          "Receive an input string as const char *."
+        ]
+      },
+      "id": "SV-2023-H-DPI-MAP-STRING-CONST-CHAR-POINTER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Match a qualified SystemVerilog type to its unqualified C representation."
+        ],
+        "negative": [
+          "Use a C formal whose type or indirection does not reflect the SystemVerilog direction."
+        ],
+        "notes": [],
+        "positive": [
+          "Match C declarations for input, output, and inout formals."
+        ]
+      },
+      "id": "SV-2023-H-DPI-MATCHING-TYPE-DEFINITIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Distinguish lowercase function/type names from uppercase macro-style names."
+        ],
+        "negative": [
+          "Expose a standardized DPI C identifier lacking either reserved prefix."
+        ],
+        "notes": [],
+        "positive": [
+          "Inspect the standardized DPI declarations in svdpi.h for an sv or SV_ prefix."
+        ]
+      },
+      "id": "SV-2023-H-DPI-NAME-PREFIX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Read and write an inout actual without touching unrelated objects."
+        ],
+        "negative": [
+          "Use VPI from a noncontext import to access unrelated SystemVerilog state."
+        ],
+        "notes": [],
+        "positive": [
+          "Have a noncontext import operate only on its actuals."
+        ]
+      },
+      "id": "SV-2023-H-DPI-NONCONTEXT-ACCESS-LIMIT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use both packed and unpacked fixed dimensions."
+        ],
+        "negative": [
+          "Treat a fixed-range formal as having different bounds."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a C counterpart matching the declared fixed packed and unpacked ranges."
+        ]
+      },
+      "id": "SV-2023-H-DPI-NONOPEN-FORMAL-EXACT-RANGES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Query an open array with descending unpacked range and normalized packed range."
+        ],
+        "negative": [
+          "Use declared descending indices directly for a non-open C array."
+        ],
+        "notes": [],
+        "positive": [
+          "Access a fixed unpacked array through C indices zero through n-1."
+        ]
+      },
+      "id": "SV-2023-H-DPI-NORMALIZED-RANGE-ACCESS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare handles only through APIs appropriate to their distinct typedef roles."
+        ],
+        "negative": [
+          "Expose a required public structure layout for either opaque handle."
+        ],
+        "notes": [],
+        "positive": [
+          "Compile code storing returned scope and open-array handles in their declared typedefs."
+        ]
+      },
+      "id": "SV-2023-H-DPI-OPAQUE-HANDLE-TYPEDEFS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Vary element count while preserving required element type."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Call one import with two actual arrays having different unpacked bounds."
+        ]
+      },
+      "id": "SV-2023-H-DPI-OPEN-ARRAY-ACTUAL-SIZE-VARIATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Combine fixed and unsized unpacked dimensions with several packed dimensions."
+        ],
+        "negative": [
+          "Replace a sized formal dimension with an actual's differing range."
+        ],
+        "notes": [],
+        "positive": [
+          "Call one import with differently bounded unpacked actuals."
+        ]
+      },
+      "id": "SV-2023-H-DPI-OPEN-ARRAY-CALL-SITE-RANGES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare open arrays of packed elements and real elements."
+        ],
+        "negative": [
+          "Give an open-array element a representation different from the same standalone type."
+        ],
+        "notes": [],
+        "positive": [
+          "Access packed logic elements through canonical open-array element access."
+        ]
+      },
+      "id": "SV-2023-H-DPI-OPEN-ARRAY-ELEMENT-REPRESENTATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use input, output, and inout open-array formals with the same handle passing form."
+        ],
+        "negative": [
+          "Cast away const and modify the handle representation."
+        ],
+        "notes": [],
+        "positive": [
+          "Receive an open-array argument as const svOpenArrayHandle and use query/access functions."
+        ]
+      },
+      "id": "SV-2023-H-DPI-OPEN-ARRAY-HANDLE-CONST"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use output and inout open arrays with the same handle form."
+        ],
+        "negative": [
+          "Pass an open array as a direct native pointer."
+        ],
+        "notes": [],
+        "positive": [
+          "Pass a multidimensional actual and query its handle."
+        ]
+      },
+      "id": "SV-2023-H-DPI-OPEN-ARRAY-HANDLE-SHAPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use one unsized dimension among fixed dimensions."
+        ],
+        "negative": [
+          "Export a subroutine with an unspecified array dimension."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare an imported function with an open-array formal."
+        ]
+      },
+      "id": "SV-2023-H-DPI-OPEN-ARRAY-IMPORT-ONLY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Combine original unpacked indices with normalized packed bit selection."
+        ],
+        "negative": [
+          "Return original separate packed dimensions from packed-range queries."
+        ],
+        "notes": [],
+        "positive": [
+          "Query descending unpacked bounds and use them to access an element."
+        ]
+      },
+      "id": "SV-2023-H-DPI-OPEN-ARRAY-ORIGINAL-INDEX-ACCESS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Query an array with both packed and multiple unpacked dimensions."
+        ],
+        "negative": [
+          "Treat dimension zero as the first unpacked dimension."
+        ],
+        "notes": [],
+        "positive": [
+          "Query ascending and descending unpacked ranges and compare every result with SystemVerilog array query methods."
+        ]
+      },
+      "id": "SV-2023-H-DPI-OPEN-ARRAY-QUERY-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Mix sized and unsized unpacked dimensions."
+        ],
+        "negative": [
+          "Declare more than one separate unsized packed dimension."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare an open formal with one unsized packed and two unsized unpacked dimensions."
+        ]
+      },
+      "id": "SV-2023-H-DPI-OPEN-ARRAY-UNSIZED-DIMENSIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Return NULL for a compacted scalar element while whole-array generic access may also be unavailable."
+        ],
+        "negative": [
+          "Return a non-NULL pointer for an out-of-range index."
+        ],
+        "notes": [],
+        "positive": [
+          "Retrieve and cast a structure element pointer at valid original indices."
+        ]
+      },
+      "id": "SV-2023-H-DPI-OPEN-ELEMENT-POINTER-APIS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Access a nested aggregate element through its computed pointer."
+        ],
+        "negative": [
+          "Use canonical packed-copy APIs for a C-compatible structure element."
+        ],
+        "notes": [],
+        "positive": [
+          "Obtain a structure element pointer and cast it to its matching C structure type."
+        ]
+      },
+      "id": "SV-2023-H-DPI-OPEN-GENERIC-ELEMENT-ACCESS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare generic and specialized access for a three-dimensional array."
+        ],
+        "negative": [
+          "Limit the generic indexing interface to three dimensions."
+        ],
+        "notes": [],
+        "positive": [
+          "Access four-dimensional data through a varargs API and one- through three-dimensional data through specialized APIs."
+        ]
+      },
+      "id": "SV-2023-H-DPI-OPEN-INDEXING-API-ARITIES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multiple packed dimensions that linearize to the matching total width."
+        ],
+        "negative": [
+          "Pass a packed actual whose collective packed width is incompatible with the solitary unsized packed formal."
+        ],
+        "notes": [],
+        "positive": [
+          "Pass a multidimensional packed actual whose collective packed width matches an unsized packed formal."
+        ]
+      },
+      "id": "SV-2023-H-DPI-OPEN-PACKED-ACTUAL-MATCHING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare varargs and specialized three-index forms."
+        ],
+        "negative": [
+          "Allocate fewer canonical words than the element width requires."
+        ],
+        "notes": [],
+        "positive": [
+          "Put and get packed elements at original descending unpacked indices using adequate canonical buffers."
+        ]
+      },
+      "id": "SV-2023-H-DPI-OPEN-PACKED-CANONICAL-COPY-APIS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare varargs and three-index forms on a three-dimensional open array."
+        ],
+        "negative": [
+          "Use packed-vector buffers as scalar API arguments."
+        ],
+        "notes": [],
+        "positive": [
+          "Get and put bit and four-state logic elements through generic and specialized forms."
+        ]
+      },
+      "id": "SV-2023-H-DPI-OPEN-SCALAR-ACCESS-APIS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise a multidimensional open array with independently sized unpacked dimensions."
+        ],
+        "negative": [
+          "Pass an actual whose unpacked dimensionality cannot correspond to the open formal."
+        ],
+        "notes": [],
+        "positive": [
+          "Pass an unpacked array to a formal with the corresponding unpacked dimension unsized."
+        ]
+      },
+      "id": "SV-2023-H-DPI-OPEN-UNPACKED-DIMENSION-MATCHING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Check independently represented arrays in one simulation."
+        ],
+        "negative": [
+          "Return a whole-array pointer for compacted non-C layout."
+        ],
+        "notes": [],
+        "positive": [
+          "Obtain pointer and nonzero byte size for a C-compatible unpacked array."
+        ]
+      },
+      "id": "SV-2023-H-DPI-OPEN-WHOLE-ARRAY-POINTER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a packed width not divisible by 32 and mask unused bits."
+        ],
+        "negative": [
+          "Pass a scalar output directly by value."
+        ],
+        "notes": [],
+        "positive": [
+          "Implement int output as int * and packed logic inout as svLogicVecVal *."
+        ]
+      },
+      "id": "SV-2023-H-DPI-OUTPUT-INOUT-BY-REFERENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Write the same value and distinguish absence of an effective change."
+        ],
+        "negative": [
+          "Suppress a value change made by C."
+        ],
+        "notes": [],
+        "positive": [
+          "Modify output and inout values in C and observe updates after return."
+        ]
+      },
+      "id": "SV-2023-H-DPI-OUTPUT-INOUT-CHANGE-DETECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise widths 32 and 33."
+        ],
+        "negative": [
+          "Store the most-significant group in element zero."
+        ],
+        "notes": [],
+        "positive": [
+          "Pass a value wider than 32 bits and verify low bits in element zero."
+        ]
+      },
+      "id": "SV-2023-H-DPI-PACKED-32-BIT-WORD-LAYOUT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a packed union with members of differing types."
+        ],
+        "negative": [
+          "Expose packed struct members as a native C struct layout."
+        ],
+        "notes": [],
+        "positive": [
+          "Pass a packed struct through the canonical vector interface."
+        ]
+      },
+      "id": "SV-2023-H-DPI-PACKED-AGGREGATE-LINEARIZATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise positive and negative N-bit signed values."
+        ],
+        "negative": [
+          "Shift by 32 in the N=32 special case."
+        ],
+        "notes": [],
+        "positive": [
+          "Mask and sign-extend values for N below 32 and check unchanged values at N=32."
+        ]
+      },
+      "id": "SV-2023-H-DPI-PACKED-BIT-MASK-MACROS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Share representation-aware code between svLogicVecVal and s_vpi_vecval."
+        ],
+        "negative": [
+          "Represent a four-state packed value as a native C integer."
+        ],
+        "notes": [],
+        "positive": [
+          "Pass packed bit and logic arrays through their respective canonical types."
+        ]
+      },
+      "id": "SV-2023-H-DPI-PACKED-CANONICAL-REPRESENTATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify widths 32 and 33 produce one and two elements."
+        ],
+        "negative": [
+          "Allocate only WIDTH/32 elements for a nonmultiple width."
+        ],
+        "notes": [],
+        "positive": [
+          "Evaluate the macro for widths 1, 32, 33, and 64."
+        ]
+      },
+      "id": "SV-2023-H-DPI-PACKED-DATA-NELEMS-MACRO"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Combine multidimensional packed and unpacked portions."
+        ],
+        "negative": [
+          "Expose separate packed dimensions to C."
+        ],
+        "notes": [],
+        "positive": [
+          "Pass a two-dimensional packed actual and observe one normalized C dimension."
+        ]
+      },
+      "id": "SV-2023-H-DPI-PACKED-LINEARIZATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Normalize a one-bit packed range to [0:0]."
+        ],
+        "negative": [
+          "Reverse significance when normalizing an ascending packed declaration."
+        ],
+        "notes": [],
+        "positive": [
+          "Map both [7:0] and [0:7] packed values to [7:0] while preserving significance."
+        ]
+      },
+      "id": "SV-2023-H-DPI-PACKED-RANGE-NORMALIZATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Check first and last normalized coordinates."
+        ],
+        "negative": [
+          "Linearize packed dimensions in column-major order."
+        ],
+        "notes": [],
+        "positive": [
+          "Verify offsets for a three-dimensional packed array against the row-major formula."
+        ]
+      },
+      "id": "SV-2023-H-DPI-PACKED-ROW-MAJOR-LINEARIZATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the maximum tag width required by the union variants."
+        ],
+        "negative": [
+          "Place the tag in bval for a four-state union."
+        ],
+        "notes": [],
+        "positive": [
+          "Inspect the MSBs after passing tagged two-state and four-state packed unions."
+        ]
+      },
+      "id": "SV-2023-H-DPI-PACKED-UNION-TAG-LOCATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Get width 32, for which there are no preserved high bits in the destination word."
+        ],
+        "negative": [
+          "Clear destination bits above w as a side effect."
+        ],
+        "notes": [],
+        "positive": [
+          "Preseed destination high bits, get an 8-bit range, and verify high bits remain unchanged."
+        ]
+      },
+      "id": "SV-2023-H-DPI-PARTSELECT-GET-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Do not assert a result for an out-of-range or wider-than-32 selection."
+        ],
+        "negative": [
+          "Apply a part-select utility to an unpacked array."
+        ],
+        "notes": [
+          "Undetermined out-of-range behavior has no portable value oracle."
+        ],
+        "positive": [
+          "Select a 32-bit range fully contained in a packed vector."
+        ]
+      },
+      "id": "SV-2023-H-DPI-PARTSELECT-LIMITS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Put widths 1 and 32 across a canonical-word boundary."
+        ],
+        "negative": [
+          "Overwrite destination bits outside the selected range."
+        ],
+        "notes": [],
+        "positive": [
+          "Put an 8-bit source into the middle of a wider destination and verify surrounding bits remain unchanged."
+        ]
+      },
+      "id": "SV-2023-H-DPI-PARTSELECT-PUT-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use canonical vector and open-array APIs."
+        ],
+        "negative": [],
+        "notes": [
+          "Portability is platform-scoped."
+        ],
+        "positive": [
+          "Link one precompiled object with two simulators on one platform."
+        ]
+      },
+      "id": "SV-2023-H-DPI-PORTABLE-BINARY-INTERFACE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Return data into a randc-qualified object."
+        ],
+        "negative": [
+          "Expose randomization metadata through DPI."
+        ],
+        "notes": [],
+        "positive": [
+          "Pass a rand-qualified struct and observe its ordinary unqualified C representation."
+        ]
+      },
+      "id": "SV-2023-H-DPI-QUALIFIER-ERASURE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Round-trip an array through both call directions."
+        ],
+        "negative": [
+          "Reverse range mapping only for exported calls."
+        ],
+        "notes": [],
+        "positive": [
+          "Use the same mapped array signature for an import and export."
+        ]
+      },
+      "id": "SV-2023-H-DPI-RANGE-MAPPING-BIDIRECTIONAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise X and Z parameter states."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Represent a reg parameter with the corresponding svdpi.h logic encoding."
+        ]
+      },
+      "id": "SV-2023-H-DPI-REG-PARAMETER-LOGIC-ENCODING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use only sv_0 and sv_1 for a two-state bit."
+        ],
+        "negative": [
+          "Swap the X and Z encodings."
+        ],
+        "notes": [],
+        "positive": [
+          "Pass all four logic states and compare against the four macros."
+        ]
+      },
+      "id": "SV-2023-H-DPI-SCALAR-STATE-ENCODINGS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use svScalar to hold each defined four-state encoding."
+        ],
+        "negative": [
+          "Define svLogic as a canonical vector structure."
+        ],
+        "notes": [],
+        "positive": [
+          "Compile C declarations using svBit and svLogic and verify scalar storage compatibility."
+        ]
+      },
+      "id": "SV-2023-H-DPI-SCALAR-TYPEDEFS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Resolve a generate-block instance scope."
+        ],
+        "negative": [
+          "Return a non-NULL scope for an unrecognized name."
+        ],
+        "notes": [],
+        "positive": [
+          "Look up a recognized module, program, interface, or generate instance by fully qualified name."
+        ]
+      },
+      "id": "SV-2023-H-DPI-SCOPE-NAME-CONVERSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multiple sized unpacked dimensions whose elements include packed values."
+        ],
+        "negative": [
+          "Represent a stand-alone actual to a sized formal with a non-C-compatible layout."
+        ],
+        "notes": [],
+        "positive": [
+          "Index a stand-alone unpacked array passed to a fixed-size formal using its matching C array type."
+        ]
+      },
+      "id": "SV-2023-H-DPI-SIZED-ARRAY-C-LAYOUT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast scalar bit with bit[0:0]."
+        ],
+        "negative": [
+          "Pass a packed vector input directly by scalar value."
+        ],
+        "notes": [],
+        "positive": [
+          "Pass int, scalar logic, chandle, and string inputs by value."
+        ]
+      },
+      "id": "SV-2023-H-DPI-SMALL-INPUT-BY-VALUE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Keep characters immutable while changing an inout pointer."
+        ],
+        "negative": [
+          "Interpret output direction as writable incoming character storage."
+        ],
+        "notes": [],
+        "positive": [
+          "Change an inout string by replacing its pointer rather than writing characters in place."
+        ]
+      },
+      "id": "SV-2023-H-DPI-STRING-DIRECTION-APPLIES-TO-POINTER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Pass an empty SystemVerilog string as a single null character."
+        ],
+        "negative": [
+          "Expose a SystemVerilog string to C without a trailing null character."
+        ],
+        "notes": [
+          "The internal SystemVerilog string object layout remains implementation dependent."
+        ],
+        "positive": [
+          "Pass a nonempty SystemVerilog string to C and observe its trailing null."
+        ]
+      },
+      "id": "SV-2023-H-DPI-STRING-NULL-TERMINATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Include permitted deprecated additions without changing normative declarations."
+        ],
+        "negative": [
+          "Alter a normative declaration by implementation or platform."
+        ],
+        "notes": [],
+        "positive": [
+          "Compare supplied headers against normative content."
+        ]
+      },
+      "id": "SV-2023-H-DPI-SVDPI-HEADER-UNIFORM"
+    },
+    {
+      "hints": {
+        "edge": [
+          "When unavailable, preseed outputs and verify false leaves them unchanged."
+        ],
+        "negative": [
+          "Modify or free the returned filename."
+        ],
+        "notes": [
+          "Availability itself is implementation specific."
+        ],
+        "positive": [
+          "With available information, verify true and updated filename and line."
+        ]
+      },
+      "id": "SV-2023-H-DPI-SVGETCALLERINFO"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Retrieve the name of a generate-block instance scope."
+        ],
+        "negative": [
+          "Return a partial or unqualified name for a valid scope."
+        ],
+        "notes": [],
+        "positive": [
+          "Retrieve the fully qualified name of a recognized instance scope."
+        ]
+      },
+      "id": "SV-2023-H-DPI-SVGETNAMEFROMSCOPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call after svSetScope and observe the selected active scope."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Call svGetScope in imports instantiated in two scopes."
+        ]
+      },
+      "id": "SV-2023-H-DPI-SVGETSCOPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Pass NULL scope and compare against simulation-time-unit scaling."
+        ],
+        "negative": [
+          "Ignore the svTimeVal type selector."
+        ],
+        "notes": [],
+        "positive": [
+          "Query the same instant as scaled real and simulation time in a scope with a local time unit."
+        ]
+      },
+      "id": "SV-2023-H-DPI-SVGETTIME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Query before any put and observe NULL."
+        ],
+        "negative": [
+          "Retrieve another key's data."
+        ],
+        "notes": [],
+        "positive": [
+          "Store and retrieve a non-NULL pointer using identical scope and key."
+        ]
+      },
+      "id": "SV-2023-H-DPI-SVGETUSERDATA"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use distinct static-symbol addresses for independent data slots."
+        ],
+        "negative": [
+          "Pass NULL scope or NULL userData and expect success."
+        ],
+        "notes": [],
+        "positive": [
+          "Store a static C object pointer under a static-symbol address key and observe return 0."
+        ]
+      },
+      "id": "SV-2023-H-DPI-SVPUTUSERDATA"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify same-scope inheritance without explicit selection."
+        ],
+        "negative": [
+          "Call an export outside an executing import without first selecting required scope."
+        ],
+        "notes": [],
+        "positive": [
+          "Save the previous scope, select another, call an export, then restore it."
+        ]
+      },
+      "id": "SV-2023-H-DPI-SVSETSCOPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise both scaled-real and integer simulation-time forms."
+        ],
+        "negative": [
+          "Use an incompatible field layout or time-type encoding."
+        ],
+        "notes": [],
+        "positive": [
+          "Populate equivalent svTimeVal and s_vpi_time values and compare fields."
+        ]
+      },
+      "id": "SV-2023-H-DPI-SVTIMEVAL-VPI-EQUIVALENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Distinguish symbolic constants from function-like macros governed by another naming category."
+        ],
+        "negative": [
+          "Expose a standardized DPI symbolic constant under an unprefixed name."
+        ],
+        "notes": [],
+        "positive": [
+          "Check a symbolic constant such as sv_x for the sv_ prefix."
+        ]
+      },
+      "id": "SV-2023-H-DPI-SYMBOLIC-CONSTANT-NAMING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Pass NULL and compare with simulation-wide values."
+        ],
+        "negative": [
+          "Return the caller scope's values instead of the supplied scope's."
+        ],
+        "notes": [],
+        "positive": [
+          "Query scopes with distinct timeunit/timeprecision declarations and compare against VPI."
+        ]
+      },
+      "id": "SV-2023-H-DPI-TIME-UNIT-PRECISION-QUERIES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Nest packed elements inside unpacked subaggregates."
+        ],
+        "negative": [
+          "Use an aggregate leaf type not supported by the DPI basic-type mappings."
+        ],
+        "notes": [],
+        "positive": [
+          "Pass an unpacked structure containing an unpacked array of legal basic elements."
+        ]
+      },
+      "id": "SV-2023-H-DPI-UNPACKED-AGGREGATE-ARGUMENTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Nest an unpacked substructure inside an unpacked structure."
+        ],
+        "negative": [
+          "Use a non-C-compatible layout for an aggregate containing only unpacked C-compatible leaves."
+        ],
+        "notes": [],
+        "positive": [
+          "Map a purely unpacked SystemVerilog structure to the corresponding native C structure."
+        ]
+      },
+      "id": "SV-2023-H-DPI-UNPACKED-AGGREGATE-C-LAYOUT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Combine multiple unpacked dimensions with a linearized multidimensional packed element."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Pass an unpacked array with three dimensions through a sized or open formal."
+        ]
+      },
+      "id": "SV-2023-H-DPI-UNPACKED-ARBITRARY-DIMENSIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Apply the mapping independently to two dimensions."
+        ],
+        "negative": [
+          "Lay out a descending declaration in textual order."
+        ],
+        "notes": [],
+        "positive": [
+          "Pass [3:0] and [0:3] arrays and verify lowest SV index at C index zero."
+        ]
+      },
+      "id": "SV-2023-H-DPI-UNPACKED-NATURAL-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise the high bit of each unsigned basic type."
+        ],
+        "negative": [
+          "Map an unsigned type to its signed C counterpart."
+        ],
+        "notes": [],
+        "positive": [
+          "Map shortint unsigned to unsigned short."
+        ]
+      },
+      "id": "SV-2023-H-DPI-UNSIGNED-BASIC-MAPPINGS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare shortint unsigned with bit[15:0]."
+        ],
+        "negative": [
+          "Use one C prototype interchangeably for byte unsigned and bit[7:0]."
+        ],
+        "notes": [],
+        "positive": [
+          "Implement byte unsigned input as unsigned char and bit[7:0] input as svBitVecVal pointer."
+        ]
+      },
+      "id": "SV-2023-H-DPI-UNSIGNED-BASIC-NOT-PACKED-EQUIVALENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast byte unsigned output with bit[7:0] output."
+        ],
+        "negative": [
+          "Implement byte unsigned output as svBitVecVal *."
+        ],
+        "notes": [],
+        "positive": [
+          "Implement byte unsigned output as unsigned char *."
+        ]
+      },
+      "id": "SV-2023-H-DPI-UNSIGNED-OUTPUT-POINTER-MAPPING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Store the same common pointer separately under the same key in multiple scopes."
+        ],
+        "negative": [
+          "Expect one svPutUserData association to be visible in another scope."
+        ],
+        "notes": [],
+        "positive": [
+          "Store different pointers under one key in two module-instance scopes and retrieve each independently."
+        ]
+      },
+      "id": "SV-2023-H-DPI-USER-DATA-CONTEXT-ISOLATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the returned string to select representation-specific compatibility code."
+        ],
+        "negative": [
+          "Report \"SV3.1a\" while exposing VPI-based svLogicVecVal."
+        ],
+        "notes": [],
+        "positive": [
+          "Call svDpiVersion on a simulator providing the VPI-based canonical representation and compare with \"1800-2005\"."
+        ]
+      },
+      "id": "SV-2023-H-DPI-VERSION-REPORTING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise each basic I/O, MCD I/O, and vpi_get_vlog_info exception family without context."
+        ],
+        "negative": [],
+        "notes": [
+          "Other VPI use requires a context import; behavior of violating noncontext calls is not a portable oracle."
+        ],
+        "positive": [
+          "Call vpi_printf and vpi_get_vlog_info from a noncontext import."
+        ]
+      },
+      "id": "SV-2023-H-DPI-VPI-CALLS-REQUIRE-CONTEXT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Observe an empty iterator when no matching objects exist."
+        ],
+        "negative": [
+          "Assume model iteration is reliable from a noncontext import."
+        ],
+        "notes": [],
+        "positive": [
+          "Iterate top-level modules from a context import."
+        ]
+      },
+      "id": "SV-2023-H-DPI-VPI-MODEL-ITERATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast a genuine registered VPI system task with a context import."
+        ],
+        "negative": [
+          "Request vpi_handle(vpiSysTfCall, NULL) from a DPI import and expect a valid call-site handle."
+        ],
+        "notes": [],
+        "positive": [
+          "Use model-oriented VPI traversal from a context import."
+        ]
+      },
+      "id": "SV-2023-H-DPI-VPI-SYSTF-CONTEXT-UNAVAILABLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Invoke the same registered system task in separate instances."
+        ],
+        "negative": [
+          "Use the VPI function's declaration location as its call context."
+        ],
+        "notes": [],
+        "positive": [
+          "Retrieve a VPI system-task call-site handle from two distinct call sites."
+        ]
+      },
+      "id": "SV-2023-H-VPI-CALL-SITE-CONTEXT"
+    }
+  ],
+  "schema_version": 1
+}

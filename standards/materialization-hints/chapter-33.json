@@ -1,0 +1,1146 @@
+{
+  "authority": "1800-2023",
+  "part": "33",
+  "requirements": [
+    {
+      "hints": {
+        "edge": [
+          "With same-named cells in multiple libraries, use a library-qualified cell clause and verify that only the named library and cell are selected."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use an unqualified cell clause and verify that every instance of the named cell is selected."
+        ]
+      },
+      "id": "SV-2023-33-CELL-CLAUSE-SELECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an unqualified cell identifier to exercise omission of the optional library qualifier."
+        ],
+        "negative": [
+          "Write a cell clause without its required cell identifier."
+        ],
+        "notes": [],
+        "positive": [
+          "Use both library-qualified and unqualified cell clauses."
+        ]
+      },
+      "id": "SV-2023-33-CELL-CLAUSE-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Specify one library name and contrast omission of the mechanism."
+        ],
+        "negative": [
+          "Attempt to provide a path or new library definition where only library names are accepted."
+        ],
+        "notes": [
+          "The option spelling is tool-specific; -L is only recommended."
+        ],
+        "positive": [
+          "Specify two mapped library names in reverse map order and verify command-line binding order."
+        ]
+      },
+      "id": "SV-2023-33-COMMAND-LINE-LIBRARY-SEARCH-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise a primitive or program instance separately from a module instance."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Apply configuration binding rules to module, primitive, interface, and program instances."
+        ]
+      },
+      "id": "SV-2023-33-CONFIG-BINDABLE-KINDS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Supply a same-named unrelated cell in another library."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Supply several uninstantiated modules and a config design statement selecting one top."
+        ]
+      },
+      "id": "SV-2023-33-CONFIG-DESIGN-DETERMINES-TOP"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use names of different design-element kinds near a config name to exercise namespace handling."
+        ],
+        "negative": [],
+        "notes": [
+          "Requires a library/configuration flow that can observe selected source descriptions."
+        ],
+        "positive": [
+          "Declare a named config and select it to govern source binding for a design."
+        ]
+      },
+      "id": "SV-2023-33-CONFIG-DESIGN-ELEMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a localparam initialized by a literal at an index boundary."
+        ],
+        "negative": [
+          "Use a design parameter or other identifier as the index."
+        ],
+        "notes": [],
+        "positive": [
+          "Index an instance array using a literal or configuration localparam."
+        ]
+      },
+      "id": "SV-2023-33-CONFIG-HIERARCHICAL-INDEX-OPERANDS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place the configured instance adjacent to, but not within, a generate scope."
+        ],
+        "negative": [
+          "Use an override hierarchical reference through a generate block scope."
+        ],
+        "notes": [],
+        "positive": [
+          "Use an override reference through ordinary instance scopes."
+        ]
+      },
+      "id": "SV-2023-33-CONFIG-HIERARCHY-NO-GENERATE-SCOPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast a scalar instance with one element of an instance array."
+        ],
+        "negative": [
+          "Use an override hierarchical reference through an array-of-instances scope."
+        ],
+        "notes": [],
+        "positive": [
+          "Use an override reference through a scalar instance hierarchy."
+        ]
+      },
+      "id": "SV-2023-33-CONFIG-HIERARCHY-NO-INSTANCE-ARRAY-SCOPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Omit one library and retain fallback libraries for absent cells."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Reverse map order in a config liblist and verify config-directed binding."
+        ]
+      },
+      "id": "SV-2023-33-CONFIG-LIBLIST-SUPERSEDES-MAP-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Declare multiple configuration localparams and omit the initializer from only one."
+        ],
+        "negative": [
+          "Declare a configuration localparam without assigning a value."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a configuration localparam with a literal initializer."
+        ]
+      },
+      "id": "SV-2023-33-CONFIG-LOCALPARAM-INITIALIZER-REQUIRED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use sized and unsized literal forms."
+        ],
+        "negative": [
+          "Initialize a configuration localparam from an identifier or nonliteral expression."
+        ],
+        "notes": [],
+        "positive": [
+          "Initialize configuration localparams with integer and string literals."
+        ]
+      },
+      "id": "SV-2023-33-CONFIG-LOCALPARAM-LITERAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a uniquely named configuration to distinguish the collision condition."
+        ],
+        "negative": [
+          "Try to denote a same-named configuration without :config."
+        ],
+        "notes": [],
+        "positive": [
+          "Reference a same-named configuration with :config."
+        ]
+      },
+      "id": "SV-2023-33-CONFIG-NAME-DISAMBIGUATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Target parameters at different levels to distinguish the precedence condition."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Apply config and defparam overrides to one parameter at the same level and observe the config value."
+        ]
+      },
+      "id": "SV-2023-33-CONFIG-OVERRIDE-BEATS-DEFPARAM"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a literal expression requiring no function."
+        ],
+        "negative": [
+          "Call a user-defined constant function in an override."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a built-in constant system function in an override."
+        ]
+      },
+      "id": "SV-2023-33-CONFIG-OVERRIDE-CONSTANT-FUNCTIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use same-named packages in distinct libraries while configuring nearby module instances."
+        ],
+        "negative": [
+          "Attempt to use a configuration to change which package is bound."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a package normally while configuration rules alter only module-instance binding."
+        ]
+      },
+      "id": "SV-2023-33-CONFIG-PACKAGE-BINDING-FORBIDDEN"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Shadow a name in parent and outer scopes to observe parent-first resolution."
+        ],
+        "negative": [
+          "Rely on a same-named identifier visible only in another scope."
+        ],
+        "notes": [],
+        "positive": [
+          "Reference a parameter visible in the configured instance's parent scope."
+        ]
+      },
+      "id": "SV-2023-33-CONFIG-PARAMETER-NAME-RESOLUTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use no rules after design and include an optional identifier after endconfig."
+        ],
+        "negative": [
+          "Use a configuration-rule combination absent from the grammar."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse each configuration-rule alternative and optional grammar form."
+        ]
+      },
+      "id": "SV-2023-33-CONFIGURATION-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast a design-level parameter override with an instance-specific override."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Override a parameter for a selected instance through a configuration."
+        ]
+      },
+      "id": "SV-2023-33-CONFIGURATION-PARAMETER-OVERRIDES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use instance and cell selection clauses with use expansions while retaining a legal default liblist."
+        ],
+        "negative": [
+          "Pair a default selection clause with a use expansion clause."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a default selection clause with a liblist expansion."
+        ]
+      },
+      "id": "SV-2023-33-DEFAULT-CLAUSE-RESTRICTIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use distinct nondefault instance or cell rules alongside one default expansion."
+        ],
+        "negative": [
+          "Specify two default clauses for the same permitted expansion clause."
+        ],
+        "notes": [],
+        "positive": [
+          "Specify one default liblist expansion clause."
+        ]
+      },
+      "id": "SV-2023-33-DEFAULT-EXPANSION-UNIQUE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Bind descendants at multiple hierarchy depths through the same default rule."
+        ],
+        "negative": [
+          "Provide no matching cell in any library of the applicable default liblist."
+        ],
+        "notes": [],
+        "positive": [
+          "Bind several descendants through a default liblist containing their source library."
+        ]
+      },
+      "id": "SV-2023-33-DEFAULT-LIBLIST-BINDING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place a same-named child cell in another library to verify parent-library fallback."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Bind a child from its parent's library with no selected liblist and with an empty selected liblist."
+        ]
+      },
+      "id": "SV-2023-33-DEFAULT-PARENT-LIBRARY-LIST"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Apply default at multiple hierarchy depths."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Let unmatched siblings use a default rule while one sibling has an instance rule."
+        ]
+      },
+      "id": "SV-2023-33-DEFAULT-SELECTS-UNMATCHED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use no config rules after design."
+        ],
+        "negative": [
+          "Place a config rule before design."
+        ],
+        "notes": [],
+        "positive": [
+          "Place design before default, instance, and cell rules."
+        ]
+      },
+      "id": "SV-2023-33-DESIGN-BEFORE-RULES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Disambiguate same-named module and configuration cells."
+        ],
+        "negative": [
+          "Name a configuration itself as a design cell."
+        ],
+        "notes": [],
+        "positive": [
+          "Name a top module in a design statement when a same-named configuration also exists."
+        ]
+      },
+      "id": "SV-2023-33-DESIGN-CELLS-NOT-CONFIGS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Specify multiple configured top-level design elements."
+        ],
+        "negative": [
+          "Select a library-qualified top cell absent from that library."
+        ],
+        "notes": [],
+        "positive": [
+          "Select a top module with a library-qualified name and provide that cell in the named library."
+        ]
+      },
+      "id": "SV-2023-33-DESIGN-SELECTS-TOP-CELL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Mix library-qualified and unqualified top cells in the same design statement."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "List two top-level module cells in one design statement and elaborate both hierarchies."
+        ]
+      },
+      "id": "SV-2023-33-DESIGN-STATEMENT-MULTIPLE-TOPS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compile the versions in separate invocations."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compile two successive versions of one cell and observe the latter definition binding."
+        ]
+      },
+      "id": "SV-2023-33-DUPLICATE-CELL-LAST-WINS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Reset a parameter whose instantiation supplied a nondefault value."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Override one parameter with .P() and observe its module default while other parameter values remain unchanged."
+        ]
+      },
+      "id": "SV-2023-33-EMPTY-NAMED-OVERRIDE-RESTORES-DEFAULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast use #() with a single empty named override .P()."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Apply use #() to an instance with several nondefault instantiation values and observe all module defaults."
+        ]
+      },
+      "id": "SV-2023-33-EMPTY-OVERRIDE-LIST-RESTORES-ALL-DEFAULTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multiple top-level modules whose descendant hierarchies all require binding."
+        ],
+        "negative": [
+          "Instantiate a child for which no source module definition can be located."
+        ],
+        "notes": [
+          "Observe elaboration success or failure rather than diagnostic wording."
+        ],
+        "positive": [
+          "Build a complete hierarchy in which every instantiated module resolves to a source definition."
+        ]
+      },
+      "id": "SV-2023-33-EVERY-INSTANCE-BOUND"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise both zero-directory and multiple-directory matches."
+        ],
+        "negative": [],
+        "notes": [
+          "Requires filesystem fixtures."
+        ],
+        "positive": [
+          "Use ... to match a file below multiple directory levels."
+        ]
+      },
+      "id": "SV-2023-33-FILE-PATH-HIERARCHICAL-WILDCARD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place the map file outside the process working directory to distinguish the base."
+        ],
+        "negative": [],
+        "notes": [
+          "Requires filesystem fixtures."
+        ],
+        "positive": [
+          "Reference a mapped source through ./ relative to the map file."
+        ]
+      },
+      "id": "SV-2023-33-FILE-PATH-MAP-DIRECTORY-SHORTCUT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Combine .. with a following directory and filename wildcard."
+        ],
+        "negative": [],
+        "notes": [
+          "Requires filesystem fixtures."
+        ],
+        "positive": [
+          "Reference a mapped source through .. from a nested map-file directory."
+        ]
+      },
+      "id": "SV-2023-33-FILE-PATH-PARENT-SHORTCUT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast zero-, one-, and two-character candidate substrings."
+        ],
+        "negative": [],
+        "notes": [
+          "Requires filesystem fixtures."
+        ],
+        "positive": [
+          "Match one-character file-name components with ?."
+        ]
+      },
+      "id": "SV-2023-33-FILE-PATH-QUESTION-WILDCARD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise both zero-character and multi-character matches without crossing a directory boundary."
+        ],
+        "negative": [],
+        "notes": [
+          "Requires filesystem fixtures."
+        ],
+        "positive": [
+          "Match file-name prefixes and suffixes with *."
+        ]
+      },
+      "id": "SV-2023-33-FILE-PATH-STAR-WILDCARD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Nest configurations through more than one subtree level."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Bind one subtree to a nested config with distinct descendant rules relative to its own top."
+        ]
+      },
+      "id": "SV-2023-33-HIERARCHICAL-CONFIG-BINDING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast a simple identifier expression with a hierarchical identifier expression."
+        ],
+        "negative": [
+          "Add a literal to a hierarchical identifier."
+        ],
+        "notes": [],
+        "positive": [
+          "Set an override directly to one hierarchical identifier."
+        ]
+      },
+      "id": "SV-2023-33-HIERARCHICAL-ID-SOLE-EXPRESSION-TERM"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Nest included map files."
+        ],
+        "negative": [
+          "Use a malformed include statement or nonexistent included path."
+        ],
+        "notes": [],
+        "positive": [
+          "Include a map whose declarations are needed after the include point."
+        ]
+      },
+      "id": "SV-2023-33-INCLUDE-MAP-TEXTUAL-INSERTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Target the top-level instance path and a deeply nested path."
+        ],
+        "negative": [
+          "Use an instance path rooted outside the design statement's tops."
+        ],
+        "notes": [],
+        "positive": [
+          "Target a nested instance with a hierarchy rooted at a configured top."
+        ]
+      },
+      "id": "SV-2023-33-INSTANCE-CLAUSE-TARGET"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Override a deeply nested instance while ancestors use default binding."
+        ],
+        "negative": [],
+        "notes": [
+          "Observe which implementation is elaborated, not source-file names themselves."
+        ],
+        "positive": [
+          "Give one instance a gate-library rule while its sibling remains governed by the RTL default liblist."
+        ]
+      },
+      "id": "SV-2023-33-INSTANCE-RULE-OVERRIDES-DEFAULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Override an inherited liblist at a descendant and distinguish the two subtrees."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Select a liblist for one instance and verify that its descendants inherit it."
+        ]
+      },
+      "id": "SV-2023-33-LIBLIST-INHERITANCE-AND-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Make the first library lack the cell and verify fallback to the next listed library."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Place same-named cells in two listed libraries and verify binding to the first."
+        ]
+      },
+      "id": "SV-2023-33-LIBLIST-ORDERED-SEARCH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place output in two instances bound to different library cells."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Execute $display with %l and %L inside a library-bound module and compare its library.cell identity."
+        ]
+      },
+      "id": "SV-2023-33-LIBRARY-BINDING-FORMAT-SPECIFIER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Map distinct kinds of design elements having valid cell names."
+        ],
+        "negative": [
+          "Attempt to map a design element into a differently named cell."
+        ],
+        "notes": [],
+        "positive": [
+          "Map a module into a library cell with the module's name."
+        ]
+      },
+      "id": "SV-2023-33-LIBRARY-CELL-NAME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use empty map text, an empty semicolon description, and multiple source or include-directory paths."
+        ],
+        "negative": [
+          "Omit a required semicolon from a library or include statement."
+        ],
+        "notes": [
+          "Use the formal production as the authority for exact alternatives."
+        ],
+        "positive": [
+          "Parse every library-description alternative from the formal grammar."
+        ]
+      },
+      "id": "SV-2023-33-LIBRARY-MAP-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Specify an empty map."
+        ],
+        "negative": [],
+        "notes": [
+          "Harness adaptation is tool-specific."
+        ],
+        "positive": [
+          "Specify one and multiple map files."
+        ]
+      },
+      "id": "SV-2023-33-MAP-FILE-SELECTION-MECHANISM"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Parse multiple source files after one map."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Parse source after reading its applicable map."
+        ]
+      },
+      "id": "SV-2023-33-MAP-READ-BEFORE-SOURCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the same relative spelling in map files located in different directories."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Resolve relative paths independently in a root map and a nested included map."
+        ]
+      },
+      "id": "SV-2023-33-MAP-RELATIVE-PATH-BASE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Overlap patterns within one library versus across two libraries."
+        ],
+        "negative": [
+          "Make the same file remain matched by two libraries after specificity resolution."
+        ],
+        "notes": [
+          "Do not depend on diagnostic wording."
+        ],
+        "positive": [
+          "Use nonoverlapping library path specifications."
+        ]
+      },
+      "id": "SV-2023-33-MULTIPLE-LIBRARY-PATH-MATCH-ERROR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Reverse their order."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use two maps with observably order-dependent declarations."
+        ]
+      },
+      "id": "SV-2023-33-MULTIPLE-MAPS-IN-SPECIFIED-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Override one of several parameters by name."
+        ],
+        "negative": [
+          "Attempt a positional configuration parameter override."
+        ],
+        "notes": [],
+        "positive": [
+          "Override parameters by name from a configuration."
+        ]
+      },
+      "id": "SV-2023-33-NAMED-CONFIG-PARAMETER-OVERRIDES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use different cell names whose first containing libraries differ."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare same-named cells in two libraries and omit a config; verify the earlier map declaration wins."
+        ]
+      },
+      "id": "SV-2023-33-NO-CONFIG-MAP-LIBRARY-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Target the nested-config boundary instance versus a child below it."
+        ],
+        "negative": [
+          "From an outer configuration, target a descendant below an instance bound to another config."
+        ],
+        "notes": [],
+        "positive": [
+          "Place descendant rules within the nested configuration itself."
+        ]
+      },
+      "id": "SV-2023-33-NO-OUTER-RULE-IN-NESTED-CONFIG-HIERARCHY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place several top cells within the sole design statement."
+        ],
+        "negative": [
+          "Provide zero or two design statements."
+        ],
+        "notes": [],
+        "positive": [
+          "Provide one design statement in a configuration."
+        ]
+      },
+      "id": "SV-2023-33-ONE-DESIGN-STATEMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise a hierarchical parent identifier at the legal boundary."
+        ],
+        "negative": [
+          "Use a parent-binding identifier form prohibited in bind."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a parent-scope identifier form also legal for bind."
+        ]
+      },
+      "id": "SV-2023-33-PARENT-BIND-IDENTIFIER-LEGALITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place other-suffix files beside .v files to verify the matching set."
+        ],
+        "negative": [],
+        "notes": [
+          "Requires filesystem fixtures."
+        ],
+        "positive": [
+          "Use ./*.v and *.v against identical map-file-directory fixtures and compare mapped files."
+        ]
+      },
+      "id": "SV-2023-33-PATH-CURRENT-DIRECTORY-PATTERN-EQUIVALENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise each adjacent priority pair separately."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Overlap explicit-name, wildcard-name, and directory-ending specifications and verify the most specific wins."
+        ]
+      },
+      "id": "SV-2023-33-PATH-SPECIFICITY-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare the trailing / form with the corresponding /* form."
+        ],
+        "negative": [],
+        "notes": [
+          "Requires filesystem fixtures."
+        ],
+        "positive": [
+          "Use a trailing-directory path to map every file directly in that directory."
+        ]
+      },
+      "id": "SV-2023-33-PATH-TRAILING-DIRECTORY-INCLUDES-ALL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Precompile cells over multiple compilation invocations."
+        ],
+        "negative": [],
+        "notes": [
+          "Invocation syntax and compiled-object format are tool-specific."
+        ],
+        "positive": [
+          "Precompile configured design cells, then reference the compiled design objects on a later command line."
+        ]
+      },
+      "id": "SV-2023-33-PRECOMPILED-CONFIG-USE-MODEL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a qualified cell selector with a use clause instead."
+        ],
+        "negative": [
+          "Combine a library-qualified cell selector with liblist."
+        ],
+        "notes": [],
+        "positive": [
+          "Use an unqualified cell with liblist."
+        ]
+      },
+      "id": "SV-2023-33-QUALIFIED-CELL-LIBLIST-ERROR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compile replacement definitions in separate invocations to distinguish the stated single-invocation condition."
+        ],
+        "negative": [],
+        "notes": [
+          "Check required warning presence, not wording; do not infer that other situations forbid warnings."
+        ],
+        "positive": [
+          "Compile two same-named modules into one library in one invocation and observe a warning."
+        ]
+      },
+      "id": "SV-2023-33-SAME-INVOCATION-DUPLICATE-MODULE-WARNING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Bind multiple tops sharing compiled descendants."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Give the binder only top-cell selection and persisted compiled descendants."
+        ]
+      },
+      "id": "SV-2023-33-SEPARATE-BINDER-USES-COMPILED-HIERARCHY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Recompile one cell before binding while retaining the others."
+        ],
+        "negative": [
+          "Leave one required descendant cell uncompiled when binding starts."
+        ],
+        "notes": [],
+        "positive": [
+          "Precompile all hierarchy cells over multiple invocations before binding."
+        ]
+      },
+      "id": "SV-2023-33-SEPARATE-COMPILATION-COMPLETE-BEFORE-BIND"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Reference the precompiled config by its library and cell name."
+        ],
+        "negative": [
+          "Attempt separate-compilation binding with an uncompiled config."
+        ],
+        "notes": [],
+        "positive": [
+          "Precompile both selected cells and the governing config before binding."
+        ]
+      },
+      "id": "SV-2023-33-SEPARATE-COMPILATION-CONFIG-PRECOMPILED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a tool-selected non-source filesystem representation."
+        ],
+        "negative": [
+          "Discard required compiled cells before the binding invocation."
+        ],
+        "notes": [],
+        "positive": [
+          "Compile a library in one invocation and bind its persisted cells in a later invocation."
+        ]
+      },
+      "id": "SV-2023-33-SEPARATE-COMPILATION-PERSISTENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an up-to-date previously compiled cell, which an implementation may optionally skip recompiling."
+        ],
+        "negative": [],
+        "notes": [
+          "Do not require recompilation when the source is unchanged; the source explicitly permits that optimization."
+        ],
+        "positive": [
+          "Supply one used and one unused cell description and verify that both are mapped into their libraries."
+        ]
+      },
+      "id": "SV-2023-33-SINGLE-PASS-MAPS-ALL-SUPPLIED-CELLS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place a same-named cell only in a persisted library but omit its source from the single-pass command line."
+        ],
+        "negative": [
+          "Require binding to a cell absent from the invocation's source set."
+        ],
+        "notes": [],
+        "positive": [
+          "Supply every needed source description on the command line and bind only among that set."
+        ]
+      },
+      "id": "SV-2023-33-SINGLE-PASS-SOURCE-SET"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place multiple cell definitions in one matched source file."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Map source files with distinct path specifications and bind cells from their matching libraries."
+        ]
+      },
+      "id": "SV-2023-33-SOURCE-FILE-TO-LIBRARY-MAPPING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast one mapped and one unmapped source file."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compile an unmapped source and bind its design element from work."
+        ]
+      },
+      "id": "SV-2023-33-UNMAPPED-FILE-WORK-LIBRARY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast qualified and unqualified top cells."
+        ],
+        "negative": [
+          "Provide the unqualified top only in another library."
+        ],
+        "notes": [],
+        "positive": [
+          "Place config and unqualified top cell in one library."
+        ]
+      },
+      "id": "SV-2023-33-UNQUALIFIED-DESIGN-CELL-LIBRARY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use qualified and unqualified exact cell names while controlling inherited-library behavior separately."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use instance-use and cell-use rules to select exact implementations."
+        ]
+      },
+      "id": "SV-2023-33-USE-CLAUSE-EXACT-BINDING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use default with liblist while separate instance and cell rules use exact bindings."
+        ],
+        "negative": [
+          "Pair a use clause with a default selection clause."
+        ],
+        "notes": [],
+        "positive": [
+          "Pair use clauses with instance and cell selection clauses."
+        ]
+      },
+      "id": "SV-2023-33-USE-CLAUSE-SELECTION-KINDS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place a same-named cell in another library to verify parent-library inheritance."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use an unqualified cell name that exists in the parent cell's library."
+        ]
+      },
+      "id": "SV-2023-33-USE-OMITTED-LIBRARY-INHERITANCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Provide separate rules selecting a binding and a library list for the same scope."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Apply a use binding at one instance and verify descendants or siblings retain the independently selected liblist."
+        ]
+      },
+      "id": "SV-2023-33-USE-PRESERVES-LIBLIST"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Bind a module instance to a cell whose name differs from its module name."
+        ],
+        "negative": [],
+        "notes": [
+          "Requires a VPI materialization."
+        ],
+        "positive": [
+          "Query vpiCell on instances bound to differently named cells."
+        ]
+      },
+      "id": "SV-2023-33-VPI-MODULE-CELL-PROPERTY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Query parent and nested-config descendants controlled by different configs."
+        ],
+        "negative": [],
+        "notes": [
+          "Requires a VPI materialization."
+        ],
+        "positive": [
+          "Query vpiConfig for instances controlled by a named config."
+        ]
+      },
+      "id": "SV-2023-33-VPI-MODULE-CONFIG-PROPERTY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Query modules at multiple hierarchy depths."
+        ],
+        "negative": [],
+        "notes": [
+          "Requires a VPI materialization."
+        ],
+        "positive": [
+          "Query vpiLibrary for modules compiled into two named libraries."
+        ]
+      },
+      "id": "SV-2023-33-VPI-MODULE-LIBRARY-PROPERTY"
+    }
+  ],
+  "schema_version": 1
+}

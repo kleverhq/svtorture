@@ -1,0 +1,1297 @@
+{
+  "authority": "1800-2023",
+  "part": "25",
+  "requirements": [
+    {
+      "hints": {
+        "edge": [
+          "Use a task in one scenario and a function in another while preserving the same single-definition cross-module structure."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare an interface method, export its implementation from one connected module, import it for another connected module, and call it there."
+        ]
+      },
+      "id": "SV-2023-25-ABSTRACT-INTERFACE-METHODS"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "From that instance, use defparam to modify a parameter outside its hierarchy."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a defparam to modify a parameter within the containing instance hierarchy when its port actual refers to an interface array."
+        ]
+      },
+      "id": "SV-2023-25-ARRAYED-INTERFACE-DEFPARAM-BOUNDARY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use different modports of one interface instance for two module connections."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Connect a module interface port to iface_instance.selected_modport."
+        ]
+      },
+      "id": "SV-2023-25-CONNECTION-MODPORT-SELECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast with an interface-local task imported by identifier."
+        ],
+        "negative": [
+          "Import a task from another module using only its identifier."
+        ],
+        "notes": [],
+        "positive": [
+          "Import a module-defined task through a modport using its full prototype."
+        ]
+      },
+      "id": "SV-2023-25-CROSS-MODULE-IMPORT-FULL-PROTOTYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use static rather than automatic in an otherwise equivalent nonprocedural declaration."
+        ],
+        "negative": [
+          "Use automatic in a nonprocedural data declaration."
+        ],
+        "notes": [
+          "This constraint is reproduced in the virtual-interface grammar excerpt; vary declaration context independently of the declared type."
+        ],
+        "positive": [
+          "Declare an automatic variable in a procedural block with an explicit data type."
+        ]
+      },
+      "id": "SV-2023-25-DATA-DECLARATION-AUTOMATIC-CONTEXT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Provide an explicit data type without var in the same declaration shape."
+        ],
+        "negative": [
+          "Omit both var and the explicit data type before a variable declaration assignment list."
+        ],
+        "notes": [
+          "This constraint is reproduced in the virtual-interface grammar excerpt; isolate explicit-type omission from lifetime and initializer choices."
+        ],
+        "positive": [
+          "Declare a variable with var and omit the explicit data type."
+        ]
+      },
+      "id": "SV-2023-25-DATA-DECLARATION-EXPLICIT-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Remove the default value while leaving the identifier-only form unchanged."
+        ],
+        "negative": [
+          "Use only the subroutine identifier in a modport while relying on a default argument value."
+        ],
+        "notes": [],
+        "positive": [
+          "Provide a full modport prototype for a subroutine whose formal argument has a default value."
+        ]
+      },
+      "id": "SV-2023-25-DEFAULT-ARGUMENT-FULL-PROTOTYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Let one implementation finish before interface-level disable and verify the remaining active call is disabled."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Call a two-implementation extern forkjoin task and disable it through the interface while both calls are active."
+        ]
+      },
+      "id": "SV-2023-25-DISABLE-INTERFACE-FORKJOIN-TASK"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "While two exported implementations run, disable one through its module instance and observe the other continue."
+        ]
+      },
+      "id": "SV-2023-25-DISABLE-MODULE-FORKJOIN-TASK"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Connect a module through a modport that exports a task the module does not define."
+        ],
+        "notes": [],
+        "positive": [
+          "Connect a module that defines the subroutine exported by its selected modport."
+        ]
+      },
+      "id": "SV-2023-25-EXPORTED-SUBROUTINE-MISSING-DEFINITION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Keep argument types but change another prototype component to test exact matching independently."
+        ],
+        "negative": [
+          "Change one argument type in the module's definition from the exported modport prototype."
+        ],
+        "notes": [],
+        "positive": [
+          "Define the exported module subroutine with a prototype exactly matching the modport prototype."
+        ]
+      },
+      "id": "SV-2023-25-EXPORTED-SUBROUTINE-PROTOTYPE-MISMATCH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Have one implementation complete immediately and another after a delay; code after the call executes after the delayed implementation."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Export a task from two connected instances with distinct delayed side effects, call it once, and observe concurrent execution plus completion after both return."
+        ]
+      },
+      "id": "SV-2023-25-EXTERN-FORKJOIN-CALL-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Connect multiple instances of one module that each export the extern forkjoin task."
+        ],
+        "negative": [
+          "Export the same ordinary, non-forkjoin interface task from two connected modules."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare an extern forkjoin interface task and export matching definitions from two connected modules."
+        ]
+      },
+      "id": "SV-2023-25-EXTERN-FORKJOIN-MULTIPLE-TASK-DEFINITIONS"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Attempt to declare a generic interface reference using a non-ANSI port list and later port declaration."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare `interface p` in an ANSI module port list."
+        ]
+      },
+      "id": "SV-2023-25-GENERIC-INTERFACE-ANSI-ONLY"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Attempt to connect the generic interface port solely through `.*`."
+        ],
+        "notes": [],
+        "positive": [
+          "Connect a generic interface port with `.p(iface_instance)` while using `.*` for other ports."
+        ]
+      },
+      "id": "SV-2023-25-GENERIC-INTERFACE-NAMED-CONNECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Instantiate the same generic-port module with two different compatible interface types in separate instances."
+        ],
+        "negative": [
+          "Connect a non-interface actual to a generic interface port."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a generic interface module port and instantiate the module with a concrete interface instance."
+        ]
+      },
+      "id": "SV-2023-25-GENERIC-INTERFACE-PORT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Instantiate the module separately with two interface types that both declare the selected modport."
+        ],
+        "negative": [
+          "Connect an interface type that does not declare the generic header's selected modport name."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare interface.mp p in a module header and connect an interface instance that declares mp."
+        ]
+      },
+      "id": "SV-2023-25-GENERIC-MODPORT-HEADER-SELECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Access the object hierarchically while also holding a virtual interface selecting a restrictive modport."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Hierarchically access an interface object omitted from a modport while another module uses that modport."
+        ]
+      },
+      "id": "SV-2023-25-HIERARCHICAL-INTERFACE-OBJECT-ACCESS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Reference a modport of a directly referenced scalar interface instance."
+        ],
+        "negative": [
+          "Connect it with a hierarchical reference that traverses an interface array or generate block."
+        ],
+        "notes": [],
+        "positive": [
+          "Connect an interface port using a direct hierarchical reference to a scalar interface instance."
+        ]
+      },
+      "id": "SV-2023-25-HIERARCHICAL-INTERFACE-PORT-ACTUAL"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Provide the hierarchical module definition with neither interface extern nor modport export declaration."
+        ],
+        "notes": [],
+        "positive": [
+          "Define an interface-scoped task hierarchically in a module after declaring it extern in the interface."
+        ]
+      },
+      "id": "SV-2023-25-HIERARCHICAL-MODULE-SUBROUTINE-DECLARATION"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Declare a module directly inside an interface."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a modport, nested interface, and generate region in an interface."
+        ]
+      },
+      "id": "SV-2023-25-INTERFACE-BODY-ITEM-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use two constituent signals of different data types through one interface port."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Instantiate an interface, connect the interface instance to an interface port, and select one constituent signal through that port."
+        ]
+      },
+      "id": "SV-2023-25-INTERFACE-BUNDLE-PORT-ACCESS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an interface wildcard-port header."
+        ],
+        "negative": [
+          "Place body items after an extern interface header."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare interfaces using ANSI and non-ANSI headers."
+        ]
+      },
+      "id": "SV-2023-25-INTERFACE-DECLARATION-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Pass a data type as an interface parameter and use it for an interface member declaration."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare a parameter, constant, variable, function, and task in an interface."
+        ]
+      },
+      "id": "SV-2023-25-INTERFACE-DECLARATIVE-MEMBERS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Connect the same external signal to ports of two interface instances."
+        ],
+        "negative": [
+          "Attempt to connect by position a member declared only in the interface body."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare input, output, and inout interface ports and connect each when instantiating the interface."
+        ]
+      },
+      "id": "SV-2023-25-INTERFACE-EXTERNAL-PORTS"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "End the header immediately after the package import."
+        ],
+        "notes": [],
+        "positive": [
+          "Follow an interface-header package import with a parameter port list."
+        ]
+      },
+      "id": "SV-2023-25-INTERFACE-HEADER-PACKAGE-IMPORT-FOLLOWER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Instantiate an interface inside a nested module hierarchy."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare an interface and instantiate it within a module."
+        ]
+      },
+      "id": "SV-2023-25-INTERFACE-IN-MODULE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Instantiate the interface twice and access corresponding members through each distinct instance name."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Instantiate an interface and read one member variable and call one member function through the instance name."
+        ]
+      },
+      "id": "SV-2023-25-INTERFACE-INSTANCE-MEMBER-ACCESS"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Write an interface instantiation without a hierarchical instance."
+        ],
+        "notes": [],
+        "positive": [
+          "Instantiate parameterized scalar and arrayed interface instances."
+        ]
+      },
+      "id": "SV-2023-25-INTERFACE-INSTANTIATION-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Use `(.*)` when the identifiers differ."
+        ],
+        "notes": [],
+        "positive": [
+          "Use `(.*)` with matching interface port and instance identifiers."
+        ]
+      },
+      "id": "SV-2023-25-INTERFACE-PORT-IMPLICIT-CONNECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise named and positional connection forms with otherwise equivalent interface ports."
+        ],
+        "negative": [
+          "Use an interface port declaration form that module port syntax rejects."
+        ],
+        "notes": [
+          "Use Clause 23.2.2 to choose one specific imported module-port rule per eventual case."
+        ],
+        "positive": [
+          "Declare and connect an interface input port using a form permitted for a module input port."
+        ]
+      },
+      "id": "SV-2023-25-INTERFACE-PORT-MODULE-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Declare both an always procedure and a subroutine in the same interface."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare an initial procedure and a continuous assignment inside an interface and observe their effects on interface members."
+        ]
+      },
+      "id": "SV-2023-25-INTERFACE-PROCEDURES-AND-ASSIGNMENTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an unmodported interface net with its default inout direction."
+        ],
+        "negative": [
+          "Use a member as a specify terminal in a direction excluded by the selected modport."
+        ],
+        "notes": [
+          "The separate ref-port requirement owns the absolute prohibition on ref terminals."
+        ],
+        "positive": [
+          "Use input and output members of a modported interface port as terminals in a module path and timing check."
+        ]
+      },
+      "id": "SV-2023-25-INTERFACE-SPECIFY-TERMINALS"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Repeat a differing timeunits declaration."
+        ],
+        "notes": [],
+        "positive": [
+          "Repeat a matching timeunits declaration in an interface."
+        ]
+      },
+      "id": "SV-2023-25-INTERFACE-TIMEUNITS-REPETITION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Provide synchronous clocking-block and asynchronous simple-signal modports in one interface."
+        ],
+        "negative": [
+          "Include a clocking block declared in an enclosing or different interface."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a clocking block and include it in a modport of the same interface, then use that modport on a module port."
+        ]
+      },
+      "id": "SV-2023-25-MODPORT-CLOCKING-BLOCK"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Connect a different instance modport than the one declared in the module header."
+        ],
+        "notes": [],
+        "positive": [
+          "Connect an instance modport to a module port declaring the same modport."
+        ]
+      },
+      "id": "SV-2023-25-MODPORT-CONNECTION-MATCH"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Omit a modport item's required parentheses."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a modport combining a directional port, imported method, and clocking name."
+        ]
+      },
+      "id": "SV-2023-25-MODPORT-DECLARATION-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use differently sized expressions and observe that no assignment-like context changes their self-determined types."
+        ],
+        "negative": [
+          "Use a constant expression for an output or inout modport port."
+        ],
+        "notes": [],
+        "positive": [
+          "Expose a variable slice as an output modport expression whose self-determined type is valid for the port."
+        ]
+      },
+      "id": "SV-2023-25-MODPORT-EXPRESSION-TYPE-AND-LEGALITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Declare the same explicit port identifier in two modports and access each through its corresponding connection."
+        ],
+        "negative": [
+          "Attempt to access the explicit modport expression name through the bare interface rather than its modport."
+        ],
+        "notes": [],
+        "positive": [
+          "Access an explicitly named modport expression through a connection selecting that modport."
+        ]
+      },
+      "id": "SV-2023-25-MODPORT-EXPRESSION-VISIBILITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Expose an assignment pattern assembled from structure elements."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Expose a concatenation of interface array elements under an explicit modport port name."
+        ]
+      },
+      "id": "SV-2023-25-MODPORT-EXPRESSIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use complementary modports for two modules connected to the same interface signals."
+        ],
+        "negative": [
+          "Drive through a modport member that is an input from the connected module's perspective."
+        ],
+        "notes": [],
+        "positive": [
+          "Connect a module through a modport whose input and output directions are declared from that module's perspective."
+        ]
+      },
+      "id": "SV-2023-25-MODPORT-MODULE-PERSPECTIVE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the same identifier in nested interfaces and ensure the nested interface's own declaration is selected."
+        ],
+        "negative": [
+          "List an undeclared name or a member of an enclosing interface."
+        ],
+        "notes": [],
+        "positive": [
+          "List members declared directly in the same interface in a modport."
+        ]
+      },
+      "id": "SV-2023-25-MODPORT-NAME-OWNERSHIP"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Show that the same omitted object remains available by a separate hierarchical reference."
+        ],
+        "negative": [
+          "Through that port or virtual interface, access a modport-listable object omitted from the modport."
+        ],
+        "notes": [],
+        "positive": [
+          "Through a selected modport, access an explicitly listed interface variable."
+        ]
+      },
+      "id": "SV-2023-25-MODPORT-OBJECT-ACCESS-RESTRICTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a simple identifier once and an explicitly named expression with the same name later in that list."
+        ],
+        "negative": [
+          "Define the same port identifier twice in one modport list."
+        ],
+        "notes": [],
+        "positive": [
+          "Reuse the same port name in two distinct modport lists."
+        ]
+      },
+      "id": "SV-2023-25-MODPORT-PORT-NAME-UNIQUENESS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Connect the module port to an unselected instance of the same interface and let the header supply the modport selection."
+        ],
+        "negative": [
+          "Select a modport name not declared by the concrete interface."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a module port using a concrete interface name and one of that interface's modport names."
+        ]
+      },
+      "id": "SV-2023-25-MODPORT-SELECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Select a modport for one module connection and omit selection for another connection to the same interface."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare modports in an interface but connect the interface to a module without selecting one."
+        ]
+      },
+      "id": "SV-2023-25-MODPORT-SELECTION-OPTIONAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast the simple form with an explicitly named modport expression whose port name differs from its referenced interface item."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "List an interface variable by a simple identifier and access it under that same name through the modport."
+        ]
+      },
+      "id": "SV-2023-25-MODPORT-SIMPLE-PORT-IDENTIFIER-BINDING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Expose one interface task through one modport but omit it from another."
+        ],
+        "negative": [
+          "Attempt to call an interface task through a selected modport that does not make the task accessible."
+        ],
+        "notes": [],
+        "positive": [
+          "Call an interface task through a modport that imports that task for the connected module."
+        ]
+      },
+      "id": "SV-2023-25-MODPORT-SUBROUTINE-ACCESS-CONTROL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use otherwise equivalent identifier and full-prototype forms where neither exception condition applies."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Import a locally defined interface task by identifier and export another task with a full prototype."
+        ]
+      },
+      "id": "SV-2023-25-MODPORT-SUBROUTINE-REFERENCE-FORM"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast access to an unlistable type with a listable variable omitted from the same modport."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Through a modport connection, reference an interface type or parameter that cannot be listed as a modport port."
+        ]
+      },
+      "id": "SV-2023-25-MODPORT-UNLISTABLE-OBJECT-ACCESS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Attempt to instantiate an already declared module inside an interface without declaring the module there."
+        ],
+        "negative": [
+          "Declare a module directly inside an interface."
+        ],
+        "notes": [],
+        "positive": [
+          "Instantiate an interface within a module rather than a module within an interface."
+        ]
+      },
+      "id": "SV-2023-25-MODULE-IN-INTERFACE-PROHIBITED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use otherwise matching function definitions in both modules so multiplicity is the only changed condition."
+        ],
+        "negative": [
+          "Export the same function from two modules connected to one interface."
+        ],
+        "notes": [],
+        "positive": [
+          "Export a function implementation from exactly one connected module."
+        ]
+      },
+      "id": "SV-2023-25-MULTIPLE-FUNCTION-EXPORT-PROHIBITED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call the same identifier-only declaration positionally without defaults."
+        ],
+        "negative": [
+          "Use an identifier-only modport declaration for a subroutine called with named argument binding."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a full modport prototype and call the subroutine with named argument binding."
+        ]
+      },
+      "id": "SV-2023-25-NAMED-ARGUMENT-FULL-PROTOTYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Access a member of the nested interface through the enclosing interface hierarchy."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare and instantiate a smaller interface within an enclosing interface."
+        ]
+      },
+      "id": "SV-2023-25-NESTED-INTERFACE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Rely on an interface port to create an implicit instance."
+        ],
+        "notes": [],
+        "positive": [
+          "Explicitly instantiate an interface before connecting it."
+        ]
+      },
+      "id": "SV-2023-25-NO-IMPLICIT-INTERFACE-INSTANTIATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an interface parameter in a modport task prototype."
+        ],
+        "negative": [
+          "Override a nonexistent interface parameter."
+        ],
+        "notes": [],
+        "positive": [
+          "Instantiate an interface once with default widths and once with a named parameter override, then observe differing member widths."
+        ]
+      },
+      "id": "SV-2023-25-PARAMETERIZED-INTERFACES"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Specify a default only in the subroutine declaration and omit the argument in a call through its prototype."
+        ],
+        "notes": [],
+        "positive": [
+          "Specify a default argument in the prototype and omit that argument in a call through the prototype."
+        ]
+      },
+      "id": "SV-2023-25-PROTOTYPE-DEFAULT-ARGUMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Give the same default in both locations before changing only the declaration default."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Give differing defaults in a prototype and definition, omit the call argument, and observe the prototype default."
+        ]
+      },
+      "id": "SV-2023-25-PROTOTYPE-DEFAULT-PRECEDENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Omit names only where the separate optional-name rule permits omission."
+        ],
+        "negative": [
+          "Change one present formal argument name between the prototype and declaration."
+        ],
+        "notes": [],
+        "positive": [
+          "Use the same formal argument names in a prototype and its subroutine definition."
+        ]
+      },
+      "id": "SV-2023-25-PROTOTYPE-FORMAL-NAME-MATCH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Add names without otherwise changing the simple prototype."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Omit formal names from a simple prototype used only with positional arguments and no additional unpacked dimensions."
+        ]
+      },
+      "id": "SV-2023-25-PROTOTYPE-FORMAL-NAMES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Remove the default value from the otherwise unchanged unnamed formal."
+        ],
+        "negative": [
+          "Specify a prototype default value while omitting that formal argument's name."
+        ],
+        "notes": [],
+        "positive": [
+          "Name a prototype formal argument that specifies a default value."
+        ]
+      },
+      "id": "SV-2023-25-PROTOTYPE-NAME-REQUIRED-FOR-DEFAULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call the same unnamed-formal prototype positionally."
+        ],
+        "negative": [
+          "Attempt named argument binding when the corresponding prototype formal has no name."
+        ],
+        "notes": [],
+        "positive": [
+          "Name the prototype formal and bind the corresponding call argument by that name."
+        ]
+      },
+      "id": "SV-2023-25-PROTOTYPE-NAME-REQUIRED-FOR-NAMED-BINDING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Remove the additional unpacked dimension from the otherwise unchanged unnamed formal."
+        ],
+        "negative": [
+          "Declare an additional unpacked dimension in a prototype formal while omitting the formal name."
+        ],
+        "notes": [],
+        "positive": [
+          "Name a prototype formal before declaring an additional unpacked dimension on it."
+        ]
+      },
+      "id": "SV-2023-25-PROTOTYPE-NAME-REQUIRED-FOR-UNPACKED-DIMENSION"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Use a ref modport member as a module-path or timing-check terminal."
+        ],
+        "notes": [],
+        "positive": [
+          "Use non-ref interface members as specify terminals."
+        ]
+      },
+      "id": "SV-2023-25-REF-NOT-SPECIFY-TERMINAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise the type-equivalence rules of Clause 6.22.1 with the count unchanged."
+        ],
+        "negative": [
+          "Change one argument type or the number of arguments between prototype and definition."
+        ],
+        "notes": [],
+        "positive": [
+          "Provide a prototype whose argument count and types match its task definition."
+        ]
+      },
+      "id": "SV-2023-25-SUBROUTINE-PROTOTYPE-MATCH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place connected and unconnected explicitly named ports in the same modport."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare an explicitly named modport port with an empty expression and connect through that modport."
+        ]
+      },
+      "id": "SV-2023-25-UNCONNECTED-MODPORT-PORT"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Call an extern forkjoin task having no connected implementation and require a runtime error."
+        ],
+        "notes": [],
+        "positive": [
+          "Call an extern forkjoin task having one connected implementation and observe no missing-definition runtime error."
+        ]
+      },
+      "id": "SV-2023-25-UNDEFINED-FORKJOIN-TASK-CALL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare elapsed simulation time with a call having one delayed implementation."
+        ],
+        "negative": [],
+        "notes": [
+          "The separate undefined-call requirement owns the required runtime error."
+        ],
+        "positive": [
+          "After calling an undefined extern forkjoin task, observe immediate execution of the next statement and no task side effect."
+        ]
+      },
+      "id": "SV-2023-25-UNDEFINED-FORKJOIN-TASK-RETURN"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare access through the same interface after selecting a restrictive modport."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Connect an interface without selecting a modport, then exercise inout access to a net and ref access to a variable."
+        ]
+      },
+      "id": "SV-2023-25-UNMODPORTED-INTERFACE-PORT-ACCESS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Pass the same virtual interface through a function and a class method in separate scenarios."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Pass an initialized virtual interface to a task and select a component through the formal argument."
+        ]
+      },
+      "id": "SV-2023-25-VIRTUAL-INTERFACE-ARGUMENT-PASSING"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Assign a different interface type."
+        ],
+        "notes": [],
+        "positive": [
+          "Assign a same-type instance, same-type virtual interface, and null to a virtual interface variable."
+        ]
+      },
+      "id": "SV-2023-25-VIRTUAL-INTERFACE-ASSIGNMENT-SOURCES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Reassign the class property procedurally to another same-type interface instance."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare a virtual interface class property and initialize it in `new` from a constructor argument."
+        ]
+      },
+      "id": "SV-2023-25-VIRTUAL-INTERFACE-CLASS-PROPERTY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change an interface signal between net and variable while retaining clocking-block access."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Through a virtual interface, use a clocking block to sample a net and procedurally drive a net or variable."
+        ]
+      },
+      "id": "SV-2023-25-VIRTUAL-INTERFACE-CLOCKING-ACCESS"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Use a virtual-interface member in a continuous assignment or event-control sensitivity list."
+        ],
+        "notes": [],
+        "positive": [
+          "Read and update an interface variable procedurally through an initialized virtual interface."
+        ]
+      },
+      "id": "SV-2023-25-VIRTUAL-INTERFACE-COMPONENT-USE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Omit the optional `interface` keyword."
+        ],
+        "negative": [
+          "Declare a virtual interface type without an interface identifier."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare parameterized virtual interface variables both with and without an explicit modport."
+        ]
+      },
+      "id": "SV-2023-25-VIRTUAL-INTERFACE-DECLARATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Reassign the virtual interface to another same-type instance and observe dot selection refer to the new underlying component."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Initialize a virtual interface from an interface instance and select one of that instance's variables by dot notation."
+        ]
+      },
+      "id": "SV-2023-25-VIRTUAL-INTERFACE-DOT-SELECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Rebind after a delay so the two represented instances are distinguishable by simulation time."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Assign one interface instance to a virtual interface, observe a member, then assign another same-type instance and observe its corresponding member."
+        ]
+      },
+      "id": "SV-2023-25-VIRTUAL-INTERFACE-DYNAMIC-REBINDING"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Compare virtual interfaces of different interface types."
+        ],
+        "notes": [],
+        "positive": [
+          "Compare a virtual interface against the assigned instance, another same-type variable, and null."
+        ]
+      },
+      "id": "SV-2023-25-VIRTUAL-INTERFACE-EQUALITY"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Apply an external defparam within the interface hierarchy and assign the instance to a virtual interface."
+        ],
+        "notes": [],
+        "positive": [
+          "Assign an interface instance with no external defparam to a matching virtual interface."
+        ]
+      },
+      "id": "SV-2023-25-VIRTUAL-INTERFACE-EXTERNAL-DEFPARAM"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Move the referenced object inside the interface body while leaving its use otherwise unchanged."
+        ],
+        "negative": [
+          "Declare a virtual interface from an interface containing a hierarchical reference to an external object."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a virtual interface from an interface whose object references are self-contained."
+        ]
+      },
+      "id": "SV-2023-25-VIRTUAL-INTERFACE-EXTERNAL-REFERENCE-TYPE-PROHIBITED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Assign an interface instance and verify the variable no longer compares equal to null."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare a newly declared, uninitialized virtual interface variable with null."
+        ]
+      },
+      "id": "SV-2023-25-VIRTUAL-INTERFACE-INITIAL-NULL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Declare a concrete nested interface item to contrast the prohibited virtual-interface item."
+        ],
+        "negative": [
+          "Declare a virtual interface variable directly as an item in an interface body."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a virtual interface variable in a procedural or class context."
+        ]
+      },
+      "id": "SV-2023-25-VIRTUAL-INTERFACE-ITEM-PROHIBITED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast a modport-selected type with the same base virtual interface type having no selected modport."
+        ],
+        "negative": [
+          "Use virtual interfaces selecting different modports as though they had the same type."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare two virtual interfaces selecting the same modport and use them in a type-compatible context."
+        ]
+      },
+      "id": "SV-2023-25-VIRTUAL-INTERFACE-MODPORT-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use another modport of the same interface that includes the block."
+        ],
+        "negative": [
+          "Reference a clocking block omitted from the selected modport."
+        ],
+        "notes": [],
+        "positive": [
+          "Include a clocking block in a modport, select that modport in a virtual interface type, and reference the block directly."
+        ]
+      },
+      "id": "SV-2023-25-VIRTUAL-INTERFACE-MODPORTED-CLOCKING-SELECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Update an interface variable procedurally and continuously assign that variable to the net."
+        ],
+        "negative": [
+          "Attempt a direct procedural assignment to an interface net through a virtual interface."
+        ],
+        "notes": [],
+        "positive": [
+          "Drive a net through a clocking block reached via a virtual interface."
+        ]
+      },
+      "id": "SV-2023-25-VIRTUAL-INTERFACE-NET-DRIVE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Pass a null virtual interface as an argument without dereferencing it, then distinguish that from component use."
+        ],
+        "negative": [
+          "Select a member through a null virtual interface and require a fatal runtime error."
+        ],
+        "notes": [],
+        "positive": [
+          "Assign an interface instance before selecting a member through a virtual interface."
+        ]
+      },
+      "id": "SV-2023-25-VIRTUAL-INTERFACE-NULL-USE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Replace the other-interface port with a non-interface signal port while retaining the virtual declaration."
+        ],
+        "negative": [
+          "Declare a virtual interface from an interface that has a port referencing another interface."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a virtual interface from an interface whose ports do not reference another interface."
+        ]
+      },
+      "id": "SV-2023-25-VIRTUAL-INTERFACE-OTHER-INTERFACE-PORT-TYPE-PROHIBITED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare an explicit actual equal to the interface default with an omitted default actual."
+        ],
+        "negative": [
+          "Assign instances whose actual value or type parameters differ."
+        ],
+        "notes": [],
+        "positive": [
+          "Assign an interface instance to a virtual interface declared with matching value and type parameters."
+        ]
+      },
+      "id": "SV-2023-25-VIRTUAL-INTERFACE-PARAMETER-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Pass a virtual interface as a subroutine argument, contrasting that permitted use with a design-unit port."
+        ],
+        "negative": [
+          "Declare a module, interface, or program port whose type is a virtual interface."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a concrete interface port and use a virtual interface as a procedural variable instead."
+        ]
+      },
+      "id": "SV-2023-25-VIRTUAL-INTERFACE-PORT-PROHIBITED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a structure context separately so union membership remains the changed dimension."
+        ],
+        "negative": [
+          "Declare a union member whose type is a virtual interface."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a virtual interface as a class property rather than a union member."
+        ]
+      },
+      "id": "SV-2023-25-VIRTUAL-INTERFACE-UNION-MEMBER-PROHIBITED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast with a modport-selected virtual interface whose modport omits the block."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use an unmodported virtual interface to select its interface clocking block by name."
+        ]
+      },
+      "id": "SV-2023-25-VIRTUAL-INTERFACE-UNMODPORTED-CLOCKING-SELECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Assign an unmodported virtual interface variable rather than a concrete instance to the modport-selected destination."
+        ],
+        "negative": [
+          "Assign a modport-selected virtual interface to an unmodported virtual interface destination."
+        ],
+        "notes": [],
+        "positive": [
+          "Assign an unmodported interface instance to a matching virtual interface type that selects one of its modports."
+        ]
+      },
+      "id": "SV-2023-25-VIRTUAL-INTERFACE-UNMODPORTED-TO-MODPORTED-ASSIGNMENT"
+    }
+  ],
+  "schema_version": 1
+}

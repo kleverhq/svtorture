@@ -1,0 +1,337 @@
+{
+  "authority": "1800-2023",
+  "part": "J",
+  "requirements": [
+    {
+      "hints": {
+        "edge": [
+          "Process bootstrap files with zero comments and with consecutive comments between entries."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Process a bootstrap file with multiple comment lines between two library entries and observe both entries being honored."
+        ]
+      },
+      "id": "SV-2023-J-BOOTSTRAP-COMMENT-PLACEMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use both an unindented comment and a comment preceded by several blanks."
+        ],
+        "negative": [
+          "Use a line with nonblank text before #; it does not satisfy the bootstrap comment-line syntax."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a newline-terminated bootstrap comment whose first nonblank character is #."
+        ]
+      },
+      "id": "SV-2023-J-BOOTSTRAP-COMMENTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an extensionless relative pathname containing directory components."
+        ],
+        "negative": [
+          "Put the platform-specific shared-library extension in the bootstrap entry pathname; the line does not satisfy the defined entry syntax."
+        ],
+        "notes": [
+          "The concrete direct-library option spelling is implementation-defined; equivalence is to that facility's pathname value."
+        ],
+        "positive": [
+          "Place an extensionless library pathname as the only nonblank content of a bootstrap entry and observe the corresponding platform shared library being integrated."
+        ]
+      },
+      "id": "SV-2023-J-BOOTSTRAP-ENTRY-PATHNAME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a bootstrap file with no library entries after its required first line."
+        ],
+        "negative": [
+          "Put two library locations on one entry line; the line does not satisfy the one-entry-per-line syntax."
+        ],
+        "notes": [],
+        "positive": [
+          "Use two bootstrap entry lines, each holding one distinct library location, and observe both entries being processed."
+        ]
+      },
+      "id": "SV-2023-J-BOOTSTRAP-ENTRY-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use exactly one leading blank and no trailing blanks."
+        ],
+        "negative": [
+          "Use an otherwise valid library entry beginning in the first column with no preceding blank."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a bootstrap entry with one leading blank and another with multiple leading and trailing blanks; both satisfy the whitespace grammar."
+        ]
+      },
+      "id": "SV-2023-J-BOOTSTRAP-ENTRY-WHITESPACE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Specify the bootstrap file by a relative pathname and combine this rule with the Annex J root-resolution rules."
+        ],
+        "negative": [],
+        "notes": [
+          "Concrete command-line switch spelling is advisory under J.2; use the implementation's corresponding facility."
+        ],
+        "positive": [
+          "Identify one bootstrap file containing an object-code entry through the bootstrap-file pathname facility and invoke its DPI routine."
+        ]
+      },
+      "id": "SV-2023-J-BOOTSTRAP-FILE-LOCATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place the required string exactly on the first line before entries."
+        ],
+        "negative": [
+          "Use a bootstrap file whose first line omits or misspells #!SV_LIBRARIES."
+        ],
+        "notes": [],
+        "positive": [
+          "Load a bootstrap file beginning with #!SV_LIBRARIES."
+        ]
+      },
+      "id": "SV-2023-J-BOOTSTRAP-MAGIC-LINE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Refer to the same file through hard-linked pathnames detectable as identical."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Specify the identical library through both a bootstrap file and direct library facility and observe bootstrap precedence."
+        ]
+      },
+      "id": "SV-2023-J-BOOTSTRAP-OVERRIDES-DIRECT-DUPLICATE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Interleave multiple bootstrap-file and direct-library specifications in one invocation."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "In one invocation, load one DPI library via a bootstrap file and another via direct library specification, then call both."
+        ]
+      },
+      "id": "SV-2023-J-CONCURRENT-OBJECT-CODE-METHODS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place a relative file reference before a later root-directory option and resolve that earlier reference from the working directory."
+        ],
+        "negative": [],
+        "notes": [
+          "Materialization needs control of simulator working directory and command-line ordering."
+        ],
+        "positive": [
+          "From a chosen working directory, load a relative-path DPI artifact without supplying a root-directory switch."
+        ]
+      },
+      "id": "SV-2023-J-DEFAULT-RELATIVE-PATH-DIRECTORY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use separate direct-library instances for two extensionless library basenames."
+        ],
+        "negative": [
+          "Pass the platform-specific shared-library extension as part of the direct library pathname."
+        ],
+        "notes": [],
+        "positive": [
+          "Specify a directly loaded shared library by pathname basename without its platform extension."
+        ]
+      },
+      "id": "SV-2023-J-DIRECT-LIBRARY-BASENAME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Run the same basename convention on platforms with differing shared-library extensions."
+        ],
+        "negative": [],
+        "notes": [
+          "Requires a platform-aware artifact-building harness."
+        ],
+        "positive": [
+          "Provide an extensionless direct-library basename whose platform-specific shared library exists and invoke a DPI routine from it."
+        ]
+      },
+      "id": "SV-2023-J-DIRECT-LIBRARY-EXTENSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use precompiled target-platform object code rather than compiling its foreign-language source as part of the simulation invocation."
+        ],
+        "negative": [],
+        "notes": [
+          "Materialization requires a target-platform object artifact and a portable build/load harness."
+        ],
+        "positive": [
+          "Supply a target-platform shared library implementing a DPI-imported routine through an Annex J inclusion method and invoke it from SystemVerilog."
+        ]
+      },
+      "id": "SV-2023-J-DPI-OBJECT-CODE-INCLUSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Refer to one library through both identical and filesystem-aliased pathnames and observe a single load when the files are identifiable as the same."
+        ],
+        "negative": [],
+        "notes": [
+          "The oracle must observe library loading or registration, not merely repeated calls to an exported DPI routine."
+        ],
+        "positive": [
+          "Specify the same library multiple times and use an observable registration counter to verify that its load-time registration occurs once."
+        ]
+      },
+      "id": "SV-2023-J-LIBRARY-LOAD-ONCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multiple entries in each method and observe the transition from the final bootstrap entry to the first direct specification."
+        ],
+        "negative": [],
+        "notes": [
+          "Materialization requires a portable observable registration mechanism and must not rely on diagnostic wording."
+        ],
+        "positive": [
+          "Use observable registration effects to verify bootstrap libraries load in entry-line order before directly specified libraries load in occurrence order."
+        ]
+      },
+      "id": "SV-2023-J-LIBRARY-LOAD-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use two bootstrap files that each name a distinct library to make processing of both files observable."
+        ],
+        "negative": [],
+        "notes": [
+          "The concrete command-line switch spelling is implementation-defined; Annex J standardizes the facility's behavior, not its option name."
+        ],
+        "positive": [
+          "Specify two bootstrap files through repeated uses of the bootstrap-file location facility and observe libraries from both files being processed."
+        ]
+      },
+      "id": "SV-2023-J-MULTIPLE-BOOTSTRAP-FILES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place one required DPI entry point in each of two libraries so successful integration requires both facility occurrences."
+        ],
+        "negative": [],
+        "notes": [
+          "The concrete command-line switch spelling is implementation-defined; Annex J standardizes the facility's behavior, not its option name."
+        ],
+        "positive": [
+          "Specify two distinct object-code libraries through repeated uses of the direct-library facility and observe imported DPI functionality from both."
+        ]
+      },
+      "id": "SV-2023-J-MULTIPLE-DIRECT-LIBRARIES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an absolute bootstrap-file location while a root directory is configured and verify that the absolute location is not formed as a root-relative path."
+        ],
+        "negative": [],
+        "notes": [
+          "Concrete option spellings are implementation-defined; exercise the corresponding Annex J location facilities. Relative pathname resolution is scored separately under J.3."
+        ],
+        "positive": [
+          "Integrate one library using an absolute location and another using a relative location, using the two Annex J inclusion methods."
+        ]
+      },
+      "id": "SV-2023-J-OBJECT-CODE-PATHNAME-FORMS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Build the same fixture on two target platforms using each platform's corresponding shared-library extension."
+        ],
+        "negative": [
+          "Name the supplied shared library with an extension for a different platform; it does not satisfy the required artifact naming condition."
+        ],
+        "notes": [
+          "Requires a platform-aware fixture-building harness; no particular extension string is portable across platforms."
+        ],
+        "positive": [
+          "Supply an Annex J shared library using the target platform's native shared-library filename extension."
+        ]
+      },
+      "id": "SV-2023-J-OBJECT-CODE-PLATFORM-EXTENSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a minimal shared library exporting exactly one DPI routine."
+        ],
+        "negative": [
+          "Supply a standalone unlinked object file where Annex J requires a shared library."
+        ],
+        "notes": [
+          "Requires platform-specific fixture generation."
+        ],
+        "positive": [
+          "Supply a target-platform shared library containing a DPI routine and load it through an Annex J method."
+        ]
+      },
+      "id": "SV-2023-J-OBJECT-CODE-SHARED-LIBRARY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Include an unrelated unreferenced function with a conflicting external symbol and verify its presence does not require loading that function."
+        ],
+        "negative": [],
+        "notes": [
+          "Materialization must distinguish loading selected object code from loading the shared-library image itself."
+        ],
+        "positive": [
+          "Load a shared library where the DPI-imported function is referenced and invoke it."
+        ]
+      },
+      "id": "SV-2023-J-REFERENCED-OBJECT-CODE-ONLY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an absolute artifact path while a root directory is configured and verify that the absolute path is not prefixed."
+        ],
+        "negative": [],
+        "notes": [
+          "The facility's command-line spelling is recommended rather than mandatory; exercise the implementation's corresponding root-directory facility."
+        ],
+        "positive": [
+          "Configure an Annex J root directory and load an artifact named by a relative path beneath it."
+        ]
+      },
+      "id": "SV-2023-J-SV-ROOT-RELATIVE-PATH"
+    }
+  ],
+  "schema_version": 1
+}

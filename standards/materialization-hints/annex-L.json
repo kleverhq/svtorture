@@ -1,0 +1,71 @@
+{
+  "authority": "1800-2023",
+  "part": "L",
+  "requirements": [
+    {
+      "hints": {
+        "edge": [
+          "Preprocess with no compatibility-version symbol and verify this block does not introduce a historical suffix mapping."
+        ],
+        "negative": [],
+        "notes": [
+          "A compact generated C preprocessing probe may cover the Cartesian product; no runtime linkage oracle is needed. Visually verify line continuations in the published source if reproducing the header text."
+        ],
+        "positive": [
+          "For each selectable historical version, preprocess references to all listed generic function names and compare expansions with the correspondingly suffixed names."
+        ]
+      },
+      "id": "SV-2023-L-COMPATIBILITY-FUNCTION-MACRO-MAPPINGS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Include vpi_user.h through the implementation-supported VPI header path and verify its single inclusion of this header does not trigger the guard error."
+        ],
+        "negative": [
+          "Process the header with VPI_COMPATIBILITY_H already defined and require preprocessing rejection."
+        ],
+        "notes": [
+          "Materialization requires the implementation-provided VPI headers and a C preprocessor/build environment; do not test diagnostic wording."
+        ],
+        "positive": [
+          "Process the header once with VPI_COMPATIBILITY_H initially undefined and observe that the guard symbol becomes defined."
+        ]
+      },
+      "id": "SV-2023-L-COMPATIBILITY-HEADER-INCLUSION-GUARD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Set VPI_COMPATIBILITY_VERSION_1800v2017 and VPI_COMPATIBILITY_VERSION_1800v2009 to 1; normalization to the 1800-2012 branch shall make the effective selections conflict."
+        ],
+        "negative": [
+          "Set two distinct effective compatibility branch selectors to 1 and require preprocessing rejection."
+        ],
+        "notes": [
+          "Do not depend on the text of the #error diagnostic. Clause 36.12.2.1 separately prohibits multiple public compatibility symbols across all application source, including the 1800v2017 and 1800v2023 aliases."
+        ],
+        "positive": [
+          "Preprocess once for each single effective compatibility branch selector set to 1 and verify that the exclusivity error is not issued."
+        ]
+      },
+      "id": "SV-2023-L-COMPATIBILITY-VERSION-MUTUAL-EXCLUSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Process the header with neither newer-version selector defined and verify that this normalization block does not introduce VPI_COMPATIBILITY_VERSION_1800v2012."
+        ],
+        "negative": [],
+        "notes": [
+          "Observe the normalized selector itself; mode-specific API retargeting is a separate requirement."
+        ],
+        "positive": [
+          "Preprocess separately with VPI_COMPATIBILITY_VERSION_1800v2017 and VPI_COMPATIBILITY_VERSION_1800v2023 set to 1, and verify that each causes VPI_COMPATIBILITY_VERSION_1800v2012 to be defined."
+        ]
+      },
+      "id": "SV-2023-L-NEWER-COMPATIBILITY-VERSIONS-NORMALIZE-TO-2012"
+    }
+  ],
+  "schema_version": 1
+}

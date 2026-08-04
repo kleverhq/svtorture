@@ -407,7 +407,7 @@ clause = "A"
     case = root / "cases" / "ch04-nba-rhs-captured" / "case.toml"
     case.write_text(
         case.read_text(encoding="utf-8").replace(
-            'primary_requirement = "SV-2023-04-NBA-RHS-CAPTURE"',
+            'primary_requirement = "SV-2023-04-NONBLOCKING-ASSIGNMENT-CAPTURE-AND-SCHEDULING"',
             'primary_requirement = "SV-2023-A-FORMAL-SYNTAX"',
         ),
         encoding="utf-8",
@@ -427,9 +427,9 @@ clause = "A"
     case_annex = next(part for part in metrics.cases.breakdown if part.id == "A")
 
     assert loaded.requirements["SV-2023-A-FORMAL-SYNTAX"].part == "A"
-    assert requirement_annex.coverage.numerator == 1
-    assert requirement_annex.density.numerator == 1
-    assert requirement_annex.density.denominator == 1
+    assert requirement_annex.coverage.numerator == 2
+    assert requirement_annex.density.numerator == 2
+    assert requirement_annex.density.denominator == 2
     assert case_annex.coverage.numerator == 1
     assert case_annex.coverage.denominator == 1
     assert case_annex.density.numerator == 2
@@ -457,8 +457,9 @@ def test_unknown_requirement_tag_is_rejected(catalog: Catalog, tmp_path: Path) -
     chapter = root / "standards" / "requirements" / "chapter-04.toml"
     chapter.write_text(
         chapter.read_text(encoding="utf-8").replace(
-            'tags = ["nba", "scheduling"]',
-            'tags = ["nba", "scheduling", "zz-unknown"]',
+            "tags = []",
+            'tags = ["zz-unknown"]',
+            1,
         ),
         encoding="utf-8",
     )

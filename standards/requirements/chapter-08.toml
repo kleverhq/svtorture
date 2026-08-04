@@ -1,0 +1,4940 @@
+schema_version = 3
+part = "8"
+
+[[requirements]]
+id = "SV-2023-08-ABSTRACT-CLASS-EXTENSION"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.21"
+anchors = [
+    "[2023:8.21:P005:p199]",
+]
+summary = "An abstract class may extend another abstract or nonabstract class and may add new pure virtual methods or override inherited methods as pure virtual, without implementing all inherited pure methods until a nonabstract descendant is declared."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.21"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.21"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.21"
+
+[[requirements]]
+id = "SV-2023-08-ABSTRACT-CLASS-HANDLE-VARIABLE"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.22"
+anchors = [
+    "[2023:8.22:P001:p199]",
+]
+summary = "Although an abstract class cannot be directly instantiated, its type may be used to declare handle variables that hold assignment-compatible subclass objects."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.22"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.22"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.22"
+
+[[requirements]]
+id = "SV-2023-08-ABSTRACT-CLASS-NO-DIRECT-CONSTRUCTION"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.21"
+anchors = [
+    "[2023:8.21:P003:p199]",
+]
+summary = "An abstract class object shall not be constructed directly; its constructor may run only indirectly in the constructor chain initiated by constructing a nonabstract derived object."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.21"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.21"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.21"
+
+[[requirements]]
+id = "SV-2023-08-ABSTRACT-INTERFACE-OBLIGATION"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.26"
+anchors = [
+    "[2023:8.26:P004:p207]",
+]
+summary = "For every method required by an implemented interface, a virtual class shall define or inherit either a pure virtual prototype or a virtual implementation; a locally declared method shall use virtual."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.26"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.26"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.26"
+
+[[requirements]]
+id = "SV-2023-08-AUTOMATIC-DYNAMIC-MEMORY"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.29"
+anchors = [
+    "[2023:8.29:P001:p216]",
+    "[2023:8.29:P004:p217]",
+]
+summary = "SystemVerilog dynamically allocates storage for objects, strings, and dynamic and associative arrays and manages that dynamic storage automatically rather than exposing manual allocation and deallocation."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.29"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.29"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.29"
+
+[[requirements]]
+id = "SV-2023-08-CAST-ASSIGNMENT-COMPATIBLE"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.16"
+anchors = [
+    "[2023:8.16:P005:p192]",
+    "[2023:8.16:L001:p192]",
+]
+summary = "$cast on class handles succeeds when the source expression is assignment compatible with the destination type, meaning the destination is the same type as or a superclass of the source expression."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.16"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.16"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.16"
+
+[[requirements]]
+id = "SV-2023-08-CAST-INCOMPATIBLE-FAILS"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.16"
+anchors = [
+    "[2023:8.16:P006:p192]",
+]
+summary = "A class-handle $cast shall fail in every case outside the enumerated success conditions; incompatible source and destination types fail even when the typed source expression evaluates to null."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.16"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.16"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.16"
+
+[[requirements]]
+id = "SV-2023-08-CAST-INTERFACE-CLASS-SOURCE"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.16"
+anchors = [
+    "[2023:8.16:L002:p192]",
+    "[2023:8.16:L004:p192]",
+]
+summary = "A source expression typed as an interface class is cast compatible with a destination class type only when its referenced object is assignment compatible with that destination, as determined by the $cast run-time check."
+related_clauses = [
+    "8.26",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.16"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.16"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.16"
+
+[[requirements]]
+id = "SV-2023-08-CAST-LITERAL-NULL-SUCCEEDS"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.16"
+anchors = [
+    "[2023:8.16:P005:p192]",
+    "[2023:8.16:L005:p192]",
+]
+summary = "For a class-handle destination, $cast with the literal constant null as its source succeeds."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.16"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.16"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.16"
+
+[[requirements]]
+id = "SV-2023-08-CAST-SUCCESS-ASSIGNS"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.16"
+anchors = [
+    "[2023:8.16:P007:p192]",
+]
+summary = "When $cast succeeds it assigns the converted source to the destination; on failure, function/task-specific error handling follows the general $cast rules."
+related_clauses = [
+    "6.24.2",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.16"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.16"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.16"
+
+[[requirements]]
+id = "SV-2023-08-CHAINED-INSTANCE-QUALIFICATION"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.12"
+anchors = [
+    "[2023:8.12:P010:p189]",
+]
+summary = "Instance member qualification may be chained through successive object-handle properties to access a member of a nested or linked object."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.12"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.12"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.12"
+
+[[requirements]]
+id = "SV-2023-08-CLASS-DECLARATION-CREATES-TYPE"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.27"
+anchors = [
+    "[2023:8.27:P003:p215]",
+]
+summary = "A class declaration inherently creates a type and does not require a separate typedef to establish that class type."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.27"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.27"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.27"
+
+[[requirements]]
+id = "SV-2023-08-CLASS-DYNAMIC-VS-STRUCT-STATIC"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.28"
+anchors = [
+    "[2023:8.28:L001:p216]",
+]
+summary = "Struct values are static objects created in static storage or an automatic-task stack, while class objects are exclusively dynamic: declaring a class handle creates no object and new performs object creation."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.28"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.28"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.28"
+
+[[requirements]]
+id = "SV-2023-08-CLASS-ENUM-INSTANCE-ACCESS"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.5"
+anchors = [
+    "[2023:8.5:P002:p183]",
+]
+summary = "A class enum name may be accessed either through class scope resolution or by qualification with an instance name."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.5"
+
+[[requirements]]
+id = "SV-2023-08-CLASS-HANDLE-CAST-CALL-FORMS"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.16"
+anchors = [
+    "[2023:8.16:P003:p191]",
+    "[2023:8.16:C001:p191]",
+    "[2023:8.16:P004:p192]",
+    "[2023:8.16:C002:p192]",
+]
+summary = "For class-handle casting, $cast accepts a destination variable and source expression and may be called as an int-returning function or as a task."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.16"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.16"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.16"
+
+[[requirements]]
+id = "SV-2023-08-CLASS-IMPLEMENTS-INTERFACE"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.26"
+anchors = [
+    "[2023:8.26:P001:p206]",
+]
+summary = "A non-interface class may implement one or more interface classes and shall provide implementations of their required methods satisfying virtual-method override compatibility."
+related_clauses = [
+    "8.20",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.26"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.26"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.26"
+
+[[requirements]]
+id = "SV-2023-08-CLASS-ITEM-PARAMETER-LOCAL"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.3"
+anchors = [
+    "[2023:8.3:G001:p180-181]",
+    "[2023:8.26.1:G001:p208]",
+]
+summary = "Within a class-item parameter declaration, parameter is synonymous with localparam."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.3"
+
+[[requirements]]
+id = "SV-2023-08-CLASS-METHOD-AUTOMATIC-LIFETIME"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.6"
+anchors = [
+    "[2023:8.6:P004:p183]",
+    "[2023:8.10:P002:p187]",
+]
+summary = "A method declared as part of a class type has automatic lifetime, and explicitly declaring such a method with static lifetime is illegal."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.6"
+
+[[requirements]]
+id = "SV-2023-08-CLASS-NEW-GRAMMAR"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.8"
+anchors = [
+    "[2023:8.8:G001:p185]",
+]
+summary = "A class new expression shall be either an optionally class-scoped new with an optional argument list or the shallow-copy form new expression."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.8"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.8"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.8"
+
+[[requirements]]
+id = "SV-2023-08-CLASS-PARAMETER-INSTANCE-ACCESS"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.5"
+anchors = [
+    "[2023:8.5:P003:p183]",
+]
+summary = "A class value parameter or local value parameter may be accessed through an instance-qualified name, but the resulting expression is not a constant expression."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.5"
+
+[[requirements]]
+id = "SV-2023-08-CLASS-PARAMETER-OVERRIDE"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.25"
+anchors = [
+    "[2023:8.25:P003:p203]",
+]
+summary = "A parameterized class specialization may use positional or named parameter overrides and typedef specialization under the same parameter override rules as modules and interfaces."
+related_clauses = [
+    "23.10",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.25"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.25"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.25"
+
+[[requirements]]
+id = "SV-2023-08-CLASS-PARAMETERS-PUBLIC"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.18"
+anchors = [
+    "[2023:8.18:P002:p194]",
+]
+summary = "Class parameters and class local parameters are public."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.18"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.18"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.18"
+
+[[requirements]]
+id = "SV-2023-08-CLASS-PROPERTY-ANY-TYPE"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.5"
+anchors = [
+    "[2023:8.5:P001:p183]",
+]
+summary = "A class property may be declared with any SystemVerilog data type."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.5"
+
+[[requirements]]
+id = "SV-2023-08-CLASS-PROPERTY-DECLARATION-INITIALIZER"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.12"
+anchors = [
+    "[2023:8.12:P010:p189]",
+]
+summary = "A class property, including an object-handle property initialized by new, may be initialized directly in its class declaration."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.12"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.12"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.12"
+
+[[requirements]]
+id = "SV-2023-08-CLASS-PROPERTY-TYPE-AND-ACCESS"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.5"
+anchors = [
+    "[2023:8.5:P001:p183]",
+]
+summary = "An object's class property is accessed by qualifying the property name with the object instance name."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.5"
+
+[[requirements]]
+id = "SV-2023-08-CLASS-QUALIFIER-UNIQUENESS"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.3"
+anchors = [
+    "[2023:8.3:G001:p180-181]",
+    "[2023:8.18:P007:p195]",
+]
+summary = "In one declaration, protected and local are mutually exclusive, rand and randc are mutually exclusive, and static and virtual may each appear no more than once."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.3"
+
+[[requirements]]
+id = "SV-2023-08-CLASS-SCOPE-ACCESS"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.23"
+anchors = [
+    "[2023:8.23:P003:p200]",
+    "[2023:8.23:L001:p201]",
+    "[2023:8.23:L002:p201]",
+    "[2023:8.23:L003:p201]",
+    "[2023:8.23:L004:p201]",
+]
+summary = "Class scope resolution disambiguates class identifiers; permits external access to static public members, constraints, type declarations, enumeration constants, class parameters, and local parameters; and permits derived-class access to public or protected superclass members."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.23"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.23"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.23"
+
+[[requirements]]
+id = "SV-2023-08-CLASS-SCOPE-RESOLUTION-SYNTAX"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.23"
+anchors = [
+    "[2023:8.23:P001:p200]",
+    "[2023:8.23:C001:p200]",
+]
+summary = "The class scope resolution form consists of a class type followed by ::, optionally repeated for nested class types, and an identifier defined in the selected class scope."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.23"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.23"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.23"
+
+[[requirements]]
+id = "SV-2023-08-CLASS-SCOPE-STATIC-ELEMENTS"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.23"
+anchors = [
+    "[2023:8.23:P004:p200]",
+]
+summary = "Class scope resolution applies to static properties, static methods, typedefs, enumerations, parameters, local parameters, constraints, structures, unions, and nested classes; resolved expressions may be read, written, called, or used as event expressions as appropriate, and class scope may prefix a type or method call."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.23"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.23"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.23"
+
+[[requirements]]
+id = "SV-2023-08-CLASS-SCOPED-PARAMETER-CONSTANT"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.23"
+anchors = [
+    "[2023:8.23:P003:p200]",
+]
+summary = "An expression referring to a class parameter or local parameter through class scope resolution is a constant expression."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.23"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.23"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.23"
+
+[[requirements]]
+id = "SV-2023-08-CLASS-SYNTAX"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.3"
+anchors = [
+    "[2023:8.3:G001:p180-181]",
+]
+summary = "Class declarations, class items, properties, methods, constructors, constraints, qualifiers, and method prototypes shall conform to the alternatives and ordering prescribed by the class syntax grammar."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "changed-expectation"
+clause = "8.3"
+note = "The 2012 class grammar lacks later alternatives and restrictions including final and dynamic-override specifiers and the revised constructor argument grammar."
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.3"
+
+[[requirements]]
+id = "SV-2023-08-CLASS-TYPE-NO-HANDLE-ACCESS"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.5"
+anchors = [
+    "[2023:8.5:P003:p183]",
+]
+summary = "A class data type or type parameter shall not be accessed through a class handle."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.5"
+
+[[requirements]]
+id = "SV-2023-08-CLASS-TYPE-PARAMETER-ANY-TYPE"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.25"
+anchors = [
+    "[2023:8.25:P006:p204]",
+]
+summary = "A class type parameter may be specialized with any type, including built-in types and user-defined class or struct types."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.25"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.25"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.25"
+
+[[requirements]]
+id = "SV-2023-08-CLASS-VARIABLE-DECLARATION-NO-OBJECT"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.12"
+anchors = [
+    "[2023:8.12:P001:p187]",
+    "[2023:8.12:P002:p187]",
+]
+summary = "Declaring a class variable creates only a handle variable, initially null; no class object exists for it until an instance is created and its handle assigned."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.12"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.12"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.12"
+
+[[requirements]]
+id = "SV-2023-08-CONCRETE-CLASS-IMPLEMENTS-PURE-METHODS"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.21"
+anchors = [
+    "[2023:8.21:P005:p199]",
+]
+summary = "A nonabstract class derived from an abstract class shall provide inherited or overridden implementations for every pure virtual method before its objects may be constructed."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.21"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.21"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.21"
+
+[[requirements]]
+id = "SV-2023-08-CONST-CLASS-PROPERTY-FORMS"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.19"
+anchors = [
+    "[2023:8.19:P001:p195]",
+]
+summary = "A const class property is read-only and may take either the global-constant or instance-constant form defined for class properties."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.19"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.19"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.19"
+
+[[requirements]]
+id = "SV-2023-08-CONSTRUCTION-INITIALIZATION-ORDER"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.7"
+anchors = [
+    "[2023:8.7:P006:p184]",
+    "[2023:8.17:P001:p192]",
+]
+summary = "Construction first completes the base constructor call, then initializes each property declared by the current class to its explicit default or uninitialized value, and only afterward evaluates the remaining user-constructor code."
+related_clauses = [
+    "8.13",
+    "8.15",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.7"
+
+[[requirements]]
+id = "SV-2023-08-CONSTRUCTOR-ACCESS-QUALIFIERS"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.7"
+anchors = [
+    "[2023:8.7:P012:p185]",
+]
+summary = "A constructor may be declared local or protected, with access governed by the corresponding class-member access rules."
+related_clauses = [
+    "8.18",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.7"
+
+[[requirements]]
+id = "SV-2023-08-CONSTRUCTOR-ARGUMENT-CONVENTIONS"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.7"
+anchors = [
+    "[2023:8.7:P011:p185]",
+]
+summary = "Constructor arguments follow the same calling conventions as other procedural subroutines, including support for default argument values."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.7"
+
+[[requirements]]
+id = "SV-2023-08-CONSTRUCTOR-ARGUMENTS"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.7"
+anchors = [
+    "[2023:8.7:P009:p185]",
+]
+summary = "A constructor may declare and receive arguments that customize the newly created object at run time."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.7"
+
+[[requirements]]
+id = "SV-2023-08-CONSTRUCTOR-DEFAULT-ARG-MARKER"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.3"
+anchors = [
+    "[2023:8.3:G001:p180-181]",
+    "[2023:8.17:L002:p192]",
+]
+summary = "The default keyword may occur at most once in a class constructor argument list."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no default superclass-argument expansion marker in class constructor argument lists."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "The special default superclass-argument expansion construct in a constructor argument list does not exist in IEEE 1800-2017."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.3"
+
+[[requirements]]
+id = "SV-2023-08-CONSTRUCTOR-DEFAULT-EXPANSION"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.17"
+anchors = [
+    "[2023:8.17:P005:p192]",
+]
+summary = "In a subclass constructor argument list, default expands in place to every superclass-constructor argument, preserving declaration order, direction, type, name, and default values."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no constructor argument-list construct that expands superclass constructor arguments with default."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 has no default keyword mechanism that expands superclass constructor arguments into a subclass constructor argument list."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.17"
+
+[[requirements]]
+id = "SV-2023-08-CONSTRUCTOR-DEFAULT-NAME-COLLISION"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.17"
+anchors = [
+    "[2023:8.17:L003:p192]",
+]
+summary = "When a constructor argument list contains default superclass-argument expansion, no explicitly declared argument in that list may have the same name as any superclass-constructor argument."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 lacks default superclass-constructor argument expansion, so its name-collision restriction is absent."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 lacks constructor default superclass-argument expansion, so it defines no associated argument-name collision rule."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.17"
+
+[[requirements]]
+id = "SV-2023-08-CONSTRUCTOR-DEFAULT-NO-LOCAL-REFERENCE"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.17"
+anchors = [
+    "[2023:8.17:L005:p193]",
+]
+summary = "Using default superclass-argument expansion is an error if any superclass-constructor argument's default value refers to a local member."
+related_clauses = [
+    "8.18",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 lacks default superclass-constructor argument expansion and its local-member default restriction."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 lacks constructor default superclass-argument expansion and its restriction on defaults referring to local members."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.17"
+
+[[requirements]]
+id = "SV-2023-08-CONSTRUCTOR-DEFAULT-SUBCLASS-ONLY"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.17"
+anchors = [
+    "[2023:8.17:L001:p192]",
+]
+summary = "The default superclass-argument expansion keyword in a constructor argument list is legal only when the containing class extends another class."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no default superclass-argument expansion keyword for subclass constructor argument lists."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 does not provide the default superclass-argument expansion keyword in constructor argument lists."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.17"
+
+[[requirements]]
+id = "SV-2023-08-CONSTRUCTOR-INVOKED-ON-CREATION"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.7"
+anchors = [
+    "[2023:8.7:P002:p184]",
+    "[2023:8.7:P003:p184]",
+    "[2023:8.7:P004:p184]",
+]
+summary = "Creating a class object with new invokes that class's new function as its constructor, and constructor statements initialize the newly created instance."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.7"
+
+[[requirements]]
+id = "SV-2023-08-CONSTRUCTOR-NONBLOCKING"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.7"
+anchors = [
+    "[2023:8.7:P005:p184]",
+]
+summary = "A class new operation is a function with no declared return type and shall execute nonblockingly like any other function."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.7"
+
+[[requirements]]
+id = "SV-2023-08-CONSTRUCTOR-NOT-STATIC-OR-VIRTUAL"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.7"
+anchors = [
+    "[2023:8.7:P012:p185]",
+]
+summary = "A constructor shall not be declared static or virtual."
+related_clauses = [
+    "8.10",
+    "8.20",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.7"
+
+[[requirements]]
+id = "SV-2023-08-CONSTRUCTOR-RETURN-TYPE-CONTEXT"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.7"
+anchors = [
+    "[2023:8.7:P005:p184]",
+]
+summary = "Although new declares no return type, the assignment left-hand side determines the object-handle return type."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.7"
+
+[[requirements]]
+id = "SV-2023-08-DEFAULT-CLASS-SPECIALIZATION"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.25"
+anchors = [
+    "[2023:8.25:P016:p205]",
+]
+summary = "C#() denotes parameterized class C's default specialization; except as a :: prefix, unadorned C denotes that default specialization."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.25"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.25"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.25"
+
+[[requirements]]
+id = "SV-2023-08-DEFAULT-PUBLIC-MEMBERS"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.18"
+anchors = [
+    "[2023:8.18:P001:p194]",
+]
+summary = "A class property or method without a local or protected access qualifier is public and may be accessed by any context that has access to the object's name."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.18"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.18"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.18"
+
+[[requirements]]
+id = "SV-2023-08-DEPENDENT-SCOPE-TYPE-SELECTION"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.23"
+anchors = [
+    "[2023:8.23:P002:p200]",
+]
+summary = "When the :: prefix is an incomplete forward type, interface-based typedef, or type parameter that may resolve to a class, selecting a type through it is restricted to typedef declarations, the type operator, and type-parameter assignments."
+related_clauses = [
+    "6.18",
+    "6.23",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 does not state the later restriction limiting dependent :: type selection to typedefs, type operators, and type-parameter assignments."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 does not specify the restricted dependent class-scope type-selection rule for incomplete forward types, interface-based typedefs, and type parameters."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.23"
+
+[[requirements]]
+id = "SV-2023-08-DERIVED-CONSTRUCTOR-CALLS-BASE-FIRST"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.7"
+anchors = [
+    "[2023:8.7:P006:p184]",
+    "[2023:8.15:P003:p191]",
+    "[2023:8.17:P004:p192]",
+]
+summary = "A derived class's new method shall first call its base-class constructor using super.new."
+related_clauses = [
+    "8.13",
+    "8.15",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.7"
+
+[[requirements]]
+id = "SV-2023-08-DERIVED-METHOD-OVERRIDE"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.13"
+anchors = [
+    "[2023:8.13:P007:p190]",
+]
+summary = "A derived class may override a method inherited from its base class with a changed definition, subject to the method-override rules."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.13"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.13"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.13"
+
+[[requirements]]
+id = "SV-2023-08-DERIVED-OBJECT-REPRESENTS-BASE"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.14"
+anchors = [
+    "[2023:8.14:P001:p190]",
+    "[2023:8.14:P002:p190]",
+]
+summary = "An object of a subclass is a legal representative of each base class in its inheritance chain and may be used where a corresponding base-class object handle is expected."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.14"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.14"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.14"
+
+[[requirements]]
+id = "SV-2023-08-DIRECT-DOWNCAST-ILLEGAL"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.16"
+anchors = [
+    "[2023:8.16:P001:p191]",
+]
+summary = "Direct assignment from a superclass-typed variable to a subclass-typed variable is illegal."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.16"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.16"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.16"
+
+[[requirements]]
+id = "SV-2023-08-DYNAMIC-OVERRIDE-SCOPE"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.3"
+anchors = [
+    "[2023:8.3:G001:p180-181]",
+]
+summary = "Dynamic override specifiers are legal only on method declarations inside a non-interface class scope."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no dynamic override specifiers on class methods."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 has no dynamic override specifiers on class method declarations."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.3"
+
+[[requirements]]
+id = "SV-2023-08-EXTENDS-ARGS-NO-EXPLICIT-SUPER"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.17"
+anchors = [
+    "[2023:8.17:P011:p193]",
+]
+summary = "When constructor arguments are specified in the extends specifier, a subclass constructor shall not contain super.new; the compiler inserts the base-constructor call automatically."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.17"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.17"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.17"
+
+[[requirements]]
+id = "SV-2023-08-EXTENDS-CONSTRUCTOR-ARGUMENTS"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.17"
+anchors = [
+    "[2023:8.17:P009:p193]",
+    "[2023:8.17:P010:p193]",
+]
+summary = "A class extends specifier may contain a fixed argument list, which is passed to the base class's new method during derived construction."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.17"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.17"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.17"
+
+[[requirements]]
+id = "SV-2023-08-EXTENDS-DEFAULT-IMPLICIT-CONSTRUCTOR"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.17"
+anchors = [
+    "[2023:8.17:P012:p194]",
+]
+summary = "If default is the sole extends-specifier argument and the subclass has no user-defined new, its implicit new shall have the complete superclass constructor argument list as though default appeared in that constructor list."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 does not support default as the sole extends-specifier argument or inherited implicit constructor signatures."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 does not permit default as the sole extends-specifier argument or define inherited implicit constructor arguments from it."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.17"
+
+[[requirements]]
+id = "SV-2023-08-EXTENDS-DEFAULT-USER-CONSTRUCTOR"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.17"
+anchors = [
+    "[2023:8.17:P012:p194]",
+]
+summary = "If default is the sole extends-specifier argument and the subclass supplies a user-defined new, that constructor's argument list shall also contain default."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no default argument in an extends specifier and no corresponding user-constructor requirement."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 has no default extends-specifier argument and no corresponding requirement on a user-defined subclass constructor."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.17"
+
+[[requirements]]
+id = "SV-2023-08-EXTERN-METHOD-DEFINITION"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.24"
+anchors = [
+    "[2023:8.24:P001:p202]",
+]
+summary = "An out-of-block method is declared in the class as a complete extern prototype including method kind, qualifiers, override specifiers, and arguments, then defined outside without those qualifiers/specifiers and with its name qualified by the class scope."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "changed-expectation"
+clause = "8.24"
+note = "IEEE 1800-2012 requires the extern prototype and class-qualified out-of-block definition but has no initial, extends, or final method specifiers to preserve in the prototype."
+
+[requirements.revision_applicability.1800-2017]
+status = "changed-expectation"
+clause = "8.24"
+note = "IEEE 1800-2017 requires the extern prototype, qualifiers, full arguments, and class-scoped out-of-block definition, but has no initial, extends, or final override specifiers to preserve or omit."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.24"
+
+[[requirements]]
+id = "SV-2023-08-FINAL-CLASS-NO-EXTENSION"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.13"
+anchors = [
+    "[2023:8.13:P009:p190]",
+    "[2023:8.13:P010:p190]",
+]
+summary = "A class declared with the :final specifier shall not be extended, and an attempt to derive a class from it shall produce an error."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no :final class specifier."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 has no :final class specifier or prohibition on extending a class marked by that construct."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.13"
+
+[[requirements]]
+id = "SV-2023-08-FINAL-METHOD-NO-OVERRIDE"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.20"
+anchors = [
+    "[2023:8.20:P013:p197]",
+]
+summary = "A method marked :final cannot be overridden by any further subclass; an attempted override is an error regardless of whether either declaration is virtual, and final alone does not make the method virtual."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no :final method specifier."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 has no :final method specifier or associated no-override rule."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.20"
+
+[[requirements]]
+id = "SV-2023-08-FINAL-PURE-VIRTUAL-ILLEGAL"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.3"
+anchors = [
+    "[2023:8.3:G001:p180-181]",
+    "[2023:8.20:P013:p197]",
+]
+summary = "A final specifier is illegal on a pure virtual method or pure constraint."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no final specifier for methods or constraints."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 has no final method or constraint specifier, including on pure virtual declarations."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.3"
+
+[[requirements]]
+id = "SV-2023-08-FORWARD-CLASS-SAME-SCOPE"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.27"
+anchors = [
+    "[2023:8.27:P005:p216]",
+]
+summary = "The complete class definition resolving a forward class typedef shall occur in the same local scope or generate block as the forward declaration."
+related_clauses = [
+    "6.18",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.27"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.27"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.27"
+
+[[requirements]]
+id = "SV-2023-08-FORWARD-CLASS-TYPEDEF"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.27"
+anchors = [
+    "[2023:8.27:P002:p215]",
+    "[2023:8.27:C001:p215]",
+    "[2023:8.27:P004:p215]",
+]
+summary = "Either `typedef class Name;` or the equivalent `typedef Name;` provides a forward class declaration so handles of that class type may be declared before the complete declaration, including mutually referential class handles."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.27"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.27"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.27"
+
+[[requirements]]
+id = "SV-2023-08-FORWARD-PARAMETERIZED-CLASS"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.27"
+anchors = [
+    "[2023:8.27:P006:p216]",
+]
+summary = "A forward class typedef may refer to a class whose later complete declaration has a parameter port list."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.27"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.27"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.27"
+
+[[requirements]]
+id = "SV-2023-08-GENERIC-CLASS-NOT-TYPE"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.25"
+anchors = [
+    "[2023:8.25:P011:p204]",
+]
+summary = "A generic class declaration is not itself a type; only a concrete specialization, including one formed from defaults, denotes a class type."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.25"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.25"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.25"
+
+[[requirements]]
+id = "SV-2023-08-GLOBAL-CONST-PROPERTY"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.19"
+anchors = [
+    "[2023:8.19:P002:p195]",
+]
+summary = "A global constant class property shall have an initializer in its declaration and cannot be assigned anywhere else."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.19"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.19"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.19"
+
+[[requirements]]
+id = "SV-2023-08-HANDLE-ASSIGNMENT-ALIASES-OBJECT"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.12"
+anchors = [
+    "[2023:8.12:P003:p188]",
+    "[2023:8.12:P004:p188]",
+]
+summary = "Assigning one object handle to another compatible handle variable copies the handle, not the object, so both variables refer to the same single object."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.12"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.12"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.12"
+
+[[requirements]]
+id = "SV-2023-08-IMPLEMENTS-KEYWORD-REQUIRED"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.26"
+anchors = [
+    "[2023:8.26:P005:p207]",
+]
+summary = "Providing methods matching all interface pure virtual methods does not by itself implement the interface; the class or a superclass shall name it with implements."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.26"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.26"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.26"
+
+[[requirements]]
+id = "SV-2023-08-IMPLEMENTS-NO-MEMBER-INHERITANCE"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.26"
+anchors = [
+    "[2023:8.26:P003:p206]",
+    "[2023:8.26.2:P001:p208]",
+]
+summary = "implements imposes interface-method implementation obligations but inherits no interface member types, parameters, or other members, unlike extends, which inherits all class members."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.26"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.26"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.26"
+
+[[requirements]]
+id = "SV-2023-08-IMPLICIT-DEFAULT-CONSTRUCTOR"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.7"
+anchors = [
+    "[2023:8.7:P006:p184]",
+]
+summary = "If a class has no explicit user-defined new method, the language automatically provides an implicit new method."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.7"
+
+[[requirements]]
+id = "SV-2023-08-IMPLICIT-INTERFACE-IMPLEMENTATION-INHERITANCE"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.26"
+anchors = [
+    "[2023:8.26:P003:p206]",
+]
+summary = "A subclass implicitly implements every interface class implemented by any superclass and gains the same interface requirements and capabilities."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.26"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.26"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.26"
+
+[[requirements]]
+id = "SV-2023-08-IMPLICIT-SUPER-CONSTRUCTOR-CALL"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.15"
+anchors = [
+    "[2023:8.15:P003:p191]",
+]
+summary = "If a derived constructor does not explicitly call super.new, the compiler shall automatically insert the base-constructor call before current-class initialization."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.15"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.15"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.15"
+
+[[requirements]]
+id = "SV-2023-08-IMPLICIT-SUPER-DEFAULT-FORWARDING"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.17"
+anchors = [
+    "[2023:8.17:P007:p193]",
+]
+summary = "If a subclass constructor declares default argument expansion but omits super.new, the compiler shall insert super.new(default) automatically."
+related_clauses = [
+    "8.15",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no constructor default argument expansion or implicit super.new(default) forwarding."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 has no constructor default argument expansion and therefore no implicit super.new(default) forwarding."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.17"
+
+[[requirements]]
+id = "SV-2023-08-INHERITED-NONVIRTUAL-NOT-INTERFACE-IMPLEMENTATION"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.26.2"
+anchors = [
+    "[2023:8.26.2:P008:p210]",
+    "[2023:8.26.2:P009:p210]",
+]
+summary = "An inherited nonvirtual method does not satisfy an implemented interface's method requirement; a derived class may declare a compatible virtual method that both hides the inherited nonvirtual method and fulfills the interface."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.26.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.26.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.26.2"
+
+[[requirements]]
+id = "SV-2023-08-INSTANCE-CONST-NOT-STATIC"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.19"
+anchors = [
+    "[2023:8.19:P004:p195]",
+]
+summary = "An instance constant cannot be declared static because static const storage cannot receive the required per-instance constructor assignment."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.19"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.19"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.19"
+
+[[requirements]]
+id = "SV-2023-08-INSTANCE-CONST-PROPERTY"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.19"
+anchors = [
+    "[2023:8.19:P003:p195]",
+]
+summary = "An instance constant class property has no declaration initializer and may be assigned exactly once at run time, only in the corresponding class constructor."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.19"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.19"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.19"
+
+[[requirements]]
+id = "SV-2023-08-INSTANCE-METHOD-RECEIVER"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.6"
+anchors = [
+    "[2023:8.6:P002:p183]",
+    "[2023:8.6:P003:p183]",
+]
+summary = "An instance method is invoked through its object rather than by passing that object as an implicit standalone argument, and unqualified class-property accesses in the method refer to the invoking instance's properties."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.6"
+
+[[requirements]]
+id = "SV-2023-08-INTERFACE-CLASS-CONTENTS"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.26"
+anchors = [
+    "[2023:8.26:P002:p206]",
+    "[2023:8.26.9:P001:p215]",
+]
+summary = "An interface class may contain only pure virtual methods, type declarations, and parameter declarations; constraints, covergroups, and nested classes are prohibited, and an interface class shall not nest within another interface class."
+related_clauses = [
+    "6.18",
+    "6.20",
+    "8.21",
+    "8.23",
+    "8.25",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.26"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.26"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.26"
+
+[[requirements]]
+id = "SV-2023-08-INTERFACE-CLASS-MULTIPLE-INHERITANCE"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.26"
+anchors = [
+    "[2023:8.26:P002:p206]",
+]
+summary = "An interface class may extend one or more interface classes and inherits their member types, pure virtual methods, and parameters except member types or parameters hidden by declarations in the derived interface; multiple-inheritance name conflicts require resolution."
+related_clauses = [
+    "8.26.6",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.26"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.26"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.26"
+
+[[requirements]]
+id = "SV-2023-08-INTERFACE-CLASS-NO-CONSTRUCTION"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.26.5"
+anchors = [
+    "[2023:8.26.5:P004:p211]",
+]
+summary = "An object whose type is an interface class shall not be constructed directly."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.26.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.26.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.26.5"
+
+[[requirements]]
+id = "SV-2023-08-INTERFACE-CLASS-SYNTAX"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.26.1"
+anchors = [
+    "[2023:8.26.1:G001:p208]",
+]
+summary = "Interface class declarations and items shall follow the interface-class grammar, including optional parameters and multiple extends bases, permitted item alternatives, and pure virtual method prototypes."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.26.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.26.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.26.1"
+
+[[requirements]]
+id = "SV-2023-08-INTERFACE-DIAMOND-MERGE"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.26.6.3"
+anchors = [
+    "[2023:8.26.6.3:P001:p213]",
+    "[2023:8.26.6.3:P002:p214]",
+]
+summary = "When the same interface is reached multiple ways through an implementation or inheritance diamond, only one copy of each symbol originating in that interface is merged and the duplicate paths do not create a name conflict."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.26.6.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.26.6.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.26.6.3"
+
+[[requirements]]
+id = "SV-2023-08-INTERFACE-HANDLE-ASSIGNMENT"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.26"
+anchors = [
+    "[2023:8.26:P005:p207]",
+    "[2023:8.26.5:P001:p211]",
+]
+summary = "A variable of interface-class type may reference any object whose class or superclass explicitly declares implementation of that interface."
+related_clauses = [
+    "8.22",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.26"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.26"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.26"
+
+[[requirements]]
+id = "SV-2023-08-INTERFACE-HANDLE-DYNAMIC-CAST"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.26.5"
+anchors = [
+    "[2023:8.26.5:P002:p211]",
+]
+summary = "A dynamic cast between interface-class handle types succeeds when the actual referenced class object is valid for assignment to the destination interface type."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.26.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.26.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.26.5"
+
+[[requirements]]
+id = "SV-2023-08-INTERFACE-HANDLE-RANDOMIZE"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.26.9"
+anchors = [
+    "[2023:8.26.9:P002:p215]",
+]
+summary = "randomize() and inline constraints are legal through an interface-class handle, although an interface class contains no data and inline constraints can therefore constrain only accessible state variables."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.26.9"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.26.9"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.26.9"
+
+[[requirements]]
+id = "SV-2023-08-INTERFACE-METHOD-CONFLICT"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.26.6.1"
+anchors = [
+    "[2023:8.26.6.1:P001:p212]",
+    "[2023:8.26.6.1:P003:p212]",
+    "[2023:8.26.6.1:P006:p213]",
+]
+summary = "A same-name interface method conflict shall be resolved by one method prototype or implementation that simultaneously satisfies every implemented pure virtual method of that name and validly overrides every inherited method of that name; if no such declaration is possible, an error shall occur."
+related_clauses = [
+    "8.20",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.26.6.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.26.6.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.26.6.1"
+
+[[requirements]]
+id = "SV-2023-08-INTERFACE-METHOD-DEFAULT"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.26.8"
+anchors = [
+    "[2023:8.26.8:P001:p215]",
+]
+summary = "An interface-class method may declare default arguments; each default shall be a constant expression evaluated in the declaration's containing scope and its value shall be identical for every implementing class."
+related_clauses = [
+    "13.5.3",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.26.8"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.26.8"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.26.8"
+
+[[requirements]]
+id = "SV-2023-08-INTERFACE-METHOD-IMPLEMENTATION"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.26"
+anchors = [
+    "[2023:8.26:P004:p207]",
+    "[2023:8.26.2:P004:p209]",
+    "[2023:8.26.2:P006:p209]",
+    "[2023:8.26.2:P007:p210]",
+]
+summary = "A nonabstract implementing class shall have a virtual method implementation for every interface pure virtual method; an inherited virtual implementation may satisfy the obligation."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.26"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.26"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.26"
+
+[[requirements]]
+id = "SV-2023-08-INTERFACE-MUST-BE-DEFINED"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.26.4"
+anchors = [
+    "[2023:8.26.4:P002:p211]",
+]
+summary = "A class shall not implement, and an interface class shall not extend, a forward typedef of an interface class; the complete interface-class declaration shall precede the implementing or extending declaration."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.26.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.26.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.26.4"
+
+[[requirements]]
+id = "SV-2023-08-INTERFACE-NAMESPACE-MERGE"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.26.6"
+anchors = [
+    "[2023:8.26.6:P001:p212]",
+]
+summary = "Multiple implemented or extended interface classes merge their identifiers into one visible namespace, and simultaneously visible equal names create conflicts that shall be resolved under the interface conflict rules."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.26.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.26.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.26.6"
+
+[[requirements]]
+id = "SV-2023-08-INTERFACE-NO-RANDOMIZATION-MODES"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.26.9"
+anchors = [
+    "[2023:8.26.9:P002:p215]",
+]
+summary = "rand_mode and constraint_mode are not legal through interface classes because interface classes have no data members or constraint names resolvable for those operations."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.26.9"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.26.9"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.26.9"
+
+[[requirements]]
+id = "SV-2023-08-INTERFACE-NULL-CAST"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.26.5"
+anchors = [
+    "[2023:8.26.5:P005:p212]",
+]
+summary = "Casting a null source interface-class handle follows the same success, failure, and assignment rules as casting a null source ordinary class handle."
+related_clauses = [
+    "8.16",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.26.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.26.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.26.5"
+
+[[requirements]]
+id = "SV-2023-08-INTERFACE-PARAMETER-TYPE-CONFLICT"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.26.6.2"
+anchors = [
+    "[2023:8.26.6.2:P001:p213]",
+    "[2023:8.26.6.2:P003:p213]",
+]
+summary = "If multiple extended interfaces contribute the same parameter or type name, the derived interface shall declare a parameter or type that overrides every collision, even when inherited declarations match or the name is otherwise unused."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.26.6.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.26.6.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.26.6.2"
+
+[[requirements]]
+id = "SV-2023-08-INTERFACE-RANDOMIZE-HOOKS"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.26.9"
+anchors = [
+    "[2023:8.26.9:P003:p215]",
+]
+summary = "Every interface class contains built-in empty virtual pre_randomize and post_randomize methods, called automatically before and after randomization and available for override; these methods do not create method-name conflicts."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.26.9"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.26.9"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.26.9"
+
+[[requirements]]
+id = "SV-2023-08-INTERFACE-RELATIONSHIP-MATRIX"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.26.2"
+anchors = [
+    "[2023:8.26.2:P002:p208]",
+    "[2023:8.26.2:L001:p208]",
+    "[2023:8.26.2:L002:p208]",
+    "[2023:8.26.2:L003:p208]",
+    "[2023:8.26.2:L004:p208]",
+    "[2023:8.26.2:L005:p208]",
+    "[2023:8.26.2:L006:p208]",
+    "[2023:8.26.2:L007:p208]",
+    "[2023:8.26.2:L008:p208]",
+    "[2023:8.26.2:L009:p208]",
+    "[2023:8.26.2:L010:p208]",
+    "[2023:8.26.2:L011:p208]",
+]
+summary = "An interface class may extend zero or more interface classes but may neither implement any type nor extend a class; a class or virtual class may extend at most one class and implement zero or more interface classes, may do both simultaneously, and may neither extend an interface nor implement a class."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.26.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.26.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.26.2"
+
+[[requirements]]
+id = "SV-2023-08-INTERFACE-SPECIALIZATION-NO-DIAMOND"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.26.6.3"
+anchors = [
+    "[2023:8.26.6.3:P003:p214]",
+    "[2023:8.26.6.3:P004:p214]",
+]
+summary = "Each distinct parameterized-interface specialization is a unique interface type, so different specializations inherited or implemented through multiple paths do not form a diamond and their duplicate member names remain conflicts requiring resolution."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.26.6.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.26.6.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.26.6.3"
+
+[[requirements]]
+id = "SV-2023-08-INTERFACE-STATIC-TYPE-ACCESS"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.26.3"
+anchors = [
+    "[2023:8.26.3:P001:p210]",
+]
+summary = "All interface-class parameters and typedefs are static and accessible with ::; parameter access through an interface-class handle follows ordinary class-handle parameter restrictions."
+related_clauses = [
+    "8.5",
+    "8.23",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "changed-expectation"
+clause = "8.26.3"
+note = "IEEE 1800-2012 makes dotted access to interface-class parameters illegal, rather than applying the ordinary class-handle parameter-access rules used in 2023."
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.26.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.26.3"
+
+[[requirements]]
+id = "SV-2023-08-INTERFACE-TYPE-PARAMETER-INHERITANCE"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.26.3"
+anchors = [
+    "[2023:8.26.3:P001:p210]",
+]
+summary = "An interface class extending another interface inherits its parameters and typedefs, while a class implementing an interface inherits neither."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.26.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.26.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.26.3"
+
+[[requirements]]
+id = "SV-2023-08-LOCAL-MEMBER-ACCESS"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.18"
+anchors = [
+    "[2023:8.18:P003:p194]",
+]
+summary = "A local class member is visible only to methods of the declaring class and is not visible directly in subclasses, although inherited nonlocal methods that reference it continue to operate on subclass objects."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.18"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.18"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.18"
+
+[[requirements]]
+id = "SV-2023-08-MEMBER-MODIFIER-ORDER"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.18"
+anchors = [
+    "[2023:8.18:P007:p195]",
+]
+summary = "Permitted class-member modifiers have no predefined textual ordering."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.18"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.18"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.18"
+
+[[requirements]]
+id = "SV-2023-08-METHOD-EXTENDS-SPECIFIER"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.20"
+anchors = [
+    "[2023:8.20:P012:p197]",
+]
+summary = "The :extends method specifier asserts that the method overrides a virtual base method and implies virtual; using it without such a base method is an error, and the virtual keyword may be omitted."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no :extends method override specifier."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 has no :extends method override specifier."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.20"
+
+[[requirements]]
+id = "SV-2023-08-METHOD-INITIAL-SPECIFIER"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.20"
+anchors = [
+    "[2023:8.20:P010:p197]",
+    "[2023:8.20:P011:p197]",
+]
+summary = "The :initial method specifier asserts that the declaration does not override a virtual base method; such an override, including one of a pure virtual method, is an error, and initial by itself does not make the method virtual."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no :initial method override specifier."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 has no :initial method override specifier."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.20"
+
+[[requirements]]
+id = "SV-2023-08-METHOD-OVERRIDE-SPECIFIER-COMBINATION"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.20"
+anchors = [
+    "[2023:8.20:P014:p197]",
+]
+summary = "Method override specifiers :initial and :extends are mutually exclusive and combining them is an error; :final may be combined with either one."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no initial, extends, or final method override specifiers."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 has none of the :initial, :extends, and :final method override specifiers whose combinations this rule governs."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.20"
+
+[[requirements]]
+id = "SV-2023-08-NESTED-CLASS-NO-OUTER-THIS"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.23"
+anchors = [
+    "[2023:8.23:P007:p201]",
+]
+summary = "A nested class has no implicit handle or this reference to an enclosing-class instance and cannot access outer non-static members unless it uses an explicitly passed or otherwise accessible outer-object handle."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.23"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.23"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.23"
+
+[[requirements]]
+id = "SV-2023-08-NESTED-CLASS-OUTER-ACCESS"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.23"
+anchors = [
+    "[2023:8.23:P007:p201]",
+]
+summary = "A nested class has method-equivalent access rights to local and protected members of its containing class and lexically scoped unqualified access to the containing class's static properties, static methods, parameters, and local parameters."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.23"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.23"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.23"
+
+[[requirements]]
+id = "SV-2023-08-NESTED-CLASS-TYPE-PUBLIC"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.23"
+anchors = [
+    "[2023:8.23:P005:p200]",
+]
+summary = "Classes are nestable scopes, and type declarations nested in a class are public and may be accessed from outside through the enclosing class scope."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.23"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.23"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.23"
+
+[[requirements]]
+id = "SV-2023-08-NO-PARAMETERIZED-INTERFACE-RELATION"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.26.4"
+anchors = [
+    "[2023:8.26.4:P001:p211]",
+]
+summary = "A class shall not implement a type parameter and an interface class shall not extend a type parameter, even when that parameter resolves to an interface class."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.26.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.26.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.26.4"
+
+[[requirements]]
+id = "SV-2023-08-NO-TYPED-SHALLOW-COPY"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.12"
+anchors = [
+    "[2023:8.12:P007:p188]",
+]
+summary = "Using a typed constructor call for a shallow copy is illegal."
+related_clauses = [
+    "8.8",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.12"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.12"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.12"
+
+[[requirements]]
+id = "SV-2023-08-NONVIRTUAL-BASE-HANDLE-LOOKUP"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.14"
+anchors = [
+    "[2023:8.14:P003:p190]",
+    "[2023:8.14:P004:p191]",
+]
+summary = "Through a base-class handle, nonvirtual member lookup uses the base handle's class: derived overrides and derived-only members, including new, are hidden; dynamic selection of an overridden method requires that method to be virtual."
+related_clauses = [
+    "8.20",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.14"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.14"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.14"
+
+[[requirements]]
+id = "SV-2023-08-NULL-HANDLE-MEMBER-ACCESS"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.4"
+anchors = [
+    "[2023:8.4:P005:p182]",
+    "[2023:8.4:T8-1.R05:p182]",
+]
+summary = "Accessing a non-static member or virtual method through a null object handle is illegal; its result is indeterminate and an implementation is permitted, but not required, to issue an error."
+related_clauses = [
+    "8.9",
+    "8.20",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.4"
+
+[[requirements]]
+id = "SV-2023-08-OBJECT-ARGUMENT-COPIES-HANDLE"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.2"
+anchors = [
+    "[2023:8.2:P003:p180]",
+]
+summary = "For an object argument declared input, output, inout, or ref, argument transfer operates on the object handle rather than copying the object's contents."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.2"
+
+[[requirements]]
+id = "SV-2023-08-OBJECT-CREATION-AND-HANDLE"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.4"
+anchors = [
+    "[2023:8.4:P001:p181]",
+    "[2023:8.4:P002:p181]",
+]
+summary = "A variable of class type holds an object handle, and invoking new creates an object of that class whose handle can be assigned to the variable."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.4"
+
+[[requirements]]
+id = "SV-2023-08-OBJECT-HANDLE-ASSIGNMENT"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.4"
+anchors = [
+    "[2023:8.4:L004:p182]",
+    "[2023:8.4:L005:p182]",
+]
+summary = "An object handle target may be assigned null or a class object whose class data type is assignment compatible with the target type."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.4"
+
+[[requirements]]
+id = "SV-2023-08-OBJECT-HANDLE-CASE-EQUALITY"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.4"
+anchors = [
+    "[2023:8.4:P007:p182]",
+    "[2023:8.4:L002:p182]",
+]
+summary = "Object handles support === and !== against null or another class object with the same semantics and compatibility constraints as == and !=."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.4"
+
+[[requirements]]
+id = "SV-2023-08-OBJECT-HANDLE-CONDITIONAL"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.4"
+anchors = [
+    "[2023:8.4:L003:p182]",
+]
+summary = "Object handles are permitted as result operands of the conditional operator subject to the conditional-operator rules."
+related_clauses = [
+    "11.4.11",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.4"
+
+[[requirements]]
+id = "SV-2023-08-OBJECT-HANDLE-DOWNCAST"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.16"
+anchors = [
+    "[2023:8.16:P001:p191]",
+    "[2023:8.16:P002:p191]",
+    "[2023:8.16:L002:p192]",
+    "[2023:8.16:L003:p192]",
+]
+summary = "$cast may assign a superclass handle to a subclass variable only when the referenced object's dynamic type is assignment compatible with the subclass target."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.16"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.16"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.16"
+
+[[requirements]]
+id = "SV-2023-08-OBJECT-HANDLE-EQUALITY"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.4"
+anchors = [
+    "[2023:8.4:P007:p182]",
+    "[2023:8.4:L001:p182]",
+]
+summary = "Object handles support == and != only against null or another class object, and for two objects one operand's type shall be assignment compatible with the other's."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.4"
+
+[[requirements]]
+id = "SV-2023-08-OBJECT-HANDLE-NO-ARITHMETIC"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.4"
+anchors = [
+    "[2023:8.4:P006:p182]",
+    "[2023:8.4:T8-1.R03:p182]",
+]
+summary = "Arithmetic operations on an object handle, including pointer-like increment, are not allowed."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.4"
+
+[[requirements]]
+id = "SV-2023-08-OBJECT-HANDLE-TYPE-RESTRICTIONS"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.4"
+anchors = [
+    "[2023:8.4:T8-1.R04:p182]",
+    "[2023:8.4:T8-1.R07:p182]",
+    "[2023:8.4:T8-1.R08:p182]",
+    "[2023:8.4:T8-1.R11:p182]",
+    "[2023:8.28:L002:p216]",
+]
+summary = "An object handle is for class objects, does not point to arbitrary data types or accept assignment of a data object's address, and supports only the limited casts defined for object handles."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.4"
+
+[[requirements]]
+id = "SV-2023-08-OBJECT-METHOD-INSTANCE-ACCESS"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.6"
+anchors = [
+    "[2023:8.6:P001:p183]",
+]
+summary = "An object's method may be accessed by qualifying the method name with the object instance, using the same member-access syntax as a property."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.6"
+
+[[requirements]]
+id = "SV-2023-08-OBJECT-REACHABILITY-LEVELS"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.29"
+anchors = [
+    "[2023:8.29:L003:p217]",
+    "[2023:8.29:L004:p217]",
+    "[2023:8.29:L005:p217]",
+]
+summary = "An object is strongly reachable when an active-scope class handle refers to it or a nonblocking assignment to one of its non-static members is pending; it is weakly reachable when not strong but reachable through a weak reference, and otherwise unreachable. A newly created object is strongly reachable by its creating process."
+related_clauses = [
+    "8.30",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no weak-reference facility or strong, weak, and unreachable object classification."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 has no weak-reference facility or strong, weak, and unreachable object classification."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.29"
+
+[[requirements]]
+id = "SV-2023-08-OBJECT-TO-INTERFACE-CAST"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.26.5"
+anchors = [
+    "[2023:8.26.5:P003:p211]",
+]
+summary = "An object handle may be dynamically cast to an interface-class handle when the actual object implements that interface type; the reverse checked cast is likewise governed by actual object compatibility."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.26.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.26.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.26.5"
+
+[[requirements]]
+id = "SV-2023-08-OUT-OF-BLOCK-DEFAULT-ARGUMENT"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.24"
+anchors = [
+    "[2023:8.24:P002:p202]",
+    "[2023:8.24:L003:p202]",
+]
+summary = "A prototype's default argument may be omitted from its out-of-block definition; if the definition repeats a default, the prototype shall contain a syntactically identical default expression."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.24"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.24"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.24"
+
+[[requirements]]
+id = "SV-2023-08-OUT-OF-BLOCK-DEFINITION-PLACEMENT"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.24"
+anchors = [
+    "[2023:8.24:P003:p202]",
+]
+summary = "An out-of-block method definition shall follow its class declaration in the same enclosing scope, and providing more than one definition for one extern method is an error."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.24"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.24"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.24"
+
+[[requirements]]
+id = "SV-2023-08-OUT-OF-BLOCK-MATCHING"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.24"
+anchors = [
+    "[2023:8.24:P002:p202]",
+    "[2023:8.24:L001:p202]",
+    "[2023:8.24:L002:p202]",
+    "[2023:8.24:P004:p202]",
+]
+summary = "An out-of-block method definition shall exactly match its in-class prototype except that the external method name is class-scope-qualified and a return type may require added class scope qualification."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.24"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.24"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.24"
+
+[[requirements]]
+id = "SV-2023-08-OUT-OF-BLOCK-NAME-RESOLUTION"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.24"
+anchors = [
+    "[2023:8.24:P006:p203]",
+    "[2023:8.24:P008:p203]",
+]
+summary = "An out-of-block method definition can access all declarations in its class, while its earlier in-class prototype sees class types only if declared before it; each identifier in both headers shall resolve to the same declaration or an error shall be reported."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.24"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.24"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.24"
+
+[[requirements]]
+id = "SV-2023-08-PARAMETERIZED-BASE-RESOLVES-CLASS"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.25"
+anchors = [
+    "[2023:8.25:P015:p205]",
+]
+summary = "A type parameter or typedef used as a base class shall resolve after elaboration to a class type."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.25"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.25"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.25"
+
+[[requirements]]
+id = "SV-2023-08-PARAMETERIZED-CLASS-DECLARATION"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.25"
+anchors = [
+    "[2023:8.25:P002:p203]",
+    "[2023:8.25:C001:p203]",
+]
+summary = "A class may declare a parameter port list after its name and use those parameters in its member declarations to define specialized class types."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.25"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.25"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.25"
+
+[[requirements]]
+id = "SV-2023-08-PARAMETERIZED-CLASS-INHERITANCE"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.25"
+anchors = [
+    "[2023:8.25:P013:p204]",
+    "[2023:8.25:P014:p205]",
+]
+summary = "A parameterized class may extend a parameterized base using the base defaults, explicit actual parameters, parameters of the derived class, or a base class supplied by a type parameter."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.25"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.25"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.25"
+
+[[requirements]]
+id = "SV-2023-08-PARAMETERIZED-EXTERN-SCOPE"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.25.1"
+anchors = [
+    "[2023:8.25.1:P004:p206]",
+]
+summary = "Within an out-of-block method declaration for a parameterized class, C:: references names as though inside the generic class and implies no specialization."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.25.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.25.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.25.1"
+
+[[requirements]]
+id = "SV-2023-08-PARAMETERIZED-SCOPE-EXPLICIT-EXTERNAL"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.25.1"
+anchors = [
+    "[2023:8.25.1:P002:p205]",
+]
+summary = "Outside a parameterized class and its out-of-block declarations, :: access shall use an explicit specific or default specialization; unadorned generic class scope is illegal, and explicit scope may access value or type parameters, including local parameters."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.25.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.25.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.25.1"
+
+[[requirements]]
+id = "SV-2023-08-PARAMETERIZED-SCOPE-UNADORNED"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.25.1"
+anchors = [
+    "[2023:8.25.1:P001:p205]",
+]
+summary = "Unadorned parameterized-class name C may prefix :: only inside C's scope or its out-of-block declarations, where it denotes the generic class member context rather than the default specialization; C#():: is required to select the default specialization."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.25.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.25.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.25.1"
+
+[[requirements]]
+id = "SV-2023-08-PARAMETERIZED-TYPED-CONSTRUCTOR"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.8"
+anchors = [
+    "[2023:8.8:P004:p186]",
+]
+summary = "When a typed constructor selects a parameterized class, its class-scope type may include a parameter specialization."
+related_clauses = [
+    "8.25",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.8"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.8"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.8"
+
+[[requirements]]
+id = "SV-2023-08-POST-DEFAULT-CONSTRUCTOR-ARG-TYPE"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.17"
+anchors = [
+    "[2023:8.17:L004:p192]",
+]
+summary = "A constructor argument declared immediately after the default expansion keyword shall use the default input direction and default logic data type."
+related_clauses = [
+    "13.4",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no default superclass-argument expansion marker and thus no directly-following constructor argument restriction."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 has no default expansion keyword in constructor argument lists and thus no rule for the argument immediately following it."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.17"
+
+[[requirements]]
+id = "SV-2023-08-PREINITIALIZATION-PROPERTY-UNDEFINED"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.7"
+anchors = [
+    "[2023:8.7:P006:p184]",
+]
+summary = "A class property has an undefined value before its prescribed construction-time initialization."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.7"
+
+[[requirements]]
+id = "SV-2023-08-PRIVATE-CROSS-INSTANCE-ACCESS"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.18"
+anchors = [
+    "[2023:8.18:P005:p194]",
+    "[2023:8.18:P006:p195]",
+]
+summary = "Code within a class may access a local method or property of any instance of that same class, not only the current instance."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.18"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.18"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.18"
+
+[[requirements]]
+id = "SV-2023-08-PROTECTED-MEMBER-ACCESS"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.18"
+anchors = [
+    "[2023:8.18:P004:p194]",
+]
+summary = "A protected class property or method has local-member access restrictions except that it is inherited and visible to subclasses."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.18"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.18"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.18"
+
+[[requirements]]
+id = "SV-2023-08-PURE-VIRTUAL-METHOD-DECLARATION"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.21"
+anchors = [
+    "[2023:8.21:P004:p199]",
+]
+summary = "In an abstract class, a pure virtual method is declared with pure virtual as a prototype without a method body; a derived class may implement it by a matching virtual override with a body."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.21"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.21"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.21"
+
+[[requirements]]
+id = "SV-2023-08-REQUIRED-CLASS-PARAMETER-OVERRIDE"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.25"
+anchors = [
+    "[2023:8.25:P016:p205]",
+]
+summary = "If a parameterized class has parameters without defaults, it has no complete default specialization and every concrete specialization shall override at least all parameters lacking defaults."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.25"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.25"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.25"
+
+[[requirements]]
+id = "SV-2023-08-SCOPE-RESOLUTION-LEFT-OPERAND"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.23"
+anchors = [
+    "[2023:8.23:P002:p200]",
+]
+summary = "The left operand of :: shall be a class, package, covergroup, coverpoint, cross, typedef, or type-parameter name; a type-name operand shall resolve after elaboration to a class or covergroup type."
+related_clauses = [
+    "6.18",
+    "6.20.3",
+    "19.5",
+    "19.6",
+    "26.2",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.23"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.23"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.23"
+
+[[requirements]]
+id = "SV-2023-08-SHALLOW-COPY-CREATES-OBJECT"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.12"
+anchors = [
+    "[2023:8.12:P005:p188]",
+    "[2023:8.12:P006:p188]",
+]
+summary = "The shallow-copy form new source creates a distinct new object and copies every class property value from the source; object-valued properties copy only their handles, so referenced nested objects remain shared."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.12"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.12"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.12"
+
+[[requirements]]
+id = "SV-2023-08-SHALLOW-COPY-DYNAMIC-TYPE"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.12"
+anchors = [
+    "[2023:8.12:P009:p189]",
+]
+summary = "Shallow-copying through a base-class handle duplicates the referenced object's actual extended-class instance, not merely an object of the handle variable's base type, and assigns the duplicate through the compatible target handle."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.12"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.12"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.12"
+
+[[requirements]]
+id = "SV-2023-08-SHALLOW-COPY-EMBEDDED-COVERGROUP-NULL"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.12"
+anchors = [
+    "[2023:8.12:L002:p188]",
+]
+summary = "As an exception to handle copying, shallow copy sets the new object's embedded-covergroup handle to null."
+related_clauses = [
+    "19.4",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.12"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.12"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.12"
+
+[[requirements]]
+id = "SV-2023-08-SHALLOW-COPY-INTERNAL-STATE"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.12"
+anchors = [
+    "[2023:8.12:L002:p188]",
+]
+summary = "Shallow copy transfers all class properties and internal randomization and coverage states, including RNG state, constraint_mode, rand_mode, and randc cyclic state, and copies ordinary covergroup object handles."
+related_clauses = [
+    "18",
+    "19",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.12"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.12"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.12"
+
+[[requirements]]
+id = "SV-2023-08-SHALLOW-COPY-RESULT-ASSIGNMENT"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.12"
+anchors = [
+    "[2023:8.12:L003:p188]",
+]
+summary = "After shallow-copy allocation and property copying, the handle of the newly created object is assigned to the left-hand-side variable."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.12"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.12"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.12"
+
+[[requirements]]
+id = "SV-2023-08-SHALLOW-COPY-SKIPS-INITIALIZATION"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.12"
+anchors = [
+    "[2023:8.12:L001:p188]",
+]
+summary = "Shallow copy allocates an object of the copied class without calling its constructor and without executing any variable-declaration initialization assignments."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.12"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.12"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.12"
+
+[[requirements]]
+id = "SV-2023-08-SHALLOW-COPY-SOURCE-HANDLE"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.8"
+anchors = [
+    "[2023:8.8:G001:p185]",
+]
+summary = "In the shallow-copy form new expression, the expression shall evaluate to an object handle."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.8"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.8"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.8"
+
+[[requirements]]
+id = "SV-2023-08-SINGLE-INHERITANCE-MEMBERS"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.13"
+anchors = [
+    "[2023:8.13:P003:p189]",
+    "[2023:8.13:P004:p190]",
+    "[2023:8.13:P006:p190]",
+    "[2023:8.13:P008:p190]",
+]
+summary = "A class may derive from one base class; the derived class inherits the base class's properties and methods as members and may add its own members."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.13"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.13"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.13"
+
+[[requirements]]
+id = "SV-2023-08-SPECIALIZATION-IDENTITY"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.25"
+anchors = [
+    "[2023:8.25:P009:p204]",
+    "[2023:8.25:L001:p204]",
+    "[2023:8.25:L002:p204]",
+]
+summary = "Two parameter sets of the same generic class denote the same specialization only when every corresponding parameter is the same: type parameters have matching actual types, and value parameters have matching value types and equal values."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.25"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.25"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.25"
+
+[[requirements]]
+id = "SV-2023-08-SPECIALIZATION-STATIC-STORAGE"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.25"
+anchors = [
+    "[2023:8.25:P007:p204]",
+    "[2023:8.25:P008:p204]",
+]
+summary = "Each distinct parameterized-class specialization owns a separate set of static members, and a specialization's methods access that specialization's static storage; shared static storage across specializations requires a nonparameterized base class."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.25"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.25"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.25"
+
+[[requirements]]
+id = "SV-2023-08-SPECIALIZATION-TYPE-CONTEXT"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.25"
+anchors = [
+    "[2023:8.25:P010:p204]",
+]
+summary = "Matching specializations of one generic class declaration are the same type; a package declaration defines one system-wide set, while each instance of another containing scope creates a unique generic class and specialization set."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.25"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.25"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.25"
+
+[[requirements]]
+id = "SV-2023-08-STATIC-METHOD-MEMBER-ACCESS"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.10"
+anchors = [
+    "[2023:8.10:P001:p186-187]",
+]
+summary = "Within a static method, direct access is allowed to static properties and static methods of the same class, while access to any non-static member or the special this handle is illegal and shall produce a compile-time error."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.10"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.10"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.10"
+
+[[requirements]]
+id = "SV-2023-08-STATIC-METHOD-NO-INSTANCE"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.10"
+anchors = [
+    "[2023:8.10:P001:p186-187]",
+]
+summary = "A static class method obeys class scope and access rules but may be called as a regular subroutine outside the class without any class instance."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.10"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.10"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.10"
+
+[[requirements]]
+id = "SV-2023-08-STATIC-METHOD-NOT-VIRTUAL"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.10"
+anchors = [
+    "[2023:8.10:P001:p186-187]",
+]
+summary = "A static method cannot be virtual."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.10"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.10"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.10"
+
+[[requirements]]
+id = "SV-2023-08-STATIC-PROPERTY-NO-INSTANCE"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.9"
+anchors = [
+    "[2023:8.9:P003:p186]",
+]
+summary = "A static class property may be used without creating an object of the class."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.9"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.9"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.9"
+
+[[requirements]]
+id = "SV-2023-08-STATIC-PROPERTY-SHARED"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.9"
+anchors = [
+    "[2023:8.9:P001:p186]",
+    "[2023:8.9:P002:p186]",
+]
+summary = "A static class property has one shared storage instance for all objects of the class and is created and initialized exactly once."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.9"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.9"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.9"
+
+[[requirements]]
+id = "SV-2023-08-SUPER-BASE-MEMBER-ACCESS"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.15"
+anchors = [
+    "[2023:8.15:P001:p191]",
+]
+summary = "Within a derived class, super selects an immediate-base member, class value parameter, or local value parameter, including one hidden by a derived declaration."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.15"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.15"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.15"
+
+[[requirements]]
+id = "SV-2023-08-SUPER-CONSTRUCTOR-ARGUMENT-SOURCES"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.17"
+anchors = [
+    "[2023:8.17:P002:p192]",
+]
+summary = "When a base constructor requires arguments, a derived class may supply them either in an explicit super.new call in its constructor or in the class extends specifier."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.17"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.17"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.17"
+
+[[requirements]]
+id = "SV-2023-08-SUPER-NEW-DEFAULT-FORWARDING"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.17"
+anchors = [
+    "[2023:8.17:P007:p193]",
+]
+summary = "Inside a constructor whose argument list uses default expansion, super.new(default) may use default as its sole argument to forward all arguments produced by that expansion to the superclass constructor."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no super.new(default) constructor-argument forwarding construct."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 has no default constructor-argument expansion and does not permit super.new(default) forwarding."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.17"
+
+[[requirements]]
+id = "SV-2023-08-SUPER-NEW-DEFAULT-REQUIRES-EXPANSION"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.17"
+anchors = [
+    "[2023:8.17:P007:p193]",
+]
+summary = "Using super.new(default) is an error unless default also appears in the containing constructor's argument list."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no super.new(default) or constructor default-expansion requirement."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 has no super.new(default) construct or matching constructor-list expansion requirement."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.17"
+
+[[requirements]]
+id = "SV-2023-08-SUPER-ONE-LEVEL"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.15"
+anchors = [
+    "[2023:8.15:P002:p191]",
+]
+summary = "super reaches only the immediate base-class level, including members inherited into that level; chaining super.super to reach a higher ancestor is illegal."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.15"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.15"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.15"
+
+[[requirements]]
+id = "SV-2023-08-SUPER-PARAMETER-NONCONSTANT"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.15"
+anchors = [
+    "[2023:8.15:P001:p191]",
+]
+summary = "An expression that uses super to access a class value parameter or local value parameter is not a constant expression."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.15"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.15"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.15"
+
+[[requirements]]
+id = "SV-2023-08-THIS-CURRENT-INSTANCE"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.11"
+anchors = [
+    "[2023:8.11:P001:p187]",
+]
+summary = "Within a permitted class context, this is a predefined object handle to the current instance and may qualify that instance's properties, value parameters, local value parameters, or methods."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.11"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.11"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.11"
+
+[[requirements]]
+id = "SV-2023-08-THIS-PERMITTED-CONTEXTS"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.11"
+anchors = [
+    "[2023:8.11:P001:p187]",
+]
+summary = "The this keyword is legal only as type(this), or within a non-static class method, class constraint, inlined constraint method, or class-embedded covergroup; use elsewhere shall issue an error."
+related_clauses = [
+    "6.23",
+    "19.4",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "changed-expectation"
+clause = "8.11"
+note = "IEEE 1800-2012 permits this in the listed class contexts but does not include the later standalone type(this) exception."
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.11"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.11"
+
+[[requirements]]
+id = "SV-2023-08-TYPED-CONSTRUCTOR-CALL"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.8"
+anchors = [
+    "[2023:8.8:P001:p185]",
+]
+summary = "A typed constructor call class_scope::new constructs the class-scope type independently of the assignment target, and that type shall be assignment compatible with the target."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.8"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.8"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.8"
+
+[[requirements]]
+id = "SV-2023-08-TYPED-CONSTRUCTOR-SEMANTICS"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.8"
+anchors = [
+    "[2023:8.8:P003:p186]",
+]
+summary = "A typed constructor call creates and initializes a new object of its specified type using exactly the ordinary-constructor process, and may pass constructor arguments where appropriate."
+related_clauses = [
+    "8.7",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.8"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.8"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.8"
+
+[[requirements]]
+id = "SV-2023-08-UNINITIALIZED-HANDLE-NULL"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.4"
+anchors = [
+    "[2023:8.4:P003:p182]",
+    "[2023:8.4:T8-1.R10:p182]",
+    "[2023:8.12:P002:p187]",
+]
+summary = "An uninitialized object handle has the default value null and may be tested by comparison with null."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.4"
+
+[[requirements]]
+id = "SV-2023-08-UNQUALIFIED-MEMBER-SCOPE-RESOLUTION"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.11"
+anchors = [
+    "[2023:8.11:P002:p187]",
+]
+summary = "An unqualified name in a class method resolves from the innermost scope outward, so a same-named subroutine argument hides an instance property; this qualification selects the hidden current-instance property."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.11"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.11"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.11"
+
+[[requirements]]
+id = "SV-2023-08-UNREACHABLE-OBJECT-RECLAIMABLE"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.29"
+anchors = [
+    "[2023:8.29:P007:p217]",
+]
+summary = "Garbage collection may transition an object from strongly reachable through weakly reachable to unreachable, and its associated memory becomes eligible for reclamation only when it is unreachable."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no strong/weak/unreachable object-state transitions or weak-reference-based reclamation rule."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 has no strong/weak reachability state model or weak-reference transition semantics."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.29"
+
+[[requirements]]
+id = "SV-2023-08-UNREFERENCED-OBJECT-GC"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.4"
+anchors = [
+    "[2023:8.4:T8-1.R09:p182]",
+    "[2023:8.7:P001:p184]",
+    "[2023:8.29:P005:p217]",
+]
+summary = "A class object that is no longer in use and has become unreachable is handled by SystemVerilog's automatic garbage collection rather than manual deallocation."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.4"
+
+[[requirements]]
+id = "SV-2023-08-UNTYPED-CONSTRUCTOR-TARGET-TYPE"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.8"
+anchors = [
+    "[2023:8.8:P001:p185]",
+]
+summary = "For an ordinary unscoped `new` constructor invocation, the type of the object constructed shall match the assignment target's type."
+related_clauses = [
+    "8.7",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.8"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.8"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.8"
+
+[[requirements]]
+id = "SV-2023-08-UPCAST-ASSIGNMENT"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.16"
+anchors = [
+    "[2023:8.16:P001:p191]",
+]
+summary = "An expression of subclass type may always be assigned directly to a handle variable of any superclass or ancestor type."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.16"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.16"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.16"
+
+[[requirements]]
+id = "SV-2023-08-VIRTUAL-CLASS-DECLARATION"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.21"
+anchors = [
+    "[2023:8.21:P002:p198]",
+]
+summary = "Prefixing a class declaration with virtual declares the class abstract."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.21"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.21"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.21"
+
+[[requirements]]
+id = "SV-2023-08-VIRTUAL-METHOD-DYNAMIC-OVERRIDE"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.20"
+anchors = [
+    "[2023:8.20:P001:p195]",
+    "[2023:8.22:P003:p199]",
+    "[2023:8.22:P005:p200]",
+]
+summary = "A virtual method declaration establishes dynamic overriding across its entire class hierarchy so calls select the latest derived override, whereas a nonvirtual redeclaration affects only that class and its descendants under static lookup."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.20"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.20"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.20"
+
+[[requirements]]
+id = "SV-2023-08-VIRTUAL-OVERRIDE-ARGUMENT-SIGNATURE"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.20"
+anchors = [
+    "[2023:8.20:P002:p195]",
+    "[2023:8.20:P003:p196]",
+]
+summary = "A subclass override of a virtual method shall match the prototype's argument types, names, qualifiers, and directions; repeating the virtual qualifier on the derived declaration is optional."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.20"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.20"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.20"
+
+[[requirements]]
+id = "SV-2023-08-VIRTUAL-OVERRIDE-COVARIANT-RETURN"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.20"
+anchors = [
+    "[2023:8.20:P003:p196]",
+    "[2023:8.20:L001:p196]",
+    "[2023:8.20:L002:p196]",
+    "[2023:8.20:P004:p196]",
+]
+summary = "A virtual function override's return type shall either match the superclass virtual function's return type or be a class type derived from it."
+related_clauses = [
+    "6.22.1",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.20"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.20"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.20"
+
+[[requirements]]
+id = "SV-2023-08-VIRTUAL-OVERRIDE-DEFAULT-PRESENCE"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.20"
+anchors = [
+    "[2023:8.20:P004:p196]",
+]
+summary = "For corresponding virtual-method arguments, the presence or absence of a default value shall match between prototype and override, but their default expressions need not match."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.20"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.20"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.20"
+
+[[requirements]]
+id = "SV-2023-08-VIRTUAL-PARTIAL-INTERFACE-IMPLEMENTATION"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.26.7"
+anchors = [
+    "[2023:8.26.7:P002:p215]",
+    "[2023:8.26.7:L001:p215]",
+    "[2023:8.26.7:L002:p215]",
+]
+summary = "For every method prototype in an implemented interface, a virtual implementing class shall either provide a compatible virtual method implementation or redeclare a compatible pure virtual method prototype; omitting both is illegal."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.26.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.26.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.26.7"
+
+[[requirements]]
+id = "SV-2023-08-VIRTUAL-STATUS-PERSISTS"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.20"
+anchors = [
+    "[2023:8.20:P009:p197]",
+]
+summary = "A virtual method may initially override a nonvirtual base method, but after a method becomes virtual every subclass override remains virtual whether or not it repeats the virtual keyword."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "8.20"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "8.20"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.20"
+
+[[requirements]]
+id = "SV-2023-08-WEAK-ID-ASSOCIATIVE-INDEX"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.30.5"
+anchors = [
+    "[2023:8.30.5:P005:p219]",
+]
+summary = "An object's numeric identification value may index an associative array without creating a strong reference to that object; because IDs may be reused after collection, stale entries need removal to avoid association with a later object."
+related_clauses = [
+    "7.8",
+    "8.29",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no weak-reference object identification values for associative-array indexing."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 has no weak_reference class, object identification values, or weak ID indexing rule."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.30.5"
+
+[[requirements]]
+id = "SV-2023-08-WEAK-REFERENCE-API"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.30.1"
+anchors = [
+    "[2023:8.30.1:P004:p217]",
+    "[2023:8.30.1:L001:p217]",
+    "[2023:8.30.1:L002:p218]",
+    "[2023:8.30.1:L003:p218]",
+    "[2023:8.30.1:L004:p218]",
+    "[2023:8.30.3:P001:p218]",
+    "[2023:8.30.3:P002:p218]",
+    "[2023:8.30.3:C001:p218]",
+    "[2023:8.30.4:P001:p219]",
+    "[2023:8.30.4:P002:p219]",
+    "[2023:8.30.4:C001:p219]",
+]
+summary = "The built-in weak_reference class provides new() to create a weak reference, get() to query its referent, clear() to clear it, and static get_id() to query an object's identification value."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no built-in weak_reference class or API."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 has no built-in weak_reference class or its new, get, clear, and get_id API."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.30.1"
+
+[[requirements]]
+id = "SV-2023-08-WEAK-REFERENCE-ATOMIC-CLEAR"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.30.1"
+anchors = [
+    "[2023:8.30.1:P002:p217]",
+]
+summary = "When a referent becomes only weakly reachable, the memory manager shall atomically clear every weak reference to it, allowing the referent to be garbage collected."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no weak references or atomic clearing guarantee."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 has no weak-reference facility or atomic automatic clearing guarantee."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.30.1"
+
+[[requirements]]
+id = "SV-2023-08-WEAK-REFERENCE-CONSTRUCTOR"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.30.2"
+anchors = [
+    "[2023:8.30.2:P001:p218]",
+    "[2023:8.30.2:P002:p218]",
+    "[2023:8.30.2:C001:p218]",
+]
+summary = "weak_reference#(T)::new has prototype function new(T referent) and creates a weak reference whose referent is the supplied class handle."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no weak_reference class constructor."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 has no weak_reference class constructor."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.30.2"
+
+[[requirements]]
+id = "SV-2023-08-WEAK-REFERENCE-GET-EVENT-CONTROL"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.30.3"
+anchors = [
+    "[2023:8.30.3:P004:p218]",
+]
+summary = "get() may be used in an event-control expression to detect clearing by user code or the memory manager."
+related_clauses = [
+    "8.30.4",
+    "9.4.2",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no weak-reference get method for event controls."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 has no weak-reference get method usable in event controls."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.30.3"
+
+[[requirements]]
+id = "SV-2023-08-WEAK-REFERENCE-GET-ID-API"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.30.5"
+anchors = [
+    "[2023:8.30.5:P001:p219]",
+    "[2023:8.30.5:P002:p219]",
+    "[2023:8.30.5:C001:p219]",
+]
+summary = "weak_reference#(T) provides static function longint get_id(T obj), which returns an identification value for the supplied referent object."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no weak-reference get_id API."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 has no weak-reference get_id API."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.30.5"
+
+[[requirements]]
+id = "SV-2023-08-WEAK-REFERENCE-GET-ID-DETERMINISTIC"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.30.5"
+anchors = [
+    "[2023:8.30.5:P003:p219]",
+]
+summary = "get_id(null) shall return 0; for a nonnull object it shall return a nonzero value that remains identical across repeated calls for that object, including calls through class handles at different inheritance levels."
+related_clauses = [
+    "8.16",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no weak-reference object identification values or determinism rules."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 defines no weak-reference object IDs or deterministic ID semantics."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.30.5"
+
+[[requirements]]
+id = "SV-2023-08-WEAK-REFERENCE-GET-ID-UNIQUE"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.30.5"
+anchors = [
+    "[2023:8.30.5:P004:p219]",
+]
+summary = "A nonzero get_id value shall be unique among all live object instances regardless of type for that object's lifetime; after collection, the value may be reused for a new object."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no weak-reference object ID uniqueness or reuse rule."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 defines no weak-reference object IDs or lifetime uniqueness guarantee."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.30.5"
+
+[[requirements]]
+id = "SV-2023-08-WEAK-REFERENCE-GET-SEMANTICS"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.30.3"
+anchors = [
+    "[2023:8.30.3:P003:p218]",
+    "[2023:8.30.4:P003:p219]",
+]
+summary = "get() returns the original referent handle while the weak reference remains uncleared and returns null after explicit or automatic clearing."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no weak-reference get or clear semantics."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 has no weak-reference get or clear semantics."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.30.3"
+
+[[requirements]]
+id = "SV-2023-08-WEAK-REFERENCE-INSTANCE-GC"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.30.1"
+anchors = [
+    "[2023:8.30.1:P005:p218]",
+]
+summary = "A weak_reference wrapper is an ordinary garbage-collected class object and becomes eligible for collection when no longer strongly reachable, independently of whether its referent has been collected."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no weak_reference wrapper class or wrapper garbage-collection semantics."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 has no weak_reference wrapper class or independent wrapper collection semantics."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.30.1"
+
+[[requirements]]
+id = "SV-2023-08-WEAK-REFERENCE-NULL-CONSTRUCTION"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.30.2"
+anchors = [
+    "[2023:8.30.2:P003:p218]",
+]
+summary = "Constructing a weak reference with a null referent is legal and issues no warning."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no weak-reference constructor or null-construction warning rule."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 has no weak_reference constructor or null-referent warning behavior."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.30.2"
+
+[[requirements]]
+id = "SV-2023-08-WEAK-REFERENCE-STD-PACKAGE"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.30.1"
+anchors = [
+    "[2023:8.30.1:P006:p218]",
+]
+summary = "The built-in weak_reference class is declared in package std, so user code may declare another weak_reference name in a different scope without redefining std::weak_reference."
+related_clauses = [
+    "26.7",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 does not declare a built-in weak_reference class in package std."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 does not declare a weak_reference class in package std."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.30.1"
+
+[[requirements]]
+id = "SV-2023-08-WEAK-REFERENCE-TYPE"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.30.1"
+anchors = [
+    "[2023:8.30.1:P001:p217]",
+]
+summary = "weak_reference#(T) is a built-in parameterized class whose references permit object access without preventing garbage collection; T shall be a class type and any other actual type shall cause a compiler error."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no built-in parameterized weak_reference class or class-type parameter restriction."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 has no built-in parameterized weak_reference type."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.30.1"
+
+[[requirements]]
+id = "SV-2023-08-WEAK-REFERENCE-WRAPPER-IDENTITY"
+standard_revision = "1800-2023"
+part = "8"
+clause = "8.30.2"
+anchors = [
+    "[2023:8.30.2:P004:p218]",
+]
+summary = "Every weak_reference instance has its own object identity, so distinct wrappers for one referent compare as different wrapper objects while get() may return the same referent handle."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no weak_reference wrapper objects or wrapper identity semantics."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 has no weak_reference wrapper objects or wrapper identity semantics."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "8.30.2"

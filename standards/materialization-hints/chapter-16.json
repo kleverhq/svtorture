@@ -1,0 +1,6144 @@
+{
+  "authority": "1800-2023",
+  "part": "16",
+  "requirements": [
+    {
+      "hints": {
+        "edge": [
+          "Test synchronous and asynchronous forms at a clock-event endpoint."
+        ],
+        "negative": [
+          "Return the operand's endpoint result instead of the forced abort result."
+        ],
+        "notes": [],
+        "positive": [
+          "For accept and reject forms, make abort and operand completion coincide."
+        ]
+      },
+      "id": "SV-2023-16-ABORT-CONDITION-ENDPOINT-PRECEDENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use ordinary sampled assertion variables without explicit sampled-value calls."
+        ],
+        "negative": [
+          "Use another sampled function without clock, a local, triggered, or matched."
+        ],
+        "notes": [],
+        "positive": [
+          "Use $sampled and an explicitly clocked $past-like function in an abort condition."
+        ]
+      },
+      "id": "SV-2023-16-ABORT-CONDITION-REFERENCE-RESTRICTIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multiple nesting levels with different abort conditions."
+        ],
+        "negative": [
+          "Reject a nested abort solely because of operator nesting."
+        ],
+        "notes": [],
+        "positive": [
+          "Nest each operator within itself and every other operator."
+        ]
+      },
+      "id": "SV-2023-16-ABORT-OPERATOR-NESTING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Nest an abort property as an operand where grammar permits."
+        ],
+        "negative": [
+          "Omit the parenthesized abort condition or property operand."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse all four operators with Boolean and distribution-capable conditions."
+        ]
+      },
+      "id": "SV-2023-16-ABORT-PROPERTY-FORMS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Keep abort false through operand completion."
+        ],
+        "negative": [
+          "Report false or disabled when accept aborts."
+        ],
+        "notes": [],
+        "positive": [
+          "Assert the abort condition while an operand would fail and observe true."
+        ]
+      },
+      "id": "SV-2023-16-ACCEPT-ON-ABORT-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Invoke a subroutine containing assertions and distinguish direct syntactic containment."
+        ],
+        "negative": [
+          "Place concurrent assert property, assume property, cover property, or cover sequence there."
+        ],
+        "notes": [],
+        "positive": [
+          "Place immediate assert/assume/cover in an action block."
+        ]
+      },
+      "id": "SV-2023-16-ACTION-BLOCK-NO-CONCURRENT-ASSERTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise the corresponding future-value form."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Reference a past active free checker variable and distinguish its Postponed value from earlier-region values at that tick."
+        ]
+      },
+      "id": "SV-2023-16-ACTIVE-FREE-CHECKER-PAST-FUTURE-SAMPLING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use identical adjacent clocks and clocks that tick simultaneously."
+        ],
+        "negative": [
+          "Require an event on the overridden clock before evaluating x."
+        ],
+        "notes": [],
+        "positive": [
+          "Compare adjacent two- and three-clock forms with the final-clock-only form."
+        ]
+      },
+      "id": "SV-2023-16-ADJACENT-CLOCK-LAST-OVERRIDES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use [0:0], which tests p at the aligned/current clock tick."
+        ],
+        "negative": [
+          "Count an off-clock instant as an actual clock tick."
+        ],
+        "notes": [],
+        "positive": [
+          "Start evaluation both on and between clock ticks for several n:m ranges."
+        ]
+      },
+      "id": "SV-2023-16-ALWAYS-CLOCK-ALIGNMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use equal minimum and maximum."
+        ],
+        "negative": [
+          "Use negative, runtime, reversed numeric bounds, or `$` for strong always."
+        ],
+        "notes": [],
+        "positive": [
+          "Use numeric ordered bounds and an allowed unbounded weak maximum."
+        ]
+      },
+      "id": "SV-2023-16-ALWAYS-RANGE-BOUNDS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a preassigned local unchanged by one operand and reassigned by the other."
+        ],
+        "negative": [
+          "Assign and flow it from both operands, and separately block it within one operand."
+        ],
+        "notes": [],
+        "positive": [
+          "Assign a local in only one unblocked operand and reference it after the composite."
+        ]
+      },
+      "id": "SV-2023-16-AND-INTERSECT-LOCAL-FLOW-BLOCKING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Reassign the local multiple times in the flowing operand before completion."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Assign a flowing local in one operand and verify the merged continuation sees its latest value."
+        ]
+      },
+      "id": "SV-2023-16-AND-INTERSECT-LOCAL-MERGE-VALUE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Suppress pass/fail actions through assertion action control."
+        ],
+        "negative": [
+          "Execute either action for disabled or the wrong branch for true/false."
+        ],
+        "notes": [],
+        "positive": [
+          "Produce true, false, and disabled evaluations with distinguishable pass/fail actions."
+        ]
+      },
+      "id": "SV-2023-16-ASSERT-ACTION-BLOCK-OUTCOME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Have multiple assertions complete in the same time step."
+        ],
+        "negative": [
+          "Execute pass/fail action in Observed or Active."
+        ],
+        "notes": [],
+        "positive": [
+          "Observe action ordering relative to Observed assertion evaluation and other Reactive processes."
+        ]
+      },
+      "id": "SV-2023-16-ASSERT-ACTION-REACTIVE-REGION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Suppress the implicit $error using $assertcontrol."
+        ],
+        "negative": [
+          "Silently ignore an unsuppressed failure with omitted else."
+        ],
+        "notes": [],
+        "positive": [
+          "Use explicit null pass/fail actions and fail an assertion with no else."
+        ]
+      },
+      "id": "SV-2023-16-ASSERT-NULL-AND-DEFAULT-FAIL-ACTION"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Use an unsupported assertion-kind keyword where an assertion statement is required."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse one statement of each of the four assertion kinds."
+        ]
+      },
+      "id": "SV-2023-16-ASSERT-STATEMENT-KINDS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Separately evaluate x and z results as false."
+        ],
+        "negative": [
+          "Evaluate an expression yielding 0 as false."
+        ],
+        "notes": [],
+        "positive": [
+          "Evaluate assertion Boolean expressions yielding 1 and a nonzero multibit value as true."
+        ]
+      },
+      "id": "SV-2023-16-ASSERTION-BOOLEAN-INTERPRETATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change control state while assertion attempts are active."
+        ],
+        "negative": [
+          "Ignore an applicable assertion-control state."
+        ],
+        "notes": [],
+        "positive": [
+          "Enable, disable, and otherwise control assertions using the specified system tasks."
+        ]
+      },
+      "id": "SV-2023-16-ASSERTION-CONTROL-SYSTEM-TASKS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Explicitly use disable iff(1'b0) to cancel a default."
+        ],
+        "negative": [
+          "Combine explicit and default conditions or apply default when explicit exists."
+        ],
+        "notes": [],
+        "positive": [
+          "Exercise explicit-over-default, default-only, and neither cases."
+        ]
+      },
+      "id": "SV-2023-16-ASSERTION-DISABLE-RESOLUTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use only a constant or procedural automatic value in the exception context."
+        ],
+        "negative": [
+          "Use a nonconstant, nonautomatic assertion expression with no resolvable clock."
+        ],
+        "notes": [],
+        "positive": [
+          "Evaluate a clock-associated sequence Boolean expression from sampled values."
+        ]
+      },
+      "id": "SV-2023-16-ASSERTION-EXPRESSION-CLOCK-ASSOCIATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast ref with const ref."
+        ],
+        "negative": [
+          "Call functions having output, inout, and ref formals."
+        ],
+        "notes": [],
+        "positive": [
+          "Call a side-effect-free function with input and const ref arguments."
+        ]
+      },
+      "id": "SV-2023-16-ASSERTION-FUNCTION-ARGUMENT-DIRECTIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a nonautomatic function that demonstrably preserves no state."
+        ],
+        "negative": [
+          "Call a function that updates external state."
+        ],
+        "notes": [],
+        "positive": [
+          "Call an automatic pure function from an assertion expression."
+        ]
+      },
+      "id": "SV-2023-16-ASSERTION-FUNCTION-STATE-SIDE-EFFECTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Nest a labeled assertion and inspect the complete hierarchical name."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Label an immediate assertion and print %m from its action block to observe the named scope."
+        ]
+      },
+      "id": "SV-2023-16-ASSERTION-STATEMENT-LABEL-SCOPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the variable multiple times in nested sequence expressions during the same tick."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Change a variable after Preponed in a clock tick and verify all assertion uses retain the sampled value."
+        ]
+      },
+      "id": "SV-2023-16-ASSERTION-USES-SAMPLED-VALUE-AT-TICK"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use one declaration with several independently initialized locals."
+        ],
+        "negative": [
+          "Omit the explicit type, use a prohibited type, or provide no identifier."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare multiple local identifiers with a mix of omitted, constant, and nonconstant initialization expressions."
+        ]
+      },
+      "id": "SV-2023-16-ASSERTION-VARIABLE-DECLARATION-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use no available free-variable choice, where weights have no effect."
+        ],
+        "negative": [
+          "Let bias weights weaken or change the assumed property."
+        ],
+        "notes": [],
+        "positive": [
+          "Compare biased and unbiased assumptions for identical acceptance while observing weighted free-variable choices."
+        ]
+      },
+      "id": "SV-2023-16-ASSUME-BIAS-PRESERVES-PROPERTY-TRUTH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use contradictory assumptions and observe the constrained solution space."
+        ],
+        "negative": [
+          "Report the formal proof failed solely because the assumption is false on an excluded trace."
+        ],
+        "notes": [],
+        "positive": [
+          "Use an assumption to restrict formal traces while proving an assertion."
+        ]
+      },
+      "id": "SV-2023-16-ASSUME-FORMAL-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Suppress the implicit $error using $assertcontrol."
+        ],
+        "negative": [
+          "Silently ignore an unsuppressed omitted-else failure."
+        ],
+        "notes": [],
+        "positive": [
+          "Fail an assume with omitted else and separately use null action."
+        ]
+      },
+      "id": "SV-2023-16-ASSUME-NULL-AND-DEFAULT-FAIL-ACTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Bias a single-value and a range distribution."
+        ],
+        "negative": [
+          "Use malformed dist syntax."
+        ],
+        "notes": [
+          "Following anchors should extend assume distribution semantics and restrictions."
+        ],
+        "positive": [
+          "Use legal weighted distribution items in an assume expression."
+        ]
+      },
+      "id": "SV-2023-16-ASSUME-RANDOM-BIAS-DIST-EXPRESSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Suppress actions using assertion action control."
+        ],
+        "negative": [
+          "Skip reporting a false unsuppressed assumption or execute an action when disabled."
+        ],
+        "notes": [],
+        "positive": [
+          "Produce true, false, and disabled assumption evaluations with distinct actions."
+        ]
+      },
+      "id": "SV-2023-16-ASSUME-SIMULATION-ACTION-OUTCOME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare accept_on and disable iff under the same reset transition."
+        ],
+        "negative": [
+          "Use current unsampled values as disable iff does, or report a disabled outcome."
+        ],
+        "notes": [],
+        "positive": [
+          "Change a sampled abort condition between property clock ticks and observe asynchronous property-level abort."
+        ]
+      },
+      "id": "SV-2023-16-ASYNCHRONOUS-ABORT-SAMPLING-LEVEL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change a variable after sampling but before Reactive call execution."
+        ],
+        "negative": [
+          "Use an unsupported argument direction or a prohibited by-value type."
+        ],
+        "notes": [],
+        "positive": [
+          "Pass sampled inputs by value and static variables by ref/const ref."
+        ]
+      },
+      "id": "SV-2023-16-ATTACHED-SUBROUTINE-ARGUMENT-MODES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast with a static variable passed by reference."
+        ],
+        "negative": [
+          "Pass it by ref and separately as a nonconstant input."
+        ],
+        "notes": [],
+        "positive": [
+          "Pass an automatic variable as a constant input."
+        ]
+      },
+      "id": "SV-2023-16-ATTACHED-SUBROUTINE-AUTOMATIC-ARGUMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Attach a time-consuming task and verify assertion evaluation proceeds independently."
+        ],
+        "negative": [
+          "Block assertion evaluation waiting for an attached task result."
+        ],
+        "notes": [],
+        "positive": [
+          "Produce multiple endpoints with multiple attached calls and observe per-endpoint source order in Reactive."
+        ]
+      },
+      "id": "SV-2023-16-ATTACHED-SUBROUTINE-EXECUTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Order assignment immediately before the call."
+        ],
+        "negative": [
+          "Use a nonflowing/unassigned local or pass a local-containing argument by reference."
+        ],
+        "notes": [],
+        "positive": [
+          "Assign a local before the call in the same list and pass it by value; also pass a flowing-out local."
+        ]
+      },
+      "id": "SV-2023-16-ATTACHED-SUBROUTINE-LOCAL-ACTUAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise the future-value form with an automatic variable."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Apply a past-value function to an automatic variable whose current value differs from an earlier value and observe the current value."
+        ]
+      },
+      "id": "SV-2023-16-AUTOMATIC-PAST-FUTURE-CURRENT-VALUE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare explicit strong/weak wrappers against defaults."
+        ],
+        "negative": [
+          "Treat a bare cover sequence as weak or bare assert sequence as strong."
+        ],
+        "notes": [],
+        "positive": [
+          "Use the same nonterminating sequence bare in assert, assume, and cover and compare outcomes."
+        ]
+      },
+      "id": "SV-2023-16-BARE-SEQUENCE-PROPERTY-STRENGTH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare assigned-before-branch locals with locals assigned only in branches."
+        ],
+        "negative": [
+          "Reference after branches with inconsistent assignment/value flow."
+        ],
+        "notes": [],
+        "positive": [
+          "Use branch assignments satisfying consistent static flow conditions and reference the local afterward."
+        ]
+      },
+      "id": "SV-2023-16-BRANCHING-LOCAL-FLOWOUT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise transitions involving x and z."
+        ],
+        "negative": [
+          "Keep the complete sampled value unchanged."
+        ],
+        "notes": [],
+        "positive": [
+          "Change any bit of a multibit expression between samples."
+        ]
+      },
+      "id": "SV-2023-16-CHANGED-FUNCTION-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise transitions involving x and z."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare both functions for unchanged and changed next global-clock samples."
+        ]
+      },
+      "id": "SV-2023-16-CHANGING-GCLK-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Return from a parenthesized/named boundary according to clock-flow containment."
+        ],
+        "negative": [
+          "Allow an outer clock through an inner replacement."
+        ],
+        "notes": [],
+        "positive": [
+          "Use an outer clock with nested replacements and named-property flattening."
+        ]
+      },
+      "id": "SV-2023-16-CLOCK-EVENT-SCOPE-INNER-OVERRIDE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Cause a transition that triggers the clock while the assertion retains the prior sampled value."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use one signal in both clock and assertion expressions where current and sampled values differ, and observe the distinct uses."
+        ]
+      },
+      "id": "SV-2023-16-CLOCK-EXPRESSION-CURRENT-VALUE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use nested named instances with an inner explicit clock."
+        ],
+        "negative": [
+          "Allow an internal declaration clock to control an expression after the instance."
+        ],
+        "notes": [],
+        "positive": [
+          "Omit an instance clock so the outer clock flows in, with and without triggered/matched."
+        ]
+      },
+      "id": "SV-2023-16-CLOCK-FLOW-NAMED-INSTANCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Nest multiple parenthesized boundaries and replacement clocks."
+        ],
+        "negative": [
+          "Let an inner explicit clock escape its parentheses or let the outer clock pass through its replacement."
+        ],
+        "notes": [],
+        "positive": [
+          "Use an outer clock entering a parenthesized sequence with an inner replacement clock."
+        ]
+      },
+      "id": "SV-2023-16-CLOCK-FLOW-PARENTHESES-BOUNDARY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast clock flow into the disabled property expression with no flow into its condition."
+        ],
+        "negative": [
+          "Infer the surrounding property clock into the disable condition."
+        ],
+        "notes": [],
+        "positive": [
+          "Use legal explicitly clocked sampled-value functions in a disable condition."
+        ]
+      },
+      "id": "SV-2023-16-CLOCK-NO-FLOW-INTO-DISABLE-CONDITION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Instantiate an external unclocked declaration that acquires the block clock."
+        ],
+        "negative": [
+          "Add an explicit clock, declare multiclock, or instantiate an external differing-clock declaration."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare unclocked properties/sequences inside and instantiate an external same-clock singly clocked declaration."
+        ]
+      },
+      "id": "SV-2023-16-CLOCKING-BLOCK-ASSERTION-CLOCK-RESTRICTIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use clocking-block input skew."
+        ],
+        "negative": [
+          "Resample the underlying raw variable independently at the assertion clock."
+        ],
+        "notes": [],
+        "positive": [
+          "Compare direct clocking-block variable references inside/outside properties against the block's sampled value."
+        ]
+      },
+      "id": "SV-2023-16-CLOCKING-BLOCK-VARIABLE-ASSERTION-SAMPLING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast the #1step value with a same-time-slot signal update."
+        ],
+        "negative": [
+          "Declare another input sampling skew for the referenced clocking-block variable."
+        ],
+        "notes": [],
+        "positive": [
+          "Reference a #1step clocking input in an assertion and verify the clocking-block sampled value is used."
+        ]
+      },
+      "id": "SV-2023-16-CLOCKING-INPUT-SAMPLED-VALUE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call a function with both an ordinarily Preponed-sampled argument and a current-value sequence method argument."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Sample a compound operator expression from operands whose sampled and current values differ."
+        ]
+      },
+      "id": "SV-2023-16-COMPOUND-EXPRESSION-SAMPLED-VALUE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare ##0 overlap with ##1 nonoverlapped concatenation."
+        ],
+        "negative": [
+          "Attempt to encode a broader partial overlap solely with concatenation."
+        ],
+        "notes": [],
+        "positive": [
+          "Use ##0 to require the final term of one sequence and first term of the next at the same tick."
+        ]
+      },
+      "id": "SV-2023-16-CONCATENATION-OVERLAP-LIMIT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use severity tasks in pass versus fail actions."
+        ],
+        "negative": [
+          "Assign a different default severity solely because the assertion is concurrent."
+        ],
+        "notes": [],
+        "positive": [
+          "Use omitted explicit severity and each severity system task."
+        ]
+      },
+      "id": "SV-2023-16-CONCURRENT-ACTION-SEVERITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use distinct clocking events for two concurrent assertions and observe independent evaluation ticks."
+        ],
+        "negative": [],
+        "notes": [
+          "Behavior is undefined if a clocking event transitions more than once in one time step; do not use that as an oracle."
+        ],
+        "positive": [
+          "Toggle assertion inputs between clock ticks and verify evaluation occurs at the declared clock event."
+        ]
+      },
+      "id": "SV-2023-16-CONCURRENT-ASSERTION-CLOCK-TICK-EVALUATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change an expression between clock events and distinguish sampled clock-point behavior from procedural event behavior."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Evaluate a concurrent assertion at its clocking event using the sampled expression value."
+        ]
+      },
+      "id": "SV-2023-16-CONCURRENT-ASSERTION-CLOCKED-SAMPLED-VALUES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast a verification statement placed inside an initial procedure."
+        ],
+        "negative": [
+          "Start only one attempt or omit later leading-clock occurrences."
+        ],
+        "notes": [],
+        "positive": [
+          "Compare an ordinary concurrent assertion against an explicit always formulation over repeated clock events."
+        ]
+      },
+      "id": "SV-2023-16-CONCURRENT-ASSERTION-IMPLICIT-ALWAYS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use assertions as statements in both always and initial procedures."
+        ],
+        "negative": [
+          "Place one in a context not permitted by the completed list or grammar."
+        ],
+        "notes": [
+          "Following anchors should complete the scope list."
+        ],
+        "positive": [
+          "Place concurrent assertions in each enumerated legal context."
+        ]
+      },
+      "id": "SV-2023-16-CONCURRENT-ASSERTION-LEGAL-SCOPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use nested generated assertions with identical local labels."
+        ],
+        "negative": [
+          "Create a name-resolution scope from an unnamed assertion."
+        ],
+        "notes": [],
+        "positive": [
+          "Reference labeled assertions locally/hierarchically and report an automatically named unlabeled assertion."
+        ]
+      },
+      "id": "SV-2023-16-CONCURRENT-ASSERTION-NAMING-SCOPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Combine sampled inputs with later Reactive-region action side effects."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Arrange same-time-step updates and assertion actions to distinguish Observed-region evaluation ordering."
+        ]
+      },
+      "id": "SV-2023-16-CONCURRENT-ASSERTION-OBSERVED-REGION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast assert (expr) with assert property (expr)."
+        ],
+        "negative": [
+          "Omit property while attempting to use a temporal property in an immediate assertion form."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse assert property (...) as a concurrent assertion."
+        ]
+      },
+      "id": "SV-2023-16-CONCURRENT-ASSERTION-PROPERTY-KEYWORD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use cover sequence with optional clock and disable iff."
+        ],
+        "negative": [
+          "Use an action block on restrict or omit its required semicolon."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse every statement alternative, optional label, action block, cover clock/disable, and null statement."
+        ]
+      },
+      "id": "SV-2023-16-CONCURRENT-ASSERTION-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast an automatic variable with a static variable in the same expression."
+        ],
+        "negative": [
+          "Reference an automatic variable from a nonprocedural concurrent assertion."
+        ],
+        "notes": [],
+        "positive": [
+          "Reference an automatic variable in a permitted procedural concurrent assertion context."
+        ]
+      },
+      "id": "SV-2023-16-CONCURRENT-EXPRESSION-AUTOMATIC-VARIABLE-REFERENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Apply an explicit cast that makes the overall result integral-compatible."
+        ],
+        "negative": [
+          "Use an expression whose final type is not cast-compatible with an integral type."
+        ],
+        "notes": [],
+        "positive": [
+          "Use an overall integral-compatible expression containing a non-integral intermediate subexpression."
+        ]
+      },
+      "id": "SV-2023-16-CONCURRENT-EXPRESSION-INTEGRAL-COMPATIBILITY"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Reference a chandle variable directly or within a compound assertion expression."
+        ],
+        "notes": [],
+        "positive": [
+          "Use an integral variable in the assertion expression."
+        ]
+      },
+      "id": "SV-2023-16-CONCURRENT-EXPRESSION-NO-CHANDLE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Reference an object instance property and separately a nonstatic method."
+        ],
+        "notes": [],
+        "positive": [
+          "Reference a static class member from an otherwise legal assertion expression."
+        ]
+      },
+      "id": "SV-2023-16-CONCURRENT-EXPRESSION-NONSTATIC-CLASS-MEMBER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise increment and decrement on a local variable specifically as the match-item lvalue."
+        ],
+        "negative": [
+          "Use increment on a nonlocal variable in an assertion expression."
+        ],
+        "notes": [],
+        "positive": [
+          "Assign a sequence local variable in a sequence match item."
+        ]
+      },
+      "id": "SV-2023-16-CONCURRENT-EXPRESSION-SIDE-EFFECTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise zero iterations and a multi-tick operand sequence."
+        ],
+        "negative": [
+          "Insert an extra clock gap between required consecutive iterations."
+        ],
+        "notes": [],
+        "positive": [
+          "Exercise exact and ranged repetition and compare [*] and [+] with expanded forms."
+        ]
+      },
+      "id": "SV-2023-16-CONSECUTIVE-REPETITION-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Apply past and future sampled-value functions to the const cast."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare const'(a) with plain a after a same-slot update to distinguish current from Preponed sampling."
+        ]
+      },
+      "id": "SV-2023-16-CONST-CAST-CURRENT-VALUE-SAMPLING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Mix disabled, vacuous, ordinary-success, and failed attempts."
+        ],
+        "negative": [
+          "Exclude it from attempts or include it in either success counter."
+        ],
+        "notes": [],
+        "positive": [
+          "Disable evaluation after attempt start and inspect all three counters."
+        ]
+      },
+      "id": "SV-2023-16-COVER-DISABLED-COUNTER-ACCOUNTING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise a cover property that never matches and verify it is not treated as an assertion failure."
+        ],
+        "negative": [],
+        "notes": [
+          "Use a portable coverage observation where available."
+        ],
+        "positive": [
+          "Exercise a cover property whose matching behavior occurs."
+        ]
+      },
+      "id": "SV-2023-16-COVER-MONITORS-PROPERTY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Invoke a subroutine from the pass statement and distinguish direct containment."
+        ],
+        "negative": [
+          "Put a concurrent assertion directly in the pass statement."
+        ],
+        "notes": [],
+        "positive": [
+          "Use null or ordinary/immediate-assertion pass statements."
+        ]
+      },
+      "id": "SV-2023-16-COVER-PASS-NO-CONCURRENT-ASSERTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Suppress pass execution using assertion action control."
+        ],
+        "negative": [
+          "Execute per match rather than per property attempt or in Observed."
+        ],
+        "notes": [],
+        "positive": [
+          "Create successful attempts completing on different and same time steps and observe one Reactive action each."
+        ]
+      },
+      "id": "SV-2023-16-COVER-PROPERTY-PASS-EXECUTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a vacuous success that is also a success and verify corresponding counter accounting."
+        ],
+        "negative": [
+          "Omit a required counter or count multiple successes for one property attempt."
+        ],
+        "notes": [],
+        "positive": [
+          "Generate ordinary successes, vacuous successes, failures, and repeated attempts and inspect all counters."
+        ]
+      },
+      "id": "SV-2023-16-COVER-PROPERTY-REQUIRED-COUNTERS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use clocked and disabled property specifications."
+        ],
+        "negative": [
+          "Supply a sequence-only specification that is illegal as property_spec or omit the statement/null terminator."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a pass statement and a null statement after a valid property specification."
+        ]
+      },
+      "id": "SV-2023-16-COVER-PROPERTY-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a sequence with simultaneous and different-endpoint matches."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare native cover-sequence counts with the specified assertion rewrite for multiple matches and disable."
+        ]
+      },
+      "id": "SV-2023-16-COVER-SEQUENCE-ASSERTION-EQUIVALENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Assert disable at the same completion time according to disable precedence."
+        ],
+        "negative": [
+          "Count disabled/incomplete matches or deduplicate simultaneous matches."
+        ],
+        "notes": [],
+        "positive": [
+          "Produce multiple enabled matches and matches preempted by disable."
+        ]
+      },
+      "id": "SV-2023-16-COVER-SEQUENCE-MATCH-COUNTING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Suppress actions without changing match counting."
+        ],
+        "negative": [
+          "Execute once per attempt or for a disabled match."
+        ],
+        "notes": [],
+        "positive": [
+          "Complete several counted matches in one time step and observe one Reactive action per match."
+        ]
+      },
+      "id": "SV-2023-16-COVER-SEQUENCE-PASS-EXECUTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Produce zero, one, and many matches in separate attempts."
+        ],
+        "negative": [
+          "Collapse sequence matches to one or increment property coverage multiple times per attempt."
+        ],
+        "notes": [],
+        "positive": [
+          "Generate multiple sequence matches in one attempt and compare sequence versus property cover counts; query at end/API."
+        ]
+      },
+      "id": "SV-2023-16-COVER-SEQUENCE-PROPERTY-COUNTING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Have simultaneous distinct matches."
+        ],
+        "negative": [
+          "Cap the sequence match counter at one per attempt."
+        ],
+        "notes": [],
+        "positive": [
+          "Generate attempts with zero, one, and multiple matches and inspect both counters."
+        ]
+      },
+      "id": "SV-2023-16-COVER-SEQUENCE-REQUIRED-COUNTERS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use both optional prefixes together."
+        ],
+        "negative": [
+          "Use malformed ordering or omit the required sequence expression."
+        ],
+        "notes": [],
+        "positive": [
+          "Exercise optional clock, optional disable, pass statement, and null statement."
+        ]
+      },
+      "id": "SV-2023-16-COVER-SEQUENCE-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise an active free checker variable separately."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Reference an automatic variable and a local variable after a same-slot update and observe current-value semantics."
+        ]
+      },
+      "id": "SV-2023-16-CURRENT-VALUE-SAMPLING-EXCEPTIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a constant expression formed from parameter arithmetic."
+        ],
+        "negative": [
+          "Use a runtime variable, nonintegral result, and negative bound in separate cases."
+        ],
+        "notes": [],
+        "positive": [
+          "Use integer constant parameters and zero as cycle-delay values."
+        ]
+      },
+      "id": "SV-2023-16-CYCLE-DELAY-CONSTANT-CONSTRAINTS"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Embed a constant_mintypmax_expression that is not itself a constant_expression."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a legal constant expression as the delay primary."
+        ]
+      },
+      "id": "SV-2023-16-CYCLE-DELAY-MINTYPMAX-RESTRICTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use equal zero bounds."
+        ],
+        "negative": [
+          "Use an upper bound smaller than the lower bound."
+        ],
+        "notes": [],
+        "positive": [
+          "Use equal and increasing lower/upper bounds."
+        ]
+      },
+      "id": "SV-2023-16-CYCLE-DELAY-RANGE-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use m equal to zero."
+        ],
+        "negative": [
+          "Attempt to treat $ as a particular fixed cycle count."
+        ],
+        "notes": [],
+        "positive": [
+          "Match ##[m:$] after an arbitrarily chosen finite delay at least m."
+        ]
+      },
+      "id": "SV-2023-16-CYCLE-DELAY-UNBOUNDED-MAXIMUM"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Show that zero delay is admitted by ##[*] but not ##[+]."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare matching of each abbreviation with its expanded form."
+        ]
+      },
+      "id": "SV-2023-16-CYCLE-DELAY-WILDCARD-ALIASES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use widths or signedness that reveal the formal-type cast."
+        ],
+        "negative": [
+          "Pass a non-cast-compatible actual."
+        ],
+        "notes": [],
+        "positive": [
+          "Pass a cast-compatible variable lvalue and verify assignment copy-out, then pass a non-lvalue expression and verify formal-type casting."
+        ]
+      },
+      "id": "SV-2023-16-DATA-TYPED-SEQUENCE-FORMAL-BINDING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use identical local names in declaration and instantiation scopes and verify lexical separation."
+        ],
+        "negative": [
+          "Reference an internally declared local by name after a named sequence instance."
+        ],
+        "notes": [],
+        "positive": [
+          "Expose required state through a permitted formal/actual mechanism."
+        ]
+      },
+      "id": "SV-2023-16-DECLARED-LOCAL-NOT-VISIBLE-AT-INSTANCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Instantiate an unclocked declaration in an assertion receiving the default leading clock."
+        ],
+        "negative": [
+          "Apply default clock directly to an ordinary property/sequence declaration outside its clocking block."
+        ],
+        "notes": [],
+        "positive": [
+          "Use unclocked assertions in each listed scope and a declaration inside the default clocking block."
+        ]
+      },
+      "id": "SV-2023-16-DEFAULT-CLOCK-ASSERTION-LEADING-EVENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place declaration at the end of scope."
+        ],
+        "negative": [
+          "Apply only to lexically following assertions."
+        ],
+        "notes": [],
+        "positive": [
+          "Place assertions before and after the declaration and observe the same default."
+        ]
+      },
+      "id": "SV-2023-16-DEFAULT-DISABLE-POSITION-INDEPENDENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Nest multiple generate and design-unit declarations."
+        ],
+        "negative": [
+          "Resolve condition names from assertion scope or keep an outer default after a nested override."
+        ],
+        "notes": [],
+        "positive": [
+          "Exercise inherited and overridden defaults through every listed nested scope with shadowed signal names."
+        ]
+      },
+      "id": "SV-2023-16-DEFAULT-DISABLE-SCOPE-OVERRIDE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a compound expression_or_dist."
+        ],
+        "negative": [
+          "Omit iff or the terminating semicolon."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare defaults with Boolean and distribution-capable expressions."
+        ]
+      },
+      "id": "SV-2023-16-DEFAULT-DISABLE-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast lexical nested declaration with instantiated design-unit boundary."
+        ],
+        "negative": [
+          "Declare two in one scope or inherit through an instance boundary."
+        ],
+        "notes": [],
+        "positive": [
+          "Use one default per scope and independently declare defaults inside instances."
+        ]
+      },
+      "id": "SV-2023-16-DEFAULT-DISABLE-UNIQUE-NONINSTANCE-SCOPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast the default with a time step in which the corresponding event or sequence condition occurs."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Reference each method where its default sampled value applies and observe false."
+        ]
+      },
+      "id": "SV-2023-16-DEFAULT-SAMPLED-EVENT-SEQUENCE-METHOD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Include nested operators and a mixture of initialized static and otherwise defaulted operands."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Evaluate a compound sampled expression whose operands have known default sampled values."
+        ]
+      },
+      "id": "SV-2023-16-DEFAULT-SAMPLED-EXPRESSION-RECURSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare default sampled values of 2-state and 4-state object types."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Observe the default sampled value of a logic object as 1'bx before an applicable sample."
+        ]
+      },
+      "id": "SV-2023-16-DEFAULT-SAMPLED-NONSTATIC-OBJECT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Repeat without an initializer for both 2-state and 4-state types."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Sample a static variable before a sampling value exists when it has a declaration initializer."
+        ]
+      },
+      "id": "SV-2023-16-DEFAULT-SAMPLED-STATIC-VARIABLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a function call as a by-value actual and observe that its evaluation is not deferred."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Pass a changing variable by value and verify the deferred call receives its value from assertion-evaluation time."
+        ]
+      },
+      "id": "SV-2023-16-DEFERRED-ACTION-ARGUMENT-CAPTURE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast ref with legal by-value passing of the same automatic variable."
+        ],
+        "negative": [
+          "Pass an automatic variable and separately a dynamic variable by ref."
+        ],
+        "notes": [],
+        "positive": [
+          "Pass a static variable to a ref formal of the deferred action subroutine."
+        ]
+      },
+      "id": "SV-2023-16-DEFERRED-ACTION-REF-LIFETIME"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Call from a final deferred action a subroutine that is illegal in the Postponed region."
+        ],
+        "notes": [],
+        "positive": [
+          "Observe ordering of #0 deferred and final deferred action side effects relative to Reactive and Postponed activity."
+        ]
+      },
+      "id": "SV-2023-16-DEFERRED-ACTION-REGION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a null action where the grammar otherwise permits omission."
+        ],
+        "negative": [
+          "Use a compound statement or multiple calls in a deferred action block."
+        ],
+        "notes": [],
+        "positive": [
+          "Use one task or function call as a deferred assertion action."
+        ]
+      },
+      "id": "SV-2023-16-DEFERRED-ACTION-SINGLE-CALL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Separately exercise dependent-signal reactivation of always_comb and disabling the process's outermost scope."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Queue a deferred report, then resume its process after an event control and verify flushing."
+        ]
+      },
+      "id": "SV-2023-16-DEFERRED-ASSERTION-FLUSH-POINTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a labeled module-scope deferred assertion."
+        ],
+        "negative": [
+          "Place a simple immediate assertion directly in the same module-item context."
+        ],
+        "notes": [],
+        "positive": [
+          "Place a deferred immediate assertion directly in module scope."
+        ]
+      },
+      "id": "SV-2023-16-DEFERRED-ASSERTION-MODULE-COMMON-ITEM"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Flush one calling process after both have pending reports and verify the other process's report remains."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Call a function containing a deferred assertion from two processes and cause both calls to fail; each process produces its own report."
+        ]
+      },
+      "id": "SV-2023-16-DEFERRED-ASSERTION-PER-PROCESS-STATE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Trigger multiple evaluations within one time step and observe deferred reporting."
+        ],
+        "negative": [],
+        "notes": [
+          "More specific observed and final scheduling rules are materialized separately."
+        ],
+        "positive": [
+          "Compare reporting time of equivalent simple and deferred immediate assertions."
+        ]
+      },
+      "id": "SV-2023-16-DEFERRED-ASSERTION-REPORTING-DELAY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare otherwise identical observed and final deferred actions."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Change a referenced static variable after assertion evaluation but before deferred action execution and observe the region-current value."
+        ]
+      },
+      "id": "SV-2023-16-DEFERRED-REF-CURRENT-VALUE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast a report that matures before a later flush point."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Create a pending deferred report, reach a flush point, and verify its action does not execute."
+        ]
+      },
+      "id": "SV-2023-16-DEFERRED-REPORT-FLUSH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Fail without else and verify the default $error is likewise deferred."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Trigger a deferred action and verify its side effect is absent until the report matures."
+        ]
+      },
+      "id": "SV-2023-16-DEFERRED-REPORT-QUEUE-ENQUEUE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast current unsampled reset with $sampled(reset)."
+        ],
+        "negative": [
+          "Reference a local, sequence.matched, or use another sampled-value function without explicit clock."
+        ],
+        "notes": [],
+        "positive": [
+          "Use current reset, sequence.triggered, $sampled, and explicitly clocked $past-like functions."
+        ]
+      },
+      "id": "SV-2023-16-DISABLE-IFF-EXPRESSION-VALUES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Instantiate a disabled property directly as a complete property_spec without an outer disable."
+        ],
+        "negative": [
+          "Nest explicit clauses and instantiate a disabled property under another disable."
+        ],
+        "notes": [],
+        "positive": [
+          "Use one outer disable clause around a property without another disable."
+        ]
+      },
+      "id": "SV-2023-16-DISABLE-IFF-NO-NESTING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Toggle the disable condition at the endpoint cycle."
+        ],
+        "negative": [
+          "Report disabled attempts as success or failure, or disable unrelated attempts whose condition is false."
+        ],
+        "notes": [],
+        "positive": [
+          "Assert reset before start, at start, during evaluation, and exactly at completion and observe per-attempt disable."
+        ]
+      },
+      "id": "SV-2023-16-DISABLE-IFF-PREEMPTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a parenthesized complex disable expression."
+        ],
+        "negative": [
+          "Attach disable iff where a property_expr rather than property_spec is required."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse a property specification with a distribution-capable disable expression."
+        ]
+      },
+      "id": "SV-2023-16-DISABLE-IFF-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Disable nested and outermost scopes in the same time step."
+        ],
+        "negative": [
+          "Flush for nested/task disable or retain pending instances after outermost disable."
+        ],
+        "notes": [],
+        "positive": [
+          "Compare disabling outermost, nested, and task scopes with pending assertions."
+        ]
+      },
+      "id": "SV-2023-16-DISABLE-PROCEDURE-SCOPE-FLUSH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast disabling a nested scope or task, where the pending report remains."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Queue a report and disable the procedure's outermost scope to verify cancellation."
+        ]
+      },
+      "id": "SV-2023-16-DISABLE-PROCESS-SCOPE-DEFERRED-QUEUE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Queue reports for two assertions and disable only one."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Queue a report for a labeled deferred assertion, disable that assertion, and verify the report does not execute."
+        ]
+      },
+      "id": "SV-2023-16-DISABLE-SPECIFIC-DEFERRED-ASSERTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Disable one assertion after queueing multiple instances of it."
+        ],
+        "negative": [
+          "Clear other assertions or allow a disabled assertion's pending instance to mature."
+        ],
+        "notes": [],
+        "positive": [
+          "Queue instances of two assertions, disable one label, and verify only its instances clear."
+        ]
+      },
+      "id": "SV-2023-16-DISABLE-SPECIFIC-PROCEDURAL-ASSERTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use zero and unequal weights; membership still controls truth."
+        ],
+        "negative": [
+          "Use dist weights to bias or alter assert/cover truth."
+        ],
+        "notes": [],
+        "positive": [
+          "Compare assert/cover dist membership against inside membership for values in and out of the set."
+        ]
+      },
+      "id": "SV-2023-16-DIST-IN-ASSERT-COVER-EQUALS-INSIDE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast passing a complete posedge event expression to an event-typed formal."
+        ],
+        "negative": [
+          "Declare that formal as event and then prefix its reference with an edge identifier."
+        ],
+        "notes": [],
+        "positive": [
+          "Pass an untyped signal expression and combine its formal with posedge in the sequence body."
+        ]
+      },
+      "id": "SV-2023-16-EDGE-COMPOSED-EVENT-FORMAL-NOT-EVENT-TYPED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an empty-only sequence where method application is otherwise legal."
+        ],
+        "negative": [
+          "Set triggered or matched for an empty alternative."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a mixed empty/nonempty sequence and observe activation only for nonempty endpoints."
+        ]
+      },
+      "id": "SV-2023-16-EMPTY-MATCH-NO-SEQUENCE-METHOD-ACTIVATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise n=1, reducing the delay to zero."
+        ],
+        "negative": [
+          "Expect either orientation with ##0 to match."
+        ],
+        "notes": [],
+        "positive": [
+          "Compare each positive-delay empty concatenation with its specified reduced equivalent."
+        ]
+      },
+      "id": "SV-2023-16-EMPTY-SEQUENCE-CONCATENATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Apply a past-value function and distinguish the method's Postponed value at the earlier tick."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Reference a sequence triggered method and observe its current result as the sampled value."
+        ]
+      },
+      "id": "SV-2023-16-EVENT-SEQUENCE-METHOD-SAMPLED-VALUE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Pass a named event and an edge expression in separate cases."
+        ],
+        "negative": [
+          "Pass a non-event actual or use the event formal in a Boolean-only position."
+        ],
+        "notes": [],
+        "positive": [
+          "Pass a legal event expression and use the formal as a sequence clocking event."
+        ]
+      },
+      "id": "SV-2023-16-EVENT-TYPED-SEQUENCE-FORMAL-ACTUAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a range beginning at zero."
+        ],
+        "negative": [
+          "Count an off-clock evaluation instant as a clock tick."
+        ],
+        "notes": [],
+        "positive": [
+          "Start on and between clock ticks with several finite ranges."
+        ]
+      },
+      "id": "SV-2023-16-EVENTUALLY-CLOCK-ALIGNMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Test always s_eventually on finite traces and s_eventually always with a stabilization point."
+        ],
+        "negative": [
+          "Treat bounded weak eventually as requiring all range ticks to exist."
+        ],
+        "notes": [],
+        "positive": [
+          "Compare each temporal form against its sequence-property expansion on finite and infinite-like traces."
+        ]
+      },
+      "id": "SV-2023-16-EVENTUALLY-SEQUENCE-EQUIVALENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Suppress actions/default error via assertion controls."
+        ],
+        "negative": [
+          "Execute wrong action or silently ignore unsuppressed omitted-else failure."
+        ],
+        "notes": [],
+        "positive": [
+          "Exercise success/failure with pass/else and omitted else."
+        ]
+      },
+      "id": "SV-2023-16-EXPECT-ACTION-OUTCOME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Property completes on the first evaluated clock."
+        ],
+        "negative": [
+          "Continue while pending, keep evaluating after completion, or automatically restart."
+        ],
+        "notes": [],
+        "positive": [
+          "Complete expect successfully and unsuccessfully and observe continuation ordering after Observed."
+        ]
+      },
+      "id": "SV-2023-16-EXPECT-BLOCK-UNBLOCK-SCHEDULING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Execute multiple separate expects in sequence."
+        ],
+        "negative": [
+          "Start at execution time/current clock or launch recurring attempts."
+        ],
+        "notes": [],
+        "positive": [
+          "Execute expect immediately before/on a clock event and verify first evaluation at the next event."
+        ]
+      },
+      "id": "SV-2023-16-EXPECT-SINGLE-NEXT-CLOCK-ATTEMPT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a disabled property and observe subsequent expect semantics."
+        ],
+        "negative": [
+          "Use expect outside procedural context or omit its property/action syntax."
+        ],
+        "notes": [],
+        "positive": [
+          "Use expect with named and inline properties and pass/fail action blocks."
+        ]
+      },
+      "id": "SV-2023-16-EXPECT-STATEMENT-SYNTAX-BLOCKING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Return success through an automatic task output after expect unblocks."
+        ],
+        "negative": [
+          "Reject automatic references solely because expect's property is temporal."
+        ],
+        "notes": [],
+        "positive": [
+          "Use expect in tasks/procedures with automatic arguments and locals."
+        ]
+      },
+      "id": "SV-2023-16-EXPECT-WAIT-CONTEXT-AUTOMATIC-VARIABLES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a multibit expression."
+        ],
+        "negative": [
+          "Change only a non-LSB bit or have the LSB not change to 0."
+        ],
+        "notes": [],
+        "positive": [
+          "Exercise next-tick LSB transitions 1/x/z to 0."
+        ]
+      },
+      "id": "SV-2023-16-FALLING-GCLK-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a multibit expression."
+        ],
+        "negative": [
+          "Change only a non-LSB bit or transition the LSB away from 0."
+        ],
+        "notes": [],
+        "positive": [
+          "Exercise 1-to-0, x-to-0, and z-to-0 LSB transitions."
+        ]
+      },
+      "id": "SV-2023-16-FELL-FUNCTION-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Cause iterative earlier-region activity and verify only the surviving final report executes."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Trigger a final deferred assertion and observe its action in Postponed."
+        ]
+      },
+      "id": "SV-2023-16-FINAL-DEFERRED-REPORT-MATURATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast immediate safety violation with an unresolved liveness obligation."
+        ],
+        "negative": [
+          "Allow an extension to repair a failed prefix."
+        ],
+        "notes": [],
+        "positive": [
+          "Reach a finite bad state with both met and unmet unrelated future obligations."
+        ]
+      },
+      "id": "SV-2023-16-FINITE-PROPERTY-FAILS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare a completed safety property against an unresolved liveness obligation."
+        ],
+        "negative": [
+          "Classify a trace with an outstanding future obligation as holding strongly."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a finite trace that completes all obligations and cannot be invalidated by extension."
+        ]
+      },
+      "id": "SV-2023-16-FINITE-PROPERTY-HOLDS-STRONGLY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "End a trace while no bad state has occurred but extension can affect the result."
+        ],
+        "negative": [
+          "Report it as holding strongly when obligations remain."
+        ],
+        "notes": [
+          "Following anchors must complete this category's conditions."
+        ],
+        "positive": [
+          "Classify a finite trace meeting the following weak-holds conditions."
+        ]
+      },
+      "id": "SV-2023-16-FINITE-PROPERTY-HOLDS-WEAKLY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Extend the same pending prefix once to success and once to failure."
+        ],
+        "negative": [
+          "Classify as pending after a bad state or after all obligations are met."
+        ],
+        "notes": [],
+        "positive": [
+          "End a finite trace with an unresolved obligation and no bad state."
+        ]
+      },
+      "id": "SV-2023-16-FINITE-PROPERTY-PENDING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise no operand match and multiple matches tied at the earliest tick."
+        ],
+        "negative": [
+          "Accept a later-ending match after an earlier match exists."
+        ],
+        "notes": [],
+        "positive": [
+          "Create operand matches at several endpoints and verify only all matches tied at the earliest endpoint survive."
+        ]
+      },
+      "id": "SV-2023-16-FIRST-MATCH-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multiple antecedent endpoints and a differently clocked consequent."
+        ],
+        "negative": [
+          "Start #-# after the endpoint or always delay an empty #=# match."
+        ],
+        "notes": [],
+        "positive": [
+          "Compare both forms on nonempty matches and test #=# with an empty match in single- and multiclock contexts."
+        ]
+      },
+      "id": "SV-2023-16-FOLLOWED-BY-CONSEQUENT-START"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Make only one of several match-point consequents succeed."
+        ],
+        "negative": [
+          "Return true with no antecedent match, or require every matched consequent to succeed."
+        ],
+        "notes": [],
+        "positive": [
+          "Provide multiple antecedent matches with at least one successful consequent."
+        ]
+      },
+      "id": "SV-2023-16-FOLLOWED-BY-EXISTENTIAL-MATCH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise empty and multiple antecedent matches."
+        ],
+        "negative": [
+          "Implement followed-by with implication's universal/vacuous semantics."
+        ],
+        "notes": [],
+        "positive": [
+          "Compare each followed-by form against its expanded dual for match/no-match and consequent outcomes."
+        ]
+      },
+      "id": "SV-2023-16-FOLLOWED-BY-IMPLICATION-DUALITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a sequence with multiple matches."
+        ],
+        "negative": [
+          "Use a property expression where the left operand requires a sequence."
+        ],
+        "notes": [
+          "Following anchors should extend exact trigger and outcome semantics."
+        ],
+        "positive": [
+          "Parse and evaluate both followed-by forms with a sequence antecedent."
+        ]
+      },
+      "id": "SV-2023-16-FOLLOWED-BY-PROPERTY-FORMS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use empty-admitting and multiple-match left sequences where legal."
+        ],
+        "negative": [
+          "Use ##1 for overlapped or ##0 for nonoverlapped."
+        ],
+        "notes": [],
+        "positive": [
+          "Compare each followed-by form with its concatenated strong-sequence expansion."
+        ]
+      },
+      "id": "SV-2023-16-FOLLOWED-BY-STRONG-SEQUENCE-EQUIVALENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call between global ticks."
+        ],
+        "negative": [
+          "Return the current or previous global-clock sample."
+        ],
+        "notes": [],
+        "positive": [
+          "Set v to a known value at the next global tick and evaluate $future_gclk(v)."
+        ]
+      },
+      "id": "SV-2023-16-FUTURE-GCLK-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a gated event in the global clocking declaration."
+        ],
+        "negative": [
+          "Reference $global_clock without an applicable global clocking declaration."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a global clock and compare assertions clocked by @$global_clock and directly by the declared event."
+        ]
+      },
+      "id": "SV-2023-16-GLOBAL-CLOCK-ASSERTION-REFERENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use coincident and noncoincident assertion/global clocks."
+        ],
+        "negative": [
+          "Execute the action at the attempt's final assertion tick."
+        ],
+        "notes": [],
+        "positive": [
+          "Fail such an assertion and verify an explicit action and default $error are delayed to the next global tick."
+        ]
+      },
+      "id": "SV-2023-16-GLOBAL-FUTURE-ACTION-DELAY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Have no global tick immediately coincident with the assertion endpoint."
+        ],
+        "negative": [
+          "Report the following global tick as the attempt endpoint."
+        ],
+        "notes": [],
+        "positive": [
+          "Use assertion and global clocks with distinct ticks and verify the attempt endpoint remains the last assertion tick."
+        ]
+      },
+      "id": "SV-2023-16-GLOBAL-FUTURE-ATTEMPT-INTERVAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Issue Kill at the following global tick."
+        ],
+        "negative": [
+          "Kill strictly after the final assertion tick and expect cancellation."
+        ],
+        "notes": [],
+        "positive": [
+          "Kill an attempt before its last assertion tick and observe control."
+        ]
+      },
+      "id": "SV-2023-16-GLOBAL-FUTURE-CONTROL-INTERVAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place match items in a referenced subsequence of the assertion."
+        ],
+        "negative": [
+          "Nest one future function inside another and use one in an assertion containing a match item."
+        ],
+        "notes": [],
+        "positive": [
+          "Use one nonnested future function in an assertion without match items."
+        ]
+      },
+      "id": "SV-2023-16-GLOBAL-FUTURE-FUNCTION-NEST-MATCH-ITEM-RESTRICTIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use it within a nested property expression that remains a property_expr."
+        ],
+        "negative": [
+          "Use one in procedural code and in an assertion action block."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a future function in a property and in a sequence expression."
+        ]
+      },
+      "id": "SV-2023-16-GLOBAL-FUTURE-FUNCTION-USAGE-CONTEXT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a multibit expression to distinguish LSB future-edge functions."
+        ],
+        "negative": [
+          "Supply an explicit clock argument or omit the expression."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse and evaluate each function with one legal expression argument."
+        ]
+      },
+      "id": "SV-2023-16-GLOBAL-FUTURE-SAMPLED-FUNCTION-FORMS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Arrange local and global clocks differently to prove the global clock is selected."
+        ],
+        "negative": [],
+        "notes": [
+          "The extracted source loses the displayed equivalence symbol; the prose states equivalence by definition."
+        ],
+        "positive": [
+          "Compare every _gclk past/change function with its ordinary function using @$global_clock."
+        ]
+      },
+      "id": "SV-2023-16-GLOBAL-PAST-FUNCTION-EQUIVALENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast with a global future function in the same contexts."
+        ],
+        "negative": [
+          "Pass an argument prohibited by ordinary sampled-value function restrictions."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a global past function in procedural code and an action block."
+        ]
+      },
+      "id": "SV-2023-16-GLOBAL-PAST-FUNCTION-GENERAL-USAGE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a multibit expression to distinguish LSB edge functions."
+        ],
+        "negative": [
+          "Supply an explicit clock argument or omit the expression."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse and evaluate each function with one legal expression argument."
+        ]
+      },
+      "id": "SV-2023-16-GLOBAL-PAST-SAMPLED-FUNCTION-FORMS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a global clock different from local assertion clocks."
+        ],
+        "negative": [
+          "Call a global-clock sampled-value function without global clocking."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare global clocking and call representative past and future global-clock functions."
+        ]
+      },
+      "id": "SV-2023-16-GLOBAL-SAMPLED-FUNCTIONS-REQUIRE-GLOBAL-CLOCK"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use adjacent-clock matches, whose separation is one tick."
+        ],
+        "negative": [
+          "Introduce an extra true occurrence strictly between counted successive matches."
+        ],
+        "notes": [],
+        "positive": [
+          "Produce required true occurrences separated by false ticks and observe the endpoint at the final occurrence."
+        ]
+      },
+      "id": "SV-2023-16-GOTO-REPETITION-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Suppress the failure with assertion control and verify the default call is suppressed."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Fail an immediate assertion without else and observe the default error."
+        ]
+      },
+      "id": "SV-2023-16-IMMEDIATE-ASSERT-DEFAULT-ERROR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Omit the pass statement and verify no user-specified action occurs on success."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use distinct pass and fail side effects and exercise both truth outcomes."
+        ]
+      },
+      "id": "SV-2023-16-IMMEDIATE-ASSERT-PASS-FAIL-ACTIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Separately exercise x and z expression values; each is false."
+        ],
+        "negative": [
+          "Execute one with 0 and observe its fail path."
+        ],
+        "notes": [],
+        "positive": [
+          "Execute an immediate assert with a true expression and observe its pass path."
+        ]
+      },
+      "id": "SV-2023-16-IMMEDIATE-ASSERTION-EXPRESSION-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Introduce a transient value to distinguish immediate from deferred action timing."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare side effects from simple and deferred immediate assertion action blocks in one time step."
+        ]
+      },
+      "id": "SV-2023-16-IMMEDIATE-ASSERTION-MODE-ACTION-TIMING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place the assertion on a conditional path that is not executed."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Place an immediate assertion in a procedural block and observe it when control reaches the statement."
+        ]
+      },
+      "id": "SV-2023-16-IMMEDIATE-ASSERTION-PROCEDURAL-EXECUTION"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Place one in a context that does not permit a procedural statement."
+        ],
+        "notes": [],
+        "positive": [
+          "Place immediate assertions in several procedural statement positions, including a nested conditional body."
+        ]
+      },
+      "id": "SV-2023-16-IMMEDIATE-ASSERTION-PROCEDURAL-PLACEMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise omitted statements allowed by action_block and statement_or_null."
+        ],
+        "negative": [
+          "Attempt an immediate restrict form or a deferred form with an unsupported delay."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse each simple form and each #0 and final deferred form."
+        ]
+      },
+      "id": "SV-2023-16-IMMEDIATE-ASSERTION-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Request results on demand through the assertion API."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Evaluate an immediate cover and obtain its coverage report at simulation end."
+        ]
+      },
+      "id": "SV-2023-16-IMMEDIATE-COVER-COLLECTION-REPORTING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Report an immediate cover that was never evaluated and expect a zero evaluation count."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Execute an immediate cover a known number of times and compare the reported evaluation count."
+        ]
+      },
+      "id": "SV-2023-16-IMMEDIATE-COVER-EVALUATION-COUNT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Evaluate the expression false and verify the pass side effect does not occur."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Attach a side effect to an immediate-cover pass statement and evaluate the expression true."
+        ]
+      },
+      "id": "SV-2023-16-IMMEDIATE-COVER-PASS-ACTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use no successful evaluations and expect a zero success count."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Evaluate an immediate cover with a known mixture of true and false results and compare the reported success count."
+        ]
+      },
+      "id": "SV-2023-16-IMMEDIATE-COVER-SUCCESS-COUNT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Track ordinary success coverage separately from vacuous success."
+        ],
+        "negative": [
+          "Make b affect the false-antecedent outcome or classify it as nonvacuous."
+        ],
+        "notes": [],
+        "positive": [
+          "Evaluate false and true antecedents with both consequent outcomes."
+        ]
+      },
+      "id": "SV-2023-16-IMPLICATION-FALSE-ANTECEDENT-VACUOUS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call after a nested clock replacement."
+        ],
+        "negative": [
+          "Use it where no current event resolves and continue without error."
+        ],
+        "notes": [],
+        "positive": [
+          "Resolve explicit, flowed, and context-derived clocks."
+        ]
+      },
+      "id": "SV-2023-16-INFERRED-CLOCK-SYSTEM-FUNCTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a default condition containing a compound expression."
+        ],
+        "negative": [
+          "Return an enclosing unrelated expression or error when no default exists."
+        ],
+        "notes": [],
+        "positive": [
+          "Call under nested default-disable scopes and with no default."
+        ]
+      },
+      "id": "SV-2023-16-INFERRED-DISABLE-SYSTEM-FUNCTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use inferred_disable on a typed Boolean-compatible formal."
+        ],
+        "negative": [
+          "Embed in a larger expression, call elsewhere, or default inferred_clock on a non-event typed formal."
+        ],
+        "notes": [],
+        "positive": [
+          "Use each as a whole formal default in every permitted declaration; use inferred_clock on untyped/event formals."
+        ]
+      },
+      "id": "SV-2023-16-INFERRED-FUNCTION-DEFAULT-ONLY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Override the default with an explicit actual."
+        ],
+        "negative": [
+          "Resolve once at declaration or reuse one instance site's clock for all instances."
+        ],
+        "notes": [],
+        "positive": [
+          "Instantiate the same defaulted property top-level and nested under different clocks, and the same checker at different sites."
+        ]
+      },
+      "id": "SV-2023-16-INFERRED-FUNCTION-INSTANCE-SUBSTITUTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Apply outer c to a set containing inherited plus concrete clocks."
+        ],
+        "negative": [
+          "Leave inherited unresolved when an incoming clock exists."
+        ],
+        "notes": [],
+        "positive": [
+          "Compute a property's semantic clock set before and after applying different outer clocks."
+        ]
+      },
+      "id": "SV-2023-16-INHERITED-SEMANTIC-CLOCK-OUTER-SUBSTITUTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a delay range that includes the current tick."
+        ],
+        "negative": [
+          "Satisfy a only at the wrong delayed tick."
+        ],
+        "notes": [],
+        "positive": [
+          "Compare ##0 a and ##1 a from the same attempt start."
+        ]
+      },
+      "id": "SV-2023-16-LEADING-CYCLE-DELAY-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise a one-expression sequence."
+        ],
+        "negative": [
+          "Make one intermediate expression false and verify no linear-sequence match."
+        ],
+        "notes": [],
+        "positive": [
+          "Drive each expression true on successive ticks and observe a match over the interval."
+        ]
+      },
+      "id": "SV-2023-16-LINEAR-SEQUENCE-MATCH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Produce multiple nonempty matches and verify assignments for each matching thread."
+        ],
+        "negative": [
+          "Execute attached assignments when the subsequence does not match."
+        ],
+        "notes": [],
+        "positive": [
+          "Attach two assignments where the second consumes the first's new value and verify source order."
+        ]
+      },
+      "id": "SV-2023-16-LOCAL-ASSIGNMENT-AT-SUBSEQUENCE-ENDPOINT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast [*1] with [*0]."
+        ],
+        "negative": [
+          "Attach an assignment to a [*0:1] or other empty-admitting subsequence."
+        ],
+        "notes": [],
+        "positive": [
+          "Attach an assignment to a subsequence guaranteed to match at least one tick."
+        ]
+      },
+      "id": "SV-2023-16-LOCAL-ASSIGNMENT-NO-EMPTY-SUBSEQUENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use zero repetitions and verify no attached assignment executes."
+        ],
+        "negative": [
+          "Execute accumulation on an iteration where the operand does not match."
+        ],
+        "notes": [],
+        "positive": [
+          "Attach a compound assignment to a repeated operand and verify accumulation over every iteration."
+        ]
+      },
+      "id": "SV-2023-16-LOCAL-ASSIGNMENT-ON-REPETITION-OPERAND"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare a declared local and local formal under the same composition operator."
+        ],
+        "negative": [
+          "Reference a local formal where ordinary local-variable flow says it is unavailable or unassigned."
+        ],
+        "notes": [],
+        "positive": [
+          "Apply local-variable assignment and flow through a sequence instance using a local formal."
+        ]
+      },
+      "id": "SV-2023-16-LOCAL-FORMAL-INHERITS-LOCAL-VARIABLE-RULES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Allow one attempt to fail while another matches."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Run overlapping attempts that assign different values to the same local formal and observe independent copies."
+        ]
+      },
+      "id": "SV-2023-16-LOCAL-FORMAL-PER-ATTEMPT-COPY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Bind the same local once as input and once as output where other rules permit."
+        ],
+        "negative": [
+          "Bind a compound expression, out-of-scope local, incompatible type, and duplicate local to multiple output/inout formals."
+        ],
+        "notes": [],
+        "positive": [
+          "Bind distinct in-scope compatible locals to output and inout formals."
+        ]
+      },
+      "id": "SV-2023-16-LOCAL-INOUT-OUTPUT-ACTUAL-RESTRICTIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a narrowing actual-local type to expose the copy-out cast."
+        ],
+        "negative": [
+          "Complete a match while an output or inout formal remains unassigned."
+        ],
+        "notes": [],
+        "positive": [
+          "Produce two matching threads with different output-formal values and observe independent cast copy-outs."
+        ]
+      },
+      "id": "SV-2023-16-LOCAL-INOUT-OUTPUT-MATCH-COPYOUT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast an otherwise identical sequence having only input locals."
+        ],
+        "negative": [
+          "Instantiate a sequence with an output or inout local formal whose body admits an empty match."
+        ],
+        "notes": [],
+        "positive": [
+          "Use an inout formal in a sequence guaranteed to have a nonempty match."
+        ]
+      },
+      "id": "SV-2023-16-LOCAL-INOUT-OUTPUT-NO-EMPTY-MATCH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Assign it on one local-flow branch but not another."
+        ],
+        "negative": [
+          "Pass an unassigned outer local to input and inout formals."
+        ],
+        "notes": [],
+        "positive": [
+          "Assign the outer local before passing it to a local input formal."
+        ]
+      },
+      "id": "SV-2023-16-LOCAL-INPUT-INOUT-ACTUAL-MUST-BE-ASSIGNED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise inout initialization with width conversion."
+        ],
+        "negative": [
+          "Bind a type-incompatible actual."
+        ],
+        "notes": [],
+        "positive": [
+          "Use an input formal to initialize a declared local and verify formal initialization occurs first with formal-type casting."
+        ]
+      },
+      "id": "SV-2023-16-LOCAL-INPUT-INOUT-INITIALIZATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast an instance having only output local formals."
+        ],
+        "negative": [
+          "Apply triggered and matched separately to instances having input and inout local formals."
+        ],
+        "notes": [],
+        "positive": [
+          "Apply a method to a sequence instance without input or inout local formals where otherwise legal."
+        ]
+      },
+      "id": "SV-2023-16-LOCAL-INPUT-INOUT-NO-SEQUENCE-METHODS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use separate attempts to verify no value carries over."
+        ],
+        "negative": [
+          "Read the output formal before it is assigned."
+        ],
+        "notes": [],
+        "positive": [
+          "Assign a local output along the matching path before completion."
+        ]
+      },
+      "id": "SV-2023-16-LOCAL-OUTPUT-STARTS-UNASSIGNED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place a local formal after a differently typed nonlocal formal."
+        ],
+        "negative": [
+          "Use local without an explicit type, infer its type from a prior formal, or specify a direction without local."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare explicitly typed local input, inout, and output formals, plus one with inferred input direction."
+        ]
+      },
+      "id": "SV-2023-16-LOCAL-SEQUENCE-FORMAL-DECLARATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Override the local input default at instantiation."
+        ],
+        "negative": [
+          "Declare a default for a local inout formal and separately for a local output formal."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare and omit an actual for a defaulted local input formal."
+        ]
+      },
+      "id": "SV-2023-16-LOCAL-SEQUENCE-FORMAL-DEFAULT-ACTUAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Terminate propagation first with explicit local and separately with an explicit type."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare one local typed formal followed by multiple identifier-only formals and verify inherited attributes."
+        ]
+      },
+      "id": "SV-2023-16-LOCAL-SEQUENCE-FORMAL-PROPAGATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a compound assignment for the reassignment."
+        ],
+        "negative": [
+          "Assign the local from outside its declaring sequence/property scope."
+        ],
+        "notes": [],
+        "positive": [
+          "Assign a local at one subsequence endpoint and reassign it at a later endpoint."
+        ]
+      },
+      "id": "SV-2023-16-LOCAL-VARIABLE-ASSIGN-REASSIGN"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use plain '=' as the first assignment, which does not require an old value."
+        ],
+        "negative": [
+          "Read, increment, or compound-assign an unassigned local."
+        ],
+        "notes": [],
+        "positive": [
+          "Initialize or assign a local before reading, incrementing, or compound-assigning it."
+        ]
+      },
+      "id": "SV-2023-16-LOCAL-VARIABLE-ASSIGNED-BEFORE-REFERENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Mix local formals and declared locals to verify all formal initializations occur first."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Run overlapping attempts and verify fresh copies, then observe ordered initialization where a later local depends on an earlier initialized local."
+        ]
+      },
+      "id": "SV-2023-16-LOCAL-VARIABLE-ATTEMPT-INITIALIZATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use both mechanisms in one named sequence to observe initialization ordering."
+        ],
+        "negative": [
+          "Declare an assertion local in a context allowing neither mechanism."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare locals through both a local formal and an assertion variable declaration in sequence/property contexts."
+        ]
+      },
+      "id": "SV-2023-16-LOCAL-VARIABLE-DECLARATION-MECHANISMS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a local to select a dynamic index after assignment."
+        ],
+        "negative": [
+          "Use a local variable in a clocking event expression."
+        ],
+        "notes": [],
+        "positive": [
+          "Use locals in arithmetic, bit-select, part-select, and array-index expressions."
+        ]
+      },
+      "id": "SV-2023-16-LOCAL-VARIABLE-EXPRESSION-USES-NO-CLOCK"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare paths where the local flows out and where it does not."
+        ],
+        "negative": [
+          "Reference it immediately after a point from which it does not flow."
+        ],
+        "notes": [],
+        "positive": [
+          "Reassign a nonflowing local after the subsequence before referencing it."
+        ]
+      },
+      "id": "SV-2023-16-LOCAL-VARIABLE-FLOW-UNASSIGNMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Declare an uninitialized local and verify it starts unassigned rather than at a type default."
+        ],
+        "negative": [
+          "Reference an earlier uninitialized local from a later initializer."
+        ],
+        "notes": [],
+        "positive": [
+          "Initialize one local and use it in a later local's initializer."
+        ]
+      },
+      "id": "SV-2023-16-LOCAL-VARIABLE-INITIALIZATION-DEPENDENCY-UNASSIGNED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use nested named sequences while respecting legal lexical/argument flow."
+        ],
+        "negative": [
+          "Reference it through a hierarchical path from another scope."
+        ],
+        "notes": [],
+        "positive": [
+          "Reference a local lexically within its declaring sequence/property."
+        ]
+      },
+      "id": "SV-2023-16-LOCAL-VARIABLE-NO-HIERARCHICAL-REFERENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multiple source matches carrying distinct local valuations."
+        ],
+        "negative": [
+          "Pass or flow a local in a case forbidden for triggered."
+        ],
+        "notes": [],
+        "positive": [
+          "Pass and flow out locals under each triggered-valid condition."
+        ]
+      },
+      "id": "SV-2023-16-MATCHED-INSTANCE-LOCAL-PASSING-FLOW"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Produce multiple matches with identical valuations."
+        ],
+        "negative": [
+          "Merge or arbitrarily choose among distinct valuations."
+        ],
+        "notes": [],
+        "positive": [
+          "Produce same-destination-cycle source matches carrying different locals and observe separate destination continuations."
+        ]
+      },
+      "id": "SV-2023-16-MATCHED-MULTIMATCH-LOCAL-THREADS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast direct matched use with direct triggered use."
+        ],
+        "negative": [
+          "Pass matched to $sampled, $past, $rose, or another sampled-value function."
+        ],
+        "notes": [],
+        "positive": [
+          "Use matched directly in a sequence expression."
+        ]
+      },
+      "id": "SV-2023-16-MATCHED-NOT-IN-SAMPLED-VALUE-FUNCTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Disable in the same time step after Observed maturation."
+        ],
+        "negative": [
+          "Cancel or alter the matured attempt due to a later disable."
+        ],
+        "notes": [],
+        "positive": [
+          "Mature an attempt, then disable its assertion and containing scopes while it completes."
+        ]
+      },
+      "id": "SV-2023-16-MATURED-ASSERTION-IMMUNE-TO-DISABLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Reenter the branch to create a new independent attempt while an old one remains active."
+        ],
+        "negative": [
+          "Cancel/change the matured attempt because the procedure no longer reaches the statement."
+        ],
+        "notes": [],
+        "positive": [
+          "Mature an attempt, then stop taking the procedural branch while the temporal property completes using captured values."
+        ]
+      },
+      "id": "SV-2023-16-MATURED-PROCEDURAL-ASSERTION-INDEPENDENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Apply the rewrite within a multiple concatenation."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Rewrite a [*0:1] operand into explicit empty and one-match alternatives before concatenation and compare behavior."
+        ]
+      },
+      "id": "SV-2023-16-MIXED-EMPTY-NONEMPTY-REWRITE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Replace the flowed clock in one nested subexpression with a new explicit clock."
+        ],
+        "negative": [
+          "Stop clock flow at implication or apply only to one branch."
+        ],
+        "notes": [],
+        "positive": [
+          "Omit repeated clocks across every listed linear operator and in every branch operator, then compare explicit-clock equivalents."
+        ]
+      },
+      "id": "SV-2023-16-MULTICLOCK-CLOCK-FLOW"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use coincident c and d ticks and multiple matches of x ##1 y."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare both forms across varying c/d phase relationships and x/y outcomes."
+        ]
+      },
+      "id": "SV-2023-16-MULTICLOCK-CONCAT-IMPLICATION-ADJOINT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use distinct clocks for condition, then branch, and else branch."
+        ],
+        "negative": [
+          "Start at a strictly later tick when a selected-branch tick is coincident, or evaluate the unselected branch."
+        ],
+        "notes": [],
+        "positive": [
+          "Select true and false branches whose clocks coincide and do not coincide with the condition clock."
+        ]
+      },
+      "id": "SV-2023-16-MULTICLOCK-IF-ELSE-BRANCH-ALIGNMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Have multiple leading clocks tick simultaneously."
+        ],
+        "negative": [
+          "Share one initialized copy across different leading-clock subproperties or initialize before a leading tick."
+        ],
+        "notes": [],
+        "positive": [
+          "Exercise one and multiple semantic leading clocks whose first ticks occur at different times."
+        ]
+      },
+      "id": "SV-2023-16-MULTICLOCK-LOCAL-INITIALIZATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Generate several source matches between destination ticks."
+        ],
+        "negative": [
+          "Use triggered for a differing source endpoint clock."
+        ],
+        "notes": [],
+        "positive": [
+          "Detect source matches in a destination sequence with a different clock."
+        ]
+      },
+      "id": "SV-2023-16-MULTICLOCK-MATCHED-ENDPOINT-CROSSING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Add a leading antecedent clock that makes otherwise distinct branch clocks uniquely led."
+        ],
+        "negative": [
+          "Use one with multiple distinct semantic leading clocks."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a multiclock maximal property whose branches resolve to one semantic leading clock."
+        ]
+      },
+      "id": "SV-2023-16-MULTICLOCK-MAXIMAL-PROPERTY-UNIQUE-LEADING-CLOCK"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Hide an empty-admitting component through named-sequence expansion before flattening."
+        ],
+        "negative": [
+          "Make either maximal component empty-only or optionally empty."
+        ],
+        "notes": [],
+        "positive": [
+          "Concatenate distinct-clock components that each require a nonempty match."
+        ]
+      },
+      "id": "SV-2023-16-MULTICLOCK-MAXIMAL-SUBSEQUENCE-NONEMPTY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use coincident antecedent endpoint and consequent clock event."
+        ],
+        "negative": [
+          "Use a coincident consequent tick or skip the nearest strict tick."
+        ],
+        "notes": [],
+        "positive": [
+          "Use multiple antecedent matches and verify each consequent at the nearest strictly later tick."
+        ]
+      },
+      "id": "SV-2023-16-MULTICLOCK-NONOVERLAPPED-IMPLICATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare |-> and |=> when no consequent tick coincides."
+        ],
+        "negative": [
+          "Always require a strictly later tick or evaluate on the antecedent clock."
+        ],
+        "notes": [],
+        "positive": [
+          "Test coincident and noncoincident consequent-clock ticks after multiple antecedent endpoints."
+        ]
+      },
+      "id": "SV-2023-16-MULTICLOCK-OVERLAPPED-IMPLICATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an unclocked outer property whose clock is derived from context."
+        ],
+        "negative": [
+          "Classify a property whose explicit and all nested clocks are identical as multiclocked solely due to nesting."
+        ],
+        "notes": [],
+        "positive": [
+          "Build each multiclock case: differing subproperty clock and multiclock sequence operand."
+        ]
+      },
+      "id": "SV-2023-16-MULTICLOCK-PROPERTY-DEFINITION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use and/or operands containing both inherited and concrete clocks, then apply an outer clock."
+        ],
+        "negative": [
+          "Union implication consequent clocks, preserve branch clocks for if/case, or resolve instances before actual substitution."
+        ],
+        "notes": [],
+        "positive": [
+          "Compute sets for every listed operator, nested explicit clocks, and property instances."
+        ]
+      },
+      "id": "SV-2023-16-MULTICLOCK-PROPERTY-SEMANTIC-LEADING-CLOCK-SET"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use distinct clocks with coincident transfer ticks."
+        ],
+        "negative": [
+          "Require all possible sequence matches or return a non-Boolean result."
+        ],
+        "notes": [],
+        "positive": [
+          "Evaluate multiclock sequences with and without a match from the attempt point."
+        ]
+      },
+      "id": "SV-2023-16-MULTICLOCK-SEQUENCE-AS-PROPERTY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Have several second-clock ticks between first-clock ticks."
+        ],
+        "negative": [
+          "Start at a coincident second-clock tick rather than a strictly subsequent one."
+        ],
+        "notes": [],
+        "positive": [
+          "Use coincident and offset distinct clocks, plus identical clocks."
+        ]
+      },
+      "id": "SV-2023-16-MULTICLOCK-SEQUENCE-CONCAT-ONE-DELAY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare ##0 and ##1 when the endpoint coincides with the second clock."
+        ],
+        "negative": [
+          "Skip a coincident second-clock tick."
+        ],
+        "notes": [],
+        "positive": [
+          "Use coincident and noncoincident distinct clocks, plus identical clocks."
+        ]
+      },
+      "id": "SV-2023-16-MULTICLOCK-SEQUENCE-CONCAT-ZERO-DELAY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use identical explicit clocks, which do not create differently clocked operands."
+        ],
+        "negative": [
+          "Combine them using ##2, intersect, and each other sequence composition operator."
+        ],
+        "notes": [],
+        "positive": [
+          "Combine distinct-clock sequences using ##0 and ##1."
+        ]
+      },
+      "id": "SV-2023-16-MULTICLOCK-SEQUENCE-ONLY-ZERO-ONE-CONCAT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Wrap a sequence already having a concrete leading clock in another explicit clock."
+        ],
+        "negative": [
+          "Take the second concatenation operand's clock or replace a noninherited inner leading clock with an outer clock."
+        ],
+        "notes": [],
+        "positive": [
+          "Compute leading clocks for unclocked, explicitly clocked, parenthesized, and nested ##0/##1 sequences."
+        ]
+      },
+      "id": "SV-2023-16-MULTICLOCK-SEQUENCE-SEMANTIC-LEADING-CLOCK"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a multiclock source whose starting clock differs but ending clock matches context."
+        ],
+        "negative": [
+          "Apply triggered across differing endpoint/context clocks."
+        ],
+        "notes": [],
+        "positive": [
+          "Apply triggered where source ending and destination context clocks match."
+        ]
+      },
+      "id": "SV-2023-16-MULTICLOCK-TRIGGERED-SAME-CLOCK"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multiple x/y matches and a d tick coincident with y."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare both forms across coincident and offset c/d clock ticks."
+        ]
+      },
+      "id": "SV-2023-16-MULTICLOCK-ZERO-CONCAT-IMPLICATION-ADJOINT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place tasks in nested procedural control flow and observe only those reached."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Select an action block containing two severity tasks and observe both executions."
+        ]
+      },
+      "id": "SV-2023-16-MULTIPLE-SEVERITY-TASKS-EXECUTE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Resolve nested same-named properties in legal scopes."
+        ],
+        "negative": [
+          "Declare one in a scope not permitted by property declaration grammar."
+        ],
+        "notes": [
+          "Following list anchors should extend this entry."
+        ],
+        "positive": [
+          "Declare and use a named property in each listed legal scope."
+        ]
+      },
+      "id": "SV-2023-16-NAMED-PROPERTY-DECLARATION-SCOPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use same-named variables in declaration and instantiation scopes."
+        ],
+        "negative": [
+          "Resolve a nonformal body name from the instantiation scope instead."
+        ],
+        "notes": [],
+        "positive": [
+          "Instantiate via local and hierarchical names and reference a declaration-scope nonformal variable."
+        ]
+      },
+      "id": "SV-2023-16-NAMED-PROPERTY-HIERARCHICAL-INSTANTIATION-RESOLUTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Construct direct and indirect recursive dependencies through bodies, defaults, and actuals."
+        ],
+        "negative": [
+          "Instantiate in property_expr position when expansion produces an illegal disable iff."
+        ],
+        "notes": [],
+        "positive": [
+          "Forward-instantiate a nonrecursive property in property_spec and legal property_expr positions."
+        ]
+      },
+      "id": "SV-2023-16-NAMED-PROPERTY-INSTANTIATION-CONTEXT-RECURSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Resolve same-named sequences in nested legal scopes."
+        ],
+        "negative": [
+          "Declare a named sequence in a scope not permitted by the declaration grammar."
+        ],
+        "notes": [
+          "Additional immediately following list items may extend this catalog entry."
+        ],
+        "positive": [
+          "Declare and reference a named sequence in each listed scope."
+        ]
+      },
+      "id": "SV-2023-16-NAMED-SEQUENCE-DECLARATION-SCOPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use names that resolve differently at declaration and instance scope before substitution."
+        ],
+        "negative": [
+          "Provide actuals whose substitution produces an illegal flattened sequence."
+        ],
+        "notes": [],
+        "positive": [
+          "Compare an instance with its manually flattened legal sequence."
+        ]
+      },
+      "id": "SV-2023-16-NAMED-SEQUENCE-FLATTENING-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a forward hierarchical reference where legal name resolution permits it."
+        ],
+        "negative": [
+          "Instantiate it in a context accepting none of these syntactic forms."
+        ],
+        "notes": [],
+        "positive": [
+          "Instantiate a named sequence before its declaration, by hierarchical name, in a sequence method call, and as an event expression."
+        ]
+      },
+      "id": "SV-2023-16-NAMED-SEQUENCE-INSTANTIATION-CONTEXTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the same identifier in a default and an overriding explicit actual."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Shadow one name between declaration and instance scopes and verify body/default versus explicit-actual resolution."
+        ]
+      },
+      "id": "SV-2023-16-NAMED-SEQUENCE-NAME-RESOLUTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a diamond-shaped acyclic dependency graph."
+        ],
+        "negative": [
+          "Create direct recursion, indirect body recursion, a default-actual cycle, and an actual-argument cycle."
+        ],
+        "notes": [],
+        "positive": [
+          "Instantiate an acyclic chain of named sequences."
+        ]
+      },
+      "id": "SV-2023-16-NAMED-SEQUENCE-NO-CYCLIC-DEPENDENCY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Reference a sequence whose first match can be empty."
+        ],
+        "negative": [
+          "Begin the referenced sequence one tick earlier or later."
+        ],
+        "notes": [],
+        "positive": [
+          "Reach a named subsequence after a delay and satisfy its first term on the reached tick."
+        ]
+      },
+      "id": "SV-2023-16-NAMED-SUBSEQUENCE-REFERENCE-START"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Nest more than two mixed synchronous/asynchronous operators."
+        ],
+        "negative": [
+          "Give the innermost simultaneous abort priority."
+        ],
+        "notes": [],
+        "positive": [
+          "Make outer accept and inner reject conditions true simultaneously, then make the inner condition true first."
+        ]
+      },
+      "id": "SV-2023-16-NESTED-ABORT-LEXICAL-PRECEDENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use nexttime[0] and s_nexttime[0] solely to align to a different clock."
+        ],
+        "negative": [
+          "Count the off-clock evaluation instant as an actual tick."
+        ],
+        "notes": [],
+        "positive": [
+          "Start on and between clock ticks and compare n=0, n=1, and larger indices."
+        ]
+      },
+      "id": "SV-2023-16-NEXTTIME-CLOCK-ALIGNMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a constant expression evaluating to zero."
+        ],
+        "negative": [
+          "Use a negative, real, unknown, or runtime-variable index."
+        ],
+        "notes": [],
+        "positive": [
+          "Use zero and positive integer parameters/constants."
+        ]
+      },
+      "id": "SV-2023-16-NEXTTIME-INDEX-CONSTANT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a named instance wrapping an unclocked subordinate under one explicit declaration clock."
+        ],
+        "negative": [
+          "Assert an unclocked expression or composite rather than such an instance."
+        ],
+        "notes": [],
+        "positive": [
+          "Assert a named instance whose declaration uniquely determines its clock."
+        ]
+      },
+      "id": "SV-2023-16-NO-CLOCK-SOURCE-REQUIRES-UNIQUE-CLOCKED-INSTANCE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Attempt to write restrict in immediate-assertion statement form."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a legal concurrent restrict property statement."
+        ]
+      },
+      "id": "SV-2023-16-NO-IMMEDIATE-RESTRICT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Read the local only after a valid composite flow-out."
+        ],
+        "negative": [
+          "Assign a local in one operand and read it in the sibling operand."
+        ],
+        "notes": [],
+        "positive": [
+          "Use thread-private locals independently or assign before the branch so the value flows into both."
+        ]
+      },
+      "id": "SV-2023-16-NO-SIBLING-BRANCH-LOCAL-ACCESS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "End exactly at the last iterative match and separately on a later false tick."
+        ],
+        "negative": [
+          "Allow another operand match before the repetition endpoint."
+        ],
+        "notes": [],
+        "positive": [
+          "Complete the required matches and concatenate a later term at various ticks before the next operand match."
+        ]
+      },
+      "id": "SV-2023-16-NONCONSECUTIVE-REPETITION-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use [*0] to trigger the empty-match nonoverlapped timing rule."
+        ],
+        "negative": [
+          "Use an antecedent that can never match."
+        ],
+        "notes": [],
+        "positive": [
+          "Use nonempty and empty-only antecedents with |=>."
+        ]
+      },
+      "id": "SV-2023-16-NONOVERLAPPED-ANTECEDENT-AT-LEAST-ONE-MATCH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an empty antecedent whose consequent clock differs from the antecedent clock."
+        ],
+        "negative": [
+          "Always delay an empty-match consequent by one tick."
+        ],
+        "notes": [],
+        "positive": [
+          "Compare overlapped and nonoverlapped starts for nonempty matches; test an empty match in single- and multiclock contexts."
+        ]
+      },
+      "id": "SV-2023-16-NONOVERLAPPED-IMPLICATION-CONSEQUENT-START"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use declaration- and instance-scope names requiring resolution before substitution."
+        ],
+        "negative": [
+          "Choose actuals whose substitution yields an illegal property."
+        ],
+        "notes": [],
+        "positive": [
+          "Compare a named instance with its manually flattened legal property."
+        ]
+      },
+      "id": "SV-2023-16-NONRECURSIVE-PROPERTY-FLATTENING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Toggle asynchronous condition between clocks and synchronous condition only between clocks."
+        ],
+        "negative": [
+          "Classify an abort-forced result as nonvacuous."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a nonvacuous operand with abort always false for all four forms."
+        ]
+      },
+      "id": "SV-2023-16-NONVACUOUS-ABORT-PROPERTIES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the first/current tick and a zero-width range."
+        ],
+        "negative": [
+          "Count a later nonvacuous attempt after an earlier failure or no nonvacuous attempt."
+        ],
+        "notes": [],
+        "positive": [
+          "Place the first nonvacuous operand at different in-range ticks after only holding prior attempts."
+        ]
+      },
+      "id": "SV-2023-16-NONVACUOUS-ALWAYS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Assert disable at the operand completion time step."
+        ],
+        "negative": [
+          "Classify a disabled/preempted attempt as nonvacuous."
+        ],
+        "notes": [],
+        "positive": [
+          "Keep disable false through a nonvacuous operand evaluation."
+        ]
+      },
+      "id": "SV-2023-16-NONVACUOUS-DISABLE-IFF"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a witness at the first in-range tick."
+        ],
+        "negative": [
+          "Count a nonvacuous attempt after an earlier hold or with no nonvacuous witness."
+        ],
+        "notes": [],
+        "positive": [
+          "Place the first holding/nonvacuous witness at several ticks."
+        ]
+      },
+      "id": "SV-2023-16-NONVACUOUS-EVENTUALLY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multiple candidate antecedent matches."
+        ],
+        "negative": [
+          "Classify no-antecedent-match followed-by as nonvacuous."
+        ],
+        "notes": [],
+        "positive": [
+          "Exercise both forms with matching antecedents and vacuous/nonvacuous consequents."
+        ]
+      },
+      "id": "SV-2023-16-NONVACUOUS-FOLLOWED-BY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multiple antecedent matches with differing consequent nonvacuity."
+        ],
+        "negative": [
+          "Classify a no-match implication as nonvacuous."
+        ],
+        "notes": [],
+        "positive": [
+          "Use matching antecedents with vacuous and nonvacuous consequents for both implication forms."
+        ]
+      },
+      "id": "SV-2023-16-NONVACUOUS-IMPLICATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "For iff, make exactly one operand nonvacuous."
+        ],
+        "negative": [
+          "Classify false-antecedent implies as nonvacuous."
+        ],
+        "notes": [],
+        "positive": [
+          "Exercise all truth/nonvacuity combinations of both operands."
+        ]
+      },
+      "id": "SV-2023-16-NONVACUOUS-IMPLIES-IFF"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use false condition on if without else."
+        ],
+        "negative": [
+          "Require both and/or operands nonvacuous or count an unselected branch."
+        ],
+        "notes": [],
+        "positive": [
+          "Exercise vacuous/nonvacuous operand combinations and both conditional branches."
+        ]
+      },
+      "id": "SV-2023-16-NONVACUOUS-LOGICAL-CONDITIONAL-PROPERTIES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use index zero according to alignment semantics."
+        ],
+        "negative": [
+          "Classify as nonvacuous without enough clock events or with a vacuous target."
+        ],
+        "notes": [],
+        "positive": [
+          "Exercise weak/strong indexed/unindexed forms with sufficient clocks and nonvacuous targets."
+        ]
+      },
+      "id": "SV-2023-16-NONVACUOUS-NEXTTIME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Provide multiple matching items and require first-match selection."
+        ],
+        "negative": [
+          "Use a nonselected branch's nonvacuity or classify no-match/no-default as nonvacuous."
+        ],
+        "notes": [],
+        "positive": [
+          "Exercise first/later matching items and default with nonvacuous/vacuous selected properties."
+        ]
+      },
+      "id": "SV-2023-16-NONVACUOUS-PROPERTY-CASE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use default and omitted actuals."
+        ],
+        "negative": [
+          "Classify based on declaration syntax without substitution."
+        ],
+        "notes": [],
+        "positive": [
+          "Instantiate the same property with actuals yielding vacuous and nonvacuous expanded forms."
+        ]
+      },
+      "id": "SV-2023-16-NONVACUOUS-PROPERTY-INSTANCE-SUBSTITUTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a sequence expression whose match fails immediately."
+        ],
+        "negative": [
+          "Call a weak sequence vacuous solely because no future tick exists."
+        ],
+        "notes": [
+          "Following anchors extend recursive nonvacuity rules for compound properties."
+        ],
+        "positive": [
+          "Classify successful, failed, and pending evaluations of each base form as nonvacuous."
+        ]
+      },
+      "id": "SV-2023-16-NONVACUOUS-SEQUENCE-PROPERTY-FORMS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Qualify at the starting clock with no prior events."
+        ],
+        "negative": [
+          "Allow prior right hold, prior left failure, or right-only nonvacuity for until_with."
+        ],
+        "notes": [],
+        "positive": [
+          "Exercise each form with left/right nonvacuous at first and later qualifying clocks."
+        ]
+      },
+      "id": "SV-2023-16-NONVACUOUS-UNTIL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Attempt a flush only after maturation and verify it cannot cancel the report."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Trigger an observed deferred assertion and observe its action in Reactive after maturation."
+        ]
+      },
+      "id": "SV-2023-16-OBSERVED-DEFERRED-REPORT-MATURATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Assign before the or so its value flows into and out of both operands."
+        ],
+        "negative": [
+          "Assign it in only one operand and reference it after the composite."
+        ],
+        "notes": [],
+        "positive": [
+          "Assign a local in both or operands and reference it in each resulting continuation."
+        ]
+      },
+      "id": "SV-2023-16-OR-LOCAL-FLOW-INTERSECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Have both operands assign the same value."
+        ],
+        "negative": [
+          "Merge differing or-branch values into one valuation."
+        ],
+        "notes": [],
+        "positive": [
+          "Assign different values in each matching operand and observe distinct continuation threads."
+        ]
+      },
+      "id": "SV-2023-16-OR-LOCAL-MATCH-THREAD-VALUATIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a leading clock with rapidly successive occurrences."
+        ],
+        "negative": [
+          "Apply single-attempt initial semantics without explicit always."
+        ],
+        "notes": [
+          "Following anchor must complete the explicit equivalent form."
+        ],
+        "positive": [
+          "Compare attempt and action behavior of the two completed equivalent forms."
+        ]
+      },
+      "id": "SV-2023-16-OUTSIDE-PROCEDURE-ASSERT-ALWAYS-EQUIVALENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Allow overlapping attempts from successive clock events."
+        ],
+        "negative": [
+          "Start only one attempt or omit an occurrence."
+        ],
+        "notes": [],
+        "positive": [
+          "Place each statement kind outside procedures and count attempts over repeated leading clocks."
+        ]
+      },
+      "id": "SV-2023-16-OUTSIDE-PROCEDURE-CONCURRENT-ALWAYS-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use overlapping evaluation attempts."
+        ],
+        "negative": [
+          "Treat the outside form as a one-shot cover."
+        ],
+        "notes": [],
+        "positive": [
+          "Compare attempts, coverage counts, and pass actions for both forms."
+        ]
+      },
+      "id": "SV-2023-16-OUTSIDE-PROCEDURE-COVER-ALWAYS-EQUIVALENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an antecedent that admits both empty and nonempty matches where otherwise legal."
+        ],
+        "negative": [
+          "Use an impossible or empty-only antecedent."
+        ],
+        "notes": [],
+        "positive": [
+          "Use an antecedent admitting a nonempty match."
+        ]
+      },
+      "id": "SV-2023-16-OVERLAPPED-ANTECEDENT-NONDEGENERATE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Generate same-start matches ending on different ticks."
+        ],
+        "negative": [
+          "Fail a no-match attempt or return true when any match's consequent fails."
+        ],
+        "notes": [],
+        "positive": [
+          "Exercise zero, one, and multiple antecedent matches, with all consequents succeeding."
+        ]
+      },
+      "id": "SV-2023-16-OVERLAPPED-IMPLICATION-ALL-MATCHES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare omitted expression2 with explicit 1'b1."
+        ],
+        "negative": [
+          "Use an expression prohibited in assertions."
+        ],
+        "notes": [],
+        "positive": [
+          "Use compound assertion-legal data and gating expressions."
+        ]
+      },
+      "id": "SV-2023-16-PAST-EXPRESSION-ARGUMENTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change the automatic selector between iterations within one clock event."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use an automatic loop index in a $past bit-select and verify each iteration accesses the corresponding bit's past value."
+        ]
+      },
+      "id": "SV-2023-16-PAST-EXPRESSION1-AUTOMATIC-VARIABLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use it in a nested arithmetic or bit-select expression."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use $past in procedural assignment, condition, and assertion expressions."
+        ]
+      },
+      "id": "SV-2023-16-PAST-GENERAL-EXPRESSION-USE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast a legal automatic reference in expression1."
+        ],
+        "negative": [
+          "Reference an automatic variable in expression2 and separately in the clocking event."
+        ],
+        "notes": [],
+        "positive": [
+          "Use static variables in the explicit clock and gating expression."
+        ]
+      },
+      "id": "SV-2023-16-PAST-NO-AUTOMATIC-CLOCK-OR-GATE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Omit multiple consecutive intermediate arguments."
+        ],
+        "negative": [
+          "Remove the comma placeholder for an omitted intermediate argument."
+        ],
+        "notes": [],
+        "positive": [
+          "Supply a later clock argument while omitting intermediate tick and gate arguments using empty comma positions."
+        ]
+      },
+      "id": "SV-2023-16-PAST-OMITTED-ARGUMENT-COMMAS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a sparse gating expression to distinguish gated from ungated tick counts."
+        ],
+        "negative": [
+          "Interpret expression2 as a returned-data expression rather than a clock gate."
+        ],
+        "notes": [],
+        "positive": [
+          "Exercise each optional argument alone where syntax permits and all three together."
+        ]
+      },
+      "id": "SV-2023-16-PAST-OPTIONAL-ARGUMENT-ROLES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Request deeper history than exists and verify the default sampled value."
+        ],
+        "negative": [
+          "Count a current or ungated clock tick toward the strictly prior gated count."
+        ],
+        "notes": [],
+        "positive": [
+          "Use gated clock occurrences and verify the kth qualifying prior sample is returned."
+        ]
+      },
+      "id": "SV-2023-16-PAST-RETURN-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an elaboration-time constant expression rather than a literal."
+        ],
+        "negative": [
+          "Use zero, a negative value, or a runtime variable."
+        ],
+        "notes": [],
+        "positive": [
+          "Use omitted, literal 1, and parameter-derived larger tick counts."
+        ]
+      },
+      "id": "SV-2023-16-PAST-TICK-COUNT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast a captured automatic with a static variable referenced by the action."
+        ],
+        "negative": [
+          "Assign, increment, or pass them as modifiable output/ref from the action block."
+        ],
+        "notes": [],
+        "positive": [
+          "Read captured automatic/const values in delayed pass and fail actions."
+        ]
+      },
+      "id": "SV-2023-16-PROCEDURAL-ACTION-BLOCK-CAPTURED-INPUTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Queue several attempts in one time step with different automatic values."
+        ],
+        "negative": [
+          "Resample automatic/const values later or snapshot static values at queue time."
+        ],
+        "notes": [],
+        "positive": [
+          "Queue attempts while const/automatic values vary and static values change before sampling."
+        ]
+      },
+      "id": "SV-2023-16-PROCEDURAL-ASSERTION-ARGUMENT-SNAPSHOT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Have no procedural or default clock and require a legality failure."
+        ],
+        "negative": [
+          "Prefer default clock when procedural context provides a legal inferred clock."
+        ],
+        "notes": [],
+        "positive": [
+          "Exercise unique procedural inference and fallback to an enclosing default clock."
+        ]
+      },
+      "id": "SV-2023-16-PROCEDURAL-ASSERTION-CLOCK-FALLBACK"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use coincident clock edges and noninteger phase offsets."
+        ],
+        "negative": [
+          "Evaluate on every assertion tick without a queued instance or collapse two pending instances into one."
+        ],
+        "notes": [],
+        "positive": [
+          "Run assertion clock at twice and half the procedure clock and count evaluations as specified."
+        ]
+      },
+      "id": "SV-2023-16-PROCEDURAL-ASSERTION-CROSS-CLOCK-MULTIPLICITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Execute the assertion again after the flush and verify the new instance matures."
+        ],
+        "negative": [
+          "Allow a flushed pending instance to mature."
+        ],
+        "notes": [],
+        "positive": [
+          "Queue an instance, reach a flush point before maturation, and verify no attempt starts."
+        ]
+      },
+      "id": "SV-2023-16-PROCEDURAL-ASSERTION-FLUSH-CLEARS-PENDING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Resume and queue a new assertion in the same activation after the flush."
+        ],
+        "negative": [
+          "Treat ordinary uninterrupted statements as flush points."
+        ],
+        "notes": [],
+        "positive": [
+          "Queue pending instances before each of the three flush-point events and verify clearing."
+        ]
+      },
+      "id": "SV-2023-16-PROCEDURAL-ASSERTION-FLUSH-POINTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Queue many instances before the same clock event."
+        ],
+        "negative": [
+          "Start before Observed, discard an off-clock mature instance, or wait past the next clock."
+        ],
+        "notes": [],
+        "positive": [
+          "Queue instances on and off their leading-clock time steps and observe immediate versus deferred starts."
+        ]
+      },
+      "id": "SV-2023-16-PROCEDURAL-ASSERTION-MATURATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an automatic variable in an assertion argument rather than the clocking event."
+        ],
+        "negative": [
+          "Reference a procedure's automatic variable in the assertion clocking event."
+        ],
+        "notes": [],
+        "positive": [
+          "Use static variables or explicit events in clocking events."
+        ]
+      },
+      "id": "SV-2023-16-PROCEDURAL-ASSERTION-NO-AUTOMATIC-CLOCK"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare multiple Active iterations before Observed with an Active iteration after Reactive."
+        ],
+        "negative": [
+          "Report transient duplicates from an always_comb reactivation that is flushed before maturation."
+        ],
+        "notes": [],
+        "positive": [
+          "Modify a dependency in Reactive to force a new Active pass and observe a second queued/matured attempt."
+        ]
+      },
+      "id": "SV-2023-16-PROCEDURAL-ASSERTION-REGION-LOOP-REEVALUATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place one inside loops and conditionals."
+        ],
+        "negative": [
+          "Reject a concurrent assertion solely because it appears in procedural code."
+        ],
+        "notes": [],
+        "positive": [
+          "Embed assert, assume, cover, and restrict forms where procedurally legal."
+        ]
+      },
+      "id": "SV-2023-16-PROCEDURAL-CONCURRENT-ASSERTION-PERMITTED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Execute from a loop with identical and differing argument values."
+        ],
+        "negative": [
+          "Evaluate immediately at each source statement or collapse all executions into one pending instance."
+        ],
+        "notes": [],
+        "positive": [
+          "Execute a procedural assertion repeatedly in one time step with changing automatic arguments and observe queued snapshots."
+        ]
+      },
+      "id": "SV-2023-16-PROCEDURAL-CONCURRENT-ASSERTION-QUEUE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an automatic conditional variable, whose current value also governs activation."
+        ],
+        "negative": [
+          "Implicitly sample an ordinary procedural conditional."
+        ],
+        "notes": [],
+        "positive": [
+          "Change an enable during the procedure and compare `if(en)` with `if($sampled(en))` queueing."
+        ]
+      },
+      "id": "SV-2023-16-PROCEDURAL-CONDITIONAL-CURRENT-VALUES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an edge expression with iff and references only in assertions elsewhere."
+        ],
+        "negative": [
+          "Add blocking timing, a second event control, two qualifying expressions, a nested proper edge expression, or a disallowed body use."
+        ],
+        "notes": [],
+        "positive": [
+          "Infer from each allowed event-expression form while references occur only in permitted clock/assertion/clocking-signal uses."
+        ]
+      },
+      "id": "SV-2023-16-PROCEDURAL-CONTEXT-CLOCK-INFERENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare selectors and items containing X or Z."
+        ],
+        "negative": [
+          "Use casex/casez wildcard semantics for the plain property case."
+        ],
+        "notes": [],
+        "positive": [
+          "Apply ordinary case matching including 4-state values."
+        ]
+      },
+      "id": "SV-2023-16-PROPERTY-CASE-COMPARISON"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Provide multiple matching labels and verify first-item termination."
+        ],
+        "negative": [
+          "Evaluate multiple matching branches or consult default during the linear search."
+        ],
+        "notes": [],
+        "positive": [
+          "Exercise first, later, default, and no-match/no-default paths."
+        ]
+      },
+      "id": "SV-2023-16-PROPERTY-CASE-EVALUATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place the single default before nondefault items."
+        ],
+        "negative": [
+          "Use two default items."
+        ],
+        "notes": [],
+        "positive": [
+          "Use zero or one default item."
+        ]
+      },
+      "id": "SV-2023-16-PROPERTY-CASE-SINGLE-OPTIONAL-DEFAULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use expression_or_dist in selector and labels."
+        ],
+        "negative": [
+          "Omit all case items or an item's terminating semicolon."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse single/multiple labels, multiple items, and default with and without colon."
+        ]
+      },
+      "id": "SV-2023-16-PROPERTY-CASE-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use explicit clock equal to default and then different."
+        ],
+        "negative": [
+          "Let default override inferred or explicit leading clock."
+        ],
+        "notes": [],
+        "positive": [
+          "Compare default-only, inferred-plus-default, and explicit-plus-default cases."
+        ]
+      },
+      "id": "SV-2023-16-PROPERTY-CLOCK-RESOLUTION-PRECEDENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Provide multiple potential sources and apply resolution precedence."
+        ],
+        "negative": [
+          "Use no legal clock source for a property requiring one."
+        ],
+        "notes": [
+          "Following anchors must complete the list."
+        ],
+        "positive": [
+          "Exercise every completed clock source and precedence path."
+        ]
+      },
+      "id": "SV-2023-16-PROPERTY-CLOCK-SPECIFICATION-SOURCES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Combine operands that complete at different times."
+        ],
+        "negative": [
+          "Return true when only one operand is true."
+        ],
+        "notes": [],
+        "positive": [
+          "Test all four Boolean operand-outcome combinations."
+        ]
+      },
+      "id": "SV-2023-16-PROPERTY-CONJUNCTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise omitted arguments, optional end labels, local input formals, and nested clocking/property expressions."
+        ],
+        "negative": [
+          "Use malformed property delimiters, port items, case items, operators, or argument lists."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse representative legal forms for every property_expr alternative and optional declaration/instance component."
+        ]
+      },
+      "id": "SV-2023-16-PROPERTY-DECLARATION-EXPRESSION-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Declare but never instantiate a property."
+        ],
+        "negative": [
+          "Expect a bare property declaration to execute or report a result."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a property and use it in assert, assume, and cover statements."
+        ]
+      },
+      "id": "SV-2023-16-PROPERTY-DECLARATION-NO-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Combine operands that complete at different times."
+        ],
+        "negative": [
+          "Require both operands true."
+        ],
+        "notes": [],
+        "positive": [
+          "Test all four Boolean operand-outcome combinations."
+        ]
+      },
+      "id": "SV-2023-16-PROPERTY-DISJUNCTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compose a sequence directly as a property expression."
+        ],
+        "negative": [
+          "Treat a property result as a multivalued non-Boolean result."
+        ],
+        "notes": [],
+        "positive": [
+          "Evaluate composed properties for both true and false outcomes."
+        ]
+      },
+      "id": "SV-2023-16-PROPERTY-EVALUATION-BOOLEAN"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise a case governed by each property-specific exception."
+        ],
+        "negative": [
+          "Assume property formals ignore sequence-formal rules without a stated property exception."
+        ],
+        "notes": [],
+        "positive": [
+          "Apply named/positional binding, required/default actuals, typing, and local formal rules to named properties."
+        ]
+      },
+      "id": "SV-2023-16-PROPERTY-FORMAL-ACTUAL-INHERITS-SEQUENCE-RULES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Pass a clocked/disabled property specification as an applicable actual."
+        ],
+        "negative": [
+          "Substitute an actual that is syntactically invalid in the formal's use position."
+        ],
+        "notes": [],
+        "positive": [
+          "Use formals in property expression and complete property specification positions."
+        ]
+      },
+      "id": "SV-2023-16-PROPERTY-FORMAL-BODY-SUBSTITUTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use expression_or_dist as condition and omit else."
+        ],
+        "negative": [
+          "Evaluate or require the unselected branch."
+        ],
+        "notes": [],
+        "positive": [
+          "Exercise true/false conditions with true/false then and else properties."
+        ]
+      },
+      "id": "SV-2023-16-PROPERTY-IF-ELSE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use temporal operands completing at different times."
+        ],
+        "negative": [
+          "Return true for true/false or false/true."
+        ],
+        "notes": [],
+        "positive": [
+          "Exercise true/true and false/false outcomes."
+        ]
+      },
+      "id": "SV-2023-16-PROPERTY-IFF"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use temporal operands that resolve at different times."
+        ],
+        "negative": [
+          "Treat property-level implies as sequential |-> endpoint triggering."
+        ],
+        "notes": [],
+        "positive": [
+          "Exercise all four combinations of operand outcomes."
+        ]
+      },
+      "id": "SV-2023-16-PROPERTY-IMPLIES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Substitute actuals that independently make the expanded context illegal."
+        ],
+        "negative": [
+          "Use a property containing disable iff as an operator operand."
+        ],
+        "notes": [],
+        "positive": [
+          "Instantiate an undisabled property as an operator operand and a disabled property as a complete property_spec."
+        ]
+      },
+      "id": "SV-2023-16-PROPERTY-INSTANCE-SUBSTITUTION-LEGALITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise the property-specific input-only direction exception."
+        ],
+        "negative": [
+          "Ignore inherited sequence local-formal restrictions."
+        ],
+        "notes": [],
+        "positive": [
+          "Apply sequence local-formal type, binding, and actual rules to property declarations."
+        ]
+      },
+      "id": "SV-2023-16-PROPERTY-LOCAL-FORMAL-INHERITS-SEQUENCE-RULES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast a nonlocal formal or sequence local formal where different rules apply."
+        ],
+        "negative": [
+          "Declare local output and local inout property formals."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare inferred and explicit local input property formals."
+        ]
+      },
+      "id": "SV-2023-16-PROPERTY-LOCAL-FORMAL-INPUT-ONLY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Negate a temporally pending property once its weak/strong outcome is determined."
+        ],
+        "negative": [
+          "Return the operand value unchanged."
+        ],
+        "notes": [],
+        "positive": [
+          "Negate properties that independently evaluate true and false."
+        ]
+      },
+      "id": "SV-2023-16-PROPERTY-NEGATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Negate a bare sequence under assert and cover contexts."
+        ],
+        "negative": [
+          "Preserve the operand's original strength through negation."
+        ],
+        "notes": [],
+        "positive": [
+          "Negate weak and strong sequence properties and compare finite-trace outcomes."
+        ]
+      },
+      "id": "SV-2023-16-PROPERTY-NEGATION-SWITCHES-STRENGTH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use coverage counters that distinguish vacuous success."
+        ],
+        "negative": [
+          "Count true-vacuous or false attempts as nonvacuous successes."
+        ],
+        "notes": [],
+        "positive": [
+          "Exercise true nonvacuous, true vacuous, and false nonvacuous attempts."
+        ]
+      },
+      "id": "SV-2023-16-PROPERTY-NONVACUOUS-SUCCESS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Chain ## for left associativity and use mandatory parentheses for strong/weak."
+        ],
+        "negative": [],
+        "notes": [
+          "Following table rows extend the hierarchy."
+        ],
+        "positive": [
+          "Parse mixed expression, repetition, and ## operators according to the hierarchy."
+        ]
+      },
+      "id": "SV-2023-16-PROPERTY-OPERATOR-PRECEDENCE-HIGH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Chain each right-associative level and mix unary temporal/control forms."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Parse mixed operators using explicit grouping that matches every listed low-precedence level."
+        ]
+      },
+      "id": "SV-2023-16-PROPERTY-OPERATOR-PRECEDENCE-LOW"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Instantiate an unclocked property in a clocked context."
+        ],
+        "negative": [
+          "Apply an explicit clock contrary to multiclock clock-resolution rules."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare properties with and without explicit clocking events and resolve inherited clocks."
+        ]
+      },
+      "id": "SV-2023-16-PROPERTY-OPTIONAL-CLOCKING-EVENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Forward it through multiple named property/sequence instances."
+        ],
+        "negative": [
+          "Bind $ to a typed formal or use the formal in a Boolean/property expression."
+        ],
+        "notes": [],
+        "positive": [
+          "Pass $ to an untyped formal used solely as an upper delay bound or forwarded actual."
+        ]
+      },
+      "id": "SV-2023-16-PROPERTY-TERMINAL-DOLLAR-ACTUAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise a property-specific exception described by following anchors."
+        ],
+        "negative": [
+          "Ignore inherited typed-sequence restrictions absent a property exception."
+        ],
+        "notes": [],
+        "positive": [
+          "Apply sequence typed-formal compatibility and binding rules to property formals."
+        ]
+      },
+      "id": "SV-2023-16-PROPERTY-TYPED-FORMAL-INHERITS-SEQUENCE-RULES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Pass a sequence actual but verify the formal's property type still controls reference context."
+        ],
+        "negative": [
+          "Declare an unsupported type or use a property-typed formal as |-> or |=> antecedent."
+        ],
+        "notes": [],
+        "positive": [
+          "Pass Boolean, sequence, and property expressions to property-typed formals used in property-expression contexts."
+        ]
+      },
+      "id": "SV-2023-16-PROPERTY-TYPED-FORMAL-TYPES-AND-CONTEXT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Check each actual independently in direct and mutual recursion."
+        ],
+        "negative": [
+          "Use a recursive actual satisfying none of them."
+        ],
+        "notes": [
+          "Following anchors must complete the allowed conditions."
+        ],
+        "positive": [
+          "Use recursive actuals satisfying one of the enumerated allowed categories."
+        ]
+      },
+      "id": "SV-2023-16-RECURSIVE-INSTANCE-ACTUAL-ARGUMENT-RESTRICTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Check every edge of a mutually recursive cycle for positive advancement."
+        ],
+        "negative": [
+          "Recur under overlapped same-tick implication or a zero-delay path."
+        ],
+        "notes": [],
+        "positive": [
+          "Guard recursion with nonoverlapped implication or another guaranteed positive delay."
+        ]
+      },
+      "id": "SV-2023-16-RECURSIVE-INSTANCE-POSITIVE-TIME-ADVANCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Nest mixed abort operators around a recursive instance after positive time advance."
+        ],
+        "negative": [
+          "Reject such a declaration solely because an abort operator is inside recursion."
+        ],
+        "notes": [],
+        "positive": [
+          "Use each abort operator inside direct and mutually recursive properties while satisfying other recursion restrictions."
+        ]
+      },
+      "id": "SV-2023-16-RECURSIVE-PROPERTY-ABORT-OPERATORS-ALLOWED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Create recursion through another named property."
+        ],
+        "negative": [
+          "Reject every self-dependent property merely because it is recursive."
+        ],
+        "notes": [
+          "Following anchors should extend recursion legality and evaluation constraints."
+        ],
+        "positive": [
+          "Declare directly and indirectly recursive named properties under the following recursion restrictions."
+        ]
+      },
+      "id": "SV-2023-16-RECURSIVE-PROPERTY-ALLOWED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an indirectly recursive property body with disable iff."
+        ],
+        "negative": [
+          "Include disable iff inside the recursive declaration."
+        ],
+        "notes": [],
+        "positive": [
+          "Place disable iff around an instance of a recursive property in a separate nonrecursive wrapper."
+        ]
+      },
+      "id": "SV-2023-16-RECURSIVE-PROPERTY-NO-DISABLE-IFF"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Apply a prohibited operator indirectly to an expression containing a nested recursive instance."
+        ],
+        "negative": [
+          "Negate it or place it under each listed strong operator."
+        ],
+        "notes": [
+          "This is restriction 1; following anchors define additional independent recursion restrictions."
+        ],
+        "positive": [
+          "Use a recursive instance only under permitted weak and Boolean operators."
+        ]
+      },
+      "id": "SV-2023-16-RECURSIVE-PROPERTY-NO-NEGATION-STRONG-CONTEXT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Make the abort condition true at operand completion."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare each rejecting form against its accepting-negation expansion for abort and no-abort paths."
+        ]
+      },
+      "id": "SV-2023-16-REJECT-ACCEPT-ABORT-DUALITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Keep abort false through operand completion."
+        ],
+        "negative": [
+          "Report true or disabled when reject aborts."
+        ],
+        "notes": [],
+        "positive": [
+          "Assert the abort condition while an operand would succeed and observe false."
+        ]
+      },
+      "id": "SV-2023-16-REJECT-ON-ABORT-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Apply consecutive repetition outside a parenthesized match-item sequence."
+        ],
+        "negative": [
+          "Apply goto and nonconsecutive repetition to a temporal sequence or to a Boolean with an attached match item."
+        ],
+        "notes": [],
+        "positive": [
+          "Apply consecutive repetition to a compound sequence and goto repetition to a plain Boolean."
+        ]
+      },
+      "id": "SV-2023-16-REPETITION-OPERAND-RESTRICTIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Violate the restricted property in simulation without treating it as an error."
+        ],
+        "negative": [
+          "Report a simulation failure or execute an action for restrict."
+        ],
+        "notes": [],
+        "positive": [
+          "Use restrict to constrain formal analysis and compare formal behavior with assume."
+        ]
+      },
+      "id": "SV-2023-16-RESTRICT-FORMAL-ONLY-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a named property instance as property_spec."
+        ],
+        "negative": [
+          "Attach pass/else actions or omit the terminating semicolon."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse restrict with clocked, disabled, and composed property specifications."
+        ]
+      },
+      "id": "SV-2023-16-RESTRICT-PROPERTY-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a multibit expression."
+        ],
+        "negative": [
+          "Change only a non-LSB bit or have the LSB not change to 1."
+        ],
+        "notes": [],
+        "positive": [
+          "Exercise next-tick LSB transitions 0/x/z to 1."
+        ]
+      },
+      "id": "SV-2023-16-RISING-GCLK-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a multibit expression."
+        ],
+        "negative": [
+          "Change only a non-LSB bit or transition the LSB away from 1."
+        ],
+        "notes": [],
+        "positive": [
+          "Exercise 0-to-1, x-to-1, and z-to-1 LSB transitions."
+        ]
+      },
+      "id": "SV-2023-16-ROSE-FUNCTION-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Separately resize a dynamic array and delete an associative-array element after sampling."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Sample a queue element, remove it before later assertion evaluation, and verify the sampled element remains usable by that assertion."
+        ]
+      },
+      "id": "SV-2023-16-SAMPLED-ARRAY-ELEMENT-LIFETIME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use $sampled in disable iff, where it changes nonsampled default behavior."
+        ],
+        "negative": [
+          "Attempt to pass a clocking-event argument to $sampled."
+        ],
+        "notes": [],
+        "positive": [
+          "Use $sampled in an assertion action block without supplying a clock."
+        ]
+      },
+      "id": "SV-2023-16-SAMPLED-FUNCTION-NO-CLOCK"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call $sampled from an action block after the current value changes."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare $sampled(a) and a in a concurrent assertion body, then use $sampled(a) in disable iff where current and sampled values differ."
+        ]
+      },
+      "id": "SV-2023-16-SAMPLED-FUNCTION-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Arrange clk1 and clk2 edges at different rates and phases."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Call $rose under clk1 while explicitly supplying clk2 and distinguish the current calling tick from the prior clk2 sample."
+        ]
+      },
+      "id": "SV-2023-16-SAMPLED-VALUE-EXPLICIT-DIFFERENT-CLOCK"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast the sequence triggered method where otherwise allowed."
+        ],
+        "negative": [
+          "Pass an assertion local variable and separately a sequence matched method in an argument expression."
+        ],
+        "notes": [],
+        "positive": [
+          "Call sampled-value functions with static variables and otherwise legal expressions."
+        ]
+      },
+      "id": "SV-2023-16-SAMPLED-VALUE-FUNCTION-ARGUMENT-RESTRICTIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Nest a call in an action block where the assertion has a distinct leading clock."
+        ],
+        "negative": [
+          "Omit the clock in a disable condition and in an assertion clock expression."
+        ],
+        "notes": [],
+        "positive": [
+          "Exercise each inference context and compare with the corresponding explicit clock."
+        ]
+      },
+      "id": "SV-2023-16-SAMPLED-VALUE-FUNCTION-CLOCK-INFERENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a distinct explicit clock to override the contextual clock where permitted."
+        ],
+        "negative": [
+          "Use a clock-dependent sampled-value function where no clock can be resolved."
+        ],
+        "notes": [],
+        "positive": [
+          "Compare explicit-clock calls with calls inheriting the same clock from assertion context."
+        ]
+      },
+      "id": "SV-2023-16-SAMPLED-VALUE-FUNCTION-CLOCKING-EVENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise omitted intermediate optional arguments using empty comma positions where grammar permits."
+        ],
+        "negative": [
+          "Add a clock argument to $sampled or supply $past optional arguments out of order."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse every function with minimal arguments and every optional argument combination permitted by its form."
+        ]
+      },
+      "id": "SV-2023-16-SAMPLED-VALUE-FUNCTION-FORMS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the result in an if condition and assignment."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Call $sampled and clocked sampled-value functions in procedural expressions."
+        ]
+      },
+      "id": "SV-2023-16-SAMPLED-VALUE-FUNCTION-PROCEDURAL-USE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Mix binding forms only as permitted by the argument-list grammar."
+        ],
+        "negative": [
+          "Omit an actual for a required nondefaulted formal."
+        ],
+        "notes": [],
+        "positive": [
+          "Instantiate using positional and named binding, omit a defaulted actual, and override it."
+        ]
+      },
+      "id": "SV-2023-16-SEQUENCE-ACTUAL-ARGUMENT-BINDING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use nested scopes with shadowed local names."
+        ],
+        "negative": [
+          "Reference that local variable from an instance outside its scope."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a sequence local variable and pass it to a nested named-sequence instance within its scope."
+        ]
+      },
+      "id": "SV-2023-16-SEQUENCE-ACTUAL-LOCAL-VARIABLE-REFERENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Make both operands end on the same tick."
+        ],
+        "negative": [
+          "Allow only one operand to match."
+        ],
+        "notes": [],
+        "positive": [
+          "Start two operands together, make both match at different ticks, and observe the later endpoint."
+        ]
+      },
+      "id": "SV-2023-16-SEQUENCE-AND-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare a direct posedge clock with a sequence-derived clock whose match becomes visible at a later sampling tick."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Clock a cover property from a named sequence and observe evaluation when the sequence event occurs."
+        ]
+      },
+      "id": "SV-2023-16-SEQUENCE-AS-ASSERTION-CLOCK-EVENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast a mixed [*0:1] sequence with [*1]."
+        ],
+        "negative": [
+          "Use an impossible, empty-only, or mixed empty/nonempty sequence as a property."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a sequence with at least one nonempty match and no empty alternative."
+        ]
+      },
+      "id": "SV-2023-16-SEQUENCE-AS-PROPERTY-NONDEGENERATE-NONEMPTY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Run overlapping attempts beginning at different clock ticks."
+        ],
+        "negative": [
+          "Violate a required term so the attempt determines no match is possible."
+        ],
+        "notes": [],
+        "positive": [
+          "Start an attempt and provide a later tick completing its match."
+        ]
+      },
+      "id": "SV-2023-16-SEQUENCE-ATTEMPT-EVALUATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise ##0 overlap and a ranged delay."
+        ],
+        "negative": [
+          "Satisfy the second term at a tick outside the specified delay."
+        ],
+        "notes": [],
+        "positive": [
+          "Concatenate two Boolean sequences with ##2 and satisfy the second at the required delayed tick."
+        ]
+      },
+      "id": "SV-2023-16-SEQUENCE-CONCATENATION-DELAY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Trigger exactly at a clock tick and verify that tick can be the first check."
+        ],
+        "negative": [
+          "Satisfy a later element without satisfying it at its required successive clock."
+        ],
+        "notes": [],
+        "positive": [
+          "Trigger a linear sequence between clock ticks and verify its first term is checked at the next tick."
+        ]
+      },
+      "id": "SV-2023-16-SEQUENCE-CONTEXT-START-AND-PROGRESSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise an optional trailing semicolon and a matching endsequence label."
+        ],
+        "negative": [
+          "Use malformed declaration delimiters, illegal port forms, or an invalid actual-argument production."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse declarations with no ports and with typed, sequence, untyped, local, directed, dimensioned, and defaulted ports."
+        ]
+      },
+      "id": "SV-2023-16-SEQUENCE-DECLARATION-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "A sequence admitting both empty and one nonempty match is nondegenerate."
+        ],
+        "negative": [
+          "Call an empty-only sequence nondegenerate."
+        ],
+        "notes": [],
+        "positive": [
+          "Classify impossible, empty-only, nonempty-only, and mixed empty/nonempty sequences."
+        ]
+      },
+      "id": "SV-2023-16-SEQUENCE-DEGENERACY-DEFINITION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast endpoints of nonempty matches beginning at different ticks but ending at the same tick."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Exercise a sequence admitting an empty match and observe its match point at attempt start."
+        ]
+      },
+      "id": "SV-2023-16-SEQUENCE-EMPTY-MATCH-ENDPOINT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise open upper delay bounds using $, omitted named or positional arguments, and ##[*]/##[+]."
+        ],
+        "negative": [
+          "Use malformed delay ranges, repetition syntax, or sequence argument lists."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse representative legal sequence forms for every grammar alternative and repetition abbreviation."
+        ]
+      },
+      "id": "SV-2023-16-SEQUENCE-EXPRESSION-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Substitute an actual whose syntax is invalid at the referenced position."
+        ],
+        "notes": [
+          "Additional immediately following list anchors may extend the enumerated positions."
+        ],
+        "positive": [
+          "Use a formal in an identifier syntactic position in a sequence body and instantiate it with a legal actual."
+        ]
+      },
+      "id": "SV-2023-16-SEQUENCE-FORMAL-BODY-SUBSTITUTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a declaration-scope name shadowed at the instance site and verify declaration-scope resolution."
+        ],
+        "negative": [
+          "Use an untyped default whose substitution produces an invalid sequence."
+        ],
+        "notes": [],
+        "positive": [
+          "Omit an actual and verify a default expression resolves names in the declaration scope."
+        ]
+      },
+      "id": "SV-2023-16-SEQUENCE-FORMAL-DEFAULT-ACTUAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast ordinary name shadowing in unrelated nested scopes."
+        ],
+        "negative": [
+          "Declare a local with the same name as a sequence formal."
+        ],
+        "notes": [],
+        "positive": [
+          "Use the formal directly or declare a differently named local."
+        ]
+      },
+      "id": "SV-2023-16-SEQUENCE-FORMAL-NO-LOCAL-REDECLARATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change the actual after local capture and verify the local retains the captured value."
+        ],
+        "negative": [
+          "Attempt to declare a sequence formal with a pass-by-value mode keyword."
+        ],
+        "notes": [],
+        "positive": [
+          "Capture a formal into a local variable at sequence start and use the local value later."
+        ]
+      },
+      "id": "SV-2023-16-SEQUENCE-FORMAL-NO-PASS-BY-VALUE-MODE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Use a type prohibited in assertion expressions."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare formals using representative legal assertion-operand types and untyped."
+        ]
+      },
+      "id": "SV-2023-16-SEQUENCE-FORMAL-SUPPORTED-TYPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Insert a second type and verify propagation switches at that formal."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare several formals after one explicit type and verify each receives that type."
+        ]
+      },
+      "id": "SV-2023-16-SEQUENCE-FORMAL-TYPE-PROPAGATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Create multiple same-length operand matches and observe all resulting composite matches."
+        ],
+        "negative": [
+          "Provide operand matches with no common length/match point."
+        ],
+        "notes": [],
+        "positive": [
+          "Give one operand multiple possible lengths and pair every equal-length endpoint with the other operand."
+        ]
+      },
+      "id": "SV-2023-16-SEQUENCE-INTERSECT-MULTIPLE-MATCHES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use two empty matches of equal length."
+        ],
+        "negative": [
+          "Make both match with different endpoint ticks, and separately make only one match."
+        ],
+        "notes": [],
+        "positive": [
+          "Make both operand sequences match with the same length."
+        ]
+      },
+      "id": "SV-2023-16-SEQUENCE-INTERSECT-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use several ordered match items."
+        ],
+        "negative": [
+          "Attach assignment syntax without the required parenthesized comma-separated form."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse match-item operator assignment and increment/decrement forms, with multiple items and an optional repetition."
+        ]
+      },
+      "id": "SV-2023-16-SEQUENCE-MATCH-ITEM-ASSIGNMENT-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Attach multiple ordered match items."
+        ],
+        "negative": [
+          "Attach a call or assignment match item to a sequence admitting an empty match."
+        ],
+        "notes": [],
+        "positive": [
+          "Attach one call of each allowed subroutine kind to a guaranteed-nonempty matching sequence."
+        ]
+      },
+      "id": "SV-2023-16-SEQUENCE-MATCH-SUBROUTINE-CALL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Apply an optional repetition to the parenthesized sequence."
+        ],
+        "negative": [
+          "Place a subroutine call outside the comma-separated parenthesized match-item form."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse each match-item alternative and mixtures in one list."
+        ]
+      },
+      "id": "SV-2023-16-SEQUENCE-MATCH-SUBROUTINE-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Pass a named sequence through an untyped formal before applying matched."
+        ],
+        "negative": [
+          "Apply matched to a property-typed formal or nonsequence expression."
+        ],
+        "notes": [],
+        "positive": [
+          "Use matched on argumentless/argumented named instances and untyped/sequence-typed formals."
+        ]
+      },
+      "id": "SV-2023-16-SEQUENCE-MATCHED-APPLICATION-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Produce source matches at or near destination clock ticks."
+        ],
+        "negative": [
+          "Require aligned starts, lose the event before the destination tick, or report it at a later tick."
+        ],
+        "notes": [],
+        "positive": [
+          "Match between destination ticks and observe true at the first later destination tick."
+        ]
+      },
+      "id": "SV-2023-16-SEQUENCE-MATCHED-SYNCHRONIZATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Pass through nested checker instances."
+        ],
+        "negative": [
+          "Retain a caller-scope clock rather than infer in the checker."
+        ],
+        "notes": [],
+        "positive": [
+          "Pass an unclocked sequence-method actual to a checker with a default clock."
+        ]
+      },
+      "id": "SV-2023-16-SEQUENCE-METHOD-CHECKER-ACTUAL-CLOCKING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an event expression inside a procedure with multiple event controls."
+        ],
+        "negative": [
+          "Apply a method where no unique legal clock can be inferred."
+        ],
+        "notes": [],
+        "positive": [
+          "Use explicit clocks and infer clocks in assertion and event-expression contexts."
+        ]
+      },
+      "id": "SV-2023-16-SEQUENCE-METHOD-CLOCK-REQUIRED-INFERRED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Have overlapping attempts with a common endpoint."
+        ],
+        "negative": [
+          "Return different sampled and current method values."
+        ],
+        "notes": [],
+        "positive": [
+          "Query methods for matches from different start points and through formalized sequences."
+        ]
+      },
+      "id": "SV-2023-16-SEQUENCE-METHOD-COMMON-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use nested interface and task forwarding."
+        ],
+        "negative": [
+          "Infer from the callee declaration scope rather than the connection/call site."
+        ],
+        "notes": [],
+        "positive": [
+          "Connect/call an unclocked sequence method in each listed context with a resolvable site clock."
+        ]
+      },
+      "id": "SV-2023-16-SEQUENCE-METHOD-CONNECTION-CLOCKING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Provide an explicit actual and verify it overrides the default."
+        ],
+        "negative": [
+          "Bind an unrelated clock or fail to infer a unique contextual clock."
+        ],
+        "notes": [],
+        "positive": [
+          "Omit the actual in contexts having each legal inferred clock source."
+        ]
+      },
+      "id": "SV-2023-16-SEQUENCE-METHOD-INFERRED-CLOCK-DEFAULT-ACTUAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a sequence instance with omitted/default arguments."
+        ],
+        "negative": [
+          "Invoke them on a property, expression, or property-typed formal."
+        ],
+        "notes": [],
+        "positive": [
+          "Invoke both methods on every allowed operand category."
+        ]
+      },
+      "id": "SV-2023-16-SEQUENCE-METHOD-OPERAND-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Chain ## to verify left associativity and throughout to verify right associativity."
+        ],
+        "negative": [],
+        "notes": [
+          "Immediately following table rows extend the precedence hierarchy in separate or updated entries."
+        ],
+        "positive": [
+          "Parse unparenthesized expressions combining repetition, ##, and throughout and compare with explicit grouping dictated by precedence."
+        ]
+      },
+      "id": "SV-2023-16-SEQUENCE-OPERATOR-PRECEDENCE-HIGH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use sequence operands having different possible endpoints and observe matches from either alternative."
+        ],
+        "negative": [
+          "Make both operands fail."
+        ],
+        "notes": [],
+        "positive": [
+          "Make only the left, only the right, and both expression operands true."
+        ]
+      },
+      "id": "SV-2023-16-SEQUENCE-OR-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the same variable in the clocking event and sequence body to contrast current clock-event evaluation with sampled body evaluation."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Change a variable in Active at the clock tick and verify a sequence Boolean sees its sampled value."
+        ]
+      },
+      "id": "SV-2023-16-SEQUENCE-PROPERTY-BOOLEAN-SAMPLED-VALUES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a sequence with an early match plus later alternatives, and one with no finite impossibility witness."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Evaluate strong and weak forms of a multi-match sequence with and without first_match."
+        ]
+      },
+      "id": "SV-2023-16-SEQUENCE-PROPERTY-FIRST-MATCH-EQUIVALENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "End simulation while a sequence remains capable of a future match."
+        ],
+        "negative": [
+          "Use an empty-admitting sequence as a sequence property."
+        ],
+        "notes": [],
+        "positive": [
+          "Compare finite successful and indefinitely pending sequences under strong and weak."
+        ]
+      },
+      "id": "SV-2023-16-SEQUENCE-PROPERTY-STRONG-WEAK"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use equal finite minimum and maximum."
+        ],
+        "negative": [
+          "Use a runtime value, negative count, or negative range endpoint."
+        ],
+        "notes": [],
+        "positive": [
+          "Use exact zero and positive constants, finite ranges, and a range ending in $."
+        ]
+      },
+      "id": "SV-2023-16-SEQUENCE-REPETITION-COUNT-DEFINITION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use zero for both bounds."
+        ],
+        "negative": [
+          "Use a finite minimum greater than the maximum."
+        ],
+        "notes": [],
+        "positive": [
+          "Use equal bounds and an increasing finite range."
+        ]
+      },
+      "id": "SV-2023-16-SEQUENCE-REPETITION-RANGE-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a sequence construct denoting multiple possible lengths."
+        ],
+        "negative": [
+          "Ensure no represented alternative matches the interval."
+        ],
+        "notes": [],
+        "positive": [
+          "Use an or-composed sequence where one alternative matches."
+        ]
+      },
+      "id": "SV-2023-16-SEQUENCE-SET-MATCH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Forward the untyped formal as an actual to another sequence."
+        ],
+        "negative": [
+          "Bind $ to a typed formal or use the corresponding formal in a Boolean expression."
+        ],
+        "notes": [],
+        "positive": [
+          "Pass $ through an untyped formal used solely as a delay upper bound."
+        ]
+      },
+      "id": "SV-2023-16-SEQUENCE-TERMINAL-DOLLAR-ACTUAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Have multiple sequence matches reach the same endpoint."
+        ],
+        "negative": [
+          "Apply it to a syntactic object that is not an allowed sequence target."
+        ],
+        "notes": [],
+        "positive": [
+          "Apply .triggered to named instances with and without arguments and to legal untyped and sequence-typed formals."
+        ]
+      },
+      "id": "SV-2023-16-SEQUENCE-TRIGGERED-METHOD-TARGETS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a Boolean expression, which is itself a sequence_expr."
+        ],
+        "negative": [
+          "Pass a non-sequence expression form or reference the formal where sequence_expr is not legal."
+        ],
+        "notes": [],
+        "positive": [
+          "Pass a Boolean expression and a temporal sequence as sequence-typed actuals, then use the formal as a sequence expression and method operand."
+        ]
+      },
+      "id": "SV-2023-16-SEQUENCE-TYPED-FORMAL-ACTUAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast inherited preceding type with a formal following explicit untyped."
+        ],
+        "negative": [
+          "Assume an omitted type implicitly becomes logic."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare an explicitly untyped formal and substitute legal expressions of different types."
+        ]
+      },
+      "id": "SV-2023-16-SEQUENCE-UNTYPED-FORMAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a one-cycle and a multicycle antecedent."
+        ],
+        "negative": [
+          "Use a property rather than sequence expression where the antecedent grammar requires a sequence."
+        ],
+        "notes": [
+          "Following anchors should extend precise timing and match semantics."
+        ],
+        "positive": [
+          "Parse and evaluate both implication forms with matching and nonmatching antecedents."
+        ]
+      },
+      "id": "SV-2023-16-SEQUENTIAL-IMPLICATION-FORMS"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [
+          "Do not prescribe the tool-specific portion or exact diagnostic wording."
+        ],
+        "positive": [
+          "Invoke the same severity task with the same arguments once from a pass action and once from a fail action and compare its message behavior."
+        ]
+      },
+      "id": "SV-2023-16-SEVERITY-TASK-ACTION-MESSAGE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Enable it and execute a false immediate assume, expecting assert-equivalent failure behavior."
+        ],
+        "notes": [
+          "The mechanism used to enable the required capability may be implementation-defined."
+        ],
+        "positive": [
+          "Enable assume-as-assert behavior and execute a true immediate assume."
+        ]
+      },
+      "id": "SV-2023-16-SIMULATOR-IMMEDIATE-ASSUME-AS-ASSERT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise both ordinary Preponed sampling and an object with a sampling exception."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use a single variable as an assertion expression and compare it with the variable's applicable sampled value."
+        ]
+      },
+      "id": "SV-2023-16-SINGLE-VARIABLE-EXPRESSION-SAMPLING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Launch multiple attempts on the same clock tick."
+        ],
+        "negative": [
+          "Initialize at declaration elaboration or on a nonclock time step."
+        ],
+        "notes": [],
+        "positive": [
+          "Start repeated attempts and observe fresh initialization at each governing-clock tick."
+        ]
+      },
+      "id": "SV-2023-16-SINGLY-CLOCKED-LOCAL-INITIALIZATION-TIME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Retain an x or z value unchanged and separately transition between unknown values."
+        ],
+        "negative": [
+          "Change any bit between samples."
+        ],
+        "notes": [],
+        "positive": [
+          "Keep all expression bits unchanged across clock samples."
+        ]
+      },
+      "id": "SV-2023-16-STABLE-FUNCTION-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Cause multiple dependency changes in one time step and observe always_comb-style flushing and reevaluation."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Place a deferred assertion at module scope and change an expression dependency to trigger its implicit always_comb behavior."
+        ]
+      },
+      "id": "SV-2023-16-STATIC-DEFERRED-ASSERTION-IMPLICIT-ALWAYS-COMB"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise stable unknown values."
+        ],
+        "negative": [
+          "Change any expression bit at the next global tick."
+        ],
+        "notes": [],
+        "positive": [
+          "Keep the complete expression unchanged at the next global tick."
+        ]
+      },
+      "id": "SV-2023-16-STEADY-GCLK-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a zero-width range [n:n]."
+        ],
+        "negative": [
+          "End before the final tick, make p false in range, or use an unbounded range."
+        ],
+        "notes": [],
+        "positive": [
+          "Provide all ticks of a bounded range with p true."
+        ]
+      },
+      "id": "SV-2023-16-STRONG-ALWAYS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an unbounded range and a finite trace with no witness."
+        ],
+        "negative": [
+          "Let the trace end or range expire without p becoming true."
+        ],
+        "notes": [],
+        "positive": [
+          "Make p true now, later in a finite range, and later in an unbounded range."
+        ]
+      },
+      "id": "SV-2023-16-STRONG-EVENTUALLY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Test index zero and exact trace termination at the target."
+        ],
+        "negative": [
+          "Return true when the required future tick does not exist."
+        ],
+        "notes": [],
+        "positive": [
+          "Evaluate with sufficient future ticks and true target property."
+        ]
+      },
+      "id": "SV-2023-16-STRONG-NEXTTIME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place the terminating condition at the last available qualifying tick."
+        ],
+        "negative": [
+          "Let the clock stop before the required condition and report true."
+        ],
+        "notes": [],
+        "positive": [
+          "Provide required future ticks and terminating conditions for each operator."
+        ]
+      },
+      "id": "SV-2023-16-STRONG-PROPERTY-OPERATORS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Test b at the first tick and a becoming false on that tick."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare both forms for immediate and delayed b witnesses."
+        ]
+      },
+      "id": "SV-2023-16-STRONG-UNTIL-WITH-SEQUENCE-EQUIVALENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change the condition immediately around a clock event and apply sampled-value ordering."
+        ],
+        "negative": [
+          "Abort solely because the condition changes between clock events."
+        ],
+        "notes": [],
+        "positive": [
+          "Assert the condition at a clock event and observe the synchronous abort result."
+        ]
+      },
+      "id": "SV-2023-16-SYNCHRONOUS-ABORT-SAMPLING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise an empty seq match and a one-tick interval."
+        ],
+        "negative": [
+          "Make exp false at one interior tick despite seq matching."
+        ],
+        "notes": [],
+        "positive": [
+          "Match seq while keeping exp true at every tick of the interval."
+        ]
+      },
+      "id": "SV-2023-16-THROUGHOUT-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Produce multiple endpoints in one time step."
+        ],
+        "negative": [
+          "Clear it before time-step end or leave it true in a later nonendpoint time step."
+        ],
+        "notes": [],
+        "positive": [
+          "Observe triggered in Observed and later regions of an endpoint time step."
+        ]
+      },
+      "id": "SV-2023-16-TRIGGERED-ENDPOINT-PERSISTENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the same sequence's triggered inside sequence context."
+        ],
+        "negative": [
+          "Use it externally when a formal is assigned or incremented in a sequence_match_item."
+        ],
+        "notes": [],
+        "positive": [
+          "Use triggered externally for a sequence without locally treated formals."
+        ]
+      },
+      "id": "SV-2023-16-TRIGGERED-EXTERNAL-LOCAL-FORMAL-ERROR"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Violate each condition separately and attempt a later reference."
+        ],
+        "notes": [
+          "The immediately following leased anchors complete the two conditions and should extend this entry."
+        ],
+        "positive": [
+          "Satisfy both following flow-out conditions and reference the local after triggered."
+        ]
+      },
+      "id": "SV-2023-16-TRIGGERED-INSTANCE-LOCAL-FLOWOUT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Assign the outer local before passing it and verify that prior outer value is not relied upon inside."
+        ],
+        "negative": [
+          "Pass the local as a subexpression or read its formal before assignment."
+        ],
+        "notes": [],
+        "positive": [
+          "Pass a whole local to an untyped formal that is assigned before its first read, then apply triggered."
+        ]
+      },
+      "id": "SV-2023-16-TRIGGERED-INSTANCE-LOCAL-PASSING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use earlier portions of the operand sequence on other clocks while matching only the ending clock."
+        ],
+        "negative": [
+          "Apply triggered where the operand's ending clock differs from the contextual clock."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a multiclocked sequence whose ending clock matches the triggered use context."
+        ]
+      },
+      "id": "SV-2023-16-TRIGGERED-MULTICLOCK-END-CLOCK"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Produce multiple matches with identical valuations."
+        ],
+        "negative": [
+          "Merge inconsistent local valuations into one arbitrary value."
+        ],
+        "notes": [],
+        "positive": [
+          "Produce two same-cycle endpoints carrying different local values and observe two continuation threads."
+        ]
+      },
+      "id": "SV-2023-16-TRIGGERED-MULTIMATCH-LOCAL-THREADS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Create a long dependency chain returning to the first sequence."
+        ],
+        "negative": [
+          "Create direct and indirect cycles through triggered references."
+        ],
+        "notes": [],
+        "positive": [
+          "Use an acyclic chain of triggered sequence dependencies."
+        ]
+      },
+      "id": "SV-2023-16-TRIGGERED-NO-CIRCULAR-DEPENDENCY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Pass a cast-compatible constant actual to each allowed formal type."
+        ],
+        "negative": [
+          "Use bit, byte, integer, or another type for a formal referenced in those syntactic positions."
+        ],
+        "notes": [],
+        "positive": [
+          "Use shortint, int, and longint typed formals as delay and repetition bounds."
+        ]
+      },
+      "id": "SV-2023-16-TYPED-FORMAL-DELAY-REPETITION-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the same typed nonlocal formal only as an rvalue."
+        ],
+        "negative": [
+          "Assign to or increment a typed nonlocal formal in a match item."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a typed local-variable formal as the lvalue in a sequence match assignment."
+        ]
+      },
+      "id": "SV-2023-16-TYPED-FORMAL-MATCH-ITEM-LVALUE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Declare a typed formal using a data type prohibited in assertion expressions."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare typed sequence formals using sequence and representative legal assertion operand types."
+        ]
+      },
+      "id": "SV-2023-16-TYPED-SEQUENCE-FORMAL-TYPE-SET"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Nest the unclocked sequence inside a clocked named sequence."
+        ],
+        "negative": [
+          "Use an unclocked sequence in a context from which no clock can be resolved."
+        ],
+        "notes": [],
+        "positive": [
+          "Instantiate the same unclocked sequence under two differently clocked properties and observe each inherited clock."
+        ]
+      },
+      "id": "SV-2023-16-UNCLOCKED-NAMED-SEQUENCE-INHERITS-CLOCK"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare aliases and equivalent-valued but syntactically distinct edge events according to event identity rules."
+        ],
+        "negative": [
+          "Use distinct clock signals tied to equal values or inferred versus nonidentical explicit events."
+        ],
+        "notes": [],
+        "positive": [
+          "Use repeated textually/semantically identical event expressions in all branches."
+        ]
+      },
+      "id": "SV-2023-16-UNIQUE-SEMANTIC-CLOCK-REQUIRES-IDENTICAL-EVENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use operands true together on the first tick and traces where q never becomes true."
+        ],
+        "negative": [
+          "Interchange overlapping and nonoverlapping operator spelling."
+        ],
+        "notes": [
+          "Following anchors should extend exact weak/strong and overlap semantics."
+        ],
+        "positive": [
+          "Parse and evaluate each of the four forms."
+        ]
+      },
+      "id": "SV-2023-16-UNTIL-PROPERTY-FORMS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Make the right operand true at the starting tick."
+        ],
+        "negative": [
+          "Require the left operand on a nonoverlapping witness tick, omit it on an overlapping witness tick, or let strong pass without a witness."
+        ],
+        "notes": [],
+        "positive": [
+          "Exercise witness at start and later, plus no witness on a finite trace, for all four forms."
+        ]
+      },
+      "id": "SV-2023-16-UNTIL-PROPERTY-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Substitute terminal $ and verify no wrapping or cast is applied."
+        ],
+        "negative": [],
+        "notes": [
+          "Additional immediately following list anchors may define further exemptions."
+        ],
+        "positive": [
+          "Substitute an operator expression and verify grouping and self-determined typing are retained."
+        ]
+      },
+      "id": "SV-2023-16-UNTYPED-ACTUAL-SUBSTITUTION-WRAPPING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use terminal $ where the separate terminal-actual restrictions permit it."
+        ],
+        "negative": [
+          "Pass runtime variables to each of delay-range, Boolean-abbreviation, and sequence-abbreviation positions."
+        ],
+        "notes": [],
+        "positive": [
+          "Pass literal and parameter constants to untyped delay and repetition formals."
+        ]
+      },
+      "id": "SV-2023-16-UNTYPED-FORMAL-ELABORATION-CONSTANT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Reference it exactly at match completion and later."
+        ],
+        "negative": [
+          "Declare it internally, pass a subexpression rather than the whole local, or bind it to a typed formal."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare an outer local, pass it whole to an untyped formal, assign it in the subsequence, and read it after match."
+        ]
+      },
+      "id": "SV-2023-16-UNTYPED-FORMAL-LOCAL-COPYOUT-CONDITIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Create multiple matching threads and verify local copies remain thread-specific."
+        ],
+        "negative": [
+          "Reference the value on a flow path where the subsequence assignment did not occur."
+        ],
+        "notes": [],
+        "positive": [
+          "Pass a sequence local through an untyped formal, assign it in the subsequence, then reference it after the subsequence matches."
+        ]
+      },
+      "id": "SV-2023-16-UNTYPED-SEQUENCE-ACTUAL-LOCAL-FLOW"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call before the first clock and test both equal-to-default and differing values."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "At the first clock, choose a value differing from its default and observe the corresponding change result."
+        ]
+      },
+      "id": "SV-2023-16-VALUE-CHANGE-FIRST-CLOCK-COMPARISON"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Have multiple simulation updates between clock events."
+        ],
+        "negative": [
+          "Treat intervening nonclock time-step values as the prior sample."
+        ],
+        "notes": [],
+        "positive": [
+          "Change an expression between two occurrences of its clock and evaluate a change function."
+        ]
+      },
+      "id": "SV-2023-16-VALUE-CHANGE-FUNCTION-COMPARISON"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Evaluate at time 0 and verify the applicable default sampled value is used."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Change a variable in Active at a clock tick and verify the assertion sees its Preponed value."
+        ]
+      },
+      "id": "SV-2023-16-VARIABLE-SAMPLED-VALUE-TIME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "End the trace before some finite or unbounded range ticks."
+        ],
+        "negative": [
+          "Make p false at one existing in-range tick."
+        ],
+        "notes": [],
+        "positive": [
+          "Hold p at every existing tick in unbounded and finite ranged forms."
+        ]
+      },
+      "id": "SV-2023-16-WEAK-ALWAYS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Test index zero and traces ending just before the target tick."
+        ],
+        "negative": [
+          "Return false solely because the required future tick does not exist."
+        ],
+        "notes": [],
+        "positive": [
+          "Evaluate unindexed and indexed forms with enough ticks and a true target property."
+        ]
+      },
+      "id": "SV-2023-16-WEAK-NEXTTIME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast with the corresponding strong operator on the same trace."
+        ],
+        "negative": [
+          "Fail solely because no further clock tick or terminating condition occurs."
+        ],
+        "notes": [],
+        "positive": [
+          "Stop the clock before a terminating condition and apply each weak operator's vacuous finite-trace semantics."
+        ]
+      },
+      "id": "SV-2023-16-WEAK-PROPERTY-OPERATORS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Terminate exactly before the final range tick."
+        ],
+        "negative": [
+          "Use an unbounded weak range or complete the range without a witness."
+        ],
+        "notes": [],
+        "positive": [
+          "Provide an in-range witness and separately terminate before all range ticks exist."
+        ]
+      },
+      "id": "SV-2023-16-WEAK-RANGED-EVENTUALLY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise empty matches for either sequence according to their match-point rules."
+        ],
+        "negative": [
+          "Start seq1 before seq2 or end it after seq2."
+        ],
+        "notes": [],
+        "positive": [
+          "Match seq1 strictly inside seq2 and with coincident boundaries."
+        ]
+      },
+      "id": "SV-2023-16-WITHIN-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Parenthesize nested within expressions to distinguish associativity."
+        ],
+        "negative": [
+          "Omit either sequence operand."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse simple and compound sequence operands around within."
+        ]
+      },
+      "id": "SV-2023-16-WITHIN-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use [*0:0] versus [*1:1]."
+        ],
+        "negative": [
+          "Take a sample for [*0] or omit the empty alternative from a zero-inclusive range."
+        ],
+        "notes": [],
+        "positive": [
+          "Evaluate [*0], [*0:1], and [*0:2] and enumerate empty/nonempty matches."
+        ]
+      },
+      "id": "SV-2023-16-ZERO-REPETITION-EMPTY-MATCH"
+    }
+  ],
+  "schema_version": 1
+}

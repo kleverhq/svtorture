@@ -1,0 +1,1450 @@
+{
+  "authority": "1800-2023",
+  "part": "28",
+  "requirements": [
+    {
+      "hints": {
+        "edge": [
+          "Distinguish L and H from unrestricted x and from a known value with multiple strength levels."
+        ],
+        "negative": [],
+        "notes": [
+          "Use set/range-aware oracles rather than requiring one implementation-selected member."
+        ],
+        "positive": [
+          "Produce each ambiguous class through driver or switch combinations and inspect its permitted value/strength range."
+        ]
+      },
+      "id": "SV-2023-28-AMBIGUOUS-STRENGTH-CLASSIFICATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Combine ambiguous signals whose ranges remain entirely within one value portion and distinguish the resulting known-value range."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Combine an H-range signal and an L-range signal whose bounds span both value portions and verify an x with the union's extreme bounds."
+        ]
+      },
+      "id": "SV-2023-28-AMBIGUOUS-STRENGTH-COMBINATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use opposite values so filtering creates a gap and verify intervening levels are restored."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Combine an ambiguous range spanning above and below a known driver's strength and verify filtering at the known level."
+        ]
+      },
+      "id": "SV-2023-28-AMBIGUOUS-WITH-UNAMBIGUOUS-RESOLUTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify z input produces x rather than propagating z through buf."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Drive each four-state input value into buf and not and compare every output with the table."
+        ]
+      },
+      "id": "SV-2023-28-BUF-NOT-FOUR-STATE-TRUTH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Create opposing or uncertain drivers whose result has an ambiguous multi-level strength and distinguish it from a single-strength result."
+        ],
+        "negative": [],
+        "notes": [
+          "Use detailed 28.12 requirements to construct drivers; this record scores the resulting strength-state form, not those algorithms again."
+        ],
+        "positive": [
+          "Resolve a built-in net driven to a known value at one strength and inspect its single value/strength state."
+        ]
+      },
+      "id": "SV-2023-28-BUILTIN-NET-VALUE-STRENGTH-RESOLUTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise controls that enable both channels, neither channel, or an unknown channel."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare a cmos instance with explicit parallel nmos and pmos instances over data and four-state control combinations."
+        ]
+      },
+      "id": "SV-2023-28-CMOS-COMPLEMENTARY-MOS-EQUIVALENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare x, H, and L transition timing and compare omitted delay with zero delay."
+        ],
+        "negative": [
+          "Supply more than three CMOS delay values."
+        ],
+        "notes": [],
+        "positive": [
+          "Specify three distinct CMOS delays and observe rise, fall, and transition-to-z."
+        ]
+      },
+      "id": "SV-2023-28-CMOS-SWITCH-DELAY-MAPPING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify rcmos preserves small charge and high impedance."
+        ],
+        "negative": [],
+        "notes": [
+          "Hold CMOS control and data behavior constant while observing strength."
+        ],
+        "positive": [
+          "Propagate a non-supply drive through cmos and verify preservation; propagate supply and verify strong.",
+          "Propagate strong, pull, and medium-charge signals through rcmos and verify the table reductions."
+        ]
+      },
+      "id": "SV-2023-28-CMOS-SWITCH-STRENGTH-REDUCTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Drive complementary controls to enable both component channels."
+        ],
+        "negative": [
+          "Swap the n-channel and p-channel control terminals or omit one control."
+        ],
+        "notes": [],
+        "positive": [
+          "Instantiate cmos with output, input, n-control, and p-control in order."
+        ]
+      },
+      "id": "SV-2023-28-CMOS-SWITCH-TERMINALS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multiple unnamed instances in one comma-separated declaration."
+        ],
+        "negative": [
+          "Attempt to place a distinct drive-strength or delay specification on the second instance in a comma-separated declaration."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare two and instances after one drive-strength and delay specification and observe both with those declaration-wide settings."
+        ]
+      },
+      "id": "SV-2023-28-COMMA-INSTANCES-SHARE-STRENGTH-DELAY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare a 2-state control with a 4-state control while holding pass terminals constant."
+        ],
+        "negative": [
+          "Use an object outside the three permitted control categories as the control terminal."
+        ],
+        "notes": [],
+        "positive": [
+          "Control otherwise identical pass switches with a 4-state net, 4-state variable, and 2-state variable."
+        ]
+      },
+      "id": "SV-2023-28-CONTROLLED-PASS-SWITCH-CONTROL-TYPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "On built-in nets, transition control to x or z and verify the smaller specified delay."
+        ],
+        "negative": [
+          "Supply three delay values to tranif."
+        ],
+        "notes": [],
+        "positive": [
+          "Specify distinct turn-on and turn-off delays and toggle the pass-switch control."
+        ]
+      },
+      "id": "SV-2023-28-CONTROLLED-PASS-SWITCH-DELAY"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Place the control before either bidirectional terminal or provide the wrong terminal count."
+        ],
+        "notes": [],
+        "positive": [
+          "Instantiate each controlled pass-switch family with two inouts followed by a control."
+        ]
+      },
+      "id": "SV-2023-28-CONTROLLED-PASS-SWITCH-TERMINALS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare omitted strength with an explicit `(strong1, strong0)` specification."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Resolve an unspecified-strength gate output against a weaker driver and observe strong strength behavior."
+        ]
+      },
+      "id": "SV-2023-28-DEFAULT-GATE-DRIVE-STRENGTH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a transition to x whose delay is selected by a minimum rule."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Apply otherwise identical value transitions at weak and supply input strengths and verify equal output timing."
+        ]
+      },
+      "id": "SV-2023-28-DELAY-INDEPENDENT-OF-INPUT-STRENGTH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a multiple-output buf and verify the declaration strength governs each output terminal."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Apply distinct explicit strengths to an eligible gate and observe the output strengths for 0 and 1."
+        ]
+      },
+      "id": "SV-2023-28-DRIVE-STRENGTH-OUTPUT-EFFECT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise pullup and pulldown, whose strength forms differ from ordinary eligible gates."
+        ],
+        "negative": [
+          "Attach a drive-strength specification to a tran or MOS switch."
+        ],
+        "notes": [],
+        "positive": [
+          "Apply a drive-strength specification to one primitive from each eligible gate family."
+        ]
+      },
+      "id": "SV-2023-28-DRIVE-STRENGTH-OUTPUT-EFFECT-AND-ELIGIBILITY"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Place the pair after the delay or omit its comma or parentheses."
+        ],
+        "notes": [],
+        "positive": [
+          "Use both `(strong1, weak0)` and reversed `(weak0, strong1)` forms before a delay."
+        ]
+      },
+      "id": "SV-2023-28-DRIVE-STRENGTH-PAIR-SYNTAX-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Reverse the two syntax members while preserving their 0/1 suffixes and verify unchanged value association."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use unequal strength0 and strength1 members and observe both output values."
+        ]
+      },
+      "id": "SV-2023-28-DRIVE-STRENGTH-VALUE-ASSOCIATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare the same value driven at weak and supply strengths against an opposing driver."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Drive nets from gate and continuous-assignment outputs at each driving-strength class and observe strength-sensitive resolution."
+        ]
+      },
+      "id": "SV-2023-28-DRIVING-STRENGTH-PROPAGATION"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Specify `(highz0, highz1)` and `(highz1, highz0)` on an otherwise eligible gate."
+        ],
+        "notes": [],
+        "positive": []
+      },
+      "id": "SV-2023-28-DUAL-HIGHZ-STRENGTH-PAIR-ILLEGAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Repeat at supply strength and compare with unequal opposing strengths where the stronger driver wins."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Combine weak0 and weak1 drivers and observe an x result with weak-or-lower ambiguity."
+        ]
+      },
+      "id": "SV-2023-28-EQUAL-OPPOSING-STRENGTH-RESOLUTION"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Specify more than three delay values on such a gate."
+        ],
+        "notes": [
+          "Primitive-family clauses can impose a smaller maximum."
+        ],
+        "positive": [
+          "Use a legal three-value delay on a primitive form that permits rise, fall, and turn-off."
+        ]
+      },
+      "id": "SV-2023-28-GATE-DELAY-MAX-THREE-VALUES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place a net delay after the gate and distinguish the two stages."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Apply a gate input transition and observe the delayed output transition."
+        ]
+      },
+      "id": "SV-2023-28-GATE-NET-DELAY-EFFECT-AND-ARITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare omitted delay, one explicit delay, and two equal delays across four-state source values."
+        ],
+        "negative": [],
+        "notes": [
+          "Remaining table rows complete from-to coverage."
+        ],
+        "positive": [
+          "Exercise rise, fall, z, and x transitions with distinct two-value delays."
+        ]
+      },
+      "id": "SV-2023-28-GATE-NET-ZERO-ONE-TWO-DELAY-MAPPING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Declare an unnamed primitive instance and a named arrayed instance in otherwise equivalent declarations."
+        ],
+        "negative": [
+          "Give a tran primitive a drive-strength specification even though its grammar has no drive-strength slot."
+        ],
+        "notes": [
+          "Vary one optional component or terminal category per case."
+        ],
+        "positive": [
+          "Declare an and primitive with an output terminal and one or more input expressions, optionally naming the instance."
+        ]
+      },
+      "id": "SV-2023-28-GATE-SWITCH-DECLARATION-COMPONENTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Observe the H range's driven-1 bound and high-impedance endpoint."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare otherwise identical unknown-output and gates using highz0 versus weak0 for the 0-output strength."
+        ]
+      },
+      "id": "SV-2023-28-GATE-UNKNOWN-WITH-HIGHZ-COMPONENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify only the highz-designated logic value becomes z."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use highz1 with a non-highz strength0 and observe z instead of a driven 1."
+        ]
+      },
+      "id": "SV-2023-28-HIGHZ-DRIVE-STRENGTH-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a one-element instance array and distinguish equal-width sharing from an invalid oversized partition."
+        ],
+        "negative": [
+          "Connect an expression one bit too short or one bit too long for all array terminals."
+        ],
+        "notes": [],
+        "positive": [
+          "Connect an N\u00d7W-bit expression to N instances with W-bit terminals."
+        ]
+      },
+      "id": "SV-2023-28-INSTANCE-ARRAY-CONNECTION-EXACT-TOTAL-WIDTH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Reference the right-hand and left-hand bound elements of a descending range."
+        ],
+        "negative": [
+          "Reference a primitive array element using an index outside its declared range."
+        ],
+        "notes": [
+          "Choose a portable observation that needs an individual hierarchical instance reference."
+        ],
+        "positive": [
+          "Hierarchically reference a named primitive array element with an index inside its declared range."
+        ]
+      },
+      "id": "SV-2023-28-INSTANCE-ARRAY-ELEMENT-REFERENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use different mapping modes on separate terminals of the same instance array by varying expression widths."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Connect a one-bit expression to a one-bit terminal across a multi-instance gate array and observe it shared by every instance."
+        ]
+      },
+      "id": "SV-2023-28-INSTANCE-ARRAY-EQUAL-WIDTH-CONNECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use vectors whose declared direction is opposite the instance-array range direction."
+        ],
+        "negative": [],
+        "notes": [
+          "Combine with the detailed terminal-to-vector mapping rules that follow before materializing."
+        ],
+        "positive": [
+          "Connect a primitive instance array to vectors and check that each instance maps to its corresponding indexed elements."
+        ]
+      },
+      "id": "SV-2023-28-INSTANCE-ARRAY-INDEX-VARIATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Repeat with ascending and descending instance-array ranges; mapping is anchored to the right-hand index rather than the numerically smallest index."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Connect a 16-bit expression to four instances having 4-bit terminals and verify the least-significant nibble reaches the right-hand-index instance."
+        ]
+      },
+      "id": "SV-2023-28-INSTANCE-ARRAY-PARTITIONED-CONNECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use equal bounds and verify one array element is elaborated."
+        ],
+        "negative": [
+          "Use a nonconstant expression as an instance-array bound."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare arrays with ascending and descending nonzero constant bounds and check elaborated counts."
+        ]
+      },
+      "id": "SV-2023-28-INSTANCE-ARRAY-RANGE-CARDINALITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a descending continuous range."
+        ],
+        "negative": [
+          "Attach two ranges to one primitive instance identifier."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a named primitive array with one continuous packed-style index range."
+        ]
+      },
+      "id": "SV-2023-28-INSTANCE-ARRAY-SINGLE-CONTINUOUS-RANGE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast omitted range with an equal-bound range: both elaborate one instance, but only the latter is an array element."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare a named primitive without a range and verify one scalar instance."
+        ]
+      },
+      "id": "SV-2023-28-INSTANCE-RANGE-OMISSION-CREATES-SCALAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a one-element array with a one-bit interconnect expression."
+        ],
+        "negative": [
+          "Connect an interconnect expression whose width differs from the primitive array length."
+        ],
+        "notes": [],
+        "positive": [
+          "Connect an N-bit interconnect net expression to an N-element primitive instance array."
+        ]
+      },
+      "id": "SV-2023-28-INTERCONNECT-INSTANCE-ARRAY-WIDTH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use expressions whose numerical values do not satisfy min \u2264 typ \u2264 max."
+        ],
+        "negative": [
+          "Use other punctuation or omit one member of a min:typ:max triple."
+        ],
+        "notes": [
+          "The selected member depends on the simulator's standardized timing-selection mode; do not assume the labels impose ordering."
+        ],
+        "positive": [
+          "Specify independent min:typ:max triples for rise, fall, and turn-off delays."
+        ]
+      },
+      "id": "SV-2023-28-MIN-TYP-MAX-DELAY-TRIPLES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Cause a transition to x and verify use of the minimum applicable delay."
+        ],
+        "negative": [
+          "Supply four delay values to an nmos declaration."
+        ],
+        "notes": [],
+        "positive": [
+          "Specify three distinct delays and observe rise, fall, and transition-to-z changes through an enabled MOS switch."
+        ]
+      },
+      "id": "SV-2023-28-MOS-SWITCH-DELAY-MAPPING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Combine x and z controls with each four-state data value and verify H, L, x, or z outcomes."
+        ],
+        "negative": [],
+        "notes": [
+          "Use set-valued oracles for H and L."
+        ],
+        "positive": [
+          "Exercise each MOS polarity with enabled and disabled controls and data 0 and 1."
+        ]
+      },
+      "id": "SV-2023-28-MOS-SWITCH-FOUR-STATE-TRUTH"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [
+          "Use a set-aware value oracle while comparing event times."
+        ],
+        "positive": [
+          "Use unequal transition delays and compare H, L, and x transition timing."
+        ]
+      },
+      "id": "SV-2023-28-MOS-SWITCH-H-L-DELAY-AS-X"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Distinguish H and L from unrestricted x."
+        ],
+        "negative": [],
+        "notes": [
+          "Use a set-valued oracle for H and L."
+        ],
+        "positive": [
+          "Use an unknown control combination that yields H or L and accept either member of its defined set."
+        ]
+      },
+      "id": "SV-2023-28-MOS-SWITCH-H-L-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare resistive and nonresistive listed keywords while holding declaration shape applicable."
+        ],
+        "negative": [
+          "Use tran as though it were a MOS switch declaration keyword."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare each listed MOS switch keyword using its applicable terminal grammar."
+        ]
+      },
+      "id": "SV-2023-28-MOS-SWITCH-KEYWORDS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify a resistive MOS switch preserves small charge and high impedance."
+        ],
+        "negative": [],
+        "notes": [
+          "Hold polarity, control, and data constant while observing strength."
+        ],
+        "positive": [
+          "Propagate ordinary and supply strengths through nmos or pmos and verify preservation versus supply-to-strong.",
+          "Propagate strong, pull, and medium-charge signals through rnmos or rpmos and verify table reductions."
+        ]
+      },
+      "id": "SV-2023-28-MOS-SWITCH-STRENGTH-REDUCTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use expressions for input and control while retaining a net lvalue output."
+        ],
+        "negative": [
+          "Swap output and input terminal positions."
+        ],
+        "notes": [],
+        "positive": [
+          "Instantiate each unidirectional MOS switch with output, input, and control in order."
+        ]
+      },
+      "id": "SV-2023-28-MOS-SWITCH-TERMINALS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Drive the output side while leaving the input undriven and verify the switch does not provide bidirectional transfer."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Enable an nmos and propagate a source value from input to output."
+        ]
+      },
+      "id": "SV-2023-28-MOS-SWITCH-UNIDIRECTIONAL-CHANNEL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place a gate delay before a net delay and distinguish the two propagation stages."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Change a net driver and observe that the net update occurs after its net delay."
+        ]
+      },
+      "id": "SV-2023-28-NET-DELAY-EFFECT-AND-ARITY"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Specify more than three delay values on a net."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a legal three-value net delay specification."
+        ]
+      },
+      "id": "SV-2023-28-NET-DELAY-MAX-THREE-VALUES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use highz0 or highz1 as one component while the opposite component remains driven."
+        ],
+        "negative": [
+          "Use a strength1 keyword as the strength0 component."
+        ],
+        "notes": [],
+        "positive": [
+          "Form strengths using one valid strength0 and one valid strength1 component."
+        ]
+      },
+      "id": "SV-2023-28-NET-STRENGTH-COMPONENTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an unknown transition whose delay is selected by the minimum rule at both arities."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare otherwise identical two-input and many-input gates with the same delay specification and verify equal transition delay."
+        ]
+      },
+      "id": "SV-2023-28-NINPUT-GATE-DELAY-INDEPENDENT-OF-ARITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Cause a transition to x and verify it uses the smaller of distinct rise and fall delays."
+        ],
+        "negative": [
+          "Supply three delay values to an and gate."
+        ],
+        "notes": [],
+        "positive": [
+          "Give an and gate distinct rise and fall delays and observe each output transition."
+        ]
+      },
+      "id": "SV-2023-28-NINPUT-GATE-DELAY-MAPPING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Combine x or z with a controlling input for and/nand and or/nor, then compare with xor/xnor where unknown propagates."
+        ],
+        "negative": [],
+        "notes": [
+          "Materialize individual operations separately."
+        ],
+        "positive": [
+          "Exercise controlling and noncontrolling 0/1 combinations for each gate family."
+        ]
+      },
+      "id": "SV-2023-28-NINPUT-GATE-FOUR-STATE-TRUTH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Distinguish the keyword `or` from use of an operator expression in an input terminal."
+        ],
+        "negative": [
+          "Use buf as a multiple-input logic-gate primitive."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare each of the six multiple-input gate primitive types."
+        ]
+      },
+      "id": "SV-2023-28-NINPUT-GATE-KEYWORDS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise controlling and unknown values beyond the first two inputs."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare a three-input gate result with the corresponding reduction over all three values."
+        ]
+      },
+      "id": "SV-2023-28-NINPUT-GATE-MULTIINPUT-EXTENSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the minimum legal one-input form for each multiple-input gate keyword."
+        ],
+        "negative": [
+          "Instantiate an and gate with no input terminal or with two output terminals."
+        ],
+        "notes": [],
+        "positive": [
+          "Instantiate an and gate with one output and one input, and another with several inputs."
+        ]
+      },
+      "id": "SV-2023-28-NINPUT-GATE-TERMINAL-ARITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Cause a transition to x and verify the smaller of distinct rise and fall delays is used."
+        ],
+        "negative": [
+          "Supply three delay values to a not gate."
+        ],
+        "notes": [],
+        "positive": [
+          "Give a buf gate distinct rise and fall delays and observe each output transition."
+        ]
+      },
+      "id": "SV-2023-28-NOUTPUT-GATE-DELAY-MAPPING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Declare the minimum one-output form and a several-output form for each keyword."
+        ],
+        "negative": [
+          "Use and as a multiple-output primitive with several outputs."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare both buf and not primitive instances."
+        ]
+      },
+      "id": "SV-2023-28-NOUTPUT-GATE-KEYWORDS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the minimum one-output, one-input form."
+        ],
+        "negative": [
+          "Place the input first or provide multiple input terminals to not."
+        ],
+        "notes": [],
+        "positive": [
+          "Instantiate buf with several outputs followed by one input."
+        ]
+      },
+      "id": "SV-2023-28-NOUTPUT-GATE-TERMINAL-ARITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Toggle a controlled switch between enabled and disabled while opposite-side drivers are present."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Pass a signal in each direction through tran and through an enabled tranif."
+        ]
+      },
+      "id": "SV-2023-28-PASS-SWITCH-CONDUCTION-CONTROL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare rtranif0 and tranif0 declarations differing only in resistive behavior."
+        ],
+        "negative": [
+          "Use nmos with a bidirectional pass-switch terminal form."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare each unconditional, controlled, resistive, and nonresistive pass-switch keyword."
+        ]
+      },
+      "id": "SV-2023-28-PASS-SWITCH-KEYWORDS"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Connect rtran to a whole vector net or a user-defined net."
+        ],
+        "notes": [],
+        "positive": [
+          "Connect a resistive pass switch to scalar nets and to vector-net bit-selects."
+        ]
+      },
+      "id": "SV-2023-28-PASS-SWITCH-NET-TYPE-RESTRICTIONS"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Connect tran between two different user-defined net types.",
+          "Connect tran between a user-defined net and a built-in net."
+        ],
+        "notes": [],
+        "positive": []
+      },
+      "id": "SV-2023-28-PASS-SWITCH-NO-INCOMPATIBLE-NET-TYPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare the same declaration using rtran, which does not admit user-defined net terminals."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Connect tran between two nets of the same user-defined net type."
+        ]
+      },
+      "id": "SV-2023-28-PASS-SWITCH-SAME-UDN-PERMISSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify resistive pass switches preserve small charge and high impedance."
+        ],
+        "negative": [],
+        "notes": [
+          "Use built-in nets and hold control/conduction constant."
+        ],
+        "positive": [
+          "Propagate ordinary and supply strengths through tran or tranif and verify preservation versus supply-to-strong.",
+          "Propagate strong, pull, and medium-charge signals through rtran or rtranif and verify table reductions."
+        ]
+      },
+      "id": "SV-2023-28-PASS-SWITCH-STRENGTH-REDUCTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Distinguish zero through-delay from a nonzero control turn-on delay."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "With an already-enabled tranif, change a value on one side and observe immediate propagation to the other side."
+        ]
+      },
+      "id": "SV-2023-28-PASS-SWITCH-ZERO-THROUGH-DELAY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a one-element range, which remains an array declaration and therefore requires a name."
+        ],
+        "negative": [
+          "Give an unnamed primitive instance an array range."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare one unnamed scalar gate and one named gate-instance array."
+        ]
+      },
+      "id": "SV-2023-28-PRIMITIVE-INSTANCE-NAMING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use one keyword for a declaration containing several instances and verify no per-instance primitive keyword is accepted."
+        ],
+        "negative": [
+          "Place an instance identifier before the primitive keyword."
+        ],
+        "notes": [],
+        "positive": [
+          "Begin a declaration with a valid gate keyword followed by two comma-separated instances of that gate type."
+        ]
+      },
+      "id": "SV-2023-28-PRIMITIVE-KEYWORD-BEGINS-DECLARATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a bidirectional switch whose two inout terminals occupy the leading terminal positions."
+        ],
+        "negative": [
+          "Place an input terminal before the gate's output terminal."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare an and gate with output first followed by comma-separated input expressions in parentheses."
+        ]
+      },
+      "id": "SV-2023-28-PRIMITIVE-TERMINAL-LIST-SYNTAX-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use distinct expressions for all three members."
+        ],
+        "negative": [
+          "Supply a malformed two-member colon delay control."
+        ],
+        "notes": [],
+        "positive": [
+          "Use literal and parameter-expression min:typ:max triples in procedural delay controls."
+        ]
+      },
+      "id": "SV-2023-28-PROCEDURAL-MIN-TYP-MAX-DELAY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Declare each pull primitive with a two-strength pair."
+        ],
+        "negative": [
+          "Declare pullup with only a strength0 keyword."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare pullup with one strength1 keyword and pulldown with one strength0 keyword."
+        ]
+      },
+      "id": "SV-2023-28-PULL-GATE-STRENGTH-FORMS"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare pullup with explicit strong1 and pulldown with explicit strong0 against their defaults."
+        ]
+      },
+      "id": "SV-2023-28-PULL-SOURCE-EXPLICIT-MATCHING-STRENGTH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Declare multiple pull instances in one declaration with a shared strength specification."
+        ],
+        "negative": [
+          "Use supply1 as though it were a pull primitive keyword."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare both pullup and pulldown sources."
+        ]
+      },
+      "id": "SV-2023-28-PULL-SOURCE-KEYWORDS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Resolve a pull source against another driver to distinguish driven value and strength."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Connect pullup and pulldown separately to undriven nets and observe 1 and 0."
+        ]
+      },
+      "id": "SV-2023-28-PULL-SOURCE-LOGIC-VALUE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Attach a delay specification to either pull source."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare pullup and pulldown without delays."
+        ]
+      },
+      "id": "SV-2023-28-PULL-SOURCE-NO-DELAY"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use two-member pull strength pairs and vary only pullup strength0 or pulldown strength1; verify the driven strength is unchanged."
+        ]
+      },
+      "id": "SV-2023-28-PULL-SOURCE-OPPOSITE-STRENGTH-IGNORED"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Observe the default strength of otherwise undriven pullup and pulldown nets."
+        ]
+      },
+      "id": "SV-2023-28-PULL-SOURCE-STRENGTH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify both supply and strong collapse to pull, while small charge and high impedance remain unchanged."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Pass every input strength class through a resistive switch and compare the output mapping."
+        ]
+      },
+      "id": "SV-2023-28-RESISTIVE-SWITCH-STRENGTH-TABLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare the paired 0 and 1 names at each equal numeric level."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Create representative values at each named strength and inspect their numeric ordering through standardized strength observations."
+        ]
+      },
+      "id": "SV-2023-28-SCALAR-STRENGTH-LEVEL-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Reverse textual pair order while retaining one keyword from each value domain."
+        ],
+        "negative": [
+          "Pair two strength1-domain keywords as though one were strength0."
+        ],
+        "notes": [],
+        "positive": [
+          "Use each listed strength1 and strength0 keyword in a valid pair."
+        ]
+      },
+      "id": "SV-2023-28-STRENGTH-KEYWORD-DOMAINS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Resolve equal opposing strengths to x and verify both 0 and 1 portions contribute."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Create resolved known 0, known 1, x, and z net states and inspect their value/strength representation."
+        ]
+      },
+      "id": "SV-2023-28-STRENGTH-PART-BY-FOUR-STATE-VALUE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare with tri0 and tri1 implicit pull strengths."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Resolve supply0 and supply1 against weaker opposite-value drivers and observe supply dominance."
+        ]
+      },
+      "id": "SV-2023-28-SUPPLY-NET-DRIVING-STRENGTH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise x-to-z, z-to-x, and transitions out of x or z."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use distinct d1, d2, and d3 and exercise every tabled from-to transition."
+        ]
+      },
+      "id": "SV-2023-28-THREE-DELAY-TRANSITION-MAPPING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Add a stronger opposite-value driver and verify it overrides the implicit pull."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Leave tri0 and tri1 otherwise undriven and observe pull-strength 0 and 1."
+        ]
+      },
+      "id": "SV-2023-28-TRI0-TRI1-IMPLICIT-PULL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Re-enable a driver just before decay expiry and verify the pending decay ends without changing the new driven value to x."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Release a charged 0 or 1 and observe x exactly after the decay time."
+        ]
+      },
+      "id": "SV-2023-28-TRIREG-CHARGE-DECAY-PROCESS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare weak driving strength level 3 with medium charge level 2 during resolution."
+        ],
+        "negative": [
+          "Attempt to use a charge-storage strength as an ordinary gate drive-strength keyword."
+        ],
+        "notes": [],
+        "positive": [
+          "Use trireg nets with large, medium, and small charge strengths and observe stored-value resolution."
+        ]
+      },
+      "id": "SV-2023-28-TRIREG-CHARGE-STORAGE-STRENGTHS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use no decay delay and distinguish indefinite retention from initial z."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Drive trireg to 0, 1, and x separately, then drive z and verify each value is retained until decay or a new active drive."
+        ]
+      },
+      "id": "SV-2023-28-TRIREG-RETAINS-VALUE-WHEN-DRIVERS-OFF"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare omitted strength with explicit medium."
+        ],
+        "negative": [
+          "Specify a non-charge driving strength as trireg storage strength."
+        ],
+        "notes": [],
+        "positive": [
+          "Charge trireg nets declared with large, medium, small, and omitted strengths, then release the driver and inspect stored strength."
+        ]
+      },
+      "id": "SV-2023-28-TRIREG-STORED-CHARGE-STRENGTH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use zero rise/fall with nonzero decay."
+        ],
+        "negative": [
+          "Attempt to specify charge-decay time without both preceding rise and fall delays."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare distinct rise, fall, and decay values and observe each event."
+        ]
+      },
+      "id": "SV-2023-28-TRIREG-THREE-DELAY-DECAY-MAPPING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Release active drivers to z after storing 0 or 1 and verify z does not replace the stored value."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Observe initial trireg z and force an already-charged trireg to z."
+        ]
+      },
+      "id": "SV-2023-28-TRIREG-Z-STATE-SOURCES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Cause a transition to x and verify the minimum applicable delay is selected."
+        ],
+        "negative": [
+          "Supply four delay values to a bufif gate."
+        ],
+        "notes": [],
+        "positive": [
+          "Specify three distinct delays and separately observe rising, falling, and transition-to-z output changes."
+        ]
+      },
+      "id": "SV-2023-28-TRISTATE-GATE-DELAY-MAPPING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Combine x and z control values with each of 0, 1, x, and z data to verify H, L, or x table outcomes."
+        ],
+        "negative": [],
+        "notes": [
+          "Where H or L permits either value, use a set-valued oracle."
+        ],
+        "positive": [
+          "For each primitive, exercise enabled and disabled control with data 0 and 1."
+        ]
+      },
+      "id": "SV-2023-28-TRISTATE-GATE-FOUR-STATE-TRUTH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare bufif0 with bufif1 declarations while holding terminal shape constant."
+        ],
+        "negative": [
+          "Use buf as though it were a controlled three-state primitive."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare each of the four three-state primitive keywords."
+        ]
+      },
+      "id": "SV-2023-28-TRISTATE-GATE-KEYWORDS-AND-CAPABILITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use complex expressions for data and control while preserving terminal roles."
+        ],
+        "negative": [
+          "Swap the data and control terminals or omit one terminal."
+        ],
+        "notes": [],
+        "positive": [
+          "Instantiate each three-state gate with output, data, and control in that order."
+        ]
+      },
+      "id": "SV-2023-28-TRISTATE-GATE-TERMINALS"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [
+          "Use a set-aware value oracle while comparing event times."
+        ],
+        "positive": [
+          "Measure H, L, and x transitions under unequal gate delays and compare selected timing."
+        ]
+      },
+      "id": "SV-2023-28-TRISTATE-H-L-DELAY-AS-X"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Distinguish H and L from unrestricted x."
+        ],
+        "negative": [],
+        "notes": [
+          "Use a set-valued oracle."
+        ],
+        "positive": [
+          "Create an unknown-control combination yielding L or H and accept either member of its defined set."
+        ]
+      },
+      "id": "SV-2023-28-TRISTATE-H-L-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare equivalent drivers on a built-in resolved net and a user-defined nettype."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Drive a user-defined nettype from sources carrying different strength annotations and verify its resolution function receives values without strength effects."
+        ]
+      },
+      "id": "SV-2023-28-UDN-IGNORES-DRIVE-STRENGTH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast with resistive reduction on built-in nets."
+        ],
+        "negative": [],
+        "notes": [
+          "User-defined nettypes do not themselves carry strength levels; observe the UDN resolution behavior without importing built-in strength semantics."
+        ],
+        "positive": [
+          "Pass values through tran between same-type user-defined nets and verify resolution is not modified by switch strength reduction."
+        ]
+      },
+      "id": "SV-2023-28-UDN-PASS-SWITCH-NO-STRENGTH-REDUCTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare otherwise equivalent tranif connections using user-defined versus built-in net types under unknown control."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Drive x and z controls on a tranif connecting same-type user-defined nets and verify the sides remain disconnected."
+        ]
+      },
+      "id": "SV-2023-28-UDN-PASS-SWITCH-UNKNOWN-CONTROL-OFF"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Combine several same-value drivers including duplicate strengths and verify the greatest strength remains."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Combine unequal opposing strengths and verify the strongest value and strength win."
+        ]
+      },
+      "id": "SV-2023-28-UNAMBIGUOUS-STRENGTH-RESOLUTION"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Attach a delay specification to tran or rtran."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare tran and rtran without delays."
+        ]
+      },
+      "id": "SV-2023-28-UNCONTROLLED-PASS-SWITCH-NO-DELAY-SPEC"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Drive both terminals concurrently and observe bidirectional net resolution."
+        ],
+        "negative": [
+          "Give tran a third control terminal."
+        ],
+        "notes": [],
+        "positive": [
+          "Instantiate tran with two nets and drive each side in separate scenarios."
+        ]
+      },
+      "id": "SV-2023-28-UNCONTROLLED-PASS-SWITCH-TERMINALS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use component pairs containing both equal and unequal strengths so dominance and wired logic both contribute."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Combine two multi-level ambiguous signals on wand and wor and derive the result from every component pair."
+        ]
+      },
+      "id": "SV-2023-28-WIRED-LOGIC-AMBIGUOUS-PAIRWISE-RESOLUTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Include x or z drivers and apply the corresponding four-state logic function."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Drive equal-strength 0 and 1 onto wand/triand and wor/trior nets and verify AND versus OR resolution at that strength."
+        ]
+      },
+      "id": "SV-2023-28-WIRED-LOGIC-EQUAL-STRENGTH-RESOLUTION"
+    }
+  ],
+  "schema_version": 1
+}

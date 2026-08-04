@@ -1,0 +1,179 @@
+{
+  "authority": "1800-2023",
+  "part": "N",
+  "requirements": [
+    {
+      "hints": {
+        "edge": [
+          "Exercise both odd and even positive degrees of freedom."
+        ],
+        "negative": [],
+        "notes": [
+          "Choose vectors whose final floating result is not near a rounding boundary."
+        ],
+        "positive": [
+          "Compare returned values and updated seeds for a fixed positive-degree seed vector."
+        ]
+      },
+      "id": "SV-2023-N-CHI-SQUARE-ALGORITHM"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use k_stage equal to 1 to exercise the single-factor product."
+        ],
+        "negative": [],
+        "notes": [
+          "Avoid a final value near a rounding boundary."
+        ],
+        "positive": [
+          "Compare returned values and updated seeds for a fixed positive-k_stage vector."
+        ]
+      },
+      "id": "SV-2023-N-ERLANG-ALGORITHM"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Choose a seed yielding a small positive U to exercise a larger result."
+        ],
+        "negative": [],
+        "notes": [
+          "The uniform correction keeps U nonzero; avoid an integer rounding boundary."
+        ],
+        "positive": [
+          "Compare returned values and updated seeds for a fixed positive-mean vector."
+        ]
+      },
+      "id": "SV-2023-N-EXPONENTIAL-ALGORITHM"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use standard_deviation 0 and verify the returned mean while a pair is still consumed."
+        ],
+        "negative": [],
+        "notes": [
+          "Also select a vector rejecting at least one pair."
+        ],
+        "positive": [
+          "Compare result and updated seed for a fixed vector accepting its first pair."
+        ]
+      },
+      "id": "SV-2023-N-NORMAL-ALGORITHM"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a vector whose initial variate is no greater than exp(-mean), producing count 0."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare returned counts and updated seeds for a fixed positive-mean vector."
+        ]
+      },
+      "id": "SV-2023-N-POISSON-ALGORITHM"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an explicit zero seed."
+        ],
+        "negative": [],
+        "notes": [
+          "Do not use the no-argument form for this mapping."
+        ],
+        "positive": [
+          "For an explicit fixed seed, compare $random's result and updated seed with the full-range computation."
+        ]
+      },
+      "id": "SV-2023-N-RANDOM-USES-FULL-RANGE-UNIFORM"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use degree_of_freedom 1 to exercise the odd chi-square path."
+        ],
+        "negative": [],
+        "notes": [
+          "Avoid a final value near a rounding boundary."
+        ],
+        "positive": [
+          "Compare returned values and updated seeds for a fixed positive-degree vector."
+        ]
+      },
+      "id": "SV-2023-N-T-ALGORITHM"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise an interval spanning negative and positive values."
+        ],
+        "negative": [],
+        "notes": [
+          "Degenerate, LONG_MAX, full-range, and zero-seed branches are separate records."
+        ],
+        "positive": [
+          "Compare result and updated seed for an ordinary fixed interval ending below LONG_MAX."
+        ]
+      },
+      "id": "SV-2023-N-UNIFORM-ALGORITHM"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use equal bounds and reversed bounds; check returned start and unchanged seed."
+        ],
+        "negative": [],
+        "notes": [
+          "20.14.2 only recommends start less than end."
+        ],
+        "positive": []
+      },
+      "id": "SV-2023-N-UNIFORM-DEGENERATE-BOUNDS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use seeds producing scaled samples on each side of zero."
+        ],
+        "negative": [],
+        "notes": [
+          "Use 32-bit integer bounds corresponding to Annex N."
+        ],
+        "positive": [
+          "Compare result and updated seed for fixed-seed full-range calls."
+        ]
+      },
+      "id": "SV-2023-N-UNIFORM-FULL-RANGE-BOUNDS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use start equal to LONG_MAX-1."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare result and updated seed for a fixed interval ending at LONG_MAX."
+        ]
+      },
+      "id": "SV-2023-N-UNIFORM-LONG-MAX-BOUND"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify degenerate bounds do not reach the substitution."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare an ordinary $dist_uniform call starting with seed 0 against the substituted reference computation."
+        ]
+      },
+      "id": "SV-2023-N-UNIFORM-ZERO-SEED-SUBSTITUTION"
+    }
+  ],
+  "schema_version": 1
+}

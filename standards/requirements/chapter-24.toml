@@ -1,0 +1,735 @@
+schema_version = 3
+part = "24"
+
+[[requirements]]
+id = "SV-2023-24-ALL-PROGRAMS-IMPLICIT-FINISH"
+standard_revision = "1800-2023"
+part = "24"
+clause = "24.3"
+anchors = [
+    "[2023:24.3:P009:p776]",
+]
+summary = "If any program block contains an initial procedure, simulation shall perform an implicit $finish immediately after all threads and descendants originating from every program initial procedure have ended."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "24.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "24.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "24.3"
+
+[[requirements]]
+id = "SV-2023-24-ANONYMOUS-PROGRAM-GRAMMAR"
+standard_revision = "1800-2023"
+part = "24"
+clause = "24.3"
+anchors = [
+    "[2023:24.3:G001:p774-775]",
+]
+summary = "An anonymous program has the form `program; ... endprogram`, and its body may contain only task, function, class, interface-class, covergroup, or class-constructor declarations, plus empty items."
+related_clauses = [
+    "24.6",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "changed-expectation"
+clause = "24.3"
+note = "The 2012 anonymous-program grammar has the same form and other body alternatives, but does not permit an interface-class declaration."
+
+[requirements.revision_applicability.1800-2017]
+status = "changed-expectation"
+clause = "24.3"
+note = "The 2017 anonymous-program grammar does not permit an interface-class declaration, which the 2023 grammar permits."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "24.3"
+
+[[requirements]]
+id = "SV-2023-24-ANONYMOUS-PROGRAM-NAMESPACE"
+standard_revision = "1800-2023"
+part = "24"
+clause = "24.6"
+anchors = [
+    "[2023:24.6:P002:p779]",
+]
+summary = "An anonymous program may declare program-wide items in a package or compilation-unit scope without creating a new scope; those items share the containing package or compilation-unit namespace."
+related_clauses = [
+    "26",
+    "3.12.1",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "24.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "24.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "24.6"
+
+[[requirements]]
+id = "SV-2023-24-ANONYMOUS-PROGRAM-NO-CROSS-REFERENCE"
+standard_revision = "1800-2023"
+part = "24"
+clause = "24.3"
+anchors = [
+    "[2023:24.3:P012:p776]",
+]
+summary = "An anonymous program shall not contain a hierarchical reference to another program scope."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "24.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "24.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "24.3"
+
+[[requirements]]
+id = "SV-2023-24-CALLING-THREAD-REGION-INHERITANCE"
+standard_revision = "1800-2023"
+part = "24"
+clause = "24.3.1"
+anchors = [
+    "[2023:24.3.1:P004:p777]",
+    "[2023:24.5:P001:p778]",
+    "[2023:24.5:P002:p779]",
+]
+summary = "Blocking sequential code inherits the scheduling region of its calling thread, including subroutine code declared in a module, package, or interface when called by a program thread."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "24.3.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "24.3.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "24.3.1"
+
+[[requirements]]
+id = "SV-2023-24-CROSS-PROGRAM-HIERARCHICAL-REFERENCE"
+standard_revision = "1800-2023"
+part = "24"
+clause = "24.3"
+anchors = [
+    "[2023:24.3:P012:p776]",
+]
+summary = "A hierarchical reference may extend from one named program scope into another program scope."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "24.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "24.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "24.3"
+
+[[requirements]]
+id = "SV-2023-24-MODULE-CANNOT-CALL-PROGRAM-CODE"
+standard_revision = "1800-2023"
+part = "24"
+clause = "24.3.1"
+anchors = [
+    "[2023:24.3.1:P004:p777]",
+    "[2023:24.5:P001:p778]",
+    "[2023:24.6:P001:p779]",
+]
+summary = "Code executing from a module context cannot call code declared in a program."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "24.3.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "24.3.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "24.3.1"
+
+[[requirements]]
+id = "SV-2023-24-NONPROGRAM-EXIT-IGNORED"
+standard_revision = "1800-2023"
+part = "24"
+clause = "24.7"
+anchors = [
+    "[2023:24.7:P003:p779]",
+]
+summary = "A call to $exit from a thread that does not originate from a program initial procedure is ignored; an implementation may issue a warning."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "24.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "24.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "24.7"
+
+[[requirements]]
+id = "SV-2023-24-PROGRAM-ANSI-IMPORT-FOLLOWER"
+standard_revision = "1800-2023"
+part = "24"
+clause = "24.3"
+anchors = [
+    "[2023:24.3:G001:p774-775]",
+]
+summary = "A package import in an ANSI program header shall be followed by a parameter-port list, a port-declaration list, or both."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "24.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "24.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "24.3"
+
+[[requirements]]
+id = "SV-2023-24-PROGRAM-CONCURRENT-ASSERTION-SCHEDULING"
+standard_revision = "1800-2023"
+part = "24"
+clause = "24.3.1"
+anchors = [
+    "[2023:24.3.1:P003:p777]",
+]
+summary = "A concurrent assertion in a program retains invariant assertion scheduling: it samples values in Preponed and evaluates in Observed, including when clocked by a program object."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "24.3.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "24.3.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "24.3.1"
+
+[[requirements]]
+id = "SV-2023-24-PROGRAM-DECLARATION-GRAMMAR"
+standard_revision = "1800-2023"
+part = "24"
+clause = "24.3"
+anchors = [
+    "[2023:24.3:G001:p774-775]",
+    "[2023:24.3:P008:p776]",
+    "[2023:24.3.1:P003:p777]",
+]
+summary = "A named program declaration shall match a non-ANSI, ANSI, wildcard-port, or extern grammar alternative, and its body items shall be restricted to the program-item productions."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "changed-expectation"
+clause = "24.3"
+note = "The 2012 named-program grammar has the same declaration alternatives, but its program_generate_item production does not include an elaboration severity system task."
+
+[requirements.revision_applicability.1800-2017]
+status = "changed-expectation"
+clause = "24.3"
+note = "The 2017 program-item grammar lacks the 2023 elaboration-severity system-task generate item, and its anonymous-program item grammar lacks interface-class declarations."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "24.3"
+
+[[requirements]]
+id = "SV-2023-24-PROGRAM-DESCENDANT-THREAD-TERMINATION"
+standard_revision = "1800-2023"
+part = "24"
+clause = "24.3"
+anchors = [
+    "[2023:24.3:P009:p776]",
+]
+summary = "As soon as all initial procedures in one program reach their ends, that program shall terminate every descendant thread spawned by those initial procedures."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "24.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "24.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "24.3"
+
+[[requirements]]
+id = "SV-2023-24-PROGRAM-DESIGN-SIGNAL-REACTIVE-SCHEDULING"
+standard_revision = "1800-2023"
+part = "24"
+clause = "24.3.1"
+anchors = [
+    "[2023:24.3.1:P001:p777]",
+]
+summary = "A statement or construct in a program that is sensitive to a design-signal change, including a program continuous assignment, is scheduled in the Reactive region when that change occurs."
+related_clauses = [
+    "4.2",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "24.3.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "24.3.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "24.3.1"
+
+[[requirements]]
+id = "SV-2023-24-PROGRAM-EXIT-TERMINATION"
+standard_revision = "1800-2023"
+part = "24"
+clause = "24.7"
+anchors = [
+    "[2023:24.7:P001:p779]",
+    "[2023:24.7:P002:p779]",
+    "[2023:24.7:C001:p779]",
+    "[2023:24.7:P003:p779]",
+]
+summary = "A call to $exit() from a thread descended from a program initial procedure terminates every initial procedure and descendant thread in that originating program block."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "24.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "24.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "24.7"
+
+[[requirements]]
+id = "SV-2023-24-PROGRAM-GENERATE-ITEM-LEGALITY"
+standard_revision = "1800-2023"
+part = "24"
+clause = "24.3"
+anchors = [
+    "[2023:24.3:G001:p774-775]",
+]
+summary = "A program generate item shall not contain an item that would be illegal directly in a program declaration."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "24.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "24.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "24.3"
+
+[[requirements]]
+id = "SV-2023-24-PROGRAM-IMPLICIT-INSTANTIATION"
+standard_revision = "1800-2023"
+part = "24"
+clause = "24.3"
+anchors = [
+    "[2023:24.3:P007:p776]",
+]
+summary = "A nested program with no ports, or a top-level program not explicitly instantiated, is implicitly instantiated exactly once with an instance name equal to its declaration name."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "24.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "24.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "24.3"
+
+[[requirements]]
+id = "SV-2023-24-PROGRAM-INITIAL-REACTIVE-SCHEDULING"
+standard_revision = "1800-2023"
+part = "24"
+clause = "24.3.1"
+anchors = [
+    "[2023:24.3.1:P001:p777]",
+]
+summary = "An initial procedure declared in a program is scheduled in the Reactive region."
+related_clauses = [
+    "4.2",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "24.3.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "24.3.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "24.3.1"
+
+[[requirements]]
+id = "SV-2023-24-PROGRAM-MAY-CALL-NONPROGRAM-SUBROUTINES"
+standard_revision = "1800-2023"
+part = "24"
+clause = "24.5"
+anchors = [
+    "[2023:24.5:P001:p778]",
+]
+summary = "Program code may call subroutines declared in other programs or in design modules."
+related_clauses = [
+    "24.3.1",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "24.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "24.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "24.5"
+
+[[requirements]]
+id = "SV-2023-24-PROGRAM-NESTING"
+standard_revision = "1800-2023"
+part = "24"
+clause = "24.3"
+anchors = [
+    "[2023:24.3:P007:p776]",
+]
+summary = "A program block may be nested within a module or interface and may share declarations in that enclosing scope with cooperating programs."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "24.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "24.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "24.3"
+
+[[requirements]]
+id = "SV-2023-24-PROGRAM-PORT-CROSS-REGION-PROPAGATION"
+standard_revision = "1800-2023"
+part = "24"
+clause = "24.3.2"
+anchors = [
+    "[2023:24.3.2:P003:p777]",
+    "[2023:24.3.2:P005:p778]",
+]
+summary = "Without a clocking block, a program-port update of a connected design variable, or driving and resolution of a connected net, occurs in the reactive region set; a sensitive design process then wakes in the active region set on the next scheduler-loop iteration."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "24.3.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "24.3.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "24.3.2"
+
+[[requirements]]
+id = "SV-2023-24-PROGRAM-PORT-DESIGN-OBJECT"
+standard_revision = "1800-2023"
+part = "24"
+clause = "24.3.2"
+anchors = [
+    "[2023:24.3.2:P002:p777]",
+]
+summary = "A program port is a program-scope object and connects only to a design-scope net or variable because program instances occur only in design scopes."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "24.3.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "24.3.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "24.3.2"
+
+[[requirements]]
+id = "SV-2023-24-PROGRAM-PORT-SEMANTICS"
+standard_revision = "1800-2023"
+part = "24"
+clause = "24.3"
+anchors = [
+    "[2023:24.3:P001:p774]",
+    "[2023:24.3:P006:p776]",
+]
+summary = "Program ports use module port declaration, connection, and instantiation semantics, including interface ports."
+related_clauses = [
+    "23.2.2",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "24.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "24.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "24.3"
+
+[[requirements]]
+id = "SV-2023-24-PROGRAM-PROHIBITED-CONTENTS"
+standard_revision = "1800-2023"
+part = "24"
+clause = "24.3"
+anchors = [
+    "[2023:24.3:P008:p776]",
+]
+summary = "A program block shall not contain an always procedure, primitive, UDP, or a declaration or instance of a module, interface, or program."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "24.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "24.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "24.3"
+
+[[requirements]]
+id = "SV-2023-24-PROGRAM-RE-NBA"
+standard_revision = "1800-2023"
+part = "24"
+clause = "24.3.1"
+anchors = [
+    "[2023:24.3.1:P002:p777]",
+    "[2023:24.5:P002:p779]",
+]
+summary = "A nonblocking assignment executed in program code schedules its update in the Re-NBA region, after the Reactive and Re-Inactive regions are empty."
+related_clauses = [
+    "4.2",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "24.3.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "24.3.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "24.3.1"
+
+[[requirements]]
+id = "SV-2023-24-PROGRAM-REACTIVE-RESUMPTION"
+standard_revision = "1800-2023"
+part = "24"
+clause = "24.3.1"
+anchors = [
+    "[2023:24.3.1:P001:p777]",
+]
+summary = "A program process resumed after a standard # delay is scheduled in the Reactive region."
+related_clauses = [
+    "4.2",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "24.3.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "24.3.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "24.3.1"
+
+[[requirements]]
+id = "SV-2023-24-PROGRAM-SCOPE"
+standard_revision = "1800-2023"
+part = "24"
+clause = "24.2"
+anchors = [
+    "[2023:24.2:L002:p774]",
+    "[2023:24.3:P010:p776]",
+]
+summary = "A program block creates a local scope that encapsulates its type, data, task, and function declarations."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "24.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "24.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "24.2"
+
+[[requirements]]
+id = "SV-2023-24-PROGRAM-SCOPE-STATIC-LIFETIME"
+standard_revision = "1800-2023"
+part = "24"
+clause = "24.3"
+anchors = [
+    "[2023:24.3:P010:p776]",
+]
+summary = "Data declared directly within a program scope has static lifetime."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "24.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "24.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "24.3"
+
+[[requirements]]
+id = "SV-2023-24-PROGRAM-SIGNAL-EXTERNAL-REFERENCE"
+standard_revision = "1800-2023"
+part = "24"
+clause = "24.3"
+anchors = [
+    "[2023:24.3:P012:p776]",
+    "[2023:24.3:P010:p776]",
+    "[2023:24.3:P011:p776]",
+    "[2023:24.6:P001:p779]",
+]
+summary = "A reference from outside every program block to a program variable or net shall be an error."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "24.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "24.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "24.3"
+
+[[requirements]]
+id = "SV-2023-24-PROGRAM-TIMEUNITS-REPEAT"
+standard_revision = "1800-2023"
+part = "24"
+clause = "24.3"
+anchors = [
+    "[2023:24.3:G001:p774-775]",
+]
+summary = "A timeunits declaration used as a non-port program item is legal only when it repeats and matches a previous timeunits declaration in the same time scope."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "24.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "24.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "24.3"

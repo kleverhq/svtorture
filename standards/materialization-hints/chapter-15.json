@@ -1,0 +1,957 @@
+{
+  "authority": "1800-2023",
+  "part": "15",
+  "requirements": [
+    {
+      "hints": {
+        "edge": [
+          "Establish no waiters for an initial trigger, then establish multiple waiters and verify that a later trigger resumes all of them."
+        ],
+        "negative": [],
+        "notes": [
+          "Order waiter establishment before the observed trigger to avoid a scheduler race."
+        ],
+        "positive": [
+          "Place two processes in @ waits on one event, then execute -> and observe both resume."
+        ]
+      },
+      "id": "SV-2023-15-BLOCKING-EVENT-TRIGGER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change the index to select an event that had previously been triggered."
+        ],
+        "negative": [
+          "Change only the index expression and ensure the waiter does not resume as though triggered."
+        ],
+        "notes": [],
+        "positive": [
+          "Wait on an indexed named event then explicitly trigger the selected event."
+        ]
+      },
+      "id": "SV-2023-15-EVENT-ARRAY-INDEX-NOT-TRIGGER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Assign null to an event and test it in an if condition, observing false."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Test a nonnull event in an if condition and observe true."
+        ]
+      },
+      "id": "SV-2023-15-EVENT-BOOLEAN-VALUE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare two distinct nonnull event synchronization objects."
+        ],
+        "negative": [
+          "Apply a relational operator such as < to event variables."
+        ],
+        "notes": [],
+        "positive": [
+          "Compare two aliases with == and ===.",
+          "Compare an event with null using != and !==."
+        ]
+      },
+      "id": "SV-2023-15-EVENT-COMPARISON-OPERATORS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place wait and trigger in ordered scheduler regions to avoid race ambiguity."
+        ],
+        "negative": [
+          "Execute ->ev before entering @ev and verify the process remains blocked until a later trigger."
+        ],
+        "notes": [],
+        "positive": [
+          "Start @ev before ->ev and observe resumption."
+        ]
+      },
+      "id": "SV-2023-15-EVENT-CONTROL-WAIT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Merge a third event transitively."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Assign one event to another, wait through both handles, and trigger either handle."
+        ]
+      },
+      "id": "SV-2023-15-EVENT-MERGE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Add a new waiter after assignment."
+        ],
+        "negative": [
+          "Wait on a destination, reassign it, then trigger the new source and ensure the existing waiter does not resume."
+        ],
+        "notes": [],
+        "positive": [
+          "Merge before entering waits and observe shared triggering."
+        ]
+      },
+      "id": "SV-2023-15-EVENT-MERGE-NOT-RETROACTIVE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Null the last associated handle."
+        ],
+        "negative": [
+          "Trigger a null event and ensure it causes no occurrence."
+        ],
+        "notes": [
+          "Do not attempt to observe resource reclamation directly."
+        ],
+        "positive": [
+          "Alias two events, then null one handle."
+        ]
+      },
+      "id": "SV-2023-15-EVENT-NULL-ASSIGNMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Trigger a selected named event from an array."
+        ],
+        "negative": [
+          "Omit the semicolon from an event trigger."
+        ],
+        "notes": [],
+        "positive": [
+          "Trigger a named event with -> ev;.",
+          "Use ->> #1 ev;."
+        ]
+      },
+      "id": "SV-2023-15-EVENT-TRIGGER-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call triggered() on a null event and require 0."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Observe triggered() as 0 before a trigger, 1 after the trigger in the same time step, and 0 after simulation time advances."
+        ]
+      },
+      "id": "SV-2023-15-EVENT-TRIGGERED-METHOD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Vary same-time process execution order while preserving the same simulation time."
+        ],
+        "negative": [],
+        "notes": [
+          "Do not advance simulation time between the trigger and the later-established wait."
+        ],
+        "positive": [
+          "Execute ->ev and then wait(ev.triggered) without advancing simulation time; the wait completes.",
+          "Establish wait(ev.triggered) first and then trigger ev in the same time step; the waiter resumes."
+        ]
+      },
+      "id": "SV-2023-15-EVENT-TRIGGERED-WAIT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Add a method in the derived class and call both it and an inherited mailbox method."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Derive and instantiate a user class from mailbox while retaining inherited methods."
+        ]
+      },
+      "id": "SV-2023-15-MAILBOX-CLASS-INHERITANCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Explicitly pass bound zero and compare with omitted bound."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Construct mailbox new() and perform puts without capacity blocking.",
+          "Construct mailbox new(1), fill it, and observe a further put wait for space."
+        ]
+      },
+      "id": "SV-2023-15-MAILBOX-CONSTRUCTOR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a capacity-one mailbox and verify that removal frees its occupied queue slot."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Put one message, call get, and verify the retrieved message is removed by observing the mailbox become empty."
+        ]
+      },
+      "id": "SV-2023-15-MAILBOX-GET-BLOCKING-REMOVE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call get with an array element that is a valid singular lvalue."
+        ],
+        "negative": [
+          "Call get with a literal or other non-left-hand expression.",
+          "Call get with a nonsingular unpacked array."
+        ],
+        "notes": [],
+        "positive": [
+          "Call get with an integral variable.",
+          "Call get with an object-handle variable."
+        ]
+      },
+      "id": "SV-2023-15-MAILBOX-GET-DESTINATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Delay the put across multiple time steps while observing that get does not return early."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Call get on an empty mailbox, verify the caller remains blocked, then put a message and observe it resume."
+        ]
+      },
+      "id": "SV-2023-15-MAILBOX-GET-EMPTY-BLOCKING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Send different message types through one nonparameterized mailbox and retrieve each into an equivalent destination."
+        ],
+        "negative": [
+          "Put one data type into a typeless mailbox and get it into a nonequivalent destination type, requiring a run-time error."
+        ],
+        "notes": [
+          "Do not depend on run-time error wording."
+        ],
+        "positive": [
+          "Put an int into a typeless mailbox and get it into an equivalent int variable."
+        ]
+      },
+      "id": "SV-2023-15-MAILBOX-GET-RUNTIME-TYPE-CHECK"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Distinguish zero, which selects unbounded operation, from negative values."
+        ],
+        "negative": [
+          "Construct a mailbox with bound -1 and require rejection or a diagnostic."
+        ],
+        "notes": [
+          "Do not use any resulting runtime behavior or warning wording as an oracle."
+        ],
+        "positive": [
+          "Construct mailboxes with bound zero and a positive bound."
+        ]
+      },
+      "id": "SV-2023-15-MAILBOX-NEGATIVE-BOUND-ILLEGAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Check num() on an empty mailbox."
+        ],
+        "negative": [],
+        "notes": [
+          "Avoid races with operations from other processes when observing the returned snapshot."
+        ],
+        "positive": [
+          "Check num() before and after putting one message."
+        ]
+      },
+      "id": "SV-2023-15-MAILBOX-NUM"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Peek the same queued message more than once and obtain the same front message each time."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Peek a message, then get it and verify the same message remained queued."
+        ]
+      },
+      "id": "SV-2023-15-MAILBOX-PEEK-BEHAVIOR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Peek into an array element lvalue."
+        ],
+        "negative": [
+          "Pass a literal or nonsingular unpacked array as the peek destination."
+        ],
+        "notes": [],
+        "positive": [
+          "Peek into an integral variable."
+        ]
+      },
+      "id": "SV-2023-15-MAILBOX-PEEK-DESTINATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "After the blocked peek resumes, verify that its message remains queued."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Call peek on an empty mailbox, verify the caller remains blocked, then put a message and observe the peek complete."
+        ]
+      },
+      "id": "SV-2023-15-MAILBOX-PEEK-EMPTY-BLOCKING"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Peek into a nonequivalent destination type and require a run-time error."
+        ],
+        "notes": [
+          "Do not depend on error wording."
+        ],
+        "positive": [
+          "Peek an integral message into an equivalent integral variable."
+        ]
+      },
+      "id": "SV-2023-15-MAILBOX-PEEK-TYPE-ERROR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Mix blocked peek and get callers and account for whether the message remains queued."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Block multiple peek processes, put one message, and observe all become unblocked while it remains queued."
+        ]
+      },
+      "id": "SV-2023-15-MAILBOX-PEEK-UNBLOCKS-WAITERS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call put with exactly one free slot and observe immediate insertion rather than suspension."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Fill a capacity-one mailbox, start a second put and observe it remain blocked, then remove the first message and observe the put complete."
+        ]
+      },
+      "id": "SV-2023-15-MAILBOX-PUT-BOUNDED-BLOCKING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Interleave puts from deterministically ordered processes and verify retrieval preserves established insertion order."
+        ],
+        "negative": [],
+        "notes": [
+          "Control insertion order explicitly rather than relying on scheduler order."
+        ],
+        "positive": [
+          "Put two distinct messages and retrieve them in the same FIFO order."
+        ]
+      },
+      "id": "SV-2023-15-MAILBOX-PUT-FIFO-BLOCKING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Put a null object handle."
+        ],
+        "negative": [
+          "Attempt to put a nonsingular expression such as an unpacked array as one message."
+        ],
+        "notes": [],
+        "positive": [
+          "Put an integral value into a mailbox.",
+          "Put an object handle into a mailbox."
+        ]
+      },
+      "id": "SV-2023-15-MAILBOX-PUT-MESSAGE-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use unqualified mailbox in the local declaration's scope and std::mailbox explicitly where the built-in is intended."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare a local type named mailbox and refer explicitly to std::mailbox in the same compilation."
+        ]
+      },
+      "id": "SV-2023-15-MAILBOX-STD-SCOPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an array element that is a singular valid lvalue."
+        ],
+        "negative": [
+          "Pass a literal, other non-lvalue, or nonsingular unpacked array as the destination."
+        ],
+        "notes": [],
+        "positive": [
+          "Call try_get with an integral variable or object-handle variable as its destination."
+        ]
+      },
+      "id": "SV-2023-15-MAILBOX-TRY-GET"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify the call does not wait for a later put."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Call try_get on an empty mailbox and require an immediate zero result."
+        ]
+      },
+      "id": "SV-2023-15-MAILBOX-TRY-GET-EMPTY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Queue multiple messages and verify only the front message is retrieved."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Put an int, call try_get with an int destination, require the value and a positive result, and verify the mailbox became empty."
+        ]
+      },
+      "id": "SV-2023-15-MAILBOX-TRY-GET-SUCCESS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "After the mismatch, use an equivalent destination to verify the front message remained available."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Put a message into a nonparameterized mailbox, then try_get it into a nonequivalent destination and require a negative result."
+        ]
+      },
+      "id": "SV-2023-15-MAILBOX-TRY-GET-TYPE-MISMATCH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an array element that is a singular valid lvalue."
+        ],
+        "negative": [
+          "Pass a literal, other non-lvalue, or nonsingular unpacked array as the destination."
+        ],
+        "notes": [],
+        "positive": [
+          "Call try_peek with an integral variable as its destination."
+        ]
+      },
+      "id": "SV-2023-15-MAILBOX-TRY-PEEK"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify the call does not wait for a later put."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Call try_peek on an empty mailbox and require an immediate zero result."
+        ]
+      },
+      "id": "SV-2023-15-MAILBOX-TRY-PEEK-EMPTY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call try_peek repeatedly and observe the same front message."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Put an int, call try_peek with an int destination, require the value and a positive result, and verify the message remains queued."
+        ]
+      },
+      "id": "SV-2023-15-MAILBOX-TRY-PEEK-SUCCESS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "After the mismatch, use an equivalent destination to verify the front message remained queued."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Put a message into a nonparameterized mailbox, then try_peek it into a nonequivalent destination and require a negative result."
+        ]
+      },
+      "id": "SV-2023-15-MAILBOX-TRY-PEEK-TYPE-MISMATCH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Pass a null object handle as the singular message."
+        ],
+        "negative": [
+          "Pass a nonsingular unpacked array as one message."
+        ],
+        "notes": [],
+        "positive": [
+          "Call try_put with an integral value or object handle."
+        ]
+      },
+      "id": "SV-2023-15-MAILBOX-TRY-PUT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Free one slot and verify a subsequent try_put no longer takes the full-mailbox branch."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Fill a capacity-one mailbox, call try_put with a second message, require immediate zero, and verify only the first message remains queued."
+        ]
+      },
+      "id": "SV-2023-15-MAILBOX-TRY-PUT-FULL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an unbounded mailbox, which is never full."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Call try_put with available capacity, require a positive result, and retrieve the inserted messages in FIFO order."
+        ]
+      },
+      "id": "SV-2023-15-MAILBOX-TRY-PUT-SUCCESS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Explicitly parameterize with the default dynamic_type."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare mailbox #(int).",
+          "Use an unparameterized mailbox to transfer values of differing types with run-time checks."
+        ]
+      },
+      "id": "SV-2023-15-MAILBOX-TYPE-PARAMETER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Explicitly establish arrival order rather than assuming same-time process launch order."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Establish two blocked getters' queue arrival order, put messages sequentially, and observe service in that order."
+        ]
+      },
+      "id": "SV-2023-15-MAILBOX-WAIT-FIFO"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an event control on ->> and observe scheduling when that control occurs."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use ->> ev and distinguish caller continuation from waiter resumption in the NBA region.",
+          "Use ->> #1 ev and observe triggering when the delay expires."
+        ]
+      },
+      "id": "SV-2023-15-NONBLOCKING-EVENT-TRIGGER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Add a method in the derived class and call both it and an inherited semaphore method."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Derive and instantiate a user class from semaphore while retaining inherited methods."
+        ]
+      },
+      "id": "SV-2023-15-SEMAPHORE-CLASS-INHERITANCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Construct with keyCount equal to zero."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Construct a semaphore with an explicit positive key count and acquire that many keys.",
+          "Construct a semaphore with no argument and observe that no key is initially procurable."
+        ]
+      },
+      "id": "SV-2023-15-SEMAPHORE-CONSTRUCTOR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call get(0), which is distinct from a prohibited negative request."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Call get() and get(2) as valid task invocations."
+        ]
+      },
+      "id": "SV-2023-15-SEMAPHORE-GET"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Add fewer than the requested number first and verify get remains blocked."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Call get(2) with fewer than two keys, observe blocking, then put enough keys and observe continuation."
+        ]
+      },
+      "id": "SV-2023-15-SEMAPHORE-GET-BLOCKING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Distinguish get(0) from a negative request."
+        ],
+        "negative": [
+          "Call get(-1) and require an error."
+        ],
+        "notes": [
+          "Do not depend on diagnostic wording."
+        ],
+        "positive": [
+          "Call get with a nonnegative count."
+        ]
+      },
+      "id": "SV-2023-15-SEMAPHORE-GET-NEGATIVE-ERROR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call get(0) with zero available keys and observe immediate continuation without changing the count."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Create a semaphore with two keys, call get(2), observe immediate continuation, and verify no key remains available."
+        ]
+      },
+      "id": "SV-2023-15-SEMAPHORE-GET-SUCCESS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Grow a semaphore constructed with zero keys."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Construct with one key, put two additional keys, then successfully acquire three keys."
+        ]
+      },
+      "id": "SV-2023-15-SEMAPHORE-KEY-COUNT-GROWTH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Construct with -1 and verify one put reaches zero but still does not make one key procurable."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Construct a semaphore with a negative keyCount, then add keys until acquisition becomes possible."
+        ]
+      },
+      "id": "SV-2023-15-SEMAPHORE-KEY-COUNT-RANGE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call put(0) and verify it adds no key."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Create an empty semaphore, call put(3), then successfully acquire three keys."
+        ]
+      },
+      "id": "SV-2023-15-SEMAPHORE-PUT-KEYS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Distinguish put(0), which is not negative, from put(-1)."
+        ],
+        "negative": [
+          "Call put(-1) and require an error."
+        ],
+        "notes": [
+          "Use a portable error/diagnostic oracle without depending on wording."
+        ],
+        "positive": [
+          "Call put with a nonnegative count."
+        ]
+      },
+      "id": "SV-2023-15-SEMAPHORE-PUT-NEGATIVE-ERROR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Return fewer than the requested keys first, then enough to satisfy the wait."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Block a process on get(2), then call put(2) and observe it resume."
+        ]
+      },
+      "id": "SV-2023-15-SEMAPHORE-PUT-RESUMES-WAITER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call put(0), which is distinct from a prohibited negative count."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Call put() and put(3) as valid function invocations."
+        ]
+      },
+      "id": "SV-2023-15-SEMAPHORE-PUT-SIGNATURE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use unqualified semaphore in the local declaration's scope and std::semaphore explicitly where the built-in is intended."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare a local type named semaphore and refer explicitly to std::semaphore in the same compilation."
+        ]
+      },
+      "id": "SV-2023-15-SEMAPHORE-STD-SCOPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Request a positive count while the available count is zero or negative."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Request two keys from a semaphore with one available, require immediate zero, then verify the one key remains available."
+        ]
+      },
+      "id": "SV-2023-15-SEMAPHORE-TRY-GET-INSUFFICIENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Distinguish zero from negative keyCount."
+        ],
+        "negative": [
+          "Call try_get(-1), require an error, and check its zero result where observable."
+        ],
+        "notes": [
+          "Do not depend on diagnostic wording."
+        ],
+        "positive": [
+          "Call try_get with a nonnegative count."
+        ]
+      },
+      "id": "SV-2023-15-SEMAPHORE-TRY-GET-NEGATIVE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call try_get(0), distinct from a prohibited negative request."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Call try_get() and try_get(2) and observe each returns without blocking."
+        ]
+      },
+      "id": "SV-2023-15-SEMAPHORE-TRY-GET-NONBLOCKING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call try_get(0) with zero available keys and require a positive result without changing the count."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Create a semaphore with two keys, call try_get(2), require a positive result, and verify no key remains."
+        ]
+      },
+      "id": "SV-2023-15-SEMAPHORE-TRY-GET-SUCCESS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Avoid using same-time process launch order as the oracle; establish arrival order explicitly."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Establish two waiters' queue arrival order, supply keys sequentially, and observe resumption in that order."
+        ]
+      },
+      "id": "SV-2023-15-SEMAPHORE-WAIT-FIFO"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Observe a waiter across a time-step boundary without retriggering the event."
+        ],
+        "negative": [
+          "Treat the end-of-step clearing of triggered state as an operand change that wakes a waiter."
+        ],
+        "notes": [],
+        "positive": [
+          "Wait on an expression involving ev.triggered and cause the event operand to change by triggering ev."
+        ]
+      },
+      "id": "SV-2023-15-TRIGGERED-REEVALUATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Check equivalent typedef aliases are accepted."
+        ],
+        "negative": [
+          "Pass a nonequivalent string argument to put on mailbox #(int).",
+          "Use a nonequivalent destination with get on mailbox #(int)."
+        ],
+        "notes": [],
+        "positive": [
+          "Use int arguments with mailbox #(int) methods."
+        ]
+      },
+      "id": "SV-2023-15-TYPED-MAILBOX-COMPILE-CHECK"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use num(), whose signature has no message-type argument."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Invoke each standard mailbox method on mailbox #(int)."
+        ]
+      },
+      "id": "SV-2023-15-TYPED-MAILBOX-METHODS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a null success statement with an else failure statement."
+        ],
+        "negative": [
+          "Cause out-of-order failure without else and require a run-time error."
+        ],
+        "notes": [
+          "Do not depend on $error diagnostic wording."
+        ],
+        "positive": [
+          "Cause out-of-order failure with an else statement and observe that statement execute."
+        ]
+      },
+      "id": "SV-2023-15-WAIT-ORDER-FAILURE-ACTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare pretriggering the first versus second event in the same time step."
+        ],
+        "negative": [
+          "Pretrigger a later listed event and do not treat its persistent state as satisfying that position."
+        ],
+        "notes": [],
+        "positive": [
+          "Trigger the first event, then execute wait_order in the same time step and subsequently trigger the remaining events in order."
+        ]
+      },
+      "id": "SV-2023-15-WAIT-ORDER-FIRST-PERSISTENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Retrigger the first event multiple times before the next event."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "For wait_order(a,b), trigger a, trigger a again, then trigger b and observe successful completion."
+        ]
+      },
+      "id": "SV-2023-15-WAIT-ORDER-PRECEDING-RETRIGGER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a single named event, which satisfies the grammar's one-or-more cardinality."
+        ],
+        "negative": [
+          "Use wait_order(a,b) and trigger b before a to cause failure rather than execute the success statement."
+        ],
+        "notes": [],
+        "positive": [
+          "Use wait_order(a,b) with a success assignment, trigger a then b, and observe that assignment execute."
+        ]
+      },
+      "id": "SV-2023-15-WAIT-ORDER-SYNTAX-SEMANTICS"
+    }
+  ],
+  "schema_version": 1
+}

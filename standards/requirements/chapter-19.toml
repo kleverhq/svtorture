@@ -1,0 +1,6362 @@
+schema_version = 3
+part = "19"
+
+[[requirements]]
+id = "SV-2023-19-AT-LEAST-ALL-LEVELS-DEFAULT"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.7"
+anchors = [
+    "[2023:19.7:T19-2.R07:p608]",
+]
+summary = "`at_least` is permitted at covergroup, coverpoint, and cross levels, with the group-level value defaulting points and crosses."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.7"
+
+[[requirements]]
+id = "SV-2023-19-AUTO-BIN-COVERPOINT-COVERAGE-FORMULA"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.11.1"
+anchors = [
+    "[2023:19.11.1:P004:p615]",
+    "[2023:19.11.1:P005:p615]",
+    "[2023:19.11.1:P006:p615]",
+]
+summary = "For an M-bit coverpoint with automatic bins, item coverage is covered automatic-bin count divided by `min(auto_bin_max, 2^M)`."
+related_clauses = [
+    "19.7",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.11.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.11.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.11.1"
+
+[[requirements]]
+id = "SV-2023-19-AUTOMATIC-BIN-NAMES"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5.3"
+anchors = [
+    "[2023:19.5.3:P006:p594]",
+]
+summary = "An automatic bin is named `auto[value]`, where value is a single value or `low:high` range; for enum points, value is the associated enumerated constant name."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.5.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5.3"
+
+[[requirements]]
+id = "SV-2023-19-AUTOMATIC-BIN-UNIFORM-DISTRIBUTION"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5.3"
+anchors = [
+    "[2023:19.5.3:P003:p594]",
+]
+summary = "When fewer automatic bins than 2^M possible values are created, values are assigned uniformly in ascending order and any indivisible remainder is included in the last bin."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.5.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5.3"
+
+[[requirements]]
+id = "SV-2023-19-AUTOMATIC-BINS-EXCLUDE-XZ"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5.3"
+anchors = [
+    "[2023:19.5.3:P004:p594]",
+]
+summary = "Automatically created bins contain only 2-state values; samples containing any X or Z bits are excluded from those bins."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.5.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5.3"
+
+[[requirements]]
+id = "SV-2023-19-AUTOMATIC-INTEGRAL-STATE-BINS"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5.3"
+anchors = [
+    "[2023:19.5.3:P001:p594]",
+    "[2023:19.5:P015:p584]",
+]
+summary = "An integral-expression coverpoint with no user-defined bins other than ignore_bins or illegal_bins receives automatically created state bins; real-expression coverpoints never receive automatic bins."
+related_clauses = [
+    "19.5.5",
+    "19.5.6",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "changed-expectation"
+clause = "19.5.3"
+note = "The 2012 rule creates automatic state bins only when a coverage point defines no bins; it does not extend that trigger to points containing only ignore_bins or illegal_bins, nor state the 2023 real-expression explicit-bin guarantee."
+
+[requirements.revision_applicability.1800-2017]
+status = "changed-expectation"
+clause = "19.5.3"
+note = "The 2017 rule creates automatic state bins only when no bins are defined at all, rather than also when the only definitions are ignore_bins or illegal_bins; 2017 also restricts coverpoints to integral expressions and therefore has no corresponding real-expression coverpoint rule."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5.3"
+
+[[requirements]]
+id = "SV-2023-19-BASE-CROSS-SURVIVES-POINT-OVERRIDE"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.4.1"
+anchors = [
+    "[2023:19.4.1:P006:p581]",
+]
+summary = "A base cross continues contributing when one of its base coverpoints is overridden, unless the derived covergroup also defines a cross with the same name."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no derived-covergroup inheritance or same-named coverpoint/cross override behavior."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 has no derived-covergroup inheritance or coverpoint/cross override semantics."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.4.1"
+
+[[requirements]]
+id = "SV-2023-19-BIN-CAST-NEGATIVE-TO-UNSIGNED-WARNING"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5.7"
+anchors = [
+    "[2023:19.5.7:L002:p596]",
+    "[2023:19.5.7:L003:p596]",
+]
+summary = "An implementation shall issue a warning when an unsigned-effective-type coverpoint compares against a signed bin expression having a negative value."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.5.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5.7"
+
+[[requirements]]
+id = "SV-2023-19-BIN-CAST-VALUE-CHANGE-WARNING"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5.7"
+anchors = [
+    "[2023:19.5.7:L004:p596]",
+]
+summary = "An implementation shall warn when assigning a bin expression to the coverpoint's effective type would produce a value unequal to the original under normal `==` comparison."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.5.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5.7"
+
+[[requirements]]
+id = "SV-2023-19-BIN-EXPRESSION-CAST-TO-POINT-TYPE"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5.7"
+anchors = [
+    "[2023:19.5.7:L002:p596]",
+]
+summary = "Before bin comparison, each bin expression is statically cast to the coverpoint expression's effective type; enum values are first treated as expressions of their enum base type."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.5.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5.7"
+
+[[requirements]]
+id = "SV-2023-19-BIN-IFF-DISABLES-COUNT"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5.1"
+anchors = [
+    "[2023:19.5.1:P026:p589]",
+]
+summary = "A bin-level trailing `iff` is evaluated at sampling, and when false prevents that bin's count from incrementing even if its value or transition otherwise matches."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.5.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5.1"
+
+[[requirements]]
+id = "SV-2023-19-BIN-MATCH-COUNTING"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5"
+anchors = [
+    "[2023:19.5:P014:p584]",
+]
+summary = "A state-bin count increments each time a sampled coverpoint value matches one of the values in that bin's set."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5"
+
+[[requirements]]
+id = "SV-2023-19-BIN-WITH-CONSTRUCTION-EVALUATION"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5.1.1"
+anchors = [
+    "[2023:19.5.1.1:P007:p590]",
+]
+summary = "A bin `with` expression behaves as if evaluated for every candidate range-list value when the covergroup instance is constructed."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5.1.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.5.1.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5.1.1"
+
+[[requirements]]
+id = "SV-2023-19-BIN-WITH-COVERPOINT-DOMAIN"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5.1.1"
+anchors = [
+    "[2023:19.5.1.1:P002:p589]",
+]
+summary = "In place of a bin range list, the containing coverpoint's name may denote all its values for `with` filtering; no other coverpoint name is permitted there."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5.1.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.5.1.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5.1.1"
+
+[[requirements]]
+id = "SV-2023-19-BIN-WITH-DISTRIBUTION-ORDER"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5.1.1"
+anchors = [
+    "[2023:19.5.1.1:P007:p590]",
+]
+summary = "By default `with` filtering occurs before values are distributed among bins; `distribute_first` instead distributes before applying the filter."
+related_clauses = [
+    "19.7.1",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5.1.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.5.1.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5.1.1"
+
+[[requirements]]
+id = "SV-2023-19-BIN-WITH-FILTER-SEMANTICS"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5.1.1"
+anchors = [
+    "[2023:19.5.1.1:P001:p589]",
+]
+summary = "A bin `with` clause includes only candidate range-list values for which its expression is true; `item` denotes each candidate with the coverpoint's type."
+related_clauses = [
+    "12.4",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5.1.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.5.1.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5.1.1"
+
+[[requirements]]
+id = "SV-2023-19-BIN-WITH-INTEGRAL-RESULT"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5"
+anchors = [
+    "[2023:19.5:G001:p582]",
+]
+summary = "The expression in a bin `with` clause shall produce a result assignment-compatible with an integral type."
+related_clauses = [
+    "19.5.1.1",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5"
+
+[[requirements]]
+id = "SV-2023-19-BIN-WITH-PRESERVES-DUPLICATES-ORDER"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5.1.1"
+anchors = [
+    "[2023:19.5.1.1:P007:p590]",
+]
+summary = "Applying a bin `with` expression shall preserve equivalent duplicate bin items and their order."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5.1.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.5.1.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5.1.1"
+
+[[requirements]]
+id = "SV-2023-19-BIN-XZ-VALUE-WARNING"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5.7"
+anchors = [
+    "[2023:19.5.7:L005:p596]",
+]
+summary = "An implementation shall warn when a non-wildcard bin expression yields any X or Z bits; this warning condition does not apply to wildcard bins because their X/Z digits expand to 0/1."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.5.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5.7"
+
+[[requirements]]
+id = "SV-2023-19-BINSOF-TRANSITION-LAST-VALUE"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.6.1.1"
+anchors = [
+    "[2023:19.6.1.1:P006:p601]",
+]
+summary = "When a cross select expression applies `binsof` to transition bins, selection uses the last value of each transition."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.6.1.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.6.1.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.6.1.1"
+
+[[requirements]]
+id = "SV-2023-19-BLOCK-BEGIN-EVENT-TIMING"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.3"
+anchors = [
+    "[2023:19.3:P009:p577]",
+]
+summary = "A `begin` block event naming a block, task, function, or class method triggers immediately before its first statement."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.3"
+
+[[requirements]]
+id = "SV-2023-19-BLOCK-END-EVENT-TIMING"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.3"
+anchors = [
+    "[2023:19.3:P009:p577]",
+]
+summary = "An `end` block event naming a block, task, function, or class method triggers immediately after its last statement."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.3"
+
+[[requirements]]
+id = "SV-2023-19-CLASS-MULTIPLE-COVERGROUPS"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.4"
+anchors = [
+    "[2023:19.4:P006:p579]",
+]
+summary = "A class may contain more than one embedded covergroup."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.4"
+
+[[requirements]]
+id = "SV-2023-19-CLOCKING-BLOCK-SIGNAL-SAMPLE-REGION"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5"
+anchors = [
+    "[2023:19.5:P011:p584]",
+]
+summary = "A coverpoint over a clocking-block signal samples the value supplied by that block: `#1step` input skew supplies the Preponed value and `#0` supplies the Observed-region value."
+related_clauses = [
+    "4",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5"
+
+[[requirements]]
+id = "SV-2023-19-CLOCKING-EVENT-COVERGROUP-ARGUMENTS"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.3"
+anchors = [
+    "[2023:19.3:P008:p577]",
+]
+summary = "A covergroup clocking event may reference the covergroup's arguments."
+related_clauses = [
+    "19.7.1",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.3"
+
+[[requirements]]
+id = "SV-2023-19-CLOCKING-EVENT-IMMEDIATE-SAMPLING"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.3"
+anchors = [
+    "[2023:19.3:P008:p577]",
+]
+summary = "With strobe disabled, each covergroup clocking event samples immediately, including multiple samples for multiple event occurrences in one time step."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.3"
+
+[[requirements]]
+id = "SV-2023-19-COVERAGE-METHODS-PROCEDURAL-ANYTIME"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.8"
+anchors = [
+    "[2023:19.8:P001:p610]",
+]
+summary = "Predefined covergroup coverage methods may be invoked procedurally at any time."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.8"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.8"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.8"
+
+[[requirements]]
+id = "SV-2023-19-COVERAGE-QUERY-BIN-COUNT-ARGS"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.8"
+anchors = [
+    "[2023:19.8:P003:p611]",
+]
+summary = "Both coverage query methods optionally accept two ref ints receiving covered-bin and total-bin counts; instance point/cross counts are the unscaled numerator/denominator, while group and cumulative queries aggregate the applicable constituent items and instances."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.8"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.8"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.8"
+
+[[requirements]]
+id = "SV-2023-19-COVERGROUP-ACTUAL-EVALUATION-TIME"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.3"
+anchors = [
+    "[2023:19.3:P005:p577]",
+]
+summary = "Actual arguments to a covergroup constructor are evaluated when the `new` operator executes."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.3"
+
+[[requirements]]
+id = "SV-2023-19-COVERGROUP-CONSTANT-INITIALIZATION-ORDER"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5"
+anchors = [
+    "[2023:19.5:P008:p583]",
+]
+summary = "An instance constant used by a covergroup expression shall be initialized before the covergroup constructor call in the enclosing class constructor."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5"
+
+[[requirements]]
+id = "SV-2023-19-COVERGROUP-CONSTRUCTION-NOT-LOOPED-WITH-CONSTANT-INIT"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5"
+anchors = [
+    "[2023:19.5:P008:p583]",
+]
+summary = "Initialization of a referenced instance constant and the covergroup constructor call shall not appear together in a loop body or `fork...join_none`, in either order."
+related_clauses = [
+    "12.7",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5"
+
+[[requirements]]
+id = "SV-2023-19-COVERGROUP-COVERAGE-EVENT-FORMS"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.3"
+anchors = [
+    "[2023:19.3:P007:p577]",
+]
+summary = "A covergroup's optional coverage event may be a clocking event, a block event expression, or a customized `sample()` method."
+related_clauses = [
+    "19.8",
+    "19.8.1",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.3"
+
+[[requirements]]
+id = "SV-2023-19-COVERGROUP-DECLARATION-SYNTAX"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.3"
+anchors = [
+    "[2023:19.3:G001:p576-577]",
+]
+summary = "A covergroup declaration shall conform to the covergroup grammar, including its optional formal list and coverage event, coverage specifications/options, and optional matching end label."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "changed-expectation"
+clause = "19.3"
+note = "The 2017 covergroup grammar has the ordinary declaration form but lacks the `covergroup extends ...` alternative added to the current grammar."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.3"
+
+[[requirements]]
+id = "SV-2023-19-COVERGROUP-DEFAULT-SAMPLE-METHOD"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.3"
+anchors = [
+    "[2023:19.3:P007:p577]",
+]
+summary = "If a covergroup specifies no coverage event, it uses a default `sample()` method with no arguments for procedural sampling."
+related_clauses = [
+    "19.8",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.3"
+
+[[requirements]]
+id = "SV-2023-19-COVERGROUP-DEFINITION-CONTEXTS"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.3"
+anchors = [
+    "[2023:19.3:P002:p576]",
+]
+summary = "A covergroup type may be defined in a package, module, program, interface, checker, or class."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.3"
+
+[[requirements]]
+id = "SV-2023-19-COVERGROUP-EXPRESSION-CONSTANT-OWNERSHIP"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5"
+anchors = [
+    "[2023:19.5:P008:p583]",
+]
+summary = "Global and instance constants referenced by an embedded-covergroup expression shall be members of its enclosing class."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5"
+
+[[requirements]]
+id = "SV-2023-19-COVERGROUP-EXPRESSION-FUNCTION-ARGUMENTS"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5"
+anchors = [
+    "[2023:19.5:P009:p583]",
+    "[2023:19.5:L004:p583]",
+]
+summary = "A function called from a covergroup expression shall have no output, inout, or ref arguments; const-ref arguments are permitted."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "changed-expectation"
+clause = "19.5"
+note = "IEEE 1800-2017 prohibits output and non-const ref arguments but does not state the current explicit prohibition on inout arguments."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5"
+
+[[requirements]]
+id = "SV-2023-19-COVERGROUP-EXPRESSION-FUNCTION-EXTERNAL-REFERENCES"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5"
+anchors = [
+    "[2023:19.5:P009:p583]",
+    "[2023:19.5:L006:p583]",
+]
+summary = "A function called from a covergroup expression shall not reference nonconstant variables outside its local scope."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5"
+
+[[requirements]]
+id = "SV-2023-19-COVERGROUP-EXPRESSION-FUNCTION-STATE"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5"
+anchors = [
+    "[2023:19.5:P009:p583]",
+    "[2023:19.5:L005:p583]",
+]
+summary = "A function called from a covergroup expression shall be automatic, or preserve no state, and shall have no side effects."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5"
+
+[[requirements]]
+id = "SV-2023-19-COVERGROUP-EXPRESSION-SYSTEM-FUNCTIONS"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5"
+anchors = [
+    "[2023:19.5:P009:p583]",
+    "[2023:19.5:L007:p583]",
+]
+summary = "System-function calls in a covergroup expression are limited to constant system-function calls."
+related_clauses = [
+    "11.2.1",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5"
+
+[[requirements]]
+id = "SV-2023-19-COVERGROUP-EXPRESSION-VARIABLE-SOURCES"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5"
+anchors = [
+    "[2023:19.5:P007:p583]",
+]
+summary = "Variables used in a covergroup expression are limited to constant expressions, qualifying global or instance constants, and non-ref covergroup arguments."
+related_clauses = [
+    "11.2.1",
+    "19.4",
+    "8.19",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5"
+
+[[requirements]]
+id = "SV-2023-19-COVERGROUP-EXTENDS-BASE-EXISTS"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.4.1"
+anchors = [
+    "[2023:19.4.1:P002:p580]",
+]
+summary = "The identifier in an embedded `covergroup extends` declaration shall name a covergroup previously defined in a base class of the enclosing class."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no embedded covergroup extends declaration or covergroup inheritance construct."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 has no embedded covergroup extends declaration or covergroup inheritance construct."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.4.1"
+
+[[requirements]]
+id = "SV-2023-19-COVERGROUP-EXTENDS-CLASS-ONLY"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.3"
+anchors = [
+    "[2023:19.3:G001:p576-577]",
+    "[2023:19.3:P016:p578]",
+]
+summary = "The `covergroup extends` declaration form is legal only within a class."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no covergroup extends declaration form."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 has no covergroup extends declaration form."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.3"
+
+[[requirements]]
+id = "SV-2023-19-COVERGROUP-FORMAL-NOT-HIERARCHICAL"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.3"
+anchors = [
+    "[2023:19.3:P006:p577]",
+]
+summary = "A covergroup formal argument cannot be accessed by hierarchical name outside the covergroup declaration."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.3"
+
+[[requirements]]
+id = "SV-2023-19-COVERGROUP-INPUT-VALUE-SNAPSHOT"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.3"
+anchors = [
+    "[2023:19.3:P005:p577]",
+]
+summary = "An input formal of a covergroup retains the value passed when its constructor is called rather than tracking later changes to the actual."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.3"
+
+[[requirements]]
+id = "SV-2023-19-COVERGROUP-MULTILEVEL-INHERITANCE"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.4.1"
+anchors = [
+    "[2023:19.4.1:P002:p580]",
+]
+summary = "A derived embedded covergroup may itself be used as the base covergroup for covergroup inheritance in another derived class."
+related_clauses = [
+    "19.4",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no covergroup inheritance, including multilevel derived covergroups."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 has no covergroup inheritance construct."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.4.1"
+
+[[requirements]]
+id = "SV-2023-19-COVERGROUP-NONDEFAULT-ACTUALS"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.3"
+anchors = [
+    "[2023:19.3:P005:p577]",
+]
+summary = "Construction of a covergroup instance shall supply an actual argument for every formal argument that has no default."
+related_clauses = [
+    "13.5",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.3"
+
+[[requirements]]
+id = "SV-2023-19-COVERGROUP-OUTPUT-INOUT-ILLEGAL"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.3"
+anchors = [
+    "[2023:19.3:P006:p577]",
+]
+summary = "A covergroup formal argument declared with output or inout direction is illegal."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.3"
+
+[[requirements]]
+id = "SV-2023-19-COVERGROUP-RANGE-UNBOUNDED-ENDPOINT"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5.1"
+anchors = [
+    "[2023:19.5.1:P002:p585]",
+]
+summary = "The `$` primary is legal as an unbounded endpoint in a covergroup value range."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.5.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5.1"
+
+[[requirements]]
+id = "SV-2023-19-COVERGROUP-REF-READ-ONLY"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.3"
+anchors = [
+    "[2023:19.3:P006:p577]",
+]
+summary = "A covergroup cannot modify a ref formal; it is treated as a read-only const ref argument."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.3"
+
+[[requirements]]
+id = "SV-2023-19-COVERGROUP-REF-TRACKS-ACTUAL"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.3"
+anchors = [
+    "[2023:19.3:P005:p577]",
+]
+summary = "A ref formal of a covergroup tracks subsequent changes to its actual argument."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.3"
+
+[[requirements]]
+id = "SV-2023-19-COVERGROUP-SAMPLE-REQUIRED-ACTUALS"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.3"
+anchors = [
+    "[2023:19.3:P007:p577]",
+]
+summary = "Calling a customized covergroup `sample()` method triggers sampling and shall supply actuals for every nondefaulted sample formal."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.3"
+
+[[requirements]]
+id = "SV-2023-19-COVERGROUP-TYPE-INSTANTIATION"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.3"
+anchors = [
+    "[2023:19.3:P002:p576]",
+    "[2023:19.3:P003:p577]",
+]
+summary = "A covergroup declaration defines a user-defined coverage-model type, and any number of instances of that type may be created with `new`."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.3"
+
+[[requirements]]
+id = "SV-2023-19-COVERGROUP-WEIGHTED-ITEM-COVERAGE"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.11"
+anchors = [
+    "[2023:19.11:P002:p614]",
+    "[2023:19.11:P003:p614]",
+    "[2023:19.11:P004:p614]",
+]
+summary = "Covergroup coverage is the sum over its points and crosses of each item weight times item coverage, divided by the sum of those item weights."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.11"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.11"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.11"
+
+[[requirements]]
+id = "SV-2023-19-COVERGROUP-ZERO-DENOMINATOR-CONDITIONS"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.11"
+anchors = [
+    "[2023:19.11:P007:p614]",
+    "[2023:19.11:L001:p614]",
+    "[2023:19.11:L002:p614]",
+    "[2023:19.11:L003:p614]",
+]
+summary = "A covergroup coverage denominator is zero when every item is excluded, every item weight is zero, or the group contains no points or crosses."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.11"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.11"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.11"
+
+[[requirements]]
+id = "SV-2023-19-COVERPOINT-DECLARED-TYPE-RESTRICTION"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5"
+anchors = [
+    "[2023:19.5:P003:p583]",
+]
+summary = "An explicitly or implicitly specified coverpoint data type shall be integral or real, and specifying a data type requires specifying a coverpoint identifier."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "changed-expectation"
+clause = "19.5"
+note = "IEEE 1800-2012 requires the specified coverpoint data type to be integral; it does not permit a real coverpoint type."
+
+[requirements.revision_applicability.1800-2017]
+status = "changed-expectation"
+clause = "19.5"
+note = "IEEE 1800-2017 requires a specified coverpoint type to be integral; it does not permit the current real type alternative."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5"
+
+[[requirements]]
+id = "SV-2023-19-COVERPOINT-EFFECTIVE-TYPE"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5.7"
+anchors = [
+    "[2023:19.5.7:L001:p596]",
+]
+summary = "For bin comparison, a coverpoint expression's effective type is its explicit coverpoint type when present, otherwise its self-determined type."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.5.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5.7"
+
+[[requirements]]
+id = "SV-2023-19-COVERPOINT-EXPRESSION-TYPES"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5"
+anchors = [
+    "[2023:19.5:P001:p582]",
+]
+summary = "A coverpoint expression shall have an integral or real type; real-expression coverage is limited to sampled-value bins and crosses of those bins."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "changed-expectation"
+clause = "19.5"
+note = "IEEE 1800-2012 limits coverpoint expressions to integral expressions and has no real-expression sampled-value-bin or cross coverage."
+
+[requirements.revision_applicability.1800-2017]
+status = "changed-expectation"
+clause = "19.5"
+note = "IEEE 1800-2017 limits coverpoint expressions to integral types and has no real-expression coverpoint or real-bin/cross behavior."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5"
+
+[[requirements]]
+id = "SV-2023-19-COVERPOINT-GRAMMAR"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5"
+anchors = [
+    "[2023:19.5:G001:p582]",
+]
+summary = "Coverage points and their bins, options, ranges, transitions, `with`, and `iff` clauses shall conform to the coverage-point grammar."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "changed-expectation"
+clause = "19.5"
+note = "The 2012 coverage-point grammar lacks the 2023 indexed covergroup value-range forms using +/- and +%-."
+
+[requirements.revision_applicability.1800-2017]
+status = "changed-expectation"
+clause = "19.5"
+note = "The 2017 coverage-point grammar lacks current real-range forms such as relative tolerance ranges, and its coverpoint semantics are integral-only."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5"
+
+[[requirements]]
+id = "SV-2023-19-COVERPOINT-IFF-DISABLES-SAMPLE"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5"
+anchors = [
+    "[2023:19.5:P012:p584]",
+]
+summary = "At a sampling event, a coverpoint whose `iff` expression evaluates false is ignored and records no coverage for that sample."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5"
+
+[[requirements]]
+id = "SV-2023-19-COVERPOINT-INFERRED-TYPE"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5"
+anchors = [
+    "[2023:19.5:P005:p583]",
+]
+summary = "When no coverpoint data type is specified, its type is the self-determined type of its expression."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5"
+
+[[requirements]]
+id = "SV-2023-19-COVERPOINT-NAME-VISIBILITY-CONTEXTS"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5"
+anchors = [
+    "[2023:19.5:L001:p583]",
+    "[2023:19.5:L002:p583]",
+    "[2023:19.5:L003:p583]",
+]
+summary = "A coverpoint name may be referenced only in a cross's coverpoint list, beneath a covergroup-variable hierarchical prefix, or after scope resolution from a covergroup type."
+related_clauses = [
+    "19.6",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5"
+
+[[requirements]]
+id = "SV-2023-19-COVERPOINT-NAMING"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5"
+anchors = [
+    "[2023:19.5:P002:p583]",
+]
+summary = "A coverpoint creates a hierarchical scope; an explicit label names it, while an unlabeled coverpoint over one variable takes that variable's name."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5"
+
+[[requirements]]
+id = "SV-2023-19-COVERPOINT-PROCEDURAL-CONTEXT"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5"
+anchors = [
+    "[2023:19.5:P001:p582]",
+]
+summary = "A coverpoint expression is evaluated in procedural context and may access data through a virtual interface."
+related_clauses = [
+    "25.9",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5"
+
+[[requirements]]
+id = "SV-2023-19-COVERPOINT-SAMPLE-TIME-EVALUATION"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5"
+anchors = [
+    "[2023:19.5:P001:p582]",
+]
+summary = "The coverpoint expression and its optional `iff` enabling expression are evaluated when the covergroup is sampled."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5"
+
+[[requirements]]
+id = "SV-2023-19-COVERPOINT-TYPED-ASSIGNMENT-SEMANTICS"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5"
+anchors = [
+    "[2023:19.5:P004:p583]",
+]
+summary = "For a typed coverpoint, its expression shall be assignment-compatible with the declared type and sampled values are converted as if assigned to a variable of that type."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5"
+
+[[requirements]]
+id = "SV-2023-19-CROSS-AUTOMATIC-TYPE-SCOPE"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.6.1.3"
+anchors = [
+    "[2023:19.6.1.3:P001:p603]",
+]
+summary = "Each cross automatically defines `CrossValType` for value tuples and `CrossQueueType` for queues of tuples; both names are scoped to and accessible only within that cross."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.6.1.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.6.1.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.6.1.3"
+
+[[requirements]]
+id = "SV-2023-19-CROSS-BIN-GROUP-MATCH-COUNT"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.6.1"
+anchors = [
+    "[2023:19.6.1:P001:p599]",
+]
+summary = "A named cross bin groups a set of cross products and increments whenever one grouped product matches, meaning every crossed point matches its corresponding component bin."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.6.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.6.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.6.1"
+
+[[requirements]]
+id = "SV-2023-19-CROSS-BIN-IFF-DISABLES-COUNT"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.6"
+anchors = [
+    "[2023:19.6:P006:p598]",
+]
+summary = "When the trailing `iff` on a cross-bin definition is false, that cross bin is ignored for the sample."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.6"
+
+[[requirements]]
+id = "SV-2023-19-CROSS-BINSOF-INTERSECT-SELECTION"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.6.1"
+anchors = [
+    "[2023:19.6.1:P008:p600]",
+    "[2023:19.6.1:P009:p600]",
+    "[2023:19.6.1:C005:p600]",
+    "[2023:19.6.1:P010:p600]",
+]
+summary = "A `binsof` selection with `intersect` retains bins whose associated values intersect any value in the comma-separated covergroup value-range list; negation selects bins whose values do not intersect that set."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "same-rule-different-clause"
+clause = "19.6.1.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.6.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.6.1"
+
+[[requirements]]
+id = "SV-2023-19-CROSS-BINSOF-OPERAND"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.6.1"
+anchors = [
+    "[2023:19.6.1:P008:p600]",
+]
+summary = "`binsof` yields the bins of an explicit or implicit coverage point, or a specifically named bin of such a point."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "same-rule-different-clause"
+clause = "19.6.1.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.6.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.6.1"
+
+[[requirements]]
+id = "SV-2023-19-CROSS-CARTESIAN-PRODUCT"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.6"
+anchors = [
+    "[2023:19.6:P007:p598]",
+]
+summary = "Cross coverage over N points consists of the Cartesian product of all bins associated with those N points."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.6"
+
+[[requirements]]
+id = "SV-2023-19-CROSS-COVERAGE-FORMULA"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.11.2"
+anchors = [
+    "[2023:19.11.2:P001:p616]",
+    "[2023:19.11.2:P002:p616]",
+    "[2023:19.11.2:P003:p616]",
+    "[2023:19.11.2:P004:p616]",
+    "[2023:19.11.2:P005:p616]",
+    "[2023:19.11.2:P006:p616]",
+]
+summary = "Cross coverage is covered-bin count divided by automatic cross-bin count plus significant user-bin count; automatic count is the product of crossed-point bin counts minus products consumed by user bins, and significant user bins exclude ignore and illegal bins."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.11.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.11.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.11.2"
+
+[[requirements]]
+id = "SV-2023-19-CROSS-EXCLUDES-DEFAULT-IGNORE-ILLEGAL"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.6"
+anchors = [
+    "[2023:19.6:P012:p599]",
+    "[2023:19.5:P016:p584]",
+]
+summary = "No cross-product bins shall be created for any coverpoint bin declared as default, ignored, or illegal."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.6"
+
+[[requirements]]
+id = "SV-2023-19-CROSS-EXPRESSION-RESTRICTIONS"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.6"
+anchors = [
+    "[2023:19.6:P005:p598]",
+]
+summary = "Identifiers and function calls used within a cross are subject to the same restrictions as those within coverpoints."
+related_clauses = [
+    "19.5",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.6"
+
+[[requirements]]
+id = "SV-2023-19-CROSS-GRAMMAR"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.6"
+anchors = [
+    "[2023:19.6:G001:p597-598]",
+]
+summary = "Cross declarations, bodies, options, local functions, bin selections, set expressions, matches clauses, and guards shall conform to the cross-coverage grammar."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "changed-expectation"
+clause = "19.6"
+note = "The 2012 cross grammar lacks the 2023 indexed +/- and +%- value-range forms and the special `$` integer match-threshold alternative."
+
+[requirements.revision_applicability.1800-2017]
+status = "changed-expectation"
+clause = "19.6"
+note = "The 2017 cross grammar lacks current additions including `$` as a matches threshold and the newer relative-tolerance range forms."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.6"
+
+[[requirements]]
+id = "SV-2023-19-CROSS-IDENTIFIER-SELECT-DOMAIN"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.6.1.2"
+anchors = [
+    "[2023:19.6.1.2:P003:p602]",
+]
+summary = "Using the enclosing cross identifier as a select expression selects every possible bin tuple, enabling a with expression to define the full cross bin; any other cross identifier is illegal."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.6.1.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.6.1.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.6.1.2"
+
+[[requirements]]
+id = "SV-2023-19-CROSS-IFF-DISABLES-SAMPLE"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.6"
+anchors = [
+    "[2023:19.6:P006:p598]",
+]
+summary = "When a cross-level `iff` expression is false at a sampling point, the entire cross is ignored for that sample."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.6"
+
+[[requirements]]
+id = "SV-2023-19-CROSS-IGNORE-BIN-SELECTION"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.6.2"
+anchors = [
+    "[2023:19.6.2:P001:p605]",
+]
+summary = "A cross may define `ignore_bins` using a select expression to designate a group of cross products for exclusion."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.6.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.6.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.6.2"
+
+[[requirements]]
+id = "SV-2023-19-CROSS-IGNORED-PRODUCT-PRECEDENCE"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.6.2"
+anchors = [
+    "[2023:19.6.2:P002:p605]",
+]
+summary = "Every cross product satisfying an ignore-bin select expression is excluded from coverage even if another bin in the same cross also includes that product."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.6.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.6.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.6.2"
+
+[[requirements]]
+id = "SV-2023-19-CROSS-ILLEGAL-BIN-SELECTION"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.6.3"
+anchors = [
+    "[2023:19.6.3:P001:p605]",
+]
+summary = "A cross may define `illegal_bins` using a select expression to designate a group of illegal cross products."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.6.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.6.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.6.3"
+
+[[requirements]]
+id = "SV-2023-19-CROSS-ILLEGAL-PRODUCT-ERROR-PRECEDENCE"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.6.3"
+anchors = [
+    "[2023:19.6.3:P002:p605]",
+]
+summary = "A selected illegal cross product is excluded and causes a run-time error, taking precedence even when the same product is explicitly ignored or included in another cross bin."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.6.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.6.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.6.3"
+
+[[requirements]]
+id = "SV-2023-19-CROSS-ITEM-EXPRESSION-REQUIRES-POINT"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.6"
+anchors = [
+    "[2023:19.6:P001:p597]",
+]
+summary = "An arbitrary expression cannot be used directly as a cross item; it must first be declared as a coverpoint."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.6"
+
+[[requirements]]
+id = "SV-2023-19-CROSS-LABEL-SCOPE"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.6"
+anchors = [
+    "[2023:19.6:P003:p598]",
+]
+summary = "A cross may have an optional label that names the cross and creates a hierarchical scope for bins declared within it."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.6"
+
+[[requirements]]
+id = "SV-2023-19-CROSS-LOCAL-FUNCTION-SCOPE"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.6"
+anchors = [
+    "[2023:19.6:P005:p598]",
+]
+summary = "A function declared inside a cross is not visible outside that cross scope."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.6"
+
+[[requirements]]
+id = "SV-2023-19-CROSS-MATCHES-PRECEDENCE"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.6"
+anchors = [
+    "[2023:19.6:G001:p597-598]",
+]
+summary = "Within a cross select expression, `matches` has higher precedence than `&&` and `||`."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.6"
+
+[[requirements]]
+id = "SV-2023-19-CROSS-MATCHES-SELECTION-POLICY"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.6.1.2"
+anchors = [
+    "[2023:19.6.1.2:P004:p602]",
+]
+summary = "A cross `matches` expression shall be a positive integer minimum satisfying-tuple count or `$` requiring all value tuples; when omitted, the minimum defaults to one."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.6.1.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.6.1.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.6.1.2"
+
+[[requirements]]
+id = "SV-2023-19-CROSS-NAME-VISIBILITY-CONTEXTS"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.6"
+anchors = [
+    "[2023:19.6:P004:p598]",
+    "[2023:19.6:L001:p598]",
+    "[2023:19.6:L002:p598]",
+]
+summary = "A cross name may be referenced only beneath a covergroup-variable hierarchical prefix or after scope resolution from a covergroup type."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.6"
+
+[[requirements]]
+id = "SV-2023-19-CROSS-NUM-PRINT-MISSING-OPTION"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.7"
+anchors = [
+    "[2023:19.7:T19-1.R21:p606]",
+    "[2023:19.7:T19-1.R22:p606]",
+    "[2023:19.7:T19-2.R09:p608]",
+]
+summary = "The numeric `cross_num_print_missing` option defaults to 0 and specifies how many uncovered cross-product bins are saved and reported; it is allowed at covergroup and cross scope, not coverpoint scope, and a group value defaults its crosses."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.7"
+
+[[requirements]]
+id = "SV-2023-19-CROSS-POINTS-SAME-COVERGROUP"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.6"
+anchors = [
+    "[2023:19.6:P013:p599]",
+]
+summary = "Every coverage point in a cross shall be defined within the same covergroup that contains the cross; attempting to cross an item from another covergroup is a compile-time error."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.6"
+
+[[requirements]]
+id = "SV-2023-19-CROSS-REAL-ITEM-POINT-REQUIRED"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.6"
+anchors = [
+    "[2023:19.6:P001:p597]",
+]
+summary = "A real variable shall not appear directly in a cross, but a coverpoint of a real expression may be crossed."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no real-valued coverpoints or crosses of real-expression coverpoints."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 has no real-expression coverpoints, so neither direct real cross items nor crossed real-expression coverpoints are defined."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.6"
+
+[[requirements]]
+id = "SV-2023-19-CROSS-RETAIN-AUTO-BINS-OPTION"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.7"
+anchors = [
+    "[2023:19.7:T19-1.R23:p606]",
+    "[2023:19.7:T19-1.R24:p606]",
+    "[2023:19.7:T19-1.R25:p606]",
+    "[2023:19.7:T19-1.R26:p606]",
+    "[2023:19.7:T19-2.R10:p608]",
+]
+summary = "The boolean `cross_retain_auto_bins` option defaults true: true retains automatic bins for products not intersecting user bins, while false removes all automatic bins whenever an explicit cross bin exists; it is allowed at covergroup and cross scope, not coverpoint scope, and a group value defaults its crosses."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no cross_retain_auto_bins option or false-mode removal of all automatic cross bins."
+
+[requirements.revision_applicability.1800-2017]
+status = "changed-expectation"
+clause = "19.6.1"
+note = "IEEE 1800-2017 always retains nonintersecting automatic cross bins when user bins exist and has no cross_retain_auto_bins option to disable retention."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.7"
+
+[[requirements]]
+id = "SV-2023-19-CROSS-SELECT-LOGICAL-COMBINATION"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.6.1"
+anchors = [
+    "[2023:19.6.1:P011:p600]",
+]
+summary = "Cross-bin selections may be combined with logical `&&` and `||` to select the intersection or union of their cross-product sets."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "same-rule-different-clause"
+clause = "19.6.1.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.6.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.6.1"
+
+[[requirements]]
+id = "SV-2023-19-CROSS-SET-EXPRESSION-CONTEXT-CAST"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.6.1.4"
+anchors = [
+    "[2023:19.6.1.4:P004:p604]",
+]
+summary = "A cross-bin context supplies `CrossQueueType` to an array literal; any expression is permitted if it evaluates to that type, and an assignment-incompatible expression requires an explicit cast."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.6.1.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.6.1.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.6.1.4"
+
+[[requirements]]
+id = "SV-2023-19-CROSS-SET-EXPRESSION-TYPE"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.6.1.4"
+anchors = [
+    "[2023:19.6.1.4:P001:p603]",
+]
+summary = "A cross set expression defining a cross bin shall yield that cross's `CrossQueueType`, containing `CrossValType` tuple elements."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.6.1.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.6.1.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.6.1.4"
+
+[[requirements]]
+id = "SV-2023-19-CROSS-SET-MATCHES-POLICY"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.6.1.4"
+anchors = [
+    "[2023:19.6.1.4:P002:p604]",
+]
+summary = "For cross-set bin selection, `matches` specifies a positive minimum number of a bin tuple's value tuples that must be present in the set, `$` requires all value tuples, and omission defaults the minimum to one."
+related_clauses = [
+    "19.6.1.2",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.6.1.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.6.1.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.6.1.4"
+
+[[requirements]]
+id = "SV-2023-19-CROSS-TWO-OR-MORE-ITEMS"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.3"
+anchors = [
+    "[2023:19.3:P013:p578]",
+    "[2023:19.6:P001:p597]",
+]
+summary = "A covergroup may define cross coverage over any combination of two or more variables or previously declared coverage points."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.3"
+
+[[requirements]]
+id = "SV-2023-19-CROSS-TYPES-IMPLICIT-TYPEDEFS"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.6.1.3"
+anchors = [
+    "[2023:19.6.1.3:P003:p603]",
+]
+summary = "The cross automatic types behave as implicit typedefs in the cross body even though explicit typedef declarations are not syntactically allowed there."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.6.1.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.6.1.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.6.1.3"
+
+[[requirements]]
+id = "SV-2023-19-CROSS-USER-AUTO-BIN-COEXISTENCE"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.6.1"
+anchors = [
+    "[2023:19.6.1:P003:p600]",
+    "[2023:19.6.1:P007:p600]",
+]
+summary = "User-defined and automatic bins may coexist in a cross; by default, automatic bins are retained only for cross products that do not intersect any user-defined cross bin, subject to `cross_retain_auto_bins`."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "changed-expectation"
+clause = "19.6.1"
+note = "IEEE 1800-2012 retains nonoverlapping automatic cross bins alongside user bins, but has no cross_retain_auto_bins option to alter that behavior."
+
+[requirements.revision_applicability.1800-2017]
+status = "changed-expectation"
+clause = "19.6.1"
+note = "IEEE 1800-2017 defines coexistence and retention of nonintersecting automatic bins as fixed behavior; it has no cross_retain_auto_bins option controlling that behavior."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.6.1"
+
+[[requirements]]
+id = "SV-2023-19-CROSS-VARIABLE-IMPLICIT-COVERPOINT"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.3"
+anchors = [
+    "[2023:19.3:P014:p578]",
+    "[2023:19.6:P001:p597]",
+]
+summary = "For a variable named directly in a cross, SystemVerilog implicitly declares a coverage point equivalent to `coverpoint V;` to track that variable's cross coverage."
+related_clauses = [
+    "19.6",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.3"
+
+[[requirements]]
+id = "SV-2023-19-CROSS-WITH-CONSTRUCTION-EVALUATION"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.6.1.2"
+anchors = [
+    "[2023:19.6.1.2:P011:p603]",
+]
+summary = "Cross-bin with expressions behave as if evaluated for every selected value tuple when the covergroup instance is constructed, although implementations need not schedule all such evaluation events."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.6.1.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.6.1.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.6.1.2"
+
+[[requirements]]
+id = "SV-2023-19-CROSS-WITH-INTEGRAL-RESULT"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.6"
+anchors = [
+    "[2023:19.6:G001:p597-598]",
+]
+summary = "A cross-selection `with` expression shall yield a result assignment-compatible with an integral type."
+related_clauses = [
+    "19.5.1.1",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.6"
+
+[[requirements]]
+id = "SV-2023-19-CROSS-WITH-ITEM-VALUE-BINDING"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.6.1.2"
+anchors = [
+    "[2023:19.6.1.2:P002:p602]",
+]
+summary = "Within a cross with expression, each cross-item identifier denotes the corresponding value in each candidate value tuple."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.6.1.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.6.1.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.6.1.2"
+
+[[requirements]]
+id = "SV-2023-19-CROSS-WITH-TUPLE-FILTER"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.6.1.2"
+anchors = [
+    "[2023:19.6.1.2:P001:p602]",
+]
+summary = "A cross select-expression `with` clause selects a candidate bin tuple only when the required number of its value tuples make the with expression true."
+related_clauses = [
+    "12.4",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.6.1.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.6.1.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.6.1.2"
+
+[[requirements]]
+id = "SV-2023-19-CROSS-ZERO-DENOMINATOR-PARENT-EXCLUSION"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.11.2"
+anchors = [
+    "[2023:19.11.2:P007:p616]",
+    "[2023:19.11.2:L001:p616]",
+]
+summary = "A cross with a zero coverage denominator does not contribute to its parent covergroup's coverage computation."
+related_clauses = [
+    "19.11",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.11.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.11.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.11.2"
+
+[[requirements]]
+id = "SV-2023-19-CROSS-ZERO-DENOMINATOR-QUERY-COUNT-OUTPUTS"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.11.2"
+anchors = [
+    "[2023:19.11.2:P007:p616]",
+    "[2023:19.11.2:L004:p616]",
+]
+summary = "When either coverage query overload with two ref arguments is called on a zero-denominator cross, both output arguments are assigned zero."
+related_clauses = [
+    "19.8",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.11.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.11.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.11.2"
+
+[[requirements]]
+id = "SV-2023-19-CROSS-ZERO-DENOMINATOR-QUERY-RESULT"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.11.2"
+anchors = [
+    "[2023:19.11.2:P007:p616]",
+    "[2023:19.11.2:L002:p616]",
+    "[2023:19.11.2:L003:p616]",
+]
+summary = "For a cross with a zero coverage denominator, get_coverage() and get_inst_coverage() return 0.0 when its weight is nonzero and 100.0 when its weight is zero."
+related_clauses = [
+    "19.8",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.11.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.11.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.11.2"
+
+[[requirements]]
+id = "SV-2023-19-CROSSQUEUETYPE-DEFINITION"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.6.1.3"
+anchors = [
+    "[2023:19.6.1.3:P002:p603]",
+]
+summary = "`CrossQueueType` is an unbounded queue whose element type is that cross's `CrossValType`."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.6.1.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.6.1.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.6.1.3"
+
+[[requirements]]
+id = "SV-2023-19-CROSSVALTYPE-INFERRED-BOUNDS"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.6.1.3"
+anchors = [
+    "[2023:19.6.1.3:P002:p603]",
+]
+summary = "If a coverpoint type's range bounds are not evident, its CrossValType field bounds are `[$bits(coverpoint_expression)-1:0]`."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.6.1.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.6.1.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.6.1.3"
+
+[[requirements]]
+id = "SV-2023-19-CROSSVALTYPE-STRUCT-FIELDS"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.6.1.3"
+anchors = [
+    "[2023:19.6.1.3:P002:p603]",
+]
+summary = "`CrossValType` is a struct with one member per crossed coverpoint, each field taking that coverpoint's name and type."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.6.1.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.6.1.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.6.1.3"
+
+[[requirements]]
+id = "SV-2023-19-CUMULATIVE-AT-LEAST-MAXIMUM"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.11.1"
+anchors = [
+    "[2023:19.11.1:P011:p616]",
+]
+summary = "For cumulative point-bin coverage across instances, a bin is covered only when its accumulated hit count reaches the maximum `at_least` value among all accumulated instances."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.11.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.11.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.11.1"
+
+[[requirements]]
+id = "SV-2023-19-DEFAULT-BIN-CANNOT-BE-IGNORED"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5"
+anchors = [
+    "[2023:19.5:P016:p584]",
+]
+summary = "A default bin cannot be explicitly ignored."
+related_clauses = [
+    "19.5.5",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5"
+
+[[requirements]]
+id = "SV-2023-19-DEFAULT-BIN-EXCLUDED-FROM-COVERAGE"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5"
+anchors = [
+    "[2023:19.5:P016:p584]",
+]
+summary = "Hits in default bins shall not contribute to the coverpoint coverage calculation."
+related_clauses = [
+    "19.6",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5"
+
+[[requirements]]
+id = "SV-2023-19-DEFAULT-BIN-UNMATCHED-VALUES"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5"
+anchors = [
+    "[2023:19.5:P016:p584]",
+]
+summary = "A `default` bin captures sampled values not in any defined state bin, and `default sequence` captures transitions not in any defined transition bin."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5"
+
+[[requirements]]
+id = "SV-2023-19-DEFAULT-SEQUENCE-BIN-INCREMENT"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5.2"
+anchors = [
+    "[2023:19.5.2:P026:p593]",
+]
+summary = "A `default sequence` bin increments only when no other nondefault transition bin increments and no previously started transition-bin match remains pending."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.5.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5.2"
+
+[[requirements]]
+id = "SV-2023-19-DEFAULT-SEQUENCE-NOT-ARRAY"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5.2"
+anchors = [
+    "[2023:19.5.2:P028:p593]",
+]
+summary = "A `default sequence` transition bin shall not use the multiple-bin `[]` form."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "same-rule-different-clause"
+clause = "19.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.5.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5.2"
+
+[[requirements]]
+id = "SV-2023-19-DEFINITION-ONLY-INSTANCE-OPTIONS"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.7"
+anchors = [
+    "[2023:19.7:P007:p607]",
+]
+summary = "`per_instance` and `get_inst_coverage` may be set only in a covergroup definition; `auto_bin_max`, `detect_overlap`, and `cross_retain_auto_bins` may be set only in their permitted definition scopes, not procedurally after instantiation."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "changed-expectation"
+clause = "19.7"
+note = "The 2012 definition-only restrictions cover per_instance, get_inst_coverage, auto_bin_max, and detect_overlap, but cross_retain_auto_bins does not exist."
+
+[requirements.revision_applicability.1800-2017]
+status = "changed-expectation"
+clause = "19.7"
+note = "IEEE 1800-2017 has the same definition-only restrictions for per_instance, get_inst_coverage, auto_bin_max, and detect_overlap, but has no cross_retain_auto_bins option."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.7"
+
+[[requirements]]
+id = "SV-2023-19-DERIVED-BASE-COVERAGE-NO-AGGREGATION"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.4.1"
+anchors = [
+    "[2023:19.4.1:P008:p581]",
+]
+summary = "For `get_coverage()`, base and derived covergroups are separate types and coverage is not aggregated across their instances."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no base and derived covergroup types."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 has no derived covergroup type or covergroup inheritance."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.4.1"
+
+[[requirements]]
+id = "SV-2023-19-DERIVED-COVERGROUP-INHERITS-ARGUMENTS"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.4.1"
+anchors = [
+    "[2023:19.4.1:P005:p581]",
+]
+summary = "A derived covergroup implicitly has the same formal argument list as its base covergroup."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no derived covergroup argument inheritance."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 has no derived covergroup argument inheritance."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.4.1"
+
+[[requirements]]
+id = "SV-2023-19-DERIVED-COVERGROUP-INHERITS-COMPONENTS"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.4.1"
+anchors = [
+    "[2023:19.4.1:P004:p580]",
+]
+summary = "A derived covergroup may refer to base-covergroup components and inherits every base component that it does not override."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no derived covergroup component inheritance."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 has no covergroup inheritance of components."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.4.1"
+
+[[requirements]]
+id = "SV-2023-19-DERIVED-COVERGROUP-INHERITS-EVENT"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.4.1"
+anchors = [
+    "[2023:19.4.1:P005:p581]",
+]
+summary = "If a base covergroup specifies a coverage event, its derived covergroup shall use that event."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no derived covergroup event inheritance."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 has no derived covergroup event inheritance."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.4.1"
+
+[[requirements]]
+id = "SV-2023-19-DERIVED-COVERGROUP-INSTANCE-REPLACEMENT"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.4.1"
+anchors = [
+    "[2023:19.4.1:P003:p580]",
+]
+summary = "A derived covergroup instance replaces the base covergroup instance, so references to that covergroup identifier in the class and all base classes resolve to the derived instance."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no derived covergroup instance-replacement behavior."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 has no derived covergroup instance replacement semantics."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.4.1"
+
+[[requirements]]
+id = "SV-2023-19-DERIVED-COVERGROUP-NO-NEW-BASE-LOCAL-COVERAGE"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.4"
+anchors = [
+    "[2023:19.4:P005:p579]",
+]
+summary = "A derived covergroup may inherit coverage of base-class local properties but shall not define new coverage constructs for properties local to the base class."
+related_clauses = [
+    "19.4.1",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no derived covergroups that inherit or add coverage of base-class local properties."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 has no derived covergroup construct governing inherited coverage of base-local properties."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.4"
+
+[[requirements]]
+id = "SV-2023-19-DERIVED-COVERGROUP-OPTION-OVERRIDE"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.4.1"
+anchors = [
+    "[2023:19.4.1:P007:p581]",
+]
+summary = "A derived covergroup option overrides the same option from its base; unoverridden base options remain applicable to the derived covergroup."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no derived covergroup option overriding."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 has no covergroup inheritance or derived option override behavior."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.4.1"
+
+[[requirements]]
+id = "SV-2023-19-DERIVED-COVERPOINT-ADDITION"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.4.1"
+anchors = [
+    "[2023:19.4.1:P006:p581]",
+]
+summary = "A derived coverpoint whose name is absent from the base covergroup is an additional sampled coverage point."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no derived covergroups or added derived coverpoints."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 has no derived covergroup coverpoint-addition behavior."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.4.1"
+
+[[requirements]]
+id = "SV-2023-19-DERIVED-COVERPOINT-OVERRIDE-COMPUTATION"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.4.1"
+anchors = [
+    "[2023:19.4.1:P006:p581]",
+]
+summary = "A derived coverpoint with the same name as a base coverpoint replaces that base point's contribution to coverage computation."
+related_clauses = [
+    "19.11",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no derived coverpoint override contribution semantics."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 has no derived coverpoint override semantics."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.4.1"
+
+[[requirements]]
+id = "SV-2023-19-DETECT-OVERLAP-OPTION"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.7"
+anchors = [
+    "[2023:19.7:T19-1.R27:p606]",
+    "[2023:19.7:T19-1.R28:p606]",
+    "[2023:19.7:T19-2.R11:p608]",
+]
+summary = "The boolean `detect_overlap` option defaults false; when true, it requires a warning for overlap between two bins' value-range or transition lists. It is allowed at covergroup and coverpoint scope, not cross scope, and a group value defaults its coverpoints."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.7"
+
+[[requirements]]
+id = "SV-2023-19-DISABLED-BLOCK-NO-END-EVENT"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.3"
+anchors = [
+    "[2023:19.3:P009:p577]",
+]
+summary = "An end-of-execution block event shall not trigger when the named execution is disabled."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.3"
+
+[[requirements]]
+id = "SV-2023-19-DUPLICATE-COVERAGE-OPTION-ERROR"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.7"
+anchors = [
+    "[2023:19.7:P002:p605]",
+]
+summary = "Assigning the same coverage option more than once within one covergroup definition is an error."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.7"
+
+[[requirements]]
+id = "SV-2023-19-EMBEDDED-COVERGROUP-ANONYMOUS-INSTANCE"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.4"
+anchors = [
+    "[2023:19.4:P004:p579]",
+]
+summary = "A covergroup declaration within a class declares both an anonymous covergroup type and an instance variable whose name is the covergroup identifier."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.4"
+
+[[requirements]]
+id = "SV-2023-19-EMBEDDED-COVERGROUP-ASSIGNMENT-SCOPE"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.4"
+anchors = [
+    "[2023:19.4:P008:p579]",
+]
+summary = "An embedded covergroup variable shall not be assigned outside the `new()` method of its parent class."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.4"
+
+[[requirements]]
+id = "SV-2023-19-EMBEDDED-COVERGROUP-ENCAPSULATED-MEMBERS"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.4"
+anchors = [
+    "[2023:19.4:P005:p579]",
+]
+summary = "An embedded covergroup may use protected and local properties of its containing class in coverpoint expressions, guards, and option initialization without changing their access protection."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.4"
+
+[[requirements]]
+id = "SV-2023-19-EMBEDDED-COVERGROUP-EXPLICIT-CONSTRUCTION"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.4"
+anchors = [
+    "[2023:19.4:P008:p579]",
+]
+summary = "An embedded covergroup is created by assigning `new()` to its variable in the parent class constructor; without that assignment no covergroup exists and no data is sampled."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.4"
+
+[[requirements]]
+id = "SV-2023-19-EMBEDDED-COVERGROUP-EXTENDS-SYNTAX"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.4.1"
+anchors = [
+    "[2023:19.4.1:P001:p580]",
+]
+summary = "An embedded covergroup may use the single-inheritance `covergroup extends identifier; ... endgroup` declaration form."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no covergroup extends syntax."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 has no embedded covergroup extends syntax."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.4.1"
+
+[[requirements]]
+id = "SV-2023-19-EMPTY-POINT-BIN-EXCLUDED"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.11.1"
+anchors = [
+    "[2023:19.11.1:P007:p615]",
+    "[2023:19.5.5:P003:p595]",
+    "[2023:19.5.6:P003:p596]",
+]
+summary = "A point bin with no associated value or transition is ignored and excluded from both numerator and denominator of point coverage."
+related_clauses = [
+    "19.5.5",
+    "19.5.6",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.11.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.11.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.11.1"
+
+[[requirements]]
+id = "SV-2023-19-ENUM-AUTOMATIC-BIN-COUNT"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5.3"
+anchors = [
+    "[2023:19.5.3:L001:p594]",
+]
+summary = "Automatic bin creation for an enum coverpoint creates one bin per value in the enumeration's cardinality."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.5.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5.3"
+
+[[requirements]]
+id = "SV-2023-19-EXCLUDED-ITEM-REMOVED-FROM-AVERAGE"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.11"
+anchors = [
+    "[2023:19.11:P006:p614]",
+]
+summary = "When an item's computation rules exclude it, both its weighted numerator contribution and its weight in the covergroup denominator are omitted."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.11"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.11"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.11"
+
+[[requirements]]
+id = "SV-2023-19-FIXED-BIN-VALUE-DISTRIBUTION"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5.1"
+anchors = [
+    "[2023:19.5.1:P003:p585]",
+]
+summary = "When fewer fixed bins than listed values are requested, values are assigned in source order with floor(total values/bin count), at least one per bin, and all remainder in the last bin; duplicate listed values are retained and may occur in multiple bins."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.5.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5.1"
+
+[[requirements]]
+id = "SV-2023-19-FIXED-BINS-EXCESS-EMPTY"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5.1"
+anchors = [
+    "[2023:19.5.1:P004:p585]",
+]
+summary = "When a fixed-bin count exceeds the number of listed values, each value is assigned to one bin in order and the remaining bins are empty."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.5.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5.1"
+
+[[requirements]]
+id = "SV-2023-19-GENERATED-COVERPOINT-NAME-NONLANGUAGE"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5"
+anchors = [
+    "[2023:19.5:P002:p583]",
+]
+summary = "An unlabeled coverpoint over anything other than a single variable may receive an implementation-generated reporting name, but that generated name cannot be referenced within SystemVerilog source."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5"
+
+[[requirements]]
+id = "SV-2023-19-GET-COVERAGE-METHOD"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.8"
+anchors = [
+    "[2023:19.8:T19-5.R07:p611]",
+    "[2023:19.8:T19-5.R08:p611]",
+    "[2023:19.8:P002:p611]",
+]
+summary = "`get_coverage()` is callable on groups, points, and crosses and returns 0..100 cumulative type coverage across all instances; as a static method it may be invoked through either type scope `::` or an instance `.`."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.8"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.8"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.8"
+
+[[requirements]]
+id = "SV-2023-19-GET-INST-COVERAGE-METHOD"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.8"
+anchors = [
+    "[2023:19.8:T19-5.R09:p611]",
+    "[2023:19.8:T19-5.R10:p611]",
+    "[2023:19.8:P002:p611]",
+]
+summary = "`get_inst_coverage()` is callable on group, point, and cross instances via `.` only and returns that specific instance's 0..100 coverage."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.8"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.8"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.8"
+
+[[requirements]]
+id = "SV-2023-19-GET-INST-COVERAGE-OPTION"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.7"
+anchors = [
+    "[2023:19.7:T19-1.R34:p606]",
+    "[2023:19.7:T19-1.R35:p606]",
+    "[2023:19.7:T19-1.R36:p606]",
+    "[2023:19.7:T19-1.R37:p606]",
+    "[2023:19.7:T19-1.R38:p606]",
+    "[2023:19.7:T19-2.R13:p608]",
+]
+summary = "The boolean covergroup-only `get_inst_coverage` option defaults false and applies when `merge_instances` is set; true enables per-instance tracking for `get_inst_coverage`, while false requires it to equal `get_coverage`. It is not allowed at coverpoint or cross scope."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.7"
+
+[[requirements]]
+id = "SV-2023-19-GLOBAL-COVERAGE-EMPTY-OR-ZERO-WEIGHT"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.11"
+anchors = [
+    "[2023:19.11:P009:p615]",
+]
+summary = "Global `$get_coverage` returns 100.0 when the design has no covergroup instances or every covergroup has weight zero."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.11"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.11"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.11"
+
+[[requirements]]
+id = "SV-2023-19-GLOBAL-GET-COVERAGE"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.9"
+anchors = [
+    "[2023:19.9:L003:p613]",
+]
+summary = "The system function `$get_coverage()` returns a real from 0 through 100 representing overall coverage of all covergroup types."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.9"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.9"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.9"
+
+[[requirements]]
+id = "SV-2023-19-GROUP-LEVEL-INSTANCE-OPTION-DEFAULTS"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.7"
+anchors = [
+    "[2023:19.7:P009:p607]",
+    "[2023:19.3:P015:p578]",
+]
+summary = "All instance options are allowed at covergroup level; except weight, goal, comment, and per_instance, group-level values default corresponding point and cross options and may be overridden by individual items."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.7"
+
+[[requirements]]
+id = "SV-2023-19-IGNORE-BINS-EXCLUDE-POINT-MATCHES"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5.5"
+anchors = [
+    "[2023:19.5.5:P001:p595]",
+]
+summary = "Values or transition sequences listed in `ignore_bins` are explicitly excluded from coverage for that coverpoint."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.5.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5.5"
+
+[[requirements]]
+id = "SV-2023-19-IGNORE-STATE-VALUES-REMOVED"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5.5"
+anchors = [
+    "[2023:19.5.5:P002:p595]",
+]
+summary = "Each ignore-bin state value is removed from every ordinary state bin after values have been distributed to specified bins."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.5.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5.5"
+
+[[requirements]]
+id = "SV-2023-19-IGNORE-TRANSITION-BOUNDED-ONLY"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5.5"
+anchors = [
+    "[2023:19.5.5:P002:p595]",
+]
+summary = "An ignored transition bin shall not specify an unbounded or simulation-dependent-length sequence."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.5.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5.5"
+
+[[requirements]]
+id = "SV-2023-19-IGNORE-TRANSITION-SUBSEQUENCE-REMOVAL"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5.5"
+anchors = [
+    "[2023:19.5.5:P002:p595]",
+]
+summary = "A covered transition sequence is removed when it cannot match without also matching an ignored transition sequence."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.5.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5.5"
+
+[[requirements]]
+id = "SV-2023-19-IGNORED-VALUE-NOT-TRANSITION-FILTER"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5.5"
+anchors = [
+    "[2023:19.5.5:P002:p595]",
+]
+summary = "A value listed in a state ignore bin does not suppress a transition merely because that transition includes the value."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.5.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5.5"
+
+[[requirements]]
+id = "SV-2023-19-ILLEGAL-BIN-REMOVAL"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5.6"
+anchors = [
+    "[2023:19.5.6:P002:p596]",
+]
+summary = "Illegal state values are removed from ordinary state bins after distribution, and a covered transition is removed when it cannot match without also matching an illegal transition sequence."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.5.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5.6"
+
+[[requirements]]
+id = "SV-2023-19-ILLEGAL-BIN-RUNTIME-ERROR-PRECEDENCE"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5.6"
+anchors = [
+    "[2023:19.5.6:P002:p596]",
+]
+summary = "Sampling an illegal value or transition issues a run-time error, even when the same match is also included in another bin."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.5.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5.6"
+
+[[requirements]]
+id = "SV-2023-19-ILLEGAL-BINS-MARK-POINT-MATCHES"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5.6"
+anchors = [
+    "[2023:19.5.6:P001:p595]",
+]
+summary = "Coverage-point values and transition sequences may be designated illegal using `illegal_bins`."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.5.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5.6"
+
+[[requirements]]
+id = "SV-2023-19-ILLEGAL-TRANSITION-BOUNDED-ONLY"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5.6"
+anchors = [
+    "[2023:19.5.6:P002:p596]",
+]
+summary = "An illegal transition bin shall not specify an unbounded or simulation-dependent-length sequence."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.5.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5.6"
+
+[[requirements]]
+id = "SV-2023-19-ILLEGAL-VALUE-NOT-TRANSITION-FILTER"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5.6"
+anchors = [
+    "[2023:19.5.6:P002:p596]",
+]
+summary = "A value listed in an illegal state bin does not by itself affect a transition sequence containing that value."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.5.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5.6"
+
+[[requirements]]
+id = "SV-2023-19-INSTANCE-AT-LEAST-OPTION"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.7"
+anchors = [
+    "[2023:19.7:T19-1.R17:p606]",
+    "[2023:19.7:T19-1.R18:p606]",
+]
+summary = "The numeric `at_least` option defaults to 1 and sets the minimum hit count for each bin; a bin with fewer hits is not covered."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.7"
+
+[[requirements]]
+id = "SV-2023-19-INSTANCE-AUTO-BIN-MAX-OPTION"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.7"
+anchors = [
+    "[2023:19.7:T19-1.R19:p606]",
+    "[2023:19.7:T19-1.R20:p606]",
+    "[2023:19.7:T19-2.R08:p608]",
+]
+summary = "The numeric `auto_bin_max` option defaults to 64 and limits automatic bins when a coverpoint has no explicit bins; it is allowed at covergroup and coverpoint scope, not cross scope, and a group value defaults its coverpoints."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.7"
+
+[[requirements]]
+id = "SV-2023-19-INSTANCE-COMMENT-OPTION"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.7"
+anchors = [
+    "[2023:19.7:T19-1.R13:p606]",
+    "[2023:19.7:T19-1.R14:p606]",
+    "[2023:19.7:T19-1.R15:p606]",
+    "[2023:19.7:T19-1.R16:p606]",
+    "[2023:19.7:T19-2.R06:p608]",
+]
+summary = "The string `comment` option defaults to empty; a set comment accompanies a covergroup instance, coverpoint, or cross and is saved in the coverage database and included in its report."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.7"
+
+[[requirements]]
+id = "SV-2023-19-INSTANCE-GOAL-OPTION"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.7"
+anchors = [
+    "[2023:19.7:T19-1.R11:p606]",
+    "[2023:19.7:T19-1.R12:p606]",
+    "[2023:19.7:T19-2.R05:p608]",
+]
+summary = "The numeric instance-specific `goal` option defaults to 100 and specifies the target goal for a covergroup instance, or for one of its coverpoints or crosses."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.7"
+
+[[requirements]]
+id = "SV-2023-19-INSTANCE-NAME-OPTION"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.7"
+anchors = [
+    "[2023:19.7:T19-1.R01:p606]",
+    "[2023:19.7:T19-1.R02:p606]",
+    "[2023:19.7:T19-1.R03:p606]",
+]
+summary = "The string instance option `name` specifies a covergroup instance name; when omitted, the tool automatically generates a unique name for each instance."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.7"
+
+[[requirements]]
+id = "SV-2023-19-INSTANCE-OPTION-ASSIGNMENT-SYNTAX"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.7"
+anchors = [
+    "[2023:19.7:P004:p606]",
+    "[2023:19.7:C001:p606]",
+]
+summary = "An instance-specific coverage option may be set in a covergroup definition using `option.member_name = expression;`."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.7"
+
+[[requirements]]
+id = "SV-2023-19-INSTANCE-OPTION-INDEPENDENCE"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.7"
+anchors = [
+    "[2023:19.7:P003:p606]",
+]
+summary = "Each covergroup instance may initialize an instance-specific option differently, and that value affects only that instance."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.7"
+
+[[requirements]]
+id = "SV-2023-19-INSTANCE-WEIGHT-APPLICATION"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.7"
+anchors = [
+    "[2023:19.7:T19-1.R05:p606]",
+    "[2023:19.7:T19-1.R06:p606]",
+    "[2023:19.7:T19-1.R07:p606]",
+    "[2023:19.7:T19-1.R08:p606]",
+    "[2023:19.7:T19-2.R04:p608]",
+]
+summary = "At covergroup scope, option.weight controls that instance's contribution to overall simulation coverage; at coverpoint or cross scope, it controls that item's contribution to the enclosing covergroup instance coverage."
+related_clauses = [
+    "19.11",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.7"
+
+[[requirements]]
+id = "SV-2023-19-INSTANCE-WEIGHT-DEFAULT"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.7"
+anchors = [
+    "[2023:19.7:T19-1.R04:p606]",
+]
+summary = "The instance-specific `option.weight` value defaults to 1."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.7"
+
+[[requirements]]
+id = "SV-2023-19-INSTANCE-WEIGHT-VALUE-RESTRICTION"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.7"
+anchors = [
+    "[2023:19.7:T19-1.R09:p606]",
+    "[2023:19.7:T19-1.R10:p606]",
+]
+summary = "The value assigned to the instance-specific option.weight shall be a nonnegative integral value."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.7"
+
+[[requirements]]
+id = "SV-2023-19-INTEGRAL-AND-REAL-RANGE-MEMBERSHIP"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5.1"
+anchors = [
+    "[2023:19.5.1:P009:p586]",
+]
+summary = "An integral range denotes every discrete integral value between inclusive endpoints, while a real range denotes every real value between inclusive endpoints."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "changed-expectation"
+clause = "19.5.1"
+note = "IEEE 1800-2012 supports discrete inclusive integral covergroup ranges but has no real-valued coverpoint ranges or continuous real interval semantics."
+
+[requirements.revision_applicability.1800-2017]
+status = "changed-expectation"
+clause = "19.5.1"
+note = "IEEE 1800-2017 defines integral covergroup ranges but has no real-expression coverpoints or real-bin range membership semantics."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5.1"
+
+[[requirements]]
+id = "SV-2023-19-INTEGRAL-AUTOMATIC-BIN-COUNT"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5.3"
+anchors = [
+    "[2023:19.5.3:L002:p594]",
+]
+summary = "For a non-enum M-bit integral coverpoint, the automatic-bin count is the smaller of 2^M and `auto_bin_max`."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.5.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5.3"
+
+[[requirements]]
+id = "SV-2023-19-INTEGRAL-BIN-ARRAY-NAMES"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5.1"
+anchors = [
+    "[2023:19.5.1:P006:p585]",
+]
+summary = "Integral open-array state bins are named `binname[value]`; fixed arrays of N state bins are named `binname[0]` through `binname[N-1]`."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.5.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5.1"
+
+[[requirements]]
+id = "SV-2023-19-LOAD-COVERAGE-DB"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.9"
+anchors = [
+    "[2023:19.9:L002:p612]",
+]
+summary = "`$load_coverage_db(filename)` loads cumulative coverage information for all covergroup types from the specified file."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.9"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.9"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.9"
+
+[[requirements]]
+id = "SV-2023-19-MERGED-BIN-NAME-OVERLAP-RULES"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.11.3"
+anchors = [
+    "[2023:19.11.3:P007:p617]",
+    "[2023:19.11.3:P009:p617]",
+]
+summary = "Merged bins overlap across instances exactly by equal generated names: scalar bins share `binname`; open state bins use value, fixed bins use index, automatic bins use original value/range unaffected by ignore/illegal removal except emptying, open transitions use bounded transition, and automatic cross bins use the complete component-bin-name tuple."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.11.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.11.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.11.3"
+
+[[requirements]]
+id = "SV-2023-19-MERGED-OVERLAPPING-BIN-COUNT-SUM"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.11.3"
+anchors = [
+    "[2023:19.11.3:P007:p617]",
+]
+summary = "When same-named bins overlap among merged covergroup instances, the cumulative count for that bin is the sum of its counts in every instance containing it."
+related_clauses = [
+    "19.11.1",
+    "19.11.2",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.11.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.11.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.11.3"
+
+[[requirements]]
+id = "SV-2023-19-NAME-OPTION-GROUP-ONLY"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.7"
+anchors = [
+    "[2023:19.7:T19-2.R03:p608]",
+]
+summary = "The instance `name` option is permitted at covergroup syntactic level and is not permitted at coverpoint or cross level."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.7"
+
+[[requirements]]
+id = "SV-2023-19-NONMERGED-QUERY-COUNTS-CONSISTENT"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.11.3"
+anchors = [
+    "[2023:19.11.3:P006:p617]",
+]
+summary = "When merge_instances is false, the two ref-int outputs of `get_coverage` shall be consistent with the weighted-sum type coverage computation."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.11.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.11.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.11.3"
+
+[[requirements]]
+id = "SV-2023-19-NONWILDCARD-BIN-FOUR-STATE-MATCH"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5.4"
+anchors = [
+    "[2023:19.5.4:P001:p594]",
+]
+summary = "A non-wildcard integral value or transition bin may contain four-state values, and X or Z in the bin matches only X or Z in the same sampled bit positions using case-equality semantics."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.5.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5.4"
+
+[[requirements]]
+id = "SV-2023-19-OPTION-ASSIGNMENT-CONSTRUCTION-EVALUATION"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.7"
+anchors = [
+    "[2023:19.7:P007:p607]",
+]
+summary = "Coverage-option assignment statements within a covergroup definition are evaluated when that covergroup is instantiated."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.7"
+
+[[requirements]]
+id = "SV-2023-19-OPTION-BUILTIN-MEMBER"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.7"
+anchors = [
+    "[2023:19.7:P005:p607]",
+]
+summary = "`option` is a built-in member of every covergroup, coverpoint, and cross."
+related_clauses = [
+    "19.10",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.7"
+
+[[requirements]]
+id = "SV-2023-19-OPTION-STRUCT-COMPOSITION"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.10"
+anchors = [
+    "[2023:19.10:P001:p613]",
+    "[2023:19.10:C001:p613-614]",
+]
+summary = "Covergroup, coverpoint, and cross `option` and `type_option` members are implicitly declared structures containing exactly the members and declared types shown for each applicable scope."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "changed-expectation"
+clause = "19.10"
+note = "The 2012 implicit option structures lack cross_retain_auto_bins and real_interval members that are present in the 2023 scope-specific compositions."
+
+[requirements.revision_applicability.1800-2017]
+status = "changed-expectation"
+clause = "19.10"
+note = "The 2017 implicit option structures lack the current cross_retain_auto_bins and real_interval members, so their exact member compositions differ."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.10"
+
+[[requirements]]
+id = "SV-2023-19-OTHER-INSTANCE-OPTIONS-PROCEDURAL"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.7"
+anchors = [
+    "[2023:19.7:P007:p607]",
+]
+summary = "Instance-specific options other than the definition-only options may be assigned procedurally after covergroup instantiation."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.7"
+
+[[requirements]]
+id = "SV-2023-19-OVERRIDDEN-SAMPLE-ARGUMENTS"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.8.1"
+anchors = [
+    "[2023:19.8.1:P001:p611-612]",
+]
+summary = "A covergroup may override `sample()` with a triggering function accepting arguments, allowing sampling values passed from automatic routines, process instances, and concurrent assertion sequences or properties."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.8.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.8.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.8.1"
+
+[[requirements]]
+id = "SV-2023-19-PARTIAL-BIN-RANGE-INTERSECTION"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5.7"
+anchors = [
+    "[2023:19.5.7:P002:p596]",
+    "[2023:19.5.7:L008:p596]",
+]
+summary = "If at least one value in a warned bin range is valid, the effective range is the intersection of the specified range and values representable by the coverpoint's effective type."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.5.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5.7"
+
+[[requirements]]
+id = "SV-2023-19-PER-INSTANCE-OPTION"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.7"
+anchors = [
+    "[2023:19.7:T19-1.R29:p606]",
+    "[2023:19.7:T19-1.R30:p606]",
+    "[2023:19.7:T19-1.R31:p606]",
+    "[2023:19.7:T19-1.R32:p606]",
+    "[2023:19.7:T19-1.R33:p606]",
+    "[2023:19.7:T19-2.R12:p608]",
+]
+summary = "The boolean covergroup-only `per_instance` option defaults false; every instance contributes to type coverage, and when true its instance-specific coverage shall be saved and reported, while false does not require preserving instance details. It is not allowed at coverpoint or cross scope."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.7"
+
+[[requirements]]
+id = "SV-2023-19-POINT-ZERO-DENOMINATOR-PARENT-EXCLUSION"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.11.1"
+anchors = [
+    "[2023:19.11.1:P008:p615]",
+    "[2023:19.11.1:L001:p615]",
+]
+summary = "A coverpoint for which no bin has an associated value or transition has a zero denominator and does not contribute to its parent covergroup's coverage computation."
+related_clauses = [
+    "19.11",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.11.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.11.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.11.1"
+
+[[requirements]]
+id = "SV-2023-19-POINT-ZERO-DENOMINATOR-QUERY-COUNT-OUTPUTS"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.11.1"
+anchors = [
+    "[2023:19.11.1:P008:p615]",
+    "[2023:19.11.1:L004:p615]",
+]
+summary = "When either coverage query overload with two ref arguments is called on an all-empty-bin coverpoint, both output arguments are assigned zero."
+related_clauses = [
+    "19.8",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.11.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.11.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.11.1"
+
+[[requirements]]
+id = "SV-2023-19-POINT-ZERO-DENOMINATOR-QUERY-RESULT"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.11.1"
+anchors = [
+    "[2023:19.11.1:P008:p615]",
+    "[2023:19.11.1:L002:p615]",
+    "[2023:19.11.1:L003:p615]",
+]
+summary = "For an all-empty-bin coverpoint, get_coverage() and get_inst_coverage() return 0.0 when its weight is nonzero and 100.0 when its weight is zero."
+related_clauses = [
+    "19.8",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.11.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.11.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.11.1"
+
+[[requirements]]
+id = "SV-2023-19-REAL-ABSOLUTE-TOLERANCE-RANGE"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5.1"
+anchors = [
+    "[2023:19.5.1:P023:p587]",
+    "[2023:19.5.1:L001:p588]",
+]
+summary = "A real bin value using `+/- tolerance` denotes the inclusive absolute-tolerance range from value minus tolerance through value plus tolerance; as a range it is partitioned when wider than `real_interval`."
+related_clauses = [
+    "11.4.13",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no real-valued coverpoint bins or absolute-tolerance real ranges."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 has no real-expression coverpoint bins or absolute-tolerance bin range syntax."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5.1"
+
+[[requirements]]
+id = "SV-2023-19-REAL-BIN-WITH-ILLEGAL"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5.1.1"
+anchors = [
+    "[2023:19.5.1.1:P001:p589]",
+]
+summary = "A `with` expression is not allowed for bins of a real coverpoint type."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no real-valued coverpoint bins to which a with filter could be applied."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 has no real-expression coverpoint bins and therefore no prohibition on with filtering for real bins."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5.1.1"
+
+[[requirements]]
+id = "SV-2023-19-REAL-COVERPOINT-EXPLICIT-BIN-REQUIRED"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5"
+anchors = [
+    "[2023:19.5:P015:p584]",
+]
+summary = "Bins shall not be automatically created for a real-expression coverpoint, so it shall contain at least one explicit `bins` construct."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no real-expression coverpoints or explicit-bin requirement for them."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 does not permit real-expression coverpoints."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5"
+
+[[requirements]]
+id = "SV-2023-19-REAL-DEFAULT-BIN-NOT-ARRAY"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5.1"
+anchors = [
+    "[2023:19.5.1:P022:p587]",
+]
+summary = "A default bin for a real expression shall be a single bin; open-array `[]` and fixed-array `[N]` forms are illegal."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no real-expression default bins."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 has no real-expression default bins."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5.1"
+
+[[requirements]]
+id = "SV-2023-19-REAL-FIXED-BIN-DISTRIBUTION"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5.1"
+anchors = [
+    "[2023:19.5.1:P017:p586-587]",
+]
+summary = "Real fixed bins are indexed 0 through N-1; range intervals and individual values are distributed in source order using floor(item count/N), at least one item per bin, with remainder in the last bin and duplicate items retained."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no fixed bins for real coverpoint intervals."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 has no fixed-bin distribution semantics for real coverpoints."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5.1"
+
+[[requirements]]
+id = "SV-2023-19-REAL-FIXED-BINS-EXCESS-EMPTY"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5.1"
+anchors = [
+    "[2023:19.5.1:P019:p587]",
+]
+summary = "When a real fixed-bin count exceeds the number of range-interval and individual-value items, the excess bins are empty."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no real fixed-bin interval distribution or excess-bin behavior."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 has no real fixed-bin arrays."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5.1"
+
+[[requirements]]
+id = "SV-2023-19-REAL-OPEN-BIN-IDENTICAL-INTERVAL-MERGE"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5.1"
+anchors = [
+    "[2023:19.5.1:P015:p586]",
+]
+summary = "When multiple ranges in one real open bin array produce identical intervals, those identical intervals are merged into one bin."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no real open-bin intervals or identical-interval merging."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 has no real open-bin intervals or interval-merging rule."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5.1"
+
+[[requirements]]
+id = "SV-2023-19-REAL-OPEN-BIN-INTERVAL-EXTENTS"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5.1"
+anchors = [
+    "[2023:19.5.1:P013:p586]",
+]
+summary = "For an open real bin array, intervals consecutively span each range from its minimum to maximum, each bin covers values in its interval, and a range no wider than the interval size produces one bin."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no real open-bin interval extents."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 has no real open-bin interval partition semantics."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5.1"
+
+[[requirements]]
+id = "SV-2023-19-REAL-OPEN-BIN-NAMES"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5.1"
+anchors = [
+    "[2023:19.5.1:P014:p586]",
+]
+summary = "A real open-array interval bin name encodes its low and high endpoints with brackets for inclusive endpoints and `)` for an exclusive high endpoint; an individual-value bin is named `binname[value]`."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no real open-bin interval naming rules."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 has no real open-array interval-bin naming rule."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5.1"
+
+[[requirements]]
+id = "SV-2023-19-REAL-RANGE-INTERVAL-PARTITION"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5.1"
+anchors = [
+    "[2023:19.5.1:P011:p586]",
+]
+summary = "A real range wider than `type_option.real_interval` is partitioned by that interval size; partitions are low-inclusive and high-exclusive except the last, which includes its high endpoint, and the last may be shorter."
+related_clauses = [
+    "19.7.1",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no real coverpoint range partitioning or real_interval option."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 has no real coverpoint range partitioning or real_interval option."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5.1"
+
+[[requirements]]
+id = "SV-2023-19-REAL-RELATIVE-TOLERANCE-RANGE"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5.1"
+anchors = [
+    "[2023:19.5.1:P023:p587]",
+    "[2023:19.5.1:L002:p588]",
+]
+summary = "A real bin value using `+%- tolerance` denotes an inclusive relative percentage-tolerance range around the real-converted value; as a range it is partitioned when wider than `real_interval`."
+related_clauses = [
+    "11.4.13",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no relative-tolerance real coverpoint ranges."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 has no relative-tolerance range syntax for real coverpoint bins."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5.1"
+
+[[requirements]]
+id = "SV-2023-19-REAL-UNBOUNDED-RANGE-SINGLE-BIN"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5.1"
+anchors = [
+    "[2023:19.5.1:P021:p587]",
+]
+summary = "The `$` primary is legal in a real covergroup value range, but a real range containing `$` is one indivisible bin item and is not partitioned into intervals."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no unbounded real coverpoint ranges."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 has no unbounded real covergroup range behavior."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5.1"
+
+[[requirements]]
+id = "SV-2023-19-REAL-VALUE-BIN-ARRAY-FORMS"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5.1"
+anchors = [
+    "[2023:19.5.1:P010:p586]",
+    "[2023:19.5.1:P012:p586]",
+]
+summary = "For real coverpoint ranges, a bin name without brackets creates one bin for all listed values and ranges, empty brackets create bins for each individual value and each range interval, and brackets containing one positive integral expression request a fixed number of bins."
+related_clauses = [
+    "11.4.13",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no real coverpoint value-bin array forms."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 has no real coverpoint bin-array forms."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5.1"
+
+[[requirements]]
+id = "SV-2023-19-REAL-WILDCARD-BIN-ILLEGAL"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5.4"
+anchors = [
+    "[2023:19.5.4:P007:p595]",
+]
+summary = "A wildcard bin specification is illegal for a real-type coverpoint."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no real-type coverpoints or real wildcard-bin legality rule."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 has no real-type coverpoints or real wildcard-bin restriction."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5.4"
+
+[[requirements]]
+id = "SV-2023-19-SAMPLE-COVERGROUP-FORMAL-NAME-UNIQUE"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.8.1"
+anchors = [
+    "[2023:19.8.1:P004:p612]",
+]
+summary = "Covergroup constructor formals and overridden-sample formals share one lexical scope, so the same argument name in both lists is an error."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.8.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.8.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.8.1"
+
+[[requirements]]
+id = "SV-2023-19-SAMPLE-FORMAL-LOOKUP-AND-USAGE"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.8.1"
+anchors = [
+    "[2023:19.8.1:P004:p612]",
+]
+summary = "Overridden-sample formals are resolved before names in the enclosing scope and may be used only to designate coverpoint or conditional-guard expressions; any other use is an error."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.8.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.8.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.8.1"
+
+[[requirements]]
+id = "SV-2023-19-SAMPLE-FORMAL-NO-OUTPUT"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.8.1"
+anchors = [
+    "[2023:19.8.1:P004:p612]",
+]
+summary = "A formal argument of an overridden sample method shall not have output direction."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.8.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.8.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.8.1"
+
+[[requirements]]
+id = "SV-2023-19-SAMPLE-METHOD"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.8"
+anchors = [
+    "[2023:19.8:T19-5.R05:p610]",
+    "[2023:19.8:T19-5.R06:p610]",
+]
+summary = "The predefined `void sample()` method is callable on a covergroup, not on a coverpoint or cross, and triggers sampling of that covergroup."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.8"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.8"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.8"
+
+[[requirements]]
+id = "SV-2023-19-SET-BIN-ARRAY-TYPE"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5.1.2"
+anchors = [
+    "[2023:19.5.1.2:P001:p590]",
+]
+summary = "A set covergroup expression defining a bin shall yield a non-associative array whose element type is assignment-compatible with the coverpoint type."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5.1.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.5.1.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5.1.2"
+
+[[requirements]]
+id = "SV-2023-19-SET-BIN-CONSTRUCTION-EVALUATION"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5.1.2"
+anchors = [
+    "[2023:19.5.1.2:P001:p590]",
+]
+summary = "A set covergroup expression is evaluated when its covergroup instance is constructed."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5.1.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.5.1.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5.1.2"
+
+[[requirements]]
+id = "SV-2023-19-SET-BIN-INTERNAL-IDENTIFIERS-HIDDEN"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5.1.2"
+anchors = [
+    "[2023:19.5.1.2:P001:p590]",
+]
+summary = "Coverpoint and bin identifiers declared within the covergroup are not visible in a set covergroup expression."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5.1.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.5.1.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5.1.2"
+
+[[requirements]]
+id = "SV-2023-19-SET-COVERAGE-DB-NAME"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.9"
+anchors = [
+    "[2023:19.9:L001:p612]",
+]
+summary = "`$set_coverage_db_name(filename)` sets the coverage database filename to which coverage information is saved at simulation end."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.9"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.9"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.9"
+
+[[requirements]]
+id = "SV-2023-19-SET-INST-NAME-METHOD"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.8"
+anchors = [
+    "[2023:19.8:T19-5.R11:p611]",
+    "[2023:19.8:T19-5.R12:p611]",
+]
+summary = "`void set_inst_name(string)` is callable on a covergroup, not a point or cross, and sets its instance name to the supplied string."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.8"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.8"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.8"
+
+[[requirements]]
+id = "SV-2023-19-START-METHOD"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.8"
+anchors = [
+    "[2023:19.8:T19-5.R13:p611]",
+    "[2023:19.8:T19-5.R14:p611]",
+]
+summary = "`void start()` is callable on covergroups, coverpoints, and crosses and starts their coverage collection."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.8"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.8"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.8"
+
+[[requirements]]
+id = "SV-2023-19-STOP-METHOD"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.8"
+anchors = [
+    "[2023:19.8:T19-5.R15:p611]",
+    "[2023:19.8:T19-5.R16:p611]",
+]
+summary = "`void stop()` is callable on covergroups, coverpoints, and crosses and stops their coverage collection."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.8"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.8"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.8"
+
+[[requirements]]
+id = "SV-2023-19-STROBE-CLOCKING-SAMPLE-COALESCING"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.3"
+anchors = [
+    "[2023:19.3:P008:p577]",
+]
+summary = "With strobe enabled, clocking-event samples occur in the Postponed region and multiple events in one time slot produce one sample."
+related_clauses = [
+    "19.7.1",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.3"
+
+[[requirements]]
+id = "SV-2023-19-STROBE-NONCLOCK-NO-EFFECT"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.3"
+anchors = [
+    "[2023:19.3:P008:p577]",
+]
+summary = "The strobe option shall not affect sampling caused by a block event expression or procedural `sample()` call."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.3"
+
+[[requirements]]
+id = "SV-2023-19-TRANSITION-ARBITRARY-SEQUENCE-LENGTH"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5.2"
+anchors = [
+    "[2023:19.5.2:P005:p591]",
+]
+summary = "A transition-bin sequence may contain an arbitrary number of ordered values, each matched by the next successive coverpoint sample."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.5.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5.2"
+
+[[requirements]]
+id = "SV-2023-19-TRANSITION-BIN-COMPLETE-MATCH-COUNT"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5.2"
+anchors = [
+    "[2023:19.5.2:P025:p592]",
+    "[2023:19.5:P014:p584]",
+]
+summary = "A transition bin's count increments when the sampled transition sequence completely matches any one ordered sequence in its transition list."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.5.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5.2"
+
+[[requirements]]
+id = "SV-2023-19-TRANSITION-BIN-GRAMMAR"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5.2"
+anchors = [
+    "[2023:19.5.2:P001:p590]",
+    "[2023:19.5.2:G001:p590-591]",
+]
+summary = "Transition-bin declarations shall conform to the transition-bin grammar, including ordered `=>` transition sets and consecutive, goto, or nonconsecutive repetition forms over covergroup value ranges."
+related_clauses = [
+    "16.9",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "changed-expectation"
+clause = "19.5.2"
+note = "The 2017 transition grammar supports the same repetition operators but lacks current covergroup range alternatives such as unbounded endpoints and tolerance-range forms."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5.2"
+
+[[requirements]]
+id = "SV-2023-19-TRANSITION-BIN-ONCE-PER-SAMPLE"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5.2"
+anchors = [
+    "[2023:19.5.2:P032:p594]",
+]
+summary = "A particular transition bin increments at most once on any one coverpoint sample, even if multiple matches complete on that sample."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.5.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5.2"
+
+[[requirements]]
+id = "SV-2023-19-TRANSITION-BINS-INTEGRAL-ONLY"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5.2"
+anchors = [
+    "[2023:19.5.2:P002:p591]",
+]
+summary = "A transition list denotes ordered integral-value transitions; transition bins over real values are illegal."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "changed-expectation"
+clause = "19.5"
+note = "IEEE 1800-2017 restricts all coverpoints to integral expressions, rather than permitting real coverpoints while specifically prohibiting only their transition bins."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5.2"
+
+[[requirements]]
+id = "SV-2023-19-TRANSITION-CONSECUTIVE-REPETITION"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5.2"
+anchors = [
+    "[2023:19.5.2:P009:p591]",
+    "[2023:19.5.2:P010:p591]",
+]
+summary = "In a transition bin, `trans_item [* repeat_range]` requires the transition item to match on the specified number, or range of numbers, of consecutive samples."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.5.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5.2"
+
+[[requirements]]
+id = "SV-2023-19-TRANSITION-GOTO-REPETITION"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5.2"
+anchors = [
+    "[2023:19.5.2:P015:p592]",
+    "[2023:19.5.2:P017:p592]",
+]
+summary = "For `trans_item [-> repeat_range]`, the item must occur the required number of times; any number of nonmatching samples may precede or separate occurrences, and any following transition item shall match immediately after the final occurrence."
+related_clauses = [
+    "16.9.2",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.5.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5.2"
+
+[[requirements]]
+id = "SV-2023-19-TRANSITION-NONCONSECUTIVE-REPETITION"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5.2"
+anchors = [
+    "[2023:19.5.2:P020:p592]",
+]
+summary = "For `trans_item [= repeat_range]`, occurrence counting is like goto repetition, but a following transition item may be delayed by any number of samples provided the repeated item does not occur again during that delay."
+related_clauses = [
+    "16.9.2",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.5.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5.2"
+
+[[requirements]]
+id = "SV-2023-19-TRANSITION-OPEN-BIN-NAMES"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5.2"
+anchors = [
+    "[2023:19.5.2:P025:p592]",
+]
+summary = "For a transition open-bin array declared `binname[]`, each bounded transition receives a bin named `binname[transition]`."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.5.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5.2"
+
+[[requirements]]
+id = "SV-2023-19-TRANSITION-OVERLAP-COUNTING"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5.2"
+anchors = [
+    "[2023:19.5.2:P029:p593]",
+]
+summary = "A transition bin increments for every complete sequence match, including matches that overlap in sampled-value history."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.5.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5.2"
+
+[[requirements]]
+id = "SV-2023-19-TRANSITION-RANGE-CARTESIAN-EXPANSION"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5.2"
+anchors = [
+    "[2023:19.5.2:P007:p591]",
+]
+summary = "A transition from one range list to another expands to every ordered transition pairing each value in the first list with each value in the second."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.5.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5.2"
+
+[[requirements]]
+id = "SV-2023-19-TRANSITION-SUCCESSIVE-SAMPLES"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5.2"
+anchors = [
+    "[2023:19.5.2:P003:p591]",
+]
+summary = "For `value1 => value2`, value1 must occur at one coverpoint sample and value2 at the immediately following sample."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.5.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5.2"
+
+[[requirements]]
+id = "SV-2023-19-TYPE-COMMENT-OPTION"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.7.1"
+anchors = [
+    "[2023:19.7.1:T19-3.R10:p608]",
+    "[2023:19.7.1:T19-3.R11:p608]",
+    "[2023:19.7.1:T19-3.R12:p608]",
+    "[2023:19.7.1:T19-4.R05:p610]",
+]
+summary = "The string-literal type `comment` option defaults to empty; it accompanies a covergroup type, point, or cross and is saved in the coverage database and report."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.7.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.7.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.7.1"
+
+[[requirements]]
+id = "SV-2023-19-TYPE-DISTRIBUTE-FIRST-OPTION"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.7.1"
+anchors = [
+    "[2023:19.7.1:T19-3.R20:p609]",
+    "[2023:19.7.1:T19-3.R21:p609]",
+    "[2023:19.7.1:T19-4.R08:p610]",
+]
+summary = "The boolean covergroup-only type option `distribute_first` defaults false; when true, values are distributed among bins before applying the with expression. It is not allowed at coverpoint or cross scope."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.7.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.7.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.7.1"
+
+[[requirements]]
+id = "SV-2023-19-TYPE-GOAL-OPTION"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.7.1"
+anchors = [
+    "[2023:19.7.1:T19-3.R08:p608]",
+    "[2023:19.7.1:T19-3.R09:p608]",
+    "[2023:19.7.1:T19-4.R04:p610]",
+]
+summary = "The constant numeric type `goal` option defaults to 100 and specifies the target goal for a covergroup type or one of its coverpoints or crosses."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.7.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.7.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.7.1"
+
+[[requirements]]
+id = "SV-2023-19-TYPE-GROUP-WEIGHTED-INSTANCE-FORMULA"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.11.3"
+anchors = [
+    "[2023:19.11.3:P002:p617]",
+    "[2023:19.11.3:P003:p617]",
+    "[2023:19.11.3:P004:p617]",
+]
+summary = "With merge disabled, covergroup type coverage is the sum of each instance's `option.weight` times its instance coverage divided by the sum of instance weights, independent of direct point/cross type weighting."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.11.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.11.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.11.3"
+
+[[requirements]]
+id = "SV-2023-19-TYPE-ITEM-WEIGHTED-INSTANCE-FORMULA"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.11.3"
+anchors = [
+    "[2023:19.11.3:P005:p617]",
+]
+summary = "With merge disabled, point or cross type coverage is the weighted average of that item across instances using each instance item's `option.weight`."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.11.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.11.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.11.3"
+
+[[requirements]]
+id = "SV-2023-19-TYPE-MERGE-INSTANCES-OPTION"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.7.1"
+anchors = [
+    "[2023:19.7.1:T19-3.R16:p609]",
+    "[2023:19.7.1:T19-3.R17:p609]",
+    "[2023:19.7.1:T19-3.R18:p609]",
+    "[2023:19.7.1:T19-3.R19:p609]",
+    "[2023:19.7.1:T19-4.R07:p610]",
+    "[2023:19.11.3:P001:p616]",
+]
+summary = "The boolean covergroup-only type option `merge_instances` defaults false; true computes type coverage as the union of all instance coverage, while false computes their weighted average. It is not allowed at coverpoint or cross scope."
+related_clauses = [
+    "19.11.3",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.7.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.7.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.7.1"
+
+[[requirements]]
+id = "SV-2023-19-TYPE-OPTION-ASSIGNMENT-SYNTAX"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.7.1"
+anchors = [
+    "[2023:19.7.1:P002:p608]",
+    "[2023:19.7.1:C001:p608]",
+]
+summary = "A covergroup type option is set in the covergroup definition using `type_option.member_name = constant_expression;`."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.7.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.7.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.7.1"
+
+[[requirements]]
+id = "SV-2023-19-TYPE-OPTION-ASSIGNMENT-TIMING"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.7.1"
+anchors = [
+    "[2023:19.7.1:P008:p610]",
+]
+summary = "`strobe` and `real_interval` type options may be set only in the covergroup definition; other type options may be assigned procedurally at any time during simulation."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "changed-expectation"
+clause = "19.7.1"
+note = "IEEE 1800-2012 makes strobe definition-only but has no real_interval option; its other type options may be assigned procedurally."
+
+[requirements.revision_applicability.1800-2017]
+status = "changed-expectation"
+clause = "19.7.1"
+note = "IEEE 1800-2017 makes strobe definition-only and allows other type options procedurally, but has no real_interval type option."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.7.1"
+
+[[requirements]]
+id = "SV-2023-19-TYPE-OPTION-BUILTIN-STATIC-MEMBER"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.7.1"
+anchors = [
+    "[2023:19.7.1:P003:p608]",
+]
+summary = "`type_option` is a built-in static member of every covergroup, coverpoint, and cross."
+related_clauses = [
+    "19.10",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.7.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.7.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.7.1"
+
+[[requirements]]
+id = "SV-2023-19-TYPE-OPTIONS-SAME-ALL-INSTANCES"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.7.1"
+anchors = [
+    "[2023:19.7.1:P004:p609]",
+]
+summary = "Different instances of one covergroup type cannot have different type-option values; definition initialization requires constant expressions."
+related_clauses = [
+    "11.2.1",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.7.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.7.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.7.1"
+
+[[requirements]]
+id = "SV-2023-19-TYPE-OPTIONS-STATIC-SEMANTICS"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.7.1"
+anchors = [
+    "[2023:19.7.1:P001:p608]",
+]
+summary = "Covergroup type options describe the covergroup type as a whole and behave analogously to static class data shared by its instances."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.7.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.7.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.7.1"
+
+[[requirements]]
+id = "SV-2023-19-TYPE-REAL-INTERVAL-GROUP-DEFAULT"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.7.1"
+anchors = [
+    "[2023:19.7.1:P010:p610]",
+]
+summary = "Group-level type options do not default lower point/cross type options, except `real_interval`, which does default lower applicable scopes."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "changed-expectation"
+clause = "19.7.1"
+note = "IEEE 1800-2012 states that group-level type options do not default lower scopes and has no real_interval exception."
+
+[requirements.revision_applicability.1800-2017]
+status = "changed-expectation"
+clause = "19.7.1"
+note = "IEEE 1800-2017 states that group-level type options do not act as lower-level defaults and has no real_interval exception."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.7.1"
+
+[[requirements]]
+id = "SV-2023-19-TYPE-REAL-INTERVAL-OPTION"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.7.1"
+anchors = [
+    "[2023:19.7.1:T19-3.R22:p609]",
+    "[2023:19.7.1:T19-3.R23:p609]",
+]
+summary = "The real-valued type `real_interval` option defaults to 1.0 and specifies the width of real range intervals distributed among multiple bins."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no real_interval type option or real-range bin partitioning."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 has no real_interval type option or real-bin interval partitioning."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.7.1"
+
+[[requirements]]
+id = "SV-2023-19-TYPE-REAL-INTERVAL-SCOPE"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.7.1"
+anchors = [
+    "[2023:19.7.1:T19-4.R09:p610]",
+]
+summary = "The `real_interval` type option is permitted at covergroup and coverpoint levels but not at cross level."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no real_interval type option at any syntactic scope."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 has no real_interval type option and therefore no scope rule for it."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.7.1"
+
+[[requirements]]
+id = "SV-2023-19-TYPE-STROBE-OPTION"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.7.1"
+anchors = [
+    "[2023:19.7.1:T19-3.R14:p609]",
+    "[2023:19.7.1:T19-3.R15:p609]",
+    "[2023:19.7.1:T19-4.R06:p610]",
+]
+summary = "The boolean covergroup-only type option `strobe` defaults false; when true, clocking-event samples are scheduled at the end of the time slot like `$strobe`. It does not apply to block-event or procedural sampling and is not allowed at point or cross scope."
+related_clauses = [
+    "19.3",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.7.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.7.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.7.1"
+
+[[requirements]]
+id = "SV-2023-19-TYPE-WEIGHT-APPLICATION"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.7.1"
+anchors = [
+    "[2023:19.7.1:T19-3.R02:p608]",
+    "[2023:19.7.1:T19-3.R03:p608]",
+    "[2023:19.7.1:T19-3.R04:p608]",
+    "[2023:19.7.1:T19-3.R05:p608]",
+    "[2023:19.7.1:T19-4.R03:p610]",
+]
+summary = "At covergroup scope, type_option.weight controls that covergroup type's contribution to cumulative coverage; at coverpoint or cross scope, it controls that item's contribution to the enclosing covergroup type coverage."
+related_clauses = [
+    "19.11",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.7.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.7.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.7.1"
+
+[[requirements]]
+id = "SV-2023-19-TYPE-WEIGHT-OPTION"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.7.1"
+anchors = [
+    "[2023:19.7.1:T19-3.R01:p608]",
+]
+summary = "The type-specific `type_option.weight` value defaults to 1."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.7.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.7.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.7.1"
+
+[[requirements]]
+id = "SV-2023-19-TYPE-WEIGHT-VALUE-RESTRICTION"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.7.1"
+anchors = [
+    "[2023:19.7.1:T19-3.R06:p608]",
+    "[2023:19.7.1:T19-3.R07:p608]",
+]
+summary = "The constant value assigned to type_option.weight shall be a nonnegative integral value."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.7.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.7.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.7.1"
+
+[[requirements]]
+id = "SV-2023-19-UNBOUNDED-TRANSITION-NOT-OPEN-ARRAY"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5.2"
+anchors = [
+    "[2023:19.5.2:P028:p593]",
+]
+summary = "A transition sequence of unbounded or simulation-dependent length shall not be declared using the multiple-bin `[]` form; doing so is an error."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.5.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5.2"
+
+[[requirements]]
+id = "SV-2023-19-USER-BIN-COVERPOINT-COVERAGE-FORMULA"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.11.1"
+anchors = [
+    "[2023:19.11.1:P001:p615]",
+    "[2023:19.11.1:P002:p615]",
+    "[2023:19.11.1:P003:p615]",
+]
+summary = "For a coverpoint with user-defined bins, item coverage is the cardinality of covered defined bins divided by the cardinality of all defined bins."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.11.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.11.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.11.1"
+
+[[requirements]]
+id = "SV-2023-19-VALUE-BIN-ARRAY-FORMS"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5.1"
+anchors = [
+    "[2023:19.5.1:P001:p584-585]",
+    "[2023:19.5.1:P002:p585]",
+]
+summary = "For an integral coverpoint range list, a bin name without brackets creates one bin for the set, empty brackets create one bin per value, and brackets containing one positive integral expression request that fixed number of bins."
+related_clauses = [
+    "11.4.13",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.5.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5.1"
+
+[[requirements]]
+id = "SV-2023-19-WARNED-BIN-RANGE-EXCLUDED"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5.7"
+anchors = [
+    "[2023:19.5.7:P002:p596]",
+    "[2023:19.5.7:L007:p596]",
+]
+summary = "A bin range shall not participate if either endpoint contains X/Z or every value in the range would trigger a value-resolution warning."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.5.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5.7"
+
+[[requirements]]
+id = "SV-2023-19-WARNED-BIN-SINGLETON-EXCLUDED"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5.7"
+anchors = [
+    "[2023:19.5.7:P002:p596]",
+    "[2023:19.5.7:L006:p596]",
+]
+summary = "When a singleton value in a bin range list or set expression triggers a value-resolution warning, that singleton shall not participate in the bin's values."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.5.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5.7"
+
+[[requirements]]
+id = "SV-2023-19-WILDCARD-B-EXPANSION-BEFORE-CONVERSION"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5.7"
+anchors = [
+    "[2023:19.5.7:P001:p596]",
+]
+summary = "For value resolution in wildcard bins, X and Z digits in a bin expression are expanded to all corresponding 0/1 values before type-resolution rules are applied."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.5.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5.7"
+
+[[requirements]]
+id = "SV-2023-19-WILDCARD-BIN-UNKNOWN-DIGITS"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5.4"
+anchors = [
+    "[2023:19.5.4:P001:p594]",
+]
+summary = "In a wildcard bin definition, each X, Z, or `?` digit is a wildcard matching either 0 or 1."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.5.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5.4"
+
+[[requirements]]
+id = "SV-2023-19-WILDCARD-BINS-EXCLUDE-XZ-SAMPLES"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5.4"
+anchors = [
+    "[2023:19.5.4:P007:p595]",
+]
+summary = "Wildcard bins expand wildcard digits only over 2-state values; sampled values containing X or Z are excluded from wildcard-bin matches."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.5.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5.4"
+
+[[requirements]]
+id = "SV-2023-19-ZERO-DENOMINATOR-GLOBAL-EXCLUSION"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.11"
+anchors = [
+    "[2023:19.11:P008:p614]",
+    "[2023:19.11:L004:p614]",
+]
+summary = "A covergroup whose coverage calculation has a zero denominator does not contribute to the overall coverage score."
+related_clauses = [
+    "19.11.3",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.11"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.11"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.11"
+
+[[requirements]]
+id = "SV-2023-19-ZERO-DENOMINATOR-QUERY-COUNT-OUTPUTS"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.11"
+anchors = [
+    "[2023:19.11:P008:p614]",
+    "[2023:19.11:L007:p615]",
+]
+summary = "When get_coverage() or get_inst_coverage() is called with its two ref arguments on a zero-denominator covergroup, both output arguments are assigned zero."
+related_clauses = [
+    "19.8",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.11"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.11"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.11"
+
+[[requirements]]
+id = "SV-2023-19-ZERO-DENOMINATOR-QUERY-RESULT"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.11"
+anchors = [
+    "[2023:19.11:P008:p614]",
+    "[2023:19.11:L005:p615]",
+    "[2023:19.11:L006:p615]",
+]
+summary = "For a covergroup with a zero coverage denominator, get_coverage() and get_inst_coverage() return 0.0 when its weight is nonzero and 100.0 when its weight is zero."
+related_clauses = [
+    "19.8",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.11"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.11"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.11"
+
+[[requirements]]
+id = "SV-2023-19-ZERO-LENGTH-TRANSITION-ILLEGAL"
+standard_revision = "1800-2023"
+part = "19"
+clause = "19.5.2"
+anchors = [
+    "[2023:19.5.2:P033:p594]",
+]
+summary = "A length-zero transition-bin specification is illegal, including a trans_set containing only one value range or one value range repeated exactly once."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "19.5.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "19.5.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "19.5.2"

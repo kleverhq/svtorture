@@ -1,0 +1,769 @@
+{
+  "authority": "1800-2023",
+  "part": "29",
+  "requirements": [
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Use an all-x input row producing 0."
+        ],
+        "notes": [],
+        "positive": [
+          "Use an all-x input row producing x."
+        ]
+      },
+      "id": "SV-2023-29-ALL-X-INPUT-ROW-OUTPUT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify no match when the input value does not change."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use * to match transitions between distinct values."
+        ]
+      },
+      "id": "SV-2023-29-ANY-EDGE-SYMBOL"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Use b as output."
+        ],
+        "notes": [],
+        "positive": [
+          "Use b in input and current-state fields."
+        ]
+      },
+      "id": "SV-2023-29-B-TABLE-SYMBOL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use x as sequential current state."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use 0, 1, and x in each permitted field."
+        ]
+      },
+      "id": "SV-2023-29-BASIC-TABLE-SYMBOLS"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Provide fewer input fields than inputs."
+        ],
+        "notes": [],
+        "positive": [
+          "Provide one input field per declared input and an output after colon."
+        ]
+      },
+      "id": "SV-2023-29-COMBINATIONAL-TABLE-ROW"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Declare its output reg."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a combinational UDP output without reg."
+        ]
+      },
+      "id": "SV-2023-29-COMBINATIONAL-UDP-NO-REG"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change an input to x and observe the row that matches the resulting current-input combination."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Change an input and observe the matching row output."
+        ]
+      },
+      "id": "SV-2023-29-COMBINATIONAL-UDP-OUTPUT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Create overlapping edge notation that denotes the same transition but conflicting outputs."
+        ],
+        "negative": [
+          "Provide matching input rows with outputs 0 and 1."
+        ],
+        "notes": [],
+        "positive": [
+          "Use disjoint rows or duplicate rows with the same result."
+        ]
+      },
+      "id": "SV-2023-29-CONFLICTING-TABLE-ROWS-ILLEGAL"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Omit a falling edge."
+        ],
+        "notes": [],
+        "positive": [
+          "Specify no-change rows for irrelevant edges."
+        ]
+      },
+      "id": "SV-2023-29-EDGE-COVERAGE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Hold inputs stable and observe no edge-triggered row match."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Trigger output using a specified input edge."
+        ]
+      },
+      "id": "SV-2023-29-EDGE-SENSITIVE-TRIGGERING"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Define two outputs."
+        ],
+        "notes": [],
+        "positive": [
+          "Define a UDP with one output."
+        ]
+      },
+      "id": "SV-2023-29-EXACTLY-ONE-OUTPUT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Distinguish transitions involving x."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use f to match 1-to-0."
+        ]
+      },
+      "id": "SV-2023-29-FALLING-EDGE-SYMBOL"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Apply x and z separately and observe identical behavior."
+        ]
+      },
+      "id": "SV-2023-29-INPUT-Z-TREATED-AS-X"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use x in the current-state field with a concrete next-state output."
+        ],
+        "negative": [
+          "Omit the current-state field from a level-sensitive sequential row."
+        ],
+        "notes": [],
+        "positive": [
+          "Define a latch row with current-state and next-state fields."
+        ]
+      },
+      "id": "SV-2023-29-LEVEL-SENSITIVE-SEQUENTIAL-FIELDS"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compile a combinational UDP with 10 inputs."
+        ]
+      },
+      "id": "SV-2023-29-MINIMUM-COMBINATIONAL-INPUTS"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compile a sequential UDP with 9 inputs."
+        ]
+      },
+      "id": "SV-2023-29-MINIMUM-SEQUENTIAL-INPUTS"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [
+          "Materialization may be resource-intensive."
+        ],
+        "positive": [
+          "Compile a model containing 256 distinct valid UDP definitions."
+        ]
+      },
+      "id": "SV-2023-29-MINIMUM-UDP-DEFINITIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Make both match differently and observe the level result."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Mix nonconflicting level and edge rows."
+        ]
+      },
+      "id": "SV-2023-29-MIXED-LEVEL-EDGE-PRECEDENCE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Use - in a combinational row."
+        ],
+        "notes": [],
+        "positive": [
+          "Use - as sequential next state."
+        ]
+      },
+      "id": "SV-2023-29-NO-CHANGE-TABLE-SYMBOL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Omit the initial statement from an otherwise valid sequential UDP."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Define sequential UDPs with and without an initial assignment."
+        ]
+      },
+      "id": "SV-2023-29-OPTIONAL-SEQUENTIAL-INITIAL"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Specify z as table output."
+        ],
+        "notes": [],
+        "positive": [
+          "Exercise outputs 0, 1, and x."
+        ]
+      },
+      "id": "SV-2023-29-OUTPUT-VALUE-DOMAIN"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use wildcard endpoint symbols."
+        ],
+        "negative": [
+          "Use (01) as output."
+        ],
+        "notes": [],
+        "positive": [
+          "Use (01) in a sequential input field."
+        ]
+      },
+      "id": "SV-2023-29-PARENTHESIZED-EDGE-SYMBOL"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Exercise each of 10, 1x, and x0 against n."
+        ]
+      },
+      "id": "SV-2023-29-POTENTIAL-NEGATIVE-EDGE-SYMBOL"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Exercise each of 01, 0x, and x1 against p."
+        ]
+      },
+      "id": "SV-2023-29-POTENTIAL-POSITIVE-EDGE-SYMBOL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use equal single-terminal and connection-expression widths so the expression connects to each UDP array element."
+        ],
+        "negative": [
+          "Connect too few expression bits for all terminals of a UDP instance array."
+        ],
+        "notes": [],
+        "positive": [
+          "Connect a UDP instance array with an expression whose width distributes exactly across the instances."
+        ]
+      },
+      "id": "SV-2023-29-PRIMITIVE-TERMINAL-RULES-APPLY"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Use ? as output."
+        ],
+        "notes": [],
+        "positive": [
+          "Use ? in an input field."
+        ]
+      },
+      "id": "SV-2023-29-QUESTION-TABLE-SYMBOL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Distinguish r from transitions involving x."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use r to match a 0-to-1 transition."
+        ]
+      },
+      "id": "SV-2023-29-RISING-EDGE-SYMBOL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use one parenthesized transition while all other input fields are level symbols."
+        ],
+        "negative": [
+          "Specify transitions on two inputs in one row."
+        ],
+        "notes": [],
+        "positive": [
+          "Specify one r transition in a sequential row."
+        ]
+      },
+      "id": "SV-2023-29-SEQUENTIAL-ONE-TRANSITION-PER-ROW"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise a no-change transition and observe that output and state remain identical."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Exercise a sequential UDP transition and observe the output reflecting the new internal state."
+        ]
+      },
+      "id": "SV-2023-29-SEQUENTIAL-OUTPUT-IS-STATE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use x as the current-state field."
+        ],
+        "negative": [
+          "Omit the current-state field from a sequential row."
+        ],
+        "notes": [],
+        "positive": [
+          "Provide input, current-state, and next-state fields separated by colons."
+        ]
+      },
+      "id": "SV-2023-29-SEQUENTIAL-TABLE-ROW"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use x as the current output state and observe the matching state-table row."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use the same input values with two current output states that select different next outputs."
+        ]
+      },
+      "id": "SV-2023-29-SEQUENTIAL-UDP-OUTPUT"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Omit reg from a sequential UDP output."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a sequential UDP output reg in each header form."
+        ]
+      },
+      "id": "SV-2023-29-SEQUENTIAL-UDP-OUTPUT-REG"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Omit a row semicolon."
+        ],
+        "notes": [],
+        "positive": [
+          "Define a table with semicolon-terminated rows."
+        ]
+      },
+      "id": "SV-2023-29-STATE-TABLE-DELIMITERS"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Reverse separate input declaration order while retaining header order and verify row interpretation."
+        ]
+      },
+      "id": "SV-2023-29-TABLE-INPUT-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the optional colon and UDP identifier after endprimitive."
+        ],
+        "negative": [
+          "Put bare names in an ANSI declaration-port list."
+        ],
+        "notes": [],
+        "positive": [
+          "Define a UDP with port declarations directly in its header and a table."
+        ]
+      },
+      "id": "SV-2023-29-UDP-ANSI-DEFINITION-FORM"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Omit the optional sequential initial statement."
+        ],
+        "negative": [
+          "Use a current-state field in a combinational row."
+        ],
+        "notes": [],
+        "positive": [
+          "Define minimal one-row combinational and sequential bodies."
+        ]
+      },
+      "id": "SV-2023-29-UDP-BODY-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Instantiate a UDP in a module and provide its top-level definition later."
+        ]
+      },
+      "id": "SV-2023-29-UDP-FORWARD-REFERENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use unsized 0 and 1."
+        ],
+        "negative": [
+          "Initialize with 1'bz or a multi-bit value."
+        ],
+        "notes": [],
+        "positive": [
+          "Initialize with each permitted value, including uppercase B and X variants."
+        ]
+      },
+      "id": "SV-2023-29-UDP-INITIAL-LITERAL"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Put a delay control in the UDP initial statement."
+        ],
+        "notes": [],
+        "positive": [
+          "Use an undelayed initial output assignment."
+        ]
+      },
+      "id": "SV-2023-29-UDP-INITIAL-NO-DELAY"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Use a begin-end block with two statements."
+        ],
+        "notes": [],
+        "positive": [
+          "Use one assignment."
+        ]
+      },
+      "id": "SV-2023-29-UDP-INITIAL-SINGLE-ASSIGNMENT"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Assign a differently named reg."
+        ],
+        "notes": [],
+        "positive": [
+          "Assign the output reg in initial."
+        ]
+      },
+      "id": "SV-2023-29-UDP-INITIAL-TARGET"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Instantiate an initialized UDP with delay and observe initial state at simulation start."
+        ]
+      },
+      "id": "SV-2023-29-UDP-INITIAL-TIMING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a single-element range."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Instantiate a ranged UDP array."
+        ]
+      },
+      "id": "SV-2023-29-UDP-INSTANCE-ARRAY"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Place a UDP instantiation at compilation-unit scope."
+        ],
+        "notes": [],
+        "positive": [
+          "Instantiate a UDP inside a module."
+        ]
+      },
+      "id": "SV-2023-29-UDP-INSTANCE-CONTEXT"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Instantiate the same UDP once named and once unnamed."
+        ]
+      },
+      "id": "SV-2023-29-UDP-INSTANCE-OPTIONAL-NAME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an instance array."
+        ],
+        "negative": [
+          "Provide no input terminal."
+        ],
+        "notes": [],
+        "positive": [
+          "Instantiate named and unnamed UDP instances."
+        ]
+      },
+      "id": "SV-2023-29-UDP-INSTANTIATION-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Specify three delay values."
+        ],
+        "notes": [],
+        "positive": [
+          "Specify one or two delay values."
+        ]
+      },
+      "id": "SV-2023-29-UDP-MAX-TWO-DELAYS"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Declare an inout UDP port."
+        ],
+        "notes": [],
+        "positive": [
+          "Define a UDP using only input and output ports."
+        ]
+      },
+      "id": "SV-2023-29-UDP-NO-INOUT-PORTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the optional colon and UDP identifier after endprimitive."
+        ],
+        "negative": [
+          "Omit a separate declaration for a listed port."
+        ],
+        "notes": [],
+        "positive": [
+          "Define a non-ANSI UDP with separate port declarations and a table."
+        ]
+      },
+      "id": "SV-2023-29-UDP-NONANSI-DEFINITION-FORM"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Place an input before output."
+        ],
+        "notes": [],
+        "positive": [
+          "List output before all inputs."
+        ]
+      },
+      "id": "SV-2023-29-UDP-OUTPUT-FIRST"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Group multiple input names."
+        ],
+        "negative": [
+          "Omit the input declaration."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare one output and multiple inputs."
+        ]
+      },
+      "id": "SV-2023-29-UDP-PORT-DECLARATIONS"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Declare a packed-vector UDP input."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare scalar UDP ports."
+        ]
+      },
+      "id": "SV-2023-29-UDP-PORTS-SCALAR"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Put z in a UDP table row."
+        ],
+        "notes": [],
+        "positive": [
+          "Use x instead of z in a table input field."
+        ]
+      },
+      "id": "SV-2023-29-UDP-TABLE-NO-Z"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a parenthesized edge indicator."
+        ],
+        "negative": [
+          "Use - as a combinational output."
+        ],
+        "notes": [],
+        "positive": [
+          "Use level and edge symbols in permitted fields."
+        ]
+      },
+      "id": "SV-2023-29-UDP-TABLE-SYMBOL-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use distinct signals to reveal swapped inputs."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Connect output first and inputs in definition order."
+        ]
+      },
+      "id": "SV-2023-29-UDP-TERMINAL-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Place a UDP definition between module and endmodule."
+        ],
+        "notes": [],
+        "positive": [
+          "Place a UDP definition before or after a module that instantiates it."
+        ]
+      },
+      "id": "SV-2023-29-UDP-TOP-LEVEL-PLACEMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Cover an input combination for one sequential current state but omit it for another, and observe x for the uncovered state."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Omit one combinational input combination and observe x."
+        ]
+      },
+      "id": "SV-2023-29-UNSPECIFIED-COMBINATION-DEFAULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Omit one no-change transition and observe x."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Add explicit no-change rows for irrelevant transitions."
+        ]
+      },
+      "id": "SV-2023-29-UNSPECIFIED-TRANSITION-DEFAULT"
+    }
+  ],
+  "schema_version": 1
+}

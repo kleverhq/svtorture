@@ -2,12 +2,1034 @@ schema_version = 3
 part = "26"
 
 [[requirements]]
-id = "SV-2023-26-PACKAGE-IMPORT"
+id = "SV-2023-26-ANONYMOUS-PROGRAM-CONTENTS"
+standard_revision = "1800-2023"
+part = "26"
+clause = "26.2"
+anchors = [
+    "[2023:26.2:G001:p807-808]",
+]
+summary = "An anonymous program package item uses `program ; ... endprogram` and its body contains only the anonymous_program_item declaration forms enumerated by the grammar."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "26.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "changed-expectation"
+clause = "26.2"
+note = "The 2017 anonymous_program_item grammar does not include interface_class_declaration, which is included in the 2023 enumeration."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "26.2"
+
+[[requirements]]
+id = "SV-2023-26-ANSI-HEADER-IMPORT-REQUIRES-FOLLOWING-LIST"
+standard_revision = "1800-2023"
+part = "26"
+clause = "26.4"
+anchors = [
+    "[2023:26.4:G001:p812-813]",
+]
+summary = "A package import in an ANSI module, interface, or program header shall be followed by a parameter-port list, a list of port declarations, or both."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "26.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "26.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "26.4"
+
+[[requirements]]
+id = "SV-2023-26-DUPLICATE-EXPORTS-ALLOWED"
+standard_revision = "1800-2023"
+part = "26"
+clause = "26.6"
+anchors = [
+    "[2023:26.6:P006:p815]",
+]
+summary = "Multiple export declarations may export the same actual declaration."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "26.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "26.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "26.6"
+
+[[requirements]]
+id = "SV-2023-26-EXPLICIT-EXPORT-VALIDITY"
+standard_revision = "1800-2023"
+part = "26"
+clause = "26.6"
+anchors = [
+    "[2023:26.6:P004:p815]",
+]
+summary = "`export P::X` is legal only if X is an import candidate and is actually imported into the exporting package from P; exporting an unreferenced wildcard candidate counts as a reference and imports it under direct-import rules."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "26.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "26.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "26.6"
+
+[[requirements]]
+id = "SV-2023-26-EXPLICIT-IMPORT-CONFLICT"
 standard_revision = "1800-2023"
 part = "26"
 clause = "26.3"
-anchors = ["[2023:26.3:P001:p808]", "[2023:26.3:P004:p809]", "[2023:3.12.1:L007:p056]"]
-summary = "A declaration imported at compilation-unit scope is visible in a nested module in the same compilation unit."
-related_clauses = ["3.12.1", "26.2"]
-tags = ["import", "package"]
-revision_applicability = { "1800-2012" = { status = "applicable", clause = "26.3" }, "1800-2017" = { status = "applicable", clause = "26.3" }, "1800-2023" = { status = "applicable", clause = "26.3" } }
+anchors = [
+    "[2023:26.3:P007:p810]",
+]
+summary = "An explicit import of an identifier is illegal when that identifier is declared in the importing scope or explicitly imported there from another package."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "26.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "26.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "26.3"
+
+[[requirements]]
+id = "SV-2023-26-EXPLICIT-IMPORT-DIRECT-VISIBILITY"
+standard_revision = "1800-2023"
+part = "26"
+clause = "26.3"
+anchors = [
+    "[2023:26.3:P004:p809]",
+]
+summary = "An explicitly imported package identifier is directly visible in the current scope without a package-name qualifier."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "26.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "26.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "26.3"
+
+[[requirements]]
+id = "SV-2023-26-EXPLICIT-IMPORT-ONLY-NAMED-SYMBOL"
+standard_revision = "1800-2023"
+part = "26"
+clause = "26.3"
+anchors = [
+    "[2023:26.3:P005:p809]",
+    "[2023:26.3:P006:p809]",
+]
+summary = "An explicit import imports only its specifically named identifier; importing a type does not also import identifiers such as enumeration literals declared as part of that type."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "26.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "26.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "26.3"
+
+[[requirements]]
+id = "SV-2023-26-EXPORT-MAY-PRECEDE-IMPORT"
+standard_revision = "1800-2023"
+part = "26"
+clause = "26.6"
+anchors = [
+    "[2023:26.6:P001:p815]",
+]
+summary = "A package export declaration may precede its corresponding package import."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "26.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "26.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "26.6"
+
+[[requirements]]
+id = "SV-2023-26-EXPORT-PATHS-PRESERVE-DECLARATION-IDENTITY"
+standard_revision = "1800-2023"
+part = "26"
+clause = "26.6"
+anchors = [
+    "[2023:26.6:P005:p815]",
+]
+summary = "Importing through an export is equivalent to importing the original declaration, so multiple exported paths to that same declaration do not conflict."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "26.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "26.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "26.6"
+
+[[requirements]]
+id = "SV-2023-26-HEADER-IMPORT-VISIBILITY-EXTENT"
+standard_revision = "1800-2023"
+part = "26"
+clause = "26.4"
+anchors = [
+    "[2023:26.4:P002:p813]",
+]
+summary = "A package item imported in a module, interface, or program header is visible throughout that design unit, including its parameter and port declarations."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "26.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "26.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "26.4"
+
+[[requirements]]
+id = "SV-2023-26-HEADER-PACKAGE-IMPORT-POSITION"
+standard_revision = "1800-2023"
+part = "26"
+clause = "26.4"
+anchors = [
+    "[2023:26.4:P001:p812]",
+    "[2023:26.4:G001:p812-813]",
+]
+summary = "A module, interface, or program header may contain package import declarations after the design-unit identifier and before its parameter and port lists."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "26.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "26.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "26.4"
+
+[[requirements]]
+id = "SV-2023-26-IMPORTED-NAME-SCOPE-CONFINEMENT"
+standard_revision = "1800-2023"
+part = "26"
+clause = "26.3"
+anchors = [
+    "[2023:26.3:P026:p812]",
+]
+summary = "Importing an identifier makes the original declaration directly visible without copying it, and that imported visibility cannot be accessed from outside the importing scope by hierarchical or interface-port reference into the scope."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "26.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "26.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "26.3"
+
+[[requirements]]
+id = "SV-2023-26-IMPORTED-NAMES-NOT-TRANSITIVE-BY-DEFAULT"
+standard_revision = "1800-2023"
+part = "26"
+clause = "26.6"
+anchors = [
+    "[2023:26.6:P001:p815]",
+]
+summary = "A declaration imported into a package is not made visible by later imports of that package unless a package export declaration exports it."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "26.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "26.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "26.6"
+
+[[requirements]]
+id = "SV-2023-26-LATER-DECLARATION-CONFLICTS-WILDCARD"
+standard_revision = "1800-2023"
+part = "26"
+clause = "26.3"
+anchors = [
+    "[2023:26.3:P015:p810]",
+    "[2023:26.5:P002:p814]",
+]
+summary = "After a wildcard-imported symbol has become locally visible in a scope, a later local declaration or explicit import with the same name in that scope is illegal."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "26.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "26.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "26.3"
+
+[[requirements]]
+id = "SV-2023-26-LOCAL-NAME-SEARCH-AND-BINDING"
+standard_revision = "1800-2023"
+part = "26"
+clause = "26.3"
+anchors = [
+    "[2023:26.3:P012:p810]",
+]
+summary = "Name resolution first searches locally visible identifiers and binds a found match; ordinary references search identifiers visible at the reference point, while task and function calls search through the end of the current scope."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "26.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "26.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "26.3"
+
+[[requirements]]
+id = "SV-2023-26-LOCAL-VISIBILITY-CONDITIONS"
+standard_revision = "1800-2023"
+part = "26"
+clause = "26.3"
+anchors = [
+    "[2023:26.3:P010:p810]",
+    "[2023:26.3:L001:p810]",
+    "[2023:26.3:L002:p810]",
+    "[2023:26.3:L003:p810]",
+]
+summary = "At a point in a scope, an identifier is locally visible if it denotes a nested scope, was declared earlier in the current scope, or was made visible there by an earlier explicit import."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "26.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "26.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "26.3"
+
+[[requirements]]
+id = "SV-2023-26-NO-IMPLICIT-CONTINUOUS-ASSIGNMENT"
+standard_revision = "1800-2023"
+part = "26"
+clause = "26.2"
+anchors = [
+    "[2023:26.2:P003:p807]",
+]
+summary = "A package shall not contain a net declaration with an implicit continuous assignment."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "26.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "26.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "26.2"
+
+[[requirements]]
+id = "SV-2023-26-NO-IMPORT-DIRECTLY-IN-CLASS"
+standard_revision = "1800-2023"
+part = "26"
+clause = "26.3"
+anchors = [
+    "[2023:26.3:G001:p809]",
+    "[2023:26.3:P027:p812]",
+]
+summary = "An import statement shall not appear directly within class scope."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "26.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "26.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "26.3"
+
+[[requirements]]
+id = "SV-2023-26-OUTER-LEXICAL-IMPORT-SEARCH"
+standard_revision = "1800-2023"
+part = "26"
+clause = "26.3"
+anchors = [
+    "[2023:26.3:P014:p810]",
+    "[2023:26.3:P016:p810]",
+]
+summary = "If no current-scope match exists, resolution repeats through each outer lexical scope through compilation-unit scope, searching local names before prior potentially visible wildcard names; a wildcard match becomes locally visible in the outer scope where found."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "26.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "26.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "26.3"
+
+[[requirements]]
+id = "SV-2023-26-PACKAGE-BEFORE-IMPORTING-SCOPE"
+standard_revision = "1800-2023"
+part = "26"
+clause = "26.3"
+anchors = [
+    "[2023:26.3:P001:p808]",
+]
+summary = "A package shall be compiled before any scope that imports it."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "26.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "26.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "26.3"
+
+[[requirements]]
+id = "SV-2023-26-PACKAGE-DECLARATION-SYNTAX"
+standard_revision = "1800-2023"
+part = "26"
+clause = "26.2"
+anchors = [
+    "[2023:26.2:G001:p807-808]",
+]
+summary = "A package declaration consists of optional attributes, `package`, an optional lifetime, a package identifier and semicolon, an optional time-units declaration, zero or more optionally attributed package items, `endpackage`, and an optional closing package identifier."
+related_clauses = [
+    "3.13",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "26.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "26.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "26.2"
+
+[[requirements]]
+id = "SV-2023-26-PACKAGE-EXPORT-SYNTAX"
+standard_revision = "1800-2023"
+part = "26"
+clause = "26.6"
+anchors = [
+    "[2023:26.6:G001:p815]",
+]
+summary = "A package export declaration is either `export *::*;` or `export` followed by one or more comma-separated package import items and a semicolon."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "26.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "26.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "26.6"
+
+[[requirements]]
+id = "SV-2023-26-PACKAGE-HIERARCHICAL-REFERENCE-LIMIT"
+standard_revision = "1800-2023"
+part = "26"
+clause = "26.2"
+anchors = [
+    "[2023:26.2:P004:p808]",
+]
+summary = "An item within a package shall not hierarchically reference an identifier unless that identifier is declared in the package or made visible by importing another package."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "26.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "26.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "26.2"
+
+[[requirements]]
+id = "SV-2023-26-PACKAGE-IMPORT-SYNTAX"
+standard_revision = "1800-2023"
+part = "26"
+clause = "26.3"
+anchors = [
+    "[2023:26.3:G001:p809]",
+]
+summary = "A package import declaration consists of `import`, one or more comma-separated package import items, and a semicolon; each item selects either one identifier or all identifiers from a named package using `::`."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "26.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "26.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "26.3"
+
+[[requirements]]
+id = "SV-2023-26-PACKAGE-ITEM-ALTERNATIVES"
+standard_revision = "1800-2023"
+part = "26"
+clause = "26.2"
+anchors = [
+    "[2023:26.2:G001:p807-808]",
+]
+summary = "A package body may contain only the `package_item` forms admitted by the grammar: the enumerated net, data, subroutine, checker, DPI, constraint, class, parameter, covergroup, and assertion declaration forms (or an empty `;`), an anonymous program, a package export, or a permitted time-units declaration."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "changed-expectation"
+clause = "26.2"
+note = "The 2012 package-item grammar admits overload_declaration but does not admit interface_class_declaration, so the permitted package declaration set differs."
+
+[requirements.revision_applicability.1800-2017]
+status = "changed-expectation"
+clause = "26.2"
+note = "The 2017 package-item grammar does not admit interface_class_declaration, which is an enumerated package declaration form in 2023."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "26.2"
+
+[[requirements]]
+id = "SV-2023-26-PACKAGE-NO-COMPILATION-UNIT-REFERENCE"
+standard_revision = "1800-2023"
+part = "26"
+clause = "26.2"
+anchors = [
+    "[2023:26.2:P004:p808]",
+]
+summary = "A package shall not refer to an item declared in compilation-unit scope."
+related_clauses = [
+    "3.12.1",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "26.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "26.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "26.2"
+
+[[requirements]]
+id = "SV-2023-26-PACKAGE-PROCESS-RESTRICTION"
+standard_revision = "1800-2023"
+part = "26"
+clause = "26.2"
+anchors = [
+    "[2023:26.2:P003:p807]",
+]
+summary = "A process in a package is legal only when it is contained within a checker declared in that package."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "26.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "26.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "26.2"
+
+[[requirements]]
+id = "SV-2023-26-PACKAGE-QUALIFIED-REFERENCE"
+standard_revision = "1800-2023"
+part = "26"
+clause = "26.3"
+anchors = [
+    "[2023:26.3:P002:p808]",
+]
+summary = "A declaration in a package can be referenced using the package scope-resolution operator, with the package name qualifying the declaration name."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "26.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "26.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "26.3"
+
+[[requirements]]
+id = "SV-2023-26-PACKAGE-VARIABLE-INITIALIZATION-ORDER"
+standard_revision = "1800-2023"
+part = "26"
+clause = "26.2"
+anchors = [
+    "[2023:26.2:P004:p808]",
+]
+summary = "Variable declaration assignments in a package occur before any initial or always procedure starts."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "26.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "26.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "26.2"
+
+[[requirements]]
+id = "SV-2023-26-PACKAGE-WILDCARD-EXPORT-SET"
+standard_revision = "1800-2023"
+part = "26"
+clause = "26.6"
+anchors = [
+    "[2023:26.6:P003:p815]",
+]
+summary = "`export P::*` exports every declaration actually imported from P, directly or through wildcard activation, but not unactivated import candidates; `export *::*` does so for all source packages."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "26.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "26.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "26.6"
+
+[[requirements]]
+id = "SV-2023-26-POTENTIAL-WILDCARD-VISIBILITY"
+standard_revision = "1800-2023"
+part = "26"
+clause = "26.3"
+anchors = [
+    "[2023:26.3:P009:p810]",
+]
+summary = "An identifier declared in a package is potentially locally visible at a point when a wildcard import of that package precedes the point in the current scope and the package declares that identifier."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "26.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "26.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "26.3"
+
+[[requirements]]
+id = "SV-2023-26-REPEATED-SAME-PACKAGE-IMPORT"
+standard_revision = "1800-2023"
+part = "26"
+clause = "26.3"
+anchors = [
+    "[2023:26.3:P007:p810]",
+]
+summary = "The same identifier may be explicitly imported from the same package multiple times in one scope."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "26.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "26.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "26.3"
+
+[[requirements]]
+id = "SV-2023-26-REPEATED-TIMEUNITS-MATCH"
+standard_revision = "1800-2023"
+part = "26"
+clause = "26.2"
+anchors = [
+    "[2023:26.2:G001:p807-808]",
+]
+summary = "A timeunits declaration used as a package item is legal only when it repeats and matches an earlier timeunits declaration in the same time scope."
+related_clauses = [
+    "3.14",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "26.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "26.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "26.2"
+
+[[requirements]]
+id = "SV-2023-26-STD-IMPLICIT-WILDCARD-IMPORT"
+standard_revision = "1800-2023"
+part = "26"
+clause = "26.7"
+anchors = [
+    "[2023:26.7:P003:p817]",
+]
+summary = "The std package is implicitly wildcard imported into every compilation unit's compilation-unit scope, making its declarations directly available in nested scopes unless redefined by user code."
+related_clauses = [
+    "3.12.1",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "26.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "26.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "26.7"
+
+[[requirements]]
+id = "SV-2023-26-STD-QUALIFIED-REFERENCE-SYNTAX"
+standard_revision = "1800-2023"
+part = "26"
+clause = "26.7"
+anchors = [
+    "[2023:26.7:P004:p817]",
+    "[2023:26.7:G001:p817]",
+    "[2023:26.7:P005:p817]",
+]
+summary = "A built-in data type or function call may optionally be qualified with `std::`; explicit `std::` qualification unambiguously selects the declaration in the built-in package."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "26.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "26.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "26.7"
+
+[[requirements]]
+id = "SV-2023-26-STD-SUBROUTINES-NO-DOLLAR-PREFIX"
+standard_revision = "1800-2023"
+part = "26"
+clause = "26.7"
+anchors = [
+    "[2023:26.7:P006:p817]",
+]
+summary = "A task or function in the std built-in package need not have a `$` prefix and participates in ordinary identifier collision and qualification rules."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "26.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "26.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "26.7"
+
+[[requirements]]
+id = "SV-2023-26-UNRESOLVED-CALL-UPWARD-SEARCH"
+standard_revision = "1800-2023"
+part = "26"
+clause = "26.3"
+anchors = [
+    "[2023:26.3:P016:p810]",
+]
+summary = "When lexical resolution finds no matching task or function call target, resolution continues using upward hierarchical identifier resolution."
+related_clauses = [
+    "23.8.1",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "26.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "26.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "26.3"
+
+[[requirements]]
+id = "SV-2023-26-UNRESOLVED-NONCALL-ILLEGAL"
+standard_revision = "1800-2023"
+part = "26"
+clause = "26.3"
+anchors = [
+    "[2023:26.3:P016:p810]",
+]
+summary = "A non-task/function-call identifier reference is illegal if lexical resolution through compilation-unit scope finds no match."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "26.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "26.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "26.3"
+
+[[requirements]]
+id = "SV-2023-26-USERS-CANNOT-EXTEND-STD"
+standard_revision = "1800-2023"
+part = "26"
+clause = "26.7"
+anchors = [
+    "[2023:26.7:P001:p816]",
+]
+summary = "User code cannot add declarations to the standard built-in package."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "26.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "26.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "26.7"
+
+[[requirements]]
+id = "SV-2023-26-WILDCARD-IMPORT-AMBIGUITY"
+standard_revision = "1800-2023"
+part = "26"
+clause = "26.3"
+anchors = [
+    "[2023:26.3:P017:p810]",
+]
+summary = "It is illegal for resolution of a referenced identifier to match the same potentially locally visible name supplied by wildcard imports from more than one package in the same scope."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "26.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "26.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "26.3"
+
+[[requirements]]
+id = "SV-2023-26-WILDCARD-IMPORT-NONOVERRIDE"
+standard_revision = "1800-2023"
+part = "26"
+clause = "26.3"
+anchors = [
+    "[2023:26.3:P008:p810]",
+]
+summary = "A wildcard import makes identifiers declared in the package available for import only when an identifier is not otherwise defined in the importing scope."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "26.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "26.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "26.3"
+
+[[requirements]]
+id = "SV-2023-26-WILDCARD-MATCH-IMPORTS-AND-BINDS"
+standard_revision = "1800-2023"
+part = "26"
+clause = "26.3"
+anchors = [
+    "[2023:26.3:P013:p810]",
+    "[2023:26.3:P011:p810]",
+    "[2023:26.5:P002:p814]",
+]
+summary = "When no locally visible identifier matches, resolution searches prior potentially visible wildcard-imported identifiers; a match is imported into the current scope, becomes locally visible, and receives the binding."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "26.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "26.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "26.3"

@@ -1,0 +1,2451 @@
+schema_version = 3
+part = "17"
+
+[[requirements]]
+id = "SV-2023-17-ASSUME-SET-CLOCK-TRIGGER"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.7.2"
+anchors = [
+    "[2023:17.7.2:P002:p517]",
+]
+summary = "Assume-based checker-variable randomization is triggered by any clock event of a property in the checker assume set, not by an explicit procedural randomize call."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.7.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.7.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.7.2"
+
+[[requirements]]
+id = "SV-2023-17-ASSUME-SOLVE-SCHEDULING"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.7.2"
+anchors = [
+    "[2023:17.7.2:P012:p519]",
+]
+summary = "Immediately before Observed, the implementation shall solve all active free checker variables using sampled values of all other variables, with an active variable’s sampled value defined as its current value; checker procedures and properties then see the new values."
+related_clauses = [
+    "16.5.1",
+    "17.7.3",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.7.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.7.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.7.2"
+
+[[requirements]]
+id = "SV-2023-17-CHECKER-ALWAYS-ASSERTIONS"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.5"
+anchors = [
+    "[2023:17.5:L010:p510]",
+    "[2023:17.5:P003:p510]",
+]
+summary = "A checker always procedure may contain immediate, deferred, and concurrent assertions."
+related_clauses = [
+    "16.4",
+    "16.14",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.5"
+note = "The same permission is established by the assertion-specific sampling text and checker always examples in this clause."
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.5"
+
+[[requirements]]
+id = "SV-2023-17-CHECKER-ALWAYS-EVENT-CONTROL"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.5"
+anchors = [
+    "[2023:17.5:L008:p510]",
+    "[2023:17.5:P003:p510]",
+]
+summary = "A timing event control in a checker always procedure is permitted only in always_ff, not always_comb or always_latch."
+related_clauses = [
+    "9.4.2",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.5"
+
+[[requirements]]
+id = "SV-2023-17-CHECKER-ALWAYS-EXPRESSION-SAMPLING"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.5"
+anchors = [
+    "[2023:17.5:P004:p510]",
+]
+summary = "In a checker always_ff, expressions other than variables in the event control are sampled, including immediate and deferred assertion expressions; in checker always_comb and always_latch, expressions are not implicitly sampled and assignments use current expression values."
+related_clauses = [
+    "16.5.1",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.5"
+
+[[requirements]]
+id = "SV-2023-17-CHECKER-ALWAYS-LET-DECLARATIONS"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.5"
+anchors = [
+    "[2023:17.5:L011:p510]",
+    "[2023:17.5:P003:p510]",
+]
+summary = "A checker always procedure may contain a let declaration."
+related_clauses = [
+    "11.12",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.5"
+
+[[requirements]]
+id = "SV-2023-17-CHECKER-ALWAYS-LOOP-STATEMENTS"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.5"
+anchors = [
+    "[2023:17.5:L007:p510]",
+    "[2023:17.5:P003:p510]",
+]
+summary = "A checker always procedure may contain loop statements."
+related_clauses = [
+    "12.7",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.5"
+
+[[requirements]]
+id = "SV-2023-17-CHECKER-ALWAYS-PROCEDURE-FORMS"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.5"
+anchors = [
+    "[2023:17.5:P003:p510]",
+]
+summary = "A checker may contain always_comb, always_latch, and always_ff procedures."
+related_clauses = [
+    "9.2",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.5"
+
+[[requirements]]
+id = "SV-2023-17-CHECKER-ALWAYS-SELECTION-STATEMENTS"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.5"
+anchors = [
+    "[2023:17.5:L006:p510]",
+    "[2023:17.5:P003:p510]",
+]
+summary = "A checker always procedure may contain selection statements."
+related_clauses = [
+    "12.4",
+    "12.5",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.5"
+
+[[requirements]]
+id = "SV-2023-17-CHECKER-ALWAYS-SUBROUTINE-CALLS"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.5"
+anchors = [
+    "[2023:17.5:L009:p510]",
+    "[2023:17.5:P003:p510]",
+]
+summary = "A checker always procedure may contain subroutine calls."
+related_clauses = [
+    "13",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.5"
+
+[[requirements]]
+id = "SV-2023-17-CHECKER-ASSIGNMENT-FUNCTION-RESTRICTIONS"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.8"
+anchors = [
+    "[2023:17.8:P002:p520]",
+    "[2023:17.8:L001:p520]",
+    "[2023:17.8:L002:p520]",
+]
+summary = "A checker-assignment right-hand expression may call a function only under concurrent-assertion function restrictions: no output, inout, or non-const ref arguments, and the function must be automatic or preserve no state and have no side effects."
+related_clauses = [
+    "16.6",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "changed-expectation"
+clause = "17.8"
+note = "The 2012 rule prohibits output and non-const ref arguments but does not prohibit inout arguments; its state-preservation and side-effect restrictions otherwise match."
+
+[requirements.revision_applicability.1800-2017]
+status = "changed-expectation"
+clause = "17.8"
+note = "The 2017 rule prohibits output and non-const ref arguments but does not prohibit inout arguments; 2023 adds the inout prohibition."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.8"
+
+[[requirements]]
+id = "SV-2023-17-CHECKER-ASSIGNMENT-TRIGGERED-METHOD"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.7.1"
+anchors = [
+    "[2023:17.7.1:L005:p517]",
+]
+summary = "The right-hand side of a checker variable assignment may contain the sequence method triggered."
+related_clauses = [
+    "16.13.6",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.7.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.7.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.7.1"
+
+[[requirements]]
+id = "SV-2023-17-CHECKER-ASSUME-SET-LIFETIME"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.7.2"
+anchors = [
+    "[2023:17.7.2:P005:p517]",
+]
+summary = "Each checker instance has exactly one possibly empty assume set that exists at every time step whether the checker instance is static or procedural."
+related_clauses = [
+    "17.3",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.7.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.7.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.7.2"
+
+[[requirements]]
+id = "SV-2023-17-CHECKER-ASSUME-SET-MEMBERSHIP"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.7.2"
+anchors = [
+    "[2023:17.7.2:P006:p518]",
+]
+summary = "A checker instance’s assume set is formed from its own and child checker assumptions that reference active free variables, excluding assumptions that reference a formal whose actual contains a const cast or automatic procedural value."
+related_clauses = [
+    "17.3",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.7.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.7.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.7.2"
+
+[[requirements]]
+id = "SV-2023-17-CHECKER-ASSUME-SIMULATION-CHECK"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.7.2"
+anchors = [
+    "[2023:17.7.2:P001:p517]",
+]
+summary = "A checker assume statement shall be checked for violation during simulation in the same manner as an ordinary assume statement."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.7.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.7.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.7.2"
+
+[[requirements]]
+id = "SV-2023-17-CHECKER-ASSUME-SOLUTION-ATTEMPT"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.7.2"
+anchors = [
+    "[2023:17.7.2:P008:p518]",
+]
+summary = "An assume-set solution attempt seeks values for all active checker variables that, with inactive variables and state, avoid assumption failure in that time step; if none is found any active values may be chosen and the attempt is unsuccessful, with no guarantee to find an existing solution or avoid dead ends."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.7.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.7.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.7.2"
+
+[[requirements]]
+id = "SV-2023-17-CHECKER-AUTOMATIC-ACTUAL-USAGE"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.3"
+anchors = [
+    "[2023:17.3:L004:p507]",
+]
+summary = "If a checker input actual contains a const cast or an automatic value from procedural code, its corresponding formal shall not be used in a continuous assignment or procedural code within the checker."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.3"
+
+[[requirements]]
+id = "SV-2023-17-CHECKER-BODY-CHECKER-INSTANTIATIONS"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.2"
+anchors = [
+    "[2023:17.2:L014:p504]",
+    "[2023:17.2:P005:p504]",
+]
+summary = "A checker body may contain checker instantiations."
+related_clauses = [
+    "17.3",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.2"
+
+[[requirements]]
+id = "SV-2023-17-CHECKER-BODY-CONCURRENT-ASSERTIONS"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.2"
+anchors = [
+    "[2023:17.2:L012:p504]",
+    "[2023:17.2:P005:p504]",
+]
+summary = "A checker body may contain concurrent assertions."
+related_clauses = [
+    "16.14",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.2"
+
+[[requirements]]
+id = "SV-2023-17-CHECKER-BODY-DEFAULT-CONTEXT-DECLARATIONS"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.2"
+anchors = [
+    "[2023:17.2:L017:p504]",
+    "[2023:17.2:P005:p504]",
+]
+summary = "A checker body may contain default clocking and default disable iff declarations."
+related_clauses = [
+    "14.12",
+    "16.12",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.2"
+
+[[requirements]]
+id = "SV-2023-17-CHECKER-BODY-DEFERRED-ASSERTIONS"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.2"
+anchors = [
+    "[2023:17.2:L011:p504]",
+    "[2023:17.2:P005:p504]",
+]
+summary = "A checker body may contain deferred assertions."
+related_clauses = [
+    "16.4",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.2"
+
+[[requirements]]
+id = "SV-2023-17-CHECKER-BODY-FUNCTION-DECLARATIONS"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.2"
+anchors = [
+    "[2023:17.2:L010:p504]",
+    "[2023:17.2:P005:p504]",
+]
+summary = "A checker body may contain a function declaration."
+related_clauses = [
+    "13",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.2"
+
+[[requirements]]
+id = "SV-2023-17-CHECKER-BODY-GENERATE-BLOCKS"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.2"
+anchors = [
+    "[2023:17.2:L019:p504-505]",
+    "[2023:17.2:P005:p504]",
+    "[2023:17.2:G001:p503-504]",
+]
+summary = "A checker body may contain generate blocks, but a checker generate item shall not contain anything that would be illegal directly in the checker declaration."
+related_clauses = [
+    "27",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.2"
+
+[[requirements]]
+id = "SV-2023-17-CHECKER-BODY-LET-DECLARATIONS"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.2"
+anchors = [
+    "[2023:17.2:L010:p504]",
+    "[2023:17.2:P005:p504]",
+]
+summary = "A checker body may contain a let declaration."
+related_clauses = [
+    "11.12",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.2"
+
+[[requirements]]
+id = "SV-2023-17-CHECKER-BODY-NESTED-CHECKER-DECLARATIONS"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.2"
+anchors = [
+    "[2023:17.2:L013:p504]",
+    "[2023:17.2:P005:p504]",
+]
+summary = "A checker body may contain a nested checker declaration."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.2"
+
+[[requirements]]
+id = "SV-2023-17-CHECKER-BODY-PROPERTY-DECLARATIONS"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.2"
+anchors = [
+    "[2023:17.2:L010:p504]",
+    "[2023:17.2:P005:p504]",
+]
+summary = "A checker body may contain a property declaration."
+related_clauses = [
+    "16.12",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.2"
+
+[[requirements]]
+id = "SV-2023-17-CHECKER-BODY-SEQUENCE-DECLARATIONS"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.2"
+anchors = [
+    "[2023:17.2:L010:p504]",
+    "[2023:17.2:P005:p504]",
+]
+summary = "A checker body may contain a sequence declaration."
+related_clauses = [
+    "16.8",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.2"
+
+[[requirements]]
+id = "SV-2023-17-CHECKER-BODY-VARIABLES"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.2"
+anchors = [
+    "[2023:17.2:L016:p504]",
+    "[2023:17.2:P005:p504]",
+]
+summary = "A checker body may contain checker variable declarations and assignments."
+related_clauses = [
+    "17.7",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.2"
+
+[[requirements]]
+id = "SV-2023-17-CHECKER-CONTEXT-VALUE-DEFAULTS"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.4"
+anchors = [
+    "[2023:17.4:P001:p509]",
+]
+summary = "A checker formal may use a context value function as its default, causing an omitted actual to be inferred from the checker instantiation context."
+related_clauses = [
+    "16.14.7",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.4"
+
+[[requirements]]
+id = "SV-2023-17-CHECKER-COVERGROUP-PLACEMENT"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.6"
+anchors = [
+    "[2023:17.6:P001:p512]",
+    "[2023:17.2:L015:p504]",
+    "[2023:17.2:P005:p504]",
+]
+summary = "A checker may contain covergroup declarations and instances, but neither a covergroup declaration nor an instance may appear in a procedural block within the checker."
+related_clauses = [
+    "19.3",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.6"
+
+[[requirements]]
+id = "SV-2023-17-CHECKER-COVERGROUP-SAMPLE-CALL"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.6"
+anchors = [
+    "[2023:17.6:P002:p512]",
+]
+summary = "A covergroup in a checker may be triggered by a procedural call to its sample() method; such a call may be made from a sequence match item under the subroutine-call rules for sequence matches."
+related_clauses = [
+    "16.11",
+    "19.8",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.6"
+
+[[requirements]]
+id = "SV-2023-17-CHECKER-COVERGROUP-VISIBLE-VALUES"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.6"
+anchors = [
+    "[2023:17.6:P001:p512]",
+]
+summary = "A checker covergroup may reference any scope-visible variable, including checker formals and variables, except that referencing a formal whose actual is const shall be an error."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.6"
+
+[[requirements]]
+id = "SV-2023-17-CHECKER-DECLARATION-CONTEXT-INHERITANCE"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.2"
+anchors = [
+    "[2023:17.2:P014:p506]",
+]
+summary = "A checker inherits clock and disable iff contexts from the scope in which the checker is declared, unless the checker establishes its own defaults."
+related_clauses = [
+    "17.4",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.2"
+
+[[requirements]]
+id = "SV-2023-17-CHECKER-DECLARATION-GRAMMAR"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.2"
+anchors = [
+    "[2023:17.2:G001:p503-504]",
+]
+summary = "A checker declaration shall use the checker keyword and identifier, an optional parenthesized checker port list, a semicolon-delimited body, endchecker, and an optional closing checker identifier as defined by the checker_declaration grammar."
+related_clauses = [
+    "A.1.2",
+    "A.1.8",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.2"
+
+[[requirements]]
+id = "SV-2023-17-CHECKER-DECLARATION-SCOPE-NAME-RESOLUTION"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.2"
+anchors = [
+    "[2023:17.2:P015:p506]",
+]
+summary = "A name used in a checker that is neither a checker formal nor checker-local is resolved under the scoping rules from the checker's declaration scope."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.2"
+
+[[requirements]]
+id = "SV-2023-17-CHECKER-DECLARATION-SCOPES"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.2"
+anchors = [
+    "[2023:17.2:P001:p504]",
+    "[2023:17.2:L001:p504]",
+    "[2023:17.2:L002:p504]",
+    "[2023:17.2:L003:p504]",
+    "[2023:17.2:L004:p504]",
+    "[2023:17.2:L005:p504]",
+    "[2023:17.2:L006:p504]",
+    "[2023:17.2:L007:p504]",
+]
+summary = "A checker declaration is permitted in module, interface, program, checker, package, generate-block, and compilation-unit scopes."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.2"
+
+[[requirements]]
+id = "SV-2023-17-CHECKER-DOLLAR-ACTUAL"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.3"
+anchors = [
+    "[2023:17.3:L003:p507]",
+]
+summary = "The terminal $ may be a checker input actual or default actual only when its formal is untyped and every reference to that formal is an upper bound of a cycle-delay constant range or is forwarded as an actual to a named sequence, property, checker, or nested-checker default."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "changed-expectation"
+clause = "17.3"
+note = "The 2012 rule permits $ as an actual to an untyped formal with restricted uses, but does not include the 2023 permission for $ as a default actual to a nested checker."
+
+[requirements.revision_applicability.1800-2017]
+status = "changed-expectation"
+clause = "17.3"
+note = "The 2017 rule permits $ as a checker input actual under the untyped/use restrictions, but does not permit it as a declared default actual or forwarding it as a nested checker's default argument."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.3"
+
+[[requirements]]
+id = "SV-2023-17-CHECKER-ENCLOSING-AUTOMATIC-DYNAMIC-REFERENCE"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.2"
+anchors = [
+    "[2023:17.2:L008:p504]",
+    "[2023:17.2:P003:p504]",
+]
+summary = "A checker shall not reference an automatic variable, or a member or element of a dynamic variable, from the scope enclosing the checker declaration."
+related_clauses = [
+    "6.21",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.2"
+
+[[requirements]]
+id = "SV-2023-17-CHECKER-ENCLOSING-FORK-BLOCK-REFERENCE"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.2"
+anchors = [
+    "[2023:17.2:L009:p504]",
+    "[2023:17.2:P003:p504]",
+]
+summary = "A checker shall not reference an element of an enclosing fork-join, fork-join_any, or fork-join_none block."
+related_clauses = [
+    "9.3.2",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.2"
+
+[[requirements]]
+id = "SV-2023-17-CHECKER-EXPLICIT-DIRECTION-REQUIRES-TYPE"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.2"
+anchors = [
+    "[2023:17.2:L020:p505]",
+    "[2023:17.2:P007:p505]",
+]
+summary = "Omitting a checker formal's type when that formal has an explicit direction qualifier is an error."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.2"
+
+[[requirements]]
+id = "SV-2023-17-CHECKER-FINAL-CONTENTS"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.5"
+anchors = [
+    "[2023:17.5:P007:p512]",
+]
+summary = "A checker final procedure may contain any construct permitted in a non-checker final procedure."
+related_clauses = [
+    "9.2.3",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.5"
+
+[[requirements]]
+id = "SV-2023-17-CHECKER-FINAL-PER-INSTANCE-EXECUTION"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.5"
+anchors = [
+    "[2023:17.5:P007:p512]",
+]
+summary = "A checker final procedure executes once at the end of simulation for each checker instantiation, independently of whether the checker was instantiated statically or procedurally."
+related_clauses = [
+    "9.2.3",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.5"
+
+[[requirements]]
+id = "SV-2023-17-CHECKER-FIRST-FORMAL-OMITTED-TYPE"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.2"
+anchors = [
+    "[2023:17.2:L021:p505]",
+    "[2023:17.2:P007:p505]",
+]
+summary = "The first checker formal with both direction and type omitted is inferred as input untyped."
+related_clauses = [
+    "16.12",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.2"
+
+[[requirements]]
+id = "SV-2023-17-CHECKER-FORBIDDEN-DESIGN-UNIT-DECLARATIONS"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.2"
+anchors = [
+    "[2023:17.2:L019:p504-505]",
+]
+summary = "A module, interface, program, or package declaration shall not appear inside a checker."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.2"
+
+[[requirements]]
+id = "SV-2023-17-CHECKER-FORBIDDEN-DESIGN-UNIT-INSTANTIATIONS"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.2"
+anchors = [
+    "[2023:17.2:L019:p504-505]",
+]
+summary = "A module, interface, or program shall not be instantiated inside a checker."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.2"
+
+[[requirements]]
+id = "SV-2023-17-CHECKER-FORMAL-PROPERTY-TYPES"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.2"
+anchors = [
+    "[2023:17.2:P007:p505]",
+]
+summary = "The legal types for checker formal arguments are the types legal for property formals."
+related_clauses = [
+    "16.12",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.2"
+
+[[requirements]]
+id = "SV-2023-17-CHECKER-FUNCTION-FREE-VARIABLES"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.8"
+anchors = [
+    "[2023:17.8:P001:p519]",
+]
+summary = "A function used in a checker shall not declare a formal or internal variable as a free variable, but may receive a free variable as an actual argument."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.8"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.8"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.8"
+
+[[requirements]]
+id = "SV-2023-17-CHECKER-INITIAL-CONTENTS"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.5"
+anchors = [
+    "[2023:17.5:P002:p510]",
+]
+summary = "An initial procedure in a checker may contain let declarations, immediate, deferred, and concurrent assertions, and procedural timing control only in the form of an event control."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.5"
+
+[[requirements]]
+id = "SV-2023-17-CHECKER-INPUT-FORMAL-IMMUTABILITY"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.2"
+anchors = [
+    "[2023:17.2:P006:p505]",
+]
+summary = "A checker shall not modify an input formal argument."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.2"
+
+[[requirements]]
+id = "SV-2023-17-CHECKER-INPUT-PORT-DEFAULT"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.2"
+anchors = [
+    "[2023:17.2:P008:p505]",
+]
+summary = "A checker declaration may specify a default actual value for each singular input port under the sequence/property default-argument rules."
+related_clauses = [
+    "16.8",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.2"
+
+[[requirements]]
+id = "SV-2023-17-CHECKER-INPUT-SUBSTITUTION-LEGALITY"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.3"
+anchors = [
+    "[2023:17.3:P003:p507]",
+]
+summary = "Checker input actuals are substituted for their corresponding formals after name resolution according to the checker rewriting algorithm; an instance whose resulting flattened checker is illegal shall produce an error."
+related_clauses = [
+    "16.12",
+    "F.4.2",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no checker rewriting algorithm or flattened-checker legality guarantee."
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.3"
+
+[[requirements]]
+id = "SV-2023-17-CHECKER-INSTANCE-CONTENT-LIFETIME"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.3"
+anchors = [
+    "[2023:17.3:P009:p508]",
+]
+summary = "All contents of a checker instance other than static assertion statements exist during every time step, with one distinct copy per checker instantiation."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.3"
+
+[[requirements]]
+id = "SV-2023-17-CHECKER-INSTANTIATION-CHECKER-PROCEDURE-PROHIBITION"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.3"
+anchors = [
+    "[2023:17.3:L002:p507]",
+    "[2023:17.3:P001:p507]",
+]
+summary = "A checker instantiation in a procedure of another checker is illegal."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.3"
+
+[[requirements]]
+id = "SV-2023-17-CHECKER-INSTANTIATION-CONCURRENT-ASSERTION-LOCATIONS"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.3"
+anchors = [
+    "[2023:17.3:P001:p507]",
+]
+summary = "Subject to checker-specific exceptions, a checker may be instantiated wherever a concurrent assertion may appear."
+related_clauses = [
+    "16.14",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.3"
+
+[[requirements]]
+id = "SV-2023-17-CHECKER-INSTANTIATION-FORK-PROHIBITION"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.3"
+anchors = [
+    "[2023:17.3:L001:p507]",
+    "[2023:17.3:P001:p507]",
+]
+summary = "A checker instantiation in a fork-join, fork-join_any, or fork-join_none block is illegal."
+related_clauses = [
+    "9.3.2",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.3"
+
+[[requirements]]
+id = "SV-2023-17-CHECKER-INSTANTIATION-GRAMMAR"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.3"
+anchors = [
+    "[2023:17.3:G001:p506-507]",
+]
+summary = "A checker instantiation shall use a checker identifier, instance name, parenthesized optional ordered or named checker port connections, and terminating semicolon as defined by checker_instantiation grammar."
+related_clauses = [
+    "A.4.1.4",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.3"
+
+[[requirements]]
+id = "SV-2023-17-CHECKER-INSTANTIATION-WILDCARD-LIMIT"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.3"
+anchors = [
+    "[2023:17.3:G001:p506-507]",
+]
+summary = "The .* wildcard connection may appear at most once in a checker port connection list."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.3"
+
+[[requirements]]
+id = "SV-2023-17-CHECKER-LATER-FORMAL-OMITTED-TYPE"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.2"
+anchors = [
+    "[2023:17.2:L022:p505]",
+    "[2023:17.2:P007:p505]",
+]
+summary = "A later checker formal whose direction and type are omitted infers its type from the preceding formal under the sequence/property formal inference rules."
+related_clauses = [
+    "16.8",
+    "16.12",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.2"
+
+[[requirements]]
+id = "SV-2023-17-CHECKER-LOCAL-DECLARATION-SCOPE"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.2"
+anchors = [
+    "[2023:17.2:P014:p506]",
+]
+summary = "A type or data declaration within a checker is local to that checker's scope."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.2"
+
+[[requirements]]
+id = "SV-2023-17-CHECKER-LOCAL-DECLARATION-STATIC-LIFETIME"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.2"
+anchors = [
+    "[2023:17.2:P014:p506]",
+    "[2023:17.7:P001:p513]",
+]
+summary = "Type and data declarations within a checker have static lifetime."
+related_clauses = [
+    "6.21",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.2"
+
+[[requirements]]
+id = "SV-2023-17-CHECKER-NONBLOCKING-RENBA-UPDATE"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.7.3"
+anchors = [
+    "[2023:17.7.3:P001:p519]",
+]
+summary = "A nonblocking assignment to a checker variable schedules its update in Re-NBA, after the Reactive and Re-Inactive regions have emptied."
+related_clauses = [
+    "4.2",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.7.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.7.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.7.3"
+
+[[requirements]]
+id = "SV-2023-17-CHECKER-OUTPUT-ACTUAL-LVALUE"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.3"
+anchors = [
+    "[2023:17.3:P005:p507]",
+]
+summary = "Every actual connected to a checker output formal shall be a variable lvalue or net lvalue."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.3"
+
+[[requirements]]
+id = "SV-2023-17-CHECKER-OUTPUT-FORMAL-TYPE-RESTRICTIONS"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.2"
+anchors = [
+    "[2023:17.2:P007:p505]",
+]
+summary = "A checker output formal shall not have untyped, sequence, or property type."
+related_clauses = [
+    "16.12",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.2"
+
+[[requirements]]
+id = "SV-2023-17-CHECKER-OUTPUT-PORT-INITIALIZATION"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.2"
+anchors = [
+    "[2023:17.2:P008:p505]",
+]
+summary = "A checker declaration may give each singular output port an initial value using input-default syntax, and that initialization has variable-initialization semantics."
+related_clauses = [
+    "6.8",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.2"
+
+[[requirements]]
+id = "SV-2023-17-CHECKER-PERMITTED-PROCEDURES"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.5"
+anchors = [
+    "[2023:17.5:P001:p510]",
+    "[2023:17.5:L001:p510]",
+    "[2023:17.5:L002:p510]",
+    "[2023:17.5:L003:p510]",
+    "[2023:17.2:L018:p504]",
+    "[2023:17.2:P005:p504]",
+]
+summary = "A checker body may contain initial, always, and final procedures; the permitted specialized always forms and each procedure kind's contents are governed by the subsequent checker-procedure rules."
+related_clauses = [
+    "9.2",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.5"
+
+[[requirements]]
+id = "SV-2023-17-CHECKER-PORT-CONNECTION-FORMS"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.3"
+anchors = [
+    "[2023:17.3:P006:p507]",
+    "[2023:17.3:L005:p507]",
+    "[2023:17.3:L006:p507]",
+    "[2023:17.3:L007:p507]",
+    "[2023:17.3:L008:p507]",
+]
+summary = "Checker formals may be connected positionally by port order or by fully explicit, implicit, or wildcard named port connections."
+related_clauses = [
+    "23.3.2",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.3"
+
+[[requirements]]
+id = "SV-2023-17-CHECKER-PORT-DIRECTION-INFERENCE"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.2"
+anchors = [
+    "[2023:17.2:P006:p505]",
+]
+summary = "A checker formal may be declared input or output; an omitted direction inherits the previous formal's direction, and an omitted direction on the first formal defaults to input."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.2"
+
+[[requirements]]
+id = "SV-2023-17-CHECKER-REACTIVE-EXECUTION"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.7.3"
+anchors = [
+    "[2023:17.7.3:P001:p519]",
+]
+summary = "Checker statements and constructs sensitive to changes, including clocking events and continuous assignments, and all checker blocking statements are scheduled in the Reactive region."
+related_clauses = [
+    "24.3.1",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.7.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.7.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.7.3"
+
+[[requirements]]
+id = "SV-2023-17-CHECKER-VARIABLE-ASSIGNMENT-FORMS"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.7.1"
+anchors = [
+    "[2023:17.7.1:P001:p516]",
+    "[2023:17.7.1:L001:p516]",
+    "[2023:17.5:L004:p510]",
+    "[2023:17.5:L005:p510]",
+    "[2023:17.5:P003:p510]",
+]
+summary = "An ordinary checker variable may be assigned by blocking or nonblocking procedural assignment or nonprocedural continuous assignment; checker always_comb/always_latch permit blocking assignment, whereas checker always_ff permits only nonblocking assignment."
+related_clauses = [
+    "10.4.1",
+    "10.4.2",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.7.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.7.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.7.1"
+
+[[requirements]]
+id = "SV-2023-17-CHECKER-VARIABLE-HIERARCHICAL-ASSIGNMENT"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.7.1"
+anchors = [
+    "[2023:17.7.1:L002:p516]",
+]
+summary = "It is illegal to reference a checker variable by hierarchical name in an assignment."
+related_clauses = [
+    "23.6",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.7.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.7.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.7.1"
+
+[[requirements]]
+id = "SV-2023-17-CHECKER-VARIABLE-INITIALIZATION"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.7.1"
+anchors = [
+    "[2023:17.7.1:L004:p517]",
+]
+summary = "A checker variable may be initialized in its declaration but may not be assigned in an initial procedure."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.7.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.7.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.7.1"
+
+[[requirements]]
+id = "SV-2023-17-CHECKER-VARIABLES-NOT-NETS"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.7"
+anchors = [
+    "[2023:17.7:P001:p513]",
+]
+summary = "A checker body may define variables, but defining a net in the checker body is illegal."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.7"
+
+[[requirements]]
+id = "SV-2023-17-CONCURRENT-ASSERTION-SCHEDULING-INVARIANCE"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.7.3"
+anchors = [
+    "[2023:17.7.3:P005:p519]",
+]
+summary = "A concurrent assertion has the same scheduling semantics whether it appears in checker code or design code."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.7.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.7.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.7.3"
+
+[[requirements]]
+id = "SV-2023-17-CONSTANT-FREE-VARIABLE-DECLARATION"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.7"
+anchors = [
+    "[2023:17.7:P008:p514]",
+]
+summary = "A free checker variable declaration may include the const qualifier."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.7"
+
+[[requirements]]
+id = "SV-2023-17-EMPTY-ASSUME-SET-RANDOMIZATION"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.7.2"
+anchors = [
+    "[2023:17.7.2:P010:p518]",
+]
+summary = "An empty assume set has an implicit clock event every time step before Observed; its active free variables may receive unconstrained random values at each such event and then remain constant through the end of that time step."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.7.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.7.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.7.2"
+
+[[requirements]]
+id = "SV-2023-17-FREE-CHECKER-VARIABLE"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.7"
+anchors = [
+    "[2023:17.7:P002:p513]",
+]
+summary = "A checker variable may have the rand qualifier, making it a free variable permitted to behave nondeterministically."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.7"
+
+[[requirements]]
+id = "SV-2023-17-FREE-VARIABLE-ACTIVE-CLASSIFICATION"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.7.2"
+anchors = [
+    "[2023:17.7.2:P003:p517]",
+]
+summary = "For assume-based randomization, a non-const free-variable singular element is inactive when it appears on an assignment left-hand side and active otherwise; all other variables are inactive, with packed aggregates classified monolithically and unpacked aggregate elements separately."
+related_clauses = [
+    "17.7.1",
+    "17.9",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.7.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.7.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.7.2"
+
+[[requirements]]
+id = "SV-2023-17-FREE-VARIABLE-ASSIGNMENT-KINDS"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.7.1"
+anchors = [
+    "[2023:17.7.1:L003:p516]",
+    "[2023:17.7.1:L006:p517]",
+]
+summary = "Continuous and blocking procedural assignments to free checker variables are illegal, but a free checker variable may be the left-hand side of a nonblocking assignment."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.7.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.7.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.7.1"
+
+[[requirements]]
+id = "SV-2023-17-FREE-VARIABLE-FORMAL-SEMANTICS"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.7"
+anchors = [
+    "[2023:17.7:P003:p514]",
+    "[2023:17.7:P009:p514]",
+    "[2023:17.7:P006:p514]",
+]
+summary = "Formal analysis shall account for every possible value and behavior of const and non-const free checker variables allowed by assumptions and assignments."
+related_clauses = [
+    "17.7.1",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.7"
+
+[[requirements]]
+id = "SV-2023-17-FREE-VARIABLE-INITIAL-RANDOMIZATION"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.7.2"
+anchors = [
+    "[2023:17.7.2:P004:p517]",
+]
+summary = "Every const or non-const, active or inactive free checker variable receives an unconstrained random initial value unless its declaration explicitly initializes it."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.7.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.7.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.7.2"
+
+[[requirements]]
+id = "SV-2023-17-FREE-VARIABLE-SIMULATION-SEMANTICS"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.7"
+anchors = [
+    "[2023:17.7:P003:p514]",
+    "[2023:17.7:P009:p514]",
+    "[2023:17.7:P006:p514]",
+]
+summary = "A simulator shall assign random values to const and non-const free checker variables under the initialization and assume-based randomization rules of 17.7.2."
+related_clauses = [
+    "17.7.2",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.7"
+
+[[requirements]]
+id = "SV-2023-17-FREE-VARIABLE-SOLVED-VALUE-STABILITY"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.7.2"
+anchors = [
+    "[2023:17.7.2:P002:p517]",
+]
+summary = "After free checker variables are updated with assume-set solution values, they shall remain constant until the next assume-set clock event or the end of the time step, whichever comes first."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.7.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.7.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.7.2"
+
+[[requirements]]
+id = "SV-2023-17-INITIALIZED-CONSTANT-FREE-VARIABLE"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.7"
+anchors = [
+    "[2023:17.7:P008:p514]",
+]
+summary = "An initialized constant free checker variable retains its declared initial value forever."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.7"
+
+[[requirements]]
+id = "SV-2023-17-NESTED-CHECKER-ASSERTION-CONTEXT"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.3"
+anchors = [
+    "[2023:17.3:P009:p508]",
+    "[2023:17.3:L011:p508]",
+]
+summary = "Static assertions in a checker statically nested inside another checker are treated as instantiated in the parent and become procedural when execution visits a procedural instance of the top-level checker ancestor."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.3"
+
+[[requirements]]
+id = "SV-2023-17-NONCONSTANT-FREE-VARIABLE-FORMAL-TIME-VALUES"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.7"
+anchors = [
+    "[2023:17.7:P017:p516]",
+    "[2023:17.7:P018:p516]",
+]
+summary = "In formal verification, an otherwise unassigned non-const free checker variable may assume any value at each time step after an initialized first step, or from the first step when uninitialized."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.7"
+
+[[requirements]]
+id = "SV-2023-17-NONCONSTANT-FREE-VARIABLE-INITIALIZED-FIRST-STEP"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.7"
+anchors = [
+    "[2023:17.7:P017:p516]",
+    "[2023:17.7:P018:p516]",
+]
+summary = "When an otherwise unassigned non-const free checker variable has a declaration initializer, that initializer determines its value for the first time step."
+related_clauses = [
+    "17.7.2",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.7"
+
+[[requirements]]
+id = "SV-2023-17-PROCEDURAL-CHECKER-ASSERTION-SEMANTICS"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.3"
+anchors = [
+    "[2023:17.3:P009:p508]",
+]
+summary = "A procedural concurrent assertion statement inside a checker shall be treated as a procedural assertion statement under 16.14.6, rather than as a static assertion at the checker's instantiation point."
+related_clauses = [
+    "16.14.6",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.3"
+
+[[requirements]]
+id = "SV-2023-17-PROCEDURAL-CHECKER-STATIC-CONCURRENT-ACTIVATION"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.3"
+anchors = [
+    "[2023:17.3:L010:p508]",
+]
+summary = "When execution reaches a procedural checker instantiation, each static concurrent assertion in the checker is added to the pending procedural assertion queue and may mature or be flushed under 16.14.6.2."
+related_clauses = [
+    "16.14.6.2",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.3"
+
+[[requirements]]
+id = "SV-2023-17-PROCEDURAL-CHECKER-STATIC-DEFERRED-ACTIVATION"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.3"
+anchors = [
+    "[2023:17.3:L010:p508]",
+]
+summary = "When execution reaches a procedural checker instantiation, each static deferred assertion in the checker is added to the pending deferred assertion report and may mature or be flushed under 16.4.1."
+related_clauses = [
+    "16.4.1",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.3"
+
+[[requirements]]
+id = "SV-2023-17-STATIC-CHECKER-CONCURRENT-ASSERTION-ACTIVATION"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.3"
+anchors = [
+    "[2023:17.3:L009:p508]",
+    "[2023:17.3:P009:p508]",
+]
+summary = "In a statically instantiated checker, each static concurrent assertion is continually monitored and begins execution on a time step matching its initial clock event."
+related_clauses = [
+    "16.14",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.3"
+
+[[requirements]]
+id = "SV-2023-17-STATIC-CHECKER-DEFERRED-ASSERTION-ACTIVATION"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.3"
+anchors = [
+    "[2023:17.3:L009:p508]",
+    "[2023:17.3:P009:p508]",
+]
+summary = "In a statically instantiated checker, each static deferred assertion is monitored whenever its expression changes."
+related_clauses = [
+    "16.4",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.3"
+
+[[requirements]]
+id = "SV-2023-17-UNINITIALIZED-CONSTANT-FREE-VARIABLE"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.7"
+anchors = [
+    "[2023:17.7:P008:p514]",
+]
+summary = "An uninitialized constant free checker variable nondeterministically acquires one value at initialization and does not change thereafter."
+related_clauses = [
+    "17.7.2",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.7"
+
+[[requirements]]
+id = "SV-2023-17-UNREFERENCED-ACTIVE-FREE-VARIABLE"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.7.2"
+anchors = [
+    "[2023:17.7.2:P011:p518]",
+]
+summary = "An active variable absent from every property in a nonempty assume set is unconstrained but explicitly clocked and may be updated randomly at every assume-set clock event."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.7.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.7.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.7.2"
+
+[[requirements]]
+id = "SV-2023-17-UNSUCCESSFUL-ASSUME-FAILURE-TIMING"
+standard_revision = "1800-2023"
+part = "17"
+clause = "17.7.2"
+anchors = [
+    "[2023:17.7.2:P013:p519]",
+]
+summary = "After an unsuccessful assume-set solution attempt, resulting assumption failures occur only when an unsatisfied property is clocked and checked in Observed."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "17.7.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "17.7.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "17.7.2"

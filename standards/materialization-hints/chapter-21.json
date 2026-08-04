@@ -1,0 +1,5956 @@
+{
+  "authority": "1800-2023",
+  "part": "21",
+  "requirements": [
+    {
+      "hints": {
+        "edge": [
+          "Seek beyond EOF before an append write."
+        ],
+        "negative": [
+          "Overwrite existing bytes through an append descriptor."
+        ],
+        "notes": [],
+        "positive": [
+          "Seek to the beginning of an append-opened file, write, and verify existing content is unchanged and new content is at EOF."
+        ]
+      },
+      "id": "SV-2023-21-APPEND-IGNORES-SEEK-FOR-WRITES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Display a one-bit value in each state."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Display a vector containing 0, 1, X, and Z using %b and verify each character."
+        ]
+      },
+      "id": "SV-2023-21-BINARY-FOUR-STATE-DIGITS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare one-bit and wide all-X vectors."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Display an all-X vector with %d and verify one lowercase x."
+        ]
+      },
+      "id": "SV-2023-21-DECIMAL-ALL-X"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare one-bit and wide all-Z vectors."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Display an all-Z vector with %d and verify one lowercase z."
+        ]
+      },
+      "id": "SV-2023-21-DECIMAL-ALL-Z"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a numeral exactly filling the field."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Display a short decimal numeral in a wider field and verify right justification."
+        ]
+      },
+      "id": "SV-2023-21-DECIMAL-FIXED-FIELD-JUSTIFICATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Display zero and inspect its retained digit versus suppressed positions."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Display a narrow positive decimal value in a wider automatically sized decimal field and verify leading spaces."
+        ]
+      },
+      "id": "SV-2023-21-DECIMAL-LEADING-ZERO-SUPPRESSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use exactly one X bit."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Display a vector mixing X with known bits using %d and verify uppercase X."
+        ]
+      },
+      "id": "SV-2023-21-DECIMAL-PARTIAL-X"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Mix X and Z with no known bits."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Display mixed known/Z bits with %d and verify Z, then add an X bit and verify X."
+        ]
+      },
+      "id": "SV-2023-21-DECIMAL-PARTIAL-Z"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Mix string literals and valued expressions whose outputs make reordering visible."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Display several distinguishable arguments and verify their output order matches source order."
+        ]
+      },
+      "id": "SV-2023-21-DISPLAY-ARGUMENT-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Display a one-bit expression in several radices."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Display a 12-bit expression with %h and verify an automatically selected three-digit field."
+        ]
+      },
+      "id": "SV-2023-21-DISPLAY-AUTOMATIC-SIZING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Display adjacent defined backslash escapes."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Display a string containing \\n and observe the defined newline character."
+        ]
+      },
+      "id": "SV-2023-21-DISPLAY-BACKSLASH-ESCAPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a value whose representations differ clearly in all four radices."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Pass the same integral expression without a format string to each radix task variant."
+        ]
+      },
+      "id": "SV-2023-21-DISPLAY-DEFAULT-NUMERIC-RADIX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an unpacked byte array containing a nonprinting byte."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Pass a string and an unpacked byte array without format specifications."
+        ]
+      },
+      "id": "SV-2023-21-DISPLAY-DEFAULT-STRING-TYPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a single comma as the complete argument list and verify two spaces."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use leading, trailing, and adjacent commas and verify one output space per empty argument."
+        ]
+      },
+      "id": "SV-2023-21-DISPLAY-EMPTY-ARGUMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the largest practical constant field width."
+        ],
+        "negative": [
+          "Use a negative, nonconstant, or nondecimal field width."
+        ],
+        "notes": [],
+        "positive": [
+          "Use %8h to override automatic hexadecimal width."
+        ]
+      },
+      "id": "SV-2023-21-DISPLAY-FIELD-WIDTH-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Intermix consuming formats with %m, %l, and %% and supply expressions only for consuming formats."
+        ],
+        "negative": [
+          "Use two consuming percent formats but supply only one subsequent expression."
+        ],
+        "notes": [],
+        "positive": [
+          "Supply one expression after a string containing one consuming format."
+        ]
+      },
+      "id": "SV-2023-21-DISPLAY-FORMAT-ARGUMENT-CORRESPONDENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Combine literal text with a defined escape and a subsequent formatted expression."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Display ordinary punctuation and letters from a string literal and verify they are emitted unchanged."
+        ]
+      },
+      "id": "SV-2023-21-DISPLAY-LITERAL-CONTENTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place %% adjacent to a consuming format and verify only the latter consumes an argument."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Display \"%%\" and verify one percent sign is emitted."
+        ]
+      },
+      "id": "SV-2023-21-DISPLAY-LITERAL-PERCENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use %m, %l, and %% without corresponding expression arguments."
+        ],
+        "negative": [
+          "Use an unsupported character after % as though it were a format specification."
+        ],
+        "notes": [],
+        "positive": [
+          "Use %h followed by an expression and verify hexadecimal substitution."
+        ]
+      },
+      "id": "SV-2023-21-DISPLAY-PERCENT-FORMAT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Distinguish the defined %% form from an undefined specifier."
+        ],
+        "negative": [
+          "Use an undefined character as a percent format specifier and require an error."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a defined percent format in a display string."
+        ]
+      },
+      "id": "SV-2023-21-DISPLAY-UNDEFINED-FORMAT-ERROR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast unpacked byte and unpacked logic arrays without formats."
+        ],
+        "negative": [
+          "Pass an unpacked array of int with no corresponding format specification."
+        ],
+        "notes": [],
+        "positive": [
+          "Give an unpacked non-byte aggregate an explicit applicable format."
+        ]
+      },
+      "id": "SV-2023-21-DISPLAY-UNFORMATTED-UNPACKED-ILLEGAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call each task with no arguments and compare whether a newline is emitted."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Emit identical text with $display and $write and observe the extra newline only after $display."
+        ]
+      },
+      "id": "SV-2023-21-DISPLAY-WRITE-NEWLINE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare bare calls with calls using empty parentheses."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Invoke argumentless $display and $write and compare their output."
+        ]
+      },
+      "id": "SV-2023-21-DISPLAY-WRITE-NO-ARGUMENTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Invoke $display(); with an empty parenthesized argument list if permitted by list_of_arguments."
+        ],
+        "negative": [
+          "Invoke a listed task with parentheses but omit the terminating semicolon."
+        ],
+        "notes": [],
+        "positive": [
+          "Invoke $display; with no parentheses and $write(\"x\"); with an argument."
+        ]
+      },
+      "id": "SV-2023-21-DISPLAY-WRITE-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Display numeric zero with zero field width."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use %0d and %0h and verify minimum-width output."
+        ]
+      },
+      "id": "SV-2023-21-DISPLAY-ZERO-FIELD-WIDTH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call $dumpall while values are stable."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Change only a subset of selected variables, call $dumpall, and verify values for all selected variables are emitted."
+        ]
+      },
+      "id": "SV-2023-21-DUMPALL-CHECKPOINT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Invoke repeatedly in one time slot."
+        ],
+        "negative": [
+          "Pass an argument to $dumpall."
+        ],
+        "notes": [],
+        "positive": [
+          "Invoke $dumpall;."
+        ]
+      },
+      "id": "SV-2023-21-DUMPALL-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a packed integral character string."
+        ],
+        "negative": [
+          "Use an unsupported aggregate filename expression."
+        ],
+        "notes": [],
+        "positive": [
+          "Specify each permitted filename expression type and separately omit it to verify dump.vcd."
+        ]
+      },
+      "id": "SV-2023-21-DUMPFILE-FILENAME-TYPES-DEFAULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a filename in a writable subdirectory."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Call $dumpfile with a unique path and verify VCD output uses it."
+        ]
+      },
+      "id": "SV-2023-21-DUMPFILE-NAMES-VCD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a computed filename expression."
+        ],
+        "negative": [
+          "Supply more than one filename."
+        ],
+        "notes": [],
+        "positive": [
+          "Invoke $dumpfile(\"wave.vcd\");."
+        ]
+      },
+      "id": "SV-2023-21-DUMPFILE-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call while dumping is suspended and verify the prior state is preserved."
+        ],
+        "negative": [
+          "Disable dumping or lose changes as a side effect of flushing."
+        ],
+        "notes": [],
+        "positive": [
+          "Generate buffered changes, call $dumpflush, verify external file visibility, then generate and verify later changes."
+        ]
+      },
+      "id": "SV-2023-21-DUMPFLUSH-BUFFER-AND-RESUME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Invoke repeatedly with no intervening changes."
+        ],
+        "negative": [
+          "Pass an argument to $dumpflush."
+        ],
+        "notes": [],
+        "positive": [
+          "Invoke $dumpflush;."
+        ]
+      },
+      "id": "SV-2023-21-DUMPFLUSH-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Set a limit near the size needed for the mandatory limit comment."
+        ],
+        "negative": [
+          "Continue recording changes after reaching the limit."
+        ],
+        "notes": [],
+        "positive": [
+          "Set a small byte limit, generate changes beyond it, and verify dumping stops with a limit comment."
+        ]
+      },
+      "id": "SV-2023-21-DUMPLIMIT-STOP-AND-COMMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a very small and a large limit."
+        ],
+        "negative": [
+          "Omit filesize or supply multiple values."
+        ],
+        "notes": [],
+        "positive": [
+          "Invoke $dumplimit(known_byte_limit);."
+        ]
+      },
+      "id": "SV-2023-21-DUMPLIMIT-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change at the same times as off and on calls and apply scheduler ordering."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Make several selected-variable changes during suspension and verify no corresponding change records."
+        ]
+      },
+      "id": "SV-2023-21-DUMPOFF-INTERVAL-NO-CHANGES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Include scalar and vector selected variables."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Turn dumping off and verify an X checkpoint for each selected variable."
+        ]
+      },
+      "id": "SV-2023-21-DUMPOFF-X-CHECKPOINT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Resume without any intervening value changes."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Change variables while dumping is off, resume, and verify the current values are checkpointed."
+        ]
+      },
+      "id": "SV-2023-21-DUMPON-CURRENT-CHECKPOINT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Issue repeated off or on calls."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Toggle dumping off and on around variable changes and inspect represented intervals."
+        ]
+      },
+      "id": "SV-2023-21-DUMPON-OFF-CONTROL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Invoke both in one simulation time slot."
+        ],
+        "negative": [
+          "Pass arguments to either task."
+        ],
+        "notes": [],
+        "positive": [
+          "Invoke $dumpoff; and $dumpon;."
+        ]
+      },
+      "id": "SV-2023-21-DUMPON-OFF-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a packed integral character string."
+        ],
+        "negative": [
+          "Name a file not established by $dumpports."
+        ],
+        "notes": [],
+        "positive": [
+          "Control the same dump using each filename expression category."
+        ]
+      },
+      "id": "SV-2023-21-DUMPPORTS-CONTROL-FILENAME-TYPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Interleave redundant calls across several filenames."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Issue repeated on and repeated off calls and verify no duplicate checkpoint or state transition from the redundant call."
+        ]
+      },
+      "id": "SV-2023-21-DUMPPORTS-CONTROL-IDEMPOTENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Test a nonexistent parent directory and denied permission."
+        ],
+        "negative": [
+          "Silently succeed for an invalid or unwritable path."
+        ],
+        "notes": [
+          "Diagnostic wording and error-versus-warning classification may be implementation dependent."
+        ],
+        "positive": [
+          "Write to a valid writable path."
+        ]
+      },
+      "id": "SV-2023-21-DUMPPORTS-FILE-CHECKS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a packed integral character string."
+        ],
+        "negative": [
+          "Use an unsupported aggregate filename."
+        ],
+        "notes": [],
+        "positive": [
+          "Use every filename expression category and omit filename to verify the default path."
+        ]
+      },
+      "id": "SV-2023-21-DUMPPORTS-FILENAME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the two forms in otherwise identical designs."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Invoke both forms and verify calling-module scope plus dumpports.vcd output."
+        ]
+      },
+      "id": "SV-2023-21-DUMPPORTS-NO-ARGS-DEFAULTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an expression filename after the leading comma."
+        ],
+        "negative": [
+          "Supply only the filename in the first positional slot."
+        ],
+        "notes": [],
+        "positive": [
+          "Invoke $dumpports(,\"named.vcd\"); to use default scope with explicit filename."
+        ]
+      },
+      "id": "SV-2023-21-DUMPPORTS-NULL-SCOPE-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Execute calls in different scheduler regions of one simulation time."
+        ],
+        "negative": [
+          "Execute two $dumpports calls at different simulation times."
+        ],
+        "notes": [],
+        "positive": [
+          "Execute $dumpports calls in different blocks at the same simulation time."
+        ]
+      },
+      "id": "SV-2023-21-DUMPPORTS-SAME-TIME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Select sibling modules with full paths."
+        ],
+        "negative": [
+          "Use a variable or quoted module name as scope."
+        ],
+        "notes": [],
+        "positive": [
+          "Use one and multiple module paths and separately omit scope to select the calling module."
+        ]
+      },
+      "id": "SV-2023-21-DUMPPORTS-SCOPE-LIST"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Select both parent and child explicitly."
+        ],
+        "negative": [
+          "Dump descendant-instance ports solely because their ancestor was selected."
+        ],
+        "notes": [],
+        "positive": [
+          "Select a module with ports and child instances and verify only the selected module's ports."
+        ]
+      },
+      "id": "SV-2023-21-DUMPPORTS-SCOPE-PORTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Overwrite the default filename."
+        ],
+        "negative": [
+          "Append to existing content."
+        ],
+        "notes": [],
+        "positive": [
+          "Precreate a longer dumpports.vcd, invoke $dumpports, and verify replacement without an overwrite diagnostic."
+        ]
+      },
+      "id": "SV-2023-21-DUMPPORTS-SILENT-OVERWRITE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Invoke at nonzero time."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Invoke at a known time with same-time port changes and verify end-of-unit start semantics."
+        ]
+      },
+      "id": "SV-2023-21-DUMPPORTS-START-END-OF-TIME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use hierarchical module identifiers."
+        ],
+        "negative": [
+          "Place a variable identifier in scope_list."
+        ],
+        "notes": [],
+        "positive": [
+          "Invoke $dumpports(module_instance,\"ports.vcd\"); and a multi-module form."
+        ]
+      },
+      "id": "SV-2023-21-DUMPPORTS-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use different filename expressions that evaluate to the same text."
+        ],
+        "negative": [
+          "Specify one filename in two $dumpports calls."
+        ],
+        "notes": [],
+        "positive": [
+          "Use distinct filenames for two same-time $dumpports calls."
+        ]
+      },
+      "id": "SV-2023-21-DUMPPORTS-UNIQUE-FILENAME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use equivalent hierarchical paths that resolve to the same scope."
+        ],
+        "negative": [
+          "Repeat a scope in one list or a later call."
+        ],
+        "notes": [],
+        "positive": [
+          "Partition distinct scopes among multiple calls."
+        ]
+      },
+      "id": "SV-2023-21-DUMPPORTS-UNIQUE-SCOPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call with no changes since the prior checkpoint."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Call after changing only one selected port and verify all selected port values are emitted."
+        ]
+      },
+      "id": "SV-2023-21-DUMPPORTSALL-CHECKPOINT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multiple active dump files."
+        ],
+        "negative": [
+          "Name a file not opened by $dumpports."
+        ],
+        "notes": [],
+        "positive": [
+          "Checkpoint one file via each filename expression form and omit filename to checkpoint all."
+        ]
+      },
+      "id": "SV-2023-21-DUMPPORTSALL-FILENAME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a computed filename expression."
+        ],
+        "negative": [
+          "Supply multiple filenames."
+        ],
+        "notes": [],
+        "positive": [
+          "Invoke with a filename established by $dumpports."
+        ]
+      },
+      "id": "SV-2023-21-DUMPPORTSALL-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Flush with no pending value change."
+        ],
+        "negative": [
+          "Leave pending VCD buffer content after a successful flush."
+        ],
+        "notes": [],
+        "positive": [
+          "Generate buffered port output, flush, and verify externally visible complete port values."
+        ]
+      },
+      "id": "SV-2023-21-DUMPPORTSFLUSH-BUFFER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use several files with pending data."
+        ],
+        "negative": [
+          "Name a file not opened by $dumpports."
+        ],
+        "notes": [],
+        "positive": [
+          "Flush one file via every filename form and omit filename to flush all."
+        ]
+      },
+      "id": "SV-2023-21-DUMPPORTSFLUSH-FILENAME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a computed filename expression."
+        ],
+        "negative": [
+          "Supply multiple filenames."
+        ],
+        "notes": [],
+        "positive": [
+          "Invoke with a filename established by $dumpports."
+        ]
+      },
+      "id": "SV-2023-21-DUMPPORTSFLUSH-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use several files with differing current sizes."
+        ],
+        "negative": [
+          "Name a file not established by $dumpports."
+        ],
+        "notes": [],
+        "positive": [
+          "Limit one named file through every filename form and omit filename to limit all."
+        ]
+      },
+      "id": "SV-2023-21-DUMPPORTSLIMIT-FILENAME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a limit near the current file size."
+        ],
+        "negative": [
+          "Continue port dumping beyond the byte maximum."
+        ],
+        "notes": [],
+        "positive": [
+          "Set a small limit, generate changes past it, and verify stop plus limit comment."
+        ]
+      },
+      "id": "SV-2023-21-DUMPPORTSLIMIT-STOP-COMMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a computed filename expression."
+        ],
+        "negative": [
+          "Reverse filesize and filename."
+        ],
+        "notes": [],
+        "positive": [
+          "Invoke $dumpportslimit(1024,\"ports.vcd\");."
+        ]
+      },
+      "id": "SV-2023-21-DUMPPORTSLIMIT-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call when one of several files is already suspended."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Open multiple port dump files, call argumentless $dumpportsoff, and verify all are suspended."
+        ]
+      },
+      "id": "SV-2023-21-DUMPPORTSOFF-OMITTED-FILENAME-ALL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change a port at the suspension simulation time."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Change selected ports after suspending one named file and verify no change records."
+        ]
+      },
+      "id": "SV-2023-21-DUMPPORTSOFF-SUSPENDS-FILE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Include scalar and vector ports."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Suspend one named port dump and verify an X checkpoint for every selected port."
+        ]
+      },
+      "id": "SV-2023-21-DUMPPORTSOFF-X-CHECKPOINT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Resume with no intervening changes."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Change ports while suspended, resume a named file, and verify a current-value checkpoint for every selected port."
+        ]
+      },
+      "id": "SV-2023-21-DUMPPORTSON-CURRENT-CHECKPOINT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a computed filename expression."
+        ],
+        "negative": [
+          "Supply multiple filenames in one call."
+        ],
+        "notes": [],
+        "positive": [
+          "Invoke each task with an extended-VCD filename."
+        ]
+      },
+      "id": "SV-2023-21-DUMPPORTSON-OFF-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call when only a subset of files is suspended."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Suspend multiple dumpports files, call argumentless $dumpportson, and verify all resume."
+        ]
+      },
+      "id": "SV-2023-21-DUMPPORTSON-OMITTED-FILENAME-ALL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Resume while another file remains suspended."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Suspend then resume one named file and verify subsequent port changes are recorded."
+        ]
+      },
+      "id": "SV-2023-21-DUMPPORTSON-RESUMES-FILE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Mix module and variable targets in one call."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare levels 1 and 2 for a module target and separately select one variable."
+        ]
+      },
+      "id": "SV-2023-21-DUMPVARS-LEVELS-AND-TARGETS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Include generated and deeply nested variables."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Call $dumpvars; in a design with variables in multiple hierarchy levels and verify all are selected."
+        ]
+      },
+      "id": "SV-2023-21-DUMPVARS-NO-ARGS-ALL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Execute calls in different scheduling regions of the same time slot."
+        ],
+        "negative": [
+          "Execute one $dumpvars call at time zero and another after a delay."
+        ],
+        "notes": [],
+        "positive": [
+          "Execute multiple $dumpvars calls from different initial blocks at time zero."
+        ]
+      },
+      "id": "SV-2023-21-DUMPVARS-SAME-SIMULATION-TIME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Select variables from multiple blocks using multiple calls."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Select a subset of variables and verify only those and scope-expanded selections receive definitions and changes."
+        ]
+      },
+      "id": "SV-2023-21-DUMPVARS-SELECTS-VARIABLES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Invoke at a nonzero simulation time."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Execute $dumpvars before same-time updates and verify dumping begins at the time-unit end checkpoint."
+        ]
+      },
+      "id": "SV-2023-21-DUMPVARS-START-END-OF-TIME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use levels as the only parenthesized argument."
+        ],
+        "negative": [
+          "Provide a target list without the levels first argument."
+        ],
+        "notes": [],
+        "positive": [
+          "Invoke bare $dumpvars; and forms with levels, modules, variables, and mixed lists."
+        ]
+      },
+      "id": "SV-2023-21-DUMPVARS-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Combine module and variable targets after levels 0."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use $dumpvars(0,module_instance) and verify unrestricted descendant selection; compare an individual variable target."
+        ]
+      },
+      "id": "SV-2023-21-DUMPVARS-ZERO-LEVELS-RECURSIVE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use components with different widths."
+        ],
+        "negative": [
+          "Represent the concatenation as one combined entry."
+        ],
+        "notes": [],
+        "positive": [
+          "Dump a concatenated port and verify distinct declarations for each component."
+        ]
+      },
+      "id": "SV-2023-21-EXTENDED-CONCATENATED-PORT-ENTRIES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use equal strength endpoints."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Drive the same logic value from input and output with the same strength range and verify conflict code and reported strength."
+        ]
+      },
+      "id": "SV-2023-21-EXTENDED-CONFLICT-EQUAL-RANGE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use boundary levels 5 and 4."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Create low and high cases with stronger input and verify d/u plus input strength."
+        ]
+      },
+      "id": "SV-2023-21-EXTENDED-CONFLICT-INPUT-STRONGER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use boundary levels 4 and 5."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Create low and high cases with stronger output and verify l/h plus output strength."
+        ]
+      },
+      "id": "SV-2023-21-EXTENDED-CONFLICT-OUTPUT-STRONGER"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Have input and output both actively drive 0 and separately 1, then verify the corresponding conflict state."
+        ]
+      },
+      "id": "SV-2023-21-EXTENDED-CONFLICT-STATE-01"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise constructs shared between both grammars."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Parse common construct names with inherited meaning and distinguish an asterisk-prefixed extended form."
+        ]
+      },
+      "id": "SV-2023-21-EXTENDED-CONSTRUCT-EQUIVALENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call it for an unknown filename and verify no dump state or file changes."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Call a control task for one valid dumpports filename."
+        ]
+      },
+      "id": "SV-2023-21-EXTENDED-CONTROL-UNKNOWN-FILE-IGNORED"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Treat an unlisted non-driver construct as a driver for extended VCD encoding."
+        ],
+        "notes": [],
+        "positive": [
+          "Create port driving through each of the three considered source categories."
+        ]
+      },
+      "id": "SV-2023-21-EXTENDED-DRIVER-SOURCES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Resolve several active drivers to the same low or high state."
+        ],
+        "negative": [
+          "Confuse uppercase single-driver and lowercase multiple-driver meanings."
+        ],
+        "notes": [],
+        "positive": [
+          "Exercise and parse every input-state symbol under its defined condition."
+        ]
+      },
+      "id": "SV-2023-21-EXTENDED-INPUT-STATE-CODES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multiple selected modules and inspect each emitted declaration context."
+        ],
+        "negative": [
+          "Skip, reorder, or duplicate code integers."
+        ],
+        "notes": [],
+        "positive": [
+          "Verify consecutive less-than-prefixed codes for ports declared in known order."
+        ]
+      },
+      "id": "SV-2023-21-EXTENDED-NODE-CODE-SEQUENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use nonzero and descending vector bounds."
+        ],
+        "negative": [
+          "Use a non-port var_type or omit the < prefix."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse scalar and vector port declarations conforming to Syntax 21-28."
+        ]
+      },
+      "id": "SV-2023-21-EXTENDED-NODE-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Represent ports backed by differing internal net/variable types."
+        ],
+        "negative": [
+          "Use reg, wire, or another var_type for an extended port node."
+        ],
+        "notes": [],
+        "positive": [
+          "Emit $var port declarations."
+        ]
+      },
+      "id": "SV-2023-21-EXTENDED-NODE-PORT-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use escaped or otherwise legal port identifiers."
+        ],
+        "negative": [
+          "Emit a non-port or different identifier as the reference."
+        ],
+        "notes": [],
+        "positive": [
+          "Verify each node reference matches its model port name."
+        ]
+      },
+      "id": "SV-2023-21-EXTENDED-NODE-REFERENCE-NAME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a one-bit explicitly ranged port."
+        ],
+        "negative": [
+          "Replace a bus's actual index with only a bit count."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare scalar and ascending/descending bus ports and verify sizes/ranges."
+        ]
+      },
+      "id": "SV-2023-21-EXTENDED-NODE-SIZE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use equal, ascending, and descending indices."
+        ],
+        "negative": [
+          "Accept an extended-only index syntax absent an override."
+        ],
+        "notes": [],
+        "positive": [
+          "Validate extended ranges using every legal 4-state VCD vector-index form."
+        ]
+      },
+      "id": "SV-2023-21-EXTENDED-NODE-VECTOR-INDEX-RULES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use exactly one space between every adjacent element."
+        ],
+        "negative": [
+          "Concatenate adjacent syntactical elements without a separating space."
+        ],
+        "notes": [],
+        "positive": [
+          "Accept one or more spaces and implementation-chosen line layouts between elements."
+        ]
+      },
+      "id": "SV-2023-21-EXTENDED-NODE-WHITESPACE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use each form with multiple open dump files."
+        ],
+        "negative": [
+          "Require a filename for an all-optional control task."
+        ],
+        "notes": [],
+        "positive": [
+          "Compare bare and () forms of dumpportsflush and other all-optional tasks."
+        ]
+      },
+      "id": "SV-2023-21-EXTENDED-OPTIONAL-ARGUMENT-FORMS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Resolve multiple output drivers to the same state."
+        ],
+        "negative": [
+          "Confuse uppercase ordinary and lowercase multiple-driver meanings."
+        ],
+        "notes": [],
+        "positive": [
+          "Exercise every output-state symbol under its defined condition."
+        ]
+      },
+      "id": "SV-2023-21-EXTENDED-OUTPUT-STATE-CODES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use ANSI and non-ANSI port declarations."
+        ],
+        "negative": [
+          "Prefer an internal range over an explicit port range."
+        ],
+        "notes": [],
+        "positive": [
+          "Exercise ports with an explicit port range, inherited internal range, and no range."
+        ]
+      },
+      "id": "SV-2023-21-EXTENDED-PORT-INDEX-SOURCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use highz and supply endpoints with differing opposite component."
+        ],
+        "negative": [
+          "Map a numeric code to the wrong strength."
+        ],
+        "notes": [],
+        "positive": [
+          "Generate or parse all eight levels for each strength component."
+        ]
+      },
+      "id": "SV-2023-21-EXTENDED-STRENGTH-CODES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Handle level 0 high impedance outside these active ranges."
+        ],
+        "negative": [
+          "Classify level 4 as strong or level 5 as weak."
+        ],
+        "notes": [],
+        "positive": [
+          "Classify every level 1-7 and test the 4/5 boundary."
+        ]
+      },
+      "id": "SV-2023-21-EXTENDED-STRENGTH-RANGES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Distinguish unconnected F from both-three-stated f."
+        ],
+        "negative": [
+          "Interchange upper- and lowercase combination codes."
+        ],
+        "notes": [],
+        "positive": [
+          "Construct or parse every listed input/output combination and verify its exact case-sensitive symbol."
+        ]
+      },
+      "id": "SV-2023-21-EXTENDED-UNKNOWN-DIRECTION-CODES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use high-impedance and supply strength endpoints."
+        ],
+        "negative": [
+          "Omit one strength component."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse representative values combining direction/state with both strength components."
+        ]
+      },
+      "id": "SV-2023-21-EXTENDED-VALUE-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use codes around decimal digit-width transitions."
+        ],
+        "negative": [
+          "Use an undeclared or differently prefixed code."
+        ],
+        "notes": [],
+        "positive": [
+          "Match value records to port declarations by <integer code."
+        ]
+      },
+      "id": "SV-2023-21-EXTENDED-VALUE-IDENTIFIER-CODE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use unequal 0 and 1 strengths."
+        ],
+        "negative": [
+          "Insert whitespace between p and state."
+        ],
+        "notes": [],
+        "positive": [
+          "Validate adjacency after p and independent strength0/strength1 values."
+        ]
+      },
+      "id": "SV-2023-21-EXTENDED-VALUE-PREFIX-STRENGTH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Record multiple changes at one time."
+        ],
+        "negative": [
+          "Encode only deltas from prior markers."
+        ],
+        "notes": [],
+        "positive": [
+          "Generate port changes at nonuniform times and verify absolute markers."
+        ]
+      },
+      "id": "SV-2023-21-EXTENDED-VCD-ABSOLUTE-TIME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise paired uppercase/lowercase symbols with distinct meanings."
+        ],
+        "negative": [
+          "Fold case during parsing."
+        ],
+        "notes": [],
+        "positive": [
+          "Distinguish case-sensitive identifier and value/direction symbols."
+        ]
+      },
+      "id": "SV-2023-21-EXTENDED-VCD-CASE-SENSITIVE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use tabs, newlines, and multiple spaces."
+        ],
+        "negative": [
+          "Concatenate commands where separating whitespace is required."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse equivalent extended files with varied whitespace and line breaks."
+        ]
+      },
+      "id": "SV-2023-21-EXTENDED-VCD-FREE-FORM"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multi-character identifier codes and vector port ranges."
+        ],
+        "negative": [
+          "Accept malformed command termination or unsupported port/strength symbols."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse a file exercising each declaration/simulation keyword, every direction/value category, and all strength levels."
+        ]
+      },
+      "id": "SV-2023-21-EXTENDED-VCD-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise common comments, scopes, times, and dump commands in an extended file."
+        ],
+        "negative": [
+          "Discard an inherited four-state rule without an explicit override."
+        ],
+        "notes": [],
+        "positive": [
+          "Validate extended files against the common VCD grammar plus extended additions."
+        ]
+      },
+      "id": "SV-2023-21-EXTENDED-VCD-INHERITS-FOURSTATE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Mix inherited and extended commands."
+        ],
+        "negative": [
+          "Reject conforming manually inserted commands solely because of origin."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse manually and automatically generated extended keyword sections including the additional command."
+        ]
+      },
+      "id": "SV-2023-21-EXTENDED-VCD-KEYWORD-SECTIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change strength while resolved logic state remains constant."
+        ],
+        "negative": [
+          "Omit strength information from extended port changes."
+        ],
+        "notes": [],
+        "positive": [
+          "Dump ports through all four states and several strengths, verifying both state and strength."
+        ]
+      },
+      "id": "SV-2023-21-EXTENDED-VCD-PORT-VALUE-STRENGTH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use subnormal, large, zero, and negative values."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Round-trip precision-sensitive binary64 values through extended VCD text."
+        ]
+      },
+      "id": "SV-2023-21-EXTENDED-VCD-REAL-16G"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a time increment with no changed ports."
+        ],
+        "negative": [
+          "Emit changes before port definitions."
+        ],
+        "notes": [],
+        "positive": [
+          "Inspect generated section order and increments containing changed and unchanged selected ports."
+        ]
+      },
+      "id": "SV-2023-21-EXTENDED-VCD-SECTION-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare a declared scalar port with one bit selected from a vector port."
+        ],
+        "negative": [
+          "Attempt to dump a part-select or expression such as a+b."
+        ],
+        "notes": [],
+        "positive": [
+          "Dump an entire vector port."
+        ]
+      },
+      "id": "SV-2023-21-EXTENDED-VCD-WHOLE-PORT-ONLY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Close an MCD selecting several channels with active operations."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Start file monitoring, close its descriptor, change monitored data, and verify no later file report."
+        ]
+      },
+      "id": "SV-2023-21-FCLOSE-CANCELS-FILE-MONITORING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Close an MCD including standard output only if a safe harness permits."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Close a single fd and an OR-combined MCD, then verify all selected files are closed."
+        ]
+      },
+      "id": "SV-2023-21-FCLOSE-CLOSES-SELECTED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Close one channel of several and continue using unaffected descriptors."
+        ],
+        "negative": [
+          "Attempt a read or write through a closed descriptor."
+        ],
+        "notes": [],
+        "positive": [
+          "Stop using a descriptor after closing it."
+        ]
+      },
+      "id": "SV-2023-21-FCLOSE-PROHIBITS-FURTHER-IO"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Close a multichannel descriptor containing multiple channel bits."
+        ],
+        "negative": [
+          "Invoke $fclose with no descriptor or multiple descriptors."
+        ],
+        "notes": [],
+        "positive": [
+          "Close descriptors returned by both forms of $fopen."
+        ]
+      },
+      "id": "SV-2023-21-FCLOSE-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast this rejection with valid OR combination of MCDs."
+        ],
+        "negative": [
+          "OR two file descriptors and use the result as a multi-file destination."
+        ],
+        "notes": [],
+        "positive": [
+          "Write separately through two file descriptors."
+        ]
+      },
+      "id": "SV-2023-21-FD-NOT-COMBINABLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare file and multichannel descriptor MSBs."
+        ],
+        "negative": [
+          "Return a nonzero file descriptor with bit 31 clear."
+        ],
+        "notes": [],
+        "positive": [
+          "Open a file with two-argument $fopen and verify bit 31 of the nonzero descriptor is set."
+        ]
+      },
+      "id": "SV-2023-21-FD-REPRESENTATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Seek away after EOF detection and observe status according to subsequent file operations."
+        ],
+        "negative": [
+          "Report EOF merely because the current position equals file length before a detecting read."
+        ],
+        "notes": [],
+        "positive": [
+          "Check zero before EOF detection, attempt a read at EOF, then verify nonzero."
+        ]
+      },
+      "id": "SV-2023-21-FEOF-STATUS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call before and after attempting to read past EOF."
+        ],
+        "negative": [
+          "Call $feof without an fd or with an MCD."
+        ],
+        "notes": [],
+        "positive": [
+          "Assign $feof(fd) to an integral variable."
+        ]
+      },
+      "id": "SV-2023-21-FEOF-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Cause different sequential errors and verify only the most recent is described."
+        ],
+        "negative": [],
+        "notes": [
+          "The standard recommends a string or packed destination of at least 640 bits but uses nonmandatory 'should'."
+        ],
+        "positive": [
+          "Cause a known file I/O error, call $ferror, and verify nonzero code plus a nonempty description."
+        ]
+      },
+      "id": "SV-2023-21-FERROR-MOST-RECENT-ERROR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call after opening a valid empty file."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Perform successful file I/O, preset str nonempty, call $ferror, and verify zero plus cleared str."
+        ]
+      },
+      "id": "SV-2023-21-FERROR-NO-ERROR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use string and sufficiently wide packed destinations."
+        ],
+        "negative": [
+          "Call $ferror without either required argument."
+        ],
+        "notes": [],
+        "positive": [
+          "Assign $ferror(fd,str) to an integral variable."
+        ]
+      },
+      "id": "SV-2023-21-FERROR-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Flush an MCD selecting multiple files including standard output."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Buffer output in multiple files and separately flush one fd, an MCD subset, and all files."
+        ]
+      },
+      "id": "SV-2023-21-FFLUSH-DESCRIPTOR-SCOPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Pass an OR-combined MCD."
+        ],
+        "negative": [
+          "Pass multiple descriptors to one $fflush call."
+        ],
+        "notes": [],
+        "positive": [
+          "Invoke $fflush(), $fflush(fd), and $fflush(mcd)."
+        ]
+      },
+      "id": "SV-2023-21-FFLUSH-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call $ferror after the -1 return to obtain the most recent error cause."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Read byte ff into a wide integer and verify it differs from the later EOF/error return -1."
+        ]
+      },
+      "id": "SV-2023-21-FGETC-ERROR-EOF"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Read byte value 8'hff into a destination wider than eight bits."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Read a file with distinguishable bytes using successive $fgetc calls."
+        ]
+      },
+      "id": "SV-2023-21-FGETC-READS-BYTE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Pass a value wider than one byte to $ungetc."
+        ],
+        "negative": [
+          "Reverse $ungetc arguments or omit the fd."
+        ],
+        "notes": [],
+        "positive": [
+          "Call $fgetc(fd) and $ungetc(c,fd) in value contexts."
+        ]
+      },
+      "id": "SV-2023-21-FGETC-UNGETC-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use widths of 9 and 15 bits."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Read into a packed destination with a non-byte-multiple width and verify only complete bytes determine capacity."
+        ]
+      },
+      "id": "SV-2023-21-FGETS-PARTIAL-BYTE-CAPACITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Cause a read error, verify zero, and query $ferror."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Read a known-length line and verify the returned character count includes any transferred newline."
+        ]
+      },
+      "id": "SV-2023-21-FGETS-RETURN-STATUS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a newline as the first character and verify it is included."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Read inputs that stop separately at destination capacity, newline, and EOF."
+        ]
+      },
+      "id": "SV-2023-21-FGETS-STOP-CONDITIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use destinations with whole-byte and partial-byte packed widths."
+        ],
+        "negative": [
+          "Omit the destination or fd."
+        ],
+        "notes": [],
+        "positive": [
+          "Assign the return of $fgets(str,fd)."
+        ]
+      },
+      "id": "SV-2023-21-FGETS-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a field width exactly equal to the converted result length."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Display a one-digit value with field width three and verify two leading padding characters."
+        ]
+      },
+      "id": "SV-2023-21-FIELD-WIDTH-LEFT-PADDING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use field width zero with a long converted result."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Display a four-character result with field width three and verify all four characters."
+        ]
+      },
+      "id": "SV-2023-21-FIELD-WIDTH-NO-TRUNCATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Format numeric zero in each radix with a larger field width."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Apply the same oversized field width to decimal, string, hexadecimal, octal, and binary values and compare padding."
+        ]
+      },
+      "id": "SV-2023-21-FIELD-WIDTH-PADDING-CHARACTER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an OR-combined MCD with a file strobe."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare each file task's formatted content or scheduling with its standard-output counterpart."
+        ]
+      },
+      "id": "SV-2023-21-FILE-OUTPUT-COUNTERPART-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Pass a constant 32-bit MCD expression selecting standard output."
+        ],
+        "negative": [
+          "Pass a non-descriptor string as the first argument."
+        ],
+        "notes": [],
+        "positive": [
+          "Pass an fd, an MCD variable, and an expression OR-ing MCDs."
+        ]
+      },
+      "id": "SV-2023-21-FILE-OUTPUT-DESCRIPTOR-ARGUMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Invoke a file-output task with only the descriptor."
+        ],
+        "negative": [
+          "Invoke a file-output task without a first descriptor argument."
+        ],
+        "notes": [],
+        "positive": [
+          "Invoke representatives of all four families with fd and MCD destinations."
+        ]
+      },
+      "id": "SV-2023-21-FILE-OUTPUT-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use signed positive, zero, and negative $fseek offsets."
+        ],
+        "negative": [
+          "Omit $fseek operation or supply an offset to $rewind."
+        ],
+        "notes": [],
+        "positive": [
+          "Call each positioning function with its defined argument list."
+        ]
+      },
+      "id": "SV-2023-21-FILE-POSITIONING-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify each binary update-mode spelling has the same read capability as its text spelling."
+        ],
+        "negative": [
+          "Attempt reading through a descriptor opened with w or a."
+        ],
+        "notes": [
+          "Apply the complete Table 21-6 update-mode definitions when interpreting the paragraph's r/r+ shorthand."
+        ],
+        "positive": [
+          "Read through descriptors opened with r, rb, and representative r+, w+, and a+ update spellings."
+        ]
+      },
+      "id": "SV-2023-21-FILE-READ-MODE-RESTRICTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Reposition to the same numeric offset."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Push back a character, reposition with each function, then verify the pushed character is no longer pending."
+        ]
+      },
+      "id": "SV-2023-21-FILE-REPOSITION-CANCELS-UNGETC"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Cause an invalid seek, verify -1, and query $ferror."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Perform valid positioning and verify zero."
+        ]
+      },
+      "id": "SV-2023-21-FILE-REPOSITION-RETURN-STATUS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "On a mapping host, compare a mapped byte sequence through text and binary modes."
+        ],
+        "negative": [],
+        "notes": [
+          "Oracle must account for the host's documented binary/text distinction."
+        ],
+        "positive": [
+          "Accept identical behavior for text and binary modes on a host with no distinction."
+        ]
+      },
+      "id": "SV-2023-21-FOPEN-BINARY-TEXT-MODE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Open the same filename using both forms at different times."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Open one file with each $fopen form and verify the returned descriptor kind can be used by its corresponding operations."
+        ]
+      },
+      "id": "SV-2023-21-FOPEN-DESCRIPTOR-SELECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Attempt opening a path lacking permission and verify zero, with cause available through $ferror."
+        ],
+        "negative": [
+          "Open a missing file with r and require a nonzero descriptor."
+        ],
+        "notes": [],
+        "positive": [
+          "Open an accessible file and verify a nonzero descriptor."
+        ]
+      },
+      "id": "SV-2023-21-FOPEN-FAILURE-ZERO"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an integral packed array containing a filename."
+        ],
+        "negative": [
+          "Use a non-string aggregate as the filename."
+        ],
+        "notes": [],
+        "positive": [
+          "Open files using each permitted filename expression category."
+        ]
+      },
+      "id": "SV-2023-21-FOPEN-FILENAME-TYPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Append to a nonexistent file."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Append to a nonempty file and verify existing content remains before new output."
+        ]
+      },
+      "id": "SV-2023-21-FOPEN-MODE-APPEND"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Create a missing file and perform both operations."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Open a nonempty file with a+ and verify reading plus appended writes."
+        ]
+      },
+      "id": "SV-2023-21-FOPEN-MODE-APPEND-UPDATE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Open a zero-length file."
+        ],
+        "negative": [
+          "Use r on a nonexistent file as though it created it."
+        ],
+        "notes": [],
+        "positive": [
+          "Open an existing file with r and rb and read it."
+        ]
+      },
+      "id": "SV-2023-21-FOPEN-MODE-READ"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Overwrite content at the current position."
+        ],
+        "negative": [
+          "Use r+ on a missing file as though it created it."
+        ],
+        "notes": [],
+        "positive": [
+          "Open an existing file with each r+ spelling and both read and write."
+        ]
+      },
+      "id": "SV-2023-21-FOPEN-MODE-READ-UPDATE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Open and close without writing."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Open an existing nonempty file with w and verify truncation; open a missing file and verify creation."
+        ]
+      },
+      "id": "SV-2023-21-FOPEN-MODE-WRITE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Create a missing file with a binary spelling."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Open an existing file with w+ and verify truncation plus read/write access."
+        ]
+      },
+      "id": "SV-2023-21-FOPEN-MODE-WRITE-UPDATE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare omitted type with explicit \"w\" mode while accounting for descriptor kind."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Open without type and write through the returned multichannel descriptor; open with type and use the file descriptor."
+        ]
+      },
+      "id": "SV-2023-21-FOPEN-OMITTED-TYPE-WRITING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Close a middle channel before opening another file."
+        ],
+        "negative": [
+          "Exhaust channels permanently despite closing prior files."
+        ],
+        "notes": [],
+        "positive": [
+          "Open, close, and repeatedly reopen files under a bounded channel limit and verify closed capacity is reused."
+        ]
+      },
+      "id": "SV-2023-21-FOPEN-REUSES-CLOSED-CHANNELS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use computed string expressions for filename and type."
+        ],
+        "negative": [
+          "Call $fopen without assigning its return descriptor."
+        ],
+        "notes": [],
+        "positive": [
+          "Assign one-argument and two-argument $fopen calls to descriptor variables."
+        ]
+      },
+      "id": "SV-2023-21-FOPEN-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use alternate equivalent binary-mode spellings."
+        ],
+        "negative": [
+          "Supply a character string not among the defined modes."
+        ],
+        "notes": [],
+        "positive": [
+          "Supply valid modes as string literals, string variables, and packed integral character strings."
+        ]
+      },
+      "id": "SV-2023-21-FOPEN-TYPE-EXPRESSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Format the code for a nonprinting ASCII character."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Format the numeric code for A with %c and %C."
+        ]
+      },
+      "id": "SV-2023-21-FORMAT-ASCII-CHARACTER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Format a nested aggregate with %P."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Format a struct or array with %p and verify assignment-pattern form."
+        ]
+      },
+      "id": "SV-2023-21-FORMAT-ASSIGNMENT-PATTERN"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Format a four-state value containing X and Z bits."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Format an integral value with %b and %B and verify binary output."
+        ]
+      },
+      "id": "SV-2023-21-FORMAT-BINARY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare %t output at different scope time units."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Format a time value with %t after configuring the time format."
+        ]
+      },
+      "id": "SV-2023-21-FORMAT-CURRENT-TIME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Format a negative signed value."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Format an integral value with %d and %D and verify decimal output."
+        ]
+      },
+      "id": "SV-2023-21-FORMAT-DECIMAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Format a value containing unknown bits."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Format the same value with each of %h, %H, %x, and %X and verify hexadecimal output."
+        ]
+      },
+      "id": "SV-2023-21-FORMAT-HEXADECIMAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use both lowercase and uppercase forms."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use %m without supplying a corresponding argument and observe a hierarchical name."
+        ]
+      },
+      "id": "SV-2023-21-FORMAT-HIERARCHICAL-NAME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use %L adjacent to a consuming format and supply an argument only for the latter."
+        ],
+        "negative": [],
+        "notes": [
+          "Materialization requires a design configuration with portable observable library binding information."
+        ],
+        "positive": [
+          "Use %l in a configured design and observe library binding information without supplying an argument."
+        ]
+      },
+      "id": "SV-2023-21-FORMAT-LIBRARY-BINDING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Instantiate the same cell from distinct libraries and compare %l output."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Display %l in a configured module instance and compare the library and cell components to its binding."
+        ]
+      },
+      "id": "SV-2023-21-FORMAT-LIBRARY-BINDING-TEXT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a net whose resolved value and strength differ among drivers."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Format a resolved net with %v and verify its signal-strength representation."
+        ]
+      },
+      "id": "SV-2023-21-FORMAT-NET-STRENGTH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Format a value whose width is not a multiple of three bits."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Format an integral value with %o and %O and verify octal output."
+        ]
+      },
+      "id": "SV-2023-21-FORMAT-OCTAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Apply explicit zero precision."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Format a real value with %f and %F and verify decimal notation."
+        ]
+      },
+      "id": "SV-2023-21-FORMAT-REAL-DECIMAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Format zero and a value with a large exponent."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Format a real value with %e and %E and verify exponential notation."
+        ]
+      },
+      "id": "SV-2023-21-FORMAT-REAL-EXPONENTIAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use values near the conversion threshold where both notations have similar length."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Format values of substantially different magnitudes with %g and observe the shorter notation."
+        ]
+      },
+      "id": "SV-2023-21-FORMAT-REAL-GENERAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Format a packed value containing multiple character bytes as a string."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Format a string value using %s and %S."
+        ]
+      },
+      "id": "SV-2023-21-FORMAT-STRING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare %u output for all-X, all-Z, and all-zero values."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Transfer a value containing X and Z with %u and verify those positions become zero."
+        ]
+      },
+      "id": "SV-2023-21-FORMAT-U-UNKNOWN-AS-ZERO"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use values containing X and Z together with the separately defined zero mapping."
+        ],
+        "negative": [],
+        "notes": [
+          "The output is binary rather than printable text."
+        ],
+        "positive": [
+          "Write a known packed value with %u and compare the output bytes with its binary representation."
+        ]
+      },
+      "id": "SV-2023-21-FORMAT-UNFORMATTED-2STATE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare packed data with distinct X and Z positions."
+        ],
+        "negative": [],
+        "notes": [
+          "The output is binary rather than printable text."
+        ],
+        "positive": [
+          "Write data containing 0, 1, X, and Z with %z and verify all four states are preserved."
+        ]
+      },
+      "id": "SV-2023-21-FORMAT-UNFORMATTED-4STATE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a 9-bit element to expose partial-byte handling."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Read distinguishable bytes into a multi-byte memory element and verify the first byte occupies its most-significant bits."
+        ]
+      },
+      "id": "SV-2023-21-FREAD-BIG-ENDIAN-ELEMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a destination spanning several bytes."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Read the same binary bytes into an integral destination and into memory."
+        ]
+      },
+      "id": "SV-2023-21-FREAD-BINARY-TARGET"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise widths 1, 8, 9, 16, and 17."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Read identical bytes into 8-bit and 9-bit memories and verify one versus two bytes consumed per word."
+        ]
+      },
+      "id": "SV-2023-21-FREAD-BYTES-PER-WORD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use extreme start/count values."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare integral reads with differing supplied range metadata where accepted and verify identical loading."
+        ]
+      },
+      "id": "SV-2023-21-FREAD-INTEGRAL-IGNORES-RANGE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use integral destinations of different widths."
+        ],
+        "negative": [
+          "Supply start/count arguments with an integral destination."
+        ],
+        "notes": [],
+        "positive": [
+          "Assign the return of $fread(integral_var,fd)."
+        ]
+      },
+      "id": "SV-2023-21-FREAD-INTEGRAL-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Start at the highest address and verify only that location can be loaded."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Read into ascending [10:20] and descending [20:10] memories with start 12 and verify locations 12, 13, and onward."
+        ]
+      },
+      "id": "SV-2023-21-FREAD-MEMORY-ADDRESS-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use count zero, one, and larger than available data."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Read with a count smaller than memory capacity and verify no additional locations change."
+        ]
+      },
+      "id": "SV-2023-21-FREAD-MEMORY-COUNT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use ascending and descending declarations with a start inside the range."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Read with and without start into a memory whose bounds make the first loaded location observable."
+        ]
+      },
+      "id": "SV-2023-21-FREAD-MEMORY-START"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an explicitly empty start position before count."
+        ],
+        "negative": [
+          "Supply more arguments than fd, start, and count."
+        ],
+        "notes": [],
+        "positive": [
+          "Call memory $fread with no range, start only, start and count, and omitted start with count."
+        ]
+      },
+      "id": "SV-2023-21-FREAD-MEMORY-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Read into a packed aggregate wider than one byte."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Read binary data into packed scalar, vector, struct, and union destinations using the integral form."
+        ]
+      },
+      "id": "SV-2023-21-FREAD-PACKED-INTEGRAL-VARIANT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare widths 7, 9, 15, and 17."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Read two bytes into a 9-bit word and verify only the defined 9 bits are retained."
+        ]
+      },
+      "id": "SV-2023-21-FREAD-PARTIAL-BYTE-TRUNCATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Cause a read error, verify zero, and query $ferror for its cause."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Read a known number of bytes and verify the returned character count."
+        ]
+      },
+      "id": "SV-2023-21-FREAD-RETURN-STATUS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Read all-zero and all-one files."
+        ],
+        "negative": [
+          "Produce X or Z from valid $fread input."
+        ],
+        "notes": [],
+        "positive": [
+          "Read varied binary bytes into a four-state destination and verify only 0 and 1 bits."
+        ]
+      },
+      "id": "SV-2023-21-FREAD-TWO-STATE-DATA"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use nested packed members."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Read distinguishable binary fields into an unpacked struct and verify declaration-order assignment."
+        ]
+      },
+      "id": "SV-2023-21-FREAD-UNPACKED-STRUCT-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use first and later members of differing widths."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Read into an unpacked union with distinguishable member representations and verify first-member treatment."
+        ]
+      },
+      "id": "SV-2023-21-FREAD-UNPACKED-UNION-FIRST"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use two descriptors positioned at different formatted records."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Open a text file and scan a formatted value through its descriptor."
+        ]
+      },
+      "id": "SV-2023-21-FSCANF-FILE-SOURCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Seek exactly one byte and a large distance beyond EOF."
+        ],
+        "negative": [
+          "Extend file size solely by seeking."
+        ],
+        "notes": [],
+        "positive": [
+          "Seek beyond EOF and verify file size remains unchanged before a write."
+        ]
+      },
+      "id": "SV-2023-21-FSEEK-BEYOND-EOF-NO-EXTEND"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Subsequently overwrite part of the gap and verify only unwritten positions remain zero."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Seek beyond EOF, write data, then read the intervening gap and verify zeros."
+        ]
+      },
+      "id": "SV-2023-21-FSEEK-GAP-ZERO-READS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Seek exactly to EOF and back one byte from EOF."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Seek using each origin with positive, zero, and valid negative offsets and verify the next byte accessed."
+        ]
+      },
+      "id": "SV-2023-21-FSEEK-SIGNED-ORIGIN"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Check the initial position and EOF position."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Check $ftell before and after known-length reads and writes."
+        ]
+      },
+      "id": "SV-2023-21-FTELL-CURRENT-OFFSET"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Cause a positioning error, verify -1, and query $ferror."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Call $ftell on a valid open descriptor and obtain a nonnegative position."
+        ]
+      },
+      "id": "SV-2023-21-FTELL-ERROR-EOF"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use widths not divisible by four or three."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Format vectors in hexadecimal and octal and verify one digit per four or three bits."
+        ]
+      },
+      "id": "SV-2023-21-HEX-OCTAL-GROUPING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Invoke from a labeled statement nested inside a named block."
+        ],
+        "negative": [
+          "Supply an argument as though %m consumed one."
+        ],
+        "notes": [],
+        "positive": [
+          "Invoke a display containing %m from nested modules, a named block, and a subroutine without supplying an argument."
+        ]
+      },
+      "id": "SV-2023-21-HIERARCHICAL-NAME-INVOKING-SCOPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast weak known drive with high-impedance Z."
+        ],
+        "negative": [
+          "Attempt to construct or report a known logic value at high-impedance strength."
+        ],
+        "notes": [],
+        "positive": [
+          "Observe a high-impedance-strength net with value Z."
+        ]
+      },
+      "id": "SV-2023-21-HIGHZ-STRENGTH-VALUE-RESTRICTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Apply each uppercase form to a packed union value."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Apply an integer format to enum, packed struct, and typedef integral values."
+        ]
+      },
+      "id": "SV-2023-21-INTEGER-FORMAT-INTEGRAL-TYPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise %u and %z on unpacked structs and unions under their explicit member-wise rules."
+        ],
+        "negative": [
+          "Apply %d to an unpacked struct."
+        ],
+        "notes": [],
+        "positive": [
+          "Format a packed aggregate with an integer format."
+        ]
+      },
+      "id": "SV-2023-21-INTEGER-FORMAT-UNPACKED-RESTRICTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Combine standard-output bit 0 with multiple file bits."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "OR two file MCDs, write once, and verify identical output reaches both files."
+        ]
+      },
+      "id": "SV-2023-21-MCD-BITWISE-COMBINATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Open channels near the implementation's multichannel limit."
+        ],
+        "negative": [
+          "Return an MCD with reserved bit 31 set."
+        ],
+        "notes": [],
+        "positive": [
+          "Verify returned MCDs never set bit 31."
+        ]
+      },
+      "id": "SV-2023-21-MCD-RESERVED-MSB"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Open the maximum supported number of multichannel files."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Open separate files using the one-argument form and verify each descriptor has one distinct file-channel bit."
+        ]
+      },
+      "id": "SV-2023-21-MCD-SINGLE-CHANNEL-BIT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "OR bit 0 with a file-channel bit to duplicate output."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Write through an MCD containing bit 0 and verify standard output receives the data."
+        ]
+      },
+      "id": "SV-2023-21-MCD-STANDARD-OUTPUT-BIT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a highest dimension with nonzero bounds."
+        ],
+        "negative": [
+          "Interpret an address directive as directly selecting a lower-dimension scalar word."
+        ],
+        "notes": [],
+        "positive": [
+          "Use address directives to select distinct highest-dimension words and verify enclosed lower dimensions load beneath each."
+        ]
+      },
+      "id": "SV-2023-21-MEMFILE-ADDRESS-HIGHEST-DIMENSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Reverse every unpacked dimension."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare file mapping for arrays with ascending and reversed bounds having the same numeric index sets."
+        ]
+      },
+      "id": "SV-2023-21-MEMFILE-DECLARATION-DIRECTION-INDEPENDENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use packed dimensions with opposing declaration directions."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Round-trip a memory element with multiple packed dimensions and verify total width and packed bit order."
+        ]
+      },
+      "id": "SV-2023-21-MEMFILE-MULTIPLE-PACKED-DIMENSIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use declaration directions opposite to numeric low-to-high order."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Load distinguishable values into a multidimensional array and verify rightmost-index-fastest, low-to-high traversal."
+        ]
+      },
+      "id": "SV-2023-21-MEMFILE-ROW-MAJOR-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Include both a changing variable and $time in the list and verify time is reported when the variable triggers."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Change each monitored variable and verify a report; advance time alone and verify time functions do not trigger one."
+        ]
+      },
+      "id": "SV-2023-21-MONITOR-CHANGE-TRIGGER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call $monitoroff before the first monitored change."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Install a monitor at simulation start without calling $monitoron and verify reporting is enabled."
+        ]
+      },
+      "id": "SV-2023-21-MONITOR-DEFAULT-ENABLED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use non-consuming %m and %% in a monitor string."
+        ],
+        "negative": [
+          "Use a consuming monitor format without a corresponding expression."
+        ],
+        "notes": [],
+        "positive": [
+          "Monitor mixed variables and expressions using defined display formats and escapes."
+        ]
+      },
+      "id": "SV-2023-21-MONITOR-DISPLAY-ARGUMENT-RULES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Combine blocking and nonblocking updates in one time step."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Make multiple same-step changes and verify the end-of-step report contains the final complete argument list."
+        ]
+      },
+      "id": "SV-2023-21-MONITOR-END-OF-TIMESTEP"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call $monitoron after replacing the display list while monitoring is disabled."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Disable an active monitor, change its arguments, then re-enable it and verify the latest monitor list resumes."
+        ]
+      },
+      "id": "SV-2023-21-MONITOR-ON-OFF-CONTROL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change the same arguments multiple times before the end of the step."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Change two monitored variables in one time step and verify exactly one report."
+        ]
+      },
+      "id": "SV-2023-21-MONITOR-SIMULTANEOUS-COALESCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Replace the active list repeatedly during simulation."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Install one monitor list, then another, and verify only the newer list responds."
+        ]
+      },
+      "id": "SV-2023-21-MONITOR-SINGLE-ACTIVE-LIST"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Invoke $monitor with no parentheses and with empty parentheses."
+        ],
+        "negative": [
+          "Pass an argument to $monitoron or $monitoroff."
+        ],
+        "notes": [],
+        "positive": [
+          "Invoke $monitor(\"%d\", v);, $monitoron;, and $monitoroff;."
+        ]
+      },
+      "id": "SV-2023-21-MONITOR-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call $monitoron when monitoring is already enabled."
+        ],
+        "negative": [
+          "Require a value change before the first report after $monitoron."
+        ],
+        "notes": [],
+        "positive": [
+          "Call $monitoron without any intervening value change and verify an immediate report."
+        ]
+      },
+      "id": "SV-2023-21-MONITORON-IMMEDIATE-DISPLAY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Monitor the same expression through multiple active file monitors."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Activate two $fmonitor tasks on distinct files and verify both continue reporting."
+        ]
+      },
+      "id": "SV-2023-21-MULTIPLE-FMONITOR-ACTIVE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an expression width not aligned to an octal or hexadecimal digit boundary."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Display a value with leading zero bits in binary, octal, and hexadecimal and verify zeros are retained."
+        ]
+      },
+      "id": "SV-2023-21-NONDECIMAL-LEADING-ZEROS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Format an aggregate containing many identical values."
+        ],
+        "negative": [],
+        "notes": [
+          "Oracle must accept both permitted representations."
+        ],
+        "positive": [
+          "Accept either repeated explicit elements or a semantically equivalent default element in %p output."
+        ]
+      },
+      "id": "SV-2023-21-P-FORMAT-DEFAULT-COMPRESSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Force an unnamed base-type value into an enum and verify base-type formatting."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Format a valid enum value and verify its declared name."
+        ]
+      },
+      "id": "SV-2023-21-P-FORMAT-ENUM"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Format a nested aggregate requiring delimiters and labels."
+        ],
+        "negative": [],
+        "notes": [
+          "Do not require a particular whitespace layout."
+        ],
+        "positive": [
+          "Parse normalized %p aggregate output as a legal assignment pattern while ignoring whitespace differences."
+        ]
+      },
+      "id": "SV-2023-21-P-FORMAT-LEGAL-PATTERN"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Generate output exactly at versus just beyond the limit."
+        ],
+        "negative": [
+          "Reach the limit with silent truncation."
+        ],
+        "notes": [
+          "Materialization requires a discoverable implementation limit; diagnostic wording is unconstrained."
+        ],
+        "positive": [
+          "Exceed a documented %p length limit and verify truncation plus a warning."
+        ]
+      },
+      "id": "SV-2023-21-P-FORMAT-LIMIT-DIAGNOSTIC"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Produce output exactly 1024 characters long."
+        ],
+        "negative": [
+          "Impose or observe truncation below 1024 characters."
+        ],
+        "notes": [],
+        "positive": [
+          "Produce %p output exceeding 1024 characters and verify it is not truncated before character 1024."
+        ]
+      },
+      "id": "SV-2023-21-P-FORMAT-MINIMUM-LIMIT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast null and non-null values without constraining the non-null representation."
+        ],
+        "negative": [],
+        "notes": [
+          "Do not constrain implementation-dependent non-null output."
+        ],
+        "positive": [
+          "Format null values of each listed handle-like type and verify the word null."
+        ]
+      },
+      "id": "SV-2023-21-P-FORMAT-NULL-HANDLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a singular typedef lacking a special %p rule."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare %p output for an integral singular value with its unformatted display."
+        ]
+      },
+      "id": "SV-2023-21-P-FORMAT-OTHER-SINGULAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a packed struct containing an enum field."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Format a packed struct with %p and verify named elements."
+        ]
+      },
+      "id": "SV-2023-21-P-FORMAT-PACKED-STRUCT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Format an empty string and a string containing a quote."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Format a string with %p and verify surrounding quotes."
+        ]
+      },
+      "id": "SV-2023-21-P-FORMAT-QUOTED-STRING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use several levels of mixed structs and arrays."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Format a nested unpacked aggregate and verify every singular leaf is represented."
+        ]
+      },
+      "id": "SV-2023-21-P-FORMAT-RECURSIVE-TRAVERSAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an active element whose value is itself an aggregate."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Format each active alternative of a tagged union and verify tag:value and the valid element."
+        ]
+      },
+      "id": "SV-2023-21-P-FORMAT-TAGGED-UNION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use first and later members of differing widths."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Format an untagged union with distinguishable members and verify only its first declared element is printed."
+        ]
+      },
+      "id": "SV-2023-21-P-FORMAT-UNION-FIRST-ELEMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a sparse associative array where index labels make elements identifiable."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Format an unpacked array with %p and parse the output as an assignment pattern."
+        ]
+      },
+      "id": "SV-2023-21-P-FORMAT-UNPACKED-ARRAY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Format a nested unpacked struct."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Format an unpacked struct with %p and verify named assignment-pattern elements."
+        ]
+      },
+      "id": "SV-2023-21-P-FORMAT-UNPACKED-STRUCT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Provide an argument consisting of + followed by one character."
+        ],
+        "negative": [
+          "Treat an otherwise identical argument lacking + as a plusarg."
+        ],
+        "notes": [],
+        "positive": [
+          "Launch with +feature and make it visible to plusarg functions."
+        ]
+      },
+      "id": "SV-2023-21-PLUSARG-COMMAND-PREFIX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use dynamically constructed string arguments."
+        ],
+        "negative": [
+          "Call $value$plusargs without a destination variable."
+        ],
+        "notes": [],
+        "positive": [
+          "Call each function with its defined argument count."
+        ]
+      },
+      "id": "SV-2023-21-PLUSARG-FUNCTION-SIGNATURES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Write sequentially to both pre-opened output streams."
+        ],
+        "negative": [
+          "Use STDIN as a writable descriptor."
+        ],
+        "notes": [],
+        "positive": [
+          "Read from STDIN and append output through STDOUT and STDERR."
+        ]
+      },
+      "id": "SV-2023-21-PREOPENED-FD-MODES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the descriptors without first calling $fopen."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare each predefined descriptor to its specified 32-bit value."
+        ]
+      },
+      "id": "SV-2023-21-PREOPENED-FD-VALUES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place an all-X group beside a known group."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Create an all-X hexadecimal or octal digit group and verify lowercase x."
+        ]
+      },
+      "id": "SV-2023-21-RADIX-GROUP-ALL-X"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place an all-Z group beside a known group."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Create an all-Z hexadecimal or octal digit group and verify lowercase z."
+        ]
+      },
+      "id": "SV-2023-21-RADIX-GROUP-ALL-Z"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use one unknown bit in an otherwise known group."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Mix X and known bits within one digit group and verify uppercase X."
+        ]
+      },
+      "id": "SV-2023-21-RADIX-GROUP-PARTIAL-X"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Mix only X and Z bits within one group."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Mix Z with known bits and verify Z, then include X in the same group and verify X."
+        ]
+      },
+      "id": "SV-2023-21-RADIX-GROUP-PARTIAL-Z"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a multidimensional target with only one remaining addressed dimension."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Select a lower-dimensional subarray and verify start/finish apply to its addressed unpacked dimension."
+        ]
+      },
+      "id": "SV-2023-21-READMEM-ADDRESS-RANGE-DIMENSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Load a mixture of existing and new indices."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Load addresses absent from a sparse associative array and verify new elements."
+        ]
+      },
+      "id": "SV-2023-21-READMEM-ASSOCIATIVE-CREATES-ELEMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a wide packed integral index."
+        ],
+        "negative": [
+          "Load an associative array indexed by string."
+        ],
+        "notes": [],
+        "positive": [
+          "Load associative arrays indexed by int and enum."
+        ]
+      },
+      "id": "SV-2023-21-READMEM-ASSOCIATIVE-INTEGRAL-INDEX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use equal start and finish."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Load ranges with start below and above finish and include an in-file address directive."
+        ]
+      },
+      "id": "SV-2023-21-READMEM-BOUNDED-DIRECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a descending declaration while verifying numeric upward progression."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Test default start and explicit start-only loading, including an in-file address jump."
+        ]
+      },
+      "id": "SV-2023-21-READMEM-DEFAULT-UPWARD-RANGE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Load into an empty dynamic array or queue."
+        ],
+        "negative": [
+          "Grow or shrink the target as a side effect of loading."
+        ],
+        "notes": [],
+        "positive": [
+          "Load into pre-sized dynamic arrays and queues and verify size is unchanged."
+        ]
+      },
+      "id": "SV-2023-21-READMEM-DYNAMIC-QUEUE-NO-RESIZE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use sparse and explicitly assigned enum values."
+        ],
+        "negative": [
+          "Use enum identifier names as file addresses."
+        ],
+        "notes": [],
+        "positive": [
+          "Load enum-indexed entries using hexadecimal numeric addresses matching declared enum values."
+        ]
+      },
+      "id": "SV-2023-21-READMEM-ENUM-INDEX-ADDRESS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Mix comments and whitespace around numbers and address specifications while preserving required @ adjacency."
+        ],
+        "negative": [
+          "Include an unrelated punctuation token outside a comment."
+        ],
+        "notes": [],
+        "positive": [
+          "Load files containing each whitespace form, both comment forms, valid number tokens, and @address directives."
+        ]
+      },
+      "id": "SV-2023-21-READMEM-FILE-CONTENTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a packed integral character string."
+        ],
+        "negative": [
+          "Use an unsupported aggregate as filename."
+        ],
+        "notes": [],
+        "positive": [
+          "Load using each permitted filename expression category."
+        ]
+      },
+      "id": "SV-2023-21-READMEM-FILENAME-TYPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use consecutive address directives with no intervening data."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Place address directives before distinguishable data and verify each subsequent starting location."
+        ]
+      },
+      "id": "SV-2023-21-READMEM-INFILE-ADDRESS-EFFECT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Test one address immediately outside each endpoint for ascending and descending ranges."
+        ],
+        "negative": [
+          "Place an in-file address outside the task range and require continued loading."
+        ],
+        "notes": [],
+        "positive": [
+          "Use in-file addresses at and within both task endpoints."
+        ]
+      },
+      "id": "SV-2023-21-READMEM-INFILE-ADDRESS-RANGE-ERROR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a long address value within target index range."
+        ],
+        "negative": [
+          "Insert whitespace between @ and its hexadecimal digits."
+        ],
+        "notes": [],
+        "positive": [
+          "Use @0, mixed-case hexadecimal addresses, and multiple address directives."
+        ]
+      },
+      "id": "SV-2023-21-READMEM-INFILE-ADDRESS-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Load an empty file and a one-element file."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Load equivalent binary and hexadecimal files using the matching tasks and verify memory values."
+        ]
+      },
+      "id": "SV-2023-21-READMEM-LOADS-TEXT-FILE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use ascending and descending slices."
+        ],
+        "negative": [
+          "Use slice syntax on a higher-order dimension."
+        ],
+        "notes": [],
+        "positive": [
+          "Load into a legal slice of the lowest unpacked dimension."
+        ]
+      },
+      "id": "SV-2023-21-READMEM-LOWEST-DIMENSION-SLICE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Partially index all but the lowest dimension."
+        ],
+        "negative": [
+          "Specify a complete or partial range for a higher-order dimension."
+        ],
+        "notes": [],
+        "positive": [
+          "Load a one-dimensional memory and a row selected by indices from a multidimensional memory."
+        ]
+      },
+      "id": "SV-2023-21-READMEM-MEMORY-SELECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an empty file over a nonempty range."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Preinitialize memory, load too few words, and verify loaded prefix plus unchanged remainder."
+        ]
+      },
+      "id": "SV-2023-21-READMEM-MISMATCH-PARTIAL-LOAD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a file ending partway through a lower-dimension word."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Preinitialize a multidimensional array, load a complete file and then an incomplete file, and verify unchanged suffix."
+        ]
+      },
+      "id": "SV-2023-21-READMEM-MULTIDIM-NO-ADDRESS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Provide no subword data after an address directive."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Preinitialize a multidimensional array and partially load one addressed highest-dimension word."
+        ]
+      },
+      "id": "SV-2023-21-READMEM-MULTIDIM-WITH-ADDRESS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use only a comment, with no surrounding whitespace, as separator."
+        ],
+        "negative": [
+          "Concatenate two intended number tokens without a separator."
+        ],
+        "notes": [],
+        "positive": [
+          "Separate numbers using every whitespace type and each comment type."
+        ]
+      },
+      "id": "SV-2023-21-READMEM-NUMBER-SEPARATORS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a packed element width not aligned to hexadecimal digits."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Load unpacked arrays of packed structs, unions, and vectors and compare equivalent vector values."
+        ]
+      },
+      "id": "SV-2023-21-READMEM-PACKED-AS-VECTOR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use equal start and finish for one entry."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Load distinguishable entries with start below finish and start above finish and verify opposite directions."
+        ]
+      },
+      "id": "SV-2023-21-READMEM-RANGE-DIRECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a one-word range and empty or two-word files."
+        ],
+        "negative": [
+          "Silently accept a mismatched count."
+        ],
+        "notes": [],
+        "positive": [
+          "Provide exactly the implied number of words and then one fewer and one more, checking warnings."
+        ]
+      },
+      "id": "SV-2023-21-READMEM-RANGE-WORD-COUNT-WARNING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use reversed-direction slice bounds."
+        ],
+        "negative": [
+          "Supply an endpoint outside the selected slice."
+        ],
+        "notes": [],
+        "positive": [
+          "Load with endpoints equal to the slice bounds."
+        ]
+      },
+      "id": "SV-2023-21-READMEM-SLICE-RANGE-BOUNDS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an address specification between two consecutive values."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Load distinguishable values with task address bounds and in-file address changes."
+        ]
+      },
+      "id": "SV-2023-21-READMEM-SUCCESSIVE-WORDS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use equal start and finish addresses."
+        ],
+        "negative": [
+          "Supply finish_addr without the syntactically preceding start_addr."
+        ],
+        "notes": [],
+        "positive": [
+          "Invoke each task with two, three, and four arguments."
+        ]
+      },
+      "id": "SV-2023-21-READMEM-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use sparse enum numeric assignments."
+        ],
+        "negative": [
+          "Use enum identifier names as data tokens."
+        ],
+        "notes": [],
+        "positive": [
+          "Load numeric tokens matching explicitly and implicitly valued enum elements."
+        ]
+      },
+      "id": "SV-2023-21-READMEM-TWOSTATE-ENUM-NUMERIC"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place the invalid value between valid values and verify the later one is not read."
+        ],
+        "negative": [
+          "Continue loading words after an out-of-range value."
+        ],
+        "notes": [],
+        "positive": [
+          "Load boundary values within the target range."
+        ]
+      },
+      "id": "SV-2023-21-READMEM-TWOSTATE-RANGE-ERROR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare the same file loaded into 2-state and 4-state targets."
+        ],
+        "negative": [
+          "Preserve X or Z in a 2-state target."
+        ],
+        "notes": [],
+        "positive": [
+          "Load X- and Z-containing tokens into 2-state int data and verify those bits become zero."
+        ]
+      },
+      "id": "SV-2023-21-READMEM-TWOSTATE-XZ-ZERO"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use numbers wider and narrower than a memory word."
+        ],
+        "negative": [
+          "Use sized or based-literal syntax such as 8'hff in the file."
+        ],
+        "notes": [],
+        "positive": [
+          "Load unadorned binary and hexadecimal digit strings with their matching tasks."
+        ]
+      },
+      "id": "SV-2023-21-READMEM-UNSIZED-UNBASED-NUMBERS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a field width smaller than the produced number."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Format real and shortreal values using %10.3g and verify minimum width 10 and precision 3."
+        ]
+      },
+      "id": "SV-2023-21-REAL-FORMAT-CAPABILITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Rewind from EOF and from a position beyond EOF."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Advance a file, call $rewind, and compare the next position and read with $fseek(fd,0,0)."
+        ]
+      },
+      "id": "SV-2023-21-REWIND-EQUIVALENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Suppress the first or final field."
+        ],
+        "negative": [
+          "Supply a destination argument for a suppressed conversion."
+        ],
+        "notes": [],
+        "positive": [
+          "Suppress one field between two assigned conversions and supply destinations only for the assigned fields."
+        ]
+      },
+      "id": "SV-2023-21-SCAN-ASSIGNMENT-SUPPRESSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Scan fields composed entirely of unknown or high-impedance symbols."
+        ],
+        "negative": [
+          "Include digit 2 in a %b field."
+        ],
+        "notes": [],
+        "positive": [
+          "Scan fields containing 0, 1, X, x, Z, z, ?, and separators with %b."
+        ]
+      },
+      "id": "SV-2023-21-SCAN-BINARY-FIELD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Scan byte values 00 and ff from a suitable input source."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Scan letters, digits, and whitespace with %c and verify their 8-bit codes."
+        ]
+      },
+      "id": "SV-2023-21-SCAN-CHARACTER-FIELD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Conflict after several successfully matched field characters."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Fail a numeric conversion on a letter, then read the next character and verify it is that letter."
+        ]
+      },
+      "id": "SV-2023-21-SCAN-CONFLICT-UNREAD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a zero or one-character field width where meaningful."
+        ],
+        "negative": [
+          "Place field width or suppression after the conversion code."
+        ],
+        "notes": [],
+        "positive": [
+          "Use plain, suppressed, width-limited, and suppressed-width conversions."
+        ]
+      },
+      "id": "SV-2023-21-SCAN-CONVERSION-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Include literal text between conversions."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Scan multiple differently formatted fields into matching destination variables."
+        ]
+      },
+      "id": "SV-2023-21-SCAN-CONVERT-AND-STORE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Scan the minimum fields +0, -0, x, z, and ?."
+        ],
+        "negative": [
+          "Scan a decimal field mixing a four-state symbol with decimal digits."
+        ],
+        "notes": [],
+        "positive": [
+          "Scan signed and unsigned decimal fields with underscores, and each standalone four-state symbol."
+        ]
+      },
+      "id": "SV-2023-21-SCAN-DECIMAL-FIELD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast input failure with matching failure at EOF boundaries."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Exercise EOF before a field, after permitted leading whitespace, and after partial directive input."
+        ]
+      },
+      "id": "SV-2023-21-SCAN-EOF-DIRECTIVE-TERMINATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Provide several excess destination arguments of different types."
+        ],
+        "negative": [],
+        "notes": [
+          "Insufficient destination arguments are explicitly undefined and are not a portable requirement oracle."
+        ],
+        "positive": [
+          "Supply an extra destination and verify it remains unaffected after the format ends."
+        ]
+      },
+      "id": "SV-2023-21-SCAN-EXCESS-ARGUMENTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Scan values with no decimal point, with a decimal point, and with signed exponent."
+        ],
+        "negative": [
+          "Use an exponent marker without exponent digits."
+        ],
+        "notes": [],
+        "positive": [
+          "Scan signed and unsigned fixed-point and exponent forms with %f, %e, and %g."
+        ]
+      },
+      "id": "SV-2023-21-SCAN-FLOATING-FIELD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Match adjacent ordinary characters."
+        ],
+        "negative": [
+          "Provide a different next input character than the format literal."
+        ],
+        "notes": [],
+        "positive": [
+          "Scan input containing required literal punctuation."
+        ]
+      },
+      "id": "SV-2023-21-SCAN-FORMAT-LITERAL-MATCH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compute the format expression at runtime."
+        ],
+        "negative": [
+          "Use an unsupported aggregate as the format."
+        ],
+        "notes": [],
+        "positive": [
+          "Provide equivalent formats via string and packed integral expressions."
+        ]
+      },
+      "id": "SV-2023-21-SCAN-FORMAT-TYPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use null bytes in $sscanf input and verify whitespace treatment."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use blanks, tabs, newlines, and formfeeds in formats and varying runs in input; verify the following field begins at the first nonwhitespace character."
+        ]
+      },
+      "id": "SV-2023-21-SCAN-FORMAT-WHITESPACE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use underscores and unknown symbols in one field."
+        ],
+        "negative": [
+          "Include a character beyond f/F in a hexadecimal field."
+        ],
+        "notes": [],
+        "positive": [
+          "Scan mixed-case hexadecimal digits and four-state symbols with %h and %x."
+        ]
+      },
+      "id": "SV-2023-21-SCAN-HEXADECIMAL-FIELD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Invoke the same scan from nested named scopes."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use %m between consuming conversions and verify it returns the invoking hierarchy without advancing input."
+        ]
+      },
+      "id": "SV-2023-21-SCAN-HIERARCHICAL-PATH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Set field width to exactly the valid field length."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Scan fields terminated separately by whitespace, invalid conversion character, and maximum width."
+        ]
+      },
+      "id": "SV-2023-21-SCAN-INPUT-FIELD-EXTENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use uppercase conversion codes."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Scan into enum, packed struct, and integral typedef destinations with applicable integer conversions."
+        ]
+      },
+      "id": "SV-2023-21-SCAN-INTEGER-INTEGRAL-TYPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast unpacked byte-array source use with prohibited unpacked destination use."
+        ],
+        "negative": [
+          "Scan an integer conversion directly into an unpacked struct or array."
+        ],
+        "notes": [],
+        "positive": [
+          "Scan into a packed aggregate."
+        ]
+      },
+      "id": "SV-2023-21-SCAN-INTEGER-UNPACKED-PROHIBITED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Scan a newline using %c."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Prefix numeric and character fields with spaces and compare conversion behavior."
+        ]
+      },
+      "id": "SV-2023-21-SCAN-LEADING-WHITESPACE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place %% between two assigning conversions."
+        ],
+        "negative": [
+          "Match %% against a non-percent input character."
+        ],
+        "notes": [],
+        "positive": [
+          "Scan an input percent sign with %% and verify no destination is consumed."
+        ]
+      },
+      "id": "SV-2023-21-SCAN-LITERAL-PERCENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use one-bit and very wide destinations."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Scan a value wider than a narrow integral destination and verify its least-significant bits."
+        ]
+      },
+      "id": "SV-2023-21-SCAN-NARROW-DESTINATION-LSBS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use underscores between every octal digit."
+        ],
+        "negative": [
+          "Include digit 8 or 9 in a %o field."
+        ],
+        "notes": [],
+        "positive": [
+          "Scan octal digits and each four-state/underscore character with %o."
+        ]
+      },
+      "id": "SV-2023-21-SCAN-OCTAL-FIELD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use values near each destination's finite limit."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Scan positive and negative overflowing real text into each listed destination type and verify signed infinity."
+        ]
+      },
+      "id": "SV-2023-21-SCAN-REAL-OVERFLOW-INFINITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Distinguish immediate matching failure returning zero from input failure before the first conversion returning EOF."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Scan zero, one, and multiple assigned items and verify the count."
+        ]
+      },
+      "id": "SV-2023-21-SCAN-RETURN-COUNT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Scan strength representations ending in 0, 1, X, Z, L, and H."
+        ],
+        "negative": [
+          "Use a nonintegral destination for %v."
+        ],
+        "notes": [],
+        "positive": [
+          "Scan representative mnemonic and numeric-pair strength strings into an integral variable."
+        ]
+      },
+      "id": "SV-2023-21-SCAN-STRENGTH-FIELD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a packed integral destination narrower than the token."
+        ],
+        "negative": [
+          "Use an unsupported aggregate destination."
+        ],
+        "notes": [],
+        "positive": [
+          "Scan the same token into each permitted destination category."
+        ]
+      },
+      "id": "SV-2023-21-SCAN-STRING-DESTINATION-TYPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a maximum field width shorter than the token."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Scan a token terminated by each supported whitespace category."
+        ]
+      },
+      "id": "SV-2023-21-SCAN-STRING-FIELD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multiple scan destinations."
+        ],
+        "negative": [
+          "Swap the input source and format arguments."
+        ],
+        "notes": [],
+        "positive": [
+          "Use $fscanf(fd,\"%d\",v) and $sscanf(str,\"%d\",v)."
+        ]
+      },
+      "id": "SV-2023-21-SCAN-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Scan positive and negative fractional time values."
+        ],
+        "negative": [
+          "Use an incomplete exponent in a %t field."
+        ],
+        "notes": [],
+        "positive": [
+          "Scan fixed and exponent-form time fields with %t."
+        ]
+      },
+      "id": "SV-2023-21-SCAN-TIME-FIELD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a value exactly at and just across a rounding boundary."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "With `timescale 1ns/100ps and $timeformat(-3,2,\" ms\",10), scan \"10.345\" with %t and verify 10350000.0."
+        ]
+      },
+      "id": "SV-2023-21-SCAN-TIME-SCALE-ROUND"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multiple trailing whitespace characters."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Scan a token ending before newline, then read and verify the newline remains; repeat with a whitespace directive."
+        ]
+      },
+      "id": "SV-2023-21-SCAN-TRAILING-WHITESPACE-UNREAD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an input alternating 0 and 1 across word boundaries."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Scan %u data into a four-state destination and verify every input 0/1 is preserved."
+        ]
+      },
+      "id": "SV-2023-21-SCAN-U-EXPANDS-FOUR-STATE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use destination widths spanning multiple 32-bit units."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Write a value using matching %u output, scan it into an equal-width target, and compare."
+        ]
+      },
+      "id": "SV-2023-21-SCAN-U-FILLS-DESTINATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Materialize on hosts of opposite endianness."
+        ],
+        "negative": [],
+        "notes": [
+          "Expected byte order is host dependent."
+        ],
+        "positive": [
+          "Read a multibyte %u file and compare byte order to host-native C read layout."
+        ]
+      },
+      "id": "SV-2023-21-SCAN-U-NATIVE-ENDIAN"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Scan all-zero and all-one data."
+        ],
+        "negative": [
+          "Produce X or Z from valid %u input."
+        ],
+        "notes": [],
+        "positive": [
+          "Scan varied %u input into a four-state variable and verify every result bit is 0 or 1."
+        ]
+      },
+      "id": "SV-2023-21-SCAN-U-NO-XZ-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Include X and Z bits in distinct native words."
+        ],
+        "negative": [],
+        "notes": [
+          "Expected byte order depends on the host and standardized VPI vector representation."
+        ],
+        "positive": [
+          "Read a multword four-state file with %z and compare its layout to host-native s_vpi_vecval data."
+        ]
+      },
+      "id": "SV-2023-21-SCAN-Z-NATIVE-ENDIAN"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use four-state data spanning multiple native words."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Write data containing 0, 1, X, and Z with matching %z output and scan it back through $fscanf and $sscanf."
+        ]
+      },
+      "id": "SV-2023-21-SCAN-Z-UNFORMATTED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Intermix consuming formats with %% and %m when counting arguments."
+        ],
+        "negative": [
+          "Supply too few and too many arguments and require a warning without stopping execution."
+        ],
+        "notes": [
+          "Diagnostic wording is unconstrained; a statically detected mismatch may additionally be reported at compile time."
+        ],
+        "positive": [
+          "Supply exactly one argument per consuming format and observe no mismatch."
+        ]
+      },
+      "id": "SV-2023-21-SFORMAT-ARGUMENT-MISMATCH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use non-consuming %% and %m."
+        ],
+        "negative": [
+          "Treat a specifier undefined for $display as defined for $sformat."
+        ],
+        "notes": [],
+        "positive": [
+          "Exercise representative numeric, string, time, hierarchy, and assignment-pattern display specifiers with $sformat."
+        ]
+      },
+      "id": "SV-2023-21-SFORMAT-DISPLAY-SPECIFIERS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a runtime-computed byte-array format."
+        ],
+        "negative": [
+          "Use an unsupported unpacked aggregate as the format argument."
+        ],
+        "notes": [],
+        "positive": [
+          "Supply the format through each permitted expression category."
+        ]
+      },
+      "id": "SV-2023-21-SFORMAT-FORMAT-TYPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a destination narrower than the formatted result."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare $sformat assignment into string and packed destinations with direct string-literal assignment."
+        ]
+      },
+      "id": "SV-2023-21-SFORMAT-OUTPUT-ASSIGNMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a dynamically computed second argument."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Place percent characters in a later string argument and verify they are data, not additional formats."
+        ]
+      },
+      "id": "SV-2023-21-SFORMAT-SECOND-ARGUMENT-ONLY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a format string with no consuming formats and no extra arguments."
+        ],
+        "negative": [
+          "Omit either the output variable or format string."
+        ],
+        "notes": [],
+        "positive": [
+          "Invoke $sformat(out, \"%d\", value);."
+        ]
+      },
+      "id": "SV-2023-21-SFORMAT-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Nest $sformatf in another string expression."
+        ],
+        "negative": [
+          "Provide an output destination as though calling $sformat."
+        ],
+        "notes": [],
+        "positive": [
+          "Use $sformatf in string assignment, concatenation, and function-argument contexts."
+        ]
+      },
+      "id": "SV-2023-21-SFORMATF-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call it with a literal-only format and no additional arguments."
+        ],
+        "negative": [
+          "Call $sformatf without a format string."
+        ],
+        "notes": [],
+        "positive": [
+          "Assign $sformatf(\"%0d\", value) to a string."
+        ]
+      },
+      "id": "SV-2023-21-SFORMATF-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a packed integral source containing embedded zero bytes."
+        ],
+        "negative": [
+          "Use an unsupported unpacked aggregate as the source."
+        ],
+        "notes": [],
+        "positive": [
+          "Scan equivalent text from each permitted source type."
+        ]
+      },
+      "id": "SV-2023-21-SSCANF-SOURCE-TYPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place the unknown bit outside the portion that would otherwise be consumed."
+        ],
+        "negative": [
+          "Insert an X or Z bit into either argument and expect a non-EOF result."
+        ],
+        "notes": [],
+        "positive": [
+          "Use two-state format and source values and scan normally."
+        ]
+      },
+      "id": "SV-2023-21-SSCANF-UNKNOWN-INPUT-EOF"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Create a resolved strength range requiring a decimal-digit pair."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Display ordinary scalar strengths and verify a two-letter mnemonic."
+        ]
+      },
+      "id": "SV-2023-21-STRENGTH-CHARACTER-ENCODING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multiple %v specifications with the same number of scalar references."
+        ],
+        "negative": [
+          "Use %v without a following scalar reference."
+        ],
+        "notes": [],
+        "positive": [
+          "Supply one scalar net reference for one %v."
+        ]
+      },
+      "id": "SV-2023-21-STRENGTH-FORMAT-ARGUMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Display a scalar net with competing drivers."
+        ],
+        "negative": [
+          "Use %v with a vector rather than a scalar reference."
+        ],
+        "notes": [],
+        "positive": [
+          "Display a scalar resolved net with %v and verify strength information is included."
+        ]
+      },
+      "id": "SV-2023-21-STRENGTH-FORMAT-SCALAR-NET"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare an undriven net with a driven Z net."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Display an undriven scalar net and verify Hi as its strength characters."
+        ]
+      },
+      "id": "SV-2023-21-STRENGTH-HIGHZ-MNEMONIC"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the widest available maximum-to-minimum strength range."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare %v output for a known value with one strength against a known value spanning a strength range."
+        ]
+      },
+      "id": "SV-2023-21-STRENGTH-KNOWN-VALUE-ENCODING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Observe the retained value after its driver turns off."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Display a trireg retaining a large charge and verify La."
+        ]
+      },
+      "id": "SV-2023-21-STRENGTH-LARGE-MNEMONIC"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use unequal resistive strengths that still resolve to L or H."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Produce L and H values and verify mnemonic strength prefixes."
+        ]
+      },
+      "id": "SV-2023-21-STRENGTH-LH-MNEMONIC"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Create ambiguous resistive values that produce L and H."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Exercise each scalar-net value category with %v and verify the third character."
+        ]
+      },
+      "id": "SV-2023-21-STRENGTH-LOGIC-CHARACTER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Observe the retained value after driver removal."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Display a trireg retaining a medium charge and verify Me."
+        ]
+      },
+      "id": "SV-2023-21-STRENGTH-MEDIUM-MNEMONIC"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use pullup and pulldown primitives."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Display a pull-driven scalar net and verify Pu."
+        ]
+      },
+      "id": "SV-2023-21-STRENGTH-PULL-MNEMONIC"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Observe the retained value after driver removal."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Display a trireg retaining a small charge and verify Sm."
+        ]
+      },
+      "id": "SV-2023-21-STRENGTH-SMALL-MNEMONIC"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Resolve equal strong drivers of differing values."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Display a strong-drive scalar net and verify St."
+        ]
+      },
+      "id": "SV-2023-21-STRENGTH-STRONG-MNEMONIC"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Test both supply0 and supply1 values."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Display a supply-strength scalar net and verify Su as the strength characters."
+        ]
+      },
+      "id": "SV-2023-21-STRENGTH-SUPPLY-MNEMONIC"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise values whose two resolved strength characters differ."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Display a scalar net with %v and verify exactly two strength characters and one value character."
+        ]
+      },
+      "id": "SV-2023-21-STRENGTH-THREE-CHARACTER-FORM"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Reverse the 0 and 1 component strengths and verify digit order reverses."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Produce X with equal opposing strengths and with unequal components and compare %v encoding."
+        ]
+      },
+      "id": "SV-2023-21-STRENGTH-UNKNOWN-VALUE-ENCODING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Resolve weak against high impedance."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Display a weak-driven scalar net and verify We."
+        ]
+      },
+      "id": "SV-2023-21-STRENGTH-WEAK-MNEMONIC"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multiple %s specifications with matching arguments."
+        ],
+        "negative": [
+          "Use %s without a corresponding following argument."
+        ],
+        "notes": [],
+        "positive": [
+          "Supply one argument for one %s specification."
+        ]
+      },
+      "id": "SV-2023-21-STRING-FORMAT-ARGUMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use nonzero and negative array bounds."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Format ascending and descending-index byte arrays with distinguishable characters and verify left-to-right bound order."
+        ]
+      },
+      "id": "SV-2023-21-STRING-FORMAT-ARRAY-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Prefix the packed value with zero bytes and verify they are not printed."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Format packed ASCII codes without a terminator and verify all nonleading codes."
+        ]
+      },
+      "id": "SV-2023-21-STRING-FORMAT-NO-TERMINATOR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a packed value whose width is not a multiple of eight."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Format a packed value containing several 8-bit ASCII codes with %s."
+        ]
+      },
+      "id": "SV-2023-21-STRING-FORMAT-PACKED-CODES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an empty string and zero-length array where supported."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use both a string and unpacked byte array as %s arguments."
+        ]
+      },
+      "id": "SV-2023-21-STRING-FORMAT-STRING-BYTE-ARRAY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use non-consuming %% and %m formats in a strobe string."
+        ],
+        "negative": [
+          "Omit a corresponding expression for a consuming format in $strobe."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a defined display escape and consuming format with $strobe."
+        ]
+      },
+      "id": "SV-2023-21-STROBE-DISPLAY-ARGUMENT-RULES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare $display and $strobe around nonblocking assignments in one time slot."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Schedule multiple same-time updates and call $strobe, then verify it reports the final value for that time slot."
+        ]
+      },
+      "id": "SV-2023-21-STROBE-END-OF-TIMESTEP"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Schedule repeated time steps where current and sampled values differ each time."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Update a value in a clocked time step and compare its $strobe value with $strobe of $sampled(value)."
+        ]
+      },
+      "id": "SV-2023-21-STROBE-SAMPLED-CURRENT-PREPONED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Invoke a strobe task with empty parentheses."
+        ],
+        "negative": [
+          "Invoke a strobe task without its terminating semicolon."
+        ],
+        "notes": [],
+        "positive": [
+          "Invoke $strobe; and $strobeh(\"%h\", value);."
+        ]
+      },
+      "id": "SV-2023-21-STROBE-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use nonzero bounds."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Write distinguishable text into ascending and descending-bound byte arrays and verify left-to-right-bound order."
+        ]
+      },
+      "id": "SV-2023-21-SWRITE-BYTE-ARRAY-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a destination narrower than the generated text."
+        ],
+        "negative": [
+          "Use a nonvariable expression or unsupported aggregate as the destination."
+        ],
+        "notes": [],
+        "positive": [
+          "Write equivalent formatted output into integral, byte-array, and string variables."
+        ]
+      },
+      "id": "SV-2023-21-SWRITE-OUTPUT-TYPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a packed destination narrower and wider than the output."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare $swrite assignment into packed and string destinations with direct string-literal assignment."
+        ]
+      },
+      "id": "SV-2023-21-SWRITE-STRING-ASSIGNMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use only the output variable."
+        ],
+        "negative": [
+          "Invoke $swrite without an output variable."
+        ],
+        "notes": [],
+        "positive": [
+          "Invoke $swrite(out); and a radix variant with formatting arguments."
+        ]
+      },
+      "id": "SV-2023-21-SWRITE-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Search with an empty string."
+        ],
+        "negative": [
+          "Include \"+foo\" as the search string and require it to match +foo."
+        ],
+        "notes": [],
+        "positive": [
+          "Match command argument +foo by searching for \"foo\"."
+        ]
+      },
+      "id": "SV-2023-21-TEST-PLUSARGS-OMIT-PLUS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Provide multiple plusargs sharing prefixes in different orders."
+        ],
+        "negative": [
+          "Require a nonprefix substring such as oba to match +foobar."
+        ],
+        "notes": [],
+        "positive": [
+          "Use +foobar and verify searches for foo and foobar succeed."
+        ]
+      },
+      "id": "SV-2023-21-TEST-PLUSARGS-PREFIX-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Query a prefix shared by several command arguments."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Query one present and one absent plusarg and compare nonzero versus zero."
+        ]
+      },
+      "id": "SV-2023-21-TEST-PLUSARGS-RETURN"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use embedded rather than leading null bytes."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Search using string and packed integral forms, including leading zero bytes."
+        ]
+      },
+      "id": "SV-2023-21-TEST-PLUSARGS-STRING-INPUT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Display a value requiring rounding to the configured time precision."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Set $timeformat and display timing values with %t from modules having different time units."
+        ]
+      },
+      "id": "SV-2023-21-TIME-FORMAT-INTERACTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Write a value whose width is not an exact multiple of 32 bits."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Write a value wider than 32 bits with distinguishable words and verify the LSB-containing word is first."
+        ]
+      },
+      "id": "SV-2023-21-U-LSB-WORD-FIRST"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Run the same materialization on hosts of opposite endianness."
+        ],
+        "negative": [],
+        "notes": [
+          "Expected bytes depend on the declared native endian order of the host."
+        ],
+        "positive": [
+          "Write a multibyte value with %u and compare byte order to the host native endian order."
+        ]
+      },
+      "id": "SV-2023-21-U-NATIVE-ENDIAN"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify later file content remains unchanged after closing and reopening."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Read a byte, push a distinguishable byte back, and verify the next $fgetc returns the pushed byte."
+        ]
+      },
+      "id": "SV-2023-21-UNGETC-NEXT-CHARACTER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Force a pushback failure, verify EOF, and query $ferror for its cause."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Push a character onto a readable descriptor and verify return zero."
+        ]
+      },
+      "id": "SV-2023-21-UNGETC-RETURN-STATUS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Cause aggregate conversion failure and verify the count is zero rather than a member count."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Scan one aggregate with %u or %z and verify a successful conversion counts as one item."
+        ]
+      },
+      "id": "SV-2023-21-UZ-AGGREGATE-ITEM-COUNT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a packed union with four-state content."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare %z output of a packed struct with an equivalent packed vector."
+        ]
+      },
+      "id": "SV-2023-21-UZ-PACKED-AS-VECTOR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use nested packed members within an unpacked struct."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Transfer an unpacked struct with distinguishable members and verify declaration order."
+        ]
+      },
+      "id": "SV-2023-21-UZ-UNPACKED-STRUCT-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use union members of differing types and confirm the first member controls."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Transfer an unpacked union whose first member has a distinguishable representation."
+        ]
+      },
+      "id": "SV-2023-21-UZ-UNPACKED-UNION-FIRST-MEMBER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise uppercase and leading-zero variants."
+        ],
+        "negative": [
+          "Use a conversion outside this set."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse representative values with every listed conversion."
+        ]
+      },
+      "id": "SV-2023-21-VALUE-PLUSARGS-CONVERSIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Distinguish no remainder from a remainder containing character 0."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Match an argument exactly at the prefix boundary into numeric and string destinations."
+        ]
+      },
+      "id": "SV-2023-21-VALUE-PLUSARGS-EMPTY-REMAINDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use one exact prefix match and one longer argument sharing the prefix."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Provide two matching plusargs with different values and verify the first value is selected."
+        ]
+      },
+      "id": "SV-2023-21-VALUE-PLUSARGS-FIRST-MATCH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place the illegal character after an initially valid prefix."
+        ],
+        "negative": [
+          "Include a non-radix digit and expect an ordinary numeric value."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse valid digits for each radix."
+        ]
+      },
+      "id": "SV-2023-21-VALUE-PLUSARGS-ILLEGAL-CHARACTERS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Query with an empty or very long prefix."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Preset the destination, query an absent plusarg, and verify zero, unchanged value, and no warning."
+        ]
+      },
+      "id": "SV-2023-21-VALUE-PLUSARGS-NO-MATCH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Provide several arguments sharing the same prefix."
+        ],
+        "negative": [
+          "Include the command-line plus sign in search text."
+        ],
+        "notes": [],
+        "positive": [
+          "Search via string and packed text, with leading nulls, among ordered command arguments."
+        ]
+      },
+      "id": "SV-2023-21-VALUE-PLUSARGS-SEARCH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Convert real and string remainders."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Match +N=42 with \"N=%d\" and verify nonzero plus stored 42."
+        ]
+      },
+      "id": "SV-2023-21-VALUE-PLUSARGS-SUCCESS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use no literal separator between prefix and conversion where the intended prefix permits."
+        ],
+        "negative": [
+          "Use multiple conversions or an unsupported display conversion."
+        ],
+        "notes": [],
+        "positive": [
+          "Use lower-, upper-, and 0-prefixed forms of each valid conversion."
+        ]
+      },
+      "id": "SV-2023-21-VALUE-PLUSARGS-USER-STRING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a value exactly matching destination width."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Parse narrow, overwide, and negative values into destinations of controlled width."
+        ]
+      },
+      "id": "SV-2023-21-VALUE-PLUSARGS-WIDTH-ADJUSTMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Record multiple changes at the same absolute time."
+        ],
+        "negative": [
+          "Encode elapsed time since the prior marker."
+        ],
+        "notes": [],
+        "positive": [
+          "Generate changes at known nonuniform times and verify markers are absolute rather than deltas."
+        ]
+      },
+      "id": "SV-2023-21-VCD-ABSOLUTE-TIME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Select a variable that never changes and verify its definition remains present."
+        ],
+        "negative": [
+          "Emit binary-only content for the 4-state VCD."
+        ],
+        "notes": [],
+        "positive": [
+          "Generate a dump and verify textual header, definitions for selected variables, and their value-change records."
+        ]
+      },
+      "id": "SV-2023-21-VCD-ASCII-CONTENTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare scalar and several packed dimensions."
+        ],
+        "negative": [
+          "Use only one packed dimension's width."
+        ],
+        "notes": [],
+        "positive": [
+          "Dump scalar and multidimensional packed bit/logic variables and verify reg plus total packed width."
+        ]
+      },
+      "id": "SV-2023-21-VCD-BIT-LOGIC-MAPPING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use uppercase and lowercase value/prefix forms where both are explicitly grammatical."
+        ],
+        "negative": [
+          "Fold identifier-code case during parsing."
+        ],
+        "notes": [],
+        "positive": [
+          "Distinguish identifiers or tokens whose allowed forms differ only by case."
+        ]
+      },
+      "id": "SV-2023-21-VCD-CASE-SENSITIVE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change a variable multiple times within one simulation time increment."
+        ],
+        "negative": [
+          "Emit ordinary per-increment records for unchanged variables."
+        ],
+        "notes": [],
+        "positive": [
+          "Change one of several selected variables and verify only its value-change record appears."
+        ]
+      },
+      "id": "SV-2023-21-VCD-CHANGE-ONLY-RECORDING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an empty comment and comment text containing keyword-like words."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Insert and parse a $comment ... $end section."
+        ]
+      },
+      "id": "SV-2023-21-VCD-COMMENT-SECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Accept implementation-specific date text formatting within the delimited section."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Generate a VCD and verify its $date section contains generation-date text."
+        ]
+      },
+      "id": "SV-2023-21-VCD-DATE-SECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Include scalar, vector, real, and event declarations as applicable."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Parse a $dumpall block and verify one current value for every declared dumped variable."
+        ]
+      },
+      "id": "SV-2023-21-VCD-DUMPALL-KEYWORD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Apply scalar and vector X encodings."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Parse a $dumpoff block and verify all selected variables receive X-form values."
+        ]
+      },
+      "id": "SV-2023-21-VCD-DUMPOFF-KEYWORD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Resume without intervening variable changes."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Parse a $dumpon block and verify complete current-value coverage before subsequent incremental changes."
+        ]
+      },
+      "id": "SV-2023-21-VCD-DUMPON-KEYWORD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Begin dumping at nonzero simulation time and treat then-current values as initial dump values."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Verify the initial $dumpvars block supplies values for every dumped variable."
+        ]
+      },
+      "id": "SV-2023-21-VCD-DUMPVARS-KEYWORD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a VCD with no selected variables."
+        ],
+        "negative": [
+          "Place further variable definitions after $enddefinitions."
+        ],
+        "notes": [],
+        "positive": [
+          "Verify $enddefinitions occurs after declarations and before simulation value data."
+        ]
+      },
+      "id": "SV-2023-21-VCD-ENDDEFINITIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare with an enum having an explicit base type."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Dump an enum without an explicit base type and verify integer 32."
+        ]
+      },
+      "id": "SV-2023-21-VCD-ENUM-DEFAULT-MAPPING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a non-32-bit packed enum base."
+        ],
+        "negative": [
+          "Always force explicitly typed enums to integer 32."
+        ],
+        "notes": [],
+        "positive": [
+          "Dump enums based on byte, shortint, and logic vectors and verify corresponding mappings."
+        ]
+      },
+      "id": "SV-2023-21-VCD-ENUM-EXPLICIT-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Trigger the same event multiple times within a time step."
+        ],
+        "negative": [
+          "Interpret the event record's value character as persistent event state."
+        ],
+        "notes": [],
+        "positive": [
+          "Trigger an event and verify a scalar-shaped record with the event's identifier code."
+        ]
+      },
+      "id": "SV-2023-21-VCD-EVENT-MARKER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Dump a resolved net whose value remains the same while strength changes."
+        ],
+        "negative": [
+          "Require strength information in the 4-state format."
+        ],
+        "notes": [],
+        "positive": [
+          "Generate 4-state and extended dumps for variables exercising logic states and strengths, then compare represented information."
+        ]
+      },
+      "id": "SV-2023-21-VCD-FILE-CATEGORIES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multiple whitespace kinds and long runs."
+        ],
+        "negative": [
+          "Concatenate commands where required separating whitespace is absent."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse semantically identical VCDs with varied whitespace and line layout."
+        ]
+      },
+      "id": "SV-2023-21-VCD-FREE-FORM-WHITESPACE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use uppercase/lowercase accepted value and vector prefixes and multi-character identifier codes."
+        ],
+        "negative": [
+          "Place malformed command delimiters or unsupported value-change tokens in the file."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse a VCD containing every declaration and simulation command, scalar/vector/real changes, all time units, and representative variable types."
+        ]
+      },
+      "id": "SV-2023-21-VCD-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise endpoint characters ! and ~."
+        ],
+        "negative": [
+          "Use whitespace or a character outside ASCII 33-126 in a code."
+        ],
+        "notes": [],
+        "positive": [
+          "Validate generated one- and multi-character identifier codes against the allowed range."
+        ]
+      },
+      "id": "SV-2023-21-VCD-IDENTIFIER-CODE-CHARACTERS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Dump signed negative values of each type."
+        ],
+        "negative": [
+          "Use host-native C widths instead of fixed SystemVerilog widths."
+        ],
+        "notes": [],
+        "positive": [
+          "Dump one variable of each type and verify exact legacy type and size."
+        ]
+      },
+      "id": "SV-2023-21-VCD-INTEGER-TYPE-MAPPINGS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use $comment in each context permitted by the full grammar."
+        ],
+        "negative": [
+          "Use a simulation-only dump keyword as a declaration command."
+        ],
+        "notes": [],
+        "positive": [
+          "Place every declaration keyword in the declaration region and every simulation keyword in simulation data."
+        ]
+      },
+      "id": "SV-2023-21-VCD-KEYWORD-CLASSIFICATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Include optional whitespace and comment sections between required sections."
+        ],
+        "negative": [
+          "Treat manually inserted conforming keyword commands as invalid solely due to origin."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse equivalent keyword sections produced automatically and manually."
+        ]
+      },
+      "id": "SV-2023-21-VCD-KEYWORD-SECTIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Extend a one-character value to a wide vector."
+        ],
+        "negative": [
+          "Sign-extend a leading 1 with ones."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse shortened values beginning in each of 0, 1, X, and Z and verify restored prefixes."
+        ]
+      },
+      "id": "SV-2023-21-VCD-LEFT-EXTENSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Select a scope containing both individual variables and a memory."
+        ],
+        "negative": [
+          "Include strength or memory value records in a 4-state VCD."
+        ],
+        "notes": [],
+        "positive": [
+          "Dump a strength-bearing net and verify only its logic state; verify memory contents are absent."
+        ]
+      },
+      "id": "SV-2023-21-VCD-NO-STRENGTH-OR-MEMORY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use nested packed aggregates with opposing index directions."
+        ],
+        "negative": [
+          "Emit separate VCD dimensions or fields."
+        ],
+        "notes": [],
+        "positive": [
+          "Dump multidimensional packed arrays and packed structs and verify one flat vector of total width."
+        ]
+      },
+      "id": "SV-2023-21-VCD-PACKED-AGGREGATE-COLLAPSE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use zero, subnormal, very large, and sign-varying values."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Dump real values requiring near-full binary64 precision and round-trip them through %g parsing."
+        ]
+      },
+      "id": "SV-2023-21-VCD-REAL-16G"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Dump a one-bit vector and a scalar."
+        ],
+        "negative": [
+          "Encode a non-real variable using real-number syntax."
+        ],
+        "notes": [],
+        "positive": [
+          "Dump real, scalar, and vector values containing every four-state symbol."
+        ]
+      },
+      "id": "SV-2023-21-VCD-REAL-AND-LOGIC-VALUES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multi-character identifier codes."
+        ],
+        "negative": [
+          "Insert whitespace between scalar value and identifier."
+        ],
+        "notes": [],
+        "positive": [
+          "Validate records such as 1! or xA with immediately adjacent identifier codes."
+        ]
+      },
+      "id": "SV-2023-21-VCD-SCALAR-SPACING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Nest several differing scope types."
+        ],
+        "negative": [
+          "Use an unsupported scope type."
+        ],
+        "notes": [],
+        "positive": [
+          "Generate declarations for each supported scope type and verify its keyword."
+        ]
+      },
+      "id": "SV-2023-21-VCD-SCOPE-SECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Generate an increment in which no selected variable changes."
+        ],
+        "negative": [
+          "Emit value changes before definitions."
+        ],
+        "notes": [],
+        "positive": [
+          "Inspect generated VCD section order and change records over increments with changed and unchanged variables."
+        ]
+      },
+      "id": "SV-2023-21-VCD-SECTION-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use precision-sensitive shortreal values."
+        ],
+        "negative": [
+          "Map shortreal to a fixed-width reg."
+        ],
+        "notes": [],
+        "positive": [
+          "Dump a shortreal and verify real value syntax and legacy real declaration."
+        ]
+      },
+      "id": "SV-2023-21-VCD-SHORTREAL-MAPPING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Attempt types absent from the supported mapping."
+        ],
+        "negative": [
+          "Invent a new VCD var_type token for a SystemVerilog type."
+        ],
+        "notes": [],
+        "positive": [
+          "Dump each mapped SystemVerilog type and validate its emitted legacy var_type and size."
+        ]
+      },
+      "id": "SV-2023-21-VCD-SYSTEMVERILOG-TYPE-MAPPING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use each supported time magnitude and unit."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Run with a known timescale and verify the VCD section reports it."
+        ]
+      },
+      "id": "SV-2023-21-VCD-TIMESCALE-SECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast a packed array with an unpacked array."
+        ],
+        "negative": [
+          "Emit declarations or value changes for an unpacked array or automatic variable."
+        ],
+        "notes": [],
+        "positive": [
+          "Select a scope containing static scalar variables and verify those remain dumpable."
+        ]
+      },
+      "id": "SV-2023-21-VCD-UNDUMPED-TYPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use nested unpacked structs."
+        ],
+        "negative": [
+          "Flatten the unpacked struct into one packed vector."
+        ],
+        "notes": [],
+        "positive": [
+          "Dump an unpacked struct with heterogeneous members and verify fork scope plus individually mapped declarations."
+        ]
+      },
+      "id": "SV-2023-21-VCD-UNPACKED-STRUCT-MAPPING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Return from the deepest nested scope to top through repeated commands."
+        ],
+        "negative": [
+          "Move down or skip multiple levels for one $upscope."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse nested $scope sections followed by $upscope and verify subsequent context."
+        ]
+      },
+      "id": "SV-2023-21-VCD-UPSCOPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare uwire and wire declarations."
+        ],
+        "negative": [
+          "Emit uwire as the VCD var_type token."
+        ],
+        "notes": [],
+        "positive": [
+          "Dump a uwire and verify its $var type token is wire."
+        ]
+      },
+      "id": "SV-2023-21-VCD-UWIRE-AS-WIRE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a one-bit significant suffix in a wide vector."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Dump values narrower in significant content than their vector width and reconstruct by left extension."
+        ]
+      },
+      "id": "SV-2023-21-VCD-VALUE-RIGHT-JUSTIFIED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use escaped identifiers."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare VCD references to source variable identifiers across scopes."
+        ]
+      },
+      "id": "SV-2023-21-VCD-VAR-IDENTIFIER-NAME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use equal indices for a one-bit range."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare declared ascending and descending design ranges with VCD msb/lsb fields."
+        ]
+      },
+      "id": "SV-2023-21-VCD-VAR-INDEX-MEANING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Declare scalar, wide vector, and real variables."
+        ],
+        "negative": [
+          "Declare a vector with an incorrect size."
+        ],
+        "notes": [],
+        "positive": [
+          "Compare $var names, codes, and sizes against selected design variables."
+        ]
+      },
+      "id": "SV-2023-21-VCD-VAR-SECTION-BASICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Represent all-zero, all-X, all-Z, and value beginning with 1."
+        ],
+        "negative": [
+          "Remove a leading bit whose omission would reconstruct a different value."
+        ],
+        "notes": [],
+        "positive": [
+          "Dump vectors with long leading runs of 0, X, or Z and verify redundant prefix removal."
+        ]
+      },
+      "id": "SV-2023-21-VCD-VECTOR-SHORTEST-FORM"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use uppercase B and a multi-character identifier code."
+        ],
+        "negative": [
+          "Insert whitespace after the base letter or omit the separator before identifier."
+        ],
+        "notes": [],
+        "positive": [
+          "Validate records such as b1010 code with adjacency after b and one separator before code."
+        ]
+      },
+      "id": "SV-2023-21-VCD-VECTOR-SPACING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a concatenated or variable filename expression."
+        ],
+        "negative": [
+          "Replace an expression-form filename in version text solely with its evaluated value."
+        ],
+        "notes": [],
+        "positive": [
+          "Generate dumps with literal and expression filenames and inspect version text for writer and original task form."
+        ]
+      },
+      "id": "SV-2023-21-VCD-VERSION-SECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare selecting a single declared scalar with selecting one bit of a vector."
+        ],
+        "negative": [
+          "Attempt to dump a part-select or expression such as a+b as a VCD object."
+        ],
+        "notes": [],
+        "positive": [
+          "Select a complete vector and verify its full width."
+        ]
+      },
+      "id": "SV-2023-21-VCD-WHOLE-VARIABLE-ONLY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Close at time zero and after a long quiet interval."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Close an extended VCD at a known time with no simultaneous port change and verify that final time."
+        ]
+      },
+      "id": "SV-2023-21-VCDCLOSE-FINAL-TIME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use final time #0."
+        ],
+        "negative": [
+          "Omit the final time or $end."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse $vcdclose #13000 $end."
+        ]
+      },
+      "id": "SV-2023-21-VCDCLOSE-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use enum and wide packed integral indices."
+        ],
+        "negative": [
+          "Pass a string-indexed associative array."
+        ],
+        "notes": [],
+        "positive": [
+          "Write a sparse integral-indexed associative array and verify an address for each emitted entry."
+        ]
+      },
+      "id": "SV-2023-21-WRITEMEM-ASSOCIATIVE-ADDRESSES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use explicitly assigned enum values and distinguish ordinal from encoded numeric value as defined by the clause."
+        ],
+        "negative": [
+          "Write enum identifier names instead of numeric ordinal values."
+        ],
+        "notes": [],
+        "positive": [
+          "Write an enum array and verify file values correspond to each element's ordinal."
+        ]
+      },
+      "id": "SV-2023-21-WRITEMEM-ENUM-ORDINAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Write a selected range with nonzero bounds."
+        ],
+        "negative": [
+          "Emit address specifiers for a sequential array."
+        ],
+        "notes": [],
+        "positive": [
+          "Write unpacked fixed and dynamic arrays and verify no @ tokens occur."
+        ]
+      },
+      "id": "SV-2023-21-WRITEMEM-NO-ADDRESS-FOR-SEQUENTIAL-ARRAYS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Overwrite a longer file with shorter output."
+        ],
+        "negative": [
+          "Append new memory data after existing file content."
+        ],
+        "notes": [],
+        "positive": [
+          "Write to a preexisting file and verify all old trailing content is removed."
+        ]
+      },
+      "id": "SV-2023-21-WRITEMEM-OVERWRITES-FILE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use packed widths not aligned to hexadecimal digits."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Write unpacked arrays of packed structs and compare output with equivalent packed vectors."
+        ]
+      },
+      "id": "SV-2023-21-WRITEMEM-PACKED-AS-READMEM"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use equal start and finish addresses."
+        ],
+        "negative": [
+          "Supply finish_addr without start_addr."
+        ],
+        "notes": [],
+        "positive": [
+          "Invoke each task with two, three, and four arguments."
+        ]
+      },
+      "id": "SV-2023-21-WRITEMEM-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use four-state data spanning a 32-bit boundary."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Write data wider than 32 bits with %z and verify the structure containing the LSB occurs first."
+        ]
+      },
+      "id": "SV-2023-21-Z-LSB-STRUCTURE-FIRST"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Include X and Z bits in distinct native words."
+        ],
+        "negative": [],
+        "notes": [
+          "Expected bytes depend on host endianness and the standardized VPI vector representation."
+        ],
+        "positive": [
+          "Write a multibit four-state value with %z and compare byte order to native s_vpi_vecval layout."
+        ]
+      },
+      "id": "SV-2023-21-Z-NATIVE-ENDIAN"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a large aggregate that reaches the implementation's shared output limit."
+        ],
+        "negative": [],
+        "notes": [
+          "Do not require one exact short-form syntax."
+        ],
+        "positive": [
+          "Format the same aggregate with %p and %0p and accept an implementation-specific shorter %0p representation."
+        ]
+      },
+      "id": "SV-2023-21-ZERO-P-AGGREGATE-FORMAT"
+    }
+  ],
+  "schema_version": 1
+}

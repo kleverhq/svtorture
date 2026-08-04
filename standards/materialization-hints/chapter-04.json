@@ -1,0 +1,755 @@
+{
+  "authority": "1800-2023",
+  "part": "4",
+  "requirements": [
+    {
+      "hints": {
+        "edge": [
+          "Create a deliberate same-region race to confirm that no particular source order is a language guarantee."
+        ],
+        "negative": [],
+        "notes": [
+          "A conformance case must not demand one of the permitted arbitrary orders."
+        ],
+        "positive": [
+          "Use independent Active-region events and accept every result permitted by either processing order."
+        ]
+      },
+      "id": "SV-2023-04-ACTIVE-REGION-ARBITRARY-EVENT-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a delayed nonblocking assignment and verify its NBA event occurs in the specified later time slot."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Execute a zero-delay nonblocking assignment in the active region set and verify its update is delivered through the current-slot NBA region."
+        ]
+      },
+      "id": "SV-2023-04-ACTIVE-SET-NBA-SCHEDULING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Schedule additional Active events before #0 and verify the suspended process resumes only after those current Active events."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Execute #0 between two observable process actions and verify the latter resumes through a subsequent Inactive-to-Active iteration of the same slot."
+        ]
+      },
+      "id": "SV-2023-04-ACTIVE-SET-ZERO-DELAY-SCHEDULING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Interleave another concurrent process while verifying the block's own statement order remains unchanged."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Perform dependent blocking assignments in one begin-end block and verify source-order results."
+        ]
+      },
+      "id": "SV-2023-04-BEGIN-END-SOURCE-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a network where omitting one connected driver would change the resolved value, and verify that driver participates."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Connect multiple interacting bidirectional devices and verify node values reflect the complete connected network."
+        ]
+      },
+      "id": "SV-2023-04-BIDIRECTIONAL-SWITCH-WHOLE-NET-RESOLUTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare #0 from Active with #0 from Reactive to verify Inactive versus Re-Inactive resumption."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Change an indexed target selector during a blocking intra-assignment delay and verify RHS uses initiation-time values while target selection uses resume-time values."
+        ]
+      },
+      "id": "SV-2023-04-BLOCKING-INTRA-ASSIGNMENT-DELAY-SCHEDULING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an x-controlled network whose conducting and nonconducting interpretations disagree and verify x."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Drive a tranif network with x control where all switch interpretations yield one node value and verify that value."
+        ]
+      },
+      "id": "SV-2023-04-BUILTIN-NET-SWITCH-UNKNOWN-CONTROL-RESOLUTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare it with an Active-region effect at the same callback time."
+        ],
+        "negative": [],
+        "notes": [
+          "Requires a PLI callback harness."
+        ],
+        "positive": [
+          "Register cbAfterDelay and verify it observes and may affect state before Active events."
+        ]
+      },
+      "id": "SV-2023-04-CB-AFTER-DELAY-PRE-ACTIVE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare its observation with cbReadOnlySynch in the same slot."
+        ],
+        "negative": [],
+        "notes": [
+          "Requires a PLI callback harness."
+        ],
+        "positive": [
+          "Register cbAtEndOfSimTime and verify it runs after other iterative regions but before Postponed observations."
+        ]
+      },
+      "id": "SV-2023-04-CB-END-SIM-TIME-PRE-POSTPONED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Queue several same-slot NBA updates while checking only the cross-region boundary."
+        ],
+        "negative": [],
+        "notes": [
+          "Requires a PLI callback harness."
+        ],
+        "positive": [
+          "Register cbNBASynch with a pending NBA and verify callback observation precedes the NBA update."
+        ]
+      },
+      "id": "SV-2023-04-CB-NBA-SYNCH-PRE-NBA"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a next time slot containing pending Active activity."
+        ],
+        "negative": [],
+        "notes": [
+          "Requires a PLI callback harness."
+        ],
+        "positive": [
+          "Register cbNextSimTime and verify invocation before Active events of the next simulation time."
+        ]
+      },
+      "id": "SV-2023-04-CB-NEXT-SIM-TIME-PRE-ACTIVE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare its observation with cbAtEndOfSimTime in the same slot."
+        ],
+        "negative": [],
+        "notes": [
+          "Requires a PLI callback harness."
+        ],
+        "positive": [
+          "Register cbReadOnlySynch and verify it observes final same-slot settled values in Postponed."
+        ]
+      },
+      "id": "SV-2023-04-CB-READ-ONLY-SYNCH-POSTPONED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a pending NBA and classify the callback observation as one of the two allowed placements."
+        ],
+        "negative": [],
+        "notes": [
+          "The oracle must accept both mapped regions; requires a PLI callback harness."
+        ],
+        "positive": [
+          "Register cbReadWriteSynch and accept execution at either permitted NBA boundary."
+        ]
+      },
+      "id": "SV-2023-04-CB-READ-WRITE-SYNCH-NBA-BOUNDARY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Observe a slot with immediate Active updates."
+        ],
+        "negative": [],
+        "notes": [
+          "Requires a PLI callback harness."
+        ],
+        "positive": [
+          "Register cbAtStartOfSimTime and verify invocation before Active activity in that slot."
+        ]
+      },
+      "id": "SV-2023-04-CB-START-SIM-TIME-PRE-ACTIVE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an implicit port continuous assignment of a constant."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Drive a target from a constant continuous assignment and verify propagation at time zero without a source transition."
+        ]
+      },
+      "id": "SV-2023-04-CONTINUOUS-ASSIGNMENT-TIME-ZERO-EVALUATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an implicit port-connection continuous assignment and verify equivalent scheduling."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Change a continuous-assignment source and verify the target updates from current expression values."
+        ]
+      },
+      "id": "SV-2023-04-CONTINUOUS-ASSIGNMENT-UPDATE-SCHEDULING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Add synchronization to remove the race and then require the settled value."
+        ],
+        "negative": [],
+        "notes": [
+          "A case should accept both legal outcomes rather than require the simulator to exhibit both."
+        ],
+        "positive": [
+          "Reproduce the same-slot continuous-assignment/display race and accept either explicitly permitted displayed value."
+        ]
+      },
+      "id": "SV-2023-04-CONTINUOUS-UPDATE-DISPLAY-RACE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Deactivate corresponding assignments affecting multiple selected targets where legal."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Release a forced target and verify subsequent source changes are no longer governed by that force."
+        ]
+      },
+      "id": "SV-2023-04-DEASSIGN-RELEASE-DEACTIVATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Create additional Active activity during processing and verify Inactive processing waits until Active activity is exhausted."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Schedule observable Active- and Inactive-region effects in one time slot and verify the Active effect precedes the Inactive effect."
+        ]
+      },
+      "id": "SV-2023-04-INACTIVE-AFTER-ACTIVE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise supply strength and verify the specified supply-to-strong exception."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Drive an inout connection from each side and verify bidirectional net resolution without ordinary strength reduction."
+        ]
+      },
+      "id": "SV-2023-04-INOUT-PORT-BIDIRECTIONAL-CONNECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Connect an expression rather than a simple net and verify equivalent behavior."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Change an outside expression connected to an input and verify the local input follows continuous-assignment semantics."
+        ]
+      },
+      "id": "SV-2023-04-INPUT-PORT-IMPLICIT-CONTINUOUS-CONNECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Create multiple Inactive iterations and verify NBA processing waits until Inactive activity is exhausted."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Schedule observable Inactive- and NBA-region effects in one time slot and verify the Inactive effect precedes the NBA effect."
+        ]
+      },
+      "id": "SV-2023-04-NBA-AFTER-INACTIVE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Derive execution order through legal process interleaving rather than assuming source order across processes."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Execute two same-time nonblocking assignments to one variable sequentially and verify the second value is final."
+        ]
+      },
+      "id": "SV-2023-04-NBA-EXECUTION-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Queue multiple NBAs while changing selectors between statements and verify each retains its own captured value and target."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Queue an NBA, then change both its RHS source and indexed LHS selector; verify the queued value updates the originally captured target."
+        ]
+      },
+      "id": "SV-2023-04-NONBLOCKING-ASSIGNMENT-CAPTURE-AND-SCHEDULING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an explicit zero delay and verify it remains in the current time step rather than advancing simulation time."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare a zero-delay NBA with a nonzero-delay NBA and verify their updates occur in the current and specified future time steps, respectively."
+        ]
+      },
+      "id": "SV-2023-04-NONBLOCKING-ASSIGNMENT-DELAY-PLACEMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Combine same-slot design NBA activity with a property action and verify the action executes only after Observed evaluation."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Trigger a concurrent assertion and verify its pass or fail action executes as Reactive-region activity in the same time slot."
+        ]
+      },
+      "id": "SV-2023-04-OBSERVED-PROPERTY-ACTION-SCHEDULING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare #1step sampling at a time-slot boundary with current-slot sampling."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Change a signal in the current slot and verify a #1step clocking-block input observes its value from immediately before that slot."
+        ]
+      },
+      "id": "SV-2023-04-ONE-STEP-PREPONED-SAMPLING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Connect an output expression to an outside variable where legal."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Change a local output expression and verify the connected outside object follows continuous-assignment semantics."
+        ]
+      },
+      "id": "SV-2023-04-OUTPUT-PORT-IMPLICIT-CONTINUOUS-CONNECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify the explicitly registered one-shot callback is not repeatedly invoked without re-registration."
+        ],
+        "negative": [],
+        "notes": [
+          "Requires a PLI callback harness."
+        ],
+        "positive": [
+          "Register one activity-triggered callback and one one-shot callback and verify each uses its defined execution kind."
+        ]
+      },
+      "id": "SV-2023-04-PLI-CALLBACK-EXECUTION-KINDS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare $display with $strobe around a same-slot nonblocking update."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Update a value earlier in a slot and verify $strobe reports its settled Postponed-region value."
+        ]
+      },
+      "id": "SV-2023-04-POSTPONED-EVENT-PLACEMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "From Postponed, schedule permitted future-time activity and verify it does not change a value in the current slot."
+        ],
+        "negative": [
+          "From a Postponed callback, attempt to write a net or variable and require rejection without depending on diagnostic wording."
+        ],
+        "notes": [
+          "Requires a callback/API harness capable of attempting a Postponed write."
+        ],
+        "positive": []
+      },
+      "id": "SV-2023-04-POSTPONED-NO-CURRENT-SLOT-WRITES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare a writable Pre-Postponed callback with a Postponed read-only callback."
+        ],
+        "negative": [
+          "Attempt a value-changing operation from the Postponed callback and require rejection without depending on diagnostic wording."
+        ],
+        "notes": [
+          "Requires a PLI callback harness."
+        ],
+        "positive": [
+          "Use a Postponed read-only callback to observe the final settled value for a time slot."
+        ]
+      },
+      "id": "SV-2023-04-POSTPONED-PLI-READ-ONLY-CONTROL-POINT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Create an event from Pre-Active and distinguish it from one created after Active processing."
+        ],
+        "negative": [],
+        "notes": [
+          "Requires a PLI callback harness."
+        ],
+        "positive": [
+          "Write through a Pre-Active callback and verify Active-region code sees the updated value."
+        ]
+      },
+      "id": "SV-2023-04-PRE-ACTIVE-PLI-CONTROL-POINT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Create an event at Pre-NBA while an NBA update is pending."
+        ],
+        "negative": [],
+        "notes": [
+          "Requires a PLI callback harness."
+        ],
+        "positive": [
+          "Read or write in Pre-NBA and verify the operation precedes a pending NBA update."
+        ]
+      },
+      "id": "SV-2023-04-PRE-NBA-PLI-CONTROL-POINT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Write or create an event immediately before Postponed and check resulting legal scheduling."
+        ],
+        "negative": [],
+        "notes": [
+          "Requires a PLI callback harness."
+        ],
+        "positive": [
+          "Read in Pre-Postponed and observe effects settled through all earlier regions."
+        ]
+      },
+      "id": "SV-2023-04-PRE-POSTPONED-PLI-CONTROL-POINT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare a direct 1-bit-net input with an expression input."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Connect a primitive input to a compound expression and verify updates propagate through continuous-assignment semantics."
+        ]
+      },
+      "id": "SV-2023-04-PRIMITIVE-EXPRESSION-INPUT-IMPLICIT-NET"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare a direct 1-bit structural net expression with another expression that requires an implicit net."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Connect a primitive input directly to a 1-bit net and verify strength-sensitive behavior without implicit conversion."
+        ]
+      },
+      "id": "SV-2023-04-PRIMITIVE-INPUT-DIRECT-NET-CONNECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Race an independent Active event while accepting allowed same-region order."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Change primitive inputs and verify its output net updates as Active-region activity."
+        ]
+      },
+      "id": "SV-2023-04-PRIMITIVE-OUTPUT-ACTIVE-UPDATE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a legal 1-bit structural net expression and verify direct strength behavior."
+        ],
+        "negative": [
+          "Connect a primitive output to a non-1-bit or nonstructural expression and require rejection."
+        ],
+        "notes": [],
+        "positive": [
+          "Connect a primitive output and inout directly to 1-bit nets and observe their drive without intervening strength conversion."
+        ]
+      },
+      "id": "SV-2023-04-PRIMITIVE-TERMINAL-DIRECT-NET-CONNECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change multiple expression sources in one slot and check the update uses current values."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Activate a procedural assign or force, change a source, and verify the target actively updates."
+        ]
+      },
+      "id": "SV-2023-04-PROCEDURAL-CONTINUOUS-ASSIGNMENT-SCHEDULING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use statements without # or @ controls and avoid assuming that each whole statement is an indivisible scheduler event."
+        ],
+        "negative": [],
+        "notes": [
+          "A case must not demand that a permitted suspension or a particular interleaving be exhibited."
+        ],
+        "positive": [
+          "Use independent concurrent procedural activity and accept every result permitted by suspension and interleaving while checking each block's internal-order invariant."
+        ]
+      },
+      "id": "SV-2023-04-PROCESS-INTERLEAVING-NONDETERMINISM"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast property sampling with Observed-region evaluation so the oracle isolates evaluation placement."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Trigger a concurrent property around a same-slot NBA update and verify evaluation uses the state available in Observed."
+        ]
+      },
+      "id": "SV-2023-04-PROPERTY-EVALUATION-IN-OBSERVED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Create additional Reactive activity and verify Re-Inactive waits until Reactive activity is exhausted."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Schedule observable Reactive and Re-Inactive effects in one slot and verify Reactive precedes Re-Inactive."
+        ]
+      },
+      "id": "SV-2023-04-RE-INACTIVE-AFTER-REACTIVE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Create multiple Re-Inactive iterations and verify Re-NBA waits until Re-Inactive activity is exhausted."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Schedule observable Re-Inactive and Re-NBA effects in one slot and verify Re-Inactive precedes Re-NBA."
+        ]
+      },
+      "id": "SV-2023-04-RE-NBA-AFTER-RE-INACTIVE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Create a deliberate Reactive-region race and confirm that no source order is treated as guaranteed."
+        ],
+        "negative": [],
+        "notes": [
+          "A case must not require one permitted order."
+        ],
+        "positive": [
+          "Use independent Reactive-region events and accept every result permitted by either processing order."
+        ]
+      },
+      "id": "SV-2023-04-REACTIVE-REGION-ARBITRARY-EVENT-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare their effects with design Active-region activity while making no assumption about order within Reactive."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Run checker or program blocking-assignment code and concurrent-assertion action code and verify each is Reactive-region activity."
+        ]
+      },
+      "id": "SV-2023-04-REACTIVE-REGION-SCHEDULING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a delayed reactive-set nonblocking assignment and verify its Re-NBA update occurs at the specified later time."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Execute a zero-delay nonblocking assignment from program activity and verify its update is delivered through current-slot Re-NBA."
+        ]
+      },
+      "id": "SV-2023-04-REACTIVE-SET-NBA-SCHEDULING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Schedule additional Reactive activity and verify the suspended process resumes only after current Reactive events."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Execute #0 in program or checker code and verify resumption through the next Re-Inactive-to-Reactive iteration in the same slot."
+        ]
+      },
+      "id": "SV-2023-04-REACTIVE-SET-ZERO-DELAY-SCHEDULING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Have reactive activity create several kinds of reactive-set events and verify the complete set drains before new Active processing."
+        ],
+        "negative": [],
+        "notes": [
+          "Observe only ordering exposed by language constructs."
+        ],
+        "positive": [
+          "Schedule cascading reactive-set events and verify that earlier-region iteration does not resume until all five reactive-set regions are empty."
+        ]
+      },
+      "id": "SV-2023-04-REFERENCE-ALGORITHM-TIME-AND-REGION-ITERATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change an inout actual while the task is active and distinguish invocation-time copy-in from return-time copy-out."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Call a task with output and inout arguments, alter the formals, and verify the actuals update on return as blocking assignments."
+        ]
+      },
+      "id": "SV-2023-04-SUBROUTINE-COPY-IN-COPY-OUT-SCHEDULING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Schedule new same-time events while processing a slot and verify they complete before time advances."
+        ],
+        "negative": [],
+        "notes": [
+          "Same-region ordering may be nondeterministic and should not be assumed."
+        ],
+        "positive": [
+          "Schedule observable effects at two nonzero delays and verify the earlier time slot completes before the later one."
+        ]
+      },
+      "id": "SV-2023-04-TIME-SLOT-CHRONOLOGICAL-EXECUTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Create multiple events in one region while relying only on order between regions."
+        ],
+        "negative": [],
+        "notes": [
+          "Materialization should use constructs whose region assignment is specified; order within a region may be unconstrained."
+        ],
+        "positive": [
+          "Arrange observations in constructs assigned to different defined regions and verify the guaranteed cross-region order."
+        ]
+      },
+      "id": "SV-2023-04-TIME-SLOT-ORDERED-REGIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Drive control with x and z and verify both are treated as off, unlike built-in-net switch semantics."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Connect two user-defined nets through a controlled bidirectional switch and verify combined resolution for on and separate resolution for off."
+        ]
+      },
+      "id": "SV-2023-04-UDN-BIDIRECTIONAL-SWITCH-CONTROL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Have both sensitive processes produce independent effects so the test does not assume an order between them."
+        ],
+        "negative": [],
+        "notes": [
+          "Do not use a race-dependent final value as the oracle because consideration order is arbitrary."
+        ],
+        "positive": [
+          "Change a signal observed by two sensitive processes and verify that both processes evaluate."
+        ]
+      },
+      "id": "SV-2023-04-UPDATE-EVENT-PROCESS-EVALUATION"
+    }
+  ],
+  "schema_version": 1
+}

@@ -1,0 +1,3108 @@
+{
+  "authority": "1800-2023",
+  "part": "7",
+  "requirements": [
+    {
+      "hints": {
+        "edge": [
+          "Use unsized dimensions in a dynamic, queue, or imported DPI formal."
+        ],
+        "negative": [
+          "Pass incompatible element types or dimension counts."
+        ],
+        "notes": [],
+        "positive": [
+          "Pass compatible arrays of differing ranges to unsized formal dimensions."
+        ]
+      },
+      "id": "SV-2023-07-ARRAY-ACTUAL-FORMAL-COMPATIBILITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise one-element, 2-state, and 4-state arrays."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "AND direct packed values and transformed expression values."
+        ]
+      },
+      "id": "SV-2023-07-ARRAY-AND-REDUCTION-METHOD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Pass an empty variable-size array."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Pass each array kind by value, modify the formal, and verify the caller's array is unchanged."
+        ]
+      },
+      "id": "SV-2023-07-ARRAY-ARGUMENT-BY-VALUE-COPY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Combine multiple packed and unpacked dimensions."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare dimensions on both sides of an identifier."
+        ]
+      },
+      "id": "SV-2023-07-ARRAY-DIMENSION-PLACEMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Select a boundary element."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Select one element from a multidimensional packed array and one from an unpacked array."
+        ]
+      },
+      "id": "SV-2023-07-ARRAY-ELEMENT-INDEXED-SELECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Access a boundary element."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Copy indexed elements between compatible packed arrays and unpacked arrays."
+        ]
+      },
+      "id": "SV-2023-07-ARRAY-ELEMENT-READ-WRITE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare empty arrays."
+        ],
+        "negative": [
+          "Compare incompatible array types."
+        ],
+        "notes": [],
+        "positive": [
+          "Compare same-type whole arrays and equal-width slices with == and !=."
+        ]
+      },
+      "id": "SV-2023-07-ARRAY-EQUALITY-OPERATIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Concatenate empty and nonempty slices."
+        ],
+        "negative": [
+          "Use concatenated elements with incompatible types."
+        ],
+        "notes": [],
+        "positive": [
+          "Assign a concatenation of slices and scalar elements to a dynamic array and verify order and size."
+        ]
+      },
+      "id": "SV-2023-07-ARRAY-EXPRESSION-AS-ASSIGNMENT-SOURCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Map an empty array and map to a wider, narrower, aggregate, or Boolean expression type."
+        ],
+        "negative": [
+          "Call map() without its required with clause."
+        ],
+        "notes": [],
+        "positive": [
+          "Map fixed, dynamic, queue, and associative arrays to same- and different-typed element values and verify shape or key preservation."
+        ]
+      },
+      "id": "SV-2023-07-ARRAY-MAP-METHOD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Omit optional parentheses where permitted."
+        ],
+        "negative": [
+          "Use malformed ordering or a brace-delimited with clause."
+        ],
+        "notes": [],
+        "positive": [
+          "Call methods with no arguments, iterator only, iterator and index, attributes, and with expressions."
+        ]
+      },
+      "id": "SV-2023-07-ARRAY-METHOD-CALL-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use nested scopes with an outer variable named item or index."
+        ],
+        "negative": [
+          "Reference an explicit iterator outside its with-expression scope."
+        ],
+        "notes": [],
+        "positive": [
+          "Use explicit and default item/index names in with expressions and verify element/index binding."
+        ]
+      },
+      "id": "SV-2023-07-ARRAY-METHOD-ITERATOR-BINDINGS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Omit both iterator and with clause."
+        ],
+        "negative": [
+          "Call a method with an iterator argument but no with clause."
+        ],
+        "notes": [],
+        "positive": [
+          "Provide an iterator together with a with clause."
+        ]
+      },
+      "id": "SV-2023-07-ARRAY-METHOD-ITERATOR-REQUIRES-WITH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Chain multiple method calls."
+        ],
+        "negative": [
+          "Place a postfix selection between a method call and its with clause."
+        ],
+        "notes": [],
+        "positive": [
+          "Chain a property or method and apply a range select after calls with and without with clauses."
+        ]
+      },
+      "id": "SV-2023-07-ARRAY-METHOD-POSTFIX-PLACEMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a compound parenthesized expression."
+        ],
+        "negative": [
+          "Use with {constraints} for an array method."
+        ],
+        "notes": [],
+        "positive": [
+          "Use with (expression) on applicable methods."
+        ]
+      },
+      "id": "SV-2023-07-ARRAY-METHOD-WITH-EXPRESSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise one-element, 2-state, and 4-state arrays."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "OR direct packed values and transformed expression values."
+        ]
+      },
+      "id": "SV-2023-07-ARRAY-OR-REDUCTION-METHOD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Order an empty or single-element array."
+        ],
+        "negative": [
+          "Apply an ordering method to an associative array."
+        ],
+        "notes": [],
+        "positive": [
+          "Apply ordering methods to fixed arrays, dynamic arrays, and queues."
+        ]
+      },
+      "id": "SV-2023-07-ARRAY-ORDERING-APPLICABILITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Observe in-place mutation rather than a returned array."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Call ordering methods with a default iterator and an explicit iterator used by an allowed with clause."
+        ]
+      },
+      "id": "SV-2023-07-ARRAY-ORDERING-METHOD-SIGNATURE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise one-element, overflow, and signed arrays according to result type semantics."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Multiply direct and transformed values."
+        ]
+      },
+      "id": "SV-2023-07-ARRAY-PRODUCT-METHOD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Reduce a nested unpacked integral array through a with expression that reduces each subarray."
+        ],
+        "negative": [
+          "Apply an integral reduction to nonintegral values without a valid integral expression."
+        ],
+        "notes": [],
+        "positive": [
+          "Reduce fixed, dynamic, queue, and typed associative arrays of integral values directly and through transformed with expressions."
+        ]
+      },
+      "id": "SV-2023-07-ARRAY-REDUCTION-APPLICABILITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use expression width and signedness differing from the element."
+        ],
+        "negative": [
+          "Use a type on which the selected reduction is undefined."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a cast in with to widen bit elements before summing and verify widened result and arithmetic."
+        ]
+      },
+      "id": "SV-2023-07-ARRAY-REDUCTION-TYPE-RULES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Reverse twice to restore the original order."
+        ],
+        "negative": [
+          "Call reverse() with a with clause."
+        ],
+        "notes": [],
+        "positive": [
+          "Reverse arrays of even, odd, zero, and one element."
+        ]
+      },
+      "id": "SV-2023-07-ARRAY-REVERSE-METHOD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Sort duplicate keys without requiring stable tie order."
+        ],
+        "negative": [
+          "Omit with for a nonrelational element type or use a nonrelational expression type."
+        ],
+        "notes": [],
+        "positive": [
+          "Reverse-sort integral values directly and structures by a relationally comparable field expression."
+        ]
+      },
+      "id": "SV-2023-07-ARRAY-RSORT-METHOD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Shuffle empty, singleton, and duplicate-valued arrays."
+        ],
+        "negative": [
+          "Call shuffle() with a with clause."
+        ],
+        "notes": [
+          "Do not require a particular random permutation or a changed order on every call."
+        ],
+        "positive": [
+          "Shuffle a populated array and verify the result is a permutation of the original."
+        ]
+      },
+      "id": "SV-2023-07-ARRAY-SHUFFLE-METHOD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a one-element slice."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Assign an overlapping slice and verify whole-slice assignment semantics."
+        ]
+      },
+      "id": "SV-2023-07-ARRAY-SLICE-ASSIGNMENT-ATOMIC"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Assign a width-one slice."
+        ],
+        "negative": [
+          "Assign slices of differing widths."
+        ],
+        "notes": [],
+        "positive": [
+          "Assign equal-width slices using variable starting indices."
+        ]
+      },
+      "id": "SV-2023-07-ARRAY-SLICE-READ-WRITE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Select a one-element slice."
+        ],
+        "negative": [
+          "Attempt a noncontiguous slice."
+        ],
+        "notes": [],
+        "positive": [
+          "Select multi-element slices from packed and unpacked arrays and use each as the corresponding array category."
+        ]
+      },
+      "id": "SV-2023-07-ARRAY-SLICE-SELECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Sort duplicate keys and empty arrays without requiring stable tie order."
+        ],
+        "negative": [
+          "Omit with for a nonrelational element type or use a nonrelational with-expression type."
+        ],
+        "notes": [],
+        "positive": [
+          "Sort integral values directly and structures by a relationally comparable field expression."
+        ]
+      },
+      "id": "SV-2023-07-ARRAY-SORT-METHOD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Sum one-element, overflow, and signed arrays according to result type semantics."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Sum direct values and transformed values with differing expression width."
+        ]
+      },
+      "id": "SV-2023-07-ARRAY-SUM-METHOD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Assign an empty dynamic array."
+        ],
+        "negative": [
+          "Assign incompatible array shapes."
+        ],
+        "notes": [],
+        "positive": [
+          "Assign one same-type, same-size array to another for both packed and fixed unpacked arrays."
+        ]
+      },
+      "id": "SV-2023-07-ARRAY-WHOLE-READ-WRITE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise one-element, duplicate, and X-containing arrays."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "XOR direct packed values and transformed expression values."
+        ]
+      },
+      "id": "SV-2023-07-ARRAY-XOR-REDUCTION-METHOD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Pass an empty array or one containing handle values."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Modify a by-value associative formal and verify the caller's entries are unchanged."
+        ]
+      },
+      "id": "SV-2023-07-ASSOCIATIVE-ARRAY-ARGUMENT-BY-VALUE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use compatible element typedefs."
+        ],
+        "negative": [
+          "Pass mismatched index types or pass between associative and fixed/dynamic array kinds."
+        ],
+        "notes": [],
+        "positive": [
+          "Pass an associative array to a matching associative formal."
+        ]
+      },
+      "id": "SV-2023-07-ASSOCIATIVE-ARRAY-ARGUMENT-COMPATIBILITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use distinct typedef names that resolve according to index-type equivalence rules."
+        ],
+        "negative": [
+          "Assign differing index types or assign between associative and other array kinds."
+        ],
+        "notes": [],
+        "positive": [
+          "Assign associative arrays with compatible element and identical index types."
+        ]
+      },
+      "id": "SV-2023-07-ASSOCIATIVE-ARRAY-ASSIGNMENT-CATEGORY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an aggregate element type."
+        ],
+        "negative": [
+          "Place a new type declaration in the index_type position."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare associative arrays with integral, string, class, and wildcard index forms."
+        ]
+      },
+      "id": "SV-2023-07-ASSOCIATIVE-ARRAY-DECLARATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use keys whose ordering differs from insertion order."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use integral, string, and class index types and exercise ordered traversal."
+        ]
+      },
+      "id": "SV-2023-07-ASSOCIATIVE-ARRAY-KEY-ORDERING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Query a newly declared associative array before any entry has been allocated."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare an associative array, verify zero entries, then write one key and verify one entry."
+        ]
+      },
+      "id": "SV-2023-07-ASSOCIATIVE-ARRAY-LAZY-STORAGE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an empty keyed literal and a default-only literal."
+        ],
+        "negative": [
+          "Use an unkeyed positional literal where associative keys are required."
+        ],
+        "notes": [],
+        "positive": [
+          "Initialize and replace an associative array with keyed entries and an optional default."
+        ]
+      },
+      "id": "SV-2023-07-ASSOCIATIVE-ARRAY-LITERAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare two empty associative arrays."
+        ],
+        "negative": [
+          "Attempt an associative-array slice."
+        ],
+        "notes": [],
+        "positive": [
+          "Read, write, and compare whole associative arrays and indexed elements."
+        ]
+      },
+      "id": "SV-2023-07-ASSOCIATIVE-ARRAY-OPERATIONS-NO-SLICE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Assign an empty source and verify every prior target entry is removed."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Assign source and target with disjoint keys and verify only source keys and values remain."
+        ]
+      },
+      "id": "SV-2023-07-ASSOCIATIVE-ASSIGNMENT-REPLACES-TARGET"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a default-only literal with no explicit keys."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Read missing keys in a defaulted array, then verify num(), exists(), and traversal behave as though no entries were created."
+        ]
+      },
+      "id": "SV-2023-07-ASSOCIATIVE-DEFAULT-DOES-NOT-CREATE-ENTRY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use default-only literals for aggregate element types."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Read a missing key with explicit and absent defaults, checking value and warning behavior."
+        ]
+      },
+      "id": "SV-2023-07-ASSOCIATIVE-DEFAULT-READ"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call delete() on an empty array."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Populate several keys, call delete(), and verify num() is zero."
+        ]
+      },
+      "id": "SV-2023-07-ASSOCIATIVE-DELETE-ALL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Delete the last existing entry."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Delete an existing key and verify only that entry is removed; delete a missing key and verify silence and no change."
+        ]
+      },
+      "id": "SV-2023-07-ASSOCIATIVE-DELETE-INDEXED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Pass null or empty-string keys to corresponding typed arrays."
+        ],
+        "negative": [
+          "Pass an incompatible key type or more than one argument."
+        ],
+        "notes": [],
+        "positive": [
+          "Call delete() with no argument and with a compatible key."
+        ]
+      },
+      "id": "SV-2023-07-ASSOCIATIVE-DELETE-SIGNATURE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify entry count increases once."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Create a new key by assignment and by passing the indexed entry to a ref formal."
+        ]
+      },
+      "id": "SV-2023-07-ASSOCIATIVE-ELEMENT-CREATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare two whole associative arrays."
+        ],
+        "negative": [
+          "Use a whole associative array as a scalar arithmetic operand."
+        ],
+        "notes": [],
+        "positive": [
+          "Use an indexed associative element in an arithmetic expression and copy or compare compatible whole arrays."
+        ]
+      },
+      "id": "SV-2023-07-ASSOCIATIVE-ELEMENT-EXPRESSION-SELECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Check a key whose stored value equals its default."
+        ],
+        "negative": [
+          "Pass an incompatible index type or omit the required argument."
+        ],
+        "notes": [],
+        "positive": [
+          "Call exists() before insertion, after insertion, and after deletion."
+        ]
+      },
+      "id": "SV-2023-07-ASSOCIATIVE-EXISTS-METHOD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a one-entry array."
+        ],
+        "negative": [
+          "Call first() on a wildcard-index array or with an incompatible ref variable."
+        ],
+        "notes": [],
+        "positive": [
+          "Call first() on populated ordered arrays and verify smallest key and status 1; call on empty and verify 0."
+        ]
+      },
+      "id": "SV-2023-07-ASSOCIATIVE-FIRST-SIGNATURE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a nested type whose leaf includes shortreal."
+        ],
+        "negative": [
+          "Use real, shortreal, or a structure containing real as the index type."
+        ],
+        "notes": [],
+        "positive": [
+          "Use string, dynamic aggregate, and other equality-comparable index types."
+        ]
+      },
+      "id": "SV-2023-07-ASSOCIATIVE-INDEX-EQUALITY-LEGALITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use 2-state, 4-state, string, and aggregate element types."
+        ],
+        "negative": [],
+        "notes": [
+          "Do not depend on warning wording."
+        ],
+        "positive": [
+          "Read nonexistent and X/Z-indexed entries and verify both warning occurrence and type-specific value."
+        ]
+      },
+      "id": "SV-2023-07-ASSOCIATIVE-INVALID-READ"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Attempt compound assignment through an invalid index."
+        ],
+        "negative": [],
+        "notes": [
+          "Do not depend on warning wording."
+        ],
+        "positive": [
+          "Attempt an X/Z-indexed write and verify no entry or value change plus a warning."
+        ]
+      },
+      "id": "SV-2023-07-ASSOCIATIVE-INVALID-WRITE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a one-entry array where first and last coincide."
+        ],
+        "negative": [
+          "Call last() on a wildcard-index array or with an incompatible ref variable."
+        ],
+        "notes": [],
+        "positive": [
+          "Call last() on populated ordered arrays and verify largest key and status 1; call on empty and verify 0."
+        ]
+      },
+      "id": "SV-2023-07-ASSOCIATIVE-LAST-METHOD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call at or above the largest key and verify 0 with unchanged argument."
+        ],
+        "negative": [
+          "Call next() on a wildcard-index array or with an incompatible ref variable."
+        ],
+        "notes": [],
+        "positive": [
+          "Call next() from existing and nonexistent intermediate keys and verify the least greater key."
+        ]
+      },
+      "id": "SV-2023-07-ASSOCIATIVE-NEXT-SIGNATURE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Overwrite an existing key and verify the count does not increase."
+        ],
+        "negative": [
+          "Pass an argument to num() or size()."
+        ],
+        "notes": [],
+        "positive": [
+          "Compare num() and size() before insertion, after several distinct insertions, and after deletion."
+        ]
+      },
+      "id": "SV-2023-07-ASSOCIATIVE-NUM-SIZE-METHODS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call at or below the smallest key and verify 0 with unchanged argument."
+        ],
+        "negative": [
+          "Call prev() on a wildcard-index array or with an incompatible ref variable."
+        ],
+        "notes": [],
+        "positive": [
+          "Call prev() from existing and nonexistent intermediate keys and verify the greatest smaller key."
+        ]
+      },
+      "id": "SV-2023-07-ASSOCIATIVE-PREV-METHOD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Apply postfix and prefix increment to missing entries."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Increment a missing integral entry with a user default and update a field of a missing default-initialized struct entry."
+        ]
+      },
+      "id": "SV-2023-07-ASSOCIATIVE-READ-MODIFY-WRITE-ALLOCATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use differing compatible integral signedness or width."
+        ],
+        "negative": [
+          "Use an incompatible string, class, or aggregate variable."
+        ],
+        "notes": [],
+        "positive": [
+          "Use an exactly matching key variable and an assignment-compatible integral variable."
+        ]
+      },
+      "id": "SV-2023-07-ASSOCIATIVE-TRAVERSAL-ARGUMENT-COMPATIBILITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a key whose high truncated bits are nonzero and one whose high bits are zero."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Traverse a wide-integral-key array into a narrower compatible argument and verify truncation and return -1."
+        ]
+      },
+      "id": "SV-2023-07-ASSOCIATIVE-TRAVERSAL-NARROW-ARGUMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise operations that would exceed capacity under the detailed bounded-queue rules."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Fill a [$:3] queue to four elements and verify indices 0 through 3."
+        ]
+      },
+      "id": "SV-2023-07-BOUNDED-QUEUE-CAPACITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Write exactly capacity and overflow by one at each end."
+        ],
+        "negative": [],
+        "notes": [
+          "Do not depend on warning wording or internal implementation strategy."
+        ],
+        "positive": [
+          "Overflow a bounded queue via whole assignment, push, and insert; verify truncation and warning."
+        ]
+      },
+      "id": "SV-2023-07-BOUNDED-QUEUE-OVERFLOW-DISCARD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Include null and derived-class handles."
+        ],
+        "negative": [],
+        "notes": [
+          "Do not require a particular cross-tool ordering."
+        ],
+        "positive": [
+          "Traverse unchanged class keys repeatedly and verify the same order."
+        ]
+      },
+      "id": "SV-2023-07-CLASS-ASSOCIATIVE-DETERMINISTIC-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use two distinct handles referring to the same object."
+        ],
+        "negative": [
+          "Index it with an unrelated class, string, or integer."
+        ],
+        "notes": [],
+        "positive": [
+          "Index a base-class-keyed array with base and derived object handles."
+        ]
+      },
+      "id": "SV-2023-07-CLASS-ASSOCIATIVE-INDEX-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Keep null and nonnull object keys simultaneously."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Store and retrieve an entry using null."
+        ]
+      },
+      "id": "SV-2023-07-CLASS-ASSOCIATIVE-NULL-INDEX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Give one declarator no unpacked dimension and another an unpacked dimension."
+        ],
+        "negative": [
+          "Attempt differing packed dimensions within one comma-separated declaration."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare two comma-separated arrays with common packed dimensions and differing unpacked dimensions."
+        ]
+      },
+      "id": "SV-2023-07-COMMA-SEPARATED-ARRAY-DECLARATIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Combine permitted unpacked open dimensions with the solitary packed dimension."
+        ],
+        "negative": [
+          "Use multiple unsized packed dimensions under this provision."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare DPI open-array formals with unsized unpacked dimensions and with one solitary unsized packed dimension."
+        ]
+      },
+      "id": "SV-2023-07-DPI-OPEN-ARRAY-UNPACKED-DIMENSIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast input and output direction modes."
+        ],
+        "negative": [
+          "Pass a dynamic array or queue to an unsized DPI output formal."
+        ],
+        "notes": [],
+        "positive": [
+          "Pass a permitted fixed-size actual to an appropriate DPI output open-array formal."
+        ]
+      },
+      "id": "SV-2023-07-DPI-OUTPUT-OPEN-ARRAY-ACTUAL-RESTRICTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Delete an empty array."
+        ],
+        "negative": [
+          "Pass an argument to delete()."
+        ],
+        "notes": [],
+        "positive": [
+          "Populate, delete, and verify size zero."
+        ]
+      },
+      "id": "SV-2023-07-DYNAMIC-ARRAY-DELETE-METHOD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Combine fixed and dynamic dimensions."
+        ],
+        "negative": [
+          "Place [] as a packed dimension."
+        ],
+        "notes": [],
+        "positive": [
+          "Place [] at different unpacked positions."
+        ]
+      },
+      "id": "SV-2023-07-DYNAMIC-ARRAY-DIMENSION-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Assign an empty source."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Assign differently sized fixed and dynamic source arrays to a dynamic target and compare with explicit new[size](source)."
+        ]
+      },
+      "id": "SV-2023-07-DYNAMIC-ARRAY-DIRECT-ASSIGNMENT-EQUIVALENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use dynamic-array elements."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare dynamic arrays of scalar, structure, and array elements."
+        ]
+      },
+      "id": "SV-2023-07-DYNAMIC-ARRAY-ELEMENT-TYPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Make only a middle dimension dynamic."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Contrast a[][2] with a[2][]."
+        ]
+      },
+      "id": "SV-2023-07-DYNAMIC-ARRAY-IDENTIFIER-LEFTMOST-DIMENSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Initialize a destination size different from the source size and apply the subsequent size-copy rules."
+        ],
+        "negative": [
+          "Use a scalar or assignment-incompatible array initializer."
+        ],
+        "notes": [],
+        "positive": [
+          "Allocate from an assignment-compatible fixed or dynamic source array."
+        ]
+      },
+      "id": "SV-2023-07-DYNAMIC-ARRAY-NEW-ARRAY-INITIALIZER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Allocate a selected dynamic subarray."
+        ],
+        "negative": [
+          "Use new[] for a fixed array or nonblocking assignment."
+        ],
+        "notes": [],
+        "positive": [
+          "Allocate at declaration and resize by blocking assignment."
+        ]
+      },
+      "id": "SV-2023-07-DYNAMIC-ARRAY-NEW-CONTEXT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Allocate elements containing nested dynamic arrays."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Allocate bit, logic, string, and aggregate element arrays without an initializer and verify defaults."
+        ]
+      },
+      "id": "SV-2023-07-DYNAMIC-ARRAY-NEW-DEFAULT-INITIALIZATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast with self-initialized resize."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Resize without an initializer and verify old values are replaced by defaults."
+        ]
+      },
+      "id": "SV-2023-07-DYNAMIC-ARRAY-NEW-DESTRUCTIVE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Have the initializer depend on state changed by the size expression."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use observable side effects in size and initializer expressions to verify left-to-right order."
+        ]
+      },
+      "id": "SV-2023-07-DYNAMIC-ARRAY-NEW-EVALUATION-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Resize to the same element count."
+        ],
+        "negative": [],
+        "notes": [
+          "Materialization needs a portable observation for outdated references rather than relying on crashes."
+        ],
+        "positive": [
+          "Take a reference to an element, resize the array, and ensure the old reference is not treated as referring to the new element."
+        ]
+      },
+      "id": "SV-2023-07-DYNAMIC-ARRAY-NEW-INVALIDATES-REFERENCES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a longint expression for the size."
+        ],
+        "negative": [
+          "Allocate with a negative size."
+        ],
+        "notes": [],
+        "positive": [
+          "Allocate positive and zero sizes."
+        ]
+      },
+      "id": "SV-2023-07-DYNAMIC-ARRAY-NEW-SIZE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use requested sizes zero and exactly equal to source size."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Initialize destinations smaller and larger than a three-element source and verify truncation and default padding."
+        ]
+      },
+      "id": "SV-2023-07-DYNAMIC-ARRAY-NEW-SOURCE-SIZE-ADJUSTMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Self-resize to the same size or zero."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Grow and shrink an array with a = new[n](a) and verify retained leading elements."
+        ]
+      },
+      "id": "SV-2023-07-DYNAMIC-ARRAY-SELF-RESIZE-PRESERVES-CONTENTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Resize to zero."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Observe size zero, then resize by new[] and assignment."
+        ]
+      },
+      "id": "SV-2023-07-DYNAMIC-ARRAY-SIZE-LIFECYCLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Check after zero allocation."
+        ],
+        "negative": [
+          "Pass an argument to size()."
+        ],
+        "notes": [],
+        "positive": [
+          "Check size() before creation and after resizing."
+        ]
+      },
+      "id": "SV-2023-07-DYNAMIC-ARRAY-SIZE-METHOD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare both on an uncreated array."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare size() with $size(array,1) before and after allocation."
+        ]
+      },
+      "id": "SV-2023-07-DYNAMIC-ARRAY-SIZE-SYSTEM-FUNCTION-EQUIVALENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use {} with a bounded queue."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Assign, compare, and return {} as a queue value."
+        ]
+      },
+      "id": "SV-2023-07-EMPTY-QUEUE-VALID-VALUE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Explicitly initialize only through a default assignment-pattern key."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Instantiate a typedef structure with an explicit assignment pattern and verify it overrides member defaults."
+        ]
+      },
+      "id": "SV-2023-07-EXPLICIT-STRUCT-INITIALIZER-OVERRIDES-DEFAULTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Test no match."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Verify the first matching index for fixed and associative arrays."
+        ]
+      },
+      "id": "SV-2023-07-FIND-FIRST-INDEX-METHOD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Test no match and a match at each boundary."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Create several matches and verify only the first is returned."
+        ]
+      },
+      "id": "SV-2023-07-FIND-FIRST-METHOD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use nonzero or descending declared ranges."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Find indices of multiple matches in fixed and associative arrays."
+        ]
+      },
+      "id": "SV-2023-07-FIND-INDEX-METHOD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Test no match."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Verify the last matching index for fixed and associative arrays."
+        ]
+      },
+      "id": "SV-2023-07-FIND-LAST-INDEX-METHOD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Test no match and a match at each boundary."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Create several matches and verify only the last is returned."
+        ]
+      },
+      "id": "SV-2023-07-FIND-LAST-METHOD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use duplicate matching values."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Find multiple, one, and zero matching elements."
+        ]
+      },
+      "id": "SV-2023-07-FIND-METHOD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a one-bit 4-state predicate."
+        ],
+        "negative": [
+          "Omit with or use an expression that cannot serve as Boolean."
+        ],
+        "notes": [],
+        "positive": [
+          "Call each method with a Boolean predicate."
+        ]
+      },
+      "id": "SV-2023-07-FIND-WITH-BOOLEAN-REQUIRED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use equal-size negative ranges."
+        ],
+        "negative": [
+          "Vary element type, dimension count, or one dimension's size."
+        ],
+        "notes": [],
+        "positive": [
+          "Pass an array with different bounds and directions but equal per-dimension sizes."
+        ]
+      },
+      "id": "SV-2023-07-FIXED-ARRAY-FORMAL-DIMENSION-SIZES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Resize the actual immediately before the call."
+        ],
+        "negative": [
+          "Pass a differently sized dynamic array or queue."
+        ],
+        "notes": [],
+        "positive": [
+          "Pass equal-sized compatible dynamic and queue actuals to a fixed-array formal."
+        ]
+      },
+      "id": "SV-2023-07-FIXED-ARRAY-FORMAL-VARIABLE-ACTUAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Declare [-1:-1]."
+        ],
+        "negative": [
+          "Use a runtime or X/Z-valued bound."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare ascending, descending, equal, and negative unpacked ranges."
+        ]
+      },
+      "id": "SV-2023-07-FIXED-UNPACKED-DIMENSION-RANGE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use [1], equivalent to [0:0]."
+        ],
+        "negative": [
+          "Use [0] or a negative or nonconstant size."
+        ],
+        "notes": [],
+        "positive": [
+          "Compare declarations [8] and [0:7]."
+        ]
+      },
+      "id": "SV-2023-07-FIXED-UNPACKED-DIMENSION-SIZE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use both soft and packed qualifiers."
+        ],
+        "negative": [
+          "Declare unequal-width members in a hard packed union."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare equal-width members in a hard packed union and unequal widths in a soft union."
+        ]
+      },
+      "id": "SV-2023-07-HARD-SOFT-PACKED-UNION-SIZES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a wide integral associative index type."
+        ],
+        "negative": [
+          "Invoke an index locator on a wildcard associative array."
+        ],
+        "notes": [],
+        "positive": [
+          "Check result types for fixed arrays and string- or class-index associative arrays."
+        ]
+      },
+      "id": "SV-2023-07-INDEX-LOCATOR-RESULT-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise narrowing, extension, and signedness conversion."
+        ],
+        "negative": [
+          "Index with real or shortreal without an explicit permitted conversion."
+        ],
+        "notes": [],
+        "positive": [
+          "Index with differently sized integral expressions and verify conversion to the key type."
+        ]
+      },
+      "id": "SV-2023-07-INTEGRAL-ASSOCIATIVE-INDEX-CAST"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Include values with the high bit set."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Traverse identical key bit patterns in signed- and unsigned-index arrays and verify each numerical order."
+        ]
+      },
+      "id": "SV-2023-07-INTEGRAL-ASSOCIATIVE-NUMERICAL-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Unknown bit discarded by a potential narrowing conversion."
+        ],
+        "negative": [
+          "Read or write with X- and Z-containing indices."
+        ],
+        "notes": [],
+        "positive": [
+          "Use fully known logic indices."
+        ]
+      },
+      "id": "SV-2023-07-INTEGRAL-ASSOCIATIVE-XZ-INVALID"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an enum whose base width exceeds one bit."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Read invalid indices from enums with 2-state and 4-state base types."
+        ]
+      },
+      "id": "SV-2023-07-INVALID-INDEX-ENUM-READ-VALUE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a multidimensional fixed-array element."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Read an invalid outer index where each element is a fixed array of logic or bit and verify shape and per-element values."
+        ]
+      },
+      "id": "SV-2023-07-INVALID-INDEX-FIXED-ARRAY-READ-VALUE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a derived class element type."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Read invalid indices from arrays of each listed handle-like type and compare with null."
+        ]
+      },
+      "id": "SV-2023-07-INVALID-INDEX-HANDLE-READ-VALUE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multi-bit integral element types."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Read invalid indices from logic and bit arrays and compare against all-X and all-zero values."
+        ]
+      },
+      "id": "SV-2023-07-INVALID-INDEX-INTEGRAL-READ-VALUE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Read invalid indices from real and shortreal arrays and compare with 0.0."
+        ]
+      },
+      "id": "SV-2023-07-INVALID-INDEX-REAL-READ-VALUE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast an existing entry containing an empty string."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Read an invalid index from a string array and compare with \"\"."
+        ]
+      },
+      "id": "SV-2023-07-INVALID-INDEX-STRING-READ-VALUE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a nested aggregate member."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use a struct element with 2-state, 4-state, and default-initialized members and read an invalid array index."
+        ]
+      },
+      "id": "SV-2023-07-INVALID-INDEX-STRUCT-READ-VALUE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a first member of aggregate type."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Read an invalid index from an array of unpacked unions and compare through the first member type."
+        ]
+      },
+      "id": "SV-2023-07-INVALID-INDEX-UNION-READ-VALUE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast an existing empty element with the nonexistent entry result."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Read invalid outer indices from arrays whose elements are dynamic arrays, queues, and associative arrays and verify size zero."
+        ]
+      },
+      "id": "SV-2023-07-INVALID-INDEX-VARIABLE-ARRAY-READ-VALUE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise queue [$+1] and associative-array creation exceptions separately."
+        ],
+        "negative": [],
+        "notes": [
+          "A warning is optional and must not be the oracle."
+        ],
+        "positive": [
+          "Read and write fixed unpacked arrays using out-of-range and X/Z indices and verify the mandated read value and no-op write."
+        ]
+      },
+      "id": "SV-2023-07-INVALID-UNPACKED-ARRAY-INDEX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Combine packed and unpacked dimension ordering as defined by query rules."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Query every dimension of a multidimensional array and compare default index() with index(1)."
+        ]
+      },
+      "id": "SV-2023-07-ITERATOR-INDEX-DIMENSION-NUMBERING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use both a custom element iterator and custom index-method name."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use default item.index and a custom iterator-index name when elements have their own index member."
+        ]
+      },
+      "id": "SV-2023-07-ITERATOR-INDEX-METHOD-NAME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a custom index method name supplied by the method call."
+        ],
+        "negative": [
+          "Pass more than one dimension argument."
+        ],
+        "notes": [],
+        "positive": [
+          "Query default and explicit dimensions from a multidimensional array method with expression."
+        ]
+      },
+      "id": "SV-2023-07-ITERATOR-INDEX-METHOD-SIGNATURE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a wide integral associative index type."
+        ],
+        "negative": [
+          "Use index() through a wildcard associative array method."
+        ],
+        "notes": [],
+        "positive": [
+          "Query indices of fixed arrays and string- or class-keyed associative arrays and verify result types."
+        ]
+      },
+      "id": "SV-2023-07-ITERATOR-INDEX-RETURN-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use sparse associative keys."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Verify first/last on ascending and descending arrays and on numerically or lexicographically ordered associative arrays."
+        ]
+      },
+      "id": "SV-2023-07-LOCATOR-FIRST-LAST-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Avoid asserting result order for methods returning all matches."
+        ],
+        "negative": [],
+        "notes": [
+          "Compare unordered result content where traversal order is unspecified."
+        ],
+        "positive": [
+          "Apply locators to fixed, dynamic, queue, and associative arrays with multiple, zero, and empty matches."
+        ]
+      },
+      "id": "SV-2023-07-LOCATOR-METHOD-COMMON-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Provide a with expression whose result type differs from the element type."
+        ],
+        "negative": [
+          "Omit with for an element type lacking relational operators."
+        ],
+        "notes": [],
+        "positive": [
+          "Call applicable methods with no with clause on integral elements and compare with with(item)."
+        ]
+      },
+      "id": "SV-2023-07-LOCATOR-OPTIONAL-WITH-RELATIONAL-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a one-element array."
+        ],
+        "negative": [],
+        "notes": [
+          "Do not require which duplicate is chosen."
+        ],
+        "positive": [
+          "Find a unique maximum and tied maxima with and without a with expression."
+        ]
+      },
+      "id": "SV-2023-07-MAX-LOCATOR-METHOD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a one-element array."
+        ],
+        "negative": [],
+        "notes": [
+          "Do not require which duplicate is chosen."
+        ],
+        "positive": [
+          "Find a unique minimum and tied minima with and without a with expression."
+        ]
+      },
+      "id": "SV-2023-07-MIN-LOCATOR-METHOD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use two dimensions on each side and verify rightmost-fastest ordering within each group."
+        ],
+        "negative": [
+          "Reference packed indices before unpacked indices."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare multiple packed and unpacked dimensions and access them in unpacked-then-packed order."
+        ]
+      },
+      "id": "SV-2023-07-MULTIDIMENSIONAL-ARRAY-DIMENSION-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use one packed dimension as a vector."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare and index a two-dimensional packed array."
+        ]
+      },
+      "id": "SV-2023-07-MULTIDIMENSIONAL-PACKED-ARRAY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a vector-net array element as a whole port connection."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Connect generated module instances through separately indexed net-array elements."
+        ]
+      },
+      "id": "SV-2023-07-NET-ARRAY-ELEMENT-USAGE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast a variable declaration and a plain net declaration of the same type."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare a wire using a structure type with member defaults and verify those defaults do not initialize the net."
+        ]
+      },
+      "id": "SV-2023-07-NET-IGNORES-DATATYPE-INITIALIZER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use differing but compatible index ranges."
+        ],
+        "negative": [
+          "Assign net and variable arrays with incompatible element types or shapes."
+        ],
+        "notes": [],
+        "positive": [
+          "Continuously assign a variable array to a wire array and procedurally copy the wire array to a compatible variable array."
+        ]
+      },
+      "id": "SV-2023-07-NET-VARIABLE-ARRAY-ASSIGNMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Select the least-significant bit and a one-bit part-select."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Part-select contiguous bits from a vector and from an integer type."
+        ]
+      },
+      "id": "SV-2023-07-PACKED-ARRAY-AND-INTEGER-SELECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise exactly 65536 bits."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare a 48-bit packed value and perform 48-bit arithmetic.",
+          "Declare a 65536-bit packed array."
+        ]
+      },
+      "id": "SV-2023-07-PACKED-ARRAY-ARBITRARY-WIDTH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare whole bits with concatenated elements."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use an entire multidimensional packed array as a vector."
+        ]
+      },
+      "id": "SV-2023-07-PACKED-ARRAY-CONTIGUOUS-VECTOR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Recursively nest packed arrays."
+        ],
+        "negative": [
+          "Form a packed array from real, string, or an unpacked structure."
+        ],
+        "notes": [],
+        "positive": [
+          "Form packed arrays from scalar bits, enums, nested packed arrays, and packed structures."
+        ]
+      },
+      "id": "SV-2023-07-PACKED-ARRAY-ELEMENT-TYPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise size conversion into a packed array."
+        ],
+        "negative": [
+          "Assign an integer directly to an unpacked array."
+        ],
+        "notes": [],
+        "positive": [
+          "Assign an integer literal to a width-compatible packed array."
+        ]
+      },
+      "id": "SV-2023-07-PACKED-ARRAY-INTEGER-ASSIGNMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a signed packed array."
+        ],
+        "negative": [
+          "Use a whole unpacked array as an arithmetic operand."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a packed array in arithmetic and bitwise expressions."
+        ]
+      },
+      "id": "SV-2023-07-PACKED-ARRAY-INTEGER-EXPRESSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use elements of a named signed type."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare signedness of a signed whole array, one element, and a part-select."
+        ]
+      },
+      "id": "SV-2023-07-PACKED-ARRAY-SIGNEDNESS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Assign with ascending versus descending bounds."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Assign equal-width vectors with differing declared ranges to packed arrays."
+        ]
+      },
+      "id": "SV-2023-07-PACKED-ARRAY-VECTOR-ASSIGNMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Declare [-1:-1]."
+        ],
+        "negative": [
+          "Use a runtime, X/Z-valued, or single-number dimension."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare ascending, descending, equal, and negative packed ranges."
+        ]
+      },
+      "id": "SV-2023-07-PACKED-DIMENSION-CONSTANT-RANGE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use both soft and packed on a union with a packed dimension."
+        ],
+        "negative": [
+          "Give an unpacked struct a trailing packed dimension."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a packed struct with a trailing packed dimension."
+        ]
+      },
+      "id": "SV-2023-07-PACKED-DIMENSION-KEYWORDS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use members of differing packed widths."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use a packed structure in a vector expression and compare its concatenated member bits."
+        ]
+      },
+      "id": "SV-2023-07-PACKED-STRUCT-AS-VECTOR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Select boundary bits n-1 and 0."
+        ],
+        "negative": [
+          "Select outside the effective packed range."
+        ],
+        "notes": [],
+        "positive": [
+          "Select one bit and a part corresponding to a member from a packed structure."
+        ]
+      },
+      "id": "SV-2023-07-PACKED-STRUCT-BIT-SELECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use nested packed aggregates."
+        ],
+        "negative": [
+          "Use a real, string, or unpacked array member."
+        ],
+        "notes": [],
+        "positive": [
+          "Use packed vectors and integer types as members."
+        ]
+      },
+      "id": "SV-2023-07-PACKED-STRUCT-MEMBER-TYPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare otherwise identical default-unsigned and explicitly signed structures."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Apply arithmetic to signed and unsigned packed structures and verify member bit order."
+        ]
+      },
+      "id": "SV-2023-07-PACKED-STRUCT-SIGNEDNESS-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Write an unknown-containing whole value then read a 2-state member."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare all-bit members with a structure containing one logic member."
+        ]
+      },
+      "id": "SV-2023-07-PACKED-STRUCT-STATE-DOMAIN"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the typedef in another aggregate."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Typedef a packed structure and declare a variable of that type."
+        ]
+      },
+      "id": "SV-2023-07-PACKED-STRUCT-TYPEDEF"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a void member together with a packed value-bearing member."
+        ],
+        "negative": [
+          "Declare a packed tagged union with an unpacked member type."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a packed tagged union with packed members of unequal widths."
+        ]
+      },
+      "id": "SV-2023-07-PACKED-TAGGED-UNION-MEMBER-TYPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Select a void member and treat every non-tag bit as undefined."
+        ],
+        "negative": [],
+        "notes": [
+          "Do not use undefined padding bits as a deterministic oracle."
+        ],
+        "positive": [
+          "Verify width and alignment for unequal-width members and recursively nested tagged unions."
+        ]
+      },
+      "id": "SV-2023-07-PACKED-TAGGED-UNION-REPRESENTATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use matching total bit counts."
+        ],
+        "negative": [
+          "Directly assign a packed array to an unpacked array."
+        ],
+        "notes": [],
+        "positive": [
+          "Explicitly cast a compatible packed value to an unpacked array target."
+        ]
+      },
+      "id": "SV-2023-07-PACKED-TO-UNPACKED-ASSIGNMENT-CAST"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use differently shaped packed members with equal total width."
+        ],
+        "negative": [],
+        "notes": [
+          "Expected bit correspondence must derive from SystemVerilog packed ordering, not host memory layout."
+        ],
+        "positive": [
+          "Write a multibyte packed member and read fixed slices through another member."
+        ]
+      },
+      "id": "SV-2023-07-PACKED-UNION-BIT-INTERPRETATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Mix 2-state and 4-state integral members."
+        ],
+        "negative": [
+          "Declare a packed union with a real or other nonintegral member."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare packed unions whose members are integral types."
+        ]
+      },
+      "id": "SV-2023-07-PACKED-UNION-INTEGRAL-MEMBERS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Write unknown bits through the 4-state member then read the 2-state member."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Write and read a 2-state member in a union also containing a logic member."
+        ]
+      },
+      "id": "SV-2023-07-PACKED-UNION-STATE-DOMAIN"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare signed and default-unsigned packed unions."
+        ],
+        "negative": [
+          "Select outside its effective range."
+        ],
+        "notes": [],
+        "positive": [
+          "Apply arithmetic and bit/part selects to a packed union."
+        ]
+      },
+      "id": "SV-2023-07-PACKED-UNION-VECTOR-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place an unpacked dimension after an int identifier."
+        ],
+        "negative": [
+          "Add a packed dimension to an int declaration."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare each predefined-width integer without a packed dimension."
+        ]
+      },
+      "id": "SV-2023-07-PREDEFINED-INTEGER-NO-PACKED-DIMENSIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Select boundary bits of byte and time values."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Bit-select and part-select an int and match it against logic signed [31:0]."
+        ]
+      },
+      "id": "SV-2023-07-PREDEFINED-INTEGER-PACKED-COMPATIBILITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise empty, singleton, and boundary insertion positions."
+        ],
+        "negative": [],
+        "notes": [
+          "Reference persistence intentionally differs and is covered separately."
+        ],
+        "positive": [
+          "Apply each listed assignment form and corresponding method to equal queues and compare resulting values."
+        ]
+      },
+      "id": "SV-2023-07-QUEUE-ASSIGNMENT-METHOD-VALUE-EQUIVALENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Assign exactly the bounded capacity and then a larger value."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Assign shorter and longer queue values to unbounded and bounded queues and verify resulting size."
+        ]
+      },
+      "id": "SV-2023-07-QUEUE-AUTOMATIC-RESIZE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast with an explicitly one-element queue."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare an uninitialized queue and compare it with {} and size zero."
+        ]
+      },
+      "id": "SV-2023-07-QUEUE-DEFAULT-EMPTY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Delete all from an already empty queue."
+        ],
+        "negative": [
+          "Pass more than one argument."
+        ],
+        "notes": [],
+        "positive": [
+          "Populate a queue, call delete() without an argument, and verify size zero."
+        ]
+      },
+      "id": "SV-2023-07-QUEUE-DELETE-ALL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Delete the sole item."
+        ],
+        "negative": [
+          "Delete with negative, size, X-containing, and Z-containing indices and verify no change."
+        ],
+        "notes": [
+          "Do not use optional warning behavior as the oracle."
+        ],
+        "positive": [
+          "Delete first, middle, and last items and verify remaining order."
+        ]
+      },
+      "id": "SV-2023-07-QUEUE-DELETE-INDEXED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the smallest permitted bound and verify the corresponding maximum last index."
+        ],
+        "negative": [
+          "Use zero, negative, or nonconstant bounded-queue right bounds."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare unbounded [$] and bounded [$:3] queues."
+        ]
+      },
+      "id": "SV-2023-07-QUEUE-DIMENSION-DECLARATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Apply these operations to an empty or one-element queue."
+        ],
+        "negative": [],
+        "notes": [
+          "Do not use implementation performance as an oracle for the constant-time capability statement."
+        ],
+        "positive": [
+          "Index first and last elements with 0 and $, slice and concatenate queues, and compare queue values."
+        ]
+      },
+      "id": "SV-2023-07-QUEUE-INDEXING-AND-ARRAY-OPERATIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Apply invalid insertion to an empty queue."
+        ],
+        "negative": [
+          "Insert with negative, size+1, X-containing, and Z-containing indices and verify no change."
+        ],
+        "notes": [
+          "Do not use warning presence or wording as the oracle."
+        ],
+        "positive": [
+          "Insert at exactly the current size."
+        ]
+      },
+      "id": "SV-2023-07-QUEUE-INSERT-INVALID-INDEX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Insert into an empty queue at index 0."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Insert at index 0, in the middle, and at the current size, verifying item order."
+        ]
+      },
+      "id": "SV-2023-07-QUEUE-INSERT-METHOD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Read from an empty queue."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Read negative, above-$, X-containing, and Z-containing indices for several element types."
+        ]
+      },
+      "id": "SV-2023-07-QUEUE-INVALID-INDEX-READ"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Write $+1 on an empty queue."
+        ],
+        "negative": [
+          "Write below zero, above $+1, or with X/Z and verify no change plus warning."
+        ],
+        "notes": [
+          "Do not depend on warning wording."
+        ],
+        "positive": [
+          "Write Q[$+1] and verify append behavior."
+        ]
+      },
+      "id": "SV-2023-07-QUEUE-INVALID-INDEX-WRITE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Push or insert into a full bounded queue and track the discarded last element."
+        ],
+        "negative": [],
+        "notes": [
+          "Use a portable outdated-reference observation."
+        ],
+        "positive": [
+          "Hold references across insertion and deletion methods, verifying retained references persist and removed-element references become outdated."
+        ]
+      },
+      "id": "SV-2023-07-QUEUE-METHOD-REFERENCE-PERSISTENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Pop the sole element and verify the queue becomes empty."
+        ],
+        "negative": [
+          "Pass an argument to pop_back()."
+        ],
+        "notes": [],
+        "positive": [
+          "Pop the back of a multi-element queue and verify returned value, reduced size, and remaining order."
+        ]
+      },
+      "id": "SV-2023-07-QUEUE-POP-BACK"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify the queue remains empty."
+        ],
+        "negative": [],
+        "notes": [
+          "Do not use optional warning behavior as the oracle."
+        ],
+        "positive": [
+          "Call pop_back() on empty queues of 2-state, 4-state, string, and aggregate types."
+        ]
+      },
+      "id": "SV-2023-07-QUEUE-POP-BACK-EMPTY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Pop the sole element and verify the queue becomes empty."
+        ],
+        "negative": [
+          "Pass an argument to pop_front()."
+        ],
+        "notes": [],
+        "positive": [
+          "Pop the front of a multi-element queue and verify returned value, reduced size, and remaining order."
+        ]
+      },
+      "id": "SV-2023-07-QUEUE-POP-FRONT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify the queue remains empty."
+        ],
+        "negative": [],
+        "notes": [
+          "Do not use optional warning behavior as the oracle."
+        ],
+        "positive": [
+          "Call pop_front() on empty queues of 2-state, 4-state, string, and aggregate element types."
+        ]
+      },
+      "id": "SV-2023-07-QUEUE-POP-FRONT-EMPTY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Push to a one-element queue."
+        ],
+        "negative": [
+          "Pass an incompatible item type or omit the argument."
+        ],
+        "notes": [],
+        "positive": [
+          "Push onto empty and populated queues and verify item becomes the last element."
+        ]
+      },
+      "id": "SV-2023-07-QUEUE-PUSH-BACK"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Push to a one-element queue."
+        ],
+        "negative": [
+          "Pass an incompatible item type or omit the argument."
+        ],
+        "notes": [],
+        "positive": [
+          "Push onto empty and populated queues and verify item becomes index 0 and old order follows."
+        ]
+      },
+      "id": "SV-2023-07-QUEUE-PUSH-FRONT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Check a bounded queue at capacity."
+        ],
+        "negative": [
+          "Pass an argument to size()."
+        ],
+        "notes": [],
+        "positive": [
+          "Check size() on empty, populated, grown, and shrunk queues."
+        ]
+      },
+      "id": "SV-2023-07-QUEUE-SIZE-METHOD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place both bounds outside opposite ends."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare Q[-2:2] with Q[0:2] and Q[1:99] with Q[1:$]."
+        ]
+      },
+      "id": "SV-2023-07-QUEUE-SLICE-LOWER-BOUND-CLAMP"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise reversed, negative/out-of-range singleton, and X/Z-containing bounds."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Slice ordinary ranges and a valid one-element range."
+        ]
+      },
+      "id": "SV-2023-07-QUEUE-SLICE-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change bounds across repeated evaluations."
+        ],
+        "negative": [
+          "Use nonintegral bounds."
+        ],
+        "notes": [],
+        "positive": [
+          "Slice a queue using runtime variables and computed integral expressions."
+        ]
+      },
+      "id": "SV-2023-07-QUEUE-SLICE-VARIABLE-BOUNDS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Construct an empty and a one-element queue."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Initialize and assign queues using both assignment patterns and unpacked concatenations."
+        ]
+      },
+      "id": "SV-2023-07-QUEUE-VALUE-CONSTRUCTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Assign a value equal to the queue's current contents."
+        ],
+        "negative": [],
+        "notes": [
+          "Use a portable outdated-reference observation."
+        ],
+        "positive": [
+          "Hold element references, replace the whole queue using direct and concatenation assignments, and verify all old references become outdated."
+        ]
+      },
+      "id": "SV-2023-07-QUEUE-WHOLE-ASSIGNMENT-INVALIDATES-REFERENCES"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Declare a rand member in a packed struct or union."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a rand member in an unpacked struct."
+        ]
+      },
+      "id": "SV-2023-07-RANDOM-QUALIFIER-UNPACKED-STRUCT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use constant width one."
+        ],
+        "negative": [
+          "Use a runtime-variable width."
+        ],
+        "notes": [],
+        "positive": [
+          "Use an indexed part-select with variable base and constant width."
+        ]
+      },
+      "id": "SV-2023-07-SELECT-WIDTH-CONSTANT-POSITION-VARIABLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Slice one dimension while indexing all remaining dimensions."
+        ],
+        "negative": [
+          "Attempt slices in two dimensions in one expression."
+        ],
+        "notes": [],
+        "positive": [
+          "Index one dimension and slice another."
+        ]
+      },
+      "id": "SV-2023-07-SLICE-SINGLE-DIMENSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Nest a soft packed union whose widest member is narrower than an outer sibling."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use unequal-width members and verify union width, LSB alignment, and nested alignment."
+        ]
+      },
+      "id": "SV-2023-07-SOFT-PACKED-UNION-REPRESENTATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Write the widest member."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Initialize a wide union, write a narrower member, and verify upper bits remain unchanged."
+        ]
+      },
+      "id": "SV-2023-07-SOFT-UNION-MEMBER-WRITE-PRESERVES-MSBS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Combine a typedef carrying packed and unpacked dimensions with additional dimensions."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Typedef a packed dimension then add another packed dimension.",
+          "Typedef an unpacked array then add another unpacked dimension."
+        ]
+      },
+      "id": "SV-2023-07-STAGED-ARRAY-DIMENSIONS-BY-TYPEDEF"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Keep empty-string and nonempty-string entries simultaneously."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Store and retrieve an entry using \"\"."
+        ]
+      },
+      "id": "SV-2023-07-STRING-ASSOCIATIVE-EMPTY-INDEX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a very long string key."
+        ],
+        "negative": [
+          "Index with an integer, real, or class handle."
+        ],
+        "notes": [],
+        "positive": [
+          "Index with string variables and literals of differing lengths."
+        ]
+      },
+      "id": "SV-2023-07-STRING-ASSOCIATIVE-INDEX-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Include the empty string and strings sharing prefixes."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Insert string keys out of order and traverse them in lexicographically ascending order."
+        ]
+      },
+      "id": "SV-2023-07-STRING-ASSOCIATIVE-LEXICOGRAPHICAL-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a constant aggregate expression for an array member."
+        ],
+        "negative": [
+          "Use a runtime variable in a member default."
+        ],
+        "notes": [],
+        "positive": [
+          "Give an unpacked-structure member a constant-expression default, instantiate the type without an explicit variable initializer, and observe the member default."
+        ]
+      },
+      "id": "SV-2023-07-STRUCT-MEMBER-DEFAULT-CONSTANT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Nest a union within an unpacked structure member."
+        ],
+        "negative": [
+          "Add a member default to a packed struct or an unpacked struct containing a union."
+        ],
+        "notes": [],
+        "positive": [
+          "Use member defaults in an unpacked structure containing no union."
+        ]
+      },
+      "id": "SV-2023-07-STRUCT-MEMBER-DEFAULT-RESTRICTIONS"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Declare an empty struct or omit a member semicolon."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a struct with two typed, semicolon-terminated members."
+        ]
+      },
+      "id": "SV-2023-07-STRUCT-UNION-DECLARATION-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an aggregate-typed member."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare an unpacked structure with heterogeneous members, assign the whole structure, and access a named member."
+        ]
+      },
+      "id": "SV-2023-07-STRUCTURE-ACCESS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an unpacked structure containing an unpacked array."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Assign one compatible structure to another and pass and return it through a function."
+        ]
+      },
+      "id": "SV-2023-07-STRUCTURE-WHOLE-TRANSFER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Omit exactly one innermost index."
+        ],
+        "negative": [
+          "Attempt to omit a slower-varying index while retaining a faster-varying one."
+        ],
+        "notes": [],
+        "positive": [
+          "Reference and assign compatible subarrays by supplying only leading indices, and assign whole arrays with no indices."
+        ]
+      },
+      "id": "SV-2023-07-SUBARRAY-REFERENCE-BY-OMITTED-INDICES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Construct a nested tagged member."
+        ],
+        "negative": [
+          "Use a nonexistent member name."
+        ],
+        "notes": [],
+        "positive": [
+          "Construct a tagged-union value with a tagged member expression."
+        ]
+      },
+      "id": "SV-2023-07-TAGGED-UNION-EXPRESSION-REFERENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Access through nested matching tags."
+        ],
+        "negative": [
+          "Read an inactive member."
+        ],
+        "notes": [],
+        "positive": [
+          "Construct and read the same tagged member."
+        ]
+      },
+      "id": "SV-2023-07-TAGGED-UNION-TAG-VALUE-CONSISTENCY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Access shared storage through a different otherwise legal member."
+        ],
+        "negative": [
+          "Declare an untagged union with a dynamic or chandle member."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare an unpacked union with integral members and a tagged union with a chandle member."
+        ]
+      },
+      "id": "SV-2023-07-UNION-STORAGE-AND-TYPE-RESTRICTIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use all-equal and associative arrays."
+        ],
+        "negative": [],
+        "notes": [
+          "Do not assert result order or a specific duplicate representative."
+        ],
+        "positive": [
+          "Verify one index per distinct expression value and that each returned index maps to the represented value."
+        ]
+      },
+      "id": "SV-2023-07-UNIQUE-INDEX-LOCATOR-METHOD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use all-equal and all-distinct arrays."
+        ],
+        "negative": [],
+        "notes": [
+          "Do not assert a particular result order or representative among duplicates."
+        ],
+        "positive": [
+          "Use repeated values and a with expression mapping distinct elements to duplicate keys; compare result as an unordered set."
+        ]
+      },
+      "id": "SV-2023-07-UNIQUE-LOCATOR-METHOD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Vary only the slowest dimension kind."
+        ],
+        "negative": [
+          "Use differing element types, fixed target counts, dimension counts, or faster-dimension types."
+        ],
+        "notes": [],
+        "positive": [
+          "Assign between fixed, dynamic, and queue outer dimensions with equivalent nested element types."
+        ]
+      },
+      "id": "SV-2023-07-UNPACKED-ARRAY-ASSIGNMENT-COMPATIBILITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use nonzero and negative bounds."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Assign equal-size arrays with opposite index directions and verify leftmost-to-leftmost correspondence."
+        ]
+      },
+      "id": "SV-2023-07-UNPACKED-ARRAY-ASSIGNMENT-CORRESPONDENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an unpacked array as the element type."
+        ],
+        "negative": [
+          "Place an intended unpacked range before the identifier."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare an unpacked array of structures and a multidimensional unpacked array."
+        ]
+      },
+      "id": "SV-2023-07-UNPACKED-ARRAY-DECLARATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare element signedness with whole-array assignment behavior."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare an unpacked array of signed packed elements and verify signed element arithmetic."
+        ]
+      },
+      "id": "SV-2023-07-UNPACKED-ARRAY-ELEMENT-SIGNEDNESS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Nest unpacked arrays around a packed element."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare unpacked arrays of scalar, packed-array, and unpacked-array elements."
+        ]
+      },
+      "id": "SV-2023-07-UNPACKED-ARRAY-KINDS-AND-ELEMENT-TYPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the mandated minimum element count."
+        ],
+        "negative": [],
+        "notes": [
+          "Materialization may require compile-only resource-conscious handling."
+        ],
+        "positive": [
+          "Declare a fixed-size unpacked array containing exactly 16777216 scalar elements."
+        ]
+      },
+      "id": "SV-2023-07-UNPACKED-ARRAY-MINIMUM-CAPACITY"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Declare an unpacked struct signed."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare an unpacked struct without a signing qualifier."
+        ]
+      },
+      "id": "SV-2023-07-UNPACKED-STRUCT-NOT-SIGNED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a one-member common prefix."
+        ],
+        "negative": [
+          "Inspect beyond the equivalent initial prefix."
+        ],
+        "notes": [],
+        "positive": [
+          "Put one of two structures sharing initial member types into a union and inspect the shared prefix through the other."
+        ]
+      },
+      "id": "SV-2023-07-UNPACKED-UNION-COMMON-INITIAL-SEQUENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a first member with a 4-state integral type."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare an unpacked union with no initializer and observe the first member's type default."
+        ]
+      },
+      "id": "SV-2023-07-UNPACKED-UNION-DEFAULT-INITIALIZATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Combine empty/null elements with otherwise valid nested fields."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use aggregate keys containing empty strings, empty arrays, or null handles."
+        ]
+      },
+      "id": "SV-2023-07-USER-TYPED-ASSOCIATIVE-EMPTY-NULL-VALID"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Add or delete a key, after which relative order may change for a nonrelational type."
+        ],
+        "negative": [],
+        "notes": [
+          "Do not require the arbitrary order to match across runs or tools."
+        ],
+        "positive": [
+          "Traverse unchanged keys repeatedly within one run and verify stable order; test a relationally ordered type separately."
+        ]
+      },
+      "id": "SV-2023-07-USER-TYPED-ASSOCIATIVE-ORDER-STABILITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place the unknown in a deeply nested element."
+        ],
+        "negative": [
+          "Use an aggregate key with a nested X or Z bit."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a fully known aggregate key."
+        ]
+      },
+      "id": "SV-2023-07-USER-TYPED-ASSOCIATIVE-XZ-INVALID"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Assign an empty source."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Assign shorter and longer source arrays to dynamic arrays and queues."
+        ]
+      },
+      "id": "SV-2023-07-VARIABLE-ARRAY-ASSIGNMENT-RESIZE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Pass any one-dimensional unpacked string array to a string dynamic-array formal."
+        ],
+        "negative": [
+          "Pass an incompatible element type, dimension count, or associative array."
+        ],
+        "notes": [],
+        "positive": [
+          "Pass each compatible actual kind to dynamic and queue formals."
+        ]
+      },
+      "id": "SV-2023-07-VARIABLE-ARRAY-FORMAL-ACTUAL-KINDS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a zero-size source and zero-element-compatible context if available."
+        ],
+        "negative": [
+          "Assign a shorter and a longer dynamic array or queue to a fixed target and verify the target is unchanged with an error."
+        ],
+        "notes": [
+          "The diagnostic wording is not part of the oracle."
+        ],
+        "positive": [
+          "Assign a runtime-sized source whose count matches the fixed target."
+        ]
+      },
+      "id": "SV-2023-07-VARIABLE-SOURCE-FIXED-TARGET-SIZE-ERROR"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Declare a void member in a struct or untagged union."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a void member in a tagged union."
+        ]
+      },
+      "id": "SV-2023-07-VOID-MEMBER-TAGGED-UNION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an integral index wider than 64 bits."
+        ],
+        "negative": [
+          "Use a string or class expression as a wildcard index."
+        ],
+        "notes": [],
+        "positive": [
+          "Index one wildcard associative array with integral expressions of several widths and signednesses."
+        ]
+      },
+      "id": "SV-2023-07-WILDCARD-ASSOCIATIVE-INDEX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use ordinary integral indexed access on the same wildcard array as a legal control."
+        ],
+        "negative": [
+          "Use foreach on a wildcard-index associative array."
+        ],
+        "notes": [],
+        "positive": [
+          "Use foreach with a typed associative array."
+        ]
+      },
+      "id": "SV-2023-07-WILDCARD-ASSOCIATIVE-NO-FOREACH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Distinguish methods returning element values from methods returning indices."
+        ],
+        "negative": [
+          "Invoke an index-returning locator method on a wildcard associative array."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a value-returning manipulation method that does not return indices, where otherwise legal."
+        ]
+      },
+      "id": "SV-2023-07-WILDCARD-ASSOCIATIVE-NO-INDEX-RETURNING-METHOD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use zero and values whose high significant bit is one."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Index with equal positive numeric values expressed at different widths and verify they address the same entry."
+        ]
+      },
+      "id": "SV-2023-07-WILDCARD-INDEX-CANONICAL-REPRESENTATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast a string literal, which has a specified conversion, with a string variable."
+        ],
+        "negative": [
+          "Index it with real or class-handle expressions."
+        ],
+        "notes": [],
+        "positive": [
+          "Index a wildcard array with integral expressions."
+        ]
+      },
+      "id": "SV-2023-07-WILDCARD-INDEX-NONINTEGRAL-ERROR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Mix key expression widths."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Insert keys out of order and traverse with first/next to verify ascending numerical order."
+        ]
+      },
+      "id": "SV-2023-07-WILDCARD-INDEX-NUMERICAL-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a signed negative expression and inspect its self-determined bit representation."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use the same bit pattern from signed and unsigned expressions and verify unsigned key interpretation."
+        ]
+      },
+      "id": "SV-2023-07-WILDCARD-INDEX-SELF-DETERMINED-UNSIGNED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place the unknown in the most-significant or least-significant bit."
+        ],
+        "negative": [
+          "Read or write using indices containing X and Z."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a fully known logic index."
+        ]
+      },
+      "id": "SV-2023-07-WILDCARD-INDEX-XZ-INVALID"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an empty or multi-byte string literal."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Index with a string literal and with its equivalent packed byte vector and verify key identity."
+        ]
+      },
+      "id": "SV-2023-07-WILDCARD-STRING-LITERAL-INDEX-CAST"
+    }
+  ],
+  "schema_version": 1
+}

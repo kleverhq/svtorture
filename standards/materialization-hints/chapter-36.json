@@ -1,0 +1,1118 @@
+{
+  "authority": "1800-2023",
+  "part": "36",
+  "requirements": [
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Expect a simulation callback without registering it through vpi_register_cb()."
+        ],
+        "notes": [],
+        "positive": [
+          "Register a simulation callback through vpi_register_cb() and trigger its reason."
+        ]
+      },
+      "id": "SV-2023-36-CALLBACK-REGISTER-WITH-VPI-REGISTER-CB"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Register two callbacks with different reasons and distinguish their invocations."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Register a distinctive callback reason and verify invocation only for that reason."
+        ]
+      },
+      "id": "SV-2023-36-CALLBACK-REGISTRATION-SELECTS-REASON"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Register two routines for separately registered callbacks."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Register a distinctive callback routine and verify that routine is invoked at the selected reason."
+        ]
+      },
+      "id": "SV-2023-36-CALLBACK-REGISTRATION-SELECTS-ROUTINE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a callback reason for which no associated object is required."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Register a value-change callback for one selected net and verify the callback identifies that net."
+        ]
+      },
+      "id": "SV-2023-36-CALLBACK-REGISTRATION-SELECTS-SYSTEM-OBJECT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use one callback routine with different user_data in two registrations."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Register distinctive user_data and verify the callback receives the same value."
+        ]
+      },
+      "id": "SV-2023-36-CALLBACK-REGISTRATION-SELECTS-USER-DATA"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a net value change as a minimal event and verify one corresponding callback."
+        ],
+        "negative": [],
+        "notes": [
+          "Select an exact callback reason defined by the VPI API for materialization."
+        ],
+        "positive": [
+          "Register an applicable simulation-event callback and trigger its specified event."
+        ]
+      },
+      "id": "SV-2023-36-CALLBACK-SIMULATION-EVENTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Request a callback after a small nonzero delay."
+        ],
+        "negative": [],
+        "notes": [
+          "Select an exact callback reason defined by the VPI API for materialization."
+        ],
+        "positive": [
+          "Register an applicable simulation-time callback and verify invocation at its requested simulation-time condition."
+        ]
+      },
+      "id": "SV-2023-36-CALLBACK-SIMULATION-TIME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use normal end of simulation rather than a tool-specific interactive feature."
+        ],
+        "negative": [],
+        "notes": [
+          "Select a portable callback reason defined by the VPI API."
+        ],
+        "positive": [
+          "Register an end-of-simulation callback and verify invocation when simulation completes."
+        ]
+      },
+      "id": "SV-2023-36-CALLBACK-SIMULATOR-ACTIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the startup callback to register one user-defined system task, without depending on vendor-specific loading options."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Register through the normative startup mechanism and record invocation during tool startup before design processing."
+        ]
+      },
+      "id": "SV-2023-36-CALLBACKS-AT-TOOL-STARTUP"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a source occurrence that executes zero times and verify no calltf call."
+        ],
+        "negative": [
+          "Invoke calltf only once for multiple runtime executions."
+        ],
+        "notes": [],
+        "positive": [
+          "Execute an associated system task repeatedly in a loop and count one calltf invocation per iteration."
+        ]
+      },
+      "id": "SV-2023-36-CALLTF-EACH-EXECUTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use both mechanisms with the same selected mode while observing one compatible legacy behavior."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use a host-default mode for one unbound application and a different compile-bound mode for another application in the same run."
+        ]
+      },
+      "id": "SV-2023-36-COMPATIBILITY-MECHANISMS-COMBINABLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare preprocessing of the same source with and without a compatibility symbol."
+        ],
+        "negative": [
+          "Ignore the selected mode and bind a designated API directly to current behavior."
+        ],
+        "notes": [],
+        "positive": [
+          "Preprocess calls to several designated APIs under a compatibility symbol and verify each resolves to its mode-specific form."
+        ]
+      },
+      "id": "SV-2023-36-COMPATIBILITY-MODE-REDEFINES-APIS"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Define two listed symbols before vpi_user.h and require a C compilation error."
+        ],
+        "notes": [],
+        "positive": [
+          "Compile with exactly one listed compatibility symbol."
+        ]
+      },
+      "id": "SV-2023-36-COMPATIBILITY-SYMBOL-AT-MOST-ONE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Put a callback in a separate unit."
+        ],
+        "negative": [
+          "Use different compatibility symbols across VPI-accessing units."
+        ],
+        "notes": [],
+        "positive": [
+          "Build a multi-source application with the same selection in every VPI-accessing unit."
+        ]
+      },
+      "id": "SV-2023-36-COMPATIBILITY-SYMBOL-CONSISTENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Select a listed mode through the compiler command line rather than source."
+        ],
+        "negative": [
+          "Define a compatibility symbol after including vpi_user.h."
+        ],
+        "notes": [],
+        "positive": [
+          "Define `VPI_COMPATIBILITY_VERSION_1800v2023` to 1 before including VPI headers."
+        ]
+      },
+      "id": "SV-2023-36-COMPILE-COMPATIBILITY-SYMBOL-SELECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place the occurrence in source that is compiled but never executed."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Register compiletf and record its invocation while a source occurrence is parsed, before simulation starts."
+        ]
+      },
+      "id": "SV-2023-36-COMPILETF-DURING-PARSE-OR-COMPILE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Put an invocation in source that is not executed at runtime and still observe one compiletf call for that source instance."
+        ],
+        "negative": [
+          "Call compiletf repeatedly for one source instance."
+        ],
+        "notes": [],
+        "positive": [
+          "Place two source invocations of a registered name and count one compiletf call for each."
+        ]
+      },
+      "id": "SV-2023-36-COMPILETF-PER-SOURCE-INSTANCE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Attempt to obtain different per-application modes solely through multiple host defaults in one run."
+        ],
+        "notes": [],
+        "positive": [
+          "Run one unbound application under the host default and another application compiled with a different compatibility symbol."
+        ]
+      },
+      "id": "SV-2023-36-DIFFERENT-COMPATIBILITY-MODES-COMPILE-BOUND"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Register a callback for completion of tool execution."
+        ],
+        "negative": [
+          "Expect an unregistered application routine to be invoked for a simulation activity."
+        ],
+        "notes": [],
+        "positive": [
+          "Register a value-change callback and observe invocation when the selected net changes."
+        ]
+      },
+      "id": "SV-2023-36-DYNAMIC-INTERACTION-USES-CALLBACKS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Repeat an applicable operation later in simulation to confirm availability continues."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "In a cbEndOfCompile callback, perform a portable VPI object-access operation unavailable during startup."
+        ]
+      },
+      "id": "SV-2023-36-FULL-VPI-ACCESS-FROM-END-OF-COMPILE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast an unbound application with one having an explicit compile-bound selection."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Select a host default compatibility mode and load an application compiled without a compatibility symbol; verify the selected legacy behavior."
+        ]
+      },
+      "id": "SV-2023-36-HOST-DEFAULT-COMPATIBILITY-AVAILABLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use two instances whose corresponding objects initially have equal values but distinct identities."
+        ],
+        "negative": [
+          "Alias corresponding objects from two instances to one VPI handle/object identity."
+        ],
+        "notes": [],
+        "positive": [
+          "Instantiate one module twice and obtain distinct VPI objects and values for the same declared wire in each instance."
+        ]
+      },
+      "id": "SV-2023-36-INSTANTIATED-OBJECTS-UNIQUELY-ACCESSIBLE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Expect vpiRefObj results."
+        ],
+        "notes": [],
+        "positive": [
+          "Iterate vpiInterfaceDecl on an allowed source and verify vpiVirtualInterfaceVar results."
+        ]
+      },
+      "id": "SV-2023-36-INTERFACEDECL-ITERATION-NO-REFOBJ"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast vpiClassDefn."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Obtain a vpiClassTypespec for an active scope and iterate vpiInterfaceDecl/vpiVirtualInterfaceVar."
+        ]
+      },
+      "id": "SV-2023-36-INTERFACEDECL-ITERATION-ON-CLASSTYPESPEC"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a nested operation and inspect each operation node separately."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Inspect a binary source expression and verify its expression handle has vpiOperation type."
+        ]
+      },
+      "id": "SV-2023-36-MULTIOPERAND-EXPRESSION-VPIOPERATION"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Attempt an object-access VPI operation from sizetf that becomes available only after cbEndOfCompile begins."
+        ],
+        "notes": [],
+        "positive": [
+          "Within sizetf, limit VPI calls to functionality available in the preceding startup stage."
+        ]
+      },
+      "id": "SV-2023-36-NO-ADDITIONAL-VPI-ACCESS-DURING-SIZETF"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Request vpiInterfaceDecl iteration on vpiClassDefn."
+        ],
+        "notes": [],
+        "positive": [
+          "Inspect vpiClassDefn without the removed relation."
+        ]
+      },
+      "id": "SV-2023-36-NO-INTERFACEDECL-ITERATION-ON-CLASSDEFN"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Attempt to assign two different host-default modes within the same simulation run."
+        ],
+        "notes": [],
+        "positive": [
+          "Run multiple unbound VPI applications under one selected host-default compatibility mode."
+        ]
+      },
+      "id": "SV-2023-36-ONE-HOST-DEFAULT-COMPATIBILITY-PER-RUN"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use parentheses to make the outer and inner operation relationship unambiguous."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Traverse a nested expression and verify the outer operation contains operand handles for subexpressions evaluated before it."
+        ]
+      },
+      "id": "SV-2023-36-OPERATION-AFTER-SUBEXPRESSIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Invoke the override with minimum-width and much wider arguments in the same design."
+        ],
+        "negative": [
+          "Provide an override whose return width varies per invocation according to argument width."
+        ],
+        "notes": [],
+        "positive": [
+          "Override $signed with a sizetf routine and invoke it with differently sized arguments, observing one fixed return width."
+        ]
+      },
+      "id": "SV-2023-36-OVERRIDDEN-SIGNED-UNSIGNED-FIXED-WIDTH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Override $signed or $unsigned and test fixed-width behavior separately."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Associate a PLI application with a built-in system function name and observe that invocation executes the replacement."
+        ]
+      },
+      "id": "SV-2023-36-PLI-OVERRIDES-BUILTIN-SYSTEM-NAME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use occurrences in multiple scopes while retaining one registration."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Place multiple occurrences of one associated user-defined system function in the design and count one sizetf invocation."
+        ]
+      },
+      "id": "SV-2023-36-SIZETF-AT-MOST-ONCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare a design containing the function with one containing no occurrence."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Register sizetf for a user-defined system function that appears once in the design and record that sizetf is called."
+        ]
+      },
+      "id": "SV-2023-36-SIZETF-CALLED-FOR-APPEARING-FUNCTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Return a width of one bit from sizetf."
+        ],
+        "negative": [
+          "Have calltf provide a result width inconsistent with sizetf."
+        ],
+        "notes": [],
+        "positive": [
+          "Return a distinctive width from sizetf and provide that many result bits from calltf."
+        ]
+      },
+      "id": "SV-2023-36-SIZETF-DEFINES-CALLTF-RETURN-BITS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare otherwise similar vpiRealFunc and vector-function registrations."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Register a vpiRealFunc with a sizetf pointer and verify an occurrence does not invoke sizetf."
+        ]
+      },
+      "id": "SV-2023-36-SIZETF-NOT-CALLED-FOR-REAL-FUNCTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Provide both compiletf and calltf for the same task and count sizetf separately."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Register a user-defined system task with a sizetf pointer and verify executing or compiling task occurrences does not invoke it."
+        ]
+      },
+      "id": "SV-2023-36-SIZETF-NOT-CALLED-FOR-TASK"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Register `cbStartOfSimulation` at startup, then register broader callbacks when that callback runs."
+        ],
+        "negative": [
+          "Register a value-change callback directly from a startup routine."
+        ],
+        "notes": [],
+        "positive": [
+          "Register each permitted startup callback reason from separate startup configurations."
+        ]
+      },
+      "id": "SV-2023-36-STARTUP-CALLBACK-REASONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Perform other VPI access later from the registered start-of-simulation callback."
+        ],
+        "negative": [
+          "Call an object-access VPI routine directly from a startup routine."
+        ],
+        "notes": [],
+        "positive": [
+          "From a startup routine, register a system task and an allowed callback."
+        ]
+      },
+      "id": "SV-2023-36-STARTUP-ROUTINE-API-RESTRICTION"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Use SystemVerilog-specific VPI declarations without including sv_vpi_user.h."
+        ],
+        "notes": [
+          "Use the normative header declarations rather than locally redeclaring the API."
+        ],
+        "positive": [
+          "Compile a C PLI application using SystemVerilog-specific VPI declarations with sv_vpi_user.h included."
+        ]
+      },
+      "id": "SV-2023-36-SV-VPI-USER-HEADER-REQUIRED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Return a value with high bits set to expose whether the width is exactly 32."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Register an integer/vector system function without sizetf and verify its expression width is 32 bits."
+        ]
+      },
+      "id": "SV-2023-36-SYSTEM-FUNCTION-DEFAULT-32-BITS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise each of the three callback roles separately with the same signature shape."
+        ],
+        "negative": [
+          "Define a systf callback as a zero-argument or multi-argument C function."
+        ],
+        "notes": [],
+        "positive": [
+          "Define registered sizetf, compiletf, and calltf callbacks using the normative one-argument callback signature."
+        ]
+      },
+      "id": "SV-2023-36-SYSTF-CALLBACK-ONE-ARGUMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Register different user_data values for separate system names sharing a callback and distinguish invocations by the received value."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Register a distinctive user_data pointer and verify the invoked callback receives that exact value."
+        ]
+      },
+      "id": "SV-2023-36-SYSTF-CALLBACK-RECEIVES-USER-DATA"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Register a system task and a system function separately through the same API."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Call vpi_register_systf with a complete registration record, then invoke the registered system name from SystemVerilog."
+        ]
+      },
+      "id": "SV-2023-36-SYSTF-CREATED-BY-VPI-REGISTER-SYSTF"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Register a task referenced from an early-elaborated scope."
+        ],
+        "negative": [
+          "Delay system-task registration until after reference resolution."
+        ],
+        "notes": [],
+        "positive": [
+          "Call vpi_register_systf from startup before elaboration, then resolve and invoke the registered task."
+        ]
+      },
+      "id": "SV-2023-36-SYSTF-REGISTRATION-BEFORE-ELABORATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Write a writable variable tfarg through the applicable PLI routine and observe the source-level variable update."
+        ],
+        "negative": [],
+        "notes": [
+          "Materialization requires a compiled PLI component; test the callback calling convention separately."
+        ],
+        "positive": [
+          "In a PLI callback, read an invocation argument through the task/function-argument access routines."
+        ]
+      },
+      "id": "SV-2023-36-TFARGS-ACCESSED-VIA-PLI"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Invoke the same callback from calls with different tfarg counts; its C callback parameter convention remains unchanged."
+        ],
+        "negative": [
+          "Define the callback as though each SystemVerilog tfarg were passed as a matching C parameter."
+        ],
+        "notes": [],
+        "positive": [
+          "Invoke a registered callback from a user-defined system call with tfargs and use the callback form prescribed by VPI rather than expecting corresponding C parameters."
+        ]
+      },
+      "id": "SV-2023-36-TFARGS-NOT-C-PARAMETERS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast registration of an overridable built-in system task with a timing-check name."
+        ],
+        "negative": [
+          "Attempt to register a PLI replacement for a timing check name such as `$setup`."
+        ],
+        "notes": [],
+        "positive": []
+      },
+      "id": "SV-2023-36-TIMING-CHECKS-NOT-OVERRIDABLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Invoke a user-defined system task with no arguments and another with multiple arguments."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Invoke a registered user-defined system task with a string and a variable argument."
+        ]
+      },
+      "id": "SV-2023-36-USER-SYSTEM-CALL-ARGUMENTS-PERMITTED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use it in an expression constrained by its registered return type and width."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use a registered user-defined system function invocation in a value expression."
+        ]
+      },
+      "id": "SV-2023-36-USER-SYSTEM-FUNCTION-FUNCTION-CONTEXTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify argument modification separately from setting the function result."
+        ],
+        "negative": [],
+        "notes": [
+          "Writability remains governed by applicable object and VPI access rules."
+        ],
+        "positive": [
+          "Pass a writable variable to a registered user-defined system function and have its callback update that tfarg."
+        ]
+      },
+      "id": "SV-2023-36-USER-SYSTEM-FUNCTION-MODIFIES-ARGUMENTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Read multiple tfargs while independently setting the result."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Pass a known value to a registered user-defined system function and have its callback read that tfarg."
+        ]
+      },
+      "id": "SV-2023-36-USER-SYSTEM-FUNCTION-READS-ARGUMENTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify the returned value independently of tfarg modifications."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Have a registered callback set a known function result and consume it in a SystemVerilog expression."
+        ]
+      },
+      "id": "SV-2023-36-USER-SYSTEM-FUNCTION-RETURNS-VALUE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use sizetf to define a one-bit vector result."
+        ],
+        "negative": [
+          "Omit required sizing behavior for a vector-valued user system function and assume an argument-derived width."
+        ],
+        "notes": [],
+        "positive": [
+          "Define a vector-valued system function whose sizetf returns a distinctive width and verify expression sizing."
+        ]
+      },
+      "id": "SV-2023-36-USER-SYSTEM-FUNCTION-VECTOR-SIZETF"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place the distinguishing character far beyond a conventional short identifier length."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Register two otherwise identical legal user-defined system names that differ only in a late character and verify each invokes its own callback."
+        ]
+      },
+      "id": "SV-2023-36-USER-SYSTEM-NAME-ALL-CHARACTERS-SIGNIFICANT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change the case of exactly one letter in an invocation and verify it does not select the differently cased name."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Register two otherwise identical user-defined system names differing only in letter case and invoke each."
+        ]
+      },
+      "id": "SV-2023-36-USER-SYSTEM-NAME-CASE-SENSITIVE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a `$`-prefixed name with a digit immediately after the prefix."
+        ],
+        "negative": [
+          "Attempt a user-defined system name containing punctuation other than dollar sign or underscore."
+        ],
+        "notes": [],
+        "positive": [
+          "Register a `$`-prefixed name containing letters, digits, underscores, and an additional dollar sign."
+        ]
+      },
+      "id": "SV-2023-36-USER-SYSTEM-NAME-CHARACTERS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a short legal name such as $a."
+        ],
+        "negative": [
+          "Attempt to register a user-defined system task name whose first character is a letter."
+        ],
+        "notes": [],
+        "positive": [
+          "Register and invoke a user-defined system task whose name begins with $."
+        ]
+      },
+      "id": "SV-2023-36-USER-SYSTEM-NAME-DOLLAR-PREFIX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a long legal name that differs from another registered name only near its end."
+        ],
+        "negative": [],
+        "notes": [
+          "Choose a practical but conspicuously long name; this rule does not prescribe implementation resource limits."
+        ],
+        "positive": [
+          "Register and invoke a user-defined system task whose legal name is substantially longer than ordinary identifiers."
+        ]
+      },
+      "id": "SV-2023-36-USER-SYSTEM-NAME-UNBOUNDED-LENGTH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Distinguish a writable variable argument from a non-writable expression."
+        ],
+        "negative": [],
+        "notes": [
+          "Writability remains governed by applicable object and VPI access rules."
+        ],
+        "positive": [
+          "Pass a writable variable to a registered user-defined system task and have its callback update the tfarg."
+        ]
+      },
+      "id": "SV-2023-36-USER-SYSTEM-TASK-MODIFIES-ARGUMENTS"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Attempt to use a user-defined system task invocation as a value-producing expression."
+        ],
+        "notes": [],
+        "positive": [
+          "Invoke a registered user-defined system task as a statement without consuming a result."
+        ]
+      },
+      "id": "SV-2023-36-USER-SYSTEM-TASK-NO-RETURN-VALUE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Read arguments of different SystemVerilog value types through applicable VPI access forms."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Pass a known value to a registered user-defined system task and have its callback read that tfarg."
+        ]
+      },
+      "id": "SV-2023-36-USER-SYSTEM-TASK-READS-ARGUMENTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the task as a standalone subroutine call statement."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Invoke a registered user-defined system task in a context where a void function call is permitted."
+        ]
+      },
+      "id": "SV-2023-36-USER-SYSTEM-TASK-VOID-FUNCTION-CONTEXTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a legal expression combining multiple operator levels."
+        ],
+        "negative": [],
+        "notes": [
+          "Choose expression forms with explicit VPI object mappings in Clauses 37 and 38."
+        ],
+        "positive": [
+          "Obtain a VPI handle for a source expression containing nested operators."
+        ]
+      },
+      "id": "SV-2023-36-VPI-ACCESS-TO-SOURCE-EXPRESSIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use separate callbacks triggered during compilation and execution."
+        ],
+        "negative": [
+          "Treat a standalone executable as the callback body without linking it into the tool."
+        ],
+        "notes": [
+          "Materialization requires the implementation's supported PLI loading/linking procedure."
+        ],
+        "positive": [
+          "Build a C callback into a loadable PLI component and invoke it from a registered user-defined system name."
+        ]
+      },
+      "id": "SV-2023-36-VPI-APPLICATION-C-FUNCTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Avoid an intervening VPI call between the failing operation and status query."
+        ],
+        "negative": [],
+        "notes": [
+          "Choose an error condition whose invalidity is explicitly defined by the VPI API."
+        ],
+        "positive": [
+          "Cause a specified VPI routine error, immediately call vpi_chk_error(), and verify a nonzero result."
+        ]
+      },
+      "id": "SV-2023-36-VPI-CHK-ERROR-NONZERO-AFTER-ERROR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Query immediately after a VPI operation chosen to have well-defined status."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Build and call a PLI application that invokes vpi_chk_error()."
+        ]
+      },
+      "id": "SV-2023-36-VPI-CHK-ERROR-PROVIDED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Apply compatibility only to a compatible partition of a mixed design."
+        ],
+        "negative": [
+          "Assume an old compatibility mode enables an old application to process newer constructs outside that mode's model."
+        ],
+        "notes": [],
+        "positive": [
+          "Run an older VPI application under a matching compatibility mode against a design using only constructs compatible with that mode."
+        ]
+      },
+      "id": "SV-2023-36-VPI-COMPATIBILITY-EMULATION"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Use core VPI declarations without including vpi_user.h."
+        ],
+        "notes": [
+          "Use the normative header declarations rather than locally redeclaring the API."
+        ],
+        "positive": [
+          "Compile a C PLI application using a core VPI routine with vpi_user.h included."
+        ]
+      },
+      "id": "SV-2023-36-VPI-USER-HEADER-REQUIRED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Distinguish the array object from an element."
+        ],
+        "negative": [
+          "Expect the array object itself to have vpiIntegerVar type."
+        ],
+        "notes": [],
+        "positive": [
+          "Inspect an unpacked integer array as vpiRegArray and a non-array integer variable as vpiIntegerVar."
+        ]
+      },
+      "id": "SV-2023-36-VPIINTEGERVAR-NOT-ARRAY"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Expect the array object's vpiType to be legacy vpiMemory."
+        ],
+        "notes": [],
+        "positive": [
+          "Inspect an unpacked one-dimensional reg array and verify its object type is vpiRegArray."
+        ]
+      },
+      "id": "SV-2023-36-VPIMEMORY-OBJECT-ABSENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify returned objects use current vpiRegArray type rather than vpiMemory object type."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use the vpiMemory one-to-many transition from an applicable scope to access current array objects."
+        ]
+      },
+      "id": "SV-2023-36-VPIMEMORY-TRANSITION-RETAINED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify returned element objects have current vpiReg type rather than vpiMemoryWord object type."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use the retained vpiMemoryWord iterator on an applicable array relation and enumerate its current element objects."
+        ]
+      },
+      "id": "SV-2023-36-VPIMEMORYWORD-ITERATOR-RETAINED"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Expect the element object's vpiType to be legacy vpiMemoryWord."
+        ],
+        "notes": [],
+        "positive": [
+          "Inspect an element of an unpacked one-dimensional reg array and verify its object type is vpiReg."
+        ]
+      },
+      "id": "SV-2023-36-VPIMEMORYWORD-OBJECT-ABSENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare unary and binary operation nodes."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Read vpiOpType from a vpiOperation handle for an operator with known arity and enumerate the expected operands."
+        ]
+      },
+      "id": "SV-2023-36-VPIOPTYPE-DETERMINES-OPERAND-COUNT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Distinguish the array object from an element."
+        ],
+        "negative": [
+          "Expect the array object itself to have vpiRealVar type."
+        ],
+        "notes": [],
+        "positive": [
+          "Inspect an unpacked real array and verify its array object is vpiRegArray."
+        ]
+      },
+      "id": "SV-2023-36-VPIREALVAR-NOT-ARRAY"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Verify both alias constants designate the same object type."
+        ]
+      },
+      "id": "SV-2023-36-VPIREG-ALIAS-VPILOGICVAR"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Iterate vpiReg on a vpiRegArray representing integer or time elements and verify corresponding non-vpiReg elements are returned."
+        ]
+      },
+      "id": "SV-2023-36-VPIREG-ITERATION-ON-REGARRAY"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Verify both alias constants designate the same object type."
+        ]
+      },
+      "id": "SV-2023-36-VPIREGARRAY-ALIAS-VPIARRAYVAR"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Iterate vpiRegArray in a scope containing integer, time, real, and reg/logic arrays and observe each."
+        ]
+      },
+      "id": "SV-2023-36-VPIREGARRAY-ITERATION-INCLUDES-VARIABLE-ARRAYS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Distinguish the array object from an element."
+        ],
+        "negative": [
+          "Expect the array object itself to have vpiTimeVar type."
+        ],
+        "notes": [],
+        "positive": [
+          "Inspect an unpacked time array as vpiRegArray and a non-array time variable as vpiTimeVar."
+        ]
+      },
+      "id": "SV-2023-36-VPITIMEVAR-NOT-ARRAY"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Iterate vpiVariables in a scope containing a scalar reg/logic variable and a reg/logic array and observe both."
+        ]
+      },
+      "id": "SV-2023-36-VPIVARIABLES-INCLUDES-REG-AND-REGARRAY"
+    }
+  ],
+  "schema_version": 1
+}

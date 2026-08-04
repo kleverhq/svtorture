@@ -1,0 +1,1310 @@
+{
+  "authority": "1800-2023",
+  "part": "32",
+  "requirements": [
+    {
+      "hints": {
+        "edge": [
+          "Annotate one of multiple specparams in an expression."
+        ],
+        "negative": [
+          "Detect continued use of the preannotation expression value."
+        ],
+        "notes": [],
+        "positive": [
+          "Annotate a specparam used in a procedural delay expression and observe the recalculated delay."
+        ]
+      },
+      "id": "SV-2023-32-ANNOTATED-SPECPARAM-DEPENDENT-EXPRESSIONS-REEVALUATED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place conditional and unconditional paths with identical terminals in the same specify block."
+        ],
+        "negative": [
+          "Provide the same terminals under a different condition and verify that path is not selected."
+        ],
+        "notes": [],
+        "positive": [
+          "Apply COND IOPATH to a specify path with the matching condition and terminals."
+        ]
+      },
+      "id": "SV-2023-32-COND-IOPATH-MAPS-CONDITIONAL-SPECIFY-PATH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare otherwise equivalent conditional entries with and without RETAIN."
+        ],
+        "negative": [],
+        "notes": [
+          "Accept either implementation choice for RETAIN."
+        ],
+        "positive": [
+          "Annotate a matching conditional path from COND IOPATH while accepting ignored RETAIN data."
+        ]
+      },
+      "id": "SV-2023-32-COND-IOPATH-RETAIN-MAY-BE-IGNORED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Provide conditional and ifnone paths with the same terminals."
+        ],
+        "negative": [
+          "Verify a regular conditional path is not selected in place of ifnone."
+        ],
+        "notes": [],
+        "positive": [
+          "Apply CONDELSE IOPATH values to a matching ifnone path."
+        ]
+      },
+      "id": "SV-2023-32-CONDELSE-IOPATH-MAPS-IFNONE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare equivalent CONDELSE entries with and without RETAIN."
+        ],
+        "negative": [],
+        "notes": [
+          "Accept either implementation choice for RETAIN."
+        ],
+        "positive": [
+          "Annotate an ifnone path while accepting an implementation that ignores RETAIN."
+        ]
+      },
+      "id": "SV-2023-32-CONDELSE-IOPATH-RETAIN-MAY-BE-IGNORED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use syntactically corresponding condition expressions on paths sharing both terminals."
+        ],
+        "negative": [
+          "Verify that a path with matching ports but a different condition remains unchanged."
+        ],
+        "notes": [],
+        "positive": [
+          "Provide two paths between the same ports with opposite conditions and verify annotation changes only the path matching the SDF COND expression."
+        ]
+      },
+      "id": "SV-2023-32-CONDITIONAL-IOPATH-EXACT-CONDITION-MATCH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use default invocation settings and verify both limits equal the delay."
+        ],
+        "negative": [],
+        "notes": [
+          "Invocation-option spelling is implementation-specific and not part of the oracle."
+        ],
+        "positive": [
+          "Annotate delay 5 with configured reject 40% and error 80% and observe limits 2 and 4."
+        ]
+      },
+      "id": "SV-2023-32-DEFAULT-PULSE-LIMITS-FROM-PERCENTAGES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a module with no specify paths and verify DEVICE targets all output-driving primitives."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Apply DEVICE to a module having specify paths to multiple outputs and verify all are targeted."
+        ]
+      },
+      "id": "SV-2023-32-DEVICE-MAPS-OUTPUT-PATHS-OR-DRIVERS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Name an output having no specify path and verify all primitives driving that output are targeted."
+        ],
+        "negative": [
+          "Verify specify paths to another output remain unchanged."
+        ],
+        "notes": [],
+        "positive": [
+          "Name one module output and verify all specify paths to that output are targeted."
+        ]
+      },
+      "id": "SV-2023-32-DEVICE-MODULE-OUTPUT-TARGET-SELECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a named module instance with no specify paths and verify all primitives driving its outputs are targeted."
+        ],
+        "negative": [
+          "Verify paths outside the named module instance remain unchanged."
+        ],
+        "notes": [],
+        "positive": [
+          "Name a module instance having specify paths to multiple outputs and verify all such paths are targeted."
+        ]
+      },
+      "id": "SV-2023-32-DEVICE-PORT-INSTANCE-TARGET-SELECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Drive through a net connection above the named source."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Place a source above its load and drive from ports at and above the source level."
+        ]
+      },
+      "id": "SV-2023-32-DOWN-HIERARCHY-INTERCONNECT-DELAY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Mix explicit and empty pulse-limit components in one IOPATH delay tuple."
+        ],
+        "negative": [
+          "Detect replacement of a pulse-limit value represented by empty parentheses."
+        ],
+        "notes": [],
+        "positive": [
+          "Set pulse limits, then apply an IOPATH with empty pulse-limit fields and verify the existing limits remain."
+        ]
+      },
+      "id": "SV-2023-32-EMPTY-SDF-VALUE-PRESERVES-CURRENT-COMPONENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise both upward and downward annotation directions."
+        ],
+        "negative": [
+          "Verify connected ports outside the directional hierarchical subset are unaffected."
+        ],
+        "notes": [],
+        "positive": [
+          "Annotate through a port connected across multiple hierarchy levels and observe all connected ports in the annotation direction."
+        ]
+      },
+      "id": "SV-2023-32-HIERARCHICAL-PORT-ANNOTATION-PROPAGATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a multisource, multiload net with nested overlapping subsets."
+        ],
+        "negative": [
+          "Detect one annotation incorrectly replacing the other outside their overlap."
+        ],
+        "notes": [],
+        "positive": [
+          "Apply two source-overlapping annotations to nested load ports with different delays and observe each hierarchical subset."
+        ]
+      },
+      "id": "SV-2023-32-HIERARCHICALLY-OVERLAPPING-ANNOTATIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a file containing only constructs unrelated to SystemVerilog timing and verify no timing state changes."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Include a TIMINGENV construct alongside valid timing annotation and verify that only the relevant timing annotation affects simulation."
+        ]
+      },
+      "id": "SV-2023-32-IGNORE-NON-SYSTEMVERILOG-SDF-CONSTRUCTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Mix supplied and omitted delay and pulse-limit components in one interconnect annotation."
+        ],
+        "negative": [
+          "Detect a missing interconnect component filled differently from the corresponding specify-path rule."
+        ],
+        "notes": [],
+        "positive": [
+          "Omit selected interconnect transition-delay or pulse-limit values and verify specify-path filling rules supply them."
+        ]
+      },
+      "id": "SV-2023-32-INTERCONNECT-DELAY-COMPONENT-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use inout module ports while retaining module ports at both endpoints."
+        ],
+        "negative": [
+          "Attempt INTERCONNECT annotation directly between primitive pins and verify no interconnect delay is created."
+        ],
+        "notes": [],
+        "positive": [
+          "Annotate delay between connected module ports."
+        ]
+      },
+      "id": "SV-2023-32-INTERCONNECT-DELAYS-ONLY-BETWEEN-MODULE-PORTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise each allowed inout substitution independently."
+        ],
+        "negative": [
+          "Use an input-only source or output-only load and verify it is not accepted as a legal INTERCONNECT pair."
+        ],
+        "notes": [],
+        "positive": [
+          "Annotate from an output port to an input port and from an inout port to an inout port."
+        ]
+      },
+      "id": "SV-2023-32-INTERCONNECT-ENDPOINT-PORT-DIRECTIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an existing source on a different net and verify the same load fallback."
+        ],
+        "negative": [
+          "Detect omission of the load delay merely because the named source mismatches."
+        ],
+        "notes": [],
+        "positive": [
+          "Name a missing source on a multisource load net and verify every actual source-to-load path uses the annotated delay."
+        ]
+      },
+      "id": "SV-2023-32-INTERCONNECT-MISMATCH-LOAD-FALLBACK"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise missing-source and different-net conditions separately."
+        ],
+        "negative": [
+          "Detect silent handling of an existing source and load on different nets."
+        ],
+        "notes": [
+          "Check warning presence, not wording."
+        ],
+        "positive": [
+          "Name a missing source port and verify that annotation issues a warning."
+        ]
+      },
+      "id": "SV-2023-32-INTERCONNECT-MISMATCH-WARNING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use inout ports as one or both legal endpoints."
+        ],
+        "negative": [
+          "Verify another source on the same net does not acquire the pair-specific delay."
+        ],
+        "notes": [],
+        "positive": [
+          "On a multisource net, annotate one existing source/load pair and verify its distinct delay."
+        ]
+      },
+      "id": "SV-2023-32-INTERCONNECT-PAIR-AND-MISMATCH-FALLBACK"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Observe through $display, $monitor, and an expression."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Observe the same signal at source and load and verify undelayed versus delayed transitions."
+        ]
+      },
+      "id": "SV-2023-32-INTERCONNECT-REFERENCE-DELAYED-VALUE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a multisource net."
+        ],
+        "negative": [
+          "Detect retention of the earlier source-specific delay."
+        ],
+        "notes": [],
+        "positive": [
+          "Apply INTERCONNECT for one source then PORT to the load and verify every source uses the PORT delay."
+        ]
+      },
+      "id": "SV-2023-32-INTERCONNECT-THEN-PORT-OVERRIDES-ALL-SOURCES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Assign distinct values to all 12 transition components and both pulse limits for each."
+        ],
+        "negative": [
+          "Detect aliasing of pulse limits between two transition components."
+        ],
+        "notes": [],
+        "positive": [
+          "Annotate distinct values for multiple interconnect transitions and their reject/error limits and observe the corresponding transition behavior."
+        ]
+      },
+      "id": "SV-2023-32-INTERCONNECT-TWELVE-TRANSITIONS-AND-PULSE-LIMITS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Generate a long burst with delay greater than the inter-transition interval so many output events remain pending."
+        ],
+        "negative": [
+          "Detect loss of a pending output event caused by a fixed queue-depth limit."
+        ],
+        "notes": [
+          "Use a finite stress count; the oracle is absence of an implementation-imposed fixed schedule-count limit, not proof over an actually infinite run."
+        ],
+        "positive": [
+          "Create several input transitions whose delayed interconnect output events are simultaneously pending and verify none is discarded merely due to a schedule-count limit."
+        ]
+      },
+      "id": "SV-2023-32-INTERCONNECT-UNLIMITED-FUTURE-SCHEDULES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Target a conditional specify path."
+        ],
+        "negative": [
+          "Use unmatched IOPATH terminals and verify a different path is not modified."
+        ],
+        "notes": [],
+        "positive": [
+          "Apply IOPATH delay values to a matching nonconditional specify path."
+        ]
+      },
+      "id": "SV-2023-32-IOPATH-MAPS-TO-SPECIFY-PATH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare annotation of equivalent IOPATH entries with and without RETAIN."
+        ],
+        "negative": [],
+        "notes": [
+          "This is an explicit implementation permission; a case must accept both supported RETAIN behavior and ignored RETAIN data."
+        ],
+        "positive": [
+          "Annotate an IOPATH containing RETAIN and accept an implementation that applies the path delay while ignoring RETAIN."
+        ]
+      },
+      "id": "SV-2023-32-IOPATH-RETAIN-MAY-BE-IGNORED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Provide conditional and unconditional paths with the same terminals and verify condition-sensitive matching."
+        ],
+        "negative": [
+          "Use an IOPATH with a mismatched terminal name or condition and verify it does not alter that path."
+        ],
+        "notes": [],
+        "positive": [
+          "Annotate an IOPATH whose terminal names and condition match a specify path."
+        ]
+      },
+      "id": "SV-2023-32-MATCH-SDF-DELAY-TO-SPECIFY-PATH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Provide otherwise identical conditional checks and select one by its condition."
+        ],
+        "negative": [
+          "Change only the timing-check type or condition and verify the nonmatching check is not annotated."
+        ],
+        "notes": [],
+        "positive": [
+          "Annotate a timing check with matching type, terminals, and condition."
+        ]
+      },
+      "id": "SV-2023-32-MATCH-SDF-TIMINGCHECK-BY-TYPE-NAMES-CONDITIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Annotate disjoint and overlapping values from separate files."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Call $sdf_annotate twice for the same timing item and verify second-file INCREMENT and ABSOLUTE behavior."
+        ]
+      },
+      "id": "SV-2023-32-MULTIPLE-SDF-FILES-COMPOSE-IN-CALL-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise exact zero and independently underflow reject and error limits."
+        ],
+        "negative": [
+          "Detect a negative resulting reject or error limit."
+        ],
+        "notes": [],
+        "positive": [
+          "Increment an existing pulse limit by a larger negative value and verify the result is zero."
+        ]
+      },
+      "id": "SV-2023-32-NEGATIVE-INCREMENTED-PULSE-LIMIT-CLAMPED-ZERO"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast an output port with a connected net target."
+        ],
+        "negative": [
+          "Attempt to target an output-only module port and verify it is not accepted as a NETDELAY target."
+        ],
+        "notes": [],
+        "positive": [
+          "Annotate NETDELAY to an input port, an inout port, and a net."
+        ]
+      },
+      "id": "SV-2023-32-NETDELAY-LEGAL-TARGETS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multiple sources and multiple load ports on the same target net."
+        ],
+        "negative": [
+          "Detect application of the delay to only one source on the target net."
+        ],
+        "notes": [],
+        "positive": [
+          "Target a multisource net and verify transitions from each source to an annotated load use the NETDELAY value."
+        ]
+      },
+      "id": "SV-2023-32-NETDELAY-MULTISOURCE-REPRESENTS-ALL-SOURCES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Mix input and inout load ports on the targeted net."
+        ],
+        "negative": [
+          "Verify a load port on another net remains unchanged."
+        ],
+        "notes": [],
+        "positive": [
+          "Target a net with multiple load ports and verify every connected load receives the delay."
+        ]
+      },
+      "id": "SV-2023-32-NETDELAY-NET-TARGET-ANNOTATES-ALL-LOADS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Target an inout module port directly."
+        ],
+        "negative": [
+          "Verify another load port is not selected merely because a direct port target was named."
+        ],
+        "notes": [],
+        "positive": [
+          "Target an input module port and verify that port receives the NETDELAY interconnect delay."
+        ]
+      },
+      "id": "SV-2023-32-NETDELAY-TARGET-AND-SOURCE-SET"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Combine unrelated constructs with a separately unannotatable SystemVerilog timing item and distinguish the required warning for the latter."
+        ],
+        "negative": [],
+        "notes": [
+          "Do not depend on diagnostic wording; isolate warning provenance where possible."
+        ],
+        "positive": [
+          "Annotate an SDF file containing a TIMINGENV construct and verify that the unrelated construct produces no warning."
+        ]
+      },
+      "id": "SV-2023-32-NO-WARNING-FOR-UNRELATED-SDF-CONSTRUCTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Mix conditional and nonconditional paths between the same terminals and verify all are annotated."
+        ],
+        "negative": [
+          "Include a path with a different source or destination and verify it remains unchanged."
+        ],
+        "notes": [],
+        "positive": [
+          "Provide two oppositely conditioned specify paths between the named ports and verify an unconditional IOPATH annotates both."
+        ]
+      },
+      "id": "SV-2023-32-NONCONDITIONAL-IOPATH-ANNOTATES-ALL-MATCHING-PORT-PATHS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Apply after an existing IOPATH delay annotation."
+        ],
+        "negative": [
+          "Detect a path-delay change caused solely by PATHPULSE."
+        ],
+        "notes": [],
+        "positive": [
+          "Apply each construct to a path and verify pulse limits change while delay remains fixed."
+        ]
+      },
+      "id": "SV-2023-32-PATHPULSE-CONSTRUCTS-DO-NOT-CHANGE-DELAY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Test reject and error limits around the delay boundary."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare pulse behavior for PATHPULSE limits equal to and greater than the delay."
+        ]
+      },
+      "id": "SV-2023-32-PATHPULSE-LIMIT-ABOVE-DELAY-BEHAVES-AS-DELAY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Apply PATHPULSE to a matching conditional specify path."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Apply PATHPULSE to a matching nonconditional specify path pulse limit."
+        ]
+      },
+      "id": "SV-2023-32-PATHPULSE-MAPS-TO-SPECIFY-PULSE-LIMITS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a conditional specify path as the target."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Apply PATHPULSEPERCENT to a matching specify path and observe the percentage-derived pulse limit."
+        ]
+      },
+      "id": "SV-2023-32-PATHPULSEPERCENT-MAPS-TO-SPECIFY-PULSE-LIMITS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare single-source and multisource nets."
+        ],
+        "negative": [
+          "Name an unrelated port and verify the intended load is unchanged."
+        ],
+        "notes": [],
+        "positive": [
+          "Apply PORT to a load on a multisource net and verify each source-to-load propagation uses the delay."
+        ]
+      },
+      "id": "SV-2023-32-PORT-DELAY-ALL-NET-SOURCES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use distinct delays for easy source-specific observation."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "On a three-source net, apply PORT then INTERCONNECT for one source and verify only that source/load delay changes."
+        ]
+      },
+      "id": "SV-2023-32-PORT-THEN-INTERCONNECT-OVERRIDES-ONE-SOURCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Require both an edge and a logical condition to match."
+        ],
+        "negative": [
+          "Provide otherwise corresponding negedge and unqualified checks and verify they remain unchanged."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a posedge-qualified SDF check and verify it annotates the corresponding posedge SystemVerilog check."
+        ]
+      },
+      "id": "SV-2023-32-QUALIFIED-SDF-TIMINGCHECK-REQUIRES-QUALIFIER-MATCH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Select boundary indices of an instance array in separate annotations."
+        ],
+        "negative": [
+          "Verify another array element remains unchanged."
+        ],
+        "notes": [],
+        "positive": [
+          "Select one indexed element of an instance array and verify annotation is confined to that element."
+        ]
+      },
+      "id": "SV-2023-32-SDF-ANNOTATE-INDEXED-MODULE-INSTANCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a file containing both successful and unannotatable data and count entries only as defined for individual annotations."
+        ],
+        "negative": [
+          "Detect a successfully annotated item missing from the log."
+        ],
+        "notes": [
+          "Do not depend on entry wording."
+        ],
+        "positive": [
+          "Annotate multiple timing items with log_file specified and verify one entry for each."
+        ]
+      },
+      "id": "SV-2023-32-SDF-ANNOTATE-LOG-ENTRY-PER-ANNOTATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the same relative SDF instance paths under two different selected scopes."
+        ],
+        "negative": [
+          "Verify a sibling outside the selected hierarchy remains unchanged."
+        ],
+        "notes": [],
+        "positive": [
+          "Select one of two sibling instances and verify annotation is confined to the selected hierarchy."
+        ]
+      },
+      "id": "SV-2023-32-SDF-ANNOTATE-MODULE-INSTANCE-SCOPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place identical child instance names beneath the caller and a sibling to distinguish the default scope."
+        ],
+        "negative": [
+          "Verify an equivalent hierarchy outside the caller module is unchanged."
+        ],
+        "notes": [],
+        "positive": [
+          "Call $sdf_annotate with module_instance omitted and verify relative SDF paths resolve under the caller module."
+        ]
+      },
+      "id": "SV-2023-32-SDF-ANNOTATE-OMITTED-SCOPE-DEFAULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Provide all seven argument positions."
+        ],
+        "negative": [
+          "Supply arguments out of order or more than the grammar permits."
+        ],
+        "notes": [],
+        "positive": [
+          "Call $sdf_annotate with only sdf_file and with selected later arguments using empty slots."
+        ]
+      },
+      "id": "SV-2023-32-SDF-ANNOTATE-TASK-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use distinct values to verify ordering."
+        ],
+        "negative": [
+          "Verify a nonmatching timing-check type is unchanged."
+        ],
+        "notes": [],
+        "positive": [
+          "Apply distinct BIDIRECTSKEW values to a matching $fullskew check."
+        ]
+      },
+      "id": "SV-2023-32-SDF-BIDIRECTSKEW-MAPPING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Apply PATHPULSE followed by IOPATH to shared pulse-limit components; compare INCREMENT and ABSOLUTE."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Apply distinct earlier and later ABSOLUTE annotations to the same timing components and observe the later values."
+        ]
+      },
+      "id": "SV-2023-32-SDF-CONSTRUCTS-ANNOTATED-IN-FILE-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare one-value and twelve-value forms."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Supply each supported delay tuple length with distinct values and observe v1 for 0-to-1."
+        ]
+      },
+      "id": "SV-2023-32-SDF-DELAY-MAP-0-TO-1"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare six-value derived mapping with explicit v7 in twelve-value form."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Choose unequal v1 and v3 and verify their minimum for three- and six-value forms."
+        ]
+      },
+      "id": "SV-2023-32-SDF-DELAY-MAP-0-TO-X"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare two-value and three-value forms."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Observe 0-to-z with distinct tuple values across supported lengths."
+        ]
+      },
+      "id": "SV-2023-32-SDF-DELAY-MAP-0-TO-Z"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare one-value and two-value forms."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use distinct v1 and v2 and observe the selected 1-to-0 delay."
+        ]
+      },
+      "id": "SV-2023-32-SDF-DELAY-MAP-1-TO-0"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise all tuple lengths."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use unequal component values to verify each minimum."
+        ]
+      },
+      "id": "SV-2023-32-SDF-DELAY-MAP-1-TO-X"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise all tuple lengths."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use distinct values for each supported tuple length and observe 1-to-z."
+        ]
+      },
+      "id": "SV-2023-32-SDF-DELAY-MAP-1-TO-Z"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare three- and six-value forms."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use unequal v2 and v6 to verify max selection."
+        ]
+      },
+      "id": "SV-2023-32-SDF-DELAY-MAP-X-TO-0"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare six- and twelve-value forms."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use unequal v1 and v4 to verify max selection."
+        ]
+      },
+      "id": "SV-2023-32-SDF-DELAY-MAP-X-TO-1"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise all tuple lengths."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use unequal values to verify each maximum."
+        ]
+      },
+      "id": "SV-2023-32-SDF-DELAY-MAP-X-TO-Z"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare three-value and six-value forms."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Observe z-to-0 with distinct values across tuple lengths."
+        ]
+      },
+      "id": "SV-2023-32-SDF-DELAY-MAP-Z-TO-0"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare the tuple-length boundary."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Observe z-to-1 using distinct values in three- and six-value forms."
+        ]
+      },
+      "id": "SV-2023-32-SDF-DELAY-MAP-Z-TO-1"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare three- and six-value forms."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use unequal values to verify each minimum."
+        ]
+      },
+      "id": "SV-2023-32-SDF-DELAY-MAP-Z-TO-X"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a direct string literal."
+        ],
+        "negative": [
+          "Pass an expression of an unsupported nonintegral, nonstring type."
+        ],
+        "notes": [],
+        "positive": [
+          "Pass a string variable naming an SDF file and separately an integral packed character string."
+        ]
+      },
+      "id": "SV-2023-32-SDF-FILE-ARGUMENT-TYPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify the setup component remains unchanged."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Apply HOLD to matching $hold and $setuphold checks."
+        ]
+      },
+      "id": "SV-2023-32-SDF-HOLD-MAPPING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use inout ports."
+        ],
+        "negative": [
+          "Use a nonmatching source/load pair and verify another connection is unchanged."
+        ],
+        "notes": [],
+        "positive": [
+          "Apply INTERCONNECT between connected module output and input ports and observe delayed propagation."
+        ]
+      },
+      "id": "SV-2023-32-SDF-INTERCONNECT-MAPS-INTERCONNECT-DELAY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Annotate multiple specparams."
+        ],
+        "negative": [
+          "Verify an unrelated specparam is unchanged."
+        ],
+        "notes": [],
+        "positive": [
+          "Use LABEL to replace a named specparam value and observe behavior controlled by it."
+        ]
+      },
+      "id": "SV-2023-32-SDF-LABEL-ANNOTATES-SPECPARAM"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise each deterministic explicit keyword against a different configuration selection."
+        ],
+        "negative": [
+          "Detect use of the configuration-file member instead of the explicit argument."
+        ],
+        "notes": [],
+        "positive": [
+          "Set configuration MTM_SPEC to MAXIMUM and explicit mtm_spec to TYPICAL, then verify the typical member is annotated."
+        ]
+      },
+      "id": "SV-2023-32-SDF-MTM-SPEC-OVERRIDES-CONFIG"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Omit mtm_spec and accept whichever member the simulator selects under default TOOL_CONTROL."
+        ],
+        "negative": [
+          "Detect selection of a different triple member under a deterministic keyword."
+        ],
+        "notes": [
+          "TOOL_CONTROL does not prescribe which member the simulator selects."
+        ],
+        "positive": [
+          "Annotate a distinct min:typ:max triple under MAXIMUM, MINIMUM, and TYPICAL and verify the selected member."
+        ]
+      },
+      "id": "SV-2023-32-SDF-MTM-SPEC-SELECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Distinguish version-scoped NETDELAY from constructs available in other SDF versions."
+        ],
+        "negative": [],
+        "notes": [
+          "Materialization requires an SDF reader mode supporting one of the listed versions."
+        ],
+        "positive": [
+          "Apply NETDELAY from a listed SDF version to a legal module-port target and separately to a net target."
+        ]
+      },
+      "id": "SV-2023-32-SDF-NETDELAY-MAPS-INTERCONNECT-DELAY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use distinct values to verify ordering."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Apply distinct NOCHANGE values to a matching $nochange check."
+        ]
+      },
+      "id": "SV-2023-32-SDF-NOCHANGE-MAPPING"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Verify another timing-check type is unchanged."
+        ],
+        "notes": [],
+        "positive": [
+          "Apply PERIOD to a matching $period check and observe the new limit."
+        ]
+      },
+      "id": "SV-2023-32-SDF-PERIOD-MAPPING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Target an inout load port."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Apply a PORT delay to a module input load and observe delayed propagation."
+        ]
+      },
+      "id": "SV-2023-32-SDF-PORT-MAPS-INTERCONNECT-DELAY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify removal remains unchanged."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Apply RECOVERY to matching $recovery and $recrem checks."
+        ]
+      },
+      "id": "SV-2023-32-SDF-RECOVERY-MAPPING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify component ordering."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Apply distinct values to each supported check form."
+        ]
+      },
+      "id": "SV-2023-32-SDF-RECREM-MAPPING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify recovery remains unchanged."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Apply REMOVAL to matching $removal and $recrem checks."
+        ]
+      },
+      "id": "SV-2023-32-SDF-REMOVAL-MAPPING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Omit scale_factors and verify unity scaling."
+        ],
+        "negative": [
+          "Detect swapping of minimum, typical, and maximum factor positions."
+        ],
+        "notes": [],
+        "positive": [
+          "Use distinct factors with distinct min/typ/max values and verify each corresponding product."
+        ]
+      },
+      "id": "SV-2023-32-SDF-SCALE-FACTORS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use unity explicit factors against nonunity configuration factors."
+        ],
+        "negative": [
+          "Detect use of configuration factors instead of the explicit argument."
+        ],
+        "notes": [],
+        "positive": [
+          "Provide explicit factors that differ from configuration SCALE_FACTORS and verify the explicit products."
+        ]
+      },
+      "id": "SV-2023-32-SDF-SCALE-FACTORS-OVERRIDE-CONFIG"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise each explicit scale_type against a different configuration mode."
+        ],
+        "negative": [
+          "Detect use of the configuration SCALE_TYPE instead of the explicit argument."
+        ],
+        "notes": [],
+        "positive": [
+          "Supply scale_type conflicting with configuration and verify the explicit mode controls scaling."
+        ]
+      },
+      "id": "SV-2023-32-SDF-SCALE-TYPE-ARGUMENT-OVERRIDES-CONFIG"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Omit scale_type and verify FROM_MTM correspondence."
+        ],
+        "negative": [
+          "Select FROM_MAXIMUM and detect factors applied from another triple member."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a distinct min:typ:max triple and distinct factors to distinguish all four scale modes."
+        ]
+      },
+      "id": "SV-2023-32-SDF-SCALE-TYPE-MODES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify the $setuphold hold component remains unchanged."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Apply SETUP to matching $setup and $setuphold checks."
+        ]
+      },
+      "id": "SV-2023-32-SDF-SETUP-MAPPING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify component ordering."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Apply distinct v1 and v2 values to each supported matching check form."
+        ]
+      },
+      "id": "SV-2023-32-SDF-SETUPHOLD-MAPPING"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Verify another timing-check type is not annotated."
+        ],
+        "notes": [],
+        "positive": [
+          "Apply SKEW to matching $skew and $timeskew checks."
+        ]
+      },
+      "id": "SV-2023-32-SDF-SKEW-MAPPING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Mix annotatable and unannotatable relevant data and isolate warning presence for the latter."
+        ],
+        "negative": [
+          "Detect silent failure to annotate relevant SDF timing data."
+        ],
+        "notes": [
+          "The oracle is warning presence, not diagnostic wording or one-warning-per-item grouping."
+        ],
+        "positive": [
+          "Provide relevant SDF timing data that cannot be applied to the selected design object and verify warning presence."
+        ]
+      },
+      "id": "SV-2023-32-SDF-UNANNOTATABLE-DATA-WARNING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify the second $width limit remains unchanged."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Apply WIDTH to a matching $width check."
+        ]
+      },
+      "id": "SV-2023-32-SDF-WIDTH-MAPPING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise both upward and downward source-port directions."
+        ],
+        "negative": [
+          "Verify sources outside the directional hierarchical subset do not acquire that source-port annotation."
+        ],
+        "notes": [],
+        "positive": [
+          "Annotate from a source port with connected sources beyond it in the annotation direction and verify each source uses the annotation."
+        ]
+      },
+      "id": "SV-2023-32-SOURCE-PORT-ANNOTATION-REPRESENTS-HIERARCHICAL-SOURCES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare three- and four-or-more-value inputs."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Supply more than three distinct SDF values to a three-delay construct and verify extras have no effect."
+        ]
+      },
+      "id": "SV-2023-32-THREE-DELAY-CONSTRUCT-IGNORES-EXTRA-SDF-VALUES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use tied minima."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use three unequal delays and observe the minimum for transition to X."
+        ]
+      },
+      "id": "SV-2023-32-THREE-DELAY-X-VALUE-USES-MINIMUM"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Mix qualified and unqualified corresponding checks."
+        ],
+        "negative": [
+          "Include a check with different signal names and verify it is not selected merely because qualifiers are absent."
+        ],
+        "notes": [],
+        "positive": [
+          "Use an unqualified SDF SETUPHOLD and corresponding SystemVerilog checks with posedge, negedge, edge, and conditional event forms; verify all are annotated."
+        ]
+      },
+      "id": "SV-2023-32-UNQUALIFIED-SDF-TIMINGCHECK-MATCHES-ALL-CONDITIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an SDF file that supplies no value for the observed timing item."
+        ],
+        "negative": [
+          "Backannotate an SDF file omitting an existing specify timing value and detect any modification of that value."
+        ],
+        "notes": [],
+        "positive": [
+          "Annotate one of two existing timing values and verify that the omitted value retains its prior value."
+        ]
+      },
+      "id": "SV-2023-32-UNSPECIFIED-TIMING-VALUES-PRESERVED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Observe both a port and a net connection above the load."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Place a load above its source and observe equal delay at ports above the load."
+        ]
+      },
+      "id": "SV-2023-32-UP-HIERARCHY-INTERCONNECT-DELAY"
+    }
+  ],
+  "schema_version": 1
+}

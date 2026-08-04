@@ -1,0 +1,338 @@
+schema_version = 3
+part = "N"
+
+[[requirements]]
+id = "SV-2023-N-CHI-SQUARE-ALGORITHM"
+standard_revision = "1800-2023"
+part = "N"
+clause = "N.2"
+anchors = [
+    "[2023:N.2:C001:p1337-1339]",
+    "[2023:N.2:C004:p1342-1344]",
+    "[2023:N.1:TN.1.R05:p1337]",
+]
+summary = "With degree_of_freedom greater than 0, $dist_chi_square starts with a squared standard-normal variate for odd degree or zero for even degree, adds twice a unit-mean exponential variate for each even step through the degree, advances the seed through those helper calls, and rounds the result to nearest integer with ties away from zero."
+related_clauses = [
+    "20.14.2",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "N.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "N.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "N.2"
+
+[[requirements]]
+id = "SV-2023-N-ERLANG-ALGORITHM"
+standard_revision = "1800-2023"
+part = "N"
+clause = "N.2"
+anchors = [
+    "[2023:N.2:C001:p1337-1339]",
+    "[2023:N.2:C004:p1342-1344]",
+    "[2023:N.2:C005:p1344]",
+    "[2023:N.1:TN.1.R07:p1337]",
+]
+summary = "With k_stage greater than 0, $dist_erlang multiplies k_stage successive unit-interval uniform variates, computes -mean*log(product)/k_stage, advances the seed once per variate, and rounds the result to nearest integer with ties away from zero."
+related_clauses = [
+    "20.14.2",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "N.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "N.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "N.2"
+
+[[requirements]]
+id = "SV-2023-N-EXPONENTIAL-ALGORITHM"
+standard_revision = "1800-2023"
+part = "N"
+clause = "N.2"
+anchors = [
+    "[2023:N.2:C001:p1337-1339]",
+    "[2023:N.2:C002:p1339-1341]",
+    "[2023:N.2:C004:p1342-1344]",
+    "[2023:N.1:TN.1.R03:p1337]",
+]
+summary = "With mean greater than 0, $dist_exponential obtains one unit-interval uniform variate U, advances the seed once, computes -log(U)*mean, and rounds the result to nearest integer with ties away from zero."
+related_clauses = [
+    "20.14.2",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "N.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "N.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "N.2"
+
+[[requirements]]
+id = "SV-2023-N-NORMAL-ALGORITHM"
+standard_revision = "1800-2023"
+part = "N"
+clause = "N.2"
+anchors = [
+    "[2023:N.2:C002:p1339-1341]",
+    "[2023:N.2:C004:p1342-1344]",
+    "[2023:N.1:TN.1.R02:p1337]",
+]
+summary = "$dist_normal repeatedly obtains pairs of uniform variates mapped to (-1,1) until their squared radius is nonzero and less than 1, transforms the first component by sqrt(-2*log(radius)/radius), scales by standard_deviation, adds mean, advances the seed for every attempted pair, and rounds to nearest integer with ties away from zero."
+related_clauses = [
+    "20.14.2",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "N.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "N.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "N.2"
+
+[[requirements]]
+id = "SV-2023-N-POISSON-ALGORITHM"
+standard_revision = "1800-2023"
+part = "N"
+clause = "N.2"
+anchors = [
+    "[2023:N.2:C002:p1339-1341]",
+    "[2023:N.2:C004:p1342-1344]",
+    "[2023:N.1:TN.1.R04:p1337]",
+]
+summary = "With mean greater than 0, $dist_poisson starts a count at zero, compares exp(-mean) with a uniform variate, and while the threshold is smaller increments the count and multiplies the accumulated variate by another uniform variate; it returns the final count and advances the seed once per variate."
+related_clauses = [
+    "20.14.2",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "N.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "N.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "N.2"
+
+[[requirements]]
+id = "SV-2023-N-RANDOM-USES-FULL-RANGE-UNIFORM"
+standard_revision = "1800-2023"
+part = "N"
+clause = "N.1"
+anchors = [
+    "[2023:N.1:TN.1.R08:p1337]",
+    "[2023:N.2:C003:p1341-1342]",
+]
+summary = "When $random is called with an explicit seed, Annex N defines it as rtl_dist_uniform(seed, LONG_MIN, LONG_MAX), so its returned value and updated seed follow the full-range uniform conversion."
+related_clauses = [
+    "20.14.1",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "N.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "N.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "N.1"
+
+[[requirements]]
+id = "SV-2023-N-T-ALGORITHM"
+standard_revision = "1800-2023"
+part = "N"
+clause = "N.2"
+anchors = [
+    "[2023:N.2:C002:p1339-1341]",
+    "[2023:N.2:C004:p1342-1344]",
+    "[2023:N.1:TN.1.R06:p1337]",
+]
+summary = "With degree_of_freedom greater than 0, $dist_t computes a chi-square variate of that degree followed by a standard-normal variate, divides the normal variate by sqrt(chi-square/degree_of_freedom), advances the seed through both helpers, and rounds the result to nearest integer with ties away from zero."
+related_clauses = [
+    "20.14.2",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "N.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "N.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "N.2"
+
+[[requirements]]
+id = "SV-2023-N-UNIFORM-ALGORITHM"
+standard_revision = "1800-2023"
+part = "N"
+clause = "N.2"
+anchors = [
+    "[2023:N.2:C002:p1339-1341]",
+    "[2023:N.2:C003:p1341-1342]",
+    "[2023:N.1:TN.1.R01:p1337]",
+    "[2023:N.1:P002:p1337]",
+]
+summary = "When start is less than end and end is less than LONG_MAX, $dist_uniform increments end for the helper call, applies the Annex N seed step and IEEE-float affine conversion, converts nonnegative samples by truncation and negative samples from r-1, clamps at the original endpoints, and returns a value in the inclusive original interval."
+related_clauses = [
+    "20.14.2",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "N.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "N.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "N.2"
+
+[[requirements]]
+id = "SV-2023-N-UNIFORM-DEGENERATE-BOUNDS"
+standard_revision = "1800-2023"
+part = "N"
+clause = "N.2"
+anchors = [
+    "[2023:N.2:C002:p1339-1341]",
+    "[2023:N.1:TN.1.R01:p1337]",
+]
+summary = "When $dist_uniform start is greater than or equal to end, it returns start immediately without invoking the uniform helper or updating the seed."
+related_clauses = [
+    "20.14.2",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "N.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "N.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "N.2"
+
+[[requirements]]
+id = "SV-2023-N-UNIFORM-FULL-RANGE-BOUNDS"
+standard_revision = "1800-2023"
+part = "N"
+clause = "N.2"
+anchors = [
+    "[2023:N.2:C002:p1339-1341]",
+    "[2023:N.2:C003:p1341-1342]",
+    "[2023:N.1:TN.1.R01:p1337]",
+]
+summary = "When $dist_uniform bounds are LONG_MIN and LONG_MAX, it affine-scales the helper sample with the Annex N constants 2147483648, 4294967295, and 4294967296, then converts nonnegative samples by truncation and negative samples from r-1 to produce the full-range result with the helper-updated seed."
+related_clauses = [
+    "20.14.2",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "N.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "N.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "N.2"
+
+[[requirements]]
+id = "SV-2023-N-UNIFORM-LONG-MAX-BOUND"
+standard_revision = "1800-2023"
+part = "N"
+clause = "N.2"
+anchors = [
+    "[2023:N.2:C002:p1339-1341]",
+    "[2023:N.2:C003:p1341-1342]",
+    "[2023:N.1:TN.1.R01:p1337]",
+]
+summary = "When $dist_uniform has LONG_MIN < start < end and end equals LONG_MAX, it decrements start for the helper call, adds 1 to the sample, converts nonnegative samples by truncation and negative samples from r-1, clamps to the original inclusive endpoints, and returns that result with the helper-updated seed."
+related_clauses = [
+    "20.14.2",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "N.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "N.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "N.2"
+
+[[requirements]]
+id = "SV-2023-N-UNIFORM-ZERO-SEED-SUBSTITUTION"
+standard_revision = "1800-2023"
+part = "N"
+clause = "N.2"
+anchors = [
+    "[2023:N.2:C003:p1341-1342]",
+    "[2023:N.1:TN.1.R01:p1337]",
+]
+summary = "Whenever a probabilistic distribution call reaches the Annex N uniform helper with seed 0, the helper substitutes 259341593 before applying the 69069*seed+1 update, so the sample and updated seed match a helper invocation initialized to 259341593."
+related_clauses = [
+    "20.14.2",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "N.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "N.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "N.2"

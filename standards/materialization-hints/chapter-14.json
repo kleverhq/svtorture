@@ -1,0 +1,1190 @@
+{
+  "authority": "1800-2023",
+  "part": "14",
+  "requirements": [
+    {
+      "hints": {
+        "edge": [
+          "Update an input in the raw event's active region and read its sampled clockvar from the block-event process."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare processes sensitive to the raw posedge and to the clocking-block event and observe the latter resume after Observed."
+        ]
+      },
+      "id": "SV-2023-14-CLOCKING-BLOCK-EVENT-OBSERVED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the block immediately after declaration without explicit instantiation."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Instantiate a module containing a clocking declaration twice and access a distinct block instance in each module instance."
+        ]
+      },
+      "id": "SV-2023-14-CLOCKING-BLOCK-IMPLICIT-INSTANCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Create two enclosing instances and verify each has its own local block scope."
+        ],
+        "negative": [
+          "Attempt to reference a block by unqualified name from outside its enclosing scope."
+        ],
+        "notes": [],
+        "positive": [
+          "Retain and access clocking-block state for the lifetime of its enclosing instance."
+        ]
+      },
+      "id": "SV-2023-14-CLOCKING-BLOCK-STATIC-LOCAL-SCOPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Declare an ordinary clocking block in a generate block within a permitted containing construct, and separately reject a compilation-unit declaration."
+        ],
+        "negative": [
+          "Declare one inside a task, package, or another clocking block."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare clocking blocks in each permitted containing construct."
+        ]
+      },
+      "id": "SV-2023-14-CLOCKING-DECLARATION-LOCATIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Parse an empty ordinary body and a body containing an assertion item declaration."
+        ],
+        "negative": [
+          "Reject a non-global clocking declaration that omits the required clocking event or semicolon."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse named ordinary and unnamed default clocking declarations using the permitted item forms."
+        ]
+      },
+      "id": "SV-2023-14-CLOCKING-DECLARATION-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use two blocks over the same signals with different clocking events and observe each block follow its own event."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Observe input sampling and output driving relative to the block's declared event."
+        ]
+      },
+      "id": "SV-2023-14-CLOCKING-EVENT-GOVERNS-TIMING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a variable that could not connect to a module inout port but satisfies both clocking-side rules."
+        ],
+        "negative": [
+          "Use an expression that fails either the input-side or output-side connection rule."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a variable as clocking inout when it is legal for both clocking input and output connection roles."
+        ]
+      },
+      "id": "SV-2023-14-CLOCKING-INOUT-DUAL-DIRECTION-LEGALITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Apply the rule to the input side of an inout clocking declaration."
+        ],
+        "negative": [
+          "Assign an expression that is illegal as an input-port connection."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a concatenation of nets and variable slices legal for an input-port connection."
+        ]
+      },
+      "id": "SV-2023-14-CLOCKING-INPUT-EXPRESSION-PORT-LEGALITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Leave the target otherwise undriven and observe 'z before the first synchronous drive, then the driven value afterward."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Before any synchronous drive, resolve the net with another driver and observe that the clocking driver contributes high impedance."
+        ]
+      },
+      "id": "SV-2023-14-CLOCKING-NET-DRIVER-INITIAL-Z"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Combine the clocking driver with an equal-strength conflicting driver and observe ordinary net resolution."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Drive 0 and 1 through a net-target clockvar against weaker opposite-valued drivers and observe strong resolution."
+        ]
+      },
+      "id": "SV-2023-14-CLOCKING-NET-DRIVER-STRENGTH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Combine the implicit driver with another net driver and observe both contributions participate independently in resolution."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Synchronously drive a net-target clockvar and observe its implicit driver update the target in Re-NBA."
+        ]
+      },
+      "id": "SV-2023-14-CLOCKING-NET-IMPLICIT-DRIVER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use two clocking blocks for one variable and omit a drive from one block while the other block drives."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Drive an output in one cycle, omit drives in later cycles, and observe that clock events alone do not reassign its associated signal."
+        ]
+      },
+      "id": "SV-2023-14-CLOCKING-OUTPUT-ASSIGNS-ONLY-ON-DRIVE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Apply the rule to the output side of an inout clocking declaration."
+        ],
+        "negative": [
+          "Assign a non-writable expression that is illegal as an output-port connection."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a writable signal or concatenation legal for an output-port connection."
+        ]
+      },
+      "id": "SV-2023-14-CLOCKING-OUTPUT-EXPRESSION-PORT-LEGALITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an assigned hierarchical expression and verify that the declared identifier names the clockvar rather than requiring a same-named enclosing signal."
+        ],
+        "negative": [
+          "Without an assigned expression, use a signal identifier that names no net or variable in the enclosing scope."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare an enclosing net or variable without an assigned expression and reference the resulting clockvar through the named block."
+        ]
+      },
+      "id": "SV-2023-14-CLOCKING-SIGNAL-CLOCKVAR-DEFINITION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Access same-named clockvars through two differently named blocks."
+        ],
+        "negative": [
+          "Attempt member access for a name not declared in the clocking block."
+        ],
+        "notes": [],
+        "positive": [
+          "Read an input clockvar as block_name.signal_name."
+        ]
+      },
+      "id": "SV-2023-14-CLOCKING-SIGNAL-MEMBER-ACCESS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the hierarchical-expression assignment form to give the clockvar a distinct name."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare a simple signal identifier whose clockvar has the same name."
+        ]
+      },
+      "id": "SV-2023-14-CLOCKVAR-NAME-MATCH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Attempt a procedural continuous assignment."
+        ],
+        "negative": [
+          "Write it using ordinary assignment, assign, or force."
+        ],
+        "notes": [],
+        "positive": [
+          "Write an output clockvar using synchronous-drive syntax."
+        ]
+      },
+      "id": "SV-2023-14-CLOCKVAR-WRITES-REQUIRE-SYNCHRONOUS-DRIVE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use zero."
+        ],
+        "negative": [
+          "Evaluate a cycle delay to a negative or nonintegral value."
+        ],
+        "notes": [],
+        "positive": [
+          "Use integral literal, identifier, and expression values greater than or equal to zero."
+        ]
+      },
+      "id": "SV-2023-14-CYCLE-DELAY-NONNEGATIVE-INTEGER"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Use ## as the intra-assignment delay of blocking and nonblocking assignments."
+        ],
+        "notes": [],
+        "positive": [
+          "Use ## as a standalone procedural timing control."
+        ]
+      },
+      "id": "SV-2023-14-CYCLE-DELAY-NOT-INTRA-ASSIGNMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place different defaults in distinct containing instances."
+        ],
+        "negative": [
+          "Use ## where no default clocking is in effect and require an error."
+        ],
+        "notes": [],
+        "positive": [
+          "Use ## with a default clocking declared in the containing construct."
+        ]
+      },
+      "id": "SV-2023-14-CYCLE-DELAY-REQUIRES-DEFAULT-CLOCKING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the cycle delay before a null statement."
+        ],
+        "negative": [
+          "Reject ## followed by an unparenthesized compound expression."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse ##3, ##count, and ##(count+1) procedural timing controls."
+        ]
+      },
+      "id": "SV-2023-14-CYCLE-DELAY-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use irregularly spaced clocking events to show counting events rather than elapsed periods."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Start ##1 midway between periodic events and observe resumption at the next block event."
+        ]
+      },
+      "id": "SV-2023-14-CYCLE-DELAY-WAITS-EVENT-COUNT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use separate containing constructs with different default clocks."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Designate a clocking block as default and observe unqualified ## delays count its events."
+        ]
+      },
+      "id": "SV-2023-14-DEFAULT-CLOCKING-CONTROLS-CYCLE-DELAYS"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Select a variable or nonexistent name as default clocking."
+        ],
+        "notes": [],
+        "positive": [
+          "Select a previously declared clocking block as default."
+        ]
+      },
+      "id": "SV-2023-14-DEFAULT-CLOCKING-IDENTIFIER-DENOTES-BLOCK"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare a nested declaration with an instantiated sibling."
+        ],
+        "negative": [
+          "Rely on an instantiating module's default inside an independently declared instantiated module."
+        ],
+        "notes": [],
+        "positive": [
+          "Use an enclosing default from a lexically nested module declaration."
+        ]
+      },
+      "id": "SV-2023-14-DEFAULT-CLOCKING-LEXICAL-SCOPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Override only the input default and retain the implicit zero output skew."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Omit all default and per-signal skews and observe the implicit input and output skews."
+        ]
+      },
+      "id": "SV-2023-14-DEFAULT-CLOCKING-SKEWS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Select an existing block from a nested module where the name is visible."
+        ],
+        "negative": [
+          "Reject a default clocking selection lacking its terminating semicolon."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse both an inline default clocking declaration and a statement selecting an existing block."
+        ]
+      },
+      "id": "SV-2023-14-DEFAULT-CLOCKING-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Schedule the later-written drive to mature earlier and verify maturity time, not source order alone, controls updates."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Schedule distinct values with different RHS cycle delays and observe each update in its selected cycle."
+        ]
+      },
+      "id": "SV-2023-14-DIFFERENT-FUTURE-DRIVES-EACH-MATURE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a long target-block delay while unrelated statements in the same process continue immediately."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Execute a synchronous drive with RHS ##2 followed by an immediate marker and observe the marker before the drive matures."
+        ]
+      },
+      "id": "SV-2023-14-DRIVE-RHS-CYCLE-DELAY-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an expression with an observable evaluation side effect and verify it occurs when the drive statement executes."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Schedule `clockvar <= ##2 expr`, change expr before maturity, and observe the originally captured value."
+        ]
+      },
+      "id": "SV-2023-14-DRIVE-RHS-IMMEDIATE-CAPTURE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use zero output skew and then nonzero output skew with the same RHS event count to isolate the added skew."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use a target clocking block distinct from the default block and observe update after the specified target events plus output skew."
+        ]
+      },
+      "id": "SV-2023-14-DRIVE-RHS-TARGET-CYCLE-SKEW-MATURITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Apply an edge skew where the clocking event has no explicit edge, as illustrated as legal."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use a posedge clocking event with a negedge output skew and observe driving on the selected edge."
+        ]
+      },
+      "id": "SV-2023-14-EDGE-SKEW-SELECTS-SIGNAL-EDGE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place global declarations at different hierarchy levels and verify the enclosing or nearest ancestor declaration wins."
+        ],
+        "negative": [
+          "Reference $global_clock when no declaration exists through the top-level and require an error."
+        ],
+        "notes": [],
+        "positive": [
+          "Resolve $global_clock first in the enclosing instance, then through parent instance scopes until the nearest declaration is found."
+        ]
+      },
+      "id": "SV-2023-14-EFFECTIVE-GLOBAL-CLOCKING-LOOKUP"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare waiting on the block event with waiting on an input clockvar change."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Wait with @(block_name) and observe resumption on the next block event."
+        ]
+      },
+      "id": "SV-2023-14-EVENT-CONTROL-CLOCKING-SYNCHRONIZATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use both a one-bit select and a wider part-select."
+        ],
+        "negative": [
+          "Use an output-only clockvar as the synchronized value expression."
+        ],
+        "notes": [],
+        "positive": [
+          "Wait on a whole input clockvar and on fixed and dynamic slices of an input or inout clockvar."
+        ]
+      },
+      "id": "SV-2023-14-EVENT-CONTROL-CLOCKVAR-SLICE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change the index multiple times while waiting and verify the selected slice remains the one chosen at wait execution."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Begin waiting on a dynamically indexed input-clockvar slice, change the index, and trigger the originally selected slice."
+        ]
+      },
+      "id": "SV-2023-14-EVENT-CONTROL-DYNAMIC-INDEX-SNAPSHOT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Pass a $global_clock-containing actual into a checker and verify lookup after substitution."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Instantiate one property containing $global_clock under two hierarchy branches and observe lookup from each assertion site."
+        ]
+      },
+      "id": "SV-2023-14-GLOBAL-CLOCK-ASSERTION-REFERENCE-POINT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the same legal declaration form separately in module and checker scopes."
+        ],
+        "negative": [
+          "Declare a global clocking in a function, task, package, or compilation-unit scope."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare one global clocking directly in each permitted construct."
+        ]
+      },
+      "id": "SV-2023-14-GLOBAL-CLOCKING-DECLARATION-RESTRICTIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast an ordinary clocking declaration in a generate block with the prohibited global form."
+        ],
+        "negative": [
+          "Place a global clocking declaration in a conditional or loop generate block."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a global clocking directly in a module outside its generate regions."
+        ]
+      },
+      "id": "SV-2023-14-GLOBAL-CLOCKING-NOT-IN-GENERATE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use one declaration in an outer module and one in a nested module declaration."
+        ],
+        "negative": [
+          "Declare two global clockings in one module, interface, checker, or program."
+        ],
+        "notes": [],
+        "positive": [
+          "Place one global clocking in each of two distinct hierarchy branches."
+        ]
+      },
+      "id": "SV-2023-14-GLOBAL-CLOCKING-ONE-PER-CONSTRUCT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a matching optional end label."
+        ],
+        "negative": [
+          "Place a clocking item in a global clocking body."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse named and unnamed global clocking declarations."
+        ]
+      },
+      "id": "SV-2023-14-GLOBAL-CLOCKING-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Give the clockvar a name different from the final name in the associated hierarchical path."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Associate a distinctly named clockvar with a cross-module hierarchical signal expression."
+        ]
+      },
+      "id": "SV-2023-14-HIERARCHICAL-CLOCKING-SIGNAL-ASSOCIATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Build a hierarchical expression entirely from current-scope slices."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Associate a clockvar with a concatenation containing a signal slice from another scope."
+        ]
+      },
+      "id": "SV-2023-14-HIERARCHICAL-EXPRESSION-FORMS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Read and drive the same inout clockvar around one clocking event and distinguish sampled input from output drive."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Read an inout clockvar after its clocking signal is sampled."
+        ]
+      },
+      "id": "SV-2023-14-INOUT-CLOCKVAR-READ-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Read and drive the same inout clockvar around one clocking event and distinguish sampled input from output drive."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Synchronously drive an inout clockvar and observe the corresponding clocking signal output behavior."
+        ]
+      },
+      "id": "SV-2023-14-INOUT-CLOCKVAR-WRITE-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Read again after the next event samples the driven signal."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Sample one value, synchronously drive a different value through the inout, and read back the retained sample before the next event."
+        ]
+      },
+      "id": "SV-2023-14-INOUT-DRIVE-PRESERVES-SAMPLED-INPUT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Read before and after consecutive events."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Read a clockvar between events after changing its underlying signal and observe the retained prior sample."
+        ]
+      },
+      "id": "SV-2023-14-INPUT-CLOCKVAR-MOST-RECENT-SAMPLE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Assign or synchronously drive an input-only clockvar."
+        ],
+        "notes": [],
+        "positive": [
+          "Read an input clockvar."
+        ]
+      },
+      "id": "SV-2023-14-INPUT-CLOCKVAR-NOT-WRITABLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use zero skew and distinguish the scheduling semantics specified for zero from nonzero temporal offset."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use equal nonzero input and output skews and observe sampling before and driving after the event."
+        ]
+      },
+      "id": "SV-2023-14-INPUT-OUTPUT-SKEW-DIRECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Schedule drives from two blocks to mature in the same time step and apply the applicable same-region ordering rule."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Drive one variable alternately from posedge and negedge clocking blocks and observe each most recent drive determine its value."
+        ]
+      },
+      "id": "SV-2023-14-MULTIPLE-BLOCK-VARIABLE-LAST-DRIVE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Trigger both events in the same time slot."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Put one signal in two blocks with different events and observe distinct sampled values."
+        ]
+      },
+      "id": "SV-2023-14-MULTIPLE-BLOCKS-INDEPENDENT-INPUT-SAMPLING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Include a non-clocking driver and a clocking driver initially at 'z."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Drive conflicting values from two clocking outputs onto a wire and observe standard wire resolution."
+        ]
+      },
+      "id": "SV-2023-14-MULTIPLE-CLOCKING-NET-DRIVER-RESOLUTION"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Attempt to designate an automatic procedural local variable as a clocking signal."
+        ],
+        "notes": [],
+        "positive": [
+          "Designate a module-scope variable as a clocking signal."
+        ]
+      },
+      "id": "SV-2023-14-NO-PROCEDURAL-LOCAL-CLOCKING-SIGNAL"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Use `#delay` or an event control as an intra-assignment drive delay."
+        ],
+        "notes": [],
+        "positive": [
+          "Use an RHS ## cycle delay."
+        ]
+      },
+      "id": "SV-2023-14-NO-REGULAR-INTRA-ASSIGNMENT-DRIVE-DELAY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast RHS ##0 with RHS ##1 while retaining zero output skew."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use a nonzero RHS cycle delay with zero output skew and observe the update in Re-NBA of the selected future event time step."
+        ]
+      },
+      "id": "SV-2023-14-NONZERO-CYCLE-DELAY-FUTURE-RE-NBA"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use 1step and a larger time-valued skew."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Change a signal across scheduling regions at the skewed time and verify the Postponed value is captured."
+        ]
+      },
+      "id": "SV-2023-14-NONZERO-INPUT-SKEW-SAMPLE-VALUE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Apply the same nonzero skew after a current event and after a future event selected by an RHS cycle delay."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Drive an output with nonzero skew and observe its update in Re-NBA of the skew-selected future time step."
+        ]
+      },
+      "id": "SV-2023-14-NONZERO-OUTPUT-SKEW-FUTURE-RE-NBA"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an RHS with an observable evaluation side effect and verify it occurs between clocking events when the statement executes."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Execute an off-event drive, change its RHS source before the next event, and observe the value captured at statement execution."
+        ]
+      },
+      "id": "SV-2023-14-OFF-EVENT-DRIVE-IMMEDIATE-CAPTURE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Execute just after a clocking event so the nonblocking interval extends to the following event."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Execute a drive between clocking events followed by an immediate marker and observe the marker before the drive is processed at the next event."
+        ]
+      },
+      "id": "SV-2023-14-OFF-EVENT-DRIVE-NONBLOCKING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare execution immediately before, coincident with, and immediately after a clocking event."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Execute a drive between events and observe its processing relative to the next clocking event."
+        ]
+      },
+      "id": "SV-2023-14-OFF-EVENT-SYNCHRONOUS-DRIVE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Specify separate defaults in nested and enclosing constructs."
+        ],
+        "negative": [
+          "Specify two defaults, including one inline declaration and one selection statement, in the same construct."
+        ],
+        "notes": [],
+        "positive": [
+          "Specify exactly one default clocking."
+        ]
+      },
+      "id": "SV-2023-14-ONE-DEFAULT-CLOCKING-PER-CONSTRUCT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare zero-skew and 1step inputs at the same event."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Change a signal in the clock event's time slot and verify a 1step input observes its prior steady-state value."
+        ]
+      },
+      "id": "SV-2023-14-ONE-STEP-INPUT-SAMPLING"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Use an output-only clockvar in a value expression."
+        ],
+        "notes": [],
+        "positive": [
+          "Drive an output clockvar without reading it."
+        ]
+      },
+      "id": "SV-2023-14-OUTPUT-CLOCKVAR-NOT-READABLE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Drive it with assign, procedural assign/force, or a primitive output."
+        ],
+        "notes": [],
+        "positive": [
+          "Write the associated variable procedurally or through its clockvar synchronous drive."
+        ]
+      },
+      "id": "SV-2023-14-OUTPUT-CLOCKVAR-VARIABLE-NO-CONTINUOUS-DRIVERS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a default clock distinct from the target clockvar's block to distinguish prefix from RHS cycle delay."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Execute `##2 block.out <= value` and observe process suspension for two default-block events before evaluating the drive."
+        ]
+      },
+      "id": "SV-2023-14-PREFIX-CYCLE-DELAY-BLOCKS-ON-DEFAULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Alternate procedural and clocking writes across time steps."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Procedurally assign the underlying variable, observe persistence, then replace it with a synchronous drive."
+        ]
+      },
+      "id": "SV-2023-14-PROCEDURAL-WRITE-TO-OUTPUT-SIGNAL-VARIABLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Assign the same value in both iterations and observe no value glitch."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Cause two Re-NBA iterations and assign differing values in each, observing both signal transitions."
+        ]
+      },
+      "id": "SV-2023-14-RE-NBA-ITERATION-DRIVE-GLITCH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use different signal roles or skews in the two blocks while retaining the shared clock event."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare two blocks over the same clock expression and verify their block events synchronize to the same underlying event."
+        ]
+      },
+      "id": "SV-2023-14-SAME-CLOCK-BLOCKS-SHARE-EVENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Repeat for both net and variable targets and for drives executed between events."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Schedule two values for the same output to mature in one Re-NBA region and observe only the latter."
+        ]
+      },
+      "id": "SV-2023-14-SAME-RE-NBA-LAST-DRIVE-WINS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use equal values to make ordering unobservable as a control."
+        ],
+        "negative": [],
+        "notes": [
+          "The oracle must accept both standard-permitted orderings and must not require deterministic selection."
+        ],
+        "positive": [
+          "Schedule both writes in one time step and accept either final value implied by the two legal orderings."
+        ]
+      },
+      "id": "SV-2023-14-SAME-STEP-NBA-AND-DRIVE-ARBITRARY-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Trigger from differing scheduling regions while the reader remains synchronized to the block event."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Wait on the clocking block and read an input changed at the triggering edge; observe the new sample."
+        ]
+      },
+      "id": "SV-2023-14-SAMPLES-UPDATED-BEFORE-BLOCK-EVENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the same signal with different directions or skews in separate clocking blocks."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare the same signal in two clocking blocks."
+        ]
+      },
+      "id": "SV-2023-14-SIGNALS-MAY-APPEAR-IN-MULTIPLE-CLOCKING-BLOCKS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use zero as the constant skew delay."
+        ],
+        "negative": [
+          "Use a negative or nonconstant expression as a clocking skew delay."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a clocking skew using a time literal and one using a non-negative integer parameter expression."
+        ]
+      },
+      "id": "SV-2023-14-SKEW-DELAY-CONSTANT-NONNEGATIVE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast a declarative #0 skew with a procedural #0 delay in otherwise similar process flow."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Execute statements around use of a #0-skew clockvar and verify no procedural suspension is introduced."
+        ]
+      },
+      "id": "SV-2023-14-SKEW-DOES-NOT-SUSPEND-PROCESS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare an explicit-unit skew with an equivalent unitless skew under the current scope timescale."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use a unitless skew in a scope with a known timeunit and observe the corresponding temporal offset."
+        ]
+      },
+      "id": "SV-2023-14-SKEW-TIME-UNIT-INTERPRETATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Toggle the raw signal twice between samples without changing consecutive sampled values."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Change the raw signal between clocking events and verify a wait on the clockvar responds according to sampled changes."
+        ]
+      },
+      "id": "SV-2023-14-SYNCHRONIZATION-USES-SAMPLED-VALUES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Drive a selected target with a correspondingly sized compatible expression."
+        ],
+        "negative": [
+          "Drive a value whose type is not assignment compatible with the target."
+        ],
+        "notes": [],
+        "positive": [
+          "Drive a value assignment compatible with the target signal."
+        ]
+      },
+      "id": "SV-2023-14-SYNCHRONOUS-DRIVE-ASSIGNMENT-COMPATIBILITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a parenthesized cycle-delay expression."
+        ],
+        "negative": [
+          "Reject a synchronous drive using `=` instead of `<=`."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse drives with and without ## cycle delay and with selected clockvar targets."
+        ]
+      },
+      "id": "SV-2023-14-SYNCHRONOUS-DRIVE-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Drive a one-bit slice."
+        ],
+        "negative": [
+          "Use a concatenation of clockvars as the drive target."
+        ],
+        "notes": [],
+        "positive": [
+          "Drive an entire clockvar, one bit, and a part-select."
+        ]
+      },
+      "id": "SV-2023-14-SYNCHRONOUS-DRIVE-TARGET-FORMS"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Attempt to select or reference a declaration contained in the unnamed block."
+        ],
+        "notes": [
+          "Materialize with a contained declaration that would otherwise be referenceable in a named block."
+        ],
+        "positive": [
+          "Use an unnamed default clocking block without referring to a contained declaration."
+        ]
+      },
+      "id": "SV-2023-14-UNNAMED-CLOCKING-DECLARATIONS-UNREFERENCEABLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast the non-global rule with the separately permitted unnamed global clocking declaration."
+        ],
+        "negative": [
+          "Declare an unnamed ordinary non-global clocking block."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare an unnamed default non-global clocking block."
+        ]
+      },
+      "id": "SV-2023-14-UNNAMED-CLOCKING-DEFAULT-ONLY"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare otherwise identical synchronous drives with and without RHS ##0."
+        ]
+      },
+      "id": "SV-2023-14-ZERO-CYCLE-DELAY-DRIVE-NO-EFFECT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Execute ##0 after the block event and observe immediate continuation."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Execute ##0 before the time-step block event and observe suspension until it."
+        ]
+      },
+      "id": "SV-2023-14-ZERO-CYCLE-DELAY-PROCEDURAL"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Update a #0-skew input before Observed and read its newly sampled clockvar from a process resumed after Observed processing."
+        ]
+      },
+      "id": "SV-2023-14-ZERO-INPUT-SAMPLE-AVAILABLE-END-OBSERVED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare #0 with 1step sampling at the same event."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Update a signal in an earlier region of the event time slot and verify a #0 clocking input samples it in Observed."
+        ]
+      },
+      "id": "SV-2023-14-ZERO-INPUT-SKEW-OBSERVED-SAMPLING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Coordinate a same-slot NBA update and clocking output drive to distinguish their scheduling regions."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Drive outputs with omitted and explicit #0 skews and observe equivalent Re-NBA updates."
+        ]
+      },
+      "id": "SV-2023-14-ZERO-OUTPUT-SKEW-RE-NBA-DRIVE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Trigger a new clocking event during a later active-region set in the same time step and verify resampling then occurs."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Cause an Active/Observed loop without a new clocking event and verify the sampled value remains unchanged."
+        ]
+      },
+      "id": "SV-2023-14-ZERO-SKEW-INPUT-NO-REPEAT-SAMPLE"
+    }
+  ],
+  "schema_version": 1
+}

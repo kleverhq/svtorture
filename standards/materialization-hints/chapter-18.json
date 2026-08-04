@@ -1,0 +1,4245 @@
+{
+  "authority": "1800-2023",
+  "part": "18",
+  "requirements": [
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare a pure constraint using pure constraint prototype syntax in a virtual class."
+        ]
+      },
+      "id": "SV-2023-18-ABSTRACT-CLASS-PURE-CONSTRAINT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a multidimensional array."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Randomize a rand array and observe all elements participate."
+        ]
+      },
+      "id": "SV-2023-18-ARRAY-RANDOM-QUALIFIER-PROPAGATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an empty array according to the selected reduction method's identity semantics."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Constrain sum() over every element of an integral unpacked array."
+        ]
+      },
+      "id": "SV-2023-18-ARRAY-REDUCTION-CONSTRAINT-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use element and with-expression types with different widths."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare a reduction without with to the element type and a reduction with an explicitly cast with-expression to that expression type."
+        ]
+      },
+      "id": "SV-2023-18-ARRAY-REDUCTION-RESULT-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a zero-size result."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Constrain a dynamic array's size and sum and verify reduction covers the resulting element count."
+        ]
+      },
+      "id": "SV-2023-18-ARRAY-REDUCTION-SIZE-SOLVED-FIRST"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use sparse integral keys."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Randomize associative-array elements while verifying the key set is unchanged."
+        ]
+      },
+      "id": "SV-2023-18-ASSOCIATIVE-ARRAY-SHAPE-NONRANDOM"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Invoke through a base-class handle to exercise virtual behavior."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Call randomize() on an object and use its integral return value."
+        ]
+      },
+      "id": "SV-2023-18-BUILTIN-VIRTUAL-RANDOMIZE-METHOD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Randomize variables from multiple enclosing visible scopes in one std::randomize call."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use object.randomize for members and std::randomize for module and subroutine-local variables."
+        ]
+      },
+      "id": "SV-2023-18-CLASS-VERSUS-SCOPE-RANDOMIZE-DOMAIN"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Include compatible soft distribution constraints and preserve their weighting."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use compatible soft range and relation constraints and verify all are satisfied."
+        ]
+      },
+      "id": "SV-2023-18-COMPATIBLE-SOFT-EQUIVALENT-HARD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Allow an intermediate abstract derived class to defer implementation."
+        ],
+        "negative": [
+          "Instantiate a nonabstract derived class that leaves an inherited pure constraint unimplemented."
+        ],
+        "notes": [],
+        "positive": [
+          "Implement an inherited pure constraint in the first concrete derived class."
+        ]
+      },
+      "id": "SV-2023-18-CONCRETE-CLASS-IMPLEMENTS-PURE-CONSTRAINTS"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Use a random variable as an index outside these permitted categories."
+        ],
+        "notes": [],
+        "positive": [
+          "Index constrained elements with a foreach variable, constant, and state variable."
+        ]
+      },
+      "id": "SV-2023-18-CONSTRAINED-ARRAY-INDEX-EXPRESSIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Resize to zero."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Constrain queue and dynamic-array sizes and verify final size and element constraints."
+        ]
+      },
+      "id": "SV-2023-18-CONSTRAINED-SIZE-RESIZE-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the same name in unrelated classes."
+        ],
+        "negative": [
+          "Declare two constraint blocks with the same name in one class."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare differently named constraint blocks in one class."
+        ]
+      },
+      "id": "SV-2023-18-CONSTRAINT-BLOCK-UNIQUE-NAME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use constraint sets to alter explicit grouping."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use unbraced nested if statements and verify else binds to the inner unmatched if."
+        ]
+      },
+      "id": "SV-2023-18-CONSTRAINT-DANGLING-ELSE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an empty constraint block."
+        ],
+        "negative": [
+          "Omit the identifier or block delimiters."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare ordinary and otherwise legal qualified constraint blocks."
+        ]
+      },
+      "id": "SV-2023-18-CONSTRAINT-DECLARATION-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a brace-delimited constraint set containing multiple expressions."
+        ],
+        "negative": [
+          "Use a procedural statement not admitted by constraint grammar."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse one minimal instance of each constraint-expression alternative."
+        ]
+      },
+      "id": "SV-2023-18-CONSTRAINT-EXPRESSION-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Use extends on a new constraint name."
+        ],
+        "notes": [],
+        "positive": [
+          "Use extends on a valid same-named replacement."
+        ]
+      },
+      "id": "SV-2023-18-CONSTRAINT-EXTENDS-SPECIFIER"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Replace a final base-class constraint in a subclass."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a final constraint and inherit it without replacement."
+        ]
+      },
+      "id": "SV-2023-18-CONSTRAINT-FINAL-NO-FURTHER-OVERRIDE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Check each permitted pairing separately without combining initial and extends."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare one constraint final:initial and an overriding constraint final:extends in appropriate class contexts."
+        ]
+      },
+      "id": "SV-2023-18-CONSTRAINT-FINAL-WITH-INITIAL-OR-EXTENDS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multiple const ref arguments."
+        ],
+        "negative": [
+          "Call functions having output, inout, or nonconst ref arguments."
+        ],
+        "notes": [],
+        "positive": [
+          "Call functions with input and const ref arguments."
+        ]
+      },
+      "id": "SV-2023-18-CONSTRAINT-FUNCTION-ARGUMENT-MODES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Construct a higher-priority choice that leaves no lower-priority solution and permit randomization failure despite a different joint choice being satisfiable."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Call f(y) in a constraint on x and independently constrain y; verify y is solved first and then fixed for x."
+        ]
+      },
+      "id": "SV-2023-18-CONSTRAINT-FUNCTION-ARGUMENT-PRIORITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multiple pure functions whose result is independent of call order."
+        ],
+        "negative": [],
+        "notes": [
+          "Materialization must not depend on side effects, which are independently forbidden."
+        ],
+        "positive": [
+          "Verify an active constraint function is evaluated at least once without assuming an exact count or order."
+        ]
+      },
+      "id": "SV-2023-18-CONSTRAINT-FUNCTION-CALL-COUNT-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call another helper that attempts such a mode change."
+        ],
+        "negative": [
+          "Call constraint_mode or rand_mode from the function."
+        ],
+        "notes": [],
+        "positive": [
+          "Call a pure function that only computes a return value."
+        ]
+      },
+      "id": "SV-2023-18-CONSTRAINT-FUNCTION-NO-MODE-MODIFICATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Create a cycle spanning three constraints."
+        ],
+        "negative": [
+          "Create mutually dependent function-argument priorities."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a one-way function-argument priority dependency."
+        ]
+      },
+      "id": "SV-2023-18-CONSTRAINT-FUNCTION-ORDERING-ACYCLIC"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change source state between randomize calls and verify each call reevaluates before solving."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use a function of fixed state and constrain a rand variable to its return value."
+        ]
+      },
+      "id": "SV-2023-18-CONSTRAINT-FUNCTION-PRESOLVE-STATE-RETURN"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a static function that demonstrably preserves no state if otherwise permitted."
+        ],
+        "negative": [
+          "Call a state-preserving function or one that modifies external state."
+        ],
+        "notes": [],
+        "positive": [
+          "Call an automatic pure computation."
+        ]
+      },
+      "id": "SV-2023-18-CONSTRAINT-FUNCTION-STATELESS-NO-SIDE-EFFECTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast with an explicitly unrolled equivalent expression that is solved bidirectionally."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Constrain y == f(x) and verify generated x values map forward to y."
+        ]
+      },
+      "id": "SV-2023-18-CONSTRAINT-FUNCTION-UNIDIRECTIONAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare two object handles in a guard."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use state and null-handle predicates to condition whether a constraint exists."
+        ]
+      },
+      "id": "SV-2023-18-CONSTRAINT-GUARD-CLASSIFICATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Nest conditional constraint forms in the consequent where grammar permits."
+        ],
+        "negative": [
+          "Omit either antecedent or consequent."
+        ],
+        "notes": [],
+        "positive": [
+          "Write an implication with a single consequent and with a brace-delimited constraint set."
+        ]
+      },
+      "id": "SV-2023-18-CONSTRAINT-IMPLICATION-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a multi-expression unnamed consequent set."
+        ],
+        "negative": [
+          "Use an antecedent whose type is neither integral nor real."
+        ],
+        "notes": [],
+        "positive": [
+          "Use integral and real antecedents with single and grouped consequents."
+        ]
+      },
+      "id": "SV-2023-18-CONSTRAINT-IMPLICATION-OPERAND-FORMS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Constrain the consequent false and verify the solver selects a false antecedent if possible."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Randomize cases with true and false antecedents and verify the consequent applies only when true."
+        ]
+      },
+      "id": "SV-2023-18-CONSTRAINT-IMPLICATION-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use constraints that jointly narrow one inherited random member."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Add a differently named derived constraint and verify both it and the base constraint apply."
+        ]
+      },
+      "id": "SV-2023-18-CONSTRAINT-INHERITANCE-AND-ADDITION"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Specify both."
+        ],
+        "notes": [],
+        "positive": [
+          "Use either specifier alone in its valid context."
+        ]
+      },
+      "id": "SV-2023-18-CONSTRAINT-INITIAL-EXTENDS-EXCLUSIVE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Use initial on a same-named inherited constraint replacement."
+        ],
+        "notes": [],
+        "positive": [
+          "Use initial for a newly named subclass constraint."
+        ]
+      },
+      "id": "SV-2023-18-CONSTRAINT-INITIAL-SPECIFIER"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Attempt a class override of constraint_mode."
+        ],
+        "notes": [],
+        "positive": [
+          "Use the inherited built-in method."
+        ]
+      },
+      "id": "SV-2023-18-CONSTRAINT-MODE-CANNOT-BE-OVERRIDDEN"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use distinct local and inherited block names."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Toggle an inherited constraint block by name through a derived object."
+        ]
+      },
+      "id": "SV-2023-18-CONSTRAINT-MODE-HIERARCHY-BLOCK-SELECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Include inherited constraints in a newly constructed derived object."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Randomize a newly constructed object without calling constraint_mode and verify its declared constraints apply."
+        ]
+      },
+      "id": "SV-2023-18-CONSTRAINT-MODE-INITIALLY-ACTIVE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a shadowing hierarchy with valid normal resolution."
+        ],
+        "negative": [
+          "Name a nonexistent block."
+        ],
+        "notes": [],
+        "positive": [
+          "Select a local or inherited constraint block."
+        ]
+      },
+      "id": "SV-2023-18-CONSTRAINT-MODE-INVALID-BLOCK-ERROR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a selected nested object handle."
+        ],
+        "negative": [
+          "Use an expression not yielding the defining object."
+        ],
+        "notes": [],
+        "positive": [
+          "Call constraint_mode through a handle-valued expression."
+        ]
+      },
+      "id": "SV-2023-18-CONSTRAINT-MODE-OBJECT-EXPRESSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Apply the all-block setter to an object with inherited and local constraints."
+        ],
+        "negative": [
+          "Attempt the no-argument query without a constraint identifier."
+        ],
+        "notes": [],
+        "positive": [
+          "Use the void setter without a block name to toggle all constraints in one object."
+        ]
+      },
+      "id": "SV-2023-18-CONSTRAINT-MODE-OMITTED-NAME-ALL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Invoke the void setter on all object constraints."
+        ],
+        "negative": [
+          "Attempt the query without a constraint identifier."
+        ],
+        "notes": [],
+        "positive": [
+          "Set one block's mode and query it using the no-argument form."
+        ]
+      },
+      "id": "SV-2023-18-CONSTRAINT-MODE-OVERLOADS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Query an inherited block."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Query a block before and after disabling and re-enabling it."
+        ]
+      },
+      "id": "SV-2023-18-CONSTRAINT-MODE-QUERY-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Include random state in that string expression."
+        ],
+        "notes": [],
+        "positive": [
+          "Use nonrandom string equality as a Boolean subexpression."
+        ]
+      },
+      "id": "SV-2023-18-CONSTRAINT-NONRANDOM-SUBEXPRESSION-TYPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Select through an implicit class handle before an array built-in method."
+        ],
+        "negative": [
+          "Add empty parentheses to an ordinary variable primary."
+        ],
+        "notes": [],
+        "positive": [
+          "Use array.size() as a constraint primary."
+        ]
+      },
+      "id": "SV-2023-18-CONSTRAINT-PRIMARY-PARENTHESES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Declare a pure constraint prototype in an otherwise legal abstract class."
+        ],
+        "negative": [
+          "Give an external definition without the required class scope."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare an extern constraint prototype and define it out of block with class scope."
+        ]
+      },
+      "id": "SV-2023-18-CONSTRAINT-PROTOTYPE-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the nonrandom-subexpression exception."
+        ],
+        "negative": [
+          "Directly constrain a non-integral operand."
+        ],
+        "notes": [],
+        "positive": [
+          "Constrain integral operands."
+        ]
+      },
+      "id": "SV-2023-18-CONSTRAINT-RESULT-TYPES"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Use X, Z, ===, or !== in a constraint."
+        ],
+        "notes": [],
+        "positive": [
+          "Use ordinary equality with 2-state values."
+        ]
+      },
+      "id": "SV-2023-18-CONSTRAINTS-TWO-STATE-ONLY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast reseeding after construction and before the first explicit randomize call."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Seed in the constructor and compare the first randomized member sequence across equivalent objects."
+        ]
+      },
+      "id": "SV-2023-18-CONSTRUCTOR-SRANDOM-BEFORE-MEMBER-RANDOMIZATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Define only one of the two callbacks in the derived class."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Define callbacks only in a base class and randomize a derived object to observe automatic base processing."
+        ]
+      },
+      "id": "SV-2023-18-DEFAULT-CALLBACK-INVOKES-SUPER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise the missing-definition behavior for an implicit derived prototype."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Replace a concrete base constraint with a derived prototype and external definition."
+        ]
+      },
+      "id": "SV-2023-18-DERIVED-PROTOTYPE-OVERRIDE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Also use a fully soft expression containing both variables and verify direct appearance causes discard."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Place q in a soft consequent of p->soft q and place p only in the hard antecedent; verify disable soft p does not discard that soft q."
+        ]
+      },
+      "id": "SV-2023-18-DISABLE-SOFT-DIRECT-REFERENCE-ONLY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Apply disable soft to a random dynamic-array size."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Place lower and higher priority soft constraints around disable soft x and verify only lower ones are discarded."
+        ]
+      },
+      "id": "SV-2023-18-DISABLE-SOFT-LOWER-PRIORITY-REFERENCES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Disable a lower-priority soft distribution that overlaps a higher-priority distribution and verify its weights no longer apply."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Disable a compatible lower-priority soft default and verify the solution space expands."
+        ]
+      },
+      "id": "SV-2023-18-DISABLE-SOFT-UNCONDITIONAL-DISCARD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Discard a soft expression that would otherwise be false."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Discard a weighted soft distribution and verify it neither restricts nor weights the remaining solution."
+        ]
+      },
+      "id": "SV-2023-18-DISCARDED-SOFT-CONSTRAINT-TRUE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Use two default items."
+        ],
+        "notes": [],
+        "positive": [
+          "Use zero or one default item."
+        ]
+      },
+      "id": "SV-2023-18-DIST-AT-MOST-ONE-DEFAULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Evaluate membership at a range endpoint."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use a dist expression whose selected value is in the listed set."
+        ]
+      },
+      "id": "SV-2023-18-DIST-BOOLEAN-MEMBERSHIP"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use explicit items that overlap each other; default still covers only values absent from all of them."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use a default item alongside an explicit subrange and verify it covers all remaining representable values."
+        ]
+      },
+      "id": "SV-2023-18-DIST-DEFAULT-COMPLEMENT-RANGE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Mix defaulted and explicit weights."
+        ],
+        "negative": [],
+        "notes": [
+          "Use a statistical oracle."
+        ],
+        "positive": [
+          "Compare an unweighted integral item with an item explicitly weighted :=1."
+        ]
+      },
+      "id": "SV-2023-18-DIST-DEFAULT-INTEGRAL-WEIGHT"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Declare an unweighted default and default:=1."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare default:/1."
+        ]
+      },
+      "id": "SV-2023-18-DIST-DEFAULT-REQUIRES-SLASH-WEIGHT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Combine a zero-weight singleton with a nonzero-weight range containing the same value."
+        ],
+        "negative": [],
+        "notes": [
+          "Exclusion depends on total weight, not any individual zero-weight occurrence."
+        ],
+        "positive": [
+          "List one value twice and statistically verify its combined weight."
+        ]
+      },
+      "id": "SV-2023-18-DIST-DUPLICATE-VALUE-WEIGHTS-ADD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "List the same value multiple times with total weight zero."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Verify omitted values and a zero-weight listed value are never selected."
+        ]
+      },
+      "id": "SV-2023-18-DIST-EXCLUDED-AND-ZERO-WEIGHT-FORBIDDEN"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an unweighted integral range."
+        ],
+        "negative": [
+          "Use := for a real range or omit its weight."
+        ],
+        "notes": [],
+        "positive": [
+          "Use weighted integral items and a real range with :/."
+        ]
+      },
+      "id": "SV-2023-18-DIST-ITEM-TYPES-AND-WEIGHTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an integral sentinel value alongside real-valued ranges."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "List an integral singleton and real ranges in one distribution on a real expression."
+        ]
+      },
+      "id": "SV-2023-18-DIST-MIXED-REAL-INTEGRAL-VALUES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Leave only one nonzero-weight item satisfiable."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Exclude one nonzero-weight item with another constraint and require successful selection among remaining legal items."
+        ]
+      },
+      "id": "SV-2023-18-DIST-NONZERO-WEIGHTS-NONRESTRICTIVE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use dist within a conditional constraint set without nesting it in another expression."
+        ],
+        "negative": [
+          "Embed a dist expression under a Boolean or arithmetic operator."
+        ],
+        "notes": [],
+        "positive": [
+          "Use dist as the complete expression_or_dist form."
+        ]
+      },
+      "id": "SV-2023-18-DIST-NOT-NESTED-IN-EXPRESSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use equivalent := and :/ weights on singleton items."
+        ],
+        "negative": [],
+        "notes": [
+          "Do not require exact finite-sample counts."
+        ],
+        "positive": [
+          "Statistically distinguish items weighted 1, 2, and 5."
+        ]
+      },
+      "id": "SV-2023-18-DIST-PROBABILITY-PROPORTIONAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exclude part of a := range with another constraint and verify its original declared size still determines whole-range weight."
+        ],
+        "negative": [],
+        "notes": [
+          "Use a statistically robust oracle."
+        ],
+        "positive": [
+          "Compare [0:2]:=1 with [0:2]:/3 and verify equivalent whole-range probability against a singleton."
+        ]
+      },
+      "id": "SV-2023-18-DIST-RANGE-WEIGHT-OPERATORS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast with a real range, which requires :/."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Weight a real singleton with :=."
+        ]
+      },
+      "id": "SV-2023-18-DIST-REAL-SINGLETON-COLON-EQUAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a compound expression with one rand operand and nonrandom operands."
+        ],
+        "negative": [
+          "Apply dist to an expression containing only state variables and constants."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a rand variable in the distribution expression."
+        ]
+      },
+      "id": "SV-2023-18-DIST-REQUIRES-RAND-VARIABLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast their behavior on a multi-value range."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use := and :/ on singleton items and observe equivalent ratios."
+        ]
+      },
+      "id": "SV-2023-18-DIST-WEIGHT-APPLIES-PER-ITEM"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an expression whose signed representation maps to an unsigned result."
+        ],
+        "negative": [
+          "Use a real-valued weight expression."
+        ],
+        "notes": [],
+        "positive": [
+          "Use an integral constant expression as a weight."
+        ]
+      },
+      "id": "SV-2023-18-DIST-WEIGHT-EXPRESSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a soft distribution constraint."
+        ],
+        "negative": [
+          "Use a list item not admitted by the distribution grammar."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse distributions using singleton values, ranges, default, :=, and :/."
+        ]
+      },
+      "id": "SV-2023-18-DISTRIBUTION-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Grow an array of class handles and verify original handle positions are retained under dynamic-array resize rules."
+        ],
+        "negative": [],
+        "notes": [
+          "All active elements are randomized after resizing, so do not expect active scalar prefix values to remain unchanged."
+        ],
+        "positive": [
+          "Resize a dynamic array with selected retained elements inactive and verify those elements are initialized from the corresponding original-array elements."
+        ]
+      },
+      "id": "SV-2023-18-DYNAMIC-ARRAY-RANDOMIZE-RESIZE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change a weight to zero and apply zero-total exclusion semantics."
+        ],
+        "negative": [],
+        "notes": [
+          "Use a statistically robust oracle."
+        ],
+        "positive": [
+          "Use a state variable as a weight, change it between calls, and statistically verify the probability shift."
+        ]
+      },
+      "id": "SV-2023-18-DYNAMIC-DIST-WEIGHTS"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Leave an extern prototype undefined."
+        ],
+        "notes": [],
+        "positive": [
+          "Provide a definition for an extern constraint prototype."
+        ]
+      },
+      "id": "SV-2023-18-EXTERN-CONSTRAINT-REQUIRES-DEFINITION"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Place an external constraint block before the corresponding class declaration."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare an external constraint block after the corresponding class declaration in the same scope."
+        ]
+      },
+      "id": "SV-2023-18-EXTERNAL-CONSTRAINT-AFTER-CLASS"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Declare an external constraint block in a scope different from the corresponding class declaration."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a class and its external constraint block in the same enclosing scope."
+        ]
+      },
+      "id": "SV-2023-18-EXTERNAL-CONSTRAINT-PLACEMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the implicit prototype form."
+        ],
+        "negative": [
+          "Define an external constraint for which the class has no prototype."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare implicit and extern prototypes and define each with ClassName::constraint_name."
+        ]
+      },
+      "id": "SV-2023-18-EXTERNAL-CONSTRAINT-PROTOTYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Match multiple compatible specifiers on both sides."
+        ],
+        "negative": [
+          "Put a specifier on only one side."
+        ],
+        "notes": [],
+        "positive": [
+          "Repeat the same override specifier on prototype and external definition."
+        ]
+      },
+      "id": "SV-2023-18-EXTERNAL-CONSTRAINT-SPECIFIER-MATCH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Combine matching static with otherwise legal matching specifiers."
+        ],
+        "negative": [
+          "Mark only one side static."
+        ],
+        "notes": [],
+        "positive": [
+          "Mark both prototype and external definition static, or leave both nonstatic."
+        ]
+      },
+      "id": "SV-2023-18-EXTERNAL-STATIC-QUALIFIER-MATCH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Leave selected dimension positions empty."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Iterate packed, unpacked, and mixed multidimensional arrays."
+        ]
+      },
+      "id": "SV-2023-18-FOREACH-ARRAY-ITERATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a hierarchical array identifier."
+        ],
+        "negative": [
+          "Use a nonarray identifier."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse foreach constraints with named and omitted loop variables."
+        ]
+      },
+      "id": "SV-2023-18-FOREACH-CONSTRAINT-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Mix packed and unpacked dimensions while skipping one position."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Iterate arrays with ascending and descending declared ranges and verify index sequences."
+        ]
+      },
+      "id": "SV-2023-18-FOREACH-DIMENSION-CARDINALITY-MAPPING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use only the first dimension variable of a high-dimensional array."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Skip a middle dimension and omit trailing empty positions."
+        ]
+      },
+      "id": "SV-2023-18-FOREACH-EMPTY-DIMENSION-POSITION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise an empty or one-element array with a proper guard."
+        ],
+        "negative": [
+          "Use an unguarded out-of-bounds adjacent index and do not expect automatic elimination."
+        ],
+        "notes": [],
+        "positive": [
+          "Guard k+1 access with k < size-1."
+        ]
+      },
+      "id": "SV-2023-18-FOREACH-INVALID-INDEX-NOT-ELIMINATED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Count empty positions as dimension positions."
+        ],
+        "negative": [
+          "Supply more loop-variable positions than dimensions."
+        ],
+        "notes": [],
+        "positive": [
+          "Use one position per dimension or fewer trailing positions."
+        ]
+      },
+      "id": "SV-2023-18-FOREACH-LOOP-VARIABLE-COUNT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Shadow an outer identifier where otherwise legal."
+        ],
+        "negative": [
+          "Reference it outside the foreach construct."
+        ],
+        "notes": [],
+        "positive": [
+          "Reference the implicit variable in the body and exercise an associative-array index type."
+        ]
+      },
+      "id": "SV-2023-18-FOREACH-LOOP-VARIABLE-SCOPE-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Use an implicit-variable-declaration function call in the identifier."
+        ],
+        "notes": [],
+        "positive": [
+          "Iterate a directly designated array variable."
+        ]
+      },
+      "id": "SV-2023-18-FOREACH-NO-IMPLICIT-FUNCTION-CALL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an object-handle comparison as the guard condition."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Guard an adjacent-element constraint with a loop-index and array-size bounds test."
+        ]
+      },
+      "id": "SV-2023-18-FOREACH-PREDICATE-GUARDS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Construct an ordering-sensitive system where fixing size first leaves no iterative solution."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Constrain collection size and elements iteratively and verify iteration uses the solved size."
+        ]
+      },
+      "id": "SV-2023-18-FOREACH-SIZE-SOLVED-FIRST"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Iterate an empty string."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Iterate a nonempty string and constrain each indexed byte."
+        ]
+      },
+      "id": "SV-2023-18-FOREACH-STRING-AS-BYTE-ARRAY"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Reuse the array identifier as a loop variable."
+        ],
+        "notes": [],
+        "positive": [
+          "Use distinct array and loop-variable names."
+        ]
+      },
+      "id": "SV-2023-18-FOREACH-VARIABLE-NOT-ARRAY-NAME"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Call a function that violates the detailed constraint-function restrictions."
+        ],
+        "notes": [],
+        "positive": [
+          "Call a compliant side-effect-free function from a constraint."
+        ]
+      },
+      "id": "SV-2023-18-FUNCTIONS-IN-CONSTRAINTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Treat the returned string as opaque."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Capture an object's RNG state string before consuming further random values."
+        ]
+      },
+      "id": "SV-2023-18-GET-RANDSTATE-OBJECT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Disable one nested constraint block while retaining others."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use active constraints in root and nested active random objects and verify all are satisfied."
+        ]
+      },
+      "id": "SV-2023-18-GLOBAL-ACTIVE-CONSTRAINT-SELECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Disable a nested rand handle and verify its referenced subtree is excluded."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Randomize a root containing multiple levels of active rand object handles and verify all reachable objects participate."
+        ]
+      },
+      "id": "SV-2023-18-GLOBAL-ACTIVE-RANDOM-OBJECT-CLOSURE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Disable rand_mode for one variable and verify its current value acts as state."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Reference an active nested rand variable and a nonrandom state variable in one global constraint."
+        ]
+      },
+      "id": "SV-2023-18-GLOBAL-RANDOM-VARIABLE-SELECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Include a random-variable subexpression to exercise RANDOM classification."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Combine a null-dereference subexpression with a decisive false guard term and verify error suppression."
+        ]
+      },
+      "id": "SV-2023-18-GUARD-ABSTRACT-EVALUATION-VALUES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a TRUE conjunction containing RANDOM terms and preserve any conditional portion."
+        ],
+        "negative": [
+          "Use an unsifted error conjunction and require randomization failure."
+        ],
+        "notes": [],
+        "positive": [
+          "Exercise false and true conjunction guards and verify constraint elimination or creation."
+        ]
+      },
+      "id": "SV-2023-18-GUARD-CONJUNCTION-CONSTRAINT-CREATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use more than two operands with multiple abstract classifications."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Exercise FALSE&&ERROR, TRUE&&ERROR, and TRUE&&TRUE and verify FALSE, ERROR, and TRUE respectively."
+        ]
+      },
+      "id": "SV-2023-18-GUARD-CONJUNCTION-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Retain a RANDOM disjunct when no guard term determines truth."
+        ],
+        "negative": [
+          "Use an unsifted error disjunction and require failure."
+        ],
+        "notes": [],
+        "positive": [
+          "Exercise false and true disjunction guard outcomes and distinguish conditional from unconditional constraint creation."
+        ]
+      },
+      "id": "SV-2023-18-GUARD-DISJUNCTION-CONSTRAINT-CREATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use more than two operands in arbitrary order."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Exercise TRUE||ERROR, FALSE||ERROR, FALSE||RANDOM, and FALSE||FALSE."
+        ]
+      },
+      "id": "SV-2023-18-GUARD-DISJUNCTION-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Put an otherwise erroneous dereference under a final FALSE result and verify suppression."
+        ],
+        "negative": [
+          "Produce an unsifted final ERROR and require constraint failure."
+        ],
+        "notes": [],
+        "positive": [
+          "Exercise final TRUE, FALSE, and RANDOM results and verify unconditional creation, elimination, and conditional creation."
+        ]
+      },
+      "id": "SV-2023-18-GUARD-FINAL-OUTCOME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an else branch and verify only the selected branch's constraints are created."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Guard a dereference of a possibly null handle using both if and implication forms."
+        ]
+      },
+      "id": "SV-2023-18-GUARD-IF-AND-IMPLICATION-FORMS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Combine an evaluation-error operand with a dominating TRUE disjunct or FALSE conjunct."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use guard operands whose abstract result is independent of subexpression evaluation order."
+        ]
+      },
+      "id": "SV-2023-18-GUARD-LOGICAL-EVALUATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Negate ERROR and RANDOM abstract subexpressions."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Negate true and false guard terms."
+        ]
+      },
+      "id": "SV-2023-18-GUARD-NEGATION-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multiple nested RANDOM terms under logical operators."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Mix random and presolve guard terms so the final result remains RANDOM and verify all surviving random conditions constrain the generated relation."
+        ]
+      },
+      "id": "SV-2023-18-GUARD-RANDOM-COLLECTS-CONDITIONAL-TERMS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Nest an error-producing term beneath a decisive outer guard."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use nested combinations of &&, ||, and ! and compare with recursive abstract evaluation."
+        ]
+      },
+      "id": "SV-2023-18-GUARD-RECURSIVE-EVALUATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Mix hard and soft constraints and never discard the hard constraint."
+        ],
+        "negative": [
+          "Use contradictory hard constraints and require failure."
+        ],
+        "notes": [],
+        "positive": [
+          "Use satisfiable hard constraints and verify all hold."
+        ]
+      },
+      "id": "SV-2023-18-HARD-CONSTRAINT-MANDATORY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Append a new dynamic object after existing creations and preserve earlier object streams."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Create equivalent objects dynamically in a fixed order from equally seeded threads and compare their streams."
+        ]
+      },
+      "id": "SV-2023-18-HIERARCHICAL-OBJECT-SEEDING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Append a new child after existing child creation and preserve earlier child streams."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Create dynamic child threads in fixed order under equally seeded parents and compare their streams."
+        ]
+      },
+      "id": "SV-2023-18-HIERARCHICAL-THREAD-SEEDING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a branch contradiction and verify the condition solves to select another legal branch."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Constrain branch results so only one random condition value can satisfy the system."
+        ]
+      },
+      "id": "SV-2023-18-IF-CONSTRAINT-BIDIRECTIONAL-SOLVING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a one-bit random condition."
+        ],
+        "negative": [
+          "Use a condition of a non-integral, non-real type."
+        ],
+        "notes": [],
+        "positive": [
+          "Use integral and real-valued conditions."
+        ]
+      },
+      "id": "SV-2023-18-IF-CONSTRAINT-CONDITION-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Nest an if-else constraint in a grouped set."
+        ],
+        "negative": [
+          "Use a procedural statement as a branch instead of a constraint set."
+        ],
+        "notes": [],
+        "positive": [
+          "Write constraint if forms with and without else, using single and grouped constraint sets."
+        ]
+      },
+      "id": "SV-2023-18-IF-ELSE-CONSTRAINT-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Omit else and verify a false condition imposes no branch restriction."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Exercise true and false branches with multiple grouped constraints."
+        ]
+      },
+      "id": "SV-2023-18-IF-ELSE-CONSTRAINT-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an else-if chain and its corresponding implications."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Express the same conditional relation once with if-else and once with implications and compare legal solutions."
+        ]
+      },
+      "id": "SV-2023-18-IF-ELSE-EQUIVALENT-IMPLICATIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a false consequent and verify the antecedent must solve false."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use random variables on both sides and constrain the consequent so only certain antecedent values remain legal."
+        ]
+      },
+      "id": "SV-2023-18-IMPLICATION-BIDIRECTIONAL-SOLVING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Accept either presence or absence of a warning."
+        ],
+        "negative": [],
+        "notes": [
+          "Do not require diagnostic wording or require the optional warning."
+        ],
+        "positive": [
+          "Leave an implicit prototype undefined and verify randomization remains unconstrained by it."
+        ]
+      },
+      "id": "SV-2023-18-IMPLICIT-CONSTRAINT-MISSING-DEFINITION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Have a derived constraint refer to an inherited rand member."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Verify a derived object satisfies base and derived constraints."
+        ]
+      },
+      "id": "SV-2023-18-INHERITED-RANDOMIZATION-CONSTRAINTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use separate instances and verify each has its own initialization RNG."
+        ],
+        "negative": [],
+        "notes": [
+          "Do not require a particular default seed value."
+        ],
+        "positive": [
+          "Repeat static process and initializer creation with the same implementation setup and verify deterministic initialization stream use."
+        ]
+      },
+      "id": "SV-2023-18-INITIALIZATION-RNG"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise nested constraint sets in an inline block."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use representative implication, foreach, distribution, soft, and solve-before forms inside randomize() with blocks."
+        ]
+      },
+      "id": "SV-2023-18-INLINE-CONSTRAINT-ALL-CLASS-FORMS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use colliding local and object names."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Reference a caller argument, local, and object property inline."
+        ]
+      },
+      "id": "SV-2023-18-INLINE-CONSTRAINT-LOCAL-REFERENCES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a hierarchical object variable identifier where grammar permits."
+        ],
+        "negative": [
+          "Use a class type name rather than an object variable as the method-call receiver."
+        ],
+        "notes": [],
+        "positive": [
+          "Call obj.randomize() with on an instantiated class object."
+        ]
+      },
+      "id": "SV-2023-18-INLINE-CONSTRAINT-OBJECT-IDENTIFIER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Define matching roots in both scopes."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Test object-class and caller-scope dotted paths."
+        ]
+      },
+      "id": "SV-2023-18-INLINE-DOTTED-NAME-RESOLUTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Qualify a subroutine argument."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Select a colliding caller local with local::."
+        ]
+      },
+      "id": "SV-2023-18-INLINE-LOCAL-QUALIFIER"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Use an absent qualified name."
+        ],
+        "notes": [],
+        "positive": [
+          "Resolve this.member and super.member."
+        ]
+      },
+      "id": "SV-2023-18-INLINE-THIS-SUPER-RESOLUTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use unequal-width ranges and distinguish equal probability per satisfying value from equal probability per range item."
+        ],
+        "negative": [],
+        "notes": [
+          "Use a statistically robust oracle."
+        ],
+        "positive": [
+          "Constrain a small variable inside a noncontiguous set and statistically test equal value probabilities."
+        ]
+      },
+      "id": "SV-2023-18-INSIDE-CONSTRAINT-EQUAL-PROBABILITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Test values at range boundaries according to inside semantics."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Constrain a rand real inside a bounded real range."
+        ]
+      },
+      "id": "SV-2023-18-INSIDE-REAL-RANGE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a caller identifier also named obj and distinguish its ordinary local lookup context."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Refer to local::obj in an inline constraint and verify the specified special receiver binding."
+        ]
+      },
+      "id": "SV-2023-18-LOCAL-OBJECT-RECEIVER-BINDING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a local typedef whose name collides with an object-class name."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Reference a caller-local class scope and type using local::."
+        ]
+      },
+      "id": "SV-2023-18-LOCAL-QUALIFIES-SCOPES-AND-TYPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Introduce an object property of the same name and verify local:: still selects local resolution."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Wildcard-import a package name and compare local::a with local unqualified lookup."
+        ]
+      },
+      "id": "SV-2023-18-LOCAL-WILDCARD-IMPORT-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Manually reseed one child without changing unrelated streams."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Seed a root process and reproduce child-thread and object streams under unchanged creation order."
+        ]
+      },
+      "id": "SV-2023-18-MANUAL-NONINITIALIZATION-RNG-SEEDING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Toggle an inherited named constraint through a derived object."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Disable one named constraint and verify randomization obeys remaining active constraints, then reenable it."
+        ]
+      },
+      "id": "SV-2023-18-NAMED-CONSTRAINT-MODE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Retain other differently named base constraints."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Override a base constraint by name and generate a value forbidden only by the replaced block."
+        ]
+      },
+      "id": "SV-2023-18-NAMED-CONSTRAINT-OVERRIDE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a constraint containing separate rand and randc variables but apply dist only to rand."
+        ],
+        "negative": [
+          "Apply dist to a randc variable."
+        ],
+        "notes": [],
+        "positive": [
+          "Apply dist to a rand variable."
+        ]
+      },
+      "id": "SV-2023-18-NO-DIST-ON-RANDC"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare with a succeeding call immediately afterward."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Record callback activity around an intentionally failing randomize call and verify pre occurs but post does not."
+        ]
+      },
+      "id": "SV-2023-18-NO-POST-RANDOMIZE-ON-FAILURE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Declare it randc and require rejection."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare an object handle rand."
+        ]
+      },
+      "id": "SV-2023-18-NO-RANDC-OBJECT-HANDLE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Put a randc variable on either side of solve before."
+        ],
+        "notes": [],
+        "positive": [
+          "Use solve-before between rand variables."
+        ]
+      },
+      "id": "SV-2023-18-NO-RANDC-SOLVE-BEFORE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Declare it randc."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare it rand."
+        ]
+      },
+      "id": "SV-2023-18-NO-RANDC-UNPACKED-STRUCT"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Apply rand or randc to a member declaration inside a packed structure."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a packed structure rand while leaving each member unqualified."
+        ]
+      },
+      "id": "SV-2023-18-NO-RANDOM-MEMBER-PACKED-STRUCT"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Apply rand or randc to a member declaration inside a packed untagged union."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a packed untagged union rand while leaving each member unqualified."
+        ]
+      },
+      "id": "SV-2023-18-NO-RANDOM-MEMBER-PACKED-UNTAGGED-UNION"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Apply each random qualifier."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a packed tagged union as nonrandom state."
+        ]
+      },
+      "id": "SV-2023-18-NO-RANDOM-PACKED-TAGGED-UNION"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Apply rand and randc in separate declarations."
+        ],
+        "notes": [],
+        "positive": [
+          "Use an unpacked union as ordinary state."
+        ]
+      },
+      "id": "SV-2023-18-NO-RANDOM-UNPACKED-UNION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast shortreal or realtime according to their real-type classification."
+        ],
+        "negative": [
+          "Declare a real variable as randc and require rejection."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a real variable as rand."
+        ]
+      },
+      "id": "SV-2023-18-NO-REAL-RANDC"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use assignment-like side-effect operators if syntactically attempted."
+        ],
+        "negative": [
+          "Use ++ or -- in a constraint."
+        ],
+        "notes": [],
+        "positive": [
+          "Use side-effect-free arithmetic in a constraint."
+        ]
+      },
+      "id": "SV-2023-18-NO-SIDE-EFFECT-OPERATORS-IN-CONSTRAINTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use instances of different classes."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Interleave calls on two objects and optional $random calls, then compare each object's sequence with an uninterleaved baseline."
+        ]
+      },
+      "id": "SV-2023-18-OBJECT-RANDOMIZE-INDEPENDENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Append new objects and random draws only after all existing object creations and compare earlier streams."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Repeat the same creation and random-call order and compare all object streams."
+        ]
+      },
+      "id": "SV-2023-18-OBJECT-SEEDING-ORDER-STABILITY"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Provide two definitions for one prototype."
+        ],
+        "notes": [],
+        "positive": [
+          "Provide exactly one external block."
+        ]
+      },
+      "id": "SV-2023-18-ONE-EXTERNAL-BLOCK-PER-PROTOTYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use individually unsatisfiable soft constraints and allow all to be discarded."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use mutually contradictory soft constraints and require randomization success after priority-based discarding."
+        ]
+      },
+      "id": "SV-2023-18-ONLY-SOFT-RANDOMIZE-CANNOT-FAIL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use several items of both kinds."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Place a relational constraint and solve-before item in one block."
+        ]
+      },
+      "id": "SV-2023-18-ORDERING-AND-VALUE-CONSTRAINTS-COEXIST"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an external definition to complete the overriding prototype."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Override an inherited pure constraint in abstract and concrete derived classes."
+        ]
+      },
+      "id": "SV-2023-18-OVERRIDE-INHERITED-PURE-CONSTRAINT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast direct randomization of the enum variable, which remains limited to named constants."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Randomize a packed aggregate containing a sparse enum and permit unnamed member encodings."
+        ]
+      },
+      "id": "SV-2023-18-PACKED-AGGREGATE-ENUM-EXCEPTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multiple valid topological placements and verify latest-set semantics."
+        ],
+        "negative": [],
+        "notes": [
+          "Use a distribution-sensitive oracle."
+        ],
+        "positive": [
+          "Create a branching partial order and test a variable constrained only before one later set."
+        ]
+      },
+      "id": "SV-2023-18-PARTIALLY-ORDERED-VARIABLES-LATEST-SET"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Explicitly call super.post_randomize in a derived override."
+        ],
+        "negative": [
+          "Override it with arguments or a nonvoid return."
+        ],
+        "notes": [],
+        "positive": [
+          "Override post_randomize with a no-argument void function."
+        ]
+      },
+      "id": "SV-2023-18-POST-RANDOMIZE-PROTOTYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Declare it in a derived class and call super.pre_randomize()."
+        ],
+        "negative": [
+          "Override it with a nonvoid return type or arguments."
+        ],
+        "notes": [],
+        "positive": [
+          "Override pre_randomize with a no-argument void function."
+        ]
+      },
+      "id": "SV-2023-18-PRE-RANDOMIZE-PROTOTYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Combine rand with one visibility qualifier and one each of static and virtual where otherwise legal."
+        ],
+        "negative": [
+          "Declare both rand and randc, both protected and local, or repeat static or virtual."
+        ],
+        "notes": [],
+        "positive": [
+          "Use one qualifier from each exclusive pair."
+        ]
+      },
+      "id": "SV-2023-18-PROPERTY-QUALIFIER-EXCLUSIVITY"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Declare both forms under one name in the class."
+        ],
+        "notes": [],
+        "positive": [
+          "Use distinct names for an in-class block and prototype."
+        ]
+      },
+      "id": "SV-2023-18-PROTOTYPE-NAME-NO-INCLASS-BLOCK"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Declare one in a concrete class."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a pure constraint in a virtual class."
+        ]
+      },
+      "id": "SV-2023-18-PURE-CONSTRAINT-ABSTRACT-ONLY"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Add any same-named concrete constraint form in that class."
+        ],
+        "notes": [],
+        "positive": [
+          "Keep a pure declaration unimplemented in its declaring abstract class."
+        ]
+      },
+      "id": "SV-2023-18-PURE-CONSTRAINT-NAME-CONFLICT"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Combine pure and final on one constraint prototype."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a pure constraint without final."
+        ]
+      },
+      "id": "SV-2023-18-PURE-CONSTRAINT-NOT-FINAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Require a later concrete descendant to implement it."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Make an inherited concrete constraint pure again in a virtual subclass."
+        ]
+      },
+      "id": "SV-2023-18-PURE-CONSTRAINT-REPLACES-INHERITED-CONCRETE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Implement through a prototype and external block with all qualifications matching."
+        ],
+        "negative": [
+          "Override a static pure constraint with nonstatic, or vice versa."
+        ],
+        "notes": [],
+        "positive": [
+          "Override static and nonstatic pure constraints with matching qualification."
+        ]
+      },
+      "id": "SV-2023-18-PURE-CONSTRAINT-STATIC-OVERRIDE-MATCH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Grow a queue of class handles and verify newly inserted back elements begin null and require no object allocation."
+        ],
+        "negative": [],
+        "notes": [
+          "Active element contents are randomized after resize; use handle identity or inactive retained elements to observe resize retention."
+        ],
+        "positive": [
+          "Grow and shrink a queue of class handles and verify retained handles stay at the front while insertion/deletion occurs at the back."
+        ]
+      },
+      "id": "SV-2023-18-QUEUE-RANDOMIZE-RESIZE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Allow identical values on consecutive calls."
+        ],
+        "negative": [],
+        "notes": [
+          "Use a statistically trustworthy oracle rather than requiring exact finite counts."
+        ],
+        "positive": [
+          "Randomize a small unconstrained rand integral variable and statistically test uniformity over its values."
+        ]
+      },
+      "id": "SV-2023-18-RAND-INTEGRAL-UNIFORM-DISTRIBUTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Combine terminals and nested nonterminals in joined sequences."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use nested nonterminals and verify each interleaving decision expands only one nonterminal level."
+        ]
+      },
+      "id": "SV-2023-18-RAND-JOIN-INTERLEAVE-DEPTH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an intermediate value and require only behavior consistent with the defined bias degree."
+        ],
+        "negative": [
+          "Use an expression outside 0.0 to 1.0 or of an invalid type."
+        ],
+        "notes": [
+          "Use a statistical oracle."
+        ],
+        "positive": [
+          "Use unequal remaining sequence lengths and statistically compare endpoint bias settings."
+        ]
+      },
+      "id": "SV-2023-18-RAND-JOIN-LENGTH-BIAS"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Attempt a class override of rand_mode."
+        ],
+        "notes": [],
+        "positive": [
+          "Use the inherited built-in method."
+        ]
+      },
+      "id": "SV-2023-18-RAND-MODE-CANNOT-BE-OVERRIDDEN"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Disable a randc variable and verify it participates as fixed state rather than consuming a cyclic value."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Disable one random variable, retain its prior value, and constrain active variables using it as fixed state."
+        ]
+      },
+      "id": "SV-2023-18-RAND-MODE-DISABLED-BEHAVIOR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Reenable an individual unpacked-array element while others remain inactive."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Disable a random variable, call rand_mode(1), then verify it participates in a subsequent randomize call."
+        ]
+      },
+      "id": "SV-2023-18-RAND-MODE-ENABLES-VARIABLES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Include inherited random members in a newly constructed derived object."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Randomize a newly constructed object without calling rand_mode and verify each random member participates."
+        ]
+      },
+      "id": "SV-2023-18-RAND-MODE-INITIALLY-ACTIVE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a shadowed name and apply normal class hierarchy resolution."
+        ],
+        "negative": [
+          "Name an absent variable and an existing nonrandom variable."
+        ],
+        "notes": [],
+        "positive": [
+          "Use an inherited rand variable."
+        ]
+      },
+      "id": "SV-2023-18-RAND-MODE-INVALID-VARIABLE-ERROR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a selected object handle from a container."
+        ],
+        "negative": [
+          "Use an expression that does not yield the defining object handle."
+        ],
+        "notes": [],
+        "positive": [
+          "Call rand_mode through a handle-valued expression."
+        ]
+      },
+      "id": "SV-2023-18-RAND-MODE-OBJECT-EXPRESSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Re-enable the handle and verify internal mode was preserved."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Disable a rand handle and query an internal rand member to verify its own mode remains active."
+        ]
+      },
+      "id": "SV-2023-18-RAND-MODE-OBJECT-HANDLE-NONRECURSIVE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Re-enable all members with obj.rand_mode(1)."
+        ],
+        "negative": [
+          "Try to query obj.rand_mode() without a selected variable."
+        ],
+        "notes": [],
+        "positive": [
+          "Call obj.rand_mode(0) and verify every rand and randc member becomes inactive."
+        ]
+      },
+      "id": "SV-2023-18-RAND-MODE-OMITTED-VARIABLE-ALL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Invoke the void setter on an entire object."
+        ],
+        "negative": [
+          "Attempt the query form without naming a random variable."
+        ],
+        "notes": [],
+        "positive": [
+          "Set one variable's mode with a bit argument and query it with the no-argument integral form."
+        ]
+      },
+      "id": "SV-2023-18-RAND-MODE-OVERLOADS"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Query one variable before and after disabling it and observe 1 then 0."
+        ]
+      },
+      "id": "SV-2023-18-RAND-MODE-QUERY-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Call the no-argument rand_mode() query on an unpacked array without selecting an element."
+        ],
+        "notes": [],
+        "positive": [
+          "Query rand_mode() on one indexed element of a random unpacked array."
+        ]
+      },
+      "id": "SV-2023-18-RAND-MODE-QUERY-SINGULAR-ONLY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a multidimensional unpacked array selection."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Disable one indexed element and, separately, all elements by omitting the index."
+        ]
+      },
+      "id": "SV-2023-18-RAND-MODE-UNPACKED-ARRAY-SELECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use members with differing random qualifiers."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Disable one structure member and then the whole structure's members."
+        ]
+      },
+      "id": "SV-2023-18-RAND-MODE-UNPACKED-STRUCT-SELECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a null handle."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Constrain fields across containing and referenced objects and verify concurrent satisfaction and handle identity."
+        ]
+      },
+      "id": "SV-2023-18-RAND-OBJECT-HANDLE-CONTENTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use strict endpoints and verify generated values satisfy them."
+        ],
+        "negative": [],
+        "notes": [
+          "Use a statistically robust tolerance; do not require exact finite counts."
+        ],
+        "positive": [
+          "Constrain a rand real to two equal-length adjacent intervals and statistically compare selection probability."
+        ]
+      },
+      "id": "SV-2023-18-RAND-REAL-UNIFORM-DISTRIBUTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Mix random and nonrandom members."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Randomize a rand unpacked struct containing typed random members."
+        ]
+      },
+      "id": "SV-2023-18-RAND-UNPACKED-STRUCT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Permit the final value of one cycle to equal the first value of the next."
+        ],
+        "negative": [],
+        "notes": [
+          "Do not require a particular permutation."
+        ],
+        "positive": [
+          "Randomize a 2-bit randc variable through more than one complete cycle and verify each cycle contains every value once."
+        ]
+      },
+      "id": "SV-2023-18-RANDC-CYCLE-PERMUTATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "A width above an implementation's documented limit may be rejected, but not an 8-bit width on that basis."
+        ],
+        "negative": [],
+        "notes": [
+          "A full 256-value cycle may be used to distinguish randc support from ordinary rand."
+        ],
+        "positive": [
+          "Declare and randomize an 8-bit randc variable."
+        ]
+      },
+      "id": "SV-2023-18-RANDC-MINIMUM-SUPPORTED-WIDTH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Leave constraints unchanged while remaining legal values exist and preserve no-repeat cycle behavior."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Partway through a cycle, change the applicable constraint and verify randomization proceeds using a recomputed legal sequence."
+        ]
+      },
+      "id": "SV-2023-18-RANDC-RECOMPUTE-CONSTRAINT-CHANGE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Construct a state where the next randc choice leaves no rand solution and observe failure."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Couple randc and rand variables so the selected cyclic value controls the remaining solution."
+        ]
+      },
+      "id": "SV-2023-18-RANDC-SOLVED-BEFORE-RAND"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a one-bit logic randc variable."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Randomize a 4-state integral randc variable and verify no X or Z appears."
+        ]
+      },
+      "id": "SV-2023-18-RANDC-TWO-STATE-SEQUENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use expressions whose widths differ."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use variable-dependent arithmetic and bitwise weight expressions."
+        ]
+      },
+      "id": "SV-2023-18-RANDCASE-ARBITRARY-WEIGHT-EXPRESSIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Nest randcase in another statement context."
+        ],
+        "negative": [
+          "Use no items or omit endcase."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse randcase with statement and null branches and multiple items."
+        ]
+      },
+      "id": "SV-2023-18-RANDCASE-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use total weights wider than one item."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use deterministic control of the thread RNG where available to verify cumulative declaration-order mapping."
+        ]
+      },
+      "id": "SV-2023-18-RANDCASE-RANDOM-DRAW-MAPPING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Repeat an identical pure weight expression and permit caching while requiring no listed expression to be evaluated more than once."
+        ],
+        "negative": [],
+        "notes": [
+          "Do not rely on weight evaluation order or side effects."
+        ],
+        "positive": [
+          "Use pure weight expressions whose result does not depend on evaluation order."
+        ]
+      },
+      "id": "SV-2023-18-RANDCASE-WEIGHT-CALL-COUNT-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a signed representation whose bits produce a distinct unsigned weight."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Mix 8-bit and 12-bit weight expressions and verify unsigned 12-bit summation and selection behavior."
+        ]
+      },
+      "id": "SV-2023-18-RANDCASE-WEIGHT-EVALUATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a zero-weight branch and verify it is not selected when total weight is nonzero."
+        ],
+        "negative": [
+          "Use a negative or nonintegral weight."
+        ],
+        "notes": [
+          "Use statistical tolerance rather than exact finite counts."
+        ],
+        "positive": [
+          "Use small weights such as 1,2,5 and statistically test proportional branch selection."
+        ]
+      },
+      "id": "SV-2023-18-RANDCASE-WEIGHTED-SELECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Set every weight to zero and verify no branch statement executes."
+        ],
+        "negative": [],
+        "notes": [
+          "A warning for all-zero weights is optional."
+        ],
+        "positive": [
+          "Include one zero-weight branch among nonzero branches and verify it is never taken."
+        ]
+      },
+      "id": "SV-2023-18-RANDCASE-ZERO-WEIGHTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use unnamed cast enum state in a nonrandom variable."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Randomize a sparse enum and observe only named constants."
+        ]
+      },
+      "id": "SV-2023-18-RANDOM-ENUM-NAMED-VALUES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Constrain a slice of the whole packed structure."
+        ],
+        "negative": [
+          "Apply rand or randc to an individual packed-structure member."
+        ],
+        "notes": [],
+        "positive": [
+          "Randomize a whole packed structure using rand and randc."
+        ]
+      },
+      "id": "SV-2023-18-RANDOM-PACKED-STRUCT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use randc on the whole union."
+        ],
+        "negative": [
+          "Apply rand to an individual member."
+        ],
+        "notes": [],
+        "positive": [
+          "Randomize a whole packed untagged union."
+        ]
+      },
+      "id": "SV-2023-18-RANDOM-PACKED-UNTAGGED-UNION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Combine one random qualifier with otherwise compatible property qualifiers."
+        ],
+        "negative": [
+          "Apply the qualifier where class-property grammar does not permit it."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare class properties with rand and randc."
+        ]
+      },
+      "id": "SV-2023-18-RANDOM-QUALIFIER-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare object randomize stability with scope randomize thread stability."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Interleave each applicable random operation in independent threads or objects and verify one stream does not consume another."
+        ]
+      },
+      "id": "SV-2023-18-RANDOM-STABILITY-DOMAINS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise several integral widths and signednesses."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Randomize singular integral and real class variables."
+        ]
+      },
+      "id": "SV-2023-18-RANDOMIZABLE-SINGULAR-TYPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Omit the super call and verify the base callback effect is absent."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Override a callback and explicitly call super to observe both derived and base effects."
+        ]
+      },
+      "id": "SV-2023-18-RANDOMIZATION-CALLBACK-BASE-DISPATCH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Disable a random object member and verify its callbacks are omitted."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use nested enabled rand object members and record callbacks before and after assignments."
+        ]
+      },
+      "id": "SV-2023-18-RANDOMIZATION-CALLBACK-OBJECT-CLOSURE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Observe behavior on an unsuccessful randomization as specified by the detailed callback rules."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Override both callbacks and record their order around a successful randomization."
+        ]
+      },
+      "id": "SV-2023-18-RANDOMIZATION-CALLBACK-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call a zero-time function helper."
+        ],
+        "negative": [
+          "Attempt a timing control or blocking task call in a callback."
+        ],
+        "notes": [],
+        "positive": [
+          "Implement callbacks using zero-time function statements."
+        ]
+      },
+      "id": "SV-2023-18-RANDOMIZATION-CALLBACKS-CANNOT-BLOCK"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast a direct nonvirtual callback call through a base-typed handle where language method lookup differs."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Randomize a derived object through a base handle and observe derived callback behavior."
+        ]
+      },
+      "id": "SV-2023-18-RANDOMIZATION-CALLBACKS-NONVIRTUAL"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [
+          "Do not require exact finite-sample frequencies."
+        ],
+        "positive": [
+          "Combine distribution, membership, and implication constraints."
+        ]
+      },
+      "id": "SV-2023-18-RANDOMIZATION-SATISFIES-DISTRIBUTIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change argument order without changing the designated set."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Call with one declared rand property and verify other rand properties stay fixed; list ordinary properties and verify they are randomized temporarily."
+        ]
+      },
+      "id": "SV-2023-18-RANDOMIZE-ARGUMENT-COMPLETE-RANDOM-SET"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare protected/public inherited properties with a local property."
+        ],
+        "negative": [
+          "Select a local property from an inaccessible external or derived-class scope."
+        ],
+        "notes": [],
+        "positive": [
+          "Select a local property from a method of its declaring class."
+        ]
+      },
+      "id": "SV-2023-18-RANDOMIZE-ARGUMENT-LOCAL-ACCESS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a shadowed property name and verify object-class scope resolution."
+        ],
+        "negative": [
+          "Pass an arbitrary expression rather than a property name."
+        ],
+        "notes": [],
+        "positive": [
+          "Select public and inherited accessible properties by name."
+        ]
+      },
+      "id": "SV-2023-18-RANDOMIZE-ARGUMENT-NAME-AND-ACCESS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Temporarily select a nonrandom property and verify it behaves as noncyclic random for that call only."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Select a randc property in an argument list and verify its cyclic behavior remains."
+        ]
+      },
+      "id": "SV-2023-18-RANDOMIZE-ARGUMENT-PRESERVES-RANDC-KIND"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Temporarily exclude all but one rand property."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Temporarily randomize an ordinary property and verify later no-argument calls revert to declared random variables."
+        ]
+      },
+      "id": "SV-2023-18-RANDOMIZE-ARGUMENT-TEMPORARY-MODE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Declare unrelated helper methods with different names or signatures only where legal."
+        ],
+        "negative": [
+          "Attempt to declare an overriding randomize method."
+        ],
+        "notes": [],
+        "positive": [
+          "Use the inherited built-in method."
+        ]
+      },
+      "id": "SV-2023-18-RANDOMIZE-CANNOT-BE-OVERRIDDEN"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call no-argument randomize on a class declaring no random variables."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use randomize(null) with currently satisfied and violated constraints and verify status without value changes."
+        ]
+      },
+      "id": "SV-2023-18-RANDOMIZE-CHECKER-MODE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify retained objects participate in randomization."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Grow a dynamic array of handles and verify new entries are null."
+        ]
+      },
+      "id": "SV-2023-18-RANDOMIZE-DOES-NOT-ALLOCATE-OBJECTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Include nested active random objects."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Initialize random members, force an unsatisfiable call, and verify all original values remain."
+        ]
+      },
+      "id": "SV-2023-18-RANDOMIZE-FAILURE-PRESERVES-VALUES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Include an ordinary non-rand member."
+        ],
+        "negative": [],
+        "notes": [
+          "Do not rely on values changing by chance."
+        ],
+        "positive": [
+          "Randomize an object with two rand members and make participation of both observable."
+        ]
+      },
+      "id": "SV-2023-18-RANDOMIZE-RAND-MEMBERS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Include nested active random objects."
+        ],
+        "negative": [
+          "Use contradictory active hard constraints and require return value 0."
+        ],
+        "notes": [],
+        "positive": [
+          "Check for return value 1 on a satisfiable object."
+        ]
+      },
+      "id": "SV-2023-18-RANDOMIZE-RETURN-STATUS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multiple active constraints and verify their conjunction."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Constrain address low bits to zero and verify every successful result is aligned."
+        ]
+      },
+      "id": "SV-2023-18-RANDOMIZE-SATISFIES-CONSTRAINTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Include both inherited and derived random members."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Call randomize through a base-typed handle to a derived object and verify derived constraints apply."
+        ]
+      },
+      "id": "SV-2023-18-RANDOMIZE-VIRTUAL-OBJECT-CONSTRAINTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Refer to an inherited random member inline."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Verify a successful result satisfies both class and inline constraints."
+        ]
+      },
+      "id": "SV-2023-18-RANDOMIZE-WITH-ADDITIONAL-CONSTRAINTS"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use randomize() with as a conditional expression and as a subexpression in an assignment."
+        ]
+      },
+      "id": "SV-2023-18-RANDOMIZE-WITH-EXPRESSION-CONTEXT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use empty optional parentheses where grammar permits."
+        ],
+        "negative": [
+          "Use null or with(formals) in a nonmethod scope randomize call."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse object randomize calls with a variable list, null, with formal identifiers, and an inline block."
+        ]
+      },
+      "id": "SV-2023-18-RANDOMIZE-WITH-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the same local identifier in distinct code blocks."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare production identifiers and code-block locals in separate randsequence invocations and verify automatic per-invocation storage."
+        ]
+      },
+      "id": "SV-2023-18-RANDSEQUENCE-AUTOMATIC-SCOPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place break in a deeply nested production call without a loop."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Execute break directly in a production and inside a nested loop, verifying randsequence exit versus loop-only exit."
+        ]
+      },
+      "id": "SV-2023-18-RANDSEQUENCE-BREAK-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Associate two comma-separated case values with one production."
+        ]
+      },
+      "id": "SV-2023-18-RANDSEQUENCE-CASE-COMMA-SHARING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise no-match cases both with and without a default."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use overlapping matching case expressions and verify the first declared match generates its production."
+        ]
+      },
+      "id": "SV-2023-18-RANDSEQUENCE-CASE-FIRST-MATCH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a default item with and without its optional colon."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare a randsequence case production with explicit items and an optional default."
+        ]
+      },
+      "id": "SV-2023-18-RANDSEQUENCE-CASE-PRODUCTION"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Declare two default items in one randsequence case production."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare one default production item."
+        ]
+      },
+      "id": "SV-2023-18-RANDSEQUENCE-CASE-SINGLE-DEFAULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Leave every alternative unweighted and verify equal weighting."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Mix one unweighted alternative with an explicitly weighted alternative and treat the omitted weight as 1."
+        ]
+      },
+      "id": "SV-2023-18-RANDSEQUENCE-DEFAULT-WEIGHT-ONE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use nested nonterminals with code blocks at multiple expansion levels."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Record code-block execution for a generated production stream."
+        ]
+      },
+      "id": "SV-2023-18-RANDSEQUENCE-EXECUTION-AND-RECURSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an optional start production, typed production ports, and weighted rule code block."
+        ],
+        "negative": [
+          "Use an undeclared syntactic form in a production."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse minimal and multi-production blocks exercising each major production alternative."
+        ]
+      },
+      "id": "SV-2023-18-RANDSEQUENCE-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change state in generated production code and use it in a later condition."
+        ],
+        "negative": [
+          "Use a condition that cannot be converted to Boolean."
+        ],
+        "notes": [],
+        "positive": [
+          "Exercise true and false conditions with and without an else production."
+        ]
+      },
+      "id": "SV-2023-18-RANDSEQUENCE-IF-ELSE-PRODUCTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use separate rules with different occurrence counts."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use one returning occurrence and repeated occurrences, verifying scalar versus [1:N] array and ordering."
+        ]
+      },
+      "id": "SV-2023-18-RANDSEQUENCE-IMPLICIT-RETURN-VARIABLES"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Attempt a hierarchical reference to a variable declared inside a randsequence code block."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a code-block local only within its anonymous scope."
+        ]
+      },
+      "id": "SV-2023-18-RANDSEQUENCE-NO-HIERARCHICAL-CODE-BLOCK-LOCAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a production with only one alternative as a control."
+        ],
+        "negative": [],
+        "notes": [
+          "Do not require a particular finite selection sequence."
+        ],
+        "positive": [
+          "Define multiple observable alternatives and verify each generated stream selects one complete alternative."
+        ]
+      },
+      "id": "SV-2023-18-RANDSEQUENCE-PRODUCTION-ALTERNATIVE-SELECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a one-item terminal production."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Define nested nonterminals with sequential items and verify terminal expansion order."
+        ]
+      },
+      "id": "SV-2023-18-RANDSEQUENCE-PRODUCTION-EXPANSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multiple formal directions where production rules permit them."
+        ],
+        "negative": [
+          "Pass arguments to a production whose declaration has no compatible formals."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare typed formal arguments with defaults and invoke with explicit and omitted default arguments."
+        ]
+      },
+      "id": "SV-2023-18-RANDSEQUENCE-PRODUCTION-FORMAL-ARGS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Access both first and last indexed occurrences of a repeated production."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Read a single production return by name and repeated returns by indexed production name in the triggering production's code block."
+        ]
+      },
+      "id": "SV-2023-18-RANDSEQUENCE-PRODUCTION-RETURN-ACCESS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Explicitly declare void."
+        ],
+        "negative": [
+          "Return data from an implicitly void production."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare integral and string return types and omit the type for a void production."
+        ]
+      },
+      "id": "SV-2023-18-RANDSEQUENCE-PRODUCTION-RETURN-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Return an expression incompatible with the production's declared return type."
+        ],
+        "notes": [],
+        "positive": [
+          "Return an expression matching a production's declared nonvoid type."
+        ]
+      },
+      "id": "SV-2023-18-RANDSEQUENCE-PRODUCTION-RETURN-VALUE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Shadow an outer variable with a formal."
+        ],
+        "negative": [
+          "Reference the formal from a different production scope."
+        ],
+        "notes": [],
+        "positive": [
+          "Reference one formal from multiple alternative rules and nested code blocks of the production."
+        ]
+      },
+      "id": "SV-2023-18-RANDSEQUENCE-PRODUCTION-SCOPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use three explicit nonzero weights with a common factor."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Define two weighted alternatives and statistically verify their proportional selection."
+        ]
+      },
+      "id": "SV-2023-18-RANDSEQUENCE-PRODUCTION-WEIGHTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Join more than two production items."
+        ],
+        "negative": [
+          "Accept an output that reverses items within one input sequence."
+        ],
+        "notes": [],
+        "positive": [
+          "Interleave two multi-item sequences and verify every output is an order-preserving shuffle."
+        ]
+      },
+      "id": "SV-2023-18-RANDSEQUENCE-RAND-JOIN"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast completion of all iterations without break."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Execute break during a repeated production and verify no later randsequence production runs."
+        ]
+      },
+      "id": "SV-2023-18-RANDSEQUENCE-REPEAT-BREAK-SCOPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compute the count using a random system function."
+        ],
+        "negative": [
+          "Use a negative or nonintegral repeat count."
+        ],
+        "notes": [],
+        "positive": [
+          "Repeat a production zero, one, and several times."
+        ]
+      },
+      "id": "SV-2023-18-RANDSEQUENCE-REPEAT-PRODUCTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a nonrecursive grammar and verify one finite expansion."
+        ],
+        "negative": [],
+        "notes": [
+          "Bound recursion in tests to guarantee termination."
+        ],
+        "positive": [
+          "Use a bounded recursive alternative to produce repeated expansion."
+        ]
+      },
+      "id": "SV-2023-18-RANDSEQUENCE-REPETITION-REQUIRES-RECURSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Return from the top-level production and verify its scope of abortion."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Return from a nested production and verify its remaining items are skipped while the parent's following production runs."
+        ]
+      },
+      "id": "SV-2023-18-RANDSEQUENCE-RETURN-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Read a later occurrence or later array element and treat the result as undefined rather than asserting a value."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Read values from preceding production occurrences."
+        ]
+      },
+      "id": "SV-2023-18-RANDSEQUENCE-RETURN-VALUE-AVAILABILITY"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Attempt to obtain static lifetime for a randsequence local without the required static prefix."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a code-block static variable with the explicit static prefix."
+        ]
+      },
+      "id": "SV-2023-18-RANDSEQUENCE-STATIC-LOCAL-EXPLICIT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a grammar containing one production."
+        ],
+        "negative": [
+          "Name an undefined production."
+        ],
+        "notes": [],
+        "positive": [
+          "Run the same grammar with an explicit nonfirst top production and with no name."
+        ]
+      },
+      "id": "SV-2023-18-RANDSEQUENCE-TOP-PRODUCTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a weight that changes to zero before a later selection."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Change a state variable used by a weight between selections of the same enclosing production and observe the changed eligible distribution."
+        ]
+      },
+      "id": "SV-2023-18-RANDSEQUENCE-WEIGHT-DYNAMIC-EVALUATION"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Use a negative or nonintegral production weight."
+        ],
+        "notes": [],
+        "positive": [
+          "Use zero and positive integral production weights."
+        ]
+      },
+      "id": "SV-2023-18-RANDSEQUENCE-WEIGHT-NONNEGATIVE-INTEGRAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Shrink then regrow the collection."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Disable a retained element, resize, and compare it with a newly added active element."
+        ]
+      },
+      "id": "SV-2023-18-RESIZE-PRESERVES-RAND-MODE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use local:: on a listed name."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "List one colliding object property while leaving another unlisted."
+        ]
+      },
+      "id": "SV-2023-18-RESTRICTED-INLINE-NAME-RESOLUTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an empty argument list as checker mode."
+        ],
+        "negative": [
+          "Use an expression where the grammar requires variable identifiers."
+        ],
+        "notes": [],
+        "positive": [
+          "Call randomize(...) and std::randomize(...) with and without a with block."
+        ]
+      },
+      "id": "SV-2023-18-SCOPE-RANDOMIZE-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Use an unsatisfiable scope constraint and verify return status 0."
+        ],
+        "notes": [],
+        "positive": [
+          "Use satisfiable scope constraints and verify return status 1."
+        ]
+      },
+      "id": "SV-2023-18-SCOPE-RANDOMIZE-RETURN-STATUS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a variable visible through lexical scope lookup."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Randomize a local variable and an enclosing module variable together under a constraint."
+        ]
+      },
+      "id": "SV-2023-18-SCOPE-RANDOMIZE-SELECTION-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Use an empty argument list with a false inline constraint and verify status 0 without variable changes."
+        ],
+        "notes": [],
+        "positive": [
+          "Call std::randomize() with an empty argument list and a true inline constraint, verifying unchanged variables and status 1."
+        ]
+      },
+      "id": "SV-2023-18-SCOPE-RANDOMIZE-STATUS-AND-CHECKER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change which variables are listed across successive calls."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "List two locals as arguments and reference an unlisted task argument as state in the inline constraint."
+        ]
+      },
+      "id": "SV-2023-18-SCOPE-RANDOMIZE-WITH-STATE-SELECTION"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [
+          "Use only a state string obtained from the same implementation's get_randstate()."
+        ],
+        "positive": [
+          "Capture an object's state, consume random values, restore the captured state, and verify the subsequent stream repeats."
+        ]
+      },
+      "id": "SV-2023-18-SET-RANDSTATE-OBJECT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use several conflicting soft constraints and verify priority determines survivors."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Override a soft default with a conflicting hard inline constraint and require success satisfying the hard constraint."
+        ]
+      },
+      "id": "SV-2023-18-SOFT-CONSTRAINT-DISCARD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a soft relation involving multiple rand variables."
+        ],
+        "negative": [
+          "Apply soft to a randc or nonrandom state variable."
+        ],
+        "notes": [],
+        "positive": [
+          "Apply soft to a rand variable."
+        ]
+      },
+      "id": "SV-2023-18-SOFT-ONLY-RAND-NOT-RANDC"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Alias one contained object through multiple rand handles and verify the latest handle determines its priority."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Conflict soft constraints in two contained objects and verify the later handle wins."
+        ]
+      },
+      "id": "SV-2023-18-SOFT-PRIORITY-CONTAINED-HANDLE-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multiple levels of contained rand objects."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Conflict a container soft constraint with one in a contained rand object and verify the container wins."
+        ]
+      },
+      "id": "SV-2023-18-SOFT-PRIORITY-CONTAINER-OVER-CONTAINED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multiple inheritance levels and verify nearer derived layers outrank all ancestors."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Conflict a derived soft constraint with a differently named inherited soft constraint and verify the derived one wins."
+        ]
+      },
+      "id": "SV-2023-18-SOFT-PRIORITY-DERIVED-OVER-BASE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place definitions far apart in the same legal scope."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Reverse external-definition order relative to prototype order and verify prototype order controls conflicts."
+        ]
+      },
+      "id": "SV-2023-18-SOFT-PRIORITY-EXTERNAL-PROTOTYPE-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Iterate an array with descending index bounds and use defined iteration order."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Generate mutually conflicting soft constraints across ordered foreach iterations and verify the latter iteration wins."
+        ]
+      },
+      "id": "SV-2023-18-SOFT-PRIORITY-FOREACH-ITERATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multiple compatible hard constraints and retain all."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Conflict hard and soft constraints and verify hard wins; conflict layered soft constraints and verify the later layer wins."
+        ]
+      },
+      "id": "SV-2023-18-SOFT-PRIORITY-HARD-HIGHEST"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a hard inline constraint, which also overrides soft class constraints by hard priority."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Conflict an inline soft constraint with a class soft default and verify inline wins."
+        ]
+      },
+      "id": "SV-2023-18-SOFT-PRIORITY-INLINE-OVER-CLASS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare soft constraints in separate blocks whose block declaration order determines relative position."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare two contradictory soft constraints in one block and verify the later expression prevails."
+        ]
+      },
+      "id": "SV-2023-18-SOFT-PRIORITY-SAME-CONSTRUCT-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Ensure the low-priority constraint is retained when the high-priority one is individually impossible."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Create cases where both, only the high priority, only the low priority, and neither soft constraint can coexist with hard constraints."
+        ]
+      },
+      "id": "SV-2023-18-SOFT-TWO-CONSTRAINT-FALLBACK-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Create a cycle through three variables."
+        ],
+        "negative": [
+          "Declare both a before b and b before a."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a chain solve a before b before c through separate ordering items."
+        ]
+      },
+      "id": "SV-2023-18-SOLVE-BEFORE-ACYCLIC"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Order sizes of two random dynamic arrays."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use solve a.size before another rand variable with and without parentheses."
+        ]
+      },
+      "id": "SV-2023-18-SOLVE-BEFORE-ARRAY-SIZE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use size both with and without parentheses."
+        ],
+        "negative": [
+          "Add parentheses to an ordinary variable primary."
+        ],
+        "notes": [],
+        "positive": [
+          "Order single and comma-list variables, including a scoped or hierarchical primary and array.size()."
+        ]
+      },
+      "id": "SV-2023-18-SOLVE-BEFORE-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Order an enum variable as an integral type."
+        ],
+        "negative": [
+          "Order a random object handle directly."
+        ],
+        "notes": [],
+        "positive": [
+          "Order integral and real rand variables."
+        ]
+      },
+      "id": "SV-2023-18-SOLVE-BEFORE-INTEGRAL-OR-REAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a distribution-sensitive case where non-equivalent reordering would be observable and require specified probabilities."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use an earlier-fixed variable whose unique value permits internal reordering without changing results."
+        ]
+      },
+      "id": "SV-2023-18-SOLVE-BEFORE-OUTCOME-EQUIVALENT-REORDERING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Specify multiple ordering relations that form a partial rather than total order."
+        ],
+        "negative": [],
+        "notes": [
+          "Use a statistically robust oracle."
+        ],
+        "positive": [
+          "Order a small selector before a much wider dependent data variable and statistically verify selector-first marginal selection."
+        ]
+      },
+      "id": "SV-2023-18-SOLVE-BEFORE-PARTIAL-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "A disabled rand declaration remains a rand variable syntactically; apply detailed active-state semantics as appropriate."
+        ],
+        "negative": [
+          "Name a nonrandom state variable."
+        ],
+        "notes": [],
+        "positive": [
+          "Order two rand variables."
+        ]
+      },
+      "id": "SV-2023-18-SOLVE-BEFORE-RAND-ONLY"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Use contradictory constraints and permit failure."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a system with exactly one solution."
+        ]
+      },
+      "id": "SV-2023-18-SOLVER-FINDS-EXISTING-SOLUTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Mix integer and packed-bit operands."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Solve a power-of-two relation expressed with shifts."
+        ]
+      },
+      "id": "SV-2023-18-SOLVER-SUPPORTED-EQUATIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Reseed one object after consuming part of its stream."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Seed two equivalent objects with the same value and verify their subsequent random behavior is reproducible."
+        ]
+      },
+      "id": "SV-2023-18-SRANDOM-OBJECT-SEED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Declare ordinary and static blocks in the same class."
+        ],
+        "negative": [
+          "Place static in a grammar position not admitted by the declaration."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare static constraint c {...}."
+        ]
+      },
+      "id": "SV-2023-18-STATIC-CONSTRAINT-DECLARATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast with a nonstatic constraint whose mode remains per object."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Disable a static constraint through one object and verify it is disabled when randomizing another instance."
+        ]
+      },
+      "id": "SV-2023-18-STATIC-CONSTRAINT-MODE-SHARED"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Combine static with a dynamic override specifier."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a static constraint without override specifiers."
+        ]
+      },
+      "id": "SV-2023-18-STATIC-CONSTRAINT-NO-DYNAMIC-OVERRIDE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise static object initializers in two distinct containing instances."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Create statically initialized class objects in a module or package and compare reproducible streams under the same initialization seed/order."
+        ]
+      },
+      "id": "SV-2023-18-STATIC-OBJECT-INITIALIZATION-SEED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise static processes in separate module instances."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Create static processes in a containing module or package and compare reproducible streams under unchanged initialization order."
+        ]
+      },
+      "id": "SV-2023-18-STATIC-PROCESS-INITIALIZATION-SEED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast with per-instance mode of a nonstatic member."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Disable a static rand member through one instance and verify it is inactive through another."
+        ]
+      },
+      "id": "SV-2023-18-STATIC-RAND-MODE-STATE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast with a nonstatic randc member whose cycle state is per instance."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Alternate randomize() calls across two instances and verify their static randc member advances one shared cycle."
+        ]
+      },
+      "id": "SV-2023-18-STATIC-RANDC-STATE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast with a nonstatic random member."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Randomize alternating instances and verify all observe the same updated static rand member."
+        ]
+      },
+      "id": "SV-2023-18-STATIC-RANDOM-VARIABLE-SHARED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use different counts of random calls per thread while preserving each thread's own sequence."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Run equivalent forked threads under different scheduling interleavings and compare each thread's outputs."
+        ]
+      },
+      "id": "SV-2023-18-THREAD-EXECUTION-ORDER-INDEPENDENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use only a discarded soft size constraint."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Randomize an unconstrained nonempty queue and verify unchanged size and randomized elements."
+        ]
+      },
+      "id": "SV-2023-18-UNCONSTRAINED-COLLECTION-SIZE-STABLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an enum random member and ensure results remain in its declared value set."
+        ],
+        "negative": [],
+        "notes": [
+          "Do not require distribution coverage or a particular generated value."
+        ],
+        "positive": [
+          "Randomize an unconstrained small integral rand member."
+        ]
+      },
+      "id": "SV-2023-18-UNCONSTRAINED-RAND-RANGE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Choose legal combinations whose marginal probabilities differ despite equal joint probabilities."
+        ],
+        "negative": [],
+        "notes": [
+          "Use a statistically robust oracle rather than exact finite counts."
+        ],
+        "positive": [
+          "Use a small constrained pair with an enumerable nonrectangular legal solution set and statistically test equal combination probabilities."
+        ]
+      },
+      "id": "SV-2023-18-UNIFORM-LEGAL-COMBINATION-DISTRIBUTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Include array leaf elements in the group."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Apply unique to several small integral variables and verify pairwise inequality."
+        ]
+      },
+      "id": "SV-2023-18-UNIQUE-ALL-DIFFERENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a multidimensional unpacked array with integral leaves."
+        ],
+        "negative": [
+          "Use an expression that does not denote an admitted variable or array form."
+        ],
+        "notes": [],
+        "positive": [
+          "Use singular integral and real variables plus an unpacked-array slice with legal leaf type."
+        ]
+      },
+      "id": "SV-2023-18-UNIQUE-ALLOWED-GROUP-ITEMS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use one range-list item, which is syntactically valid but semantically ineffective."
+        ],
+        "negative": [
+          "Omit braces or supply a general computed expression."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse unique {a, b, array_slice} using permitted variables."
+        ]
+      },
+      "id": "SV-2023-18-UNIQUE-CONSTRAINT-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Combine a singular variable with array leaves of equivalent type."
+        ],
+        "negative": [
+          "Mix nonequivalent member types in one unique group."
+        ],
+        "notes": [],
+        "positive": [
+          "Use members with equivalent integral types."
+        ]
+      },
+      "id": "SV-2023-18-UNIQUE-EQUIVALENT-MEMBER-TYPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Apply unique to an empty array or slice."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Randomize with unique containing one singular variable."
+        ]
+      },
+      "id": "SV-2023-18-UNIQUE-FEWER-THAN-TWO-NO-EFFECT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an array whose group expansion would include a randc-qualified member if applicable."
+        ],
+        "negative": [
+          "Include a randc variable."
+        ],
+        "notes": [],
+        "positive": [
+          "Use rand variables in unique."
+        ]
+      },
+      "id": "SV-2023-18-UNIQUE-NO-RANDC"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Leave several mutually constrained variables unordered."
+        ],
+        "negative": [],
+        "notes": [
+          "Use a distribution-sensitive oracle where this ordering is observable."
+        ],
+        "positive": [
+          "Order a before b while leaving c unordered and test c with the final selection set."
+        ]
+      },
+      "id": "SV-2023-18-UNORDERED-VARIABLES-SOLVED-LAST"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a packed integral type as the leaf of nested unpacked dimensions."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Apply unique to a multidimensional unpacked array and compare all scalar leaves."
+        ]
+      },
+      "id": "SV-2023-18-UNPACKED-ARRAY-LEAF-ELEMENT"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Verify object property wins a collision and local fallback resolves an absent object name."
+        ]
+      },
+      "id": "SV-2023-18-UNRESTRICTED-INLINE-NAME-RESOLUTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Seed from a deliberately varying external value and do not require reproducibility."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Repeat a simulation with identical setup and compare its RNG sequence."
+        ]
+      },
+      "id": "SV-2023-18-URANDOM-DETERMINISTIC-DEFAULT-STREAM"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use adjacent reversed bounds."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Call with ascending arguments and verify results match the same bounds supplied in descending order."
+        ]
+      },
+      "id": "SV-2023-18-URANDOM-RANGE-REVERSES-BOUNDS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use equal bounds and require that exact value."
+        ],
+        "negative": [],
+        "notes": [
+          "Do not require every value to appear in a finite sample."
+        ],
+        "positive": [
+          "Call with explicit bounds and with omitted minval, checking every result lies inclusively in range."
+        ]
+      },
+      "id": "SV-2023-18-URANDOM-RANGE-SIGNATURE-AND-BOUNDS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Interleave calls from independent threads and verify one thread does not consume another's stream."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare equivalent thread creation and call sequences across runs."
+        ]
+      },
+      "id": "SV-2023-18-URANDOM-RANGE-THREAD-STABLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare differently typed integral seed expressions that convert to the same seed value."
+        ],
+        "negative": [],
+        "notes": [
+          "Compare complete call sequences; do not require a particular implementation-independent sequence."
+        ],
+        "positive": [
+          "Initialize equivalent streams with the same seed and compare several subsequent outputs."
+        ]
+      },
+      "id": "SV-2023-18-URANDOM-SAME-SEED-REPRODUCES-STREAM"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use differently typed integral expressions that convert to the same seed value."
+        ],
+        "negative": [
+          "Pass a nonintegral seed expression."
+        ],
+        "notes": [],
+        "positive": [
+          "Seed with integral expressions of different widths and signedness."
+        ]
+      },
+      "id": "SV-2023-18-URANDOM-SEED-REPRODUCIBILITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Assign two calls into a 64-bit concatenation."
+        ],
+        "negative": [],
+        "notes": [
+          "Do not require successive values to differ by chance."
+        ],
+        "positive": [
+          "Call $urandom with and without a seed and verify unsigned 32-bit result typing."
+        ]
+      },
+      "id": "SV-2023-18-URANDOM-SIGNATURE-AND-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an empty collection."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Randomize each variable-size collection kind and verify all elements satisfy element constraints."
+        ]
+      },
+      "id": "SV-2023-18-VARIABLE-SIZE-ARRAY-RANDOMIZATION"
+    }
+  ],
+  "schema_version": 1
+}
