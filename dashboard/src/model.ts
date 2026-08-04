@@ -151,7 +151,16 @@ export function requirementsQuickFilters(filters: Filters): Filters {
 export function casesFilters(filters: Filters): Filters {
   return {
     ...filters,
+    search: "",
+    status: "",
+    revision: "",
+    part: "",
+    clause: "",
+    phase: "",
+    expectation: "",
+    casePresence: "",
     tag: "",
+    reason: "",
     requirementTags: "",
   };
 }

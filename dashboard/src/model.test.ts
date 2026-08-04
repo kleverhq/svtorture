@@ -114,19 +114,29 @@ describe("Cases filters", () => {
     ).toHaveLength(2);
   });
 
-  it("ignores corpus-specific Requirement tags and the legacy tag field", () => {
+  it("ignores hidden Advanced filters but keeps visible Case facets", () => {
     const projected = casesFilters({
       ...EMPTY_FILTERS,
       requirementTags: "requirement-only",
       tag: "legacy",
       caseTags: "copy-out",
       search: "case search",
+      phase: "simulate",
+      status: "conforming",
+      reason: "expectation-met",
+      statusGroup: "pass",
+      requirement: "SV-2023-13-OUTPUT-COPYOUT",
     });
 
     expect(projected.requirementTags).toBe("");
     expect(projected.tag).toBe("");
     expect(projected.caseTags).toBe("copy-out");
-    expect(projected.search).toBe("case search");
+    expect(projected.search).toBe("");
+    expect(projected.phase).toBe("");
+    expect(projected.status).toBe("");
+    expect(projected.reason).toBe("");
+    expect(projected.statusGroup).toBe("pass");
+    expect(projected.requirement).toBe("SV-2023-13-OUTPUT-COPYOUT");
   });
 });
 

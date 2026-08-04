@@ -373,22 +373,13 @@ export default function App() {
         ])
       : view === "evidence"
         ? JSON.stringify([
-            filters.search,
             filters.tool,
             filters.profile,
-            filters.status,
             filters.statusGroup,
             filters.changed,
             filters.disagreement,
-            filters.revision,
-            filters.part,
-            filters.clause,
-            filters.phase,
-            filters.expectation,
-            filters.casePresence,
             filters.caseTags,
             filters.requirement,
-            filters.reason,
           ])
         : filters;
   const corpusFilters = useMemo(() => {
@@ -432,7 +423,7 @@ export default function App() {
   const inspectRequirementToolCases = useCallback(
     (tool: string, profile: string, requirement: string) => {
       setFilters((current) => ({
-        ...current,
+        ...casesFilters(current),
         tool,
         profile,
         requirement,
@@ -617,7 +608,6 @@ export default function App() {
               history={state.trends}
               filters={filters}
               setFilters={setFilters}
-              onReset={() => undefined}
               mode="trends"
               trendKind={trend.kind}
               standardParts={latest?.corpus_metrics.requirements.breakdown ?? []}
@@ -694,13 +684,6 @@ export default function App() {
           ),
       )
     : [];
-  const resetLocalFilters = () =>
-    setFilters((current) => ({
-      ...EMPTY_FILTERS,
-      campaign: current.campaign,
-      dateFrom: current.dateFrom,
-      dateTo: current.dateTo,
-    }));
   const inspectToolCases = (
     tool: string,
     profile: string,
@@ -762,7 +745,6 @@ export default function App() {
               history={state.trends}
               filters={filters}
               setFilters={setFilters}
-              onReset={resetLocalFilters}
               mode={
                 view === "matrix"
                   ? "requirements"

@@ -547,18 +547,15 @@ describe("App overview navigation", () => {
     expect(await within(caseDetail).findByText(original.summary)).toBeTruthy();
     expect(within(caseDetail).getByText(related.summary)).toBeTruthy();
     expect(screen.queryByText(failingCase.title)).toBeNull();
-    const requirementFilter = screen.getByLabelText(
-      "Requirement",
-    ) as HTMLSelectElement;
-    expect(requirementFilter.value).toBe(related.id);
-    expect(screen.getByText("Advanced filters").closest("details")?.open).toBe(true);
+    expect(screen.queryByText("Advanced filters")).toBeNull();
+    expect(screen.queryByLabelText("Requirement")).toBeNull();
     await waitFor(() => {
       const parameters = new URLSearchParams(window.location.search);
       expect(parameters.get("view")).toBe("evidence");
       expect(parameters.get("tool")).toBe("fake");
       expect(parameters.get("profile")).toBe("simulator");
       expect(parameters.get("requirement")).toBe(related.id);
-      expect(parameters.get("phase")).toBe("simulate");
+      expect(parameters.get("phase")).toBeNull();
       expect(parameters.get("statusGroup")).toBe("pass");
     });
   });

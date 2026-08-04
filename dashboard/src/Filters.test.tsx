@@ -32,7 +32,6 @@ function FilterHarness({
       campaign={selectedCampaign(dataset, "")}
       filters={filters}
       setFilters={setFilters}
-      onReset={() => setFilters({ ...EMPTY_FILTERS })}
       mode={mode}
       trendKind={mode === "trends" ? trendKind : undefined}
       standardParts={dataset.corpus_coverage.requirements.breakdown}
@@ -43,19 +42,6 @@ function FilterHarness({
 }
 
 describe("Filters", () => {
-  it("keeps broad and exact status filters mutually exclusive", () => {
-    render(<FilterHarness />);
-
-    const exact = screen.getByLabelText("Exact result") as HTMLSelectElement;
-    expect(exact.value).toBe("conforming");
-
-    fireEvent.click(screen.getByRole("button", { name: "Fail 0" }));
-    expect(exact.value).toBe("");
-    expect(
-      screen.getByRole("button", { name: "Fail 0" }).getAttribute("aria-pressed"),
-    ).toBe("true");
-  });
-
   it("shows side-by-side corpus facets and clear result labels", () => {
     render(<FilterHarness />);
 
@@ -126,37 +112,8 @@ describe("Filters", () => {
 
     expect(copyOut.getAttribute("aria-pressed")).toBe("true");
     expect(output.getAttribute("aria-pressed")).toBe("true");
-    fireEvent.click(screen.getByText("Advanced filters"));
-    expect(screen.queryByLabelText("Tag")).toBeNull();
-    expect(screen.getByLabelText("Phase")).toBeTruthy();
-  });
-
-  it("opens Advanced filters for an exact Requirement on Cases", () => {
-    const dataset = makeTestDataset();
-    const requirement = dataset.requirements[0];
-    if (!requirement) throw new Error("incomplete test dataset");
-
-    const view = render(
-      <FilterHarness dataset={dataset} requirement={requirement.id} />,
-    );
-
-    const select = screen.getByLabelText("Requirement") as HTMLSelectElement;
-    expect(select.value).toBe(requirement.id);
-    const summary = screen.getByText("Advanced filters");
-    expect(summary.closest("details")?.open).toBe(true);
-
-    fireEvent.click(summary);
-    view.rerender(
-      <FilterHarness
-        dataset={dataset}
-        requirement={requirement.id}
-        mode="overview"
-      />,
-    );
-    view.rerender(
-      <FilterHarness dataset={dataset} requirement={requirement.id} />,
-    );
-    expect(screen.getByText("Advanced filters").closest("details")?.open).toBe(true);
+    expect(screen.queryByText("Advanced filters")).toBeNull();
+    expect(screen.queryByLabelText("Phase")).toBeNull();
   });
 
   it("shows quick trend facets without Advanced filters", () => {

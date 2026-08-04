@@ -3,7 +3,6 @@ import { useEffect, useRef, type Dispatch, type SetStateAction } from "react";
 import {
   STATUS_GROUP_LABELS,
   STATUS_GROUP_ORDER,
-  STATUS_LABELS,
   filterValueList,
   statusGroup,
   toggleFilterValue,
@@ -18,7 +17,6 @@ import type {
   CampaignTrends,
   CorpusPartMetric,
   Dataset,
-  Status,
 } from "./types";
 
 export type FilterMode =
@@ -34,7 +32,6 @@ interface FilterProps {
   history?: CampaignTrends | undefined;
   filters: FilterValues;
   setFilters: Dispatch<SetStateAction<FilterValues>>;
-  onReset: () => void;
   mode: FilterMode;
   trendKind?: TrendKind | undefined;
   standardParts?: CorpusPartMetric[] | undefined;
@@ -52,15 +49,6 @@ function standardPartLabel(part: string): string {
   return /^[A-Q]$/.test(part) ? `Annex ${part}` : `Chapter ${part}`;
 }
 
-function standardPartOrder(left: string, right: string): number {
-  if (/^[0-9]+$/.test(left) && /^[0-9]+$/.test(right)) {
-    return Number(left) - Number(right);
-  }
-  if (/^[0-9]+$/.test(left)) return -1;
-  if (/^[0-9]+$/.test(right)) return 1;
-  return left.localeCompare(right);
-}
-
 function displayFilterValue(value: string): string {
   return value
     .replaceAll(/[-_]+/g, " ")
@@ -73,7 +61,6 @@ export function Filters({
   history,
   filters,
   setFilters,
-  onReset,
   mode,
   trendKind,
   standardParts = [],
@@ -91,10 +78,6 @@ export function Filters({
       return { ...current, [name]: value };
     });
   };
-  const statuses = choices(
-    campaign?.results.map((result) => result.status) ?? [],
-  ) as Status[];
-  const reasons = choices(campaign?.results.map((result) => result.reason) ?? []);
   const requirementTags = choices(
     (dataset?.requirements ?? []).flatMap((requirement) => requirement.tags),
   );
@@ -186,7 +169,6 @@ export function Filters({
   const showPartFacet =
     mode === "trends" && trendKind !== undefined && trendKind !== "pass-rate";
   const partMultiselectRef = useRef<HTMLDetailsElement>(null);
-  const advancedFiltersRef = useRef<HTMLDetailsElement>(null);
   useEffect(() => {
     const closeOnOutsidePointer = (event: PointerEvent) => {
       const multiselect = partMultiselectRef.current;
@@ -212,15 +194,6 @@ export function Filters({
       document.removeEventListener("keydown", closeOnEscape);
     };
   }, []);
-  useEffect(() => {
-    if (
-      mode === "cases" &&
-      filters.requirement &&
-      advancedFiltersRef.current
-    ) {
-      advancedFiltersRef.current.open = true;
-    }
-  }, [filters.requirement, mode]);
   const partSelectionLabel = selectedParts.length
     ? `${selectedParts.length} selected`
     : `All ${standardParts.length}`;
@@ -406,143 +379,6 @@ export function Filters({
             </div>
           </details>
         )}
-
-      {mode === "cases" && (
-        <details className="filters__advanced" ref={advancedFiltersRef}>
-          <summary>Advanced filters</summary>
-        <div className="filters__grid">
-          <label className="search">
-            <span>Search</span>
-            <input
-              type="search"
-              value={filters.search}
-              placeholder="Requirement, case, clause, diagnostic…"
-              onChange={(event) => update("search", event.target.value)}
-            />
-          </label>
-          {mode === "cases" && (
-            <>
-              <label>
-                <span>Revision</span>
-                <select
-                  value={filters.revision}
-                  onChange={(event) => update("revision", event.target.value)}
-                >
-                  <option value="">Any</option>
-                  <option>1800-2012</option>
-                  <option>1800-2017</option>
-                  <option>1800-2023</option>
-                </select>
-              </label>
-              <label>
-                <span>Standard part</span>
-                <select
-                  value={filters.part}
-                  onChange={(event) => update("part", event.target.value)}
-                >
-                  <option value="">Any</option>
-                  {choices((dataset?.requirements ?? []).map((item) => item.part))
-                    .sort(standardPartOrder)
-                    .map((part) => (
-                      <option value={part} key={part}>
-                        {standardPartLabel(part)}
-                      </option>
-                    ))}
-                </select>
-              </label>
-              <label>
-                <span>Clause or annex prefix</span>
-                <input
-                  value={filters.clause}
-                  placeholder="12.4 or A.1"
-                  onChange={(event) => update("clause", event.target.value)}
-                />
-              </label>
-              <label>
-                <span>Phase</span>
-                <select
-                  value={filters.phase}
-                  onChange={(event) => update("phase", event.target.value)}
-                >
-                  <option value="">Any</option>
-                  {choices((dataset?.cases ?? []).map((item) => item.target_phase)).map((phase) => (
-                    <option key={phase}>{phase}</option>
-                  ))}
-                </select>
-              </label>
-              <label>
-                <span>Expectation</span>
-                <select
-                  value={filters.expectation}
-                  onChange={(event) => update("expectation", event.target.value)}
-                >
-                  <option value="">Any</option>
-                  {choices((dataset?.cases ?? []).map((item) => item.expectation)).map(
-                    (expectation) => (
-                      <option key={expectation}>{expectation}</option>
-                    ),
-                  )}
-                </select>
-              </label>
-              <label>
-                <span>Case presence</span>
-                <select
-                  value={filters.casePresence}
-                  onChange={(event) => update("casePresence", event.target.value)}
-                >
-                  <option value="">Any</option>
-                  <option value="with-cases">With cases</option>
-                  <option value="without-cases">Without cases</option>
-                </select>
-              </label>
-              <label>
-                <span>Requirement</span>
-                <select
-                  value={filters.requirement}
-                  onChange={(event) => update("requirement", event.target.value)}
-                >
-                  <option value="">Any</option>
-                  {(dataset?.requirements ?? []).map((requirement) => (
-                    <option key={requirement.id} value={requirement.id}>
-                      {requirement.id} · {requirement.summary}
-                    </option>
-                  ))}
-                </select>
-              </label>
-              <label>
-                <span>Exact result</span>
-                <select
-                  value={filters.status}
-                  onChange={(event) => update("status", event.target.value)}
-                >
-                  <option value="">Any</option>
-                  {statuses.map((status) => (
-                    <option key={status} value={status}>
-                      {STATUS_LABELS[status]}
-                    </option>
-                  ))}
-                </select>
-              </label>
-              <label>
-                <span>Reason</span>
-                <select
-                  value={filters.reason}
-                  onChange={(event) => update("reason", event.target.value)}
-                >
-                  <option value="">Any</option>
-                  {reasons.map((reason) => (
-                    <option key={reason}>{reason}</option>
-                  ))}
-                </select>
-              </label>
-            </>
-          )}
-          <button type="button" className="button button--quiet" onClick={onReset}>
-            Clear local filters
-          </button>
-          </div>
-        </details>
-      )}
     </div>
   );
 }
