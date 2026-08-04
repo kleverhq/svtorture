@@ -2,12 +2,6648 @@ schema_version = 3
 part = "11"
 
 [[requirements]]
-id = "SV-2023-11-ADDITION-CONTEXT-WIDTH"
+id = "SV-2023-11-ADDITION-LARGEST-CONTEXT-WIDTH"
 standard_revision = "1800-2023"
 part = "11"
 clause = "11.6"
-anchors = ["[2023:11.6:P003:p299]", "[2023:11.6.2:P001:p300]"]
-summary = "An assignment context propagates its width into addition operands before the addition is evaluated."
-related_clauses = ["11.4.3", "11.8.2"]
-tags = ["addition", "context", "sizing"]
-revision_applicability = { "1800-2012" = { status = "applicable", clause = "11.6.1" }, "1800-2017" = { status = "applicable", clause = "11.6.1" }, "1800-2023" = { status = "applicable", clause = "11.6" } }
+anchors = [
+    "[2023:11.6:P003:p299]",
+]
+summary = "An addition is evaluated using the bit length of its largest operand, counting the assignment left-hand side as part of the sizing context."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.6"
+
+[[requirements]]
+id = "SV-2023-11-AGGREGATE-COMPARISON-TYPE"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.2.2"
+anchors = [
+    "[2023:11.2.2:P003:p270]",
+]
+summary = "When both operands of a comparison are aggregate expressions, their types shall be equivalent under 6.22.2."
+related_clauses = [
+    "6.22.2",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.2.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.2.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.2.2"
+
+[[requirements]]
+id = "SV-2023-11-AND-IMPLICATION-SHORT-CIRCUIT"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.7"
+anchors = [
+    "[2023:11.4.7:P009:p281]",
+    "[2023:11.4.7:L002:p281]",
+]
+summary = "For && and ->, a logically false first operand prevents evaluation of the second operand."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.7"
+note = "Clause 11.3.5 identifies both && and -> as short-circuiting, while 11.4.7 defines implication through !expression1 || expression2 and gives the controlling logical short-circuit condition."
+
+[requirements.revision_applicability.1800-2017]
+status = "changed-expectation"
+clause = "11.4.7"
+note = "The 2017 rule requires short-circuit evaluation for && and || only; it does not include logical implication (->) in the short-circuit mandate."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.7"
+
+[[requirements]]
+id = "SV-2023-11-ARITHMETIC-ASSIGNMENT-OPERAND-TYPES"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.3"
+anchors = [
+    "[2023:11.3:T11-1.R02:p271]",
+]
+summary = "The +=, -=, /=, and *= assignment operators accept integral, real, and shortreal operands."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.3"
+
+[[requirements]]
+id = "SV-2023-11-ARITHMETIC-DATA-TYPE-INTERPRETATION"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.3.1"
+anchors = [
+    "[2023:11.4.3.1:T11-7.R01:p277]",
+    "[2023:11.4.3.1:T11-7.R02:p277]",
+    "[2023:11.4.3.1:T11-7.R03:p277]",
+    "[2023:11.4.3.1:T11-7.R04:p277]",
+    "[2023:11.4.3.1:T11-7.R05:p277]",
+]
+summary = "Arithmetic operators interpret unsigned nets and variables as unsigned, signed nets and variables as signed two's-complement, and real variables as signed floating-point values."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.3.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.3.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.3.1"
+
+[[requirements]]
+id = "SV-2023-11-ARITHMETIC-RIGHT-SHIFT-FILL"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.10"
+anchors = [
+    "[2023:11.4.10:P001:p284]",
+]
+summary = "Arithmetic >>> fills vacated positions with zero for an unsigned result type and with the left operand's most-significant sign bit for a signed result type."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.10"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.10"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.10"
+
+[[requirements]]
+id = "SV-2023-11-ARITHMETIC-SHIFT-ASSIGNMENT-TYPES"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.3"
+anchors = [
+    "[2023:11.3:T11-1.R06:p271]",
+]
+summary = "The >>>= and <<<= arithmetic-shift assignment operators accept integral operands only."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.3"
+
+[[requirements]]
+id = "SV-2023-11-ARITHMETIC-XZ-PROPAGATION"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.3"
+anchors = [
+    "[2023:11.4.3:P018:p277]",
+]
+summary = "If any bit of any arithmetic-operator operand is x or z, the entire arithmetic result is x."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.3"
+
+[[requirements]]
+id = "SV-2023-11-ARRAY-OPERANDS"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.2"
+anchors = [
+    "[2023:11.2:L015:p269]",
+    "[2023:11.2:L016:p269]",
+    "[2023:11.2:L017:p269]",
+]
+summary = "Packed and unpacked arrays are legal expression operands; packed-array selections, elements, and slices and unpacked-array element selections, elements, and slices are also legal operands."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.2"
+
+[[requirements]]
+id = "SV-2023-11-ASSIGNED-VALUE-SIGNEDNESS"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.3.1"
+anchors = [
+    "[2023:11.4.3.1:P002:p277]",
+]
+summary = "A value assigned to an unsigned net or variable shall be treated as unsigned, and a value assigned to a signed net or variable shall be treated as signed."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.3.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.3.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.3.1"
+
+[[requirements]]
+id = "SV-2023-11-ASSIGNMENT-EXPRESSION-PROHIBITED-CONTEXTS"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.3.6"
+anchors = [
+    "[2023:11.3.6:P003:p275]",
+]
+summary = "An assignment operator is illegal in an event expression, in an expression within a procedural continuous assignment, or in any expression outside a procedural statement."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.3.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.3.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.3.6"
+
+[[requirements]]
+id = "SV-2023-11-ASSIGNMENT-EXPRESSION-VALUE"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.3.6"
+anchors = [
+    "[2023:11.3.6:P002:p274]",
+]
+summary = "An assignment expression evaluates and casts its right-hand side to the left-hand type, preserves that cast value, updates the left-hand side, and returns the preserved value with the left-hand side's data type."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.3.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.3.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.3.6"
+
+[[requirements]]
+id = "SV-2023-11-ASSIGNMENT-RHS-SIZING-AND-EXTENSION"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.8.3"
+anchors = [
+    "[2023:11.8.3:L001:p303]",
+    "[2023:11.8.3:L002:p303]",
+]
+summary = "Assignment evaluation determines right-hand size under 11.6 and extends it if needed; extension is sign extension if and only if the right-hand expression type is signed."
+related_clauses = [
+    "11.6",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.8.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.8.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.8.3"
+
+[[requirements]]
+id = "SV-2023-11-BINARY-ADDITION-SEMANTICS"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.3"
+anchors = [
+    "[2023:11.4.3:T11-3.R00:p275]",
+]
+summary = "The binary + operator produces the sum of its operands."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.3"
+
+[[requirements]]
+id = "SV-2023-11-BINARY-ARITHMETIC-BITWISE-RESULT-SIZE"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.6.1"
+anchors = [
+    "[2023:11.6.1:T11-21.R03:p299]",
+    "[2023:11.6.1:T11-21.R04:p299]",
+]
+summary = "For binary +, -, *, /, %, &, |, ^, ^~, and ~^, result size is max(L(i), L(j))."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.6.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.6.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.6.1"
+
+[[requirements]]
+id = "SV-2023-11-BINARY-ARITHMETIC-TYPES"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.3"
+anchors = [
+    "[2023:11.3:T11-1.R12:p271]",
+]
+summary = "Binary +, -, *, /, and ** accept integral, real, and shortreal operands."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.3"
+
+[[requirements]]
+id = "SV-2023-11-BINARY-BITWISE-PER-BIT-SEMANTICS"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.8"
+anchors = [
+    "[2023:11.4.8:P001:p281]",
+]
+summary = "Binary &, |, ^, ^~, and ~^ combine corresponding bits of integral operands with the named Boolean operation, producing one result bit per operand bit position."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.8"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.8"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.8"
+
+[[requirements]]
+id = "SV-2023-11-BINARY-BITWISE-TYPES"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.3"
+anchors = [
+    "[2023:11.3:T11-1.R14:p271]",
+]
+summary = "Binary &, |, ^, ~^, and ^~ accept integral operands only."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.3"
+
+[[requirements]]
+id = "SV-2023-11-BINARY-DIVISION-SEMANTICS"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.3"
+anchors = [
+    "[2023:11.4.3:T11-3.R03:p275]",
+    "[2023:11.4.3:P002:p275]",
+]
+summary = "The binary / operator divides its first operand by its second; integral division discards any fractional part by truncating toward zero."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.3"
+
+[[requirements]]
+id = "SV-2023-11-BINARY-LOGICAL-TYPES"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.3"
+anchors = [
+    "[2023:11.3:T11-1.R17:p271]",
+]
+summary = "Binary logical operators &&, ||, ->, and <-> accept integral, real, and shortreal operands."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.3"
+
+[[requirements]]
+id = "SV-2023-11-BINARY-MODULUS-OPERAND-TYPE"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.3"
+anchors = [
+    "[2023:11.3:T11-1.R13:p271]",
+]
+summary = "The binary % operator accepts integral operands only."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.3"
+
+[[requirements]]
+id = "SV-2023-11-BINARY-MODULUS-SEMANTICS"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.3"
+anchors = [
+    "[2023:11.4.3:T11-3.R04:p275]",
+    "[2023:11.4.3:P002:p275]",
+]
+summary = "The binary % operator returns the remainder of integral division; it returns zero for exact division and a nonzero remainder has the sign of the first operand."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.3"
+
+[[requirements]]
+id = "SV-2023-11-BINARY-MULTIPLICATION-SEMANTICS"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.3"
+anchors = [
+    "[2023:11.4.3:T11-3.R02:p275]",
+]
+summary = "The binary * operator produces the product of its operands."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.3"
+
+[[requirements]]
+id = "SV-2023-11-BINARY-SUBTRACTION-SEMANTICS"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.3"
+anchors = [
+    "[2023:11.4.3:T11-3.R01:p275]",
+]
+summary = "The binary - operator produces the first operand minus the second."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.3"
+
+[[requirements]]
+id = "SV-2023-11-BIT-AND-PART-SELECT-OPERANDS"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.5"
+anchors = [
+    "[2023:11.5:P002:p295]",
+]
+summary = "A bit-select denotes one bit and a part-select denotes adjacent bits of a vector net, vector variable, packed array, packed structure, or parameter as an operand."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.5"
+
+[[requirements]]
+id = "SV-2023-11-BIT-SELECT-SELF-DETERMINED-ADDRESS"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.5.1"
+anchors = [
+    "[2023:11.5.1:P001:p295]",
+]
+summary = "A bit-select extracts one bit from a vector, packed array, packed structure, parameter, or concatenation, and its address expression is evaluated in a self-determined context."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.5.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.5.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.5.1"
+
+[[requirements]]
+id = "SV-2023-11-BIT-SELECT-USES-DECLARED-INDEX-RANGE"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.5.1"
+anchors = [
+    "[2023:11.5.1:P010:p296]",
+    "[2023:11.5.1:P009:p296]",
+    "[2023:11.5.1:C004:p296]",
+    "[2023:11.5.1:C005:p296]",
+]
+summary = "A vector bit-select acc[index] selects the bit whose declared index equals index, so identical address values can denote different physical bit positions for differing declared index ranges and directions."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.5.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.5.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.5.1"
+
+[[requirements]]
+id = "SV-2023-11-BITWISE-AND-FOUR-STATE-TRUTH-TABLE"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.8"
+anchors = [
+    "[2023:11.4.8:P005:p281]",
+    "[2023:11.4.8:T11-11.R00:p282]",
+    "[2023:11.4.8:T11-11.R01:p282]",
+    "[2023:11.4.8:T11-11.R02:p282]",
+    "[2023:11.4.8:T11-11.R03:p282]",
+    "[2023:11.4.8:T11-11.R04:p282]",
+]
+summary = "For one-bit four-state operands, bitwise AND returns 0 if either operand is 0, returns 1 only for 1 & 1, and otherwise returns x; z therefore behaves as unknown for AND."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.8"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.8"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.8"
+
+[[requirements]]
+id = "SV-2023-11-BITWISE-ASSIGNMENT-OPERAND-TYPES"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.3"
+anchors = [
+    "[2023:11.3:T11-1.R04:p271]",
+]
+summary = "The &=, |=, and ^= assignment operators accept integral operands only."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.3"
+
+[[requirements]]
+id = "SV-2023-11-BITWISE-NEGATION-FOUR-STATE-TRUTH-TABLE"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.8"
+anchors = [
+    "[2023:11.4.8:T11-15.R00:p283]",
+    "[2023:11.4.8:T11-15.R01:p283]",
+    "[2023:11.4.8:T11-15.R02:p283]",
+    "[2023:11.4.8:T11-15.R03:p283]",
+    "[2023:11.4.8:T11-15.R04:p283]",
+]
+summary = "For a one-bit four-state operand, bitwise negation ~ maps 0 to 1, 1 to 0, and both x and z to x."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.8"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.8"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.8"
+
+[[requirements]]
+id = "SV-2023-11-BITWISE-OR-FOUR-STATE-TRUTH-TABLE"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.8"
+anchors = [
+    "[2023:11.4.8:P005:p281]",
+    "[2023:11.4.8:T11-12.R00:p282]",
+    "[2023:11.4.8:T11-12.R01:p282]",
+    "[2023:11.4.8:T11-12.R02:p282]",
+    "[2023:11.4.8:T11-12.R03:p282]",
+    "[2023:11.4.8:T11-12.R04:p282]",
+]
+summary = "For one-bit four-state operands, bitwise OR returns 1 if either operand is 1, returns 0 only for 0 | 0, and otherwise returns x; z therefore behaves as unknown for OR."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.8"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.8"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.8"
+
+[[requirements]]
+id = "SV-2023-11-BITWISE-XNOR-FOUR-STATE-TRUTH-TABLE"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.8"
+anchors = [
+    "[2023:11.4.8:T11-14.R00:p282]",
+    "[2023:11.4.8:T11-14.R01:p282]",
+    "[2023:11.4.8:T11-14.R02:p282]",
+    "[2023:11.4.8:T11-14.R03:p282]",
+    "[2023:11.4.8:T11-14.R04:p282]",
+    "[2023:11.4.8:T11-14.R05:p282]",
+    "[2023:11.4.8:T11-14.R06:p282]",
+]
+summary = "The ^~ and ~^ spellings are equivalent one-bit XNOR operations: they return 1 for equal known bits and 0 for unequal known bits, and return x if either operand is x or z."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.8"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.8"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.8"
+
+[[requirements]]
+id = "SV-2023-11-BITWISE-XOR-FOUR-STATE-TRUTH-TABLE"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.8"
+anchors = [
+    "[2023:11.4.8:T11-13.R00:p282]",
+    "[2023:11.4.8:T11-13.R01:p282]",
+    "[2023:11.4.8:T11-13.R02:p282]",
+    "[2023:11.4.8:T11-13.R03:p282]",
+    "[2023:11.4.8:T11-13.R04:p282]",
+]
+summary = "For one-bit four-state operands, bitwise XOR returns 0 for equal known bits and 1 for unequal known bits; if either operand is x or z, it returns x."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.8"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.8"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.8"
+
+[[requirements]]
+id = "SV-2023-11-CASE-EQUALITY-DEFINITIONS"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.5"
+anchors = [
+    "[2023:11.4.5:T11-9.R00:p279]",
+    "[2023:11.4.5:T11-9.R01:p279]",
+]
+summary = "Case equality === tests bit-for-bit equality including x and z values, and case inequality !== is its not-equal counterpart including x and z."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.5"
+
+[[requirements]]
+id = "SV-2023-11-CASE-EQUALITY-OPERATOR-TYPES"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.3"
+anchors = [
+    "[2023:11.3:T11-1.R19:p271]",
+    "[2023:11.3:T11-1.R20:p271]",
+]
+summary = "Binary case equality and inequality operators === and !== accept any operand type except real and shortreal."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.3"
+
+[[requirements]]
+id = "SV-2023-11-CASE-EQUALITY-XZ-KNOWN-RESULT"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.5"
+anchors = [
+    "[2023:11.4.5:P008:p279]",
+]
+summary = "Case === and !== compare as procedural case does, treating x and z as ordinary values that must match by position, and always return known 1'b0 or 1'b1."
+related_clauses = [
+    "12.5",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.5"
+
+[[requirements]]
+id = "SV-2023-11-COERCED-REAL-TO-INTEGER-SIGNED"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.8.1"
+anchors = [
+    "[2023:11.8.1:L008:p302]",
+]
+summary = "An integer produced by type coercion from a real value is signed."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.8.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.8.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.8.1"
+
+[[requirements]]
+id = "SV-2023-11-COMPARISON-OPERAND-MUTUAL-CONTEXT"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.8.2"
+anchors = [
+    "[2023:11.8.2:L005:p303]",
+]
+summary = "Relational and equality operands mutually determine a comparison context of their derived type and maximum width, independent of the surrounding expression, while the actual comparison result remains one-bit unsigned."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.8.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.8.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.8.2"
+
+[[requirements]]
+id = "SV-2023-11-COMPARISON-REDUCTION-RESULT-UNSIGNED"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.8.1"
+anchors = [
+    "[2023:11.8.1:L007:p302]",
+]
+summary = "Comparison and reduction operator results are unsigned regardless of operand signedness."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.8.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.8.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.8.1"
+
+[[requirements]]
+id = "SV-2023-11-COMPLETE-NAMED-OPERAND-USES-ALL-BITS"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.5"
+anchors = [
+    "[2023:11.5:P001:p295]",
+]
+summary = "A bare reference to a net, variable, or parameter is a legal operand and uses every bit of that object's value."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.5"
+
+[[requirements]]
+id = "SV-2023-11-COMPOUND-ASSIGNMENT-BLOCKING-SEMANTICS"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.1"
+anchors = [
+    "[2023:11.4.1:P001:p275]",
+]
+summary = "Each listed compound assignment operator has blocking-assignment semantics."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.1"
+
+[[requirements]]
+id = "SV-2023-11-COMPOUND-ASSIGNMENT-INDEX-ONCE"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.1"
+anchors = [
+    "[2023:11.4.1:P001:p275]",
+]
+summary = "A left-hand index expression in a compound assignment is evaluated exactly once."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.1"
+
+[[requirements]]
+id = "SV-2023-11-CONCATENATION-ASSIGNMENT-EXPRESSION-TYPE"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.3.6"
+anchors = [
+    "[2023:11.3.6:P002:p274]",
+]
+summary = "When an assignment expression's left-hand side is a concatenation, its returned value has an unsigned integral type whose width is the sum of the concatenation operand widths."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.3.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.3.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.3.6"
+
+[[requirements]]
+id = "SV-2023-11-CONCATENATION-PACKED-VECTOR-USAGE"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.12"
+anchors = [
+    "[2023:11.4.12:P005:p287]",
+]
+summary = "A concatenation is treated as a packed vector of bits."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.12"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.12"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.12"
+
+[[requirements]]
+id = "SV-2023-11-CONCATENATION-PROHIBITS-UNSIZED-CONSTANT"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.12"
+anchors = [
+    "[2023:11.4.12:P002:p286]",
+]
+summary = "An unsized constant number is illegal as a concatenation operand because every operand width must be known to determine concatenation width."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.12"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.12"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.12"
+
+[[requirements]]
+id = "SV-2023-11-CONCATENATION-REPLICATION-SIZE"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.6.1"
+anchors = [
+    "[2023:11.6.1:T11-21.R17:p300]",
+    "[2023:11.6.1:T11-21.R18:p300]",
+]
+summary = "A concatenation's size is the sum of its self-determined operand lengths; a replication's size is multiplier i times the sum of its self-determined concatenation operand lengths."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.6.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.6.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.6.1"
+
+[[requirements]]
+id = "SV-2023-11-CONCATENATION-REPLICATION-TYPES"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.3"
+anchors = [
+    "[2023:11.3:T11-1.R26:p271]",
+]
+summary = "Concatenation and replication operators accept integral operands."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.3"
+
+[[requirements]]
+id = "SV-2023-11-CONCATENATION-RESULT-UNSIGNED"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.8.1"
+anchors = [
+    "[2023:11.8.1:L006:p302]",
+]
+summary = "A concatenation result is unsigned regardless of operand signedness."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.8.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.8.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.8.1"
+
+[[requirements]]
+id = "SV-2023-11-CONCATENATION-SELECT-NOT-LVALUE"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.12"
+anchors = [
+    "[2023:11.4.12:P006:p287]",
+]
+summary = "A bit-select or part-select of a concatenation is illegal as a net_lvalue, variable_lvalue, assignment left-hand side, or equivalent lvalue use."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.12"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.12"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.12"
+
+[[requirements]]
+id = "SV-2023-11-CONCATENATION-SYNTAX-AND-BIT-JOIN"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.12"
+anchors = [
+    "[2023:11.4.12:P001:p286]",
+]
+summary = "A concatenation joins the bits produced by one or more expressions and is written as comma-separated expressions enclosed by { and }."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.12"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.12"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.12"
+
+[[requirements]]
+id = "SV-2023-11-CONCATENATION-VERSUS-AGGREGATE-LITERAL-SYNTAX"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.12"
+anchors = [
+    "[2023:11.4.12:P007:p287]",
+]
+summary = "A concatenation uses plain braces {...}; structure and array literals are distinct constructs using apostrophe-prefixed braces '{...}."
+related_clauses = [
+    "5.10",
+    "5.11",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.12"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.12"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.12"
+
+[[requirements]]
+id = "SV-2023-11-CONDITIONAL-AMBIGUOUS-ARRAY-MERGE"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.11"
+anchors = [
+    "[2023:11.4.11:P008:p286]",
+    "[2023:11.4.11:L011:p286]",
+]
+summary = "For an ambiguous predicate and nonequivalent branch values of non-associative aggregate array types with equal element counts, results are merged element by element: matching elements are retained and mismatches become the Table 7-1 value for the element type."
+related_clauses = [
+    "7.4.5",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.11"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.11"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.11"
+
+[[requirements]]
+id = "SV-2023-11-CONDITIONAL-AMBIGUOUS-INTEGRAL-MERGE"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.11"
+anchors = [
+    "[2023:11.4.11:P004:p285]",
+    "[2023:11.4.11:T11-20.R00:p285]",
+    "[2023:11.4.11:T11-20.R01:p285]",
+    "[2023:11.4.11:T11-20.R02:p285]",
+    "[2023:11.4.11:T11-20.R03:p285]",
+    "[2023:11.4.11:T11-20.R04:p285]",
+]
+summary = "For an ambiguous conditional predicate with nonequivalent integral branch values, the branches are extended to a common width and merged bitwise: matching 0 bits yield 0, matching 1 bits yield 1, and every other pair including x or z yields x."
+related_clauses = [
+    "11.6.1",
+    "11.8.2",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.11"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.11"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.11"
+
+[[requirements]]
+id = "SV-2023-11-CONDITIONAL-AMBIGUOUS-NONARRAY-FALLBACK"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.11"
+anchors = [
+    "[2023:11.4.11:P008:p286]",
+    "[2023:11.4.11:L012:p286]",
+]
+summary = "For an ambiguous predicate and logically nonequivalent nonintegral or aggregate branch values not eligible for equal-element array merging, the conditional returns the Table 7-1 value for the previously determined result type."
+related_clauses = [
+    "7.4.5",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.11"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.11"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.11"
+
+[[requirements]]
+id = "SV-2023-11-CONDITIONAL-AMBIGUOUS-PREDICATE-EVALUATION"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.11"
+anchors = [
+    "[2023:11.4.11:P003:p285]",
+]
+summary = "For an x or z conditional predicate, both result expressions are evaluated and logically compared; if equivalent, either expression value is returned, otherwise the result is merged according to their data types."
+related_clauses = [
+    "11.4.5",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.11"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.11"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.11"
+
+[[requirements]]
+id = "SV-2023-11-CONDITIONAL-CLASS-BRANCH-TYPING"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.11"
+anchors = [
+    "[2023:11.4.11:L004:p286]",
+    "[2023:11.4.11:L005:p286]",
+    "[2023:11.4.11:L006:p286]",
+    "[2023:11.4.11:L007:p286]",
+    "[2023:11.4.11:L008:p286]",
+    "[2023:11.4.11:L009:p286]",
+]
+summary = "For class or interface-class branches: two null branches produce null; one null branch yields the non-null branch type; one-way assignment compatibility yields the destination-compatible opposing type; otherwise classes with a common base yield the closest common inherited type. A known condition returns the selected branch value."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.11"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.11"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.11"
+
+[[requirements]]
+id = "SV-2023-11-CONDITIONAL-EXPRESSION-SIZE"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.6.1"
+anchors = [
+    "[2023:11.6.1:T11-21.R16:p300]",
+]
+summary = "An integral conditional i ? j : k has size max(L(j), L(k)), and predicate i is self-determined."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.6.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.6.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.6.1"
+
+[[requirements]]
+id = "SV-2023-11-CONDITIONAL-IMPLICIT-INTEGRAL-CAST"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.11"
+anchors = [
+    "[2023:11.4.11:L003:p286]",
+]
+summary = "Otherwise, if one conditional branch is integral and the opposing branch is implicitly castable to integral, that cast is performed and integral conditional rules apply."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.11"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.11"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.11"
+
+[[requirements]]
+id = "SV-2023-11-CONDITIONAL-KNOWN-PREDICATE-SHORT-CIRCUIT"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.11"
+anchors = [
+    "[2023:11.4.11:P003:p285]",
+]
+summary = "A true conditional predicate evaluates and returns only the first expression, while a false predicate evaluates and returns only the second expression."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.11"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.11"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.11"
+
+[[requirements]]
+id = "SV-2023-11-CONDITIONAL-NONINTEGRAL-NUMERIC-PROMOTION"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.11"
+anchors = [
+    "[2023:11.4.11:L002:p286]",
+]
+summary = "Conditional branches promote to real if both are real or either is real (casting an integral or shortreal counterpart), and promote to shortreal when one is shortreal and the other integral (casting the integral branch)."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.11"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.11"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.11"
+
+[[requirements]]
+id = "SV-2023-11-CONDITIONAL-OPERATOR-GRAMMAR"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.11"
+anchors = [
+    "[2023:11.4.11:P001:p285]",
+    "[2023:11.4.11:G001:p285]",
+]
+summary = "The right-associative conditional operator has a cond_predicate followed by ?, optional attributes, a first expression, :, and a second expression; a predicate may combine expressions or matching patterns with &&&."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.11"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.11"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.11"
+
+[[requirements]]
+id = "SV-2023-11-CONDITIONAL-OPERATOR-TYPES"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.3"
+anchors = [
+    "[2023:11.3:T11-1.R07:p271]",
+]
+summary = "The conditional operator accepts operands of any data type, subject to its result and compatibility rules."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.3"
+
+[[requirements]]
+id = "SV-2023-11-CONDITIONAL-OTHER-BRANCH-TYPE-EQUIVALENCE"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.11"
+anchors = [
+    "[2023:11.4.11:L010:p286]",
+]
+summary = "When no preceding integral, numeric-promotion, implicit-cast, or class rule applies, the two conditional branch types shall be equivalent under 6.22.2."
+related_clauses = [
+    "6.22.2",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.11"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.11"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.11"
+
+[[requirements]]
+id = "SV-2023-11-CONDITIONAL-PATTERN-PREDICATE"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.11"
+anchors = [
+    "[2023:11.4.11:P002:p285]",
+]
+summary = "A conditional cond_predicate may be a traditional expression or may perform pattern matching as defined in 12.6."
+related_clauses = [
+    "12.6",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.11"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.11"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.11"
+
+[[requirements]]
+id = "SV-2023-11-CONSTANT-BUILTIN-METHOD-ELABORATION"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.2.1"
+anchors = [
+    "[2023:11.2.1:P005:p270]",
+]
+summary = "A constant built-in method call used in a constant expression is evaluated at elaboration time."
+related_clauses = [
+    "5.13",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 clause 11.2.1 does not define constant built-in method calls or their elaboration-time evaluation."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 does not define constant built-in method calls as constant-expression operands or require their elaboration-time evaluation."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.2.1"
+
+[[requirements]]
+id = "SV-2023-11-CONSTANT-BUILTIN-METHOD-ELIGIBILITY"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.2.1"
+anchors = [
+    "[2023:11.2.1:P005:p270]",
+    "[2023:11.2.1:P006:p270]",
+]
+summary = "A built-in method can be a constant call only if it is side-effect free and its value depends solely on its arguments and optionally the current receiver value; its arguments and any receiver value on which the result depends shall be constant expressions."
+related_clauses = [
+    "5.13",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 clause 11.2.1 has no constant built-in method-call category or eligibility rules."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 has no corresponding constant built-in method-call eligibility rules."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.2.1"
+
+[[requirements]]
+id = "SV-2023-11-CONSTANT-EXPRESSION-CONTENTS"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.2.1"
+anchors = [
+    "[2023:11.2.1:P001:p270]",
+]
+summary = "A constant expression may contain only constant numbers, strings, parameters, constant parameter selects, non-void constant function calls, constant system-function calls, and constant built-in method calls as operands, and may use any operator in Table 11-1."
+related_clauses = [
+    "13.4.3",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "changed-expectation"
+clause = "11.2.1"
+note = "The 2012 operand list includes constant function and system-function calls but does not include constant built-in method calls."
+
+[requirements.revision_applicability.1800-2017]
+status = "changed-expectation"
+clause = "11.2.1"
+note = "The 2017 constant-expression operand list does not include constant built-in method calls, which are included by the 2023 expectation."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.2.1"
+
+[[requirements]]
+id = "SV-2023-11-CONSTANT-NUMBER-SELF-DETERMINED-SIZE"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.6.1"
+anchors = [
+    "[2023:11.6.1:P005:p299]",
+    "[2023:11.6.1:T11-21.R01:p299]",
+    "[2023:11.6.1:T11-21.R02:p299]",
+]
+summary = "An unsized constant number has a self-determined size of at least 32 bits, while a sized constant number has exactly its stated size."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "changed-expectation"
+clause = "11.6.1"
+note = "The 2012 table sizes an unsized constant number the same as integer, rather than specifying at least 32 bits."
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.6.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.6.1"
+
+[[requirements]]
+id = "SV-2023-11-CONSTANT-SELECT-DEFINITION"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.5.1"
+anchors = [
+    "[2023:11.5.1:P006:p296]",
+]
+summary = "A constant bit-select has a constant position; a constant part-select has constant position and width. Every part-select width is constant, every non-indexed part-select is constant, and an indexed part-select is constant exactly when its base is constant."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.5.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.5.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.5.1"
+
+[[requirements]]
+id = "SV-2023-11-CONSTANT-SYSTEM-FUNCTION-ELABORATION"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.2.1"
+anchors = [
+    "[2023:11.2.1:P002:p270]",
+]
+summary = "A constant system-function call used in a constant expression is evaluated at elaboration time."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.2.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.2.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.2.1"
+
+[[requirements]]
+id = "SV-2023-11-CONSTANT-SYSTEM-FUNCTION-ELIGIBILITY"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.2.1"
+anchors = [
+    "[2023:11.2.1:P002:p270]",
+    "[2023:11.2.1:P003:p270]",
+    "[2023:11.2.1:P004:p270]",
+]
+summary = "A system function is usable as a constant system-function call only when it is pure; listed timescale, conversion, mathematical, bit-vector, and $sformatf calls qualify when all arguments are constant expressions, while data-query and array-query calls may qualify with nonconstant arguments under their defining subclauses."
+related_clauses = [
+    "20.4",
+    "20.5",
+    "20.6",
+    "20.7",
+    "20.8",
+    "20.9",
+    "21.3.3",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "changed-expectation"
+clause = "11.2.1"
+note = "The 2012 constant-argument list includes conversion, mathematical, and bit-vector functions, but not the later timescale functions or $sformatf; query-function exceptions remain."
+
+[requirements.revision_applicability.1800-2017]
+status = "changed-expectation"
+clause = "11.2.1"
+note = "The 2017 eligible constant-argument list covers conversion, mathematical, and bit-vector system functions, but not the 2023 additions for timescale functions and $sformatf."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.2.1"
+
+[[requirements]]
+id = "SV-2023-11-CONTEXT-DETERMINED-EXPRESSION-DEFINITION"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.6.1"
+anchors = [
+    "[2023:11.6.1:P004:p299]",
+]
+summary = "A context-determined expression has a size determined by both its own expression form and its containing expression, such as an assignment right-hand side sized partly by the left-hand side."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.6.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.6.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.6.1"
+
+[[requirements]]
+id = "SV-2023-11-DECLARED-AND-DEFAULT-SIGNEDNESS"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.3.1"
+anchors = [
+    "[2023:11.4.3.1:P001:p277]",
+]
+summary = "The byte, shortint, int, integer, and longint data types are signed by default; all other data types are unsigned by default."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.3.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.3.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.3.1"
+
+[[requirements]]
+id = "SV-2023-11-DIST-OPERAND-TYPE"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.3"
+anchors = [
+    "[2023:11.3:T11-1.R25:p271]",
+]
+summary = "The binary dist distribution operator accepts integral operands."
+related_clauses = [
+    "16.14.2",
+    "18.5.3",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.3"
+
+[[requirements]]
+id = "SV-2023-11-DIVIDE-MODULUS-BY-ZERO"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.3"
+anchors = [
+    "[2023:11.4.3:P002:p275]",
+]
+summary = "Division or modulus with a zero second operand produces an all-x result value."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.3"
+
+[[requirements]]
+id = "SV-2023-11-EMPTY-STRING-LITERAL-EQUIVALENCE"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.10.3"
+anchors = [
+    "[2023:11.10.3:P001:p306]",
+]
+summary = "The empty string literal \"\" is equivalent to ASCII NUL \"\\0\" with numeric value zero, and is distinct from the one-character string \"0\"."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.10.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.10.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.10.3"
+
+[[requirements]]
+id = "SV-2023-11-EQUALITY-BELOW-RELATIONAL-PRECEDENCE"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.5"
+anchors = [
+    "[2023:11.4.5:P001:p279]",
+]
+summary = "Equality operators have lower precedence than relational operators."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.5"
+
+[[requirements]]
+id = "SV-2023-11-EQUALITY-COMPARISON-BASIC-RESULT"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.5"
+anchors = [
+    "[2023:11.4.5:P002:p279]",
+]
+summary = "All four equality operators compare operands bit for bit and return 1'b1 for a successful comparison and 1'b0 for a failed comparison; all four share the same precedence."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.5"
+
+[[requirements]]
+id = "SV-2023-11-EQUALITY-RELATIONAL-RESULT-AND-OPERAND-SIZE"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.6.1"
+anchors = [
+    "[2023:11.6.1:T11-21.R07:p299]",
+    "[2023:11.6.1:T11-21.R08:p299]",
+]
+summary = "Case/logical equality and relational operators return one bit and size both operands to max(L(i), L(j)) for the comparison."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.6.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.6.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.6.1"
+
+[[requirements]]
+id = "SV-2023-11-EQUIVALENCE-OPERANDS-EVALUATED-ONCE"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.7"
+anchors = [
+    "[2023:11.4.7:P002:p280]",
+]
+summary = "Each operand of logical equivalence <-> is evaluated exactly once."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.7"
+
+[[requirements]]
+id = "SV-2023-11-EXPRESSION-EVALUATION-SIZE-SIGN-PROPAGATION"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.8.2"
+anchors = [
+    "[2023:11.8.2:L001:p302]",
+    "[2023:11.8.2:L002:p302]",
+    "[2023:11.8.2:L003:p302]",
+]
+summary = "Expression evaluation first determines result size under 11.6, then sign under 11.8.1, then propagates the result type and size downward so each context-determined operand generally has the operator result's type and size."
+related_clauses = [
+    "11.6",
+    "11.8.1",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.8.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.8.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.8.2"
+
+[[requirements]]
+id = "SV-2023-11-EXPRESSION-SIZE-OPERANDS-CONTEXT-AND-CAST"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.6"
+anchors = [
+    "[2023:11.6:P001:p298]",
+    "[2023:11.6.1:P002:p299]",
+]
+summary = "Expression size is determined by its operands and evaluation context."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.6"
+
+[[requirements]]
+id = "SV-2023-11-EXPRESSION-TYPE-OPERANDS-ONLY"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.8.1"
+anchors = [
+    "[2023:11.8.1:L001:p302]",
+]
+summary = "An expression's resulting type depends only on its operands and not on any assignment left-hand side."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.8.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.8.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.8.1"
+
+[[requirements]]
+id = "SV-2023-11-FIELD-SELECT-AND-PREFIX-DEFINITION"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.5.3"
+anchors = [
+    "[2023:11.5.3:P002:p298]",
+]
+summary = "A field select is a hierarchical name whose final dot's right side names a field of a struct- or union-typed variable; its field-select prefix is the name portion left of that final dot."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.5.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.5.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.5.3"
+
+[[requirements]]
+id = "SV-2023-11-FUNCTION-CALL-IS-OPERAND"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.5"
+anchors = [
+    "[2023:11.5:P005:p295]",
+]
+summary = "A value-returning function call is a legal expression operand."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.5"
+
+[[requirements]]
+id = "SV-2023-11-GENVAR-CONSTANT-PRIMARY-CONTEXT"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.11"
+anchors = [
+    "[2023:11.11:G001:p306-307]",
+]
+summary = "A genvar identifier is legal as a constant_primary only within a loop generate construct."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "changed-expectation"
+clause = "11.12"
+note = "The 2012 grammar permits a genvar identifier as a constant primary only within a genvar_expression, rather than throughout a loop generate construct."
+
+[requirements.revision_applicability.1800-2017]
+status = "changed-expectation"
+clause = "11.11"
+note = "IEEE 1800-2017 permits a genvar_identifier as a constant_primary only within a genvar_expression, rather than anywhere within a loop generate construct."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.11"
+
+[[requirements]]
+id = "SV-2023-11-HANDLE-EQUALITY-LEGALITY-AND-VALUE"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.5"
+anchors = [
+    "[2023:11.4.5:P006:p279]",
+]
+summary = "Logical or case equality is legal for class or interface-class handles and null when one operand is assignment compatible with the other, and is legal for chandle and null operands; the operation compares the handle or chandle values."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.5"
+
+[[requirements]]
+id = "SV-2023-11-HIGHER-PRECEDENCE-GROUPS-FIRST"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.3.2"
+anchors = [
+    "[2023:11.3.2:P004:p273]",
+]
+summary = "In an unparenthesized expression containing operators of different precedence, higher-precedence operators group before lower-precedence operators."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.3.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.3.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.3.2"
+
+[[requirements]]
+id = "SV-2023-11-IMPLICATION-EQUIVALENCE-LOGIC"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.7"
+anchors = [
+    "[2023:11.4.7:P002:p280]",
+]
+summary = "Logical implication a -> b is equivalent to !a || b, and logical equivalence a <-> b is equivalent to (a -> b) && (b -> a)."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.7"
+
+[[requirements]]
+id = "SV-2023-11-INCREMENT-DECREMENT-EXPRESSION-FORMS"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.2"
+anchors = [
+    "[2023:11.4.2:P001:p275]",
+]
+summary = "Prefix and postfix ++ and -- are legal unparenthesized assignment expressions and perform blocking updates."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.2"
+
+[[requirements]]
+id = "SV-2023-11-INCREMENT-DECREMENT-TYPES"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.3"
+anchors = [
+    "[2023:11.3:T11-1.R23:p271]",
+]
+summary = "Unary increment and decrement operators ++ and -- accept integral, real, and shortreal operands."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.3"
+
+[[requirements]]
+id = "SV-2023-11-INDEXED-PART-SELECT"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.5.1"
+anchors = [
+    "[2023:11.5.1:P004:p295]",
+    "[2023:11.5.1:C002:p295]",
+    "[2023:11.5.1:P005:p295-296]",
+]
+summary = "An indexed part-select uses base +: width to select width bits ascending from a runtime integer base or base -: width to select descending; width is a positive constant integer, and base and width expressions are self-determined."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.5.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.5.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.5.1"
+
+[[requirements]]
+id = "SV-2023-11-INDEXING-SELECT-AND-PREFIX-DEFINITION"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.5.3"
+anchors = [
+    "[2023:11.5.3:P003:p298]",
+]
+summary = "An indexing select is one array, bit, part, or indexed-part operation; its prefix is an identifier or, for a multidimensional select, the preceding indexing select."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.5.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.5.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.5.3"
+
+[[requirements]]
+id = "SV-2023-11-INSIDE-ABSOLUTE-TOLERANCE-RANGE"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.13"
+anchors = [
+    "[2023:11.4.13:P009:p290]",
+    "[2023:11.4.13:P010:p290]",
+]
+summary = "An inside range [A +/- B] is an absolute-tolerance range equivalent to [A - type(A)'(B) : A + type(A)'(B)]."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 set membership has bounded [low:high] ranges but no +/- absolute-tolerance range construct."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 does not define the +/- absolute-tolerance form for an inside range."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.13"
+
+[[requirements]]
+id = "SV-2023-11-INSIDE-BOUNDED-RANGE-SEMANTICS"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.13"
+anchors = [
+    "[2023:11.4.13:P007:p289]",
+]
+summary = "An inside range [low:high] includes both bounds; $ denotes the left operand type's lowest or highest value according to bound position; bounds shall be singular types supporting <= and >=, and a low bound greater than the high bound makes an empty range."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.13"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.13"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.13"
+
+[[requirements]]
+id = "SV-2023-11-INSIDE-COMPARISON-OPERATORS"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.13"
+anchors = [
+    "[2023:11.4.13:P005:p289]",
+]
+summary = "inside compares nonintegral values with logical equality and integral values with wildcard equality; x or z in a set value is a wildcard, while x or z in the left operand is not."
+related_clauses = [
+    "11.4.6",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.13"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.13"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.13"
+
+[[requirements]]
+id = "SV-2023-11-INSIDE-EXPRESSION-GRAMMAR"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.13"
+anchors = [
+    "[2023:11.4.13:P002:p288]",
+    "[2023:11.4.13:G001:p289]",
+]
+summary = "An inside expression has a left expression followed by inside and a braced comma-separated range_list; each value_range may be an expression, bounded or $-bounded range, or a +/− tolerance range in the grammar."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "changed-expectation"
+clause = "11.4.13"
+note = "The 2012 inside grammar supports expressions and bounded/open ranges but does not include +/- or +%- tolerance-range forms."
+
+[requirements.revision_applicability.1800-2017]
+status = "changed-expectation"
+clause = "11.4.13"
+note = "The 2017 inside grammar includes expression and ordinary or $-bounded ranges, but not the 2023 absolute and relative tolerance range forms."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.13"
+
+[[requirements]]
+id = "SV-2023-11-INSIDE-LEFT-OPERAND-SINGULAR"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.13"
+anchors = [
+    "[2023:11.4.13:P003:p289]",
+    "[2023:11.3:T11-1.R24:p271]",
+]
+summary = "The left operand of inside may be any singular expression and shall not be an aggregate expression."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.13"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.13"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.13"
+
+[[requirements]]
+id = "SV-2023-11-INSIDE-RELATIVE-TOLERANCE-RANGE"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.13"
+anchors = [
+    "[2023:11.4.13:P009:p290]",
+    "[2023:11.4.13:P011:p290]",
+]
+summary = "An inside range [A +%- B] is a relative-percent-tolerance range equivalent to [A - type(A)'(A*B/100.0) : A + type(A)'(A*B/100.0)]."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no +%- relative-tolerance range construct for inside."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 does not define the +%- relative-tolerance form for an inside range."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.13"
+
+[[requirements]]
+id = "SV-2023-11-INSIDE-SET-SCAN-AND-ARRAY-FLATTEN"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.13"
+anchors = [
+    "[2023:11.4.13:P004:p289]",
+]
+summary = "inside scans comma-separated set values and ranges until a match, returning 1'b1 for a match and 1'b0 when none match; an unpacked-array set expression is recursively traversed to its singular elements."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.13"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.13"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.13"
+
+[[requirements]]
+id = "SV-2023-11-INSIDE-UNKNOWN-NOMATCH-RESULT"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.13"
+anchors = [
+    "[2023:11.4.13:P006:p289]",
+]
+summary = "If inside finds no true match but at least one comparison is x, it returns 1'bx, equivalent to OR-reducing all member comparisons."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.13"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.13"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.13"
+
+[[requirements]]
+id = "SV-2023-11-INTEGER-LITERAL-SIGNEDNESS-INTERPRETATION"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.3.3"
+anchors = [
+    "[2023:11.3.3:P003:p273]",
+]
+summary = "An integer literal without a base specifier is interpreted as a signed two's-complement value, while a literal with an unsigned base specifier is interpreted as unsigned."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.3.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.3.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.3.3"
+
+[[requirements]]
+id = "SV-2023-11-INTEGRAL-POWER-SIGN-AND-SPECIAL-MATRIX"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.3"
+anchors = [
+    "[2023:11.4.3:T11-4.R00:p276]",
+    "[2023:11.4.3:T11-4.R01:p276]",
+    "[2023:11.4.3:T11-4.R02:p276]",
+    "[2023:11.4.3:T11-4.R03:p276]",
+    "[2023:11.4.3:T11-4.R05:p276]",
+    "[2023:11.4.3:T11-4.R06:p276]",
+    "[2023:11.4.3:T11-4.R07:p276]",
+]
+summary = "For integral ** with a nonzero base, positive exponents compute integral power with negative-base sign determined by exponent parity; negative exponents yield 0 when the base magnitude exceeds 1, yield 1 for base 1, and for base -1 yield -1 for odd exponent and 1 for even exponent."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.3"
+
+[[requirements]]
+id = "SV-2023-11-INTEGRAL-POWER-SPECIAL-RESULTS"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.3"
+anchors = [
+    "[2023:11.4.3:P004:p276]",
+    "[2023:11.4.3:T11-4.R04:p276]",
+    "[2023:11.4.3:T11-4.R06:p276]",
+]
+summary = "For ** with no real operand, a zero base and negative exponent produces an all-x result, and any base with exponent zero produces 1; otherwise result type follows 11.6.1 and 11.8.1."
+related_clauses = [
+    "11.6.1",
+    "11.8.1",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.3"
+
+[[requirements]]
+id = "SV-2023-11-INTERIM-RESULT-LARGEST-OPERAND-SIZE"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.6.2"
+anchors = [
+    "[2023:11.6.2:P001:p300]",
+]
+summary = "During expression evaluation, each interim result takes the size of the largest operand, including an assignment left-hand side when applicable."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.6.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.6.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.6.2"
+
+[[requirements]]
+id = "SV-2023-11-INVALID-BIT-SELECT-READ-VALUE"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.5.1"
+anchors = [
+    "[2023:11.5.1:P001:p295]",
+]
+summary = "An out-of-bounds bit-select or one with any x or z address bit returns x for a 4-state selected value and 0 for a 2-state selected value."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.5.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.5.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.5.1"
+
+[[requirements]]
+id = "SV-2023-11-INVALID-MEMORY-ADDRESS-RESULT"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.5.2"
+anchors = [
+    "[2023:11.5.2:P005:p297]",
+]
+summary = "Memory address meaning follows the memory's declared bounds; an out-of-bounds address or one containing x or z yields the invalid-reference value defined in 7.4.5."
+related_clauses = [
+    "7.4.5",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.5.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.5.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.5.2"
+
+[[requirements]]
+id = "SV-2023-11-INVERTED-REDUCTION-DEFINITION"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.9"
+anchors = [
+    "[2023:11.4.9:P001:p283]",
+]
+summary = "Reduction NAND, NOR, and XNOR return the bitwise inverse of reduction AND, OR, and XOR, respectively."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.9"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.9"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.9"
+
+[[requirements]]
+id = "SV-2023-11-LEFT-SHIFT-ZERO-FILL"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.10"
+anchors = [
+    "[2023:11.4.10:P001:p284]",
+]
+summary = "Logical << and arithmetic <<< shift the left operand left by the unsigned count in the right operand and fill all vacated positions with zero."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.10"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.10"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.10"
+
+[[requirements]]
+id = "SV-2023-11-LET-DECLARATION-AND-EXPRESSION-GRAMMAR"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.12"
+anchors = [
+    "[2023:11.12:G001:p307-308]",
+]
+summary = "A let declaration names an expression template with optional typed, implicit, or untyped formal ports, dimensions, and defaults; a let expression may use optional package scope and positional, omitted, or named actual expression arguments under Syntax 11-8."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "same-rule-different-clause"
+clause = "11.13"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.12"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.12"
+
+[[requirements]]
+id = "SV-2023-11-LET-DECLARATION-SCOPES-DESIGN-UNITS"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.12"
+anchors = [
+    "[2023:11.12:P011:p309]",
+    "[2023:11.12:L003:p309]",
+    "[2023:11.12:L004:p309]",
+    "[2023:11.12:L005:p309]",
+    "[2023:11.12:L006:p309]",
+    "[2023:11.12:L007:p309]",
+]
+summary = "A let may be declared in a module, interface, program, checker, or clocking block."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "same-rule-different-clause"
+clause = "11.13"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.12"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.12"
+
+[[requirements]]
+id = "SV-2023-11-LET-DECLARATION-SCOPES-LEXICAL"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.12"
+anchors = [
+    "[2023:11.12:P011:p309]",
+    "[2023:11.12:L008:p309]",
+    "[2023:11.12:L009:p309]",
+    "[2023:11.12:L010:p309]",
+    "[2023:11.12:L011:p309]",
+    "[2023:11.12:L012:p309]",
+]
+summary = "A let may be declared in a package, compilation-unit scope, generate block, sequential or parallel block, or subroutine."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "same-rule-different-clause"
+clause = "11.13"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.12"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.12"
+
+[[requirements]]
+id = "SV-2023-11-LET-EVENT-FORMAL-ARGUMENT"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.12"
+anchors = [
+    "[2023:11.12:P007:p309]",
+    "[2023:11.12:L001:p309]",
+]
+summary = "A typed let formal shall be event or a type allowed by 16.6; for an event formal, the actual shall be an event_expression and every formal reference shall occur where an event_expression is permitted."
+related_clauses = [
+    "16.6",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "same-rule-different-clause"
+clause = "11.13"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.12"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.12"
+
+[[requirements]]
+id = "SV-2023-11-LET-HIERARCHICAL-REFERENCE-PROHIBITED"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.12"
+anchors = [
+    "[2023:11.12:P008:p309]",
+]
+summary = "A hierarchical reference to a let declaration is illegal."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "same-rule-different-clause"
+clause = "11.13"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.12"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.12"
+
+[[requirements]]
+id = "SV-2023-11-LET-NONFORMAL-NAME-RESOLUTION-AND-ORDER"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.12"
+anchors = [
+    "[2023:11.12:P008:p309]",
+]
+summary = "Names in a let body that are not formals resolve from the let declaration scope, and within that scope the let body shall be declared before use."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "same-rule-different-clause"
+clause = "11.13"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.12"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.12"
+
+[[requirements]]
+id = "SV-2023-11-LET-SAMPLED-VALUE-CLOCK-INFERENCE"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.12"
+anchors = [
+    "[2023:11.12:P010:p309]",
+]
+summary = "A let body may call sampled-value functions; an omitted clock is inferred as if the call appeared directly in the instantiation context, and failure to infer a required clock is an error."
+related_clauses = [
+    "16.9.3",
+    "16.9.4",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "same-rule-different-clause"
+clause = "11.13"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.12"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.12"
+
+[[requirements]]
+id = "SV-2023-11-LET-SUBSTITUTION-PARENTHESES-AND-LEGALITY"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.12"
+anchors = [
+    "[2023:11.12:P009:p309]",
+]
+summary = "Let instantiation substitutes actuals for formals, checks the expanded body for legality, and encloses the substituted result in parentheses to preserve the let body's evaluation priority."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "same-rule-different-clause"
+clause = "11.13"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.12"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.12"
+
+[[requirements]]
+id = "SV-2023-11-LET-TEMPLATE-INSTANTIATION"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.12"
+anchors = [
+    "[2023:11.12:P001:p308]",
+]
+summary = "A let declaration defines a port-customizable template expression whose instances may appear within other expressions."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "same-rule-different-clause"
+clause = "11.13"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.12"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.12"
+
+[[requirements]]
+id = "SV-2023-11-LET-TYPED-NONEVENT-ACTUAL-CAST"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.12"
+anchors = [
+    "[2023:11.12:P007:p309]",
+    "[2023:11.12:L002:p309]",
+]
+summary = "For a non-event typed let formal, each explicit or default actual's self-determined type shall be cast compatible with the formal type and is cast to that type before substitution."
+related_clauses = [
+    "6.22.4",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "same-rule-different-clause"
+clause = "11.13"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.12"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.12"
+
+[[requirements]]
+id = "SV-2023-11-LITERAL-OPERANDS"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.2"
+anchors = [
+    "[2023:11.2:L001:p269]",
+    "[2023:11.2:L002:p269]",
+    "[2023:11.2:P003:p269]",
+]
+summary = "Constant numeric literals, including real literals, and string literals are legal expression operands."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.2"
+
+[[requirements]]
+id = "SV-2023-11-LOGICAL-EQUALITY-AMBIGUOUS-RESULT"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.5"
+anchors = [
+    "[2023:11.4.5:P007:p279]",
+]
+summary = "Logical == or != returns 1'bx when x or z operand bits make the equality relation ambiguous."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.5"
+
+[[requirements]]
+id = "SV-2023-11-LOGICAL-EQUALITY-DEFINITIONS"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.5"
+anchors = [
+    "[2023:11.4.5:T11-9.R02:p279]",
+    "[2023:11.4.5:T11-9.R03:p279]",
+]
+summary = "Logical equality == tests equality and logical inequality != tests inequality, with either result permitted to be unknown when operand uncertainty prevents determination."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.5"
+
+[[requirements]]
+id = "SV-2023-11-LOGICAL-EQUALITY-OPERATOR-TYPES"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.3"
+anchors = [
+    "[2023:11.3:T11-1.R21:p271]",
+]
+summary = "Binary logical equality and inequality operators == and != accept operands of any data type, subject to their compatibility rules."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.3"
+
+[[requirements]]
+id = "SV-2023-11-LOGICAL-FIRST-OPERAND-ALWAYS-EVALUATED"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.7"
+anchors = [
+    "[2023:11.4.7:P009:p281]",
+    "[2023:11.4.7:L001:p281]",
+]
+summary = "The first operand of &&, ||, and -> is always evaluated."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "changed-expectation"
+clause = "11.4.7"
+note = "The 2017 short-circuit rule guarantees first-operand evaluation for && and ||, but does not include -> in that mandate."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.7"
+
+[[requirements]]
+id = "SV-2023-11-LOGICAL-NEGATION-SEMANTICS"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.7"
+anchors = [
+    "[2023:11.4.7:P003:p280]",
+]
+summary = "Logical ! maps a nonzero or true operand to 1'b0, zero or false to 1'b1, and an ambiguous truth value to 1'bx."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.7"
+
+[[requirements]]
+id = "SV-2023-11-LOGICAL-NEGATION-TYPES"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.3"
+anchors = [
+    "[2023:11.3:T11-1.R10:p271]",
+]
+summary = "Logical negation ! accepts integral, real, and shortreal operands."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.3"
+
+[[requirements]]
+id = "SV-2023-11-LOGICAL-OPERATOR-PRECEDENCE"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.7"
+anchors = [
+    "[2023:11.4.7:P001:p280]",
+]
+summary = "Logical && has higher precedence than ||; both rank below relational and equality operators. Right-associative -> and <-> share a lower level than the other logical operators and the conditional operator."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.7"
+
+[[requirements]]
+id = "SV-2023-11-LOGICAL-OPERATOR-RESULT"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.7"
+anchors = [
+    "[2023:11.4.7:P001:p280]",
+]
+summary = "Logical &&, ||, ->, and <-> produce 1'b1 for true, 1'b0 for false, or 1'bx when the logical result is ambiguous."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.7"
+
+[[requirements]]
+id = "SV-2023-11-LOGICAL-OPERATOR-SELF-DETERMINED-SIZE"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.6.1"
+anchors = [
+    "[2023:11.6.1:T11-21.R09:p299]",
+    "[2023:11.6.1:T11-21.R10:p299]",
+]
+summary = "Logical &&, ||, ->, and <-> return one bit, and each operand's size is self-determined."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.6.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.6.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.6.1"
+
+[[requirements]]
+id = "SV-2023-11-LOGICAL-RIGHT-SHIFT-ZERO-FILL"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.10"
+anchors = [
+    "[2023:11.4.10:P001:p284]",
+]
+summary = "Logical >> shifts the left operand right by the right-operand count and fills vacated positions with zero."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.10"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.10"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.10"
+
+[[requirements]]
+id = "SV-2023-11-LOGICAL-SHIFT-ASSIGNMENT-OPERAND-TYPES"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.3"
+anchors = [
+    "[2023:11.3:T11-1.R05:p271]",
+]
+summary = "The >>= and <<= logical-shift assignment operators accept integral operands only."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.3"
+
+[[requirements]]
+id = "SV-2023-11-LONGEST-STATIC-PREFIX-DEFINITION"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.5.3"
+anchors = [
+    "[2023:11.5.3:P005:p298]",
+    "[2023:11.5.3:L006:p298]",
+    "[2023:11.5.3:L007:p298]",
+    "[2023:11.5.3:L008:p298]",
+]
+summary = "The longest static prefix is the outermost static identifier, field select, or indexing select that is not itself a field- or indexing-select prefix of a larger static-prefix expression."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.5.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.5.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.5.3"
+
+[[requirements]]
+id = "SV-2023-11-MEMORY-ADDRESS-EXPRESSION"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.5.2"
+anchors = [
+    "[2023:11.5.2:P003:p297]",
+    "[2023:11.5.2:C002:p297]",
+]
+summary = "A memory address consists of the memory name followed by a bracketed address expression."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.5.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.5.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.5.2"
+
+[[requirements]]
+id = "SV-2023-11-MINTYPMAX-EXPRESSION-SYNTAX"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.11"
+anchors = [
+    "[2023:11.11:G001:p306-307]",
+]
+summary = "A mintypmax expression is either one expression or three colon-separated expressions; its constant form similarly uses one or three constant expressions, with expression and constant-primary forms admitted by Syntax 11-7."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "same-rule-different-clause"
+clause = "11.12"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.11"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.11"
+
+[[requirements]]
+id = "SV-2023-11-MIXED-TWO-FOUR-STATE-OPERATION"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.3.4"
+anchors = [
+    "[2023:11.3.4:P001:p273-274]",
+]
+summary = "Operators may combine 2-state and 4-state values, with value semantics as if every operand were 4-state; when every operand is 2-state the result remains in the 2-state value set except when the operator semantics produce x, such as division by zero."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.3.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.3.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.3.4"
+
+[[requirements]]
+id = "SV-2023-11-MODULUS-ASSIGNMENT-OPERAND-TYPE"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.3"
+anchors = [
+    "[2023:11.3:T11-1.R03:p271]",
+]
+summary = "The %= modulus assignment operator accepts integral operands only."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.3"
+
+[[requirements]]
+id = "SV-2023-11-MULTIDIMENSIONAL-ARRAY-ADDRESSING"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.5.2"
+anchors = [
+    "[2023:11.5.2:P007:p297]",
+    "[2023:11.5.2:C005:p297]",
+    "[2023:11.5.2:P008:p297]",
+]
+summary = "A multidimensional memory or array element is addressed by its name followed by one bracketed integer expression for each addressed dimension; the selected element's declared type determines whether the result is a vector or scalar."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.5.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.5.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.5.2"
+
+[[requirements]]
+id = "SV-2023-11-MULTIPLICATION-CONTEXT-PRESERVES-OVERFLOW"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.6.1"
+anchors = [
+    "[2023:11.6.1:P006:p300]",
+]
+summary = "A multiplication is evaluated wide enough to preserve overflow bits when its result is assigned into a sufficiently wide context-determined destination."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.6.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.6.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.6.1"
+
+[[requirements]]
+id = "SV-2023-11-NET-OPERANDS"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.2"
+anchors = [
+    "[2023:11.2:L005:p269]",
+    "[2023:11.2:L006:p269]",
+]
+summary = "A net, or a bit-select or part-select of a net, is a legal expression operand."
+related_clauses = [
+    "6.7",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.2"
+
+[[requirements]]
+id = "SV-2023-11-NON-SHORT-CIRCUIT-OPERATORS"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.3.5"
+anchors = [
+    "[2023:11.3.5:P001:p274]",
+    "[2023:11.3.5:P004:p274]",
+]
+summary = "Every operator other than &&, ||, ->, and ?: evaluates all operand expressions, with optimizations permitted only when observable simulation behavior including side effects is unchanged."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.3.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.3.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.3.5"
+
+[[requirements]]
+id = "SV-2023-11-NONINDEXED-PART-SELECT"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.5.1"
+anchors = [
+    "[2023:11.5.1:P002:p295]",
+    "[2023:11.5.1:C001:p295]",
+    "[2023:11.5.1:P003:p295]",
+]
+summary = "A non-indexed contiguous part-select is vect[msb_expr:lsb_expr]; both bounds are self-determined constant integer expressions and the first denotes the more-significant bit."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.5.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.5.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.5.1"
+
+[[requirements]]
+id = "SV-2023-11-NONSELF-DETERMINED-RESULT-TYPE-HIERARCHY"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.8.1"
+anchors = [
+    "[2023:11.8.1:L010:p302]",
+    "[2023:11.8.1:L011:p302]",
+    "[2023:11.8.1:L012:p302]",
+    "[2023:11.8.1:L013:p302]",
+]
+summary = "For non-self-determined operands, any real operand makes the result real; otherwise any unsigned operand makes the result unsigned regardless of operator; otherwise all-signed operands make the result signed unless a specific rule overrides."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.8.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.8.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.8.1"
+
+[[requirements]]
+id = "SV-2023-11-NUMERIC-LITERAL-SIGNEDNESS"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.8.1"
+anchors = [
+    "[2023:11.8.1:L002:p302]",
+    "[2023:11.8.1:L003:p302]",
+]
+summary = "Decimal numbers are signed; based numbers are unsigned unless their base specifier contains s, in which case they are signed."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.8.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.8.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.8.1"
+
+[[requirements]]
+id = "SV-2023-11-OPERAND-ALONE-EXPRESSION"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.2"
+anchors = [
+    "[2023:11.2:P002:p269]",
+]
+summary = "Any legal operand without an operator is itself an expression."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.2"
+
+[[requirements]]
+id = "SV-2023-11-OPERATOR-ASSOCIATIVITY"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.3.2"
+anchors = [
+    "[2023:11.3.2:P003:p273]",
+]
+summary = "Operators of equal precedence associate left to right except conditional, implication, and equivalence operators, which associate right to left."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.3.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.3.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.3.2"
+
+[[requirements]]
+id = "SV-2023-11-OPERATOR-PRECEDENCE-ARITHMETIC-THROUGH-CONDITIONAL"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.3.2"
+anchors = [
+    "[2023:11.3.2:T11-2.R03:p272]",
+    "[2023:11.3.2:T11-2.R04:p272]",
+    "[2023:11.3.2:T11-2.R05:p272]",
+    "[2023:11.3.2:T11-2.R06:p272]",
+    "[2023:11.3.2:T11-2.R07:p272]",
+    "[2023:11.3.2:T11-2.R08:p272]",
+    "[2023:11.3.2:T11-2.R09:p272]",
+    "[2023:11.3.2:T11-2.R10:p272]",
+    "[2023:11.3.2:T11-2.R11:p272]",
+    "[2023:11.3.2:T11-2.R12:p272]",
+    "[2023:11.3.2:T11-2.R13:p272]",
+    "[2023:11.3.2:T11-2.R14:p272]",
+]
+summary = "From higher to lower precedence, the levels are exponentiation; multiplicative; additive; shifts; relational/inside/dist; equality; binary AND; binary XOR/XNOR; binary OR; logical AND; logical OR; and conditional. Each listed binary level is left-associative, including exponentiation as specified by this table, while conditional is right-associative."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.3.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.3.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.3.2"
+
+[[requirements]]
+id = "SV-2023-11-OPERATOR-PRECEDENCE-INITIAL-LEVELS"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.3.2"
+anchors = [
+    "[2023:11.3.2:P001:p272]",
+    "[2023:11.3.2:T11-2.R01:p272]",
+    "[2023:11.3.2:T11-2.R02:p272]",
+]
+summary = "Operator precedence follows Table 11-2 from highest to lowest: parenthesized calls/indexing, scope resolution, and member access occupy the highest left-associative level, followed by the unary arithmetic, logical, bitwise, reduction, increment, and decrement operators at the unary level."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.3.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.3.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.3.2"
+
+[[requirements]]
+id = "SV-2023-11-OPERATOR-PRECEDENCE-LOWEST-LEVELS"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.3.2"
+anchors = [
+    "[2023:11.3.2:T11-2.R15:p272]",
+    "[2023:11.3.2:T11-2.R16:p272]",
+    "[2023:11.3.2:T11-2.R17:p272]",
+    "[2023:11.3.2:T11-2.R18:p272]",
+]
+summary = "Below conditional precedence, implication and equivalence form a right-associative level; assignment-family, distribution-weight, and nonblocking-assignment operators occupy the next nonassociative level; concatenation and replication have the lowest precedence."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.3.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.3.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.3.2"
+
+[[requirements]]
+id = "SV-2023-11-OPERATOR-TOKEN-GRAMMAR"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.3"
+anchors = [
+    "[2023:11.3:G001:p270-271]",
+]
+summary = "Assignment, conditional, unary, binary, increment/decrement, and stream operators are formed only with the tokens and operand arrangement specified by the operator grammar."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.3"
+
+[[requirements]]
+id = "SV-2023-11-OR-SHORT-CIRCUIT"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.7"
+anchors = [
+    "[2023:11.4.7:P009:p281]",
+    "[2023:11.4.7:L003:p281]",
+]
+summary = "For ||, a logically true first operand prevents evaluation of the second operand."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.7"
+
+[[requirements]]
+id = "SV-2023-11-OUT-OF-RANGE-PART-SELECT"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.5.1"
+anchors = [
+    "[2023:11.5.1:P007:p296]",
+]
+summary = "A wholly out-of-range or x/z part-select reads as x and writes nothing; a partially out-of-range select reads x in out-of-range positions and valid bits elsewhere, and writes only in-range positions."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.5.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.5.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.5.1"
+
+[[requirements]]
+id = "SV-2023-11-PARAMETER-OPERANDS"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.2"
+anchors = [
+    "[2023:11.2:L003:p269]",
+    "[2023:11.2:L004:p269]",
+    "[2023:11.2:P003:p269]",
+]
+summary = "A parameter, local parameter, or specify parameter, and a bit-select or part-select of any such parameter, is a legal expression operand."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.2"
+
+[[requirements]]
+id = "SV-2023-11-PARENTHESIZED-BLOCKING-ASSIGNMENT-EXPRESSION"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.3.6"
+anchors = [
+    "[2023:11.3.6:P001:p274]",
+]
+summary = "A timing-control-free blocking assignment may appear within an expression only when the assignment is enclosed in parentheses."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.3.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.3.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.3.6"
+
+[[requirements]]
+id = "SV-2023-11-POSITIVE-REDUCTION-FOLD"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.9"
+anchors = [
+    "[2023:11.4.9:P001:p283]",
+]
+summary = "Reduction AND, OR, and XOR fold the corresponding one-bit truth-table operation from the first two operand bits through each remaining bit and produce a single-bit result."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.9"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.9"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.9"
+
+[[requirements]]
+id = "SV-2023-11-POWER-EXPONENT-SELF-DETERMINED"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.3"
+anchors = [
+    "[2023:11.4.3:P005:p276]",
+]
+summary = "The second operand of ** is self-determined in every case."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.3"
+
+[[requirements]]
+id = "SV-2023-11-POWER-OPERATOR-SEMANTICS"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.3"
+anchors = [
+    "[2023:11.4.3:T11-3.R05:p275]",
+]
+summary = "The binary ** operator raises its first operand to the power specified by its second operand."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.3"
+
+[[requirements]]
+id = "SV-2023-11-PROPAGATED-SIMPLE-OPERAND-CONVERSION"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.8.2"
+anchors = [
+    "[2023:11.8.2:L006:p303]",
+]
+summary = "When context propagation reaches a simple operand, it is converted to the propagated type and size; required extension is sign extension exactly when the propagated type is signed, otherwise non-sign extension."
+related_clauses = [
+    "11.5",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.8.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.8.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.8.2"
+
+[[requirements]]
+id = "SV-2023-11-REAL-EQUALITY-COMPARISON"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.5"
+anchors = [
+    "[2023:11.4.5:P005:p279]",
+]
+summary = "If either equality operand is real, the other operand is converted to an equivalent real value and the comparison is performed between real values."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.5"
+
+[[requirements]]
+id = "SV-2023-11-REAL-INCREMENT-DECREMENT-STEP"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.2"
+anchors = [
+    "[2023:11.4.2:P004:p275]",
+]
+summary = "Increment and decrement applied to a real operand add or subtract 1.0, respectively."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.2"
+
+[[requirements]]
+id = "SV-2023-11-REAL-LOGICAL-RELATIONAL-RESULT-WIDTH"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.3.1"
+anchors = [
+    "[2023:11.3.1:P002:p272]",
+]
+summary = "Applying a logical, relational, or inside operator to real operands produces a single-bit result."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.3.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.3.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.3.1"
+
+[[requirements]]
+id = "SV-2023-11-REAL-POWER-RESULT-TYPE"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.3"
+anchors = [
+    "[2023:11.4.3:P003:p276]",
+]
+summary = "If either operand of ** is real, the power expression's result type is real."
+related_clauses = [
+    "11.3.1",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.3"
+
+[[requirements]]
+id = "SV-2023-11-REAL-RELATIONAL-COMPARISON"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.4"
+anchors = [
+    "[2023:11.4.4:P005:p278]",
+]
+summary = "If either relational operand is real, the other operand is converted to the equivalent real value and the comparison is performed between real values."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.4"
+
+[[requirements]]
+id = "SV-2023-11-REAL-RESULT-OPERAND-CONVERSION-EXCEPTION"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.8.2"
+anchors = [
+    "[2023:11.8.2:L004:p302]",
+]
+summary = "When an operator result is real, each non-real context-determined operand is instead evaluated as self-determined and converted to real immediately before applying the operator."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.8.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.8.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.8.2"
+
+[[requirements]]
+id = "SV-2023-11-REAL-RESULT-TYPE-PROMOTION"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.3.1"
+anchors = [
+    "[2023:11.3.1:P003:p272]",
+]
+summary = "For operators other than the separately specified logical, relational, and inside cases, a real operand makes the result real; otherwise a shortreal operand makes it shortreal, excluding the conditional operator's predicate from this promotion decision."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.3.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.3.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.3.1"
+
+[[requirements]]
+id = "SV-2023-11-RECURSIVE-LET-PROHIBITED"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.12"
+anchors = [
+    "[2023:11.12:P009:p309]",
+]
+summary = "Direct or indirect recursive let instantiation is prohibited."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "same-rule-different-clause"
+clause = "11.13"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.12"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.12"
+
+[[requirements]]
+id = "SV-2023-11-REDUCTION-AND-FOLD-TRUTH-TABLE"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.9"
+anchors = [
+    "[2023:11.4.9:T11-16.R00:p283]",
+    "[2023:11.4.9:T11-16.R01:p283]",
+    "[2023:11.4.9:T11-16.R02:p283]",
+    "[2023:11.4.9:T11-16.R03:p283]",
+    "[2023:11.4.9:T11-16.R04:p283]",
+]
+summary = "Each reduction-AND fold step returns 0 if either input is 0, returns 1 only for two 1 inputs, and otherwise returns x for uncertain x or z inputs."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.9"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.9"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.9"
+
+[[requirements]]
+id = "SV-2023-11-REDUCTION-NEGATION-SELF-DETERMINED-SIZE"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.6.1"
+anchors = [
+    "[2023:11.6.1:T11-21.R11:p299]",
+    "[2023:11.6.1:T11-21.R12:p299]",
+]
+summary = "Unary reductions &, ~&, |, ~|, ^, ~^, ^~ and logical ! return one bit and evaluate their operand as self-determined."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.6.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.6.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.6.1"
+
+[[requirements]]
+id = "SV-2023-11-REDUCTION-OPERATOR-TYPES"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.3"
+anchors = [
+    "[2023:11.3:T11-1.R11:p271]",
+]
+summary = "Unary reduction operators &, ~&, |, ~|, ^, ~^, and ^~ accept integral operands only."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.3"
+
+[[requirements]]
+id = "SV-2023-11-REDUCTION-OR-FOLD-TRUTH-TABLE"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.9"
+anchors = [
+    "[2023:11.4.9:T11-17.R00:p283]",
+    "[2023:11.4.9:T11-17.R01:p283]",
+    "[2023:11.4.9:T11-17.R02:p283]",
+    "[2023:11.4.9:T11-17.R03:p283]",
+    "[2023:11.4.9:T11-17.R04:p283]",
+]
+summary = "Each reduction-OR fold step returns 1 if either input is 1, returns 0 only for two 0 inputs, and otherwise returns x for uncertain x or z inputs."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.9"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.9"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.9"
+
+[[requirements]]
+id = "SV-2023-11-REDUCTION-XOR-FOLD-TRUTH-TABLE"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.9"
+anchors = [
+    "[2023:11.4.9:T11-18.R00:p284]",
+    "[2023:11.4.9:T11-18.R01:p284]",
+    "[2023:11.4.9:T11-18.R02:p284]",
+    "[2023:11.4.9:T11-18.R03:p284]",
+    "[2023:11.4.9:T11-18.R04:p284]",
+]
+summary = "Each reduction-XOR fold step returns 0 for equal known inputs and 1 for unequal known inputs; it returns x if either input is x or z."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.9"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.9"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.9"
+
+[[requirements]]
+id = "SV-2023-11-RELATIONAL-BOOLEAN-RESULT"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.4"
+anchors = [
+    "[2023:11.4.4:P002:p278]",
+]
+summary = "A relational expression returns 1'b1 when its specified relation is true and 1'b0 when false."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.4"
+
+[[requirements]]
+id = "SV-2023-11-RELATIONAL-OPERATOR-DEFINITIONS"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.4"
+anchors = [
+    "[2023:11.4.4:T11-8.R00:p278]",
+    "[2023:11.4.4:T11-8.R01:p278]",
+    "[2023:11.4.4:T11-8.R02:p278]",
+    "[2023:11.4.4:T11-8.R03:p278]",
+]
+summary = "The <, >, <=, and >= operators test whether the first operand is respectively less than, greater than, less than or equal to, or greater than or equal to the second operand."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.4"
+
+[[requirements]]
+id = "SV-2023-11-RELATIONAL-OPERATOR-PRECEDENCE"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.4"
+anchors = [
+    "[2023:11.4.4:P006:p278]",
+]
+summary = "All relational operators have equal precedence, which is lower than arithmetic-operator precedence."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.4"
+
+[[requirements]]
+id = "SV-2023-11-RELATIONAL-OPERATOR-TYPES"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.3"
+anchors = [
+    "[2023:11.3:T11-1.R18:p271]",
+]
+summary = "Binary relational operators <, <=, >, and >= accept integral, real, and shortreal operands."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.3"
+
+[[requirements]]
+id = "SV-2023-11-RELATIONAL-XZ-RESULT"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.4"
+anchors = [
+    "[2023:11.4.4:P002:p278]",
+]
+summary = "If either relational operand contains any x or z bit, the relational result is 1'bx."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.4"
+
+[[requirements]]
+id = "SV-2023-11-REPLICATION-MULTIPLIER-AND-COPY-SEMANTICS"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.12.1"
+anchors = [
+    "[2023:11.4.12.1:P001:p287]",
+]
+summary = "A replication is written as a concatenation preceded within braces by a constant multiplier that is nonnegative and contains neither x nor z; its value joins that many copies of the concatenation."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.12.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.12.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.12.1"
+
+[[requirements]]
+id = "SV-2023-11-REPLICATION-OPERANDS-EVALUATED-ONCE"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.12.1"
+anchors = [
+    "[2023:11.4.12.1:P007:p288]",
+]
+summary = "Each replication operand expression is evaluated exactly once, including when the multiplier is zero."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.12.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.12.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.12.1"
+
+[[requirements]]
+id = "SV-2023-11-REPLICATION-PROHIBITED-DESTINATION-CONTEXTS"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.12.1"
+anchors = [
+    "[2023:11.4.12.1:P001:p287]",
+]
+summary = "An expression containing a replication is illegal on an assignment left-hand side and as a connection to an output or inout port."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.12.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.12.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.12.1"
+
+[[requirements]]
+id = "SV-2023-11-SAME-ROW-PRECEDENCE"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.3.2"
+anchors = [
+    "[2023:11.3.2:P002:p273]",
+]
+summary = "Operators on the same Table 11-2 row have equal precedence, and each successive row has lower precedence than the preceding row."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.3.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.3.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.3.2"
+
+[[requirements]]
+id = "SV-2023-11-SCALAR-REAL-SELECT-ILLEGAL"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.5.1"
+anchors = [
+    "[2023:11.5.1:P001:p295]",
+]
+summary = "A bit-select or part-select of a scalar, real variable, or real parameter is illegal."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.5.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.5.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.5.1"
+
+[[requirements]]
+id = "SV-2023-11-SELECT-OF-ARRAY-ELEMENT"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.5.2"
+anchors = [
+    "[2023:11.5.2:P009:p297]",
+]
+summary = "To bit-select or part-select an array element, every unpacked dimension is addressed first; the selected element is then bit- or part-selected under the ordinary net and variable rules of 11.5.1."
+related_clauses = [
+    "11.5.1",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.5.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.5.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.5.2"
+
+[[requirements]]
+id = "SV-2023-11-SELECT-RESULT-UNSIGNED"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.8.1"
+anchors = [
+    "[2023:11.8.1:L004:p302]",
+    "[2023:11.8.1:L005:p302]",
+]
+summary = "Bit-select and part-select results are unsigned regardless of source signedness, including a part-select covering the entire vector."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.8.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.8.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.8.1"
+
+[[requirements]]
+id = "SV-2023-11-SELF-DETERMINED-EXPRESSION-DEFINITION"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.6.1"
+anchors = [
+    "[2023:11.6.1:P003:p299]",
+]
+summary = "A self-determined expression has a bit length determined solely by that expression and not by surrounding context."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.6.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.6.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.6.1"
+
+[[requirements]]
+id = "SV-2023-11-SELF-DETERMINED-OPERAND-SIGN-SIZE-INDEPENDENT"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.8.1"
+anchors = [
+    "[2023:11.8.1:L009:p302]",
+]
+summary = "A self-determined operand's sign and size are determined solely by that operand and are independent of the rest of the expression."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.8.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.8.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.8.1"
+
+[[requirements]]
+id = "SV-2023-11-SHIFT-COUNT-AND-RESULT-SIGNEDNESS"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.10"
+anchors = [
+    "[2023:11.4.10:P001:p284]",
+]
+summary = "A shift right operand is always interpreted as unsigned and does not affect result signedness; result signedness is determined by the left operand and surrounding expression under 11.8.1."
+related_clauses = [
+    "11.8.1",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.10"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.10"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.10"
+
+[[requirements]]
+id = "SV-2023-11-SHIFT-OPERATOR-TYPES"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.3"
+anchors = [
+    "[2023:11.3:T11-1.R15:p271]",
+    "[2023:11.3:T11-1.R16:p271]",
+]
+summary = "Logical shifts >> and << and arithmetic shifts >>> and <<< accept integral operands only."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.3"
+
+[[requirements]]
+id = "SV-2023-11-SHIFT-POWER-RESULT-SIZE"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.6.1"
+anchors = [
+    "[2023:11.6.1:T11-21.R14:p300]",
+    "[2023:11.6.1:T11-21.R15:p300]",
+]
+summary = "For >>, <<, >>>, <<<, and **, result size is L(i), the left/base operand's length, while the right shift-count or exponent operand is self-determined."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.6.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.6.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.6.1"
+
+[[requirements]]
+id = "SV-2023-11-SHIFT-UNKNOWN-COUNT"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.10"
+anchors = [
+    "[2023:11.4.10:P001:p284]",
+]
+summary = "If a shift count contains x or z, the shift result is unknown."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.10"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.10"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.10"
+
+[[requirements]]
+id = "SV-2023-11-SHORT-CIRCUIT-OPERATORS"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.3.5"
+anchors = [
+    "[2023:11.3.5:P001:p274]",
+    "[2023:11.3.5:P004:p274]",
+]
+summary = "The &&, ||, ->, and ?: operators short-circuit operands not required to determine their result; an omitted operand evaluation produces neither its side effects nor its run-time errors, and optimizations shall preserve this observable behavior."
+related_clauses = [
+    "11.4.7",
+    "11.4.11",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.3.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.3.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.3.5"
+
+[[requirements]]
+id = "SV-2023-11-SIGNED-AND-REAL-REPRESENTATION"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.3.1"
+anchors = [
+    "[2023:11.4.3.1:P002:p277]",
+]
+summary = "Signed values use two's-complement representation except values assigned to real variables, which use floating-point representation."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.3.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.3.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.3.1"
+
+[[requirements]]
+id = "SV-2023-11-SIGNED-BINARY-BITWISE-SIZING"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.8"
+anchors = [
+    "[2023:11.4.8:P003:p281]",
+]
+summary = "If both binary bitwise operands are signed, the result is signed and a shorter operand is sign-extended to the longer operand's width."
+related_clauses = [
+    "11.8.2",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.8"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.8"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.8"
+
+[[requirements]]
+id = "SV-2023-11-SIGNED-EQUALITY-COMPARISON"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.5"
+anchors = [
+    "[2023:11.4.5:P004:p279]",
+]
+summary = "If both equality operands are signed, they are compared as signed values and the shorter operand is sign-extended to the longer width."
+related_clauses = [
+    "11.8.2",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.5"
+
+[[requirements]]
+id = "SV-2023-11-SIGNED-RELATIONAL-COMPARISON"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.4"
+anchors = [
+    "[2023:11.4.4:P004:p278]",
+]
+summary = "If both relational operands are signed, they are compared as signed values, with the shorter operand sign-extended to the longer width."
+related_clauses = [
+    "11.8.2",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.4"
+
+[[requirements]]
+id = "SV-2023-11-SIGNED-UNSIGNED-CAST-FUNCTIONS"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.7"
+anchors = [
+    "[2023:11.7:P002:p301]",
+]
+summary = "$signed and $unsigned evaluate their input and return a one-dimensional packed array with the same bit count and value, respectively marked signed or unsigned."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.7"
+
+[[requirements]]
+id = "SV-2023-11-SIGNED-XZ-NONLOGICAL-RESULT"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.8.4"
+anchors = [
+    "[2023:11.8.4:P001:p303]",
+]
+summary = "Any nonlogical operation involving a signed value containing any x or z bit produces an all-x result whose type remains the expression's required type."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.8.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.8.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.8.4"
+
+[[requirements]]
+id = "SV-2023-11-SIGNED-XZ-SIGN-EXTENSION"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.8.4"
+anchors = [
+    "[2023:11.8.4:P001:p303]",
+]
+summary = "Widening a signed operand to a larger signed width fills new bits with x when the sign bit is x and with z when the sign bit is z."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.8.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.8.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.8.4"
+
+[[requirements]]
+id = "SV-2023-11-SIGNEDNESS-CONVERSION-PRESERVES-BITS"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.3.1"
+anchors = [
+    "[2023:11.4.3.1:P002:p277]",
+]
+summary = "Conversion between signed and unsigned interpretations preserves the bit representation and changes only its interpretation."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.3.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.3.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.3.1"
+
+[[requirements]]
+id = "SV-2023-11-SIMPLE-ASSIGNMENT-OPERAND-TYPE"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.3"
+anchors = [
+    "[2023:11.3:T11-1.R01:p271]",
+]
+summary = "The binary simple assignment operator accepts operands of any data type, subject to the applicable assignment compatibility rules."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.3"
+
+[[requirements]]
+id = "SV-2023-11-SIMPLE-OPERAND-DEFINITION"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.5"
+anchors = [
+    "[2023:11.5:P006:p295]",
+]
+summary = "An operand is simple exactly when it is an unparenthesized primary under A.8.4; parenthesized or compound expressions may be operands but are not simple operands."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.5"
+
+[[requirements]]
+id = "SV-2023-11-STATIC-PREFIX-RECURSIVE-DEFINITION"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.5.3"
+anchors = [
+    "[2023:11.5.3:P004:p298]",
+    "[2023:11.5.3:L001:p298]",
+    "[2023:11.5.3:L002:p298]",
+    "[2023:11.5.3:L003:p298]",
+    "[2023:11.5.3:L004:p298]",
+    "[2023:11.5.3:L005:p298]",
+]
+summary = "Static prefixes include identifiers, hierarchical object references, and package net/variable references; a field select is static when its prefix is static, and an indexing select is static when its prefix is static and its select expression is constant."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.5.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.5.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.5.3"
+
+[[requirements]]
+id = "SV-2023-11-STREAM-BITSTREAM-EXPRESSION-APPEND"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.14.1"
+anchors = [
+    "[2023:11.4.14.1:P001:p291]",
+    "[2023:11.4.14.1:P002:p291]",
+    "[2023:11.4.14.1:P003:p291]",
+]
+summary = "stream_expressions are processed left to right and recursively appended to the generic stream; a nested streaming concatenation or bit-stream-typed expression is bit-stream-cast to packed bit, with 2-state to 4-state conversion when required, then appended at the generic stream's right end."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.14.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.14.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.14.1"
+
+[[requirements]]
+id = "SV-2023-11-STREAM-BLOCK-REORDER-DIRECTIONS"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.14.2"
+anchors = [
+    "[2023:11.4.14.2:P003:p292]",
+]
+summary = "Streaming >> preserves left-to-right block order and ignores slice_size; streaming << slices from the right, reverses block order while preserving bits within each block, and retains an undersized leftmost remainder block without padding or truncation."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.14.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.14.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.14.2"
+
+[[requirements]]
+id = "SV-2023-11-STREAM-INACCESSIBLE-CLASS-MEMBER-ILLEGAL"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.14.1"
+anchors = [
+    "[2023:11.4.14.1:P013:p292]",
+]
+summary = "Streaming a class handle is illegal when it has local or protected members inaccessible at the streaming-operator location."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.14.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.14.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.14.1"
+
+[[requirements]]
+id = "SV-2023-11-STREAM-NONNULL-CLASS-MEMBER-ORDER"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.14.1"
+anchors = [
+    "[2023:11.4.14.1:P012:p292]",
+    "[2023:11.4.14.1:P013:p292]",
+]
+summary = "A non-null class handle streams the referenced object's data members, not the handle, in declaration order, with base-class members before extended-class members."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.14.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.14.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.14.1"
+
+[[requirements]]
+id = "SV-2023-11-STREAM-NULL-CLASS-SKIPPED"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.14.1"
+anchors = [
+    "[2023:11.4.14.1:P010:p292]",
+    "[2023:11.4.14.1:P011:p292]",
+]
+summary = "A null class-handle stream expression contributes no bits and is skipped; an implementation may optionally warn."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.14.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.14.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.14.1"
+
+[[requirements]]
+id = "SV-2023-11-STREAM-OPERATOR-TYPES"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.3"
+anchors = [
+    "[2023:11.3:T11-1.R27:p271]",
+]
+summary = "Left-to-right and right-to-left stream operators accept integral operands."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.3"
+
+[[requirements]]
+id = "SV-2023-11-STREAM-SKIPPED-ITEM-PROCEDURE"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.14.1"
+anchors = [
+    "[2023:11.4.14.1:P016:p292]",
+]
+summary = "A skipped stream expression is not appended to the stream, and processing proceeds with the next item."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.14.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.14.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.14.1"
+
+[[requirements]]
+id = "SV-2023-11-STREAM-SLICE-SIZE"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.14.2"
+anchors = [
+    "[2023:11.4.14.2:P001:p292]",
+    "[2023:11.4.14.2:P002:p292]",
+]
+summary = "Stream reordering slices the generic stream into bit blocks; omitted slice_size defaults to 1, a simple-type slice uses that type's bit width, and a constant-integral slice size shall be positive rather than zero or negative."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.14.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.14.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.14.2"
+
+[[requirements]]
+id = "SV-2023-11-STREAM-SOURCE-TARGET-WIDENING"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.14"
+anchors = [
+    "[2023:11.4.14:P006:p291]",
+    "[2023:11.4.14:L001:p291]",
+    "[2023:11.4.14:L002:p291]",
+    "[2023:11.4.14:L003:p291]",
+]
+summary = "For assignment from a streaming concatenation to a bit-stream object: a narrower fixed target is an error; a wider fixed target right-zero-pads the stream; a dynamic target resizes to the fewest elements whose width covers the stream and right-zero-pads any excess width."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.14"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.14"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.14"
+
+[[requirements]]
+id = "SV-2023-11-STREAM-STRUCT-DECLARATION-ORDER"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.14.1"
+anchors = [
+    "[2023:11.4.14.1:P006:p291]",
+    "[2023:11.4.14.1:P007:p291]",
+]
+summary = "A struct stream expression is recursively streamed member by member in declaration order."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.14.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.14.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.14.1"
+
+[[requirements]]
+id = "SV-2023-11-STREAM-UNPACKED-ARRAY-ORDER"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.14.1"
+anchors = [
+    "[2023:11.4.14.1:P004:p291]",
+    "[2023:11.4.14.1:P005:p291]",
+]
+summary = "An unpacked array stream expression is recursively streamed element by element; associative arrays use index-sorted order and other unpacked arrays use single-index foreach traversal order."
+related_clauses = [
+    "12.7.3",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.14.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.14.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.14.1"
+
+[[requirements]]
+id = "SV-2023-11-STREAM-UNSUPPORTED-EXPRESSION-ERROR"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.14.1"
+anchors = [
+    "[2023:11.4.14.1:P014:p292]",
+    "[2023:11.4.14.1:P015:p292]",
+]
+summary = "A stream expression not matching any supported recursive category is skipped and shall cause an error."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.14.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.14.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.14.1"
+
+[[requirements]]
+id = "SV-2023-11-STREAM-UNTAGGED-UNION-FIRST-MEMBER"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.14.1"
+anchors = [
+    "[2023:11.4.14.1:P008:p291]",
+    "[2023:11.4.14.1:P009:p291]",
+]
+summary = "An untagged union stream expression is recursively streamed using its first-declared member."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.14.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.14.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.14.1"
+
+[[requirements]]
+id = "SV-2023-11-STREAM-WITH-EXPRESSION-GRAMMAR"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.14.4"
+anchors = [
+    "[2023:11.4.14.4:P002:p293]",
+    "[2023:11.4.14.4:G001:p293]",
+]
+summary = "A stream expression may append with [array_range_expression], where the range expression is an index, explicit range, indexed +: range, or indexed -: range."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.14.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.14.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.14.4"
+
+[[requirements]]
+id = "SV-2023-11-STREAM-WITH-PACK-EXTENT"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.14.4"
+anchors = [
+    "[2023:11.4.14.4:P005:p294]",
+]
+summary = "During pack, with behaves as an array slice: only specified items are streamed for a smaller range; for a range exceeding the array, the entire array is streamed and extra positions use the Table 7-1 nonexistent-entry value."
+related_clauses = [
+    "7.4.5",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.14.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.14.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.14.4"
+
+[[requirements]]
+id = "SV-2023-11-STREAM-WITH-RANGE-EVALUATION-TIME"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.14.4"
+anchors = [
+    "[2023:11.4.14.4:P003:p293]",
+]
+summary = "A with range is evaluated immediately before its array is streamed; it sees values unpacked earlier by the same operator, but sees previous values for variables unpacked later to its right."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.14.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.14.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.14.4"
+
+[[requirements]]
+id = "SV-2023-11-STREAM-WITH-RANGE-TYPE-AND-BOUNDS"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.14.4"
+anchors = [
+    "[2023:11.4.14.4:P003:p293]",
+]
+summary = "A streaming with range shall be integral and evaluate within fixed-array bounds or to positive values for dynamic arrays and queues; the expression before with may be any one-dimensional unpacked array including a queue."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.14.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.14.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.14.4"
+
+[[requirements]]
+id = "SV-2023-11-STREAM-WITH-UNPACK-EXTENT"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.14.4"
+anchors = [
+    "[2023:11.4.14.4:P004:p293-294]",
+]
+summary = "During unpack, a variable-size array resizes to its with range; a fixed-array range extending outside the array is clipped and causes an error; when the range is smaller than the array, only designated locations change and all others remain unmodified."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.14.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.14.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.14.4"
+
+[[requirements]]
+id = "SV-2023-11-STREAMING-CONCATENATION-EXPRESSION-AND-SOURCE-RESTRICTIONS"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.14"
+anchors = [
+    "[2023:11.4.14:P005:p291]",
+]
+summary = "A streaming concatenation used as a general expression operand shall first be cast to a bit-stream type; when it is an assignment source, the target shall be a bit-stream data object or another streaming concatenation."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.14"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.14"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.14"
+
+[[requirements]]
+id = "SV-2023-11-STREAMING-CONCATENATION-GRAMMAR"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.14"
+anchors = [
+    "[2023:11.4.14:P003:p290]",
+    "[2023:11.4.14:G001:p290]",
+]
+summary = "A streaming concatenation uses { >> or <<, an optional simple-type or constant-expression slice size, and a braced comma-separated stream-concatenation }; each stream expression may have an optional with array-range selector using index, range, +:, or -: forms."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.14"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.14"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.14"
+
+[[requirements]]
+id = "SV-2023-11-STREAMING-CONCATENATION-LEGAL-CONTEXTS"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.14"
+anchors = [
+    "[2023:11.4.14:P004:p291]",
+]
+summary = "A streaming concatenation may be an assignment target, an assignment source, a bit-stream-cast operand, or a stream_expression nested in another streaming concatenation."
+related_clauses = [
+    "11.4.14.3",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.14"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.14"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.14"
+
+[[requirements]]
+id = "SV-2023-11-STREAMING-PACK-STATE-DOMAIN"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.14"
+anchors = [
+    "[2023:11.4.14:P002:p290]",
+]
+summary = "Packing data containing any 4-state type produces a 4-state stream; packing exclusively 2-state data produces a 2-state stream."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.14"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.14"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.14"
+
+[[requirements]]
+id = "SV-2023-11-STREAMING-PACK-TWO-STAGE-SEMANTICS"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.14"
+anchors = [
+    "[2023:11.4.14:P008:p291]",
+]
+summary = "Streaming pack semantics first concatenate all integral stream-expression data into one stream as for a less-restricted bit-stream cast, then reorder that stream according to stream_operator and slice_size; implementations may fuse stages only if the overall result is identical."
+related_clauses = [
+    "6.24.3",
+    "11.4.14.1",
+    "11.4.14.2",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.14"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.14"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.14"
+
+[[requirements]]
+id = "SV-2023-11-STREAMING-PACK-UNPACK-DIRECTION"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.14"
+anchors = [
+    "[2023:11.4.14:P001:p290]",
+]
+summary = "A streaming operator on the right packs bit-stream types into a bit sequence in user-specified order; on an assignment left-hand side it performs the reverse operation, unpacking a bit stream into one or more variables."
+related_clauses = [
+    "6.24.3",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.14"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.14"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.14"
+
+[[requirements]]
+id = "SV-2023-11-STREAMING-UNPACK-CLASS-OBJECTS-PREEXIST"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.14.3"
+anchors = [
+    "[2023:11.4.14.3:P002:p292-293]",
+]
+summary = "Pack and unpack skip null handles, unpacking never creates class objects, and any object hierarchy to reconstruct shall exist before unpacking."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.14.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.14.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.14.3"
+
+[[requirements]]
+id = "SV-2023-11-STREAMING-UNPACK-EXPLICIT-PROPERTIES-ONLY"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.14.3"
+anchors = [
+    "[2023:11.4.14.3:P002:p292-293]",
+]
+summary = "Streaming unpack modifies only explicitly declared properties and shall not modify implicit properties such as random modes."
+related_clauses = [
+    "18",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.14.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.14.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.14.3"
+
+[[requirements]]
+id = "SV-2023-11-STREAMING-UNPACK-SOURCE-AND-SIZE"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.14.3"
+anchors = [
+    "[2023:11.4.14.3:P001:p292]",
+]
+summary = "A streaming assignment target unpacks from a bit-stream expression or another streaming concatenation; excess source bits are consumed from the most-significant left end, while too few source bits cause an error."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.14.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.14.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.14.3"
+
+[[requirements]]
+id = "SV-2023-11-STREAMING-UNPACK-STATE-CAST"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.14.3"
+anchors = [
+    "[2023:11.4.14.3:P002:p292-293]",
+]
+summary = "Unpacking between 4-state streams and 2-state targets, or vice versa, performs the corresponding state-domain cast."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.14.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.14.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.14.3"
+
+[[requirements]]
+id = "SV-2023-11-STRING-CONCATENATION-CONVERSION"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.12.2"
+anchors = [
+    "[2023:11.4.12.2:P001:p288]",
+]
+summary = "Concatenation of string objects is legal; generally, if any operand is string, the concatenation is a string and all non-string operands are implicitly converted to string under 6.16."
+related_clauses = [
+    "6.16",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.12.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.12.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.12.2"
+
+[[requirements]]
+id = "SV-2023-11-STRING-CONCATENATION-NOT-LVALUE"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.12.2"
+anchors = [
+    "[2023:11.4.12.2:P001:p288]",
+]
+summary = "A string concatenation is legal only as an expression and is illegal on an assignment left-hand side."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.12.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.12.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.12.2"
+
+[[requirements]]
+id = "SV-2023-11-STRING-CONCATENATION-RESIZES-NOT-TRUNCATES"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.12.2"
+anchors = [
+    "[2023:11.4.12.2:P003:p288]",
+]
+summary = "A string concatenation or replication result is not truncated; the string destination resizes to hold the complete result."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.12.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.12.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.12.2"
+
+[[requirements]]
+id = "SV-2023-11-STRING-LITERAL-COPY-CONCATENATE-COMPARE"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.10.1"
+anchors = [
+    "[2023:11.10.1:P001:p305]",
+]
+summary = "String literals and string literals stored in vectors support copy by simple assignment, concatenation by {}, and comparison by equality operators."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.10.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.10.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.10.1"
+
+[[requirements]]
+id = "SV-2023-11-STRING-LITERAL-NUMERIC-ASCII-BEHAVIOR"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.10"
+anchors = [
+    "[2023:11.10:P002:p305]",
+]
+summary = "A string literal operand is a constant number formed from one 8-bit ASCII code per character; any operator may manipulate it as one numeric value."
+related_clauses = [
+    "5.9",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.10"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.10"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.10"
+
+[[requirements]]
+id = "SV-2023-11-STRING-LITERAL-VECTOR-LEFT-ZERO-PADDING"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.10"
+anchors = [
+    "[2023:11.10:P003:p305]",
+]
+summary = "Assigning a string literal into a wider vector pads unused most-significant positions on the left with zeros."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.10"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.10"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.10"
+
+[[requirements]]
+id = "SV-2023-11-STRING-REPLICATION-NONCONSTANT-MULTIPLIER"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.12.2"
+anchors = [
+    "[2023:11.4.12.2:P002:p288]",
+]
+summary = "Replication braces may replicate a string object or string concatenation, and a string replication multiplier may be nonconstant."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.12.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.12.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.12.2"
+
+[[requirements]]
+id = "SV-2023-11-STRING-VECTOR-PADDING-INDISTINGUISHABLE-FROM-NUL"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.10.2"
+anchors = [
+    "[2023:11.10.2:P001:p305]",
+]
+summary = "String literals assigned to vectors are left-zero-padded, and comparison and concatenation treat padding zeros identically to original ASCII NUL characters."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.10.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.10.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.10.2"
+
+[[requirements]]
+id = "SV-2023-11-STRUCTURE-OPERANDS"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.2"
+anchors = [
+    "[2023:11.2:L009:p269]",
+    "[2023:11.2:L010:p269]",
+    "[2023:11.2:L011:p269]",
+]
+summary = "Packed and unpacked structures and their members are legal expression operands; a bit-select or part-select of a packed structure is also a legal operand."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.2"
+
+[[requirements]]
+id = "SV-2023-11-TAGGED-UNION-CONTEXTUAL-TYPE-CHECK"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.9"
+anchors = [
+    "[2023:11.9:P004:p304]",
+]
+summary = "A tagged-union expression's type shall be known from assignment, cast, or enclosing context; it produces that type and statically permits only its member names with member expressions of corresponding types."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.9"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.9"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.9"
+
+[[requirements]]
+id = "SV-2023-11-TAGGED-UNION-EXPRESSION-SYNTAX"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.9"
+anchors = [
+    "[2023:11.9:G001:p303]",
+    "[2023:11.9:P001:p303]",
+]
+summary = "A packed or unpacked tagged-union expression is tagged member_identifier followed by the member-value primary, with that primary omitted for a void member."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "changed-expectation"
+clause = "11.9"
+note = "The 2012 grammar and prose permit an expression as the tagged member value, whereas the 2023 rule requires a primary."
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.9"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.9"
+
+[[requirements]]
+id = "SV-2023-11-TAGGED-UNION-MEMBER-ACCESS-TAG-CHECK"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.9"
+anchors = [
+    "[2023:11.9:P006:p304]",
+]
+summary = "Tagged-union members and nested fields may be read or assigned with dot notation only when consistent with the current tag; implementations perform a run-time check as needed and report a run-time error for a tag-inconsistent access."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.9"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.9"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.9"
+
+[[requirements]]
+id = "SV-2023-11-TOLERANCE-RANGE-NORMALIZATION-AND-TYPE"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.13"
+anchors = [
+    "[2023:11.4.13:P012:p290]",
+]
+summary = "Tolerance bounds are normalized to [low:high] regardless of A and B signedness, swapping computed values when needed; the range type is A's type, and real-to-integral tolerance conversion truncates rather than rounds."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 has no inside tolerance ranges and therefore no tolerance-bound normalization, type, or truncation rules."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 does not define inside tolerance ranges, so it has no normalization, result-type, or truncation rule for them."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.13"
+
+[[requirements]]
+id = "SV-2023-11-TYPE-REFERENCE-CONSTANT-PRIMARY-OPERATORS"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.11"
+anchors = [
+    "[2023:11.11:G001:p306-307]",
+]
+summary = "A type_reference constant_primary may be a static cast's casting_type and may otherwise be used only with logical equality/inequality or case equality/inequality operators."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "same-rule-different-clause"
+clause = "11.12"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.11"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.11"
+
+[[requirements]]
+id = "SV-2023-11-UNARY-ARITHMETIC-BITWISE-RESULT-SIZE"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.6.1"
+anchors = [
+    "[2023:11.6.1:T11-21.R05:p299]",
+    "[2023:11.6.1:T11-21.R06:p299]",
+]
+summary = "Unary +, -, and ~ produce a result with the same bit length L(i) as their operand."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.6.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.6.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.6.1"
+
+[[requirements]]
+id = "SV-2023-11-UNARY-ARITHMETIC-PRECEDENCE"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.3"
+anchors = [
+    "[2023:11.4.3:P017:p277]",
+]
+summary = "Unary arithmetic operators have higher precedence than binary operators."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.3"
+
+[[requirements]]
+id = "SV-2023-11-UNARY-ARITHMETIC-TYPES"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.3"
+anchors = [
+    "[2023:11.3:T11-1.R08:p271]",
+]
+summary = "Unary + and - accept integral, real, and shortreal operands."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.3"
+
+[[requirements]]
+id = "SV-2023-11-UNARY-BITWISE-NEGATION-SEMANTICS"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.8"
+anchors = [
+    "[2023:11.4.8:P001:p281]",
+]
+summary = "Unary ~ negates every bit of its integral operand independently."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.8"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.8"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.8"
+
+[[requirements]]
+id = "SV-2023-11-UNARY-BITWISE-NEGATION-TYPES"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.3"
+anchors = [
+    "[2023:11.3:T11-1.R09:p271]",
+]
+summary = "Unary bitwise negation ~ accepts integral operands only."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.3"
+
+[[requirements]]
+id = "SV-2023-11-UNARY-BITWISE-RESULT-SIGNEDNESS"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.8"
+anchors = [
+    "[2023:11.4.8:P004:p281]",
+]
+summary = "The result of unary ~ is unsigned for an unsigned operand and signed for a signed operand."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.8"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.8"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.8"
+
+[[requirements]]
+id = "SV-2023-11-UNARY-PLUS-MINUS-SEMANTICS"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.3"
+anchors = [
+    "[2023:11.4.3:T11-6.R00:p277]",
+    "[2023:11.4.3:T11-6.R01:p277]",
+]
+summary = "Unary + returns its operand unchanged, while unary - returns the arithmetic negation of its operand."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.3"
+
+[[requirements]]
+id = "SV-2023-11-UNBOUNDED-DYNAMIC-UNPACK-GREEDY"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.14.4"
+anchors = [
+    "[2023:11.4.14.4:P001:p293]",
+]
+summary = "Without explicit extents, unpacking unbounded dynamic targets is greedy: the first dynamic item takes all stream data except that reserved for later fixed-size items, and later dynamic items remain empty."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.14.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.14.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.14.4"
+
+[[requirements]]
+id = "SV-2023-11-UNION-OPERANDS"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.2"
+anchors = [
+    "[2023:11.2:L012:p269]",
+    "[2023:11.2:L013:p269]",
+    "[2023:11.2:L014:p269]",
+]
+summary = "Packed, unpacked, and tagged unions and their members are legal expression operands; a bit-select or part-select of a packed union is also a legal operand."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.2"
+
+[[requirements]]
+id = "SV-2023-11-UNSIGNED-BINARY-BITWISE-SIZING"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.8"
+anchors = [
+    "[2023:11.4.8:P002:p281]",
+]
+summary = "If either binary bitwise operand is unsigned, the result is unsigned and a shorter operand is zero-extended to the longer operand's width."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.8"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.8"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.8"
+
+[[requirements]]
+id = "SV-2023-11-UNSIGNED-EQUALITY-COMPARISON"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.5"
+anchors = [
+    "[2023:11.4.5:P003:p279]",
+]
+summary = "If either equality operand is unsigned, both operands are compared as unsigned values and the shorter operand is zero-extended to the longer width."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.5"
+
+[[requirements]]
+id = "SV-2023-11-UNSIGNED-RELATIONAL-COMPARISON"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.4"
+anchors = [
+    "[2023:11.4.4:P003:p278]",
+]
+summary = "If either relational operand is unsigned, both are compared as unsigned values, with the shorter operand zero-extended to the longer width."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.4"
+
+[[requirements]]
+id = "SV-2023-11-UNSPECIFIED-INTRAEXPRESSION-ASSIGNMENT-ORDER"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.2"
+anchors = [
+    "[2023:11.4.2:P002:p275]",
+    "[2023:11.4.2:C001:p275]",
+    "[2023:11.4.2:P003:p275]",
+]
+summary = "The relative order of assignment operations and other operations within one expression is unspecified; for the specified expression combining i++ with assignment to i from initial value 10, each of 18, 19, and 20 is a permitted final value of j."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.2"
+
+[[requirements]]
+id = "SV-2023-11-VALUE-RETURNING-CALL-OPERAND"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.2"
+anchors = [
+    "[2023:11.2:L018:p269]",
+]
+summary = "A call to a user-defined function, system function, or method that returns a legal operand value is itself a legal expression operand."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.2"
+
+[[requirements]]
+id = "SV-2023-11-VARIABLE-OPERANDS"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.2"
+anchors = [
+    "[2023:11.2:L007:p269]",
+    "[2023:11.2:L008:p269]",
+]
+summary = "A variable, or a bit-select or part-select of a variable, is a legal expression operand."
+related_clauses = [
+    "6.8",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.2"
+
+[[requirements]]
+id = "SV-2023-11-WIDENED-STREAM-IMPLICIT-TARGET-CAST"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.14"
+anchors = [
+    "[2023:11.4.14:P007:p291]",
+]
+summary = "After any required widening, an assignment-source stream is implicitly cast to the target type."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.14"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.14"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.14"
+
+[[requirements]]
+id = "SV-2023-11-WILDCARD-EQUALITY-EXTENSION"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.6"
+anchors = [
+    "[2023:11.4.6:P003:p280]",
+]
+summary = "Unequal-width wildcard equality operands are extended by the same signedness-dependent rules as logical equality operands before bitwise comparison."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.6"
+
+[[requirements]]
+id = "SV-2023-11-WILDCARD-EQUALITY-MATCHING"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.6"
+anchors = [
+    "[2023:11.4.6:T11-10.R01:p280]",
+    "[2023:11.4.6:T11-10.R02:p280]",
+    "[2023:11.4.6:P002:p280]",
+]
+summary = "For ==? and !=?, each x or z bit in the right operand is a wildcard matching 0, 1, x, or z in the corresponding left bit; x and z in the left operand are not wildcards, and nonwildcard positions use logical equality semantics."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.6"
+
+[[requirements]]
+id = "SV-2023-11-WILDCARD-EQUALITY-OPERATOR-TYPES"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.3"
+anchors = [
+    "[2023:11.3:T11-1.R22:p271]",
+]
+summary = "Binary wildcard equality and inequality operators ==? and !=? accept integral operands only."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.3"
+
+[[requirements]]
+id = "SV-2023-11-WILDCARD-EQUALITY-PRECEDENCE"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.6"
+anchors = [
+    "[2023:11.4.6:P001:p280]",
+]
+summary = "Wildcard equality and inequality have the same precedence as the other equality operators."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.6"
+
+[[requirements]]
+id = "SV-2023-11-WILDCARD-EQUALITY-RESULT"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.6"
+anchors = [
+    "[2023:11.4.6:P003:p280]",
+    "[2023:11.4.6:P004:p280]",
+]
+summary = "Wildcard equality and inequality return a one-bit self-determined result: 1'b1 for true, 1'b0 for false, and 1'bx when the relation remains unknown, including an unresolved left-side x or z not covered by a right-side wildcard."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.6"
+
+[[requirements]]
+id = "SV-2023-11-WILDCARD-HANDLE-EQUALITY-EQUIVALENCE"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.6"
+anchors = [
+    "[2023:11.4.6:P005:p280]",
+]
+summary = "For class handles, interface-class handles, chandles, and null, wildcard equality has the same semantics as logical equality."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.6"
+
+[[requirements]]
+id = "SV-2023-11-ZERO-MULTIPLIER-REPLICATION"
+standard_revision = "1800-2023"
+part = "11"
+clause = "11.4.12.1"
+anchors = [
+    "[2023:11.4.12.1:P005:p287]",
+]
+summary = "A zero-multiplier replication has zero size and is ignored, but is legal only within a concatenation that also has at least one positive-size operand."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "11.4.12.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "11.4.12.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "11.4.12.1"

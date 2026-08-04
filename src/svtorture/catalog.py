@@ -38,6 +38,7 @@ from svtorture.models import (
     ToolManifest,
     ToolRegistry,
     model_to_jsonable,
+    standard_location_sort_key,
 )
 
 
@@ -95,7 +96,17 @@ class Catalog:
         )
 
     def requirement_manifest_hash(self) -> str:
-        return hash_json(model_to_jsonable(self.inventory))
+        inventory = self.inventory.model_copy(
+            update={
+                "requirements": tuple(
+                    sorted(
+                        self.inventory.requirements,
+                        key=lambda item: standard_location_sort_key(item.clause),
+                    )
+                )
+            }
+        )
+        return hash_json(model_to_jsonable(inventory))
 
     def corpus_metrics(self) -> CorpusMetrics:
         parts = _standard_parts(self.anchor_index)

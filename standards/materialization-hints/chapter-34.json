@@ -1,0 +1,2279 @@
+{
+  "authority": "1800-2023",
+  "part": "34",
+  "requirements": [
+    {
+      "hints": {
+        "edge": [
+          "After reset, omit the keyword in the next envelope and verify its default applies."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Omit a keyword having a defined default and verify behavior equals explicitly selecting the default."
+        ]
+      },
+      "id": "SV-2023-34-ABSENT-KEYWORD-USES-DEFAULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place author outside any encryption envelope and compare output unchanged."
+        ],
+        "negative": [
+          "Encrypt the author expression into data_block."
+        ],
+        "notes": [],
+        "positive": [
+          "Encrypt an envelope containing author and verify it remains visible inside the protected envelope but outside data_block."
+        ]
+      },
+      "id": "SV-2023-34-AUTHOR-ENCRYPTION-OUTPUT-PLACEMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an empty string as the author value."
+        ],
+        "negative": [
+          "Use a non-string author value."
+        ],
+        "notes": [],
+        "positive": [
+          "Specify author = \"Example Author\" in an encryption envelope."
+        ]
+      },
+      "id": "SV-2023-34-AUTHOR-EXPRESSION-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an empty additional-information string."
+        ],
+        "negative": [
+          "Use a non-string author_info value."
+        ],
+        "notes": [],
+        "positive": [
+          "Specify author_info = \"contact@example.test\"."
+        ]
+      },
+      "id": "SV-2023-34-AUTHOR-INFO-EXPRESSION-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place author_info outside an envelope and compare unchanged."
+        ],
+        "negative": [
+          "Encrypt author_info into data_block."
+        ],
+        "notes": [],
+        "positive": [
+          "Verify author_info remains visible inside protected output."
+        ]
+      },
+      "id": "SV-2023-34-AUTHOR-INFO-OUTPUT-PLACEMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise input lengths around three-byte groups and line wrapping."
+        ],
+        "negative": [
+          "Reject base64 or map it to another encoding."
+        ],
+        "notes": [],
+        "positive": [
+          "Encode and decode a known RFC 2045 base64 vector."
+        ]
+      },
+      "id": "SV-2023-34-BASE64-ENCODING-REQUIRED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Require both key_block and data_block."
+        ],
+        "negative": [
+          "Emit a required block outside its envelope."
+        ],
+        "notes": [],
+        "positive": [
+          "Verify output expression and block ordering inside the envelope."
+        ]
+      },
+      "id": "SV-2023-34-BEGIN-ENCRYPTION-OUTPUT-FORM"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Split expressions among successive directives."
+        ],
+        "negative": [
+          "Ignore a required expression in the block."
+        ],
+        "notes": [],
+        "positive": [
+          "Supply required settings as several expressions within one block."
+        ]
+      },
+      "id": "SV-2023-34-BEGIN-PROTECTED-ACCUMULATES-DECRYPTION-PRAGMAS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use exactly one IV block followed by one ciphertext block."
+        ],
+        "negative": [
+          "Treat the first decoded IV block as ciphertext payload."
+        ],
+        "notes": [],
+        "positive": [
+          "Decode a CBC data_block, use its first cipher block as IV, and decrypt the remaining ciphertext."
+        ]
+      },
+      "id": "SV-2023-34-CBC-DATA-IV-EXTRACTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use exactly one IV block plus one ciphertext block."
+        ],
+        "negative": [
+          "Treat IV as encrypted digest payload."
+        ],
+        "notes": [],
+        "positive": [
+          "Decode, extract first block as IV, and decrypt remaining digest."
+        ]
+      },
+      "id": "SV-2023-34-CBC-DIGEST-IV-EXTRACTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Encrypt exactly one plaintext cipher block."
+        ],
+        "negative": [
+          "Append the IV after ciphertext."
+        ],
+        "notes": [],
+        "positive": [
+          "Decode a CBC data_block and verify its first cipher block is the IV."
+        ]
+      },
+      "id": "SV-2023-34-CBC-IV-PREPENDED-TO-DATA-BLOCK"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a one-block encrypted digest."
+        ],
+        "negative": [
+          "Append IV after encrypted digest."
+        ],
+        "notes": [],
+        "positive": [
+          "Decode digest_block and verify the first cipher block is IV."
+        ]
+      },
+      "id": "SV-2023-34-CBC-IV-PREPENDED-TO-DIGEST"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use one ciphertext block."
+        ],
+        "negative": [
+          "Append IV after key ciphertext."
+        ],
+        "notes": [],
+        "positive": [
+          "Decode key_block and verify first block is IV."
+        ]
+      },
+      "id": "SV-2023-34-CBC-IV-PREPENDED-TO-KEY-BLOCK"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use exactly one IV block followed by one ciphertext block."
+        ],
+        "negative": [
+          "Treat the first decoded IV block as encrypted key metadata."
+        ],
+        "notes": [],
+        "positive": [
+          "Decode a CBC key_block, use its first cipher block as IV, and decrypt the remainder."
+        ]
+      },
+      "id": "SV-2023-34-CBC-KEY-BLOCK-IV-EXTRACTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place comment immediately before end."
+        ],
+        "negative": [
+          "Encrypt the comment value or place it after data_block."
+        ],
+        "notes": [],
+        "positive": [
+          "Put comment inside an envelope and verify its complete pragma appears immediately before data_block."
+        ]
+      },
+      "id": "SV-2023-34-COMMENT-EXPRESSION-CLEARTEXT-OUTPUT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an encoded minimum-length block accepted by the selected method."
+        ],
+        "negative": [
+          "Attempt to decrypt the textual encoding directly."
+        ],
+        "notes": [],
+        "positive": [
+          "Decode a non-CBC encoded data_block and recover its cleartext by decrypting the decoded bytes."
+        ]
+      },
+      "id": "SV-2023-34-DATA-BLOCK-DECRYPTION-PIPELINE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place the marker immediately inside protected delimiters."
+        ],
+        "negative": [
+          "Place data_block in ordinary encryption input and require an error."
+        ],
+        "notes": [],
+        "positive": [
+          "Reencrypt a generated protected block containing data_block and verify the inner marker is ignored."
+        ]
+      },
+      "id": "SV-2023-34-DATA-BLOCK-ENCRYPTION-INPUT-LEGALITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an empty begin/end body."
+        ],
+        "negative": [
+          "Encode before encryption."
+        ],
+        "notes": [],
+        "positive": [
+          "Encrypt known cleartext then decode and decrypt emitted next-line data to recover it."
+        ]
+      },
+      "id": "SV-2023-34-DATA-BLOCK-ENCRYPTION-PIPELINE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Encode the key using a nondefault current encoding."
+        ],
+        "negative": [
+          "Separate the expression and key value with another pragma line."
+        ],
+        "notes": [
+          "Use with digital signatures is recommended, not mandatory."
+        ],
+        "positive": [
+          "Place an encoded decryption key immediately after data_decrypt_key."
+        ]
+      },
+      "id": "SV-2023-34-DATA-DECRYPT-KEY-INPUT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a nondefault encoding for key_block."
+        ],
+        "negative": [
+          "Emit data_decrypt_key as cleartext."
+        ],
+        "notes": [],
+        "positive": [
+          "Decode and decrypt key_block to recover data_decrypt_key."
+        ]
+      },
+      "id": "SV-2023-34-DATA-DECRYPT-KEY-OUTPUT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use identical public-key material under distinct owners and verify owner-qualified lookup."
+        ],
+        "negative": [
+          "Select a private key associated with a different owner or public key."
+        ],
+        "notes": [],
+        "positive": [
+          "Provide data_keyowner plus data_public_key and decrypt with the corresponding private key."
+        ]
+      },
+      "id": "SV-2023-34-DATA-KEY-LOOKUP-FOR-DECRYPTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Have identical names under different owners and verify owner disambiguation."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Provide owner and name resolving uniquely to the correct decryption key."
+        ]
+      },
+      "id": "SV-2023-34-DATA-KEYNAME-DECRYPTION-SELECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a name known under a different owner only."
+        ],
+        "negative": [
+          "Use an unknown key name for that owner and require an error."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a key name registered for the selected owner."
+        ]
+      },
+      "id": "SV-2023-34-DATA-KEYNAME-MUST-BE-KNOWN"
+    },
+    {
+      "hints": {
+        "edge": [
+          "With a digital envelope, recover the key name from key_block."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Without a digital envelope, verify data_keyname remains cleartext."
+        ]
+      },
+      "id": "SV-2023-34-DATA-KEYNAME-OUTPUT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "With a digital signature, verify the owner appears encrypted in key_block."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Without a signature, compare data_keyowner input and output unchanged."
+        ]
+      },
+      "id": "SV-2023-34-DATA-KEYOWNER-OUTPUT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the same key name under two owners and verify owner disambiguation."
+        ],
+        "negative": [
+          "Select the data encryption key from a different owner."
+        ],
+        "notes": [],
+        "positive": [
+          "Select a third-party data_keyowner and verify its associated key encrypts data_block."
+        ]
+      },
+      "id": "SV-2023-34-DATA-KEYOWNER-SELECTION-AND-UNIQUE-KEYS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Reuse the same value under two different owners."
+        ],
+        "negative": [
+          "Reuse a data_keyname, data_decrypt_key, or data_public_key value for the same owner."
+        ],
+        "notes": [],
+        "positive": [
+          "Use distinct data key names, decrypt-key values, and public-key values for one owner."
+        ]
+      },
+      "id": "SV-2023-34-DATA-KEYOWNER-UNIQUE-KEY-VALUES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change data_method between envelopes and verify textual state sequencing."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Select a supported method and encrypt two subsequent envelopes with it."
+        ]
+      },
+      "id": "SV-2023-34-DATA-METHOD-CONTROLS-SUBSEQUENT-BLOCKS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Choose an extension identifier that does not collide with a standardized table identifier."
+        ],
+        "negative": [],
+        "notes": [
+          "The extension name and cipher are implementation-defined; do not prescribe either in a portable case."
+        ],
+        "positive": [
+          "Use an implementation-defined additional data_method identifier with its documented corresponding cipher."
+        ]
+      },
+      "id": "SV-2023-34-DATA-METHOD-IDENTIFIER-SUPPORT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "With a signature, recover data_method from key_block."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Without a signature, compare data_method unchanged."
+        ]
+      },
+      "id": "SV-2023-34-DATA-METHOD-OUTPUT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change encoding immediately before the public-key expression."
+        ],
+        "negative": [
+          "Provide data_public_key and data_keyname referring to different keys."
+        ],
+        "notes": [],
+        "positive": [
+          "Place an encoded public key on the line after data_public_key."
+        ]
+      },
+      "id": "SV-2023-34-DATA-PUBLIC-KEY-INPUT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify the encoded value immediately follows the expression."
+        ],
+        "negative": [
+          "Use a public key but omit it from one protected output block."
+        ],
+        "notes": [],
+        "positive": [
+          "Encrypt two blocks using a public key and verify each block emits the expression and value."
+        ]
+      },
+      "id": "SV-2023-34-DATA-PUBLIC-KEY-OUTPUT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Include nested envelopes with each required proper key supplied."
+        ],
+        "negative": [],
+        "notes": [
+          "A valid encrypted payload and proper keys are required."
+        ],
+        "positive": [
+          "Supply proper keys for multiple decryption envelopes and verify all resulting cleartext is compiled."
+        ]
+      },
+      "id": "SV-2023-34-DECRYPT-ALL-ENVELOPES-WITH-KEY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use negative or zero numeric match."
+        ],
+        "negative": [
+          "Return a nonmatching value and deny processing."
+        ],
+        "notes": [
+          "Requires a controlled test shared library."
+        ],
+        "positive": [
+          "Return match and permit decrypted-text processing."
+        ]
+      },
+      "id": "SV-2023-34-DECRYPT-LICENSE-CHECK"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a distinctive negative return value."
+        ],
+        "negative": [
+          "Return a nonmatching value and verify no decryption plus a diagnostic containing that value."
+        ],
+        "notes": [],
+        "positive": []
+      },
+      "id": "SV-2023-34-DECRYPT-LICENSE-DENIAL-DIAGNOSTIC"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise licensed and denied termination paths."
+        ],
+        "negative": [
+          "Omit the required callback invocation when exit is specified."
+        ],
+        "notes": [],
+        "positive": [
+          "Specify exit and record that it is called before process termination."
+        ]
+      },
+      "id": "SV-2023-34-DECRYPT-LICENSE-EXIT-CALLBACK"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place it adjacent to the envelope boundary."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Decrypt output and verify the license pragma is unchanged."
+        ]
+      },
+      "id": "SV-2023-34-DECRYPT-LICENSE-OUTPUT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use required fields only."
+        ],
+        "negative": [
+          "Omit one required field."
+        ],
+        "notes": [],
+        "positive": [
+          "Specify all required fields with optional exit and match."
+        ]
+      },
+      "id": "SV-2023-34-DECRYPT-LICENSE-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify nested closes match innermost openers."
+        ],
+        "negative": [
+          "Provide end_protected without an unclosed opener."
+        ],
+        "notes": [],
+        "positive": [
+          "Process one matched begin_protected/end_protected envelope."
+        ]
+      },
+      "id": "SV-2023-34-DECRYPTION-ENVELOPE-DELIMITERS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Decrypt a minimal envelope whose replacement is a single source token."
+        ],
+        "negative": [],
+        "notes": [
+          "Requires a valid supported encrypted payload."
+        ],
+        "positive": [
+          "Decrypt a valid data_block and compile the recovered source in place of its envelope."
+        ]
+      },
+      "id": "SV-2023-34-DECRYPTION-REPLACES-EACH-ENVELOPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Decode content with inserted line breaks."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Decode a padded textual block and use bytes to recover exactly the original data."
+        ]
+      },
+      "id": "SV-2023-34-DECRYPTION-USES-ENCODING-DESCRIPTOR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use content spanning multiple DES blocks."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Encrypt and decrypt known content using des-cbc."
+        ]
+      },
+      "id": "SV-2023-34-DES-CBC-DATA-METHOD-REQUIRED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Authenticate empty decrypted data."
+        ],
+        "negative": [
+          "Modify encrypted data or digest and verify comparison mismatch."
+        ],
+        "notes": [],
+        "positive": [
+          "Verify matching digest for unchanged encrypted data."
+        ]
+      },
+      "id": "SV-2023-34-DIGEST-AUTHENTICATION-COMPARISON"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify next-line placement for an encoded digest."
+        ],
+        "negative": [
+          "Separate a digest_block from the block it authenticates."
+        ],
+        "notes": [],
+        "positive": [
+          "Generate both key and data blocks and verify each immediately followed by its digest."
+        ]
+      },
+      "id": "SV-2023-34-DIGEST-BLOCK-ENCODING-AND-PLACEMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place digest_block inside previously protected bytes and verify it is not an active request."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Place digest_block after encryption content and verify digest generation."
+        ]
+      },
+      "id": "SV-2023-34-DIGEST-BLOCK-INPUT-REQUEST"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change data_decrypt_key before the envelope, omit digest_decrypt_key, and verify the new current value is inherited."
+        ],
+        "negative": [
+          "Use an unrelated digest decrypt key when the keyword is omitted."
+        ],
+        "notes": [],
+        "positive": [
+          "Omit digest_decrypt_key and verify the current data_decrypt_key is used for digest-key metadata."
+        ]
+      },
+      "id": "SV-2023-34-DIGEST-DECRYPT-KEY-DEFAULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change encoding immediately before digest_decrypt_key and encode the next line with the current setting."
+        ],
+        "negative": [
+          "Fail to treat the next source line as the encoded key value."
+        ],
+        "notes": [
+          "Use with digital signatures is recommended, not mandatory."
+        ],
+        "positive": [
+          "Place an encoded digest decryption key immediately after digest_decrypt_key."
+        ]
+      },
+      "id": "SV-2023-34-DIGEST-DECRYPT-KEY-INPUT-DEFAULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use nondefault encoding."
+        ],
+        "negative": [
+          "Emit digest_decrypt_key as cleartext."
+        ],
+        "notes": [],
+        "positive": [
+          "Decode and decrypt key_block to recover digest_decrypt_key."
+        ]
+      },
+      "id": "SV-2023-34-DIGEST-DECRYPT-KEY-OUTPUT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Omit digest_key_method and verify current data method key is used."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Generate a known digest and recover it using the declared digest encryption settings."
+        ]
+      },
+      "id": "SV-2023-34-DIGEST-GENERATION-AND-ENCRYPTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use identical public-key material under distinct owners and verify owner-qualified lookup."
+        ],
+        "negative": [
+          "Select a private key associated with a different digest owner or public key."
+        ],
+        "notes": [],
+        "positive": [
+          "Provide digest_keyowner plus digest_public_key and decrypt with the corresponding private key."
+        ]
+      },
+      "id": "SV-2023-34-DIGEST-KEY-LOOKUP"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change digest_key_method between two digest blocks and verify lexical sequencing."
+        ],
+        "negative": [
+          "Encrypt a subsequent digest_block with a different algorithm."
+        ],
+        "notes": [],
+        "positive": [
+          "Select digest_key_method and verify it encrypts subsequent digest_block contents."
+        ]
+      },
+      "id": "SV-2023-34-DIGEST-KEY-METHOD-CONTROL-AND-DEFAULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a digest block spanning multiple cipher blocks."
+        ],
+        "negative": [
+          "Use a different declared algorithm and accept the result."
+        ],
+        "notes": [],
+        "positive": [
+          "Decrypt digest_block with its declared digest_key_method."
+        ]
+      },
+      "id": "SV-2023-34-DIGEST-KEY-METHOD-DECRYPTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change data_method immediately before relying on the digest_key_method default."
+        ],
+        "negative": [
+          "Use an unrelated digest encryption method when digest_key_method is omitted."
+        ],
+        "notes": [],
+        "positive": [
+          "Omit digest_key_method and verify current data_method supplies the digest encryption method."
+        ]
+      },
+      "id": "SV-2023-34-DIGEST-KEY-METHOD-DEFAULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "With signature, recover digest method using key_block key."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare unchanged method without signature."
+        ]
+      },
+      "id": "SV-2023-34-DIGEST-KEY-METHOD-OUTPUT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Disambiguate identical names under different owners."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Resolve a unique digest decryption key by owner and name."
+        ]
+      },
+      "id": "SV-2023-34-DIGEST-KEYNAME-DECRYPTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change data_keyname immediately before relying on the default."
+        ],
+        "negative": [
+          "Select an unrelated key name when digest_keyname is omitted."
+        ],
+        "notes": [],
+        "positive": [
+          "Omit digest_keyname and verify current data_keyname is inherited."
+        ]
+      },
+      "id": "SV-2023-34-DIGEST-KEYNAME-DEFAULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a name known only under a different owner."
+        ],
+        "negative": [
+          "Use a digest key name unknown for that owner and require an error."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a digest key name known for the selected digest_keyowner."
+        ]
+      },
+      "id": "SV-2023-34-DIGEST-KEYNAME-INPUT-DEFAULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Recover encrypted digest key name from digital-envelope key_block."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Verify cleartext key name without digital envelope."
+        ]
+      },
+      "id": "SV-2023-34-DIGEST-KEYNAME-OUTPUT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change data_keyowner immediately before relying on the default."
+        ],
+        "negative": [
+          "Use an unrelated owner when digest_keyowner is omitted."
+        ],
+        "notes": [],
+        "positive": [
+          "Omit digest_keyowner and verify current data_keyowner is inherited."
+        ]
+      },
+      "id": "SV-2023-34-DIGEST-KEYOWNER-DEFAULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the same key name under two owners and verify owner disambiguation."
+        ],
+        "negative": [
+          "Select the digest encryption key from a different owner."
+        ],
+        "notes": [],
+        "positive": [
+          "Select a third-party digest_keyowner and verify its associated key encrypts digest_block."
+        ]
+      },
+      "id": "SV-2023-34-DIGEST-KEYOWNER-SELECTION-DEFAULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an empty string."
+        ],
+        "negative": [
+          "Use a non-string value."
+        ],
+        "notes": [],
+        "positive": [
+          "Specify digest_keyowner = \"key provider\"."
+        ]
+      },
+      "id": "SV-2023-34-DIGEST-KEYOWNER-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Reuse the same value under two different digest owners."
+        ],
+        "negative": [
+          "Reuse one of those digest key values for the same owner."
+        ],
+        "notes": [],
+        "positive": [
+          "Use distinct digest key names, decrypt-key values, and public-key values for one owner."
+        ]
+      },
+      "id": "SV-2023-34-DIGEST-KEYOWNER-UNIQUE-KEY-VALUES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change method between two output blocks."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Select a method and verify digests for subsequent data and key blocks."
+        ]
+      },
+      "id": "SV-2023-34-DIGEST-METHOD-CONTROLS-SUBSEQUENT-BLOCKS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Choose an extension identifier that does not collide with a standardized table identifier."
+        ],
+        "negative": [],
+        "notes": [
+          "The extension name and digest algorithm are implementation-defined; do not prescribe either portably."
+        ],
+        "positive": [
+          "Use an implementation-defined additional digest_method identifier supported by the implementation."
+        ]
+      },
+      "id": "SV-2023-34-DIGEST-METHOD-IDENTIFIER-EXTENSIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Recover method from key_block with signature."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare unchanged method without signature."
+        ]
+      },
+      "id": "SV-2023-34-DIGEST-METHOD-OUTPUT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an implementation-defined string."
+        ],
+        "negative": [
+          "Use a non-string value."
+        ],
+        "notes": [],
+        "positive": [
+          "Specify digest_method = \"sha256\"."
+        ]
+      },
+      "id": "SV-2023-34-DIGEST-METHOD-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Generate a digest for an empty data block."
+        ],
+        "negative": [
+          "Accept a digest generated with a different algorithm."
+        ],
+        "notes": [],
+        "positive": [
+          "Generate the declared digest from decrypted data and compare it."
+        ]
+      },
+      "id": "SV-2023-34-DIGEST-METHOD-VERIFICATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change data_public_key immediately before relying on the default."
+        ],
+        "negative": [
+          "Use an unrelated public key when digest_public_key is omitted."
+        ],
+        "notes": [],
+        "positive": [
+          "Omit digest_public_key and verify current data_public_key is inherited."
+        ]
+      },
+      "id": "SV-2023-34-DIGEST-PUBLIC-KEY-DEFAULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change encoding immediately before the public-key expression."
+        ],
+        "negative": [
+          "Provide digest_public_key and digest_keyname that identify different keys."
+        ],
+        "notes": [],
+        "positive": [
+          "Place a currently encoded digest public key on the line immediately after digest_public_key."
+        ]
+      },
+      "id": "SV-2023-34-DIGEST-PUBLIC-KEY-INPUT-DEFAULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify key value immediately follows expression."
+        ],
+        "negative": [
+          "Omit the key from one using block."
+        ],
+        "notes": [],
+        "positive": [
+          "Verify every using block emits expression and encoded key."
+        ]
+      },
+      "id": "SV-2023-34-DIGEST-PUBLIC-KEY-OUTPUT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change encoding immediately before each of the six encoded field kinds."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use two encoding expressions before different block fields and decode each accordingly."
+        ]
+      },
+      "id": "SV-2023-34-ENCODING-APPLIES-TO-ENCODED-FIELDS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Describe an empty original block with bytes = 0."
+        ],
+        "negative": [
+          "Set bytes to the encoded text length rather than original byte count."
+        ],
+        "notes": [],
+        "positive": [
+          "Set bytes to the known pre-encoding size of a block."
+        ]
+      },
+      "id": "SV-2023-34-ENCODING-BYTES-DESCRIPTOR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Generate multiple protected blocks and verify each declares encoding."
+        ],
+        "negative": [
+          "Emit a protected block without its encoding directive."
+        ],
+        "notes": [],
+        "positive": [
+          "Encrypt without an input encoding and verify output declares the chosen encoding."
+        ]
+      },
+      "id": "SV-2023-34-ENCODING-DIRECTIVE-REQUIRED-IN-OUTPUT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change encoding before a later block and verify lexical state takes effect."
+        ],
+        "negative": [
+          "Emit a data, digest, or key block using a different textual encoding."
+        ],
+        "notes": [],
+        "positive": [
+          "Select a required encoding and verify all three output binary block kinds use it."
+        ]
+      },
+      "id": "SV-2023-34-ENCODING-EXPRESSION-CONTROLS-OUTPUT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Specify both optional numeric subkeywords."
+        ],
+        "negative": [
+          "Use a non-string enctype or nonnumeric line_length/bytes value."
+        ],
+        "notes": [],
+        "positive": [
+          "Specify encoding with a required enctype string."
+        ]
+      },
+      "id": "SV-2023-34-ENCODING-EXPRESSION-SYNTAX-AND-EFFECT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Choose an extension identifier that does not collide with standardized encoding identifiers."
+        ],
+        "negative": [],
+        "notes": [
+          "The extension identifier and algorithm are implementation-defined; do not prescribe either portably."
+        ],
+        "positive": [
+          "Use an implementation-defined additional encoding identifier supported by the implementation."
+        ]
+      },
+      "id": "SV-2023-34-ENCODING-IDENTIFIER-SUPPORT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Supply bytes = 0 for a nonempty encryption input block."
+        ],
+        "negative": [
+          "Use the supplied input bytes value to truncate or pad the block."
+        ],
+        "notes": [],
+        "positive": [
+          "Provide a misleading input bytes value and verify encryption derives output independently of it."
+        ]
+      },
+      "id": "SV-2023-34-ENCODING-INPUT-BYTES-IGNORED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use content whose encoded length is exactly the limit and one character over it."
+        ],
+        "negative": [
+          "Emit an encoded data line longer than the specified limit."
+        ],
+        "notes": [],
+        "positive": [
+          "Set a short line_length and verify every encoded data_block line stays within it."
+        ]
+      },
+      "id": "SV-2023-34-ENCODING-LINE-LENGTH-LIMIT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Provide an empty information string."
+        ],
+        "negative": [
+          "Encrypt encrypt_agent_info into data_block."
+        ],
+        "notes": [
+          "Generation of encrypt_agent_info is optional."
+        ],
+        "positive": [
+          "Provide tool information and verify it is visible inside the protected envelope."
+        ]
+      },
+      "id": "SV-2023-34-ENCRYPT-AGENT-INFO-OUTPUT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an empty string."
+        ],
+        "negative": [
+          "Use a non-string value."
+        ],
+        "notes": [],
+        "positive": [
+          "Use encrypt_agent_info = \"version information\"."
+        ]
+      },
+      "id": "SV-2023-34-ENCRYPT-AGENT-INFO-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Encrypt an empty source region and still verify encrypt_agent."
+        ],
+        "negative": [
+          "Omit encrypt_agent or put it in data_block."
+        ],
+        "notes": [],
+        "positive": [
+          "Encrypt an envelope and inspect the visible encrypt_agent string."
+        ]
+      },
+      "id": "SV-2023-34-ENCRYPT-AGENT-OUTPUT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Put comments adjacent to both boundaries."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Recover source, comments, and pragma text after decryption."
+        ]
+      },
+      "id": "SV-2023-34-ENCRYPT-ALL-ENVELOPE-TEXT-IN-DATA-BLOCK"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an empty begin/end envelope followed by a second nonoverlapping envelope."
+        ],
+        "negative": [
+          "Provide end without a preceding unclosed begin."
+        ],
+        "notes": [
+          "Nested begin/end encryption envelopes are separately required to be an error."
+        ],
+        "positive": [
+          "Use one matched begin/end pair around source text."
+        ]
+      },
+      "id": "SV-2023-34-ENCRYPTION-ENVELOPE-DELIMITERS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place pre-encrypted begin_protected content inside an encryption envelope."
+        ],
+        "negative": [
+          "Nest a begin/end envelope and require an error."
+        ],
+        "notes": [],
+        "positive": [
+          "Use sequential nonoverlapping envelopes."
+        ]
+      },
+      "id": "SV-2023-34-ENCRYPTION-ENVELOPES-NOT-NESTED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place comments and preprocessing text immediately outside envelope boundaries and compare output exactly."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Encrypt a file with unchanged source before and after an encryption envelope."
+        ]
+      },
+      "id": "SV-2023-34-ENCRYPTION-IGNORES-NONPRAGMA-TEXT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise zero and nonzero padding."
+        ],
+        "negative": [],
+        "notes": [
+          "Padding is unspecified."
+        ],
+        "positive": [
+          "Accept decrypted content with added boundary comments."
+        ]
+      },
+      "id": "SV-2023-34-ENCRYPTION-PADDING-COMMENTS-PERMITTED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an empty or minimal envelope body and verify a corresponding data_block is emitted."
+        ],
+        "negative": [],
+        "notes": [
+          "Cryptographic verification requires a supported method and known key."
+        ],
+        "positive": [
+          "Encrypt a source file containing two envelopes and verify each becomes a decryptable decryption envelope."
+        ]
+      },
+      "id": "SV-2023-34-ENCRYPTION-REPLACES-EACH-ENVELOPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an empty encryption region."
+        ],
+        "negative": [
+          "Encrypt cleartext following end as part of the region."
+        ],
+        "notes": [],
+        "positive": [
+          "Verify end closes input and becomes end_protected."
+        ]
+      },
+      "id": "SV-2023-34-END-ENCRYPTION-OUTPUT-FORM"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Put the next setting immediately after the closer."
+        ],
+        "negative": [
+          "Apply settings after end_protected to the closed block."
+        ],
+        "notes": [],
+        "positive": [
+          "Close one block and establish different settings for the next."
+        ]
+      },
+      "id": "SV-2023-34-END-PROTECTED-ENVELOPE-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place expressions immediately adjacent to the opener and closer and verify their classification by position."
+        ],
+        "negative": [],
+        "notes": [
+          "Choose keywords whose effects make positional classification observable."
+        ],
+        "positive": [
+          "Place an envelope attribute before begin_protected and a content keyword inside its matched region."
+        ]
+      },
+      "id": "SV-2023-34-ENVELOPE-AND-CONTENT-KEYWORD-PLACEMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the minimum metadata set sufficient to determine a data decryption key."
+        ],
+        "negative": [
+          "Parse encoded or still-encrypted key_block text as metadata."
+        ],
+        "notes": [],
+        "positive": [
+          "Decode and decrypt a non-CBC key_block, then parse its data-key metadata."
+        ]
+      },
+      "id": "SV-2023-34-KEY-BLOCK-DECRYPTION-PIPELINE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Put it immediately inside protected delimiters."
+        ],
+        "negative": [
+          "Place key_block in ordinary input and require an error."
+        ],
+        "notes": [],
+        "positive": [
+          "Reencrypt generated protected content containing key_block."
+        ]
+      },
+      "id": "SV-2023-34-KEY-BLOCK-ENCRYPTION-INPUT-LEGALITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Include every listed metadata kind."
+        ],
+        "negative": [
+          "Encode metadata before encryption."
+        ],
+        "notes": [],
+        "positive": [
+          "Decode and decrypt key_block to recover selected metadata."
+        ]
+      },
+      "id": "SV-2023-34-KEY-BLOCK-OUTPUT-PIPELINE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an empty or minimally valid key name string and inspect output."
+        ],
+        "negative": [
+          "Encrypt key_keyname into key_block."
+        ],
+        "notes": [],
+        "positive": [
+          "Verify selected key_keyname remains visible in encryption output."
+        ]
+      },
+      "id": "SV-2023-34-KEY-KEYNAME-CLEARTEXT-OUTPUT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a name known only for another owner."
+        ],
+        "negative": [
+          "Use an unknown name for that owner."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a key name registered for the owner."
+        ]
+      },
+      "id": "SV-2023-34-KEY-KEYNAME-MUST-BE-KNOWN"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Disambiguate identical names under distinct owners."
+        ],
+        "negative": [
+          "Select a same-named key associated with a different key owner."
+        ],
+        "notes": [],
+        "positive": [
+          "Select the key-encryption key by matching key_keyowner and key_keyname."
+        ]
+      },
+      "id": "SV-2023-34-KEY-KEYNAME-OUTPUT-SELECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a provider distinct from author and encryption agent."
+        ],
+        "negative": [
+          "Violate a data_keyowner uniqueness constraint for one key_keyowner."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a key owner with unique associated key identifiers."
+        ]
+      },
+      "id": "SV-2023-34-KEY-KEYOWNER-CONSTRAINTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an empty owner string if otherwise legal."
+        ],
+        "negative": [
+          "Rewrite the owner string."
+        ],
+        "notes": [],
+        "positive": [
+          "Compare key_keyowner input and output exactly."
+        ]
+      },
+      "id": "SV-2023-34-KEY-KEYOWNER-OUTPUT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an empty string."
+        ],
+        "negative": [
+          "Use a non-string value."
+        ],
+        "notes": [],
+        "positive": [
+          "Specify key_keyowner = \"provider\"."
+        ]
+      },
+      "id": "SV-2023-34-KEY-KEYOWNER-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a multi-block key_block."
+        ],
+        "negative": [
+          "Use a different algorithm and accept the result."
+        ],
+        "notes": [],
+        "positive": [
+          "Decrypt key_block with its declared method."
+        ]
+      },
+      "id": "SV-2023-34-KEY-METHOD-DECRYPTS-KEY-BLOCK"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an optional supported method."
+        ],
+        "negative": [
+          "Substitute another method identifier."
+        ],
+        "notes": [],
+        "positive": [
+          "Compare key_method input and output."
+        ]
+      },
+      "id": "SV-2023-34-KEY-METHOD-OUTPUT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use different data_method and key_method values."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Select a supported key method and recover a protected data key."
+        ]
+      },
+      "id": "SV-2023-34-KEY-METHOD-SELECTS-KEY-ENCRYPTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change current encoding immediately beforehand."
+        ],
+        "negative": [
+          "Provide public key and name for different keys."
+        ],
+        "notes": [],
+        "positive": [
+          "Place encoded public key immediately after expression."
+        ]
+      },
+      "id": "SV-2023-34-KEY-PUBLIC-KEY-INPUT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify next-line key placement."
+        ],
+        "negative": [
+          "Omit key from one using block."
+        ],
+        "notes": [],
+        "positive": [
+          "Verify each using block emits expression and encoded key."
+        ]
+      },
+      "id": "SV-2023-34-KEY-PUBLIC-KEY-OUTPUT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Have decrypted text define and then use a macro at the replacement site."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Decrypt cleartext containing a macro use and verify macro expansion after insertion."
+        ]
+      },
+      "id": "SV-2023-34-MACROS-AFTER-DECRYPTION-REPLACEMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use exactly two alternative key blocks."
+        ],
+        "negative": [
+          "Change data key metadata between key blocks and require an error."
+        ],
+        "notes": [],
+        "positive": [
+          "Emit alternative key blocks protecting the same data key."
+        ]
+      },
+      "id": "SV-2023-34-MULTIPLE-KEY-BLOCKS-SAME-DATA-KEY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise exactly eight nested decryption envelopes."
+        ],
+        "negative": [],
+        "notes": [
+          "Support beyond eight is implementation-specific."
+        ],
+        "positive": [
+          "Process eight nested decryption envelopes containing valid protected data."
+        ]
+      },
+      "id": "SV-2023-34-NESTED-DECRYPTION-ENVELOPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use eight nested envelopes and verify outer-to-inner replacement."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Decrypt an outer envelope containing an inner envelope and compile the inner cleartext."
+        ]
+      },
+      "id": "SV-2023-34-NESTED-ENVELOPES-DECRYPT-OUTER-FIRST"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multi-block content."
+        ],
+        "negative": [
+          "Use a non-128-bit key or non-CBC mode for aes128-cbc."
+        ],
+        "notes": [
+          "aes128-cbc support is optional."
+        ],
+        "positive": [
+          "Compare a known AES-128 CBC vector."
+        ]
+      },
+      "id": "SV-2023-34-OPTIONAL-AES128-CBC-DATA-METHOD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multi-block content."
+        ],
+        "negative": [
+          "Use a non-192-bit AES key."
+        ],
+        "notes": [
+          "aes192-cbc support is optional."
+        ],
+        "positive": [
+          "Compare a known AES-192 vector under the table mapping."
+        ]
+      },
+      "id": "SV-2023-34-OPTIONAL-AES192-CBC-DATA-METHOD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multi-block content."
+        ],
+        "negative": [
+          "Use a non-256-bit key or non-CBC mode."
+        ],
+        "notes": [
+          "aes256-cbc support is optional."
+        ],
+        "positive": [
+          "Compare a known AES-256 CBC vector."
+        ]
+      },
+      "id": "SV-2023-34-OPTIONAL-AES256-CBC-DATA-METHOD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise a supported boundary key size."
+        ],
+        "negative": [
+          "Map rsa to a different asymmetric algorithm."
+        ],
+        "notes": [
+          "rsa support is optional."
+        ],
+        "positive": [
+          "On an implementation supporting rsa, encrypt and decrypt a known RSA vector."
+        ]
+      },
+      "id": "SV-2023-34-OPTIONAL-ASYMMETRIC-DATA-METHODS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multi-block content."
+        ],
+        "negative": [
+          "Use a different cipher or mode."
+        ],
+        "notes": [
+          "blowfish-cbc support is optional."
+        ],
+        "positive": [
+          "Compare a known Blowfish CBC vector."
+        ]
+      },
+      "id": "SV-2023-34-OPTIONAL-BLOWFISH-CBC-DATA-METHOD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multi-block content."
+        ],
+        "negative": [
+          "Use a different cipher or mode."
+        ],
+        "notes": [
+          "cast128-cbc support is optional."
+        ],
+        "positive": [
+          "Compare a known CAST-128 CBC vector."
+        ]
+      },
+      "id": "SV-2023-34-OPTIONAL-CAST128-CBC-DATA-METHOD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multi-block content."
+        ],
+        "negative": [
+          "Use a different cipher or mode for 3des-cbc."
+        ],
+        "notes": [
+          "3des-cbc support is optional."
+        ],
+        "positive": [
+          "On an implementation supporting 3des-cbc, compare a known Triple-DES CBC vector."
+        ]
+      },
+      "id": "SV-2023-34-OPTIONAL-DATA-METHOD-MAPPINGS-A"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multi-block content."
+        ],
+        "negative": [
+          "Use a non-192-bit key."
+        ],
+        "notes": [
+          "twofish192-cbc support is optional."
+        ],
+        "positive": [
+          "Compare a known Twofish-192 vector."
+        ]
+      },
+      "id": "SV-2023-34-OPTIONAL-DATA-METHOD-MAPPINGS-B"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Digest empty input."
+        ],
+        "negative": [
+          "Map md2 to a different digest algorithm."
+        ],
+        "notes": [
+          "md2 support is optional."
+        ],
+        "positive": [
+          "Compare a known MD2 digest vector."
+        ]
+      },
+      "id": "SV-2023-34-OPTIONAL-DIGEST-METHOD-MAPPINGS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise a supported boundary key size."
+        ],
+        "negative": [
+          "Map elgamal to another algorithm."
+        ],
+        "notes": [
+          "elgamal support is optional."
+        ],
+        "positive": [
+          "On an implementation supporting elgamal, encrypt and decrypt known content with ElGamal."
+        ]
+      },
+      "id": "SV-2023-34-OPTIONAL-ELGAMAL-DATA-METHOD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Encode a line containing boundary printable/nonprintable bytes."
+        ],
+        "negative": [
+          "Map quoted-printable to a different encoding."
+        ],
+        "notes": [
+          "quoted-printable support is optional."
+        ],
+        "positive": [
+          "Encode bytes requiring quoted-printable escaping and compare RFC 2045 output."
+        ]
+      },
+      "id": "SV-2023-34-OPTIONAL-ENCODING-NAMES-AND-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise a supported boundary key size."
+        ],
+        "negative": [
+          "Map pgp-rsa to non-OpenPGP RSA semantics."
+        ],
+        "notes": [
+          "pgp-rsa support is optional."
+        ],
+        "positive": [
+          "On an implementation supporting pgp-rsa, process a known OpenPGP RSA vector."
+        ]
+      },
+      "id": "SV-2023-34-OPTIONAL-PGP-RSA-DATA-METHOD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Include nonprintable byte values."
+        ],
+        "negative": [
+          "Transform bytes under raw encoding."
+        ],
+        "notes": [
+          "raw support is optional."
+        ],
+        "positive": [
+          "Verify raw output bytes are identical to input bytes."
+        ]
+      },
+      "id": "SV-2023-34-OPTIONAL-RAW-ENCODING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Digest empty input."
+        ],
+        "negative": [
+          "Map ripemd-160 to a different digest."
+        ],
+        "notes": [
+          "ripemd-160 support is optional."
+        ],
+        "positive": [
+          "Compare a known RIPEMD-160 digest vector."
+        ]
+      },
+      "id": "SV-2023-34-OPTIONAL-RIPEMD160-DIGEST-METHOD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multi-block content."
+        ],
+        "negative": [
+          "Use a non-128-bit key."
+        ],
+        "notes": [
+          "serpent128-cbc support is optional."
+        ],
+        "positive": [
+          "Compare a known Serpent-128 vector."
+        ]
+      },
+      "id": "SV-2023-34-OPTIONAL-SERPENT128-CBC-DATA-METHOD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multi-block content."
+        ],
+        "negative": [
+          "Use a non-192-bit key."
+        ],
+        "notes": [
+          "serpent192-cbc support is optional."
+        ],
+        "positive": [
+          "Compare a known Serpent-192 vector."
+        ]
+      },
+      "id": "SV-2023-34-OPTIONAL-SERPENT192-CBC-DATA-METHOD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multi-block content."
+        ],
+        "negative": [
+          "Use a non-256-bit key or different mode."
+        ],
+        "notes": [
+          "serpent256-cbc support is optional."
+        ],
+        "positive": [
+          "Compare a known Serpent-256 CBC vector."
+        ]
+      },
+      "id": "SV-2023-34-OPTIONAL-SERPENT256-CBC-DATA-METHOD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multi-block content."
+        ],
+        "negative": [
+          "Use a non-128-bit key."
+        ],
+        "notes": [
+          "twofish128-cbc support is optional."
+        ],
+        "positive": [
+          "Compare a known Twofish-128 vector."
+        ]
+      },
+      "id": "SV-2023-34-OPTIONAL-TWOFISH128-CBC-DATA-METHOD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multi-block content."
+        ],
+        "negative": [
+          "Use a non-256-bit key or different mode."
+        ],
+        "notes": [
+          "twofish256-cbc support is optional."
+        ],
+        "positive": [
+          "Compare a known Twofish-256 CBC vector."
+        ]
+      },
+      "id": "SV-2023-34-OPTIONAL-TWOFISH256-CBC-DATA-METHOD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Check empty and binary blocks."
+        ],
+        "negative": [
+          "Report encoded character count instead of original bytes."
+        ],
+        "notes": [],
+        "positive": [
+          "Encrypt known-length content and verify generated bytes equals original byte count."
+        ]
+      },
+      "id": "SV-2023-34-OUTPUT-BYTES-COUNT-GENERATED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Include protect pragma text in that byte stream."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Encrypt an existing decryption envelope as content."
+        ]
+      },
+      "id": "SV-2023-34-PREENCRYPTED-CONTENT-AS-ENCRYPTION-BYTES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Split the sequence at each possible expression boundary without changing its interpretation."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare equivalent expression sequences written in one directive and in successive directives."
+        ]
+      },
+      "id": "SV-2023-34-PROTECT-DIRECTIVE-GROUPING-INVARIANT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place multiple expressions in one directive and preserve their left-to-right order."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use an ordered sequence of protect expressions whose later expression depends on state established by an earlier one."
+        ]
+      },
+      "id": "SV-2023-34-PROTECT-EXPRESSIONS-LEFT-TO-RIGHT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place an envelope opener immediately before an include and its closer in the included file."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Open protect state in one file and continue it through an included file."
+        ]
+      },
+      "id": "SV-2023-34-PROTECT-SCOPE-LEXICAL-ACROSS-FILES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place source tokens spanning the protected-region boundary and verify transformation precedes source analysis."
+        ],
+        "negative": [],
+        "notes": [
+          "Requires a portable way to produce a valid protected payload."
+        ],
+        "positive": [
+          "Compile a protected region whose decrypted cleartext is valid source and observe that the cleartext participates in compilation."
+        ]
+      },
+      "id": "SV-2023-34-PROTECTED-TEXT-TRANSFORMED-BEFORE-ANALYSIS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use adjacent begin_protected and end_protected."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Recover the inner end_protected after decrypting outer data."
+        ]
+      },
+      "id": "SV-2023-34-REENCRYPT-END-PROTECTED-IN-DATA-BLOCK"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Put reset protect inside nested protected bytes."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use conflicting inner settings and verify outer settings remain effective."
+        ]
+      },
+      "id": "SV-2023-34-REENCRYPT-INNER-PRAGMAS-UNINTERPRETED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an empty protected body and verify the begin_protected expression is included."
+        ],
+        "negative": [
+          "Interpret its encoded protected content instead of treating it as cleartext bytes."
+        ],
+        "notes": [
+          "Encryption of the matching end_protected expression is owned separately."
+        ],
+        "positive": [
+          "Reencrypt a protected envelope inside a larger encryption envelope and recover its opener and body from the outer data_block."
+        ]
+      },
+      "id": "SV-2023-34-REENCRYPT-PROTECTED-BLOCK-AS-CLEARTEXT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Digest empty and multi-block input."
+        ],
+        "negative": [
+          "Reject sha1 or map it to a different digest."
+        ],
+        "notes": [],
+        "positive": [
+          "Generate and verify a known SHA-1 digest vector."
+        ]
+      },
+      "id": "SV-2023-34-REQUIRED-DIGEST-METHODS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Digest empty and multi-block input."
+        ],
+        "negative": [
+          "Reject md5 or map it to a different digest."
+        ],
+        "notes": [],
+        "positive": [
+          "Generate and verify a known MD5 digest vector."
+        ]
+      },
+      "id": "SV-2023-34-REQUIRED-MD5-DIGEST-METHOD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Apply reset across an included-file boundary."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Set several protect values, apply reset, and compare subsequent behavior with explicit defaults."
+        ]
+      },
+      "id": "SV-2023-34-RESET-PROTECT-DEFAULTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a distinctive match value."
+        ],
+        "negative": [
+          "Return a different value and deny execution."
+        ],
+        "notes": [
+          "Requires a controlled shared library."
+        ],
+        "positive": [
+          "Return match and permit execution."
+        ]
+      },
+      "id": "SV-2023-34-RUNTIME-LICENSE-CHECK"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a negative return value."
+        ],
+        "negative": [
+          "Return nonmatch and verify no execution plus diagnostic containing return value."
+        ],
+        "notes": [],
+        "positive": []
+      },
+      "id": "SV-2023-34-RUNTIME-LICENSE-DENIAL-DIAGNOSTIC"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise normal and denied termination."
+        ],
+        "negative": [
+          "Omit callback when specified."
+        ],
+        "notes": [],
+        "positive": [
+          "Record exit callback before application termination."
+        ]
+      },
+      "id": "SV-2023-34-RUNTIME-LICENSE-EXIT-CALLBACK"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place it adjacent to a delimiter."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Decrypt output and compare runtime_license unchanged."
+        ]
+      },
+      "id": "SV-2023-34-RUNTIME-LICENSE-OUTPUT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use required fields only."
+        ],
+        "negative": [
+          "Omit a required field."
+        ],
+        "notes": [],
+        "positive": [
+          "Specify required fields and both optional fields."
+        ]
+      },
+      "id": "SV-2023-34-RUNTIME-LICENSE-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a minimal envelope body while checking that both key_block and data_block are present."
+        ],
+        "negative": [],
+        "notes": [
+          "Session-key support is optional; this applies when that mode is used."
+        ],
+        "positive": [
+          "Encrypt through a supported session-key flow and decrypt the emitted key_block and data_block to recover the body."
+        ]
+      },
+      "id": "SV-2023-34-SESSION-KEY-ENVELOPE-FORM"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use distinct encodings for key_block and digest_block."
+        ],
+        "negative": [
+          "Skip key_block decryption or fail to recover either field."
+        ],
+        "notes": [
+          "The recovered values can subsequently be used for digest_block decryption; that follow-on is capability wording here."
+        ],
+        "positive": [
+          "Decrypt a signed region's key_block and recover digest_decrypt_key and digest_key_method."
+        ]
+      },
+      "id": "SV-2023-34-SIGNATURE-DIGEST-KEY-BLOCK-DECRYPTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use distinct encodings for key_block and data_block."
+        ],
+        "negative": [
+          "Attempt to obtain the metadata without decrypting key_block."
+        ],
+        "notes": [
+          "The recovered values can subsequently be used for data_block decryption; that follow-on is capability wording here."
+        ],
+        "positive": [
+          "Decrypt a signed region's key_block and recover data_decrypt_key and data_method."
+        ]
+      },
+      "id": "SV-2023-34-SIGNATURE-KEY-BLOCK-DECRYPTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a minimal data_block and verify its ciphertext bytes remain unchanged."
+        ],
+        "negative": [
+          "Reencrypt data_block as part of key_block processing."
+        ],
+        "notes": [],
+        "positive": [
+          "Construct signed output and recover method and data key from key_block before decrypting unchanged data_block."
+        ]
+      },
+      "id": "SV-2023-34-SIGNED-DATA-KEY-BLOCK-FORM"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a minimal digest block."
+        ],
+        "negative": [
+          "Reencrypt digest_block during key metadata protection."
+        ],
+        "notes": [],
+        "positive": [
+          "Recover digest metadata from key_block and verify digest ciphertext unchanged."
+        ]
+      },
+      "id": "SV-2023-34-SIGNED-DIGEST-KEY-BLOCK-FORM"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise zero, high-bit, and line-sensitive bytes."
+        ],
+        "negative": [
+          "Reject uuencode or map it to another encoding."
+        ],
+        "notes": [],
+        "positive": [
+          "Encode and decode a known binary vector with uuencode."
+        ]
+      },
+      "id": "SV-2023-34-UUENCODE-AND-BASE64-REQUIRED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Name an object at the deepest nested scope still contained in the envelope."
+        ],
+        "negative": [
+          "Name an object outside the current protected envelope."
+        ],
+        "notes": [],
+        "positive": [
+          "Name an object declared inside the current protected envelope."
+        ]
+      },
+      "id": "SV-2023-34-VIEWPORT-OBJECT-CONTAINMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use empty strings to test grammar independently of semantic validity."
+        ],
+        "negative": [
+          "Omit a required field or use a non-string value."
+        ],
+        "notes": [],
+        "positive": [
+          "Specify both object and access strings."
+        ]
+      },
+      "id": "SV-2023-34-VIEWPORT-SYNTAX-AND-OBJECT-CONTAINMENT"
+    }
+  ],
+  "schema_version": 1
+}

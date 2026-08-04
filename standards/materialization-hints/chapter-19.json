@@ -1,0 +1,3567 @@
+{
+  "authority": "1800-2023",
+  "part": "19",
+  "requirements": [
+    {
+      "hints": {
+        "edge": [
+          "Leave one item unoverridden and verify inheritance."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Set group at_least and override one point and one cross."
+        ]
+      },
+      "id": "SV-2023-19-AT-LEAST-ALL-LEVELS-DEFAULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Set auto_bin_max below 2^M."
+        ],
+        "negative": [],
+        "notes": [
+          "The source equation is visually annotated; denominator is MIN(auto_bin_max, 2^M)."
+        ],
+        "positive": [
+          "Use M=3 with auto_bin_max above eight, cover four bins, and verify one-half coverage."
+        ]
+      },
+      "id": "SV-2023-19-AUTO-BIN-COVERPOINT-COVERAGE-FORMULA"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use explicitly encoded enum constants."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Inspect automatic names for a singleton, grouped integral range, and enum value."
+        ]
+      },
+      "id": "SV-2023-19-AUTOMATIC-BIN-NAMES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a bin count that evenly divides the value count."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "For a 3-bit point with three bins, verify ranges 0:1, 2:3, and 4:7."
+        ]
+      },
+      "id": "SV-2023-19-AUTOMATIC-BIN-UNIFORM-DISTRIBUTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a multi-bit value with only one unknown bit."
+        ],
+        "negative": [
+          "Sample values containing X and Z and observe no automatic-bin hit."
+        ],
+        "notes": [],
+        "positive": [
+          "Sample ordinary 0/1 values and observe automatic-bin hits."
+        ]
+      },
+      "id": "SV-2023-19-AUTOMATIC-BINS-EXCLUDE-XZ"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare an integral point with one ordinary explicit bin, for which automatic creation does not apply."
+        ],
+        "negative": [
+          "Omit explicit bins on a real point."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare an integral point with only ignore and illegal bins and observe automatic state bins for remaining values."
+        ]
+      },
+      "id": "SV-2023-19-AUTOMATIC-INTEGRAL-STATE-BINS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Override both the point and same-named cross."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Override a point but not its base cross and observe the cross still contributes."
+        ]
+      },
+      "id": "SV-2023-19-BASE-CROSS-SURVIVES-POINT-OVERRIDE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an explicitly unsigned cast of the same bit pattern."
+        ],
+        "negative": [
+          "Use a negative signed bin value with an unsigned-effective-type point and require a diagnostic."
+        ],
+        "notes": [],
+        "positive": [
+          "Use nonnegative signed bin values with an unsigned point."
+        ]
+      },
+      "id": "SV-2023-19-BIN-CAST-NEGATIVE-TO-UNSIGNED-WARNING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use signedness conversion that preserves the mathematical value."
+        ],
+        "negative": [
+          "Use an out-of-range value whose narrowing changes it and require a warning."
+        ],
+        "notes": [],
+        "positive": [
+          "Use an in-range bin value preserved by conversion."
+        ]
+      },
+      "id": "SV-2023-19-BIN-CAST-VALUE-CHANGE-WARNING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare enum constants with explicitly encoded base values."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use a bin value requiring width conversion to the point's effective type."
+        ]
+      },
+      "id": "SV-2023-19-BIN-EXPRESSION-CAST-TO-POINT-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a true coverpoint guard but false bin guard to isolate bin-level behavior."
+        ],
+        "negative": [
+          "Match the same bin with a false guard and observe no increment."
+        ],
+        "notes": [],
+        "positive": [
+          "Match a bin once with a true bin guard and observe one increment."
+        ]
+      },
+      "id": "SV-2023-19-BIN-IFF-DISABLES-COUNT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use overlapping state bins and verify each matching bin follows its own count."
+        ],
+        "negative": [
+          "Sample a value outside the bin's set and observe no increment."
+        ],
+        "notes": [],
+        "positive": [
+          "Sample two matching values on separate samples and observe two state-bin increments."
+        ]
+      },
+      "id": "SV-2023-19-BIN-MATCH-COUNTING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change the source variable after construction and verify bin definitions remain construction-derived."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use a constructor input in a with predicate and create instances with different filtered bins."
+        ]
+      },
+      "id": "SV-2023-19-BIN-WITH-CONSTRUCTION-EVALUATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare with an explicit full-domain range list."
+        ],
+        "negative": [
+          "Use a different coverpoint's name as the domain."
+        ],
+        "notes": [],
+        "positive": [
+          "Define a bin as its own point name with a filtering predicate."
+        ]
+      },
+      "id": "SV-2023-19-BIN-WITH-COVERPOINT-DOMAIN"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Choose values for which the two orders produce different empty bins."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use fixed bins and a selective predicate to distinguish default and distribute_first ordering."
+        ]
+      },
+      "id": "SV-2023-19-BIN-WITH-DISTRIBUTION-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a predicate sensitive to the coverpoint type's signedness."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Filter [0:9] with an even-item predicate and inspect included bins."
+        ]
+      },
+      "id": "SV-2023-19-BIN-WITH-FILTER-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a one-bit integral expression."
+        ],
+        "negative": [
+          "Use a non-integral result in a with clause."
+        ],
+        "notes": [],
+        "positive": [
+          "Use an integral relational expression in a with clause."
+        ]
+      },
+      "id": "SV-2023-19-BIN-WITH-INTEGRAL-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Interleave duplicate accepted items with rejected items."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Filter a list containing repeated accepted values and inspect fixed-bin distribution."
+        ]
+      },
+      "id": "SV-2023-19-BIN-WITH-PRESERVES-DUPLICATES-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a multi-bit value with one unknown bit."
+        ],
+        "negative": [
+          "Use X or Z in an ordinary bin expression and require a warning."
+        ],
+        "notes": [],
+        "positive": [
+          "Use X in a wildcard bin without invoking this nonwildcard warning condition."
+        ]
+      },
+      "id": "SV-2023-19-BIN-XZ-VALUE-WARNING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use several transitions sharing the same final value."
+        ],
+        "negative": [
+          "Attempt to select based only on an earlier transition value and verify it does not control selection."
+        ],
+        "notes": [],
+        "positive": [
+          "Define transitions with distinct final values and intersect binsof with one final-value range."
+        ]
+      },
+      "id": "SV-2023-19-BINSOF-TRANSITION-LAST-VALUE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a class method."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Change a value in the first statement and observe its pre-change value at begin sampling."
+        ]
+      },
+      "id": "SV-2023-19-BLOCK-BEGIN-EVENT-TIMING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a function."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Change a value in the last statement and observe the changed value at end sampling."
+        ]
+      },
+      "id": "SV-2023-19-BLOCK-END-EVENT-TIMING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Have both covergroups sample the same class member."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare and construct two embedded covergroups with different events."
+        ]
+      },
+      "id": "SV-2023-19-CLASS-MULTIPLE-COVERGROUPS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Update the underlying signal within the same time slot as sampling."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Cover equivalent clocking-block inputs with #1step and #0 skews and distinguish their sampled values."
+        ]
+      },
+      "id": "SV-2023-19-CLOCKING-BLOCK-SIGNAL-SAMPLE-REGION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a ref argument whose value changes to control subsequent clocking-event triggering."
+        ],
+        "negative": [],
+        "notes": [
+          "Observe successful name resolution and event-driven sampling; do not infer behavior from diagnostic wording."
+        ],
+        "positive": [
+          "Define a covergroup with an argument and use that argument in its clocking event."
+        ]
+      },
+      "id": "SV-2023-19-CLOCKING-EVENT-COVERGROUP-ARGUMENTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change the covered value between same-step events."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Trigger two clocking events in one time step and observe two samples."
+        ]
+      },
+      "id": "SV-2023-19-CLOCKING-EVENT-IMMEDIATE-SAMPLING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Invoke before and after sampling events."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Invoke query and control methods from procedural code after construction."
+        ]
+      },
+      "id": "SV-2023-19-COVERAGE-METHODS-PROCEDURAL-ANYTIME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use weighted coverage where aggregate counts need not directly reproduce the returned percentage."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Query optional counts for an instance point, instance group, cumulative point, and cumulative group and verify each aggregation domain."
+        ]
+      },
+      "id": "SV-2023-19-COVERAGE-QUERY-BIN-COUNT-ARGS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an actual expression with a visible side effect and verify it occurs at construction."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Change an actual expression's source value before construction and observe the construction-time value."
+        ]
+      },
+      "id": "SV-2023-19-COVERGROUP-ACTUAL-EVALUATION-TIME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Separate initialization and construction into consecutive constructor statements."
+        ],
+        "negative": [
+          "Construct the covergroup before initializing the referenced const member."
+        ],
+        "notes": [],
+        "positive": [
+          "Initialize the const member, then construct the embedded covergroup."
+        ]
+      },
+      "id": "SV-2023-19-COVERGROUP-CONSTANT-INITIALIZATION-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Reverse their textual order inside the prohibited construct."
+        ],
+        "negative": [
+          "Place both operations in a loop body; repeat with fork-join_none."
+        ],
+        "notes": [],
+        "positive": [
+          "Perform initialization and covergroup construction sequentially outside loops and forks."
+        ]
+      },
+      "id": "SV-2023-19-COVERGROUP-CONSTRUCTION-NOT-LOOPED-WITH-CONSTANT-INIT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a customized sample method with a defaulted formal argument."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Define and trigger one covergroup with each of the three coverage-event forms."
+        ]
+      },
+      "id": "SV-2023-19-COVERGROUP-COVERAGE-EVENT-FORMS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an optional endgroup label matching the declared identifier."
+        ],
+        "negative": [
+          "Place a coverpoint outside the grammar-prescribed covergroup body."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a covergroup containing a coverpoint and option assignment, then instantiate it."
+        ]
+      },
+      "id": "SV-2023-19-COVERGROUP-DECLARATION-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call the default method at multiple procedural points and observe one sample per call."
+        ],
+        "negative": [
+          "Attempt to pass an argument to the default sample method."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a covergroup with no event and trigger sampling by calling its no-argument sample method."
+        ]
+      },
+      "id": "SV-2023-19-COVERGROUP-DEFAULT-SAMPLE-METHOD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Define a covergroup in a package and instantiate its type from an importing module."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Define and instantiate equivalent covergroups in each permitted context."
+        ]
+      },
+      "id": "SV-2023-19-COVERGROUP-DEFINITION-CONTEXTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Reference a static class constant."
+        ],
+        "negative": [
+          "Reference a constant belonging to an unrelated object."
+        ],
+        "notes": [],
+        "positive": [
+          "Reference a const member of the containing class."
+        ]
+      },
+      "id": "SV-2023-19-COVERGROUP-EXPRESSION-CONSTANT-OWNERSHIP"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Call functions having output, inout, or mutable ref formals."
+        ],
+        "notes": [],
+        "positive": [
+          "Call a side-effect-free function with input and const-ref formals."
+        ]
+      },
+      "id": "SV-2023-19-COVERGROUP-EXPRESSION-FUNCTION-ARGUMENTS"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Call a function that reads a mutable module or class variable."
+        ],
+        "notes": [],
+        "positive": [
+          "Call a function using locals, arguments, and an external constant."
+        ]
+      },
+      "id": "SV-2023-19-COVERGROUP-EXPRESSION-FUNCTION-EXTERNAL-REFERENCES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call a non-automatic function that demonstrably preserves no state."
+        ],
+        "negative": [
+          "Call a function that updates static state or another variable."
+        ],
+        "notes": [],
+        "positive": [
+          "Call an automatic pure function of its inputs."
+        ]
+      },
+      "id": "SV-2023-19-COVERGROUP-EXPRESSION-FUNCTION-STATE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use `$bits` of a statically known type."
+        ],
+        "negative": [
+          "Use a runtime, nonconstant system function."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a constant system function in a covergroup expression."
+        ]
+      },
+      "id": "SV-2023-19-COVERGROUP-EXPRESSION-SYSTEM-FUNCTIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a constant expression with no variable references."
+        ],
+        "negative": [
+          "Use a ref covergroup argument as a variable in a covergroup expression."
+        ],
+        "notes": [],
+        "positive": [
+          "Use an input covergroup argument and enclosing-class constant in a coverage option expression."
+        ]
+      },
+      "id": "SV-2023-19-COVERGROUP-EXPRESSION-VARIABLE-SOURCES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Extend a covergroup inherited through an intermediate base class."
+        ],
+        "negative": [
+          "Extend an undefined covergroup name."
+        ],
+        "notes": [],
+        "positive": [
+          "Extend an embedded covergroup declared in the immediate base class."
+        ]
+      },
+      "id": "SV-2023-19-COVERGROUP-EXTENDS-BASE-EXISTS"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Declare an extending covergroup at module scope."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare an extending covergroup inside a class."
+        ]
+      },
+      "id": "SV-2023-19-COVERGROUP-EXTENDS-CLASS-ONLY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Access a similarly named class property through the instance while ensuring the formal remains inaccessible."
+        ],
+        "negative": [
+          "Reference a covergroup formal through an instance hierarchical name."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a formal within its covergroup's coverpoint expression."
+        ]
+      },
+      "id": "SV-2023-19-COVERGROUP-FORMAL-NOT-HIERARCHICAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Pass an expression rather than a simple variable as the input actual."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Construct with an input variable, change the variable, then sample coverage based on the formal's original value."
+        ]
+      },
+      "id": "SV-2023-19-COVERGROUP-INPUT-VALUE-SNAPSHOT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "At the leaf level, reference a component inherited through both covergroup inheritance levels."
+        ],
+        "negative": [],
+        "notes": [
+          "Use class inheritance at each level; covergroup extends is legal only inside a class."
+        ],
+        "positive": [
+          "Create base, intermediate, and leaf classes, extending the embedded covergroup at both derived levels."
+        ]
+      },
+      "id": "SV-2023-19-COVERGROUP-MULTILEVEL-INHERITANCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Mix defaulted and nondefaulted formals and supply all mandatory actuals."
+        ],
+        "negative": [
+          "Omit a nondefaulted formal argument in the `new` call."
+        ],
+        "notes": [],
+        "positive": [
+          "Construct a covergroup while omitting only a defaulted formal."
+        ]
+      },
+      "id": "SV-2023-19-COVERGROUP-NONDEFAULT-ACTUALS"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Declare output and inout formals on covergroups."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare otherwise equivalent input and ref covergroup formals."
+        ]
+      },
+      "id": "SV-2023-19-COVERGROUP-OUTPUT-INOUT-ILLEGAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use each endpoint form in separate bins."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare ranges using [$:upper] and [lower:$]."
+        ]
+      },
+      "id": "SV-2023-19-COVERGROUP-RANGE-UNBOUNDED-ENDPOINT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Externally update the actual and confirm the covergroup can read but not write it."
+        ],
+        "negative": [
+          "Attempt to assign to the ref formal within the covergroup declaration."
+        ],
+        "notes": [],
+        "positive": [
+          "Read a ref formal in a coverpoint expression."
+        ]
+      },
+      "id": "SV-2023-19-COVERGROUP-REF-READ-ONLY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Sample the ref formal both before and after an external update."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Construct with a ref variable, modify it externally, and sample the updated value."
+        ]
+      },
+      "id": "SV-2023-19-COVERGROUP-REF-TRACKS-ACTUAL"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Omit an actual for a nondefaulted sample formal."
+        ],
+        "notes": [],
+        "positive": [
+          "Call sample while omitting only a defaulted formal."
+        ]
+      },
+      "id": "SV-2023-19-COVERGROUP-SAMPLE-REQUIRED-ACTUALS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Declare an instance variable before constructing it with `new`."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare one covergroup type and construct two separately named instances."
+        ]
+      },
+      "id": "SV-2023-19-COVERGROUP-TYPE-INSTANTIATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Set one item's weight to zero."
+        ],
+        "negative": [],
+        "notes": [
+          "The source equation is visually annotated but corresponds to Cg = sum(Wi*Ci)/sum(Wi), with i ranging over points and crosses."
+        ],
+        "positive": [
+          "Use two items with unequal weights and known coverage to verify the weighted average."
+        ]
+      },
+      "id": "SV-2023-19-COVERGROUP-WEIGHTED-ITEM-COVERAGE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Keep one included nonzero-weight item and verify denominator is nonzero."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Construct each of the three zero-denominator conditions."
+        ]
+      },
+      "id": "SV-2023-19-COVERGROUP-ZERO-DENOMINATOR-CONDITIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an explicit real type."
+        ],
+        "negative": [
+          "Specify a coverpoint data type without an identifier."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a named coverpoint with an explicit integral type."
+        ]
+      },
+      "id": "SV-2023-19-COVERPOINT-DECLARED-TYPE-RESTRICTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an implicit data type with a self-determined expression."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare typed and untyped points whose explicit conversion changes width or signedness."
+        ]
+      },
+      "id": "SV-2023-19-COVERPOINT-EFFECTIVE-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Cross a real sampled-value coverpoint with an integral coverpoint."
+        ],
+        "negative": [
+          "Define transition bins for a real-valued coverpoint."
+        ],
+        "notes": [],
+        "positive": [
+          "Cover an integral expression and a real expression using sampled-value bins."
+        ]
+      },
+      "id": "SV-2023-19-COVERPOINT-EXPRESSION-TYPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an empty semicolon bins body."
+        ],
+        "negative": [
+          "Place a bins declaration outside the grammar-prescribed coverpoint body."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a labeled coverpoint with bins, a with clause, and iff guard."
+        ]
+      },
+      "id": "SV-2023-19-COVERPOINT-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Toggle only the guard between consecutive samples."
+        ],
+        "negative": [
+          "Sample a matching value with a false guard and observe no hit."
+        ],
+        "notes": [],
+        "positive": [
+          "Sample once with a true guard and observe a hit."
+        ]
+      },
+      "id": "SV-2023-19-COVERPOINT-IFF-DISABLES-SAMPLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a concatenation with a self-determined width."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use an untyped coverpoint expression whose width and signedness affect bin matching."
+        ]
+      },
+      "id": "SV-2023-19-COVERPOINT-INFERRED-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Access instance option data hierarchically and type-option data through scope resolution."
+        ],
+        "negative": [
+          "Reference a coverpoint as an unqualified identifier from unrelated procedural code."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a point in a cross, through an instance hierarchy, and through covergroup scope resolution."
+        ]
+      },
+      "id": "SV-2023-19-COVERPOINT-NAME-VISIBILITY-CONTEXTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Access a labeled point method."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Reference a labeled point in a cross and an unlabeled single-variable point by the variable name."
+        ]
+      },
+      "id": "SV-2023-19-COVERPOINT-NAMING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Assign the virtual interface before constructing and sampling the covergroup."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Cover a signal accessed through a virtual interface handle."
+        ]
+      },
+      "id": "SV-2023-19-COVERPOINT-PROCEDURAL-CONTEXT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change values again immediately after the sampling call."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Change both point and iff source values before sampling and observe their sample-time values."
+        ]
+      },
+      "id": "SV-2023-19-COVERPOINT-SAMPLE-TIME-EVALUATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise signedness conversion."
+        ],
+        "negative": [
+          "Use an expression incompatible with the declared coverpoint type."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a wider expression with a narrower compatible integral coverpoint type and bin the converted value."
+        ]
+      },
+      "id": "SV-2023-19-COVERPOINT-TYPED-ASSIGNMENT-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Declare two crosses and verify each has distinct scoped types."
+        ],
+        "negative": [
+          "Reference either automatic type outside the cross scope."
+        ],
+        "notes": [],
+        "positive": [
+          "Use CrossQueueType in a function declared inside its cross."
+        ]
+      },
+      "id": "SV-2023-19-CROSS-AUTOMATIC-TYPE-SCOPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Group products sharing one component bin."
+        ],
+        "negative": [
+          "Match only some component bins of a product and verify no increment."
+        ],
+        "notes": [],
+        "positive": [
+          "Group several products in one named cross bin and hit two different products on separate samples."
+        ]
+      },
+      "id": "SV-2023-19-CROSS-BIN-GROUP-MATCH-COUNT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a true cross-level guard and false bin-level guard."
+        ],
+        "negative": [
+          "Match the same tuple with the bin guard false."
+        ],
+        "notes": [],
+        "positive": [
+          "Match a selected cross bin with its guard true."
+        ]
+      },
+      "id": "SV-2023-19-CROSS-BIN-IFF-DISABLES-COUNT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Negate the selection and use multiple disjoint ranges."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Select point bins intersecting a range and verify only overlapping bins form the user cross bin."
+        ]
+      },
+      "id": "SV-2023-19-CROSS-BINSOF-INTERSECT-SELECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an implicitly created point from a direct cross variable."
+        ],
+        "negative": [
+          "Apply binsof to an arbitrary expression that is not a point or point bin."
+        ],
+        "notes": [],
+        "positive": [
+          "Select all bins of an implicit variable point and one named bin of an explicit point."
+        ]
+      },
+      "id": "SV-2023-19-CROSS-BINSOF-OPERAND"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Include an empty or excluded point bin and verify later rules governing its cross participation."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Cross points with two and three bins and observe six cross combinations."
+        ]
+      },
+      "id": "SV-2023-19-CROSS-CARTESIAN-PRODUCT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Include ignore and illegal cross bins and verify they are absent from significant user-bin count."
+        ],
+        "negative": [],
+        "notes": [
+          "Visually annotated equations correspond to Ci=|bins_covered|/(Bc+Bu) and Bc=(product Bj)-Bb."
+        ],
+        "positive": [
+          "Build a small cross with overlapping user bins and verify automatic and user denominator components."
+        ]
+      },
+      "id": "SV-2023-19-CROSS-COVERAGE-FORMULA"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Have one crossed point contain each excluded bin kind."
+        ],
+        "negative": [
+          "Add default, ignore, and illegal point bins and verify no products are formed from them."
+        ],
+        "notes": [],
+        "positive": [
+          "Cross points having ordinary bins and verify their products exist."
+        ]
+      },
+      "id": "SV-2023-19-CROSS-EXCLUDES-DEFAULT-IGNORE-ILLEGAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a constant system function."
+        ],
+        "negative": [
+          "Call a side-effecting function from a cross expression."
+        ],
+        "notes": [],
+        "positive": [
+          "Call a pure automatic function with permitted arguments in a cross expression."
+        ]
+      },
+      "id": "SV-2023-19-CROSS-EXPRESSION-RESTRICTIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an empty semicolon cross body."
+        ],
+        "negative": [
+          "Use a cross body item not admitted by the grammar."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a labeled cross with a local function, option, and selected bin."
+        ]
+      },
+      "id": "SV-2023-19-CROSS-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the enclosing identifier without a with clause to select all products."
+        ],
+        "negative": [
+          "Use another cross's identifier in the select expression."
+        ],
+        "notes": [],
+        "positive": [
+          "Define a cross bin as its enclosing cross name with a tuple predicate."
+        ]
+      },
+      "id": "SV-2023-19-CROSS-IDENTIFIER-SELECT-DOMAIN"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Keep point guards true while disabling only the cross."
+        ],
+        "negative": [
+          "Sample it with a false cross guard and observe no cross hit."
+        ],
+        "notes": [],
+        "positive": [
+          "Sample a matching tuple with a true cross guard."
+        ]
+      },
+      "id": "SV-2023-19-CROSS-IFF-DISABLES-SAMPLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Combine binsof selections logically in the ignore expression."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Select products involving a specified point-value range into an ignore cross bin."
+        ]
+      },
+      "id": "SV-2023-19-CROSS-IGNORE-BIN-SELECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Overlap ignored products with retained automatic bins."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Include one product in both an ordinary user bin and ignore bin and verify it is excluded."
+        ]
+      },
+      "id": "SV-2023-19-CROSS-IGNORED-PRODUCT-PRECEDENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Select illegal products with a compound logical expression."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Define legal cross bins alongside an illegal selected product set."
+        ]
+      },
+      "id": "SV-2023-19-CROSS-ILLEGAL-BIN-SELECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Overlap all three classifications on one product."
+        ],
+        "negative": [
+          "Sample an illegal product also present in an ordinary and ignore bin and require a runtime error."
+        ],
+        "notes": [],
+        "positive": [
+          "Sample ordinary products without error."
+        ]
+      },
+      "id": "SV-2023-19-CROSS-ILLEGAL-PRODUCT-ERROR-PRECEDENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Mix a direct variable with an explicitly declared expression coverpoint."
+        ],
+        "negative": [
+          "Place an arbitrary expression directly in a cross item list."
+        ],
+        "notes": [],
+        "positive": [
+          "Cross an explicit coverpoint whose covered expression is nontrivial."
+        ]
+      },
+      "id": "SV-2023-19-CROSS-ITEM-EXPRESSION-REQUIRES-POINT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Declare an unlabeled cross when no source-level reference is needed."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Label a cross and access a bin or option beneath its scope."
+        ]
+      },
+      "id": "SV-2023-19-CROSS-LABEL-SCOPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use another same-named function in an outer scope."
+        ],
+        "negative": [
+          "Call the cross-local function from outside the cross."
+        ],
+        "notes": [],
+        "positive": [
+          "Call a cross-local function from a bin selection in the same cross."
+        ]
+      },
+      "id": "SV-2023-19-CROSS-LOCAL-FUNCTION-SCOPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use both logical operators around matches."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use an unparenthesized expression combining matches, conjunction, and disjunction and compare with explicit grammar-equivalent parentheses."
+        ]
+      },
+      "id": "SV-2023-19-CROSS-MATCHES-PRECEDENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Set the count exactly equal to the number of satisfying tuples."
+        ],
+        "negative": [
+          "Specify zero or a negative matches count."
+        ],
+        "notes": [],
+        "positive": [
+          "Exercise omitted matches, an explicit count, and `$` over candidate tuples."
+        ]
+      },
+      "id": "SV-2023-19-CROSS-MATCHES-SELECTION-POLICY"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Use a cross name as an unqualified identifier in unrelated code."
+        ],
+        "notes": [],
+        "positive": [
+          "Access an instance cross option hierarchically and a type option through covergroup scope resolution."
+        ]
+      },
+      "id": "SV-2023-19-CROSS-NAME-VISIBILITY-CONTEXTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Set it at covergroup scope and observe the value inherited by a cross."
+        ],
+        "negative": [
+          "Attempt to set cross_num_print_missing at coverpoint scope."
+        ],
+        "notes": [
+          "Coverage database/report access is environment-facing; a materialization may instead observe option legality, value, and inheritance in-language."
+        ],
+        "positive": [
+          "Set a positive limit on a cross and verify that many missing products are requested for persistence/reporting."
+        ]
+      },
+      "id": "SV-2023-19-CROSS-NUM-PRINT-MISSING-OPTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use similarly named points in two groups and ensure lexical ownership controls."
+        ],
+        "negative": [
+          "Attempt to reference a point from a different covergroup in the cross list."
+        ],
+        "notes": [],
+        "positive": [
+          "Cross two points declared in one covergroup."
+        ]
+      },
+      "id": "SV-2023-19-CROSS-POINTS-SAME-COVERGROUP"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Cross two explicitly declared real-expression coverpoints."
+        ],
+        "negative": [
+          "Place a real variable directly in the cross item list."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a real-expression coverpoint and cross it with another point."
+        ]
+      },
+      "id": "SV-2023-19-CROSS-REAL-ITEM-POINT-REQUIRED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Set the option at covergroup scope and verify a contained cross inherits it."
+        ],
+        "negative": [
+          "Set false and verify all automatic bins disappear when one explicit bin is present.",
+          "Attempt to set cross_retain_auto_bins at coverpoint scope."
+        ],
+        "notes": [],
+        "positive": [
+          "At cross scope, leave the default true, define a partial user bin, and observe automatic bins for remaining products."
+        ]
+      },
+      "id": "SV-2023-19-CROSS-RETAIN-AUTO-BINS-OPTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Parenthesize a mixture of conjunction and disjunction."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Combine point-bin selections with && for one product and || for their union."
+        ]
+      },
+      "id": "SV-2023-19-CROSS-SELECT-LOGICAL-COMBINATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Explicitly cast a structurally suitable but assignment-incompatible value."
+        ],
+        "negative": [
+          "Use an incompatible expression without a cast."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a context-typed array literal and a separately computed CrossQueueType expression."
+        ]
+      },
+      "id": "SV-2023-19-CROSS-SET-EXPRESSION-CONTEXT-CAST"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an empty CrossQueueType value."
+        ],
+        "negative": [
+          "Use a scalar or queue of incompatible tuple elements."
+        ],
+        "notes": [],
+        "positive": [
+          "Define a cross bin from a correctly typed tuple queue."
+        ]
+      },
+      "id": "SV-2023-19-CROSS-SET-EXPRESSION-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise omitted matches and `$` requiring every value tuple."
+        ],
+        "negative": [
+          "Use fewer present values than the requested positive threshold."
+        ],
+        "notes": [],
+        "positive": [
+          "Select a candidate with an explicit positive matches count that it meets."
+        ]
+      },
+      "id": "SV-2023-19-CROSS-SET-MATCHES-POLICY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Cross three mixed items."
+        ],
+        "negative": [
+          "Attempt a one-item cross."
+        ],
+        "notes": [],
+        "positive": [
+          "Cross two variables and cross mixed variables and coverpoints."
+        ]
+      },
+      "id": "SV-2023-19-CROSS-TWO-OR-MORE-ITEMS"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Place an explicit typedef declaration directly in the cross body."
+        ],
+        "notes": [],
+        "positive": [
+          "Refer to CrossValType and CrossQueueType inside the cross body without declaring them."
+        ]
+      },
+      "id": "SV-2023-19-CROSS-TYPES-IMPLICIT-TYPEDEFS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Toggle cross_retain_auto_bins to exercise its specified control."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Define one user bin covering part of a cross and observe automatic bins retained for nonoverlapping products."
+        ]
+      },
+      "id": "SV-2023-19-CROSS-USER-AUTO-BIN-COEXISTENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Mix one directly named integral variable with one explicit coverpoint in a cross."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Cross two variables without explicit coverpoint declarations and query the resulting cross coverage."
+        ]
+      },
+      "id": "SV-2023-19-CROSS-VARIABLE-IMPLICIT-COVERPOINT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Avoid relying on side effects or observable evaluation-event counts."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use constructor inputs in a cross with predicate and construct instances yielding different selected tuples."
+        ]
+      },
+      "id": "SV-2023-19-CROSS-WITH-CONSTRUCTION-EVALUATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a one-bit integral function result."
+        ],
+        "negative": [
+          "Use a non-integral result expression."
+        ],
+        "notes": [],
+        "positive": [
+          "Use an integral predicate in a cross-bin with clause."
+        ]
+      },
+      "id": "SV-2023-19-CROSS-WITH-INTEGRAL-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Mix an explicit point identifier and an implicit variable point."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Filter candidate tuples with a relation between two crossed item identifiers."
+        ]
+      },
+      "id": "SV-2023-19-CROSS-WITH-ITEM-VALUE-BINDING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a tuple containing multi-value point bins."
+        ],
+        "negative": [
+          "Use a threshold larger than its satisfying tuple count."
+        ],
+        "notes": [],
+        "positive": [
+          "Select a bin tuple with several satisfying value tuples and a threshold it meets."
+        ]
+      },
+      "id": "SV-2023-19-CROSS-WITH-TUPLE-FILTER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exclude every cross product with ignore_bins."
+        ],
+        "negative": [],
+        "notes": [
+          "Observe parent coverage from the remaining item."
+        ],
+        "positive": [
+          "Define a cross with no contributing cross bins and combine it with a contributing point in the parent covergroup."
+        ]
+      },
+      "id": "SV-2023-19-CROSS-ZERO-DENOMINATOR-PARENT-EXCLUSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise both get_coverage and get_inst_coverage."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Initialize covered and total outputs nonzero, query a zero-denominator cross, and check both become zero."
+        ]
+      },
+      "id": "SV-2023-19-CROSS-ZERO-DENOMINATOR-QUERY-COUNT-OUTPUTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change only the cross weight between zero and one."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Query a zero-denominator nonzero-weight cross and expect 0.0.",
+          "Query the same cross with zero weight and expect 100.0."
+        ]
+      },
+      "id": "SV-2023-19-CROSS-ZERO-DENOMINATOR-QUERY-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an empty queue."
+        ],
+        "negative": [
+          "Return a queue with incompatible element type."
+        ],
+        "notes": [],
+        "positive": [
+          "Return an unbounded queue of tuple structs from a cross-local function."
+        ]
+      },
+      "id": "SV-2023-19-CROSSQUEUETYPE-DEFINITION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare with an explicitly ranged coverpoint type."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Cross an untyped concatenation point and inspect its tuple field width and descending bounds."
+        ]
+      },
+      "id": "SV-2023-19-CROSSVALTYPE-INFERRED-BOUNDS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Include an implicitly created point."
+        ],
+        "negative": [
+          "Use a nonexistent or incompatible field in a CrossValType value."
+        ],
+        "notes": [],
+        "positive": [
+          "Cross differently named and typed points and construct a tuple struct with matching fields."
+        ]
+      },
+      "id": "SV-2023-19-CROSSVALTYPE-STRUCT-FIELDS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Give all instances the same threshold."
+        ],
+        "negative": [
+          "Accumulate only two hits and verify the bin remains uncovered."
+        ],
+        "notes": [],
+        "positive": [
+          "Use instances with at_least 1 and 3; verify cumulative bin coverage requires three hits."
+        ]
+      },
+      "id": "SV-2023-19-CUMULATIVE-AT-LEAST-MAXIMUM"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use ignore_bins for explicit values alongside a default bin."
+        ],
+        "negative": [
+          "Attempt to explicitly ignore the default bin."
+        ],
+        "notes": [],
+        "positive": [
+          "Define a normal default bin."
+        ]
+      },
+      "id": "SV-2023-19-DEFAULT-BIN-CANNOT-BE-IGNORED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Hit explicit and default bins in the same point and verify only explicit-bin hits contribute."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Hit only a default bin and verify the coverpoint percentage gains no coverage."
+        ]
+      },
+      "id": "SV-2023-19-DEFAULT-BIN-EXCLUDED-FROM-COVERAGE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Sample values already claimed by explicit bins and verify they do not enter default."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Sample an uncovered value and an unspecified transition into corresponding default bins."
+        ]
+      },
+      "id": "SV-2023-19-DEFAULT-BIN-UNMATCHED-VALUES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Complete an explicit transition and verify only that transition bin increments."
+        ],
+        "negative": [
+          "Start an explicit multi-sample transition and verify default sequence does not increment while it remains pending."
+        ],
+        "notes": [],
+        "positive": [
+          "Sample a value that neither completes nor leaves pending any explicit transition and observe a default-sequence hit."
+        ]
+      },
+      "id": "SV-2023-19-DEFAULT-SEQUENCE-BIN-INCREMENT"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Declare `default sequence` as an open bin array."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare one scalar default sequence bin."
+        ]
+      },
+      "id": "SV-2023-19-DEFAULT-SEQUENCE-NOT-ARRAY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Set auto_bin_max at both covergroup and coverpoint definition levels."
+        ],
+        "negative": [
+          "Assign any of these restricted options procedurally after instantiation."
+        ],
+        "notes": [
+          "Use the option-specific scope requirements for exact covergroup, coverpoint, or cross placement."
+        ],
+        "positive": [
+          "Set each restricted option at a scope permitted by its option-specific scope rule."
+        ]
+      },
+      "id": "SV-2023-19-DEFINITION-ONLY-INSTANCE-OPTIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multiple instances of each type."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Create base and derived instances with different hits and query each type's coverage separately."
+        ]
+      },
+      "id": "SV-2023-19-DERIVED-BASE-COVERAGE-NO-AGGREGATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Inherit defaulted and ref arguments."
+        ],
+        "negative": [
+          "Omit a required inherited argument."
+        ],
+        "notes": [],
+        "positive": [
+          "Construct a derived covergroup using the base covergroup's required arguments."
+        ]
+      },
+      "id": "SV-2023-19-DERIVED-COVERGROUP-INHERITS-ARGUMENTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Inherit options, points, and crosses together."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Extend a covergroup and retain an unoverridden base point while adding a cross that refers to it."
+        ]
+      },
+      "id": "SV-2023-19-DERIVED-COVERGROUP-INHERITS-COMPONENTS"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Attempt to replace the inherited event in the extends declaration."
+        ],
+        "notes": [],
+        "positive": [
+          "Trigger the base-specified event and observe sampling of added derived points."
+        ]
+      },
+      "id": "SV-2023-19-DERIVED-COVERGROUP-INHERITS-EVENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a chain of two derived classes."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Reference the inherited covergroup name from base and derived methods and observe the derived instance."
+        ]
+      },
+      "id": "SV-2023-19-DERIVED-COVERGROUP-INSTANCE-REPLACEMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Add derived coverage for a protected rather than local base property."
+        ],
+        "negative": [
+          "Add a new derived coverpoint referring to a base-local property."
+        ],
+        "notes": [],
+        "positive": [
+          "Inherit a base covergroup that already covers a base-local property."
+        ]
+      },
+      "id": "SV-2023-19-DERIVED-COVERGROUP-NO-NEW-BASE-LOCAL-COVERAGE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use options with visibly distinct queryable values."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Override one inherited option while retaining another."
+        ]
+      },
+      "id": "SV-2023-19-DERIVED-COVERGROUP-OPTION-OVERRIDE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Add a uniquely named point in a derived covergroup and observe both base and derived points sample."
+        ]
+      },
+      "id": "SV-2023-19-DERIVED-COVERPOINT-ADDITION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use different expressions for same-named base and derived points."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Override a base point by name and distinguish the derived bins in computed coverage."
+        ]
+      },
+      "id": "SV-2023-19-DERIVED-COVERPOINT-OVERRIDE-COMPUTATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Set it at covergroup scope and verify contained coverpoints inherit it."
+        ],
+        "negative": [
+          "Attempt to set detect_overlap at cross scope."
+        ],
+        "notes": [
+          "Do not depend on warning wording."
+        ],
+        "positive": [
+          "Enable detect_overlap on a coverpoint and define overlapping value bins and transition bins; require warnings."
+        ]
+      },
+      "id": "SV-2023-19-DETECT-OVERLAP-OPTION"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Disable it before completion and observe no end sample."
+        ],
+        "notes": [],
+        "positive": [
+          "Allow a task to complete and observe its end sample."
+        ]
+      },
+      "id": "SV-2023-19-DISABLED-BLOCK-NO-END-EVENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Override an inherited option once in a derived covergroup, which is a distinct definition."
+        ],
+        "negative": [
+          "Assign the same option twice in the same definition."
+        ],
+        "notes": [],
+        "positive": [
+          "Assign each option at most once at a given covergroup definition."
+        ]
+      },
+      "id": "SV-2023-19-DUPLICATE-COVERAGE-OPTION-ERROR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the identifier as an instance variable rather than as a separately nameable type."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare an embedded covergroup and construct the implicitly declared variable by its identifier."
+        ]
+      },
+      "id": "SV-2023-19-EMBEDDED-COVERGROUP-ANONYMOUS-INSTANCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Attempt assignment from external procedural code."
+        ],
+        "negative": [
+          "Assign or reassign the embedded covergroup variable in another class method."
+        ],
+        "notes": [],
+        "positive": [
+          "Assign `new()` to the covergroup variable in the parent constructor."
+        ]
+      },
+      "id": "SV-2023-19-EMBEDDED-COVERGROUP-ASSIGNMENT-SCOPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Initialize a coverage option from a class member."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Cover a local member and use a protected member in a guard inside the containing class."
+        ]
+      },
+      "id": "SV-2023-19-EMBEDDED-COVERGROUP-ENCAPSULATED-MEMBERS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Conditionally execute the construction assignment."
+        ],
+        "negative": [
+          "Omit construction and verify its event produces no coverage data."
+        ],
+        "notes": [],
+        "positive": [
+          "Construct one embedded covergroup in the parent constructor and observe sampling."
+        ]
+      },
+      "id": "SV-2023-19-EMBEDDED-COVERGROUP-EXPLICIT-CONSTRUCTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Include an optional matching endgroup label."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Extend a base-class embedded covergroup in a derived class."
+        ]
+      },
+      "id": "SV-2023-19-EMBEDDED-COVERGROUP-EXTENDS-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Repeat with illegal-bin removal and leave one other bin nonempty."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Empty one bin through ignore removal and verify it is absent from both numerator and denominator."
+        ]
+      },
+      "id": "SV-2023-19-EMPTY-POINT-BIN-EXCLUDED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use enum encodings with nonconsecutive underlying values."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use a three-value enum point without explicit bins and observe three automatic bins."
+        ]
+      },
+      "id": "SV-2023-19-ENUM-AUTOMATIC-BIN-COUNT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exclude every item, producing zero denominator behavior."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Exclude one item and verify group coverage is computed only from remaining items."
+        ]
+      },
+      "id": "SV-2023-19-EXCLUDED-ITEM-REMOVED-FROM-AVERAGE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Include duplicate values positioned so they map to different bins."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Distribute ten ordered values into four bins and verify 2,2,2,4 allocation."
+        ]
+      },
+      "id": "SV-2023-19-FIXED-BIN-VALUE-DISTRIBUTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Request exactly one more bin than values."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Request five bins for three values and observe two trailing empty bins."
+        ]
+      },
+      "id": "SV-2023-19-FIXED-BINS-EXCESS-EMPTY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an explicitly labeled equivalent and reference that label."
+        ],
+        "negative": [
+          "Attempt to reference a tool-reported generated name in a cross."
+        ],
+        "notes": [],
+        "positive": [
+          "Use an unlabeled expression coverpoint solely for collection."
+        ]
+      },
+      "id": "SV-2023-19-GENERATED-COVERPOINT-NAME-NONLANGUAGE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Create instances with complementary hits and query cumulative coverage."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Query one item through both its type and instance and verify equal cumulative coverage."
+        ]
+      },
+      "id": "SV-2023-19-GET-COVERAGE-METHOD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare with get_coverage when get_inst_coverage option is false."
+        ],
+        "negative": [
+          "Invoke get_inst_coverage through type scope resolution."
+        ],
+        "notes": [],
+        "positive": [
+          "Create differently covered instances and query each through dot notation."
+        ]
+      },
+      "id": "SV-2023-19-GET-INST-COVERAGE-METHOD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Leave it false and verify get_inst_coverage equals get_coverage."
+        ],
+        "negative": [
+          "Attempt to set get_inst_coverage at coverpoint or cross scope."
+        ],
+        "notes": [],
+        "positive": [
+          "With merge_instances and the covergroup-level get_inst_coverage option true, create instances with distinct hits and query each."
+        ]
+      },
+      "id": "SV-2023-19-GET-INST-COVERAGE-OPTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Add one nonzero-weight uncovered group and verify this special result no longer applies."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Query a design with no group instances and one with only zero-weight groups; expect 100.0."
+        ]
+      },
+      "id": "SV-2023-19-GLOBAL-COVERAGE-EMPTY-OR-ZERO-WEIGHT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Query with no covered bins and with complete coverage."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Cover several types partially and query the global result within range."
+        ]
+      },
+      "id": "SV-2023-19-GLOBAL-GET-COVERAGE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Set weight at group level and verify it does not default item weights."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Set at_least at group level and override it on one point; compare with an unoverridden cross."
+        ]
+      },
+      "id": "SV-2023-19-GROUP-LEVEL-INSTANCE-OPTION-DEFAULTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Ignore a range of values and one transition in the same point."
+        ],
+        "negative": [
+          "Sample an ignored value and complete an ignored transition; neither contributes."
+        ],
+        "notes": [],
+        "positive": [
+          "Sample an ordinary value and transition and observe coverage."
+        ]
+      },
+      "id": "SV-2023-19-IGNORE-BINS-EXCLUDE-POINT-MATCHES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Remove all values assigned to one fixed bin."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Place one value in both an ordinary bin and ignore bin and verify it is removed after distribution."
+        ]
+      },
+      "id": "SV-2023-19-IGNORE-STATE-VALUES-REMOVED"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Declare an ignored transition using unbounded nonconsecutive repetition."
+        ],
+        "notes": [],
+        "positive": [
+          "Ignore a bounded consecutive transition."
+        ]
+      },
+      "id": "SV-2023-19-IGNORE-TRANSITION-BOUNDED-ONLY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Keep a covered sequence that can match without the ignored subsequence."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Ignore 2=>3 and verify covered 1=>2=>3=>4 is removed."
+        ]
+      },
+      "id": "SV-2023-19-IGNORE-TRANSITION-SUBSEQUENCE-REMOVAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Also add a transition ignore bin to distinguish the two forms."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Ignore state value 2 and still match an ordinary transition 1=>2=>3."
+        ]
+      },
+      "id": "SV-2023-19-IGNORED-VALUE-NOT-TRANSITION-FILTER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Cause removal to leave an empty ordinary bin."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Overlap ordinary and illegal state values and transition subsequences and inspect effective bins."
+        ]
+      },
+      "id": "SV-2023-19-ILLEGAL-BIN-REMOVAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Complete an illegal transition that overlaps an ordinary transition."
+        ],
+        "negative": [
+          "Sample a value present in both illegal and ordinary bins and require a runtime error."
+        ],
+        "notes": [],
+        "positive": [
+          "Sample only ordinary values without a runtime error."
+        ]
+      },
+      "id": "SV-2023-19-ILLEGAL-BIN-RUNTIME-ERROR-PRECEDENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use illegal ranges and a multi-step illegal transition."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare ordinary legal bins alongside illegal value and transition bins."
+        ]
+      },
+      "id": "SV-2023-19-ILLEGAL-BINS-MARK-POINT-MATCHES"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Declare an illegal transition using unbounded nonconsecutive repetition."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a bounded illegal transition."
+        ]
+      },
+      "id": "SV-2023-19-ILLEGAL-TRANSITION-BOUNDED-ONLY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Distinguish the state-value runtime error from transition-bin matching."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "List 2 as illegal state and match ordinary transition 1=>2=>3."
+        ]
+      },
+      "id": "SV-2023-19-ILLEGAL-VALUE-NOT-TRANSITION-FILTER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the default and cover a bin with one hit."
+        ],
+        "negative": [
+          "Hit it only once and verify it remains uncovered."
+        ],
+        "notes": [],
+        "positive": [
+          "Set at_least to 2 and hit a bin twice to cover it."
+        ]
+      },
+      "id": "SV-2023-19-INSTANCE-AT-LEAST-OPTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Set it at covergroup scope and verify an unoverridden point inherits it."
+        ],
+        "negative": [
+          "Attempt to set auto_bin_max at cross scope."
+        ],
+        "notes": [],
+        "positive": [
+          "Set auto_bin_max on a coverpoint below its domain size and observe the limited bin count."
+        ]
+      },
+      "id": "SV-2023-19-INSTANCE-AUTO-BIN-MAX-OPTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Leave the comment unset and observe the empty default."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Set comments at group, point, and cross levels and inspect persisted coverage reporting."
+        ]
+      },
+      "id": "SV-2023-19-INSTANCE-COMMENT-OPTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Set distinct goals on two instances."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Query the default goal at group, point, and cross levels and set a different instance target."
+        ]
+      },
+      "id": "SV-2023-19-INSTANCE-GOAL-OPTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Leave names unset and verify generated names are unique."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Set distinct explicit names on two instances and query them."
+        ]
+      },
+      "id": "SV-2023-19-INSTANCE-NAME-OPTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Set options at group and point syntactic levels."
+        ],
+        "negative": [
+          "Use type_option syntax when intending an instance-specific assignment."
+        ],
+        "notes": [],
+        "positive": [
+          "Assign option.at_least from a constructor argument inside a covergroup."
+        ]
+      },
+      "id": "SV-2023-19-INSTANCE-OPTION-ASSIGNMENT-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare with a type option shared by all instances."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Construct two instances and assign different instance option values; query each independently."
+        ]
+      },
+      "id": "SV-2023-19-INSTANCE-OPTION-INDEPENDENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Set a covergroup instance weight independently from weights on its contained coverpoints."
+        ],
+        "negative": [],
+        "notes": [
+          "Use exact coverage computation rules from 19.11 when constructing the oracle."
+        ],
+        "positive": [
+          "Assign unequal weights to two coverpoints and observe their weighted contribution to the enclosing instance coverage."
+        ]
+      },
+      "id": "SV-2023-19-INSTANCE-WEIGHT-APPLICATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare the default against an explicitly assigned value of 1."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Leave option.weight unset and query its default value at covergroup, coverpoint, and cross scope."
+        ]
+      },
+      "id": "SV-2023-19-INSTANCE-WEIGHT-DEFAULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use zero, the lower boundary of the allowed domain."
+        ],
+        "negative": [
+          "Assign a negative value to option.weight.",
+          "Assign a nonintegral real value to option.weight."
+        ],
+        "notes": [
+          "Check acceptance or rejection without depending on diagnostic wording."
+        ],
+        "positive": [
+          "Assign zero and a positive integer to option.weight."
+        ]
+      },
+      "id": "SV-2023-19-INSTANCE-WEIGHT-VALUE-RESTRICTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Test both endpoints exactly."
+        ],
+        "negative": [
+          "Test a real value just outside either endpoint and observe no match."
+        ],
+        "notes": [],
+        "positive": [
+          "Match interior and endpoint values against integral and real ranges."
+        ]
+      },
+      "id": "SV-2023-19-INTEGRAL-AND-REAL-RANGE-MEMBERSHIP"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Set auto_bin_max exactly equal to 2^M."
+        ],
+        "negative": [],
+        "notes": [
+          "The annotated source renders the formula as 2M; it denotes the 2^M possible 2-state values, confirmed by the following paragraph's M=3 example yielding eight values."
+        ],
+        "positive": [
+          "Compare a small domain below auto_bin_max with a wider domain above it."
+        ]
+      },
+      "id": "SV-2023-19-INTEGRAL-AUTOMATIC-BIN-COUNT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use sparse and duplicate values in an open array."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Create open and fixed bin arrays and inspect their reported bin names."
+        ]
+      },
+      "id": "SV-2023-19-INTEGRAL-BIN-ARRAY-NAMES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Load a database containing several covergroup types."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Save coverage, load it in a later run, and query cumulative type coverage."
+        ]
+      },
+      "id": "SV-2023-19-LOAD-COVERAGE-DB"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Ignore a value inside an automatic bin and verify its name remains based on the original range."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Create pairs of instances sharing and differing under each naming form and verify union cardinality."
+        ]
+      },
+      "id": "SV-2023-19-MERGED-BIN-NAME-OVERLAP-RULES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Leave the overlapping bin unhit in one instance and multiply hit in the other."
+        ],
+        "negative": [],
+        "notes": [
+          "Use the two-ref query overload or a coverage result whose threshold makes the summed count observable."
+        ],
+        "positive": [
+          "Create two instances with a same-named bin, hit it once in each, and observe cumulative count two."
+        ]
+      },
+      "id": "SV-2023-19-MERGED-OVERLAPPING-BIN-COUNT-SUM"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Set option.name inside a coverpoint or cross."
+        ],
+        "notes": [],
+        "positive": [
+          "Set option.name in a covergroup."
+        ]
+      },
+      "id": "SV-2023-19-NAME-OPTION-GROUP-ONLY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Include a zero-weight instance."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Query counts and returned coverage for unequal instance weights and verify consistency."
+        ]
+      },
+      "id": "SV-2023-19-NONMERGED-QUERY-COUNTS-CONSISTENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use X/Z matching within a transition bin."
+        ],
+        "negative": [
+          "Sample 0 or 1 where the nonwildcard bin contains X or Z."
+        ],
+        "notes": [],
+        "positive": [
+          "Define bins containing X and Z bits and sample exact four-state matches."
+        ]
+      },
+      "id": "SV-2023-19-NONWILDCARD-BIN-FOUR-STATE-MATCH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change the argument source after construction and observe the assigned option remains construction-derived."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Set an option from a constructor argument and create instances with different values."
+        ]
+      },
+      "id": "SV-2023-19-OPTION-ASSIGNMENT-CONSTRUCTION-EVALUATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use both declaration-scope and hierarchical instance access."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Access option fields through group, point, and cross objects."
+        ]
+      },
+      "id": "SV-2023-19-OPTION-BUILTIN-MEMBER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare group, point, and cross type_option member sets."
+        ],
+        "negative": [
+          "Access a member omitted from that scope's structure, such as per_instance on a point."
+        ],
+        "notes": [],
+        "positive": [
+          "Access every listed member at its permitted group, point, or cross scope and verify its data type."
+        ]
+      },
+      "id": "SV-2023-19-OPTION-STRUCT-COMPOSITION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Assign a point option on one instance without affecting another."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "After construction, assign comment, goal, or weight through an instance hierarchy."
+        ]
+      },
+      "id": "SV-2023-19-OTHER-INSTANCE-OPTIONS-PROCEDURAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Pass a property local variable sampled under assertion semantics."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Define a sample method with formals and call it from an automatic function and a property."
+        ]
+      },
+      "id": "SV-2023-19-OVERRIDDEN-SAMPLE-ARGUMENTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a signed point where only the low or high portion intersects."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use [6:10] with a 3-bit unsigned point and verify effective range [6:7]."
+        ]
+      },
+      "id": "SV-2023-19-PARTIAL-BIN-RANGE-INTERSECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Leave it false and verify aggregate type coverage still includes all instances."
+        ],
+        "negative": [
+          "Attempt to set per_instance at coverpoint or cross scope."
+        ],
+        "notes": [
+          "Database/report materialization may use environment integration; scope, default, and aggregate contribution remain in-language observable."
+        ],
+        "positive": [
+          "Enable per_instance at covergroup scope and inspect separately saved/reported instance coverage."
+        ]
+      },
+      "id": "SV-2023-19-PER-INSTANCE-OPTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a point whose single explicit bin is emptied by ignore removal."
+        ],
+        "negative": [],
+        "notes": [
+          "Observe that parent coverage is determined by the remaining point."
+        ],
+        "positive": [
+          "Remove all values from a point's bins with ignore_bins and combine it with a nonempty point in the same covergroup."
+        ]
+      },
+      "id": "SV-2023-19-POINT-ZERO-DENOMINATOR-PARENT-EXCLUSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise both get_coverage and get_inst_coverage."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Initialize covered and total outputs nonzero, query an all-empty point, and check both become zero."
+        ]
+      },
+      "id": "SV-2023-19-POINT-ZERO-DENOMINATOR-QUERY-COUNT-OUTPUTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change only point weight from zero to one while bins remain empty."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Query an all-empty nonzero-weight point and expect 0.0.",
+          "Query the same point with zero weight and expect 100.0."
+        ]
+      },
+      "id": "SV-2023-19-POINT-ZERO-DENOMINATOR-QUERY-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Choose a tolerance range wider than real_interval and observe multiple interval bins."
+        ],
+        "negative": [
+          "Sample just outside either tolerance endpoint."
+        ],
+        "notes": [],
+        "positive": [
+          "Define `1.0 +/- 0.1` and hit both endpoints and an interior value."
+        ]
+      },
+      "id": "SV-2023-19-REAL-ABSOLUTE-TOLERANCE-RANGE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Use a with-filter on a real coverpoint bin."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a with-filter on an integral coverpoint bin."
+        ]
+      },
+      "id": "SV-2023-19-REAL-BIN-WITH-ILLEGAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Declare several explicit real ranges."
+        ],
+        "negative": [
+          "Declare a real coverpoint without an explicit bin."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a real coverpoint with one explicit sampled-value bin."
+        ]
+      },
+      "id": "SV-2023-19-REAL-COVERPOINT-EXPLICIT-BIN-REQUIRED"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Declare real default bins using `[]` and `[N]`."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a scalar default bin for a real coverpoint."
+        ]
+      },
+      "id": "SV-2023-19-REAL-DEFAULT-BIN-NOT-ARRAY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Include duplicate intervals that map to different fixed bins."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Distribute six real intervals and three values into four bins and verify 2,2,2,3 allocation."
+        ]
+      },
+      "id": "SV-2023-19-REAL-FIXED-BIN-DISTRIBUTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Request exactly one excess bin."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Request five real fixed bins for three items and observe two empty bins."
+        ]
+      },
+      "id": "SV-2023-19-REAL-FIXED-BINS-EXCESS-EMPTY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use equal numeric endpoints with different endpoint inclusivity and verify nonidentical intervals remain separate."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use overlapping real ranges aligned to produce one identical interval and inspect the resulting bins."
+        ]
+      },
+      "id": "SV-2023-19-REAL-OPEN-BIN-IDENTICAL-INTERVAL-MERGE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a range smaller than and exactly equal to real_interval; each produces one bin."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Create an open bin array over a multi-interval range and hit each interval."
+        ]
+      },
+      "id": "SV-2023-19-REAL-OPEN-BIN-INTERVAL-EXTENTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Create an individual real-value bin."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Create nonfinal and final real intervals and inspect names ending in `)` and `]` respectively."
+        ]
+      },
+      "id": "SV-2023-19-REAL-OPEN-BIN-NAMES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Sample a shared partition boundary and verify it belongs only to the later interval."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Partition a real range whose width is not divisible by real_interval and test all boundaries."
+        ]
+      },
+      "id": "SV-2023-19-REAL-RANGE-INTERVAL-PARTITION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an integral center value and verify conversion to real."
+        ],
+        "negative": [
+          "Sample values just below 99.0 and above 101.0."
+        ],
+        "notes": [],
+        "positive": [
+          "Define `100 +%- 1.0` and hit 99.0, 100.0, and 101.0."
+        ]
+      },
+      "id": "SV-2023-19-REAL-RELATIVE-TOLERANCE-RANGE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Combine one individual value and one `[low:$]` range in fixed bins, leaving excess bins empty."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use `[$:0.75]` in an open array and observe one bin."
+        ]
+      },
+      "id": "SV-2023-19-REAL-UNBOUNDED-RANGE-SINGLE-BIN"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Mix individual real values and ranges."
+        ],
+        "negative": [
+          "Use a nonpositive fixed real-bin count."
+        ],
+        "notes": [],
+        "positive": [
+          "Apply all three real-bin declaration forms to equivalent real values and ranges."
+        ]
+      },
+      "id": "SV-2023-19-REAL-VALUE-BIN-ARRAY-FORMS"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Declare a wildcard bin on a real coverpoint."
+        ],
+        "notes": [],
+        "positive": [
+          "Use ordinary explicit ranges for a real coverpoint."
+        ]
+      },
+      "id": "SV-2023-19-REAL-WILDCARD-BIN-ILLEGAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use similar but distinct escaped identifiers."
+        ],
+        "negative": [
+          "Repeat one name in both formal lists."
+        ],
+        "notes": [],
+        "positive": [
+          "Use distinct constructor and sample formal names."
+        ]
+      },
+      "id": "SV-2023-19-SAMPLE-COVERGROUP-FORMAL-NAME-UNIQUE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Shadow an enclosing name and verify the sample formal wins lookup."
+        ],
+        "negative": [
+          "Use a sample formal to initialize an option or other unsupported context."
+        ],
+        "notes": [],
+        "positive": [
+          "Use sample formals in a point expression and iff guard."
+        ]
+      },
+      "id": "SV-2023-19-SAMPLE-FORMAL-LOOKUP-AND-USAGE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Declare an output sample formal."
+        ],
+        "notes": [],
+        "positive": [
+          "Use input and otherwise permitted directions."
+        ]
+      },
+      "id": "SV-2023-19-SAMPLE-FORMAL-NO-OUTPUT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call sample multiple times in one time slot."
+        ],
+        "negative": [
+          "Call sample directly on a point or cross."
+        ],
+        "notes": [],
+        "positive": [
+          "Call sample on a constructed covergroup and observe point and cross updates."
+        ]
+      },
+      "id": "SV-2023-19-SAMPLE-METHOD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a queue of compatible values."
+        ],
+        "negative": [
+          "Use an associative array or incompatible element type."
+        ],
+        "notes": [],
+        "positive": [
+          "Define a bin from a compatible fixed-size or dynamic array."
+        ]
+      },
+      "id": "SV-2023-19-SET-BIN-ARRAY-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Modify the source array after construction and verify the established set is unchanged."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Construct two instances after changing the source array and observe distinct bin sets."
+        ]
+      },
+      "id": "SV-2023-19-SET-BIN-CONSTRUCTION-EVALUATION"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Reference a coverpoint or bin identifier from the set expression."
+        ],
+        "notes": [],
+        "positive": [
+          "Build the set expression from constructor-visible array data."
+        ]
+      },
+      "id": "SV-2023-19-SET-BIN-INTERNAL-IDENTIFIERS-HIDDEN"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a path with directories or spaces supported by the environment."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Set a database filename, run simulation, and verify coverage is saved there."
+        ]
+      },
+      "id": "SV-2023-19-SET-COVERAGE-DB-NAME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Set a name containing spaces."
+        ],
+        "negative": [
+          "Call set_inst_name on a point or cross."
+        ],
+        "notes": [],
+        "positive": [
+          "Set a group instance name and inspect it in coverage output."
+        ]
+      },
+      "id": "SV-2023-19-SET-INST-NAME-METHOD"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Stop then start an item and verify subsequent matching samples count."
+        ]
+      },
+      "id": "SV-2023-19-START-METHOD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Stop a group and compare effects on constituent items."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Stop a point or cross and verify matching samples no longer count."
+        ]
+      },
+      "id": "SV-2023-19-STOP-METHOD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Trigger events in adjacent slots."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Trigger repeated clocking events in one slot under strobe and observe one sample."
+        ]
+      },
+      "id": "SV-2023-19-STROBE-CLOCKING-SAMPLE-COALESCING"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Under strobe, make repeated procedural sample calls and observe each sample."
+        ]
+      },
+      "id": "SV-2023-19-STROBE-NONCLOCK-NO-EFFECT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a two-value and a longer sequence in separate bins."
+        ],
+        "negative": [
+          "Swap two middle sampled values and observe no match."
+        ],
+        "notes": [],
+        "positive": [
+          "Match a four-value transition over four successive samples."
+        ]
+      },
+      "id": "SV-2023-19-TRANSITION-ARBITRARY-SEQUENCE-LENGTH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Have two candidate sequences share a prefix."
+        ],
+        "negative": [
+          "Match only a proper prefix and verify no count increment."
+        ],
+        "notes": [],
+        "positive": [
+          "Define two alternative sequences and completely match each in separate runs."
+        ]
+      },
+      "id": "SV-2023-19-TRANSITION-BIN-COMPLETE-MATCH-COUNT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a repeat range with minimum and maximum counts."
+        ],
+        "negative": [
+          "Use sequence syntax outside the transition grammar subset."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare ordered transitions using each repetition operator."
+        ]
+      },
+      "id": "SV-2023-19-TRANSITION-BIN-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Complete different bins on the same sample; the limit applies per bin."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Arrange multiple pending paths in one bin to complete at one sample and observe one increment."
+        ]
+      },
+      "id": "SV-2023-19-TRANSITION-BIN-ONCE-PER-SAMPLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an enum-valued integral coverpoint."
+        ],
+        "negative": [
+          "Declare a transition bin over a real coverpoint."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a transition bin over an integral coverpoint."
+        ]
+      },
+      "id": "SV-2023-19-TRANSITION-BINS-INTEGRAL-ONLY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a repetition range and match its minimum and maximum counts."
+        ],
+        "negative": [
+          "Interrupt the repeated value before the required consecutive count."
+        ],
+        "notes": [],
+        "positive": [
+          "Match `3[*5]` with five consecutive samples of 3."
+        ]
+      },
+      "id": "SV-2023-19-TRANSITION-CONSECUTIVE-REPETITION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use no leading or intervening nonmatching samples."
+        ],
+        "negative": [
+          "Insert a sample between the final occurrence and the following transition item."
+        ],
+        "notes": [],
+        "positive": [
+          "Match three goto occurrences separated by nonmatching values, immediately followed by the next required item."
+        ]
+      },
+      "id": "SV-2023-19-TRANSITION-GOTO-REPETITION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Match the following item immediately after the last required occurrence."
+        ],
+        "negative": [
+          "Repeat the repetition value again during the delay before the following item."
+        ],
+        "notes": [],
+        "positive": [
+          "Match required nonconsecutive occurrences, delay with other values, then match the following item."
+        ]
+      },
+      "id": "SV-2023-19-TRANSITION-NONCONSECUTIVE-REPETITION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use transitions expanded from source and destination ranges."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Create an open transition-bin array from several bounded transitions and inspect their names."
+        ]
+      },
+      "id": "SV-2023-19-TRANSITION-OPEN-BIN-NAMES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use goto repetitions whose completed matches share earlier samples."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Sample five consecutive matching values for a three-consecutive-value bin and observe three overlapping hits."
+        ]
+      },
+      "id": "SV-2023-19-TRANSITION-OVERLAP-COUNTING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use overlapping source and destination ranges."
+        ],
+        "negative": [
+          "Sample a value outside either source range and observe no match."
+        ],
+        "notes": [],
+        "positive": [
+          "Use two values on each side and hit all four resulting transitions."
+        ]
+      },
+      "id": "SV-2023-19-TRANSITION-RANGE-CARTESIAN-EXPANSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Repeat the matching pair in overlapping samples."
+        ],
+        "negative": [
+          "Insert a different sampled value between value1 and value2 and observe no hit."
+        ],
+        "notes": [],
+        "positive": [
+          "Sample value1 then value2 on consecutive sampling events and observe a hit."
+        ]
+      },
+      "id": "SV-2023-19-TRANSITION-SUCCESSIVE-SAMPLES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Leave it unset and observe the empty default."
+        ],
+        "negative": [
+          "Use a runtime string expression rather than a string literal."
+        ],
+        "notes": [],
+        "positive": [
+          "Set literal comments at all three type scopes and inspect persisted reporting."
+        ]
+      },
+      "id": "SV-2023-19-TYPE-COMMENT-OPTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Leave it false and compare default filtering-before-distribution."
+        ],
+        "negative": [
+          "Attempt to set type_option.distribute_first at coverpoint or cross scope."
+        ],
+        "notes": [],
+        "positive": [
+          "At covergroup scope, enable distribute_first with fixed bins and a selective predicate to observe distribution-before-filtering."
+        ]
+      },
+      "id": "SV-2023-19-TYPE-DISTRIBUTE-FIRST-OPTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Leave it unset and observe 100."
+        ],
+        "negative": [
+          "Use a runtime nonconstant goal expression."
+        ],
+        "notes": [],
+        "positive": [
+          "Set a constant type goal at group, point, and cross levels and query it."
+        ]
+      },
+      "id": "SV-2023-19-TYPE-GOAL-OPTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Set one instance weight to zero."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Create two instances with unequal group weights and known instance coverage and verify the weighted result."
+        ]
+      },
+      "id": "SV-2023-19-TYPE-GROUP-WEIGHTED-INSTANCE-FORMULA"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Repeat for a cross."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Give the same point unequal per-instance weights and known hit percentages."
+        ]
+      },
+      "id": "SV-2023-19-TYPE-ITEM-WEIGHTED-INSTANCE-FORMULA"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use unequal instance weights so the false-mode result is distinguishable."
+        ],
+        "negative": [
+          "Attempt to set type_option.merge_instances at coverpoint or cross scope."
+        ],
+        "notes": [],
+        "positive": [
+          "At covergroup scope, create complementary instance hits and compare true union coverage with false weighted-average coverage."
+        ]
+      },
+      "id": "SV-2023-19-TYPE-MERGE-INSTANCES-OPTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a parameter-derived constant expression."
+        ],
+        "negative": [
+          "Set it to a runtime nonconstant expression."
+        ],
+        "notes": [],
+        "positive": [
+          "Set a type option to a valid constant expression in a covergroup definition."
+        ]
+      },
+      "id": "SV-2023-19-TYPE-OPTION-ASSIGNMENT-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Procedurally update a shared type goal after instances exist."
+        ],
+        "negative": [
+          "Procedurally assign strobe or real_interval."
+        ],
+        "notes": [],
+        "positive": [
+          "Set strobe and real_interval in the definition and procedurally assign another type option."
+        ]
+      },
+      "id": "SV-2023-19-TYPE-OPTION-ASSIGNMENT-TIMING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Access through covergroup scope resolution."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Access type_option fields at group, point, and cross scopes."
+        ]
+      },
+      "id": "SV-2023-19-TYPE-OPTION-BUILTIN-STATIC-MEMBER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a parameter constant common to all instances."
+        ],
+        "negative": [
+          "Attempt to initialize a type option from a per-instance constructor argument."
+        ],
+        "notes": [],
+        "positive": [
+          "Construct multiple instances sharing one constant type option."
+        ]
+      },
+      "id": "SV-2023-19-TYPE-OPTIONS-SAME-ALL-INSTANCES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare with an instance option that differs per instance."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Set a type option and observe the same type-level property across multiple instances."
+        ]
+      },
+      "id": "SV-2023-19-TYPE-OPTIONS-STATIC-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Set group type weight and verify it does not default point weight."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Set group real_interval and observe point real-bin partitioning without a point override."
+        ]
+      },
+      "id": "SV-2023-19-TYPE-REAL-INTERVAL-GROUP-DEFAULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a range narrower than the interval."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Set real_interval to 0.25 and inspect partitioning of a 1.0-wide range."
+        ]
+      },
+      "id": "SV-2023-19-TYPE-REAL-INTERVAL-OPTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Override the group default at a point."
+        ],
+        "negative": [
+          "Set it inside a cross."
+        ],
+        "notes": [],
+        "positive": [
+          "Set real_interval at group and point scopes."
+        ]
+      },
+      "id": "SV-2023-19-TYPE-REAL-INTERVAL-SCOPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Under strobe, invoke procedural sample repeatedly and verify those calls are unaffected."
+        ],
+        "negative": [
+          "Attempt to set type_option.strobe at coverpoint or cross scope."
+        ],
+        "notes": [],
+        "positive": [
+          "Enable strobe and trigger multiple clocking events in one slot, observing one end-of-slot sample."
+        ]
+      },
+      "id": "SV-2023-19-TYPE-STROBE-OPTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Set a covergroup type weight independently from type weights on contained points."
+        ],
+        "negative": [],
+        "notes": [
+          "Use exact cumulative coverage formulas from 19.11."
+        ],
+        "positive": [
+          "Assign unequal type weights to two coverpoints and observe weighted cumulative type coverage."
+        ]
+      },
+      "id": "SV-2023-19-TYPE-WEIGHT-APPLICATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare the default with an explicit constant assignment of 1."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Leave type_option.weight unset and query its default at group, point, and cross type scope."
+        ]
+      },
+      "id": "SV-2023-19-TYPE-WEIGHT-OPTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use zero, the lowest permitted value."
+        ],
+        "negative": [
+          "Assign a negative constant to type_option.weight.",
+          "Assign a nonintegral real constant to type_option.weight."
+        ],
+        "notes": [
+          "Check legality without relying on diagnostic wording."
+        ],
+        "positive": [
+          "Assign zero and a positive integral constant to type_option.weight."
+        ]
+      },
+      "id": "SV-2023-19-TYPE-WEIGHT-VALUE-RESTRICTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a bounded consecutive repetition in an open array for comparison."
+        ],
+        "negative": [
+          "Place that transition in an open bin array."
+        ],
+        "notes": [],
+        "positive": [
+          "Place a nonconsecutive unbounded transition in one scalar bin."
+        ]
+      },
+      "id": "SV-2023-19-UNBOUNDED-TRANSITION-NOT-OPEN-ARRAY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use state and transition bins together."
+        ],
+        "negative": [],
+        "notes": [
+          "The visually annotated equation is Ci = |bins_covered| / |bins|."
+        ],
+        "positive": [
+          "Define four bins, cover three, and verify 75% before goal scaling effects."
+        ]
+      },
+      "id": "SV-2023-19-USER-BIN-COVERPOINT-COVERAGE-FORMULA"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Request more fixed bins than distinct listed values."
+        ],
+        "negative": [
+          "Use a zero or negative fixed-bin count."
+        ],
+        "notes": [],
+        "positive": [
+          "Apply all three declaration forms to the same integral value list."
+        ]
+      },
+      "id": "SV-2023-19-VALUE-BIN-ARRAY-FORMS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a singleton range whose only value is unrepresentable."
+        ],
+        "negative": [
+          "Use a wholly out-of-range range and a range with an X endpoint."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a range wholly representable by the point type."
+        ]
+      },
+      "id": "SV-2023-19-WARNED-BIN-RANGE-EXCLUDED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a warned singleton as the sole set element, yielding an empty bin."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Combine one valid and one narrowing-invalid singleton and verify only the valid value remains."
+        ]
+      },
+      "id": "SV-2023-19-WARNED-BIN-SINGLETON-EXCLUDED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Combine multiple wildcard digits with a narrower coverpoint type."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use a wildcard bin expression whose expansion then undergoes width conversion."
+        ]
+      },
+      "id": "SV-2023-19-WILDCARD-B-EXPANSION-BEFORE-CONVERSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use X and Z wildcard digits as well as question marks."
+        ],
+        "negative": [
+          "Sample a value whose fixed bit differs."
+        ],
+        "notes": [],
+        "positive": [
+          "Use `4'b11??` and hit all four 12-through-15 values."
+        ]
+      },
+      "id": "SV-2023-19-WILDCARD-BIN-UNKNOWN-DIGITS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a sample with one unknown and otherwise matching fixed bits."
+        ],
+        "negative": [
+          "Sample an X or Z in a wildcard position and observe no hit."
+        ],
+        "notes": [],
+        "positive": [
+          "Hit a wildcard bin with each corresponding 0/1 expansion."
+        ]
+      },
+      "id": "SV-2023-19-WILDCARD-BINS-EXCLUDE-XZ-SAMPLES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a covergroup whose items are all excluded, producing the same zero-denominator condition."
+        ],
+        "negative": [],
+        "notes": [
+          "Observe the unaffected overall score from the contributing covergroup."
+        ],
+        "positive": [
+          "Create a covergroup with no points or crosses and combine it with another contributing covergroup."
+        ]
+      },
+      "id": "SV-2023-19-ZERO-DENOMINATOR-GLOBAL-EXCLUSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Repeat for both get_coverage and get_inst_coverage overloads."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Initialize both ref arguments nonzero, query an empty covergroup, and check that both become zero."
+        ]
+      },
+      "id": "SV-2023-19-ZERO-DENOMINATOR-QUERY-COUNT-OUTPUTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change only the covergroup weight between zero and one while keeping the denominator zero."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Query an empty nonzero-weight covergroup and expect 0.0.",
+          "Query an empty zero-weight covergroup and expect 100.0."
+        ]
+      },
+      "id": "SV-2023-19-ZERO-DENOMINATOR-QUERY-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use two consecutive repetitions, which has nonzero transition length."
+        ],
+        "negative": [
+          "Declare `(0)`, `([0:1])`, or `(0[*1])` as transition bins."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a two-sample transition."
+        ]
+      },
+      "id": "SV-2023-19-ZERO-LENGTH-TRANSITION-ILLEGAL"
+    }
+  ],
+  "schema_version": 1
+}

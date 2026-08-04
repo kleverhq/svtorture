@@ -1,0 +1,1497 @@
+{
+  "authority": "1800-2023",
+  "part": "12",
+  "requirements": [
+    {
+      "hints": {
+        "edge": [
+          "Place break inside a nested procedural block that remains within a loop."
+        ],
+        "negative": [
+          "Use break outside every loop."
+        ],
+        "notes": [],
+        "positive": [
+          "Place break in the body of a loop."
+        ]
+      },
+      "id": "SV-2023-12-BREAK-LOOP-CONTEXT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Break from a multidimensional foreach and verify all dimension iteration terminates."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Break from a loop body and verify no later iteration or loop step occurs."
+        ]
+      },
+      "id": "SV-2023-12-BREAK-LOOP-EXIT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Introduce one unsigned item among signed expressions and verify unsigned treatment applies to all."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare all-signed expressions whose extension and match reflect signed treatment."
+        ]
+      },
+      "id": "SV-2023-12-CASE-COMPARISON-SIGNEDNESS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Make the longest expression an item other than the first."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use controlling and item expressions of different widths whose match depends on common longest-width conversion."
+        ]
+      },
+      "id": "SV-2023-12-CASE-COMPARISON-WIDTH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a sized signed constant case expression against mixed-width item expressions."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use case (1) with variable bit-select item expressions to implement a priority selection."
+        ]
+      },
+      "id": "SV-2023-12-CASE-CONSTANT-EXPRESSION-COMPARISON"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a single default without its optional colon."
+        ],
+        "negative": [
+          "Place two default items in one case statement."
+        ],
+        "notes": [],
+        "positive": [
+          "Use case statements with zero and one default item."
+        ]
+      },
+      "id": "SV-2023-12-CASE-DEFAULT-CARDINALITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Mix ? with ordinary digits and explicit Z digits in one case item."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use ? digits in binary literals of casez and casex items."
+        ]
+      },
+      "id": "SV-2023-12-CASE-DONT-CARE-QUESTION-MARK"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place a default between source items and verify it is not part of comparison search."
+        ],
+        "negative": [],
+        "notes": [
+          "Avoid scheduling races when exposing side effects."
+        ],
+        "positive": [
+          "Use deterministic counters to verify one controlling evaluation followed by source-order item evaluations."
+        ]
+      },
+      "id": "SV-2023-12-CASE-EXPRESSION-EVALUATION-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast X with Z at one bit and verify the item does not match."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Match item expressions containing X and Z bits exactly against the case expression."
+        ]
+      },
+      "id": "SV-2023-12-CASE-FOUR-STATE-EXACT-MATCH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Make every membership comparison return 0 or X and verify default executes."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use multiple case-inside items to observe ordering required by the selected qualification."
+        ]
+      },
+      "id": "SV-2023-12-CASE-INSIDE-ORDER-AND-DEFAULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Produce a 1'bx membership result and verify that item does not match."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use ranges and wildcard values whose inside result is 1'b1 and verify selection."
+        ]
+      },
+      "id": "SV-2023-12-CASE-INSIDE-SELECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise no match both with a default and without one."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Make two source-ordered items match and verify only the first statement executes."
+        ]
+      },
+      "id": "SV-2023-12-CASE-LINEAR-SELECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place a default among items and verify it is ignored during matching."
+        ],
+        "negative": [],
+        "notes": [
+          "Avoid scheduling races when observing evaluation."
+        ],
+        "positive": [
+          "Use deterministic side effects to verify one tested-expression evaluation followed by source-order tests."
+        ]
+      },
+      "id": "SV-2023-12-CASE-PATTERN-EVALUATION-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify binding occurs before filter evaluation by referencing the bound value in the filter."
+        ],
+        "negative": [
+          "Make the pattern match but the filter evaluate to zero, X, or Z."
+        ],
+        "notes": [],
+        "positive": [
+          "Match a pattern and use a bound identifier in a true filter to select the item."
+        ]
+      },
+      "id": "SV-2023-12-CASE-PATTERN-FILTER-SELECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a pattern item without its optional filter."
+        ],
+        "negative": [
+          "Reference one item's pattern identifier from a different case item."
+        ],
+        "notes": [],
+        "positive": [
+          "Bind an identifier, reference it in the item's &&& filter and statement, and reuse its spelling in another item."
+        ]
+      },
+      "id": "SV-2023-12-CASE-PATTERN-ITEM-SCOPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise no selected item both with and without a default."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Make multiple items selectable and verify only the source-first selected statement executes."
+        ]
+      },
+      "id": "SV-2023-12-CASE-PATTERN-LINEAR-SELECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use filters to reject otherwise matching patterns so no item is selected."
+        ],
+        "negative": [],
+        "notes": [
+          "Do not depend on diagnostic wording."
+        ],
+        "positive": [
+          "Cause no item to select under priority and unique and verify a violation."
+        ]
+      },
+      "id": "SV-2023-12-CASE-PATTERN-NO-MATCH-CHECK"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use differently shaped nested patterns that still have the same contextual type."
+        ],
+        "negative": [
+          "Use one case-item pattern of a different structure or tagged-union type."
+        ],
+        "notes": [],
+        "positive": [
+          "Use multiple patterns all matching the tested structure type."
+        ]
+      },
+      "id": "SV-2023-12-CASE-PATTERN-TYPE-COMPATIBILITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Make overlapping patterns differ only by filters that both evaluate true."
+        ],
+        "negative": [],
+        "notes": [
+          "Do not depend on diagnostic wording."
+        ],
+        "positive": [
+          "Make two items select under unique and verify an overlap violation."
+        ]
+      },
+      "id": "SV-2023-12-CASE-PATTERN-UNIQUE-OVERLAP"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise ignored bits in both a tagged-union tag and a nested member."
+        ],
+        "negative": [
+          "Verify casez-matches does not ignore an X bit."
+        ],
+        "notes": [],
+        "positive": [
+          "Use casez-matches with Z in tag/member comparisons and casex-matches with X and Z."
+        ]
+      },
+      "id": "SV-2023-12-CASE-PATTERN-WILDCARD-FORMS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change an item expression between successive executions of the case statement."
+        ],
+        "negative": [],
+        "notes": [
+          "Avoid side effects when testing only nonconstant-expression legality."
+        ],
+        "positive": [
+          "Use runtime variables and function calls as the case expression and item expressions."
+        ]
+      },
+      "id": "SV-2023-12-CASE-RUNTIME-EXPRESSIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use optional colons on default items and a null statement as an item body."
+        ],
+        "negative": [
+          "Use a pattern item in ordinary case without matches, or a range-list item without inside."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse ordinary case, casez, casex, case-matches, and case-inside forms with their corresponding item syntax."
+        ]
+      },
+      "id": "SV-2023-12-CASE-STATEMENT-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multiple ignored positions split between the case expression and item expression."
+        ],
+        "negative": [
+          "Verify that X is not a do-not-care in casez."
+        ],
+        "notes": [],
+        "positive": [
+          "Match casez with Z on each side in turn, and casex with X and Z on each side in turn."
+        ]
+      },
+      "id": "SV-2023-12-CASEZ-CASEX-DONT-CARE-MATCHING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a binding from the first match as the expression in a second match."
+        ],
+        "negative": [
+          "Reference the binding in the alternative expression."
+        ],
+        "notes": [],
+        "positive": [
+          "Bind an identifier in a match clause and use it in a later clause and consequent expression."
+        ]
+      },
+      "id": "SV-2023-12-CONDITIONAL-PATTERN-BINDING-SCOPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Produce an ambiguous predicate through a Boolean filter and verify conditional-operator ambiguous-result merging."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Exercise true and false pattern predicates and verify selection of the consequent or alternative."
+        ]
+      },
+      "id": "SV-2023-12-CONDITIONAL-PATTERN-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify a clause with a side effect is not evaluated after an earlier clause fails."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use a successful match followed by a true Boolean clause in a conditional expression."
+        ]
+      },
+      "id": "SV-2023-12-CONDITIONAL-PATTERN-SEQUENTIAL-CONJUNCTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place continue inside a nested procedural block that remains within a loop."
+        ],
+        "negative": [
+          "Use continue outside every loop."
+        ],
+        "notes": [],
+        "positive": [
+          "Place continue in a loop body."
+        ]
+      },
+      "id": "SV-2023-12-CONTINUE-LOOP-CONTEXT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Continue in a multidimensional foreach and verify it advances from the current index tuple rather than an inferred inner dimension."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Continue from a for body and verify the step executes before the next condition test."
+        ]
+      },
+      "id": "SV-2023-12-CONTINUE-LOOP-CONTROL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Nest two unmatched if statements followed by one else and observe association with the inner if."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use begin-end around an inner unmatched if so a following else associates with the outer if."
+        ]
+      },
+      "id": "SV-2023-12-DANGLING-ELSE-ASSOCIATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an X or Z post-test condition and verify termination after the first body execution."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Start with a false condition and verify the body executes once before termination."
+        ]
+      },
+      "id": "SV-2023-12-DO-WHILE-POST-TEST"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a single entry in each list and then multiple comma-separated entries."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use multiple initialized variables and mix assignment, increment, and function-call entries in the step list."
+        ]
+      },
+      "id": "SV-2023-12-FOR-CONTROL-LIST-FORMS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the same externally declared variable in sequential loops without introducing parallel races."
+        ],
+        "negative": [],
+        "notes": [
+          "The paragraph's parallel-process race warning does not prescribe a deterministic result."
+        ],
+        "positive": [
+          "Declare a control variable in an enclosing block and assign it in the for initialization."
+        ]
+      },
+      "id": "SV-2023-12-FOR-EXTERNAL-CONTROL-VARIABLES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Declare several identifiers under one data type in the local-declaration form."
+        ],
+        "negative": [
+          "Assign a predeclared control and locally declare another control in the same initialization list."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare all initialization controls locally, and separately assign only predeclared controls."
+        ]
+      },
+      "id": "SV-2023-12-FOR-INITIALIZATION-DECLARATION-CONSISTENCY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Chain three declarations where each initializer uses an earlier variable."
+        ],
+        "negative": [
+          "Reference a later-declared loop variable from an earlier initializer."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare i first and initialize j from i in the same for initialization."
+        ]
+      },
+      "id": "SV-2023-12-FOR-INITIALIZER-DECLARATION-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Run parallel activations of a subroutine containing a locally declared for control and verify their controls are independent."
+        ],
+        "negative": [],
+        "notes": [
+          "Use synchronization to avoid introducing races when observing parallel activations."
+        ],
+        "positive": [
+          "Enter a loop declaration scope on separate activations and verify each activation has its own automatic control variable."
+        ]
+      },
+      "id": "SV-2023-12-FOR-LOCAL-DECLARATION-AUTOMATIC-LIFETIME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast a declaration initializer with an assignment-only initializer, which creates no implicit block."
+        ],
+        "negative": [
+          "Reference an unlabelled loop-local control outside its implicit scope."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a control in a labeled for initialization and reference it through the loop's named scope where permitted."
+        ]
+      },
+      "id": "SV-2023-12-FOR-LOCAL-DECLARATION-SCOPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise omitted initialization, condition, and step separately, and conditions evaluating X or Z."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Record initialization, condition, body, and step side effects to verify their order across iterations."
+        ]
+      },
+      "id": "SV-2023-12-FOR-LOOP-EXECUTION-SEQUENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Iterate an empty string and verify no index values are produced."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Iterate packed, unpacked, multidimensional, and string variables."
+        ]
+      },
+      "id": "SV-2023-12-FOREACH-ARRAY-AND-STRING-DOMAIN"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Omit all trailing dimension positions and their commas."
+        ],
+        "negative": [
+          "Provide more loop-variable positions than array dimensions."
+        ],
+        "notes": [],
+        "positive": [
+          "Iterate selected dimensions of a multidimensional array by leaving an interior index position empty."
+        ]
+      },
+      "id": "SV-2023-12-FOREACH-DIMENSION-VARIABLE-LIST"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a hierarchical array identifier containing indexed selections but no call."
+        ],
+        "negative": [
+          "Use a function call in the foreach array-designating identifier."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a plain array identifier or hierarchical array identifier in foreach."
+        ]
+      },
+      "id": "SV-2023-12-FOREACH-IDENTIFIER-NO-FUNCTION-CALL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use synchronized parallel activations to distinguish automatic index storage."
+        ],
+        "negative": [],
+        "notes": [
+          "Avoid races when observing parallel activations."
+        ],
+        "positive": [
+          "Invoke a foreach-containing automatic context more than once and verify each activation has independent index variables."
+        ]
+      },
+      "id": "SV-2023-12-FOREACH-INDEX-AUTOMATIC-LIFETIME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Explicitly cast an index to a type different from its automatic cast type."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use fixed-array and associative-array foreach indices in arithmetic expressions and verify their prescribed expression types."
+        ]
+      },
+      "id": "SV-2023-12-FOREACH-INDEX-EXPRESSION-CAST"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use identifiers differing only beyond a shared prefix."
+        ],
+        "negative": [
+          "Use the array identifier itself as a foreach index variable."
+        ],
+        "notes": [],
+        "positive": [
+          "Use distinct array and index identifiers."
+        ]
+      },
+      "id": "SV-2023-12-FOREACH-INDEX-NAME-DISTINCT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Pass the index to an input argument without modifying it."
+        ],
+        "negative": [
+          "Assign to, increment, or decrement a foreach index variable in the body."
+        ],
+        "notes": [],
+        "positive": [
+          "Read the foreach index to access and compute array elements."
+        ]
+      },
+      "id": "SV-2023-12-FOREACH-INDEX-READ-ONLY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the same index spelling in separate foreach scopes."
+        ],
+        "negative": [
+          "Reference an unlabelled foreach index outside its loop scope."
+        ],
+        "notes": [],
+        "positive": [
+          "Label a foreach and refer to an index through the named loop scope where permitted."
+        ]
+      },
+      "id": "SV-2023-12-FOREACH-INDEX-SCOPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast index types from fixed-range and specifically typed associative dimensions."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Iterate a specifically typed associative array and use the index in a context that reveals the matching index type."
+        ]
+      },
+      "id": "SV-2023-12-FOREACH-INDEX-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Skip an interior dimension and verify nesting/order of the remaining lower- and higher-cardinality indices."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Record iteration tuples for a multidimensional array with both ascending and descending declared ranges."
+        ]
+      },
+      "id": "SV-2023-12-FOREACH-ITERATION-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exit a surrounding process through an applicable disable mechanism."
+        ],
+        "negative": [],
+        "notes": [
+          "Include timing or explicit termination to avoid a zero-delay scheduler hang; the standard states this as a recommendation."
+        ],
+        "positive": [
+          "Use a timing control in a forever body and count several repeated executions."
+        ]
+      },
+      "id": "SV-2023-12-FOREVER-LOOP-EXECUTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Return an assignment-compatible expression requiring only the language's prescribed type conversion."
+        ],
+        "negative": [
+          "Use bare return or an incompatible expression in a value-returning function."
+        ],
+        "notes": [],
+        "positive": [
+          "Return an expression matching the declared function return type."
+        ]
+      },
+      "id": "SV-2023-12-FUNCTION-RETURN-EXPRESSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an X or Z Boolean filter after a successful pattern match and verify the else branch is selected."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Observe the then branch for a known nonzero predicate and the else branch for zero."
+        ]
+      },
+      "id": "SV-2023-12-IF-ELSE-BRANCH-SELECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place a side effect in a condition after an earlier true condition and verify it is not evaluated after chain termination."
+        ],
+        "negative": [],
+        "notes": [
+          "Avoid scheduling races when observing evaluation side effects."
+        ],
+        "positive": [
+          "Use deterministic side effects to verify source-order condition evaluation before the first true arm."
+        ]
+      },
+      "id": "SV-2023-12-IF-ELSE-IF-EVALUATION-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Make every condition false, with and without a trailing else, and observe the defined fallback."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Make multiple chain conditions true and verify only the first true arm executes."
+        ]
+      },
+      "id": "SV-2023-12-IF-ELSE-IF-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a predicate combining a matches pattern and an expression with &&&."
+        ],
+        "negative": [
+          "Use an if condition without parentheses or an else without a preceding if."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse an if with multiple else-if arms, a final else, and a unique0 qualifier."
+        ]
+      },
+      "id": "SV-2023-12-IF-ELSE-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Chain two matches where the second matched expression uses a binding from the first."
+        ],
+        "negative": [
+          "Reference the binding in the else arm or before its declaring match clause."
+        ],
+        "notes": [],
+        "positive": [
+          "Bind an identifier in the first match clause and use it in a later clause and the true arm."
+        ]
+      },
+      "id": "SV-2023-12-IF-PATTERN-BINDING-SCOPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Give a later clause a visible side effect and verify it is not evaluated after an earlier failure."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use a successful match followed by a true Boolean filter and verify the true arm."
+        ]
+      },
+      "id": "SV-2023-12-IF-PATTERN-SEQUENTIAL-CONJUNCTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use nested matches whose types are derived from an earlier binding."
+        ],
+        "negative": [
+          "Match a structure expression against a pattern context of a different structure type."
+        ],
+        "notes": [],
+        "positive": [
+          "Match a tagged-union expression against a pattern of the same type."
+        ]
+      },
+      "id": "SV-2023-12-IF-PATTERN-TYPE-COMPATIBILITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place a separately qualified nested if inside a begin-end arm."
+        ],
+        "negative": [
+          "Insert unique, unique0, or priority between else and if within an already qualified series."
+        ],
+        "notes": [],
+        "positive": [
+          "Qualify the initial if of a multi-arm if-else-if series."
+        ]
+      },
+      "id": "SV-2023-12-IF-QUALIFIER-SCOPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Nest a local loop inside a fork branch within an outer loop and target only the local loop."
+        ],
+        "negative": [
+          "Place break or continue in a fork branch to control an enclosing loop outside the fork-join."
+        ],
+        "notes": [],
+        "positive": [
+          "Use break or continue within a loop wholly contained in one fork branch."
+        ]
+      },
+      "id": "SV-2023-12-JUMP-CANNOT-CROSS-FORK-JOIN"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use bare return in a void subroutine and expression return in a value-returning function."
+        ],
+        "negative": [
+          "Omit the terminating semicolon from a jump statement."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse break, continue, bare return, and return with an expression in legal contexts."
+        ]
+      },
+      "id": "SV-2023-12-JUMP-STATEMENT-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Omit each optional for control field and omit selected foreach index identifiers."
+        ],
+        "negative": [
+          "Omit a required semicolon in a for control or the terminating semicolon of a do-while."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse each of the six loop forms and each allowed for-step assignment form."
+        ]
+      },
+      "id": "SV-2023-12-LOOP-STATEMENT-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an enum constant whose type matches the contextual member."
+        ],
+        "negative": [
+          "Use a real-valued constant expression as a pattern leaf."
+        ],
+        "notes": [],
+        "positive": [
+          "Use an integral constant leaf in a pattern matched against a known integral member."
+        ]
+      },
+      "id": "SV-2023-12-PATTERN-CONSTANT-INTEGRAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare four-state values containing X or Z against an exactly equal constant."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Match equal and unequal integral values against one constant pattern."
+        ]
+      },
+      "id": "SV-2023-12-PATTERN-CONSTANT-MATCH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Nest patterns and verify each binding receives its position-derived type."
+        ],
+        "negative": [
+          "Use a pattern-bound identifier outside the scope established for its containing construct."
+        ],
+        "notes": [
+          "Construct-specific scope extent is defined by later subclauses."
+        ],
+        "positive": [
+          "Bind identifiers at differently typed structure-member positions and use them within the construct's pattern scope."
+        ]
+      },
+      "id": "SV-2023-12-PATTERN-IDENTIFIER-DECLARATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Reuse the same spelling in two separate patterns with separate scopes."
+        ],
+        "negative": [
+          "Reuse one binding identifier at two positions in the same pattern."
+        ],
+        "notes": [],
+        "positive": [
+          "Use distinct binding identifiers at two pattern positions."
+        ]
+      },
+      "id": "SV-2023-12-PATTERN-IDENTIFIER-UNIQUENESS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Cause no pattern arm to select under each qualifier and exercise the normal no-match check."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use unique-if and priority-if chains whose predicates contain matches clauses."
+        ]
+      },
+      "id": "SV-2023-12-PATTERN-IF-QUALIFIERS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a four-state constant pattern to exercise both determined success and determined failure."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Match correctly typed values containing X or Z and verify every result is exactly 0 or 1."
+        ]
+      },
+      "id": "SV-2023-12-PATTERN-MATCH-DETERMINED-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use recursively nested patterns whose contextual types remain identical at each level."
+        ],
+        "negative": [
+          "Match a structure or tagged-union value against a pattern of a different type."
+        ],
+        "notes": [],
+        "positive": [
+          "Match a value against a pattern with the same known contextual type."
+        ]
+      },
+      "id": "SV-2023-12-PATTERN-MATCH-TYPE-COMPATIBILITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Omit every member not needed to determine the match."
+        ],
+        "negative": [
+          "Make one specified nested member fail while all others match."
+        ],
+        "notes": [],
+        "positive": [
+          "Match a named-member structure pattern whose members are reordered and one member is omitted."
+        ]
+      },
+      "id": "SV-2023-12-PATTERN-STRUCTURE-MATCH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Bind a four-state member value containing X and Z bits."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Match a structure member with an identifier pattern and observe the full corresponding value assigned to it."
+        ]
+      },
+      "id": "SV-2023-12-PATTERN-SUCCESSFUL-BINDING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use positional and named structure patterns at different nesting levels."
+        ],
+        "negative": [
+          "Supply a nested member pattern for a tagged void member."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse nested tagged-union and named-structure patterns with identifier and wildcard leaves."
+        ]
+      },
+      "id": "SV-2023-12-PATTERN-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Match a tagged void member, which has no nested pattern."
+        ],
+        "negative": [
+          "Present a value with a different tag even if its payload bits would satisfy the nested pattern."
+        ],
+        "notes": [],
+        "positive": [
+          "Match the correct tagged-union member with a nested identifier or constant pattern."
+        ]
+      },
+      "id": "SV-2023-12-PATTERN-TAGGED-UNION-MATCH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use wildcards for all leaves of a nested structure pattern."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use .* at a nested member position and match values of several contents."
+        ]
+      },
+      "id": "SV-2023-12-PATTERN-WILDCARD-MATCH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Repeat with priority casez and priority casex where wildcard matching creates overlap."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Create two matching priority-case items and verify only the source-first item's statement executes."
+        ]
+      },
+      "id": "SV-2023-12-PRIORITY-CASE-FIRST-MATCH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use condition side effects to distinguish source-order evaluation while avoiding unrelated races."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use overlapping true conditions and observe execution of the first listed priority-if arm."
+        ]
+      },
+      "id": "SV-2023-12-PRIORITY-IF-EVALUATION-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place a statement in a final block and in a function to cover both containment categories."
+        ],
+        "negative": [
+          "Place a procedural assignment directly at module scope rather than inside an allowed procedural block."
+        ],
+        "notes": [],
+        "positive": [
+          "Place an assignment statement inside each listed automatic block, a task, and a function."
+        ]
+      },
+      "id": "SV-2023-12-PROCEDURAL-STATEMENT-CONTAINMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise each statement_item alternative in a valid containing block."
+        ],
+        "negative": [
+          "Use a block label followed by no statement item or terminating null semicolon."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a labeled procedural statement and an attribute-bearing null statement in allowed procedural contexts."
+        ]
+      },
+      "id": "SV-2023-12-PROCEDURAL-STATEMENT-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Control qualified-case reporting without suppressing unrelated procedural execution."
+        ],
+        "negative": [],
+        "notes": [
+          "Observe report presence, not diagnostic wording."
+        ],
+        "positive": [
+          "Disable and re-enable qualified-case violation reporting with the applicable assertion control system task."
+        ]
+      },
+      "id": "SV-2023-12-QUALIFIED-CASE-ASSERTION-CONTROL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast a flushed transient overlap with a stable overlap that persists through Observed and reports."
+        ],
+        "negative": [],
+        "notes": [
+          "Avoid depending on active-region execution order or diagnostic wording."
+        ],
+        "positive": [
+          "Create a transient qualified-case violation removed by same-time-step always_comb retriggering and verify no report."
+        ]
+      },
+      "id": "SV-2023-12-QUALIFIED-CASE-GLITCH-IMMUNITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a compile-time-determinable no-match and accept reporting at compile time rather than requiring run-time duplication."
+        ],
+        "negative": [],
+        "notes": [
+          "Check report occurrence rather than wording."
+        ],
+        "positive": [
+          "Run priority-case and unique-case with no matching item and verify a report."
+        ]
+      },
+      "id": "SV-2023-12-QUALIFIED-CASE-NO-MATCH-REPORT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Retrigger only one caller so its pending case violation is flushed while the other caller's report matures."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Execute one function containing a unique-case violation from two processes and verify independent stable reports."
+        ]
+      },
+      "id": "SV-2023-12-QUALIFIED-CASE-PROCESS-INDEPENDENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Retrigger one of two processes and verify only that process's pending case report is flushed."
+        ],
+        "negative": [],
+        "notes": [
+          "Do not depend on diagnostic wording."
+        ],
+        "positive": [
+          "Create a transient qualified-case violation and retrigger its always_comb process before Observed so the pending report is discarded."
+        ]
+      },
+      "id": "SV-2023-12-QUALIFIED-CASE-REPORT-FLUSH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Attempt a later process flush after Observed and verify it cannot cancel an already matured report."
+        ],
+        "negative": [],
+        "notes": [
+          "Observe report occurrence rather than wording."
+        ],
+        "positive": [
+          "Maintain a qualified-case violation through Observed and verify the matured report occurs."
+        ]
+      },
+      "id": "SV-2023-12-QUALIFIED-CASE-REPORT-MATURATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change relevant state later in the active region while preserving the violation to distinguish check time from report time."
+        ],
+        "negative": [],
+        "notes": [
+          "Use scheduler-aware observation without relying on diagnostic text."
+        ],
+        "positive": [
+          "Cause a stable qualified-case violation and verify reporting is deferred until the current time step's Observed region."
+        ]
+      },
+      "id": "SV-2023-12-QUALIFIED-CASE-REPORT-SCHEDULING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Control qualified-if reports without suppressing normal branch execution."
+        ],
+        "negative": [],
+        "notes": [
+          "Observe report presence rather than diagnostic wording."
+        ],
+        "positive": [
+          "Disable and re-enable qualified-if violation reporting with the applicable assertion control system task."
+        ]
+      },
+      "id": "SV-2023-12-QUALIFIED-IF-ASSERTION-CONTROL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast a transient active-region overlap with a stable overlap that must report."
+        ],
+        "negative": [],
+        "notes": [
+          "Materialization must avoid depending on ordering among active-region events."
+        ],
+        "positive": [
+          "Create same-time active-region updates that transiently appear to violate a qualified-if check but settle without a violation."
+        ]
+      },
+      "id": "SV-2023-12-QUALIFIED-IF-GLITCH-IMMUNITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Add an explicit else and verify the no-match report is suppressed."
+        ],
+        "negative": [],
+        "notes": [
+          "Check report occurrence rather than wording."
+        ],
+        "positive": [
+          "Drive unique-if and priority-if chains with no matching condition and no else and verify a report."
+        ]
+      },
+      "id": "SV-2023-12-QUALIFIED-IF-NO-MATCH-REPORT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Retrigger one of two callers to clear its transient failure while leaving the other caller's stable pending failure to report."
+        ],
+        "negative": [],
+        "notes": [
+          "Use one shared subroutine check so only calling-process identity varies."
+        ],
+        "positive": [
+          "Call one function containing a unique-if violation from two processes and verify each stable failing execution reports independently."
+        ]
+      },
+      "id": "SV-2023-12-QUALIFIED-IF-PROCESS-INDEPENDENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Queue multiple loop-generated violations in one process and retrigger it so the process queue is cleared together."
+        ],
+        "negative": [],
+        "notes": [
+          "Construct stimulus without assuming active-region execution order."
+        ],
+        "positive": [
+          "Cause a transient violation in always_comb, then retrigger the process from a dependent-signal transition before Observed and verify the pending report is discarded."
+        ]
+      },
+      "id": "SV-2023-12-QUALIFIED-IF-REPORT-FLUSH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Retrigger the process only after report maturation and verify that this cannot flush the matured report."
+        ],
+        "negative": [],
+        "notes": [
+          "Oracle is report occurrence, never report wording."
+        ],
+        "positive": [
+          "Leave a stable violation pending through the Observed region and verify one violation is reported."
+        ]
+      },
+      "id": "SV-2023-12-QUALIFIED-IF-REPORT-MATURATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Distinguish execution-time detection from later Observed reporting with scheduler-aware state observation."
+        ],
+        "negative": [],
+        "notes": [
+          "Do not depend on diagnostic text."
+        ],
+        "positive": [
+          "Detect a stable qualified-if violation and observe that its report matures in the same time step's Observed region."
+        ]
+      },
+      "id": "SV-2023-12-QUALIFIED-IF-REPORT-SCHEDULING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Modify data used by the captured count inside the body and verify the iteration count does not change."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Repeat a body with a positive count and verify that many iterations after one count-expression evaluation."
+        ]
+      },
+      "id": "SV-2023-12-REPEAT-LOOP-COUNT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast each converted-zero class with an explicit positive count."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use negative, X-containing, and Z-containing repeat counts and verify zero body executions."
+        ]
+      },
+      "id": "SV-2023-12-REPEAT-LOOP-NONPOSITIVE-UNKNOWN-COUNT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use return inside a nested procedural block that is itself within a subroutine."
+        ],
+        "negative": [
+          "Use return directly inside an initial, always, or module-level procedural block rather than a subroutine."
+        ],
+        "notes": [],
+        "positive": [
+          "Use return inside a task, void function, and value-returning function."
+        ]
+      },
+      "id": "SV-2023-12-RETURN-SUBROUTINE-ONLY"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Attempt a net declaration whose type_reference data type is not preceded by a net type keyword."
+        ],
+        "notes": [
+          "Keep the declaration kind unambiguously a net when contrasting the required prefix."
+        ],
+        "positive": [
+          "Declare a net with an explicit net type keyword immediately before a type_reference data type."
+        ]
+      },
+      "id": "SV-2023-12-TYPE-REFERENCE-NET-TYPE-PREFIX"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Declare a for-loop control variable using a type_reference data type without the required var prefix."
+        ],
+        "notes": [
+          "A for_variable_declaration directly exercises the chapter-12 occurrence of footnote 18."
+        ],
+        "positive": [
+          "Declare a for-loop control variable with var immediately before a type_reference data type."
+        ]
+      },
+      "id": "SV-2023-12-TYPE-REFERENCE-VAR-PREFIX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Cause overlap while verifying the controlling expression still evaluates only once."
+        ],
+        "negative": [],
+        "notes": [
+          "Avoid races when observing side effects."
+        ],
+        "positive": [
+          "Use deterministic counters to verify one controlling evaluation precedes item-expression evaluation."
+        ]
+      },
+      "id": "SV-2023-12-UNIQUE-CASE-CONTROLLING-EVALUATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Make exactly one item match and verify no overlap report."
+        ],
+        "negative": [],
+        "notes": [
+          "Do not test unspecified item-expression evaluation order or diagnostic wording."
+        ],
+        "positive": [
+          "Make two distinct items match and verify an overlap report."
+        ]
+      },
+      "id": "SV-2023-12-UNIQUE-CASE-OVERLAP-CHECK"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Reverse the source order of two matching items and verify the executed statement changes accordingly."
+        ],
+        "negative": [],
+        "notes": [
+          "Observe branch effects separately from report wording."
+        ],
+        "positive": [
+          "Make two distinct items match and verify only the source-first matching statement executes."
+        ]
+      },
+      "id": "SV-2023-12-UNIQUE-CASE-OVERLAP-EXECUTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast with the same expressions placed in two distinct case items, which is a violation."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Put two expressions that both match in one unique-case item and verify its statement executes without an overlap violation."
+        ]
+      },
+      "id": "SV-2023-12-UNIQUE-CASE-SAME-ITEM-MULTIMATCH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Make exactly one condition true and verify no overlap report."
+        ],
+        "negative": [],
+        "notes": [
+          "Do not rely on unspecified condition evaluation order or diagnostic wording."
+        ],
+        "positive": [
+          "Make two conditions true and verify an overlap report."
+        ]
+      },
+      "id": "SV-2023-12-UNIQUE-IF-OVERLAP-CHECK"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Reverse two true arms in source order and verify which statement executes changes accordingly."
+        ],
+        "negative": [],
+        "notes": [
+          "Observe arm effects independently of violation wording."
+        ],
+        "positive": [
+          "Make two conditions true and verify only the source-first true arm executes."
+        ]
+      },
+      "id": "SV-2023-12-UNIQUE-IF-OVERLAP-EXECUTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Keep overlap reporting enabled while verifying that only the no-match report is prohibited."
+        ],
+        "negative": [],
+        "notes": [
+          "Do not treat absence of all diagnostics as sufficient if the scenario also overlaps."
+        ],
+        "positive": [
+          "Run unique0 case, casez, and casex forms with no matching item and verify no no-match report."
+        ]
+      },
+      "id": "SV-2023-12-UNIQUE0-CASE-NO-MATCH-NO-REPORT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Keep overlap checking active while isolating the no-match-only scenario."
+        ],
+        "negative": [],
+        "notes": [
+          "Do not depend on diagnostic wording."
+        ],
+        "positive": [
+          "Drive a unique0-if chain so no condition matches and verify no no-match report."
+        ]
+      },
+      "id": "SV-2023-12-UNIQUE0-IF-NO-MATCH-NO-REPORT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Start with zero, X, and Z conditions and verify no body execution."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Start true, update the condition in the body, and verify repeated pre-test execution until false."
+        ]
+      },
+      "id": "SV-2023-12-WHILE-LOOP-EXECUTION"
+    }
+  ],
+  "schema_version": 1
+}

@@ -1,0 +1,408 @@
+{
+  "authority": "1800-2023",
+  "part": "24",
+  "requirements": [
+    {
+      "hints": {
+        "edge": [
+          "Include one program with no initial procedure and another whose initial procedure ends; the no-initial program does not prevent implicit finish."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Allow the last initial-originated thread across two programs to end and observe simulation terminate without explicit $finish."
+        ]
+      },
+      "id": "SV-2023-24-ALL-PROGRAMS-IMPLICIT-FINISH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Declare `program; ; endprogram` to exercise an empty anonymous-program body item."
+        ],
+        "negative": [
+          "Place an initial construct in an anonymous program body."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare an anonymous program containing one permitted function declaration."
+        ]
+      },
+      "id": "SV-2023-24-ANONYMOUS-PROGRAM-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place an anonymous program directly in compilation-unit scope."
+        ],
+        "negative": [
+          "Declare the same identifier both inside the anonymous program and elsewhere in its containing namespace."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare an anonymous-program task in a package and call it from a program using the package namespace."
+        ]
+      },
+      "id": "SV-2023-24-ANONYMOUS-PROGRAM-NAMESPACE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "From an anonymous program, hierarchically read a named program variable."
+        ],
+        "notes": [],
+        "positive": [
+          "Use only local declarations from an anonymous program."
+        ]
+      },
+      "id": "SV-2023-24-ANONYMOUS-PROGRAM-NO-CROSS-REFERENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call the same task from module and program threads."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Call a package task from a program and observe blocking statements in Reactive."
+        ]
+      },
+      "id": "SV-2023-24-CALLING-THREAD-REGION-INHERITANCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Reference through an enclosing module hierarchy while both endpoints remain program scopes."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Have one named program hierarchically read a signal in another named program."
+        ]
+      },
+      "id": "SV-2023-24-CROSS-PROGRAM-HIERARCHICAL-REFERENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call program code from another program."
+        ],
+        "negative": [
+          "Attempt to call a program-declared task from a module process."
+        ],
+        "notes": [],
+        "positive": [
+          "Call a module- or package-declared task from a program."
+        ]
+      },
+      "id": "SV-2023-24-MODULE-CANNOT-CALL-PROGRAM-CODE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Accept either presence or absence of a warning while requiring the call to be ignored."
+        ],
+        "negative": [],
+        "notes": [
+          "Do not require warning text or even warning issuance."
+        ],
+        "positive": [
+          "Call $exit from a module initial process and verify execution continues."
+        ]
+      },
+      "id": "SV-2023-24-NONPROGRAM-EXIT-IGNORED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Follow the import with only a parameter-port list."
+        ],
+        "negative": [
+          "Terminate an ANSI program header after a package import with neither parameters nor ports."
+        ],
+        "notes": [],
+        "positive": [
+          "Place a package import before an ANSI program port-declaration list."
+        ]
+      },
+      "id": "SV-2023-24-PROGRAM-ANSI-IMPORT-FOLLOWER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Clock the assertion from a program object and exercise the scheduler iteration back to Observed."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Place a concurrent assertion in a program and verify it samples the preponed value and evaluates in Observed."
+        ]
+      },
+      "id": "SV-2023-24-PROGRAM-CONCURRENT-ASSERTION-SCHEDULING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Parse extern ANSI and non-ANSI program headers and a wildcard-port program declaration."
+        ],
+        "negative": [
+          "Place a module-only body item in a program declaration."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse named ANSI and non-ANSI programs containing permitted declarations and initial/final constructs."
+        ]
+      },
+      "id": "SV-2023-24-PROGRAM-DECLARATION-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Keep a second initial procedure alive and verify descendants are not terminated prematurely."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Fork a nonterminating descendant from a program initial block and verify it is terminated when all program initials end."
+        ]
+      },
+      "id": "SV-2023-24-PROGRAM-DESCENDANT-THREAD-TERMINATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Drive a design signal that feeds a program continuous assignment and observe the assignment with Reactive-region ordering."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Trigger a program event control from a design-signal transition and order its action after same-time Active-region design work."
+        ]
+      },
+      "id": "SV-2023-24-PROGRAM-DESIGN-SIGNAL-REACTIVE-SCHEDULING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Run another program concurrently and verify $exit affects only the originating program."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Call $exit() in a forked descendant of one program initial and verify all initial families in that program terminate."
+        ]
+      },
+      "id": "SV-2023-24-PROGRAM-EXIT-TERMINATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an elaboration severity system task as a program generate item."
+        ],
+        "negative": [
+          "Hide a program-illegal declaration inside a program generate region."
+        ],
+        "notes": [],
+        "positive": [
+          "Generate an allowed program declaration item under a conditional generate construct."
+        ]
+      },
+      "id": "SV-2023-24-PROGRAM-GENERATE-ITEM-LEGALITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Hierarchically refer to the implicit instance using the program declaration name."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare an uninstantiated top-level portless program and observe its initial procedure execute once."
+        ]
+      },
+      "id": "SV-2023-24-PROGRAM-IMPLICIT-INSTANTIATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Declare multiple program initial procedures and observe each with Reactive-region ordering."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "At time zero, order a program initial observation after same-time Active-region module initial activity."
+        ]
+      },
+      "id": "SV-2023-24-PROGRAM-INITIAL-REACTIVE-SCHEDULING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "From one program call a subroutine in another program."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "From a program, call a module function and module task."
+        ]
+      },
+      "id": "SV-2023-24-PROGRAM-MAY-CALL-NONPROGRAM-SUBROUTINES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Nest a portless program in an interface."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Nest two programs in one module and access a variable in the enclosing module scope."
+        ]
+      },
+      "id": "SV-2023-24-PROGRAM-NESTING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare variable-port with resolved net-port propagation."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Drive a program output net and observe a receiving module process in the next Active-region iteration."
+        ]
+      },
+      "id": "SV-2023-24-PROGRAM-PORT-CROSS-REGION-PROPAGATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Connect program ports to design nets and variables declared in an interface scope."
+        ],
+        "negative": [
+          "Attempt to instantiate a program within a program scope."
+        ],
+        "notes": [],
+        "positive": [
+          "Connect program ports to module variables and nets."
+        ]
+      },
+      "id": "SV-2023-24-PROGRAM-PORT-DESIGN-OBJECT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Instantiate a program at top level with an implicit named port connection."
+        ],
+        "negative": [
+          "Use a port connection form that is illegal for a module on an otherwise equivalent program instance."
+        ],
+        "notes": [],
+        "positive": [
+          "Instantiate a named program and connect scalar and interface ports using module-style connections."
+        ]
+      },
+      "id": "SV-2023-24-PROGRAM-PORT-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Attempt to declare another program inside a program."
+        ],
+        "negative": [
+          "Place an always procedure or module instance directly in a program."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare data, classes, subroutines, objects, and initial/final procedures in a program."
+        ]
+      },
+      "id": "SV-2023-24-PROGRAM-PROHIBITED-CONTENTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast simultaneous module NBA and program Re-NBA updates."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Issue a program nonblocking assignment and compare its update with reactive activity."
+        ]
+      },
+      "id": "SV-2023-24-PROGRAM-RE-NBA"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use successive nonzero delays in a program process and verify each resumption has Reactive-region ordering."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Resume a program process after a nonzero # delay and order its action after same-time Active-region design work."
+        ]
+      },
+      "id": "SV-2023-24-PROGRAM-REACTIVE-RESUMPTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the same name in a program and an enclosing scope and verify scoped resolution."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare program data, a task, and a function and resolve them within the program scope."
+        ]
+      },
+      "id": "SV-2023-24-PROGRAM-SCOPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare a program-scope variable with an automatic local variable in a program task."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Modify a program-scope variable across repeated subroutine calls and observe retained state."
+        ]
+      },
+      "id": "SV-2023-24-PROGRAM-SCOPE-STATIC-LIFETIME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Attempt an external reference to a program port variable."
+        ],
+        "negative": [
+          "Reference a program variable hierarchically from a module process."
+        ],
+        "notes": [],
+        "positive": [
+          "Reference a program signal from another named program through a hierarchical path."
+        ]
+      },
+      "id": "SV-2023-24-PROGRAM-SIGNAL-EXTERNAL-REFERENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the optional timeunits declaration immediately after the program header without a later repeat."
+        ],
+        "negative": [
+          "Add a non-port program-item timeunits declaration that differs from the earlier declaration."
+        ],
+        "notes": [],
+        "positive": [
+          "Repeat an identical timeunit/timeprecision declaration as a non-port program item."
+        ]
+      },
+      "id": "SV-2023-24-PROGRAM-TIMEUNITS-REPEAT"
+    }
+  ],
+  "schema_version": 1
+}

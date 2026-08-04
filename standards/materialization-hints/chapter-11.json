@@ -1,0 +1,3630 @@
+{
+  "authority": "1800-2023",
+  "part": "11",
+  "requirements": [
+    {
+      "hints": {
+        "edge": [
+          "Choose operands that produce a carry only in the wider context."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Assign the same sum of two 16-bit operands to 16-bit and 17-bit destinations and observe evaluation width."
+        ]
+      },
+      "id": "SV-2023-11-ADDITION-LARGEST-CONTEXT-WIDTH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare separately declared aggregate types that satisfy the equivalent-type rules."
+        ],
+        "negative": [
+          "Compare aggregate expressions whose types are assignment-compatible but not equivalent."
+        ],
+        "notes": [],
+        "positive": [
+          "Compare two aggregate expressions of equivalent type."
+        ]
+      },
+      "id": "SV-2023-11-AGGREGATE-COMPARISON-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place a side effect and a run-time error in second operands skipped by false first operands."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use a required second operand when the first operand is true."
+        ]
+      },
+      "id": "SV-2023-11-AND-IMPLICATION-SHORT-CIRCUIT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise each operator on boundary-width integral types."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Apply each of +=, -=, /=, and *= to integral, real, and shortreal variables."
+        ]
+      },
+      "id": "SV-2023-11-ARITHMETIC-ASSIGNMENT-OPERAND-TYPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast signed and unsigned objects whose most significant bit is set, and compare with a real value of the corresponding magnitude."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Apply sign-sensitive arithmetic to each of the five table categories using the same significant bit pattern."
+        ]
+      },
+      "id": "SV-2023-11-ARITHMETIC-DATA-TYPE-INTERPRETATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use identical bits under signed and unsigned result contexts."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Arithmetic-right-shift signed negative, signed positive, and unsigned values."
+        ]
+      },
+      "id": "SV-2023-11-ARITHMETIC-RIGHT-SHIFT-FILL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Shift-assign a one-bit signed variable."
+        ],
+        "negative": [
+          "Apply one to a real variable."
+        ],
+        "notes": [],
+        "positive": [
+          "Apply each operator to an integral variable."
+        ]
+      },
+      "id": "SV-2023-11-ARITHMETIC-SHIFT-ASSIGNMENT-TYPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place one x or z bit in each operand position and observe an all-x result."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Perform arithmetic on fully known four-state operands."
+        ]
+      },
+      "id": "SV-2023-11-ARITHMETIC-XZ-PROPAGATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Bit-select an element of an unpacked array and use the result as an operand."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use whole arrays, packed-array selections, and unpacked-array elements and slices as operands."
+        ]
+      },
+      "id": "SV-2023-11-ARRAY-OPERANDS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Assign a pattern with its most significant bit set."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Assign the same bit pattern to signed and unsigned objects and use each in sign-sensitive arithmetic."
+        ]
+      },
+      "id": "SV-2023-11-ASSIGNED-VALUE-SIGNEDNESS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast procedural and nonprocedural expression contexts."
+        ],
+        "negative": [
+          "Place an assignment operator in each prohibited expression context."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a parenthesized assignment expression in a legal procedural statement."
+        ]
+      },
+      "id": "SV-2023-11-ASSIGNMENT-EXPRESSION-PROHIBITED-CONTEXTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Nest assignments with different widths and signedness."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Consume an assignment expression whose right-hand value changes during conversion."
+        ]
+      },
+      "id": "SV-2023-11-ASSIGNMENT-EXPRESSION-VALUE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use identical high-bit-one patterns with opposite right-hand signedness."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Assign narrower signed and unsigned right-hand values to wider destinations."
+        ]
+      },
+      "id": "SV-2023-11-ASSIGNMENT-RHS-SIZING-AND-EXTENSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Add values at an integral width boundary."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Add representative positive, negative, and zero numeric operands."
+        ]
+      },
+      "id": "SV-2023-11-BINARY-ADDITION-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Reverse operand order and use one-bit versus wide operands."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Apply every listed operator to unequal-width operands and inspect result width."
+        ]
+      },
+      "id": "SV-2023-11-BINARY-ARITHMETIC-BITWISE-RESULT-SIZE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exponentiate integral and real operands at representative width boundaries."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use each of +, -, *, /, and ** with integral, real, and shortreal operands."
+        ]
+      },
+      "id": "SV-2023-11-BINARY-ARITHMETIC-TYPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise all four-state input combinations at one bit position."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Apply every binary bitwise operator to complementary multi-bit patterns."
+        ]
+      },
+      "id": "SV-2023-11-BINARY-BITWISE-PER-BIT-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Combine one-bit four-state operands."
+        ],
+        "negative": [
+          "Apply one to real operands."
+        ],
+        "notes": [],
+        "positive": [
+          "Apply every spelling to integral vectors."
+        ]
+      },
+      "id": "SV-2023-11-BINARY-BITWISE-TYPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Divide a magnitude smaller than the divisor and observe zero."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Divide positive and negative integral values with nonzero remainders."
+        ]
+      },
+      "id": "SV-2023-11-BINARY-DIVISION-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Combine zero and nonzero real operands."
+        ],
+        "negative": [
+          "Apply one to an unpacked aggregate."
+        ],
+        "notes": [
+          "Verify implication and equivalence glyphs against the source image."
+        ],
+        "positive": [
+          "Apply each operator to permitted numeric categories."
+        ]
+      },
+      "id": "SV-2023-11-BINARY-LOGICAL-TYPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Apply % to signed and unsigned one-bit integral operands."
+        ],
+        "negative": [
+          "Apply % to real or shortreal operands."
+        ],
+        "notes": [],
+        "positive": [
+          "Apply % to integral operands."
+        ]
+      },
+      "id": "SV-2023-11-BINARY-MODULUS-OPERAND-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an exact divisor and observe zero."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compute remainders for all sign combinations of dividend and nonzero divisor."
+        ]
+      },
+      "id": "SV-2023-11-BINARY-MODULUS-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Multiply by zero and one."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Multiply representative signed and unsigned operands."
+        ]
+      },
+      "id": "SV-2023-11-BINARY-MULTIPLICATION-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Subtract at an integral width boundary."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Subtract positive, negative, and zero operands."
+        ]
+      },
+      "id": "SV-2023-11-BINARY-SUBTRACTION-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Select one bit using both bit-select and one-bit part-select forms."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Bit- and part-select every enumerated object category."
+        ]
+      },
+      "id": "SV-2023-11-BIT-AND-PART-SELECT-OPERANDS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use signed and unsigned address expressions with identical bits."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Bit-select every permitted category using addresses whose widths differ from surrounding context."
+        ]
+      },
+      "id": "SV-2023-11-BIT-SELECT-SELF-DETERMINED-ADDRESS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Select each declared endpoint in ascending and descending declarations."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Select the same index from vectors declared [15:0] and [2:17] and verify declaration-based mapping."
+        ]
+      },
+      "id": "SV-2023-11-BIT-SELECT-USES-DECLARED-INDEX-RANGE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify that 0 masks x and z to 0 while 1 passes uncertainty as x."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Evaluate all sixteen ordered pairs of 0, 1, x, and z with &."
+        ]
+      },
+      "id": "SV-2023-11-BITWISE-AND-FOUR-STATE-TRUTH-TABLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Apply ^= to a one-bit integral variable."
+        ],
+        "negative": [
+          "Apply a bitwise assignment operator to a real variable."
+        ],
+        "notes": [],
+        "positive": [
+          "Apply each bitwise assignment operator to integral variables."
+        ]
+      },
+      "id": "SV-2023-11-BITWISE-ASSIGNMENT-OPERAND-TYPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify z negates to x rather than z."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Apply ~ independently to 0, 1, x, and z."
+        ]
+      },
+      "id": "SV-2023-11-BITWISE-NEGATION-FOUR-STATE-TRUTH-TABLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify that 1 masks x and z to 1 while 0 passes uncertainty as x."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Evaluate all sixteen ordered pairs of 0, 1, x, and z with |."
+        ]
+      },
+      "id": "SV-2023-11-BITWISE-OR-FOUR-STATE-TRUTH-TABLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify both spellings give identical results and propagate x or z as x."
+        ],
+        "negative": [],
+        "notes": [
+          "The table header is split across extracted rows; verify its visual alignment during materialization."
+        ],
+        "positive": [
+          "Evaluate both XNOR spellings over all ordered pairs of 0, 1, x, and z."
+        ]
+      },
+      "id": "SV-2023-11-BITWISE-XNOR-FOUR-STATE-TRUTH-TABLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify every operation involving x or z yields x."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Evaluate all sixteen ordered pairs of 0, 1, x, and z with ^."
+        ]
+      },
+      "id": "SV-2023-11-BITWISE-XOR-FOUR-STATE-TRUTH-TABLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare x with x and z with z in corresponding bit positions."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Apply === and !== to equal and unequal four-state vectors containing x and z."
+        ]
+      },
+      "id": "SV-2023-11-CASE-EQUALITY-DEFINITIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Case-compare four-state values containing X and Z."
+        ],
+        "negative": [
+          "Apply === or !== to real or shortreal operands."
+        ],
+        "notes": [],
+        "positive": [
+          "Case-compare integral and compatible non-real values."
+        ]
+      },
+      "id": "SV-2023-11-CASE-EQUALITY-OPERATOR-TYPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare x against z and matching x against x."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Case-compare equal and unequal vectors containing x and z."
+        ]
+      },
+      "id": "SV-2023-11-CASE-EQUALITY-XZ-KNOWN-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Convert values near integer range and rounding boundaries."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Coerce positive and negative real values to integer and use the result in sign-sensitive operations."
+        ]
+      },
+      "id": "SV-2023-11-COERCED-REAL-TO-INTEGER-SIGNED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Choose a surrounding context that would alter operands if comparison were fully context-determined."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare unequal-width signed and unsigned operands inside a wider surrounding expression."
+        ]
+      },
+      "id": "SV-2023-11-COMPARISON-OPERAND-MUTUAL-CONTEXT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use x-valued one-bit results and verify unsigned type."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Inspect result type from comparisons and every reduction on signed operands."
+        ]
+      },
+      "id": "SV-2023-11-COMPARISON-REDUCTION-RESULT-UNSIGNED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use objects of one bit and multiple bits."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use bare names of packed nets, variables, and parameters with recognizable values."
+        ]
+      },
+      "id": "SV-2023-11-COMPLETE-NAMED-OPERAND-USES-ALL-BITS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use operands whose conversion to the left-hand type changes the stored result."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Apply each compound assignment operator to a simple nonindexed left-hand side and observe its immediate blocking update."
+        ]
+      },
+      "id": "SV-2023-11-COMPOUND-ASSIGNMENT-BLOCKING-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an index expression that changes the selected element when evaluated repeatedly."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use a side-effecting function as the index in a compound assignment and count one invocation."
+        ]
+      },
+      "id": "SV-2023-11-COMPOUND-ASSIGNMENT-INDEX-ONCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use concatenation operands of differing widths and inspect returned width and unsignedness."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Consume the returned value from an assignment to a concatenated left-hand side."
+        ]
+      },
+      "id": "SV-2023-11-CONCATENATION-ASSIGNMENT-EXPRESSION-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a one-bit, one-operand concatenation and compare its packed-vector properties with a one-bit vector."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use a concatenation in an operation that observes its packed bit ordering and width."
+        ]
+      },
+      "id": "SV-2023-11-CONCATENATION-PACKED-VECTOR-USAGE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast an unsized literal with an explicitly sized one of the same value."
+        ],
+        "negative": [
+          "Place an unsized constant number directly in a concatenation."
+        ],
+        "notes": [],
+        "positive": [
+          "Use explicitly sized constants and sized expression operands in concatenations."
+        ]
+      },
+      "id": "SV-2023-11-CONCATENATION-PROHIBITS-UNSIZED-CONSTANT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multiplier zero in its legal context and multiplier one."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Measure flat, nested, and replicated concatenations with varying operand widths."
+        ]
+      },
+      "id": "SV-2023-11-CONCATENATION-REPLICATION-SIZE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Replicate a one-bit four-state operand once."
+        ],
+        "negative": [
+          "Place a real value directly in an integral concatenation."
+        ],
+        "notes": [],
+        "positive": [
+          "Concatenate and replicate integral values of differing widths."
+        ]
+      },
+      "id": "SV-2023-11-CONCATENATION-REPLICATION-TYPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a one-operand concatenation around a signed value."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Concatenate only signed operands and inspect result signedness."
+        ]
+      },
+      "id": "SV-2023-11-CONCATENATION-RESULT-UNSIGNED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Attempt the prohibited use with a concatenation whose operands individually are writable."
+        ],
+        "negative": [
+          "Assign to a bit-select or part-select of a concatenation."
+        ],
+        "notes": [],
+        "positive": [
+          "Read a selection from a concatenation on an assignment right-hand side."
+        ]
+      },
+      "id": "SV-2023-11-CONCATENATION-SELECT-NOT-LVALUE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a single-expression concatenation."
+        ],
+        "negative": [
+          "Use missing braces or omit commas between expressions."
+        ],
+        "notes": [],
+        "positive": [
+          "Concatenate one and multiple expressions of differing widths."
+        ]
+      },
+      "id": "SV-2023-11-CONCATENATION-SYNTAX-AND-BIT-JOIN"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a one-item brace construct with and without the apostrophe."
+        ],
+        "negative": [
+          "Treat plain-brace concatenation syntax as an aggregate literal or vice versa."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse corresponding concatenation, structure-literal, and array-literal forms in valid contexts."
+        ]
+      },
+      "id": "SV-2023-11-CONCATENATION-VERSUS-AGGREGATE-LITERAL-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use nested aggregate element types and verify type-specific mismatch values."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Merge equal-length aggregate arrays with a mixture of matching and differing elements under an x predicate."
+        ]
+      },
+      "id": "SV-2023-11-CONDITIONAL-AMBIGUOUS-ARRAY-MERGE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Include x and z in each branch position and use unequal branch widths."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Merge branch vectors with matching and differing known bits under an x predicate."
+        ]
+      },
+      "id": "SV-2023-11-CONDITIONAL-AMBIGUOUS-INTEGRAL-MERGE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an associative array or unequal-length aggregate arrays to exercise the fallback rather than element merging."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use nonequivalent branches of several nonintegral result types under an x predicate."
+        ]
+      },
+      "id": "SV-2023-11-CONDITIONAL-AMBIGUOUS-NONARRAY-FALLBACK"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Put observable side effects in both branches and verify both execute."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use ambiguous predicates with equal branch values and with differing branch values."
+        ]
+      },
+      "id": "SV-2023-11-CONDITIONAL-AMBIGUOUS-PREDICATE-EVALUATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a multilevel hierarchy where the closest common base is not the root."
+        ],
+        "negative": [
+          "Use unrelated class branches with no applicable compatibility or common-base rule."
+        ],
+        "notes": [],
+        "positive": [
+          "Exercise two nulls, null in either branch, both directions of one-way compatibility, and sibling classes with a common base."
+        ]
+      },
+      "id": "SV-2023-11-CONDITIONAL-CLASS-BRANCH-TYPING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an ambiguous predicate with branches requiring extension to the maximum width."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use unequal-width branches and predicates of several widths."
+        ]
+      },
+      "id": "SV-2023-11-CONDITIONAL-EXPRESSION-SIZE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise both branch orders."
+        ],
+        "negative": [
+          "Pair an integral branch with a type not implicitly castable to integral absent another applicable rule."
+        ],
+        "notes": [],
+        "positive": [
+          "Pair an integral branch with a nonintegral branch having a legal implicit integral conversion."
+        ]
+      },
+      "id": "SV-2023-11-CONDITIONAL-IMPLICIT-INTEGRAL-CAST"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place a run-time error in each unselected branch and verify it is skipped."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use side effects in selected true and false branches."
+        ]
+      },
+      "id": "SV-2023-11-CONDITIONAL-KNOWN-PREDICATE-SHORT-CIRCUIT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an ambiguous predicate after numeric promotion and inspect merged behavior."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use every ordered pairing of real, shortreal, and integral conditional branches and inspect result type."
+        ]
+      },
+      "id": "SV-2023-11-CONDITIONAL-NONINTEGRAL-NUMERIC-PROMOTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Nest a conditional in the false branch without parentheses."
+        ],
+        "negative": [
+          "Omit either result expression or the colon."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse simple, nested right-associative, attributed, &&&-combined, and matches-based conditional forms."
+        ]
+      },
+      "id": "SV-2023-11-CONDITIONAL-OPERATOR-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Select between compatible unpacked aggregates."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use conditional branches of representative scalar and aggregate types."
+        ]
+      },
+      "id": "SV-2023-11-CONDITIONAL-OPERATOR-TYPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use separately declared types at the boundary of equivalent-type rules."
+        ],
+        "negative": [
+          "Use nonequivalent branch types not covered by an earlier conditional typing rule."
+        ],
+        "notes": [],
+        "positive": [
+          "Use equivalent aggregate or nonintegral branch types."
+        ]
+      },
+      "id": "SV-2023-11-CONDITIONAL-OTHER-BRANCH-TYPE-EQUIVALENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Combine several pattern conditions with &&&."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use both expression and pattern-matching predicates in conditional operators."
+        ]
+      },
+      "id": "SV-2023-11-CONDITIONAL-PATTERN-PREDICATE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Nest an eligible method call within another constant expression."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use an eligible built-in method call in a parameter initializer."
+        ]
+      },
+      "id": "SV-2023-11-CONSTANT-BUILTIN-METHOD-ELABORATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call a pure receiver-independent method with constant arguments on a nonconstant receiver."
+        ],
+        "negative": [
+          "Use a side-effecting method or a receiver-dependent method on a nonconstant receiver in a constant expression."
+        ],
+        "notes": [],
+        "positive": [
+          "Call a pure receiver-dependent built-in method on a constant receiver with constant arguments."
+        ]
+      },
+      "id": "SV-2023-11-CONSTANT-BUILTIN-METHOD-ELIGIBILITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a constant bit-select of a parameter with an operator from Table 11-1."
+        ],
+        "negative": [
+          "Use a runtime variable as an operand where a constant expression is required."
+        ],
+        "notes": [],
+        "positive": [
+          "Build a constant expression from parameters, literals, and a non-void constant function call."
+        ]
+      },
+      "id": "SV-2023-11-CONSTANT-EXPRESSION-CONTENTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a very large unsized value requiring more than 32 bits."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Inspect $bits for unsized and several explicitly sized constant numbers."
+        ]
+      },
+      "id": "SV-2023-11-CONSTANT-NUMBER-SELF-DETERMINED-SIZE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a parameter-derived constant base and width."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Classify literal-index bit selects, non-indexed selects, and indexed selects with constant and variable bases."
+        ]
+      },
+      "id": "SV-2023-11-CONSTANT-SELECT-DEFINITION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Nest eligible constant system-function calls in a constant expression."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use an eligible constant system-function result in a parameter initializer."
+        ]
+      },
+      "id": "SV-2023-11-CONSTANT-SYSTEM-FUNCTION-ELABORATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an eligible query function under its specific rules with an argument that is not a constant expression."
+        ],
+        "negative": [
+          "Use a side-effecting system function or a nonlisted, noneligible system function in a constant expression."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a listed mathematical system function with constant arguments in a parameter initializer."
+        ]
+      },
+      "id": "SV-2023-11-CONSTANT-SYSTEM-FUNCTION-ELIGIBILITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Nest several context-determined operator levels."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Evaluate identical right-hand expressions under differently sized assignment destinations."
+        ]
+      },
+      "id": "SV-2023-11-CONTEXT-DETERMINED-EXPRESSION-DEFINITION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast an int with an otherwise same-width default-unsigned packed type."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Inspect default signedness of byte, shortint, int, integer, longint, and representative other data types."
+        ]
+      },
+      "id": "SV-2023-11-DECLARED-AND-DEFAULT-SIGNEDNESS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a one-bit integral distribution expression."
+        ],
+        "negative": [
+          "Use a real operand with dist."
+        ],
+        "notes": [],
+        "positive": [
+          "Use integral expressions in a dist expression."
+        ]
+      },
+      "id": "SV-2023-11-DIST-OPERAND-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Apply / and % with zero divisors at several result widths and observe all x."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Divide and take modulus by nonzero values."
+        ]
+      },
+      "id": "SV-2023-11-DIVIDE-MODULUS-BY-ZERO"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Store each form in vectors of exact and wider widths."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare empty string with NUL and with character zero in numeric and equality contexts."
+        ]
+      },
+      "id": "SV-2023-11-EMPTY-STRING-LITERAL-EQUIVALENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare the default grouping with explicit parentheses reversing it."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Evaluate an unparenthesized expression combining equality and relational operators."
+        ]
+      },
+      "id": "SV-2023-11-EQUALITY-BELOW-RELATIONAL-PRECEDENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use one-bit operands and verify exactly one-bit known results when comparison succeeds or fails."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare bit vectors that are identical and that differ in one bit using all four operators."
+        ]
+      },
+      "id": "SV-2023-11-EQUALITY-COMPARISON-BASIC-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use widths whose extension changes the comparison value."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare unequal-width operands with every listed equality and relational operator and inspect one-bit result."
+        ]
+      },
+      "id": "SV-2023-11-EQUALITY-RELATIONAL-RESULT-AND-OPERAND-SIZE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use operands whose repeated evaluation would change the equivalence result."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use independently side-effecting expressions as both equivalence operands and count one evaluation each."
+        ]
+      },
+      "id": "SV-2023-11-EQUIVALENCE-OPERANDS-EVALUATED-ONCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Mix a self-determined subexpression with several context-determined levels."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Trace sizing and signedness through nested context-determined expressions."
+        ]
+      },
+      "id": "SV-2023-11-EXPRESSION-EVALUATION-SIZE-SIGN-PROPAGATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Nest context-determined and self-determined subexpressions to isolate the size contribution of each."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Evaluate the same expression in assignment contexts of differing widths."
+        ]
+      },
+      "id": "SV-2023-11-EXPRESSION-SIZE-OPERANDS-CONTEXT-AND-CAST"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use destination contexts that still change size but not expression type."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use the same expression under destinations of differing type and verify its intrinsic result type is unchanged."
+        ]
+      },
+      "id": "SV-2023-11-EXPRESSION-TYPE-OPERANDS-ONLY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multiply nested field selections."
+        ],
+        "negative": [
+          "Treat an ordinary hierarchical object name with no final struct/union field as a field select."
+        ],
+        "notes": [],
+        "positive": [
+          "Classify struct and union member paths and identify the prefix before the final dot."
+        ]
+      },
+      "id": "SV-2023-11-FIELD-SELECT-AND-PREFIX-DEFINITION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a zero-argument function call as a complete expression."
+        ],
+        "negative": [
+          "Use a void function call where a value operand is required."
+        ],
+        "notes": [],
+        "positive": [
+          "Use calls returning integral, real, and aggregate-compatible values as operands."
+        ]
+      },
+      "id": "SV-2023-11-FUNCTION-CALL-IS-OPERAND"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Reference the genvar in nested constant expressions inside the generate loop."
+        ],
+        "negative": [
+          "Use a genvar identifier as constant_primary outside loop generate."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a genvar constant primary within a loop generate."
+        ]
+      },
+      "id": "SV-2023-11-GENVAR-CONSTANT-PRIMARY-CONTEXT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare two null handle values and handles referring to the same versus distinct objects."
+        ],
+        "negative": [
+          "Compare class handles for which neither operand is assignment compatible with the other."
+        ],
+        "notes": [],
+        "positive": [
+          "Compare assignment-compatible class handles, interface-class handles, chandles, and each against null."
+        ]
+      },
+      "id": "SV-2023-11-HANDLE-EQUALITY-LEGALITY-AND-VALUE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Combine three adjacent precedence levels in one expression."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Evaluate addition combined with division without parentheses."
+        ]
+      },
+      "id": "SV-2023-11-HIGHER-PRECEDENCE-GROUPS-FIRST"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Include x truth values and compare four-state results with the expanded forms."
+        ],
+        "negative": [],
+        "notes": [
+          "Verify extracted implication and equivalence glyphs against the source."
+        ],
+        "positive": [
+          "Compare each operator against its expanded logical form for all known truth combinations."
+        ]
+      },
+      "id": "SV-2023-11-IMPLICATION-EQUIVALENCE-LOGIC"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Nest a prefix or postfix operation in a larger expression."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use all four prefix and postfix forms directly within procedural expressions."
+        ]
+      },
+      "id": "SV-2023-11-INCREMENT-DECREMENT-EXPRESSION-FORMS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Increment a maximum-width boundary value."
+        ],
+        "negative": [
+          "Increment an unpacked aggregate."
+        ],
+        "notes": [],
+        "positive": [
+          "Increment and decrement variables of every permitted numeric category."
+        ]
+      },
+      "id": "SV-2023-11-INCREMENT-DECREMENT-TYPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use width one and bases at each declared boundary."
+        ],
+        "negative": [
+          "Use zero, negative, or nonconstant width."
+        ],
+        "notes": [],
+        "positive": [
+          "Use +: and -: on vectors declared in both index directions with runtime-varying bases."
+        ]
+      },
+      "id": "SV-2023-11-INDEXED-PART-SELECT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a chain mixing array, bit, and part selects."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Identify each indexing operation and prefix in multidimensional array and packed selections."
+        ]
+      },
+      "id": "SV-2023-11-INDEXING-SELECT-AND-PREFIX-DEFINITION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use zero tolerance and a B whose type differs from A."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Test values at, within, and just outside absolute-tolerance bounds for integral and real A."
+        ]
+      },
+      "id": "SV-2023-11-INSIDE-ABSOLUTE-TOLERANCE-RANGE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use equal bounds and reversed bounds."
+        ],
+        "negative": [
+          "Use nonsingular or nonrelationally-comparable range bounds."
+        ],
+        "notes": [],
+        "positive": [
+          "Test both endpoints, interior values, and $-open lower and upper ranges."
+        ]
+      },
+      "id": "SV-2023-11-INSIDE-BOUNDED-RANGE-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Reverse an uncertain integral value to the left side and observe it is not a wildcard."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use right-side x and z wildcard bits in integral set values and ordinary equality for nonintegral values."
+        ]
+      },
+      "id": "SV-2023-11-INSIDE-COMPARISON-OPERATORS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Mix every value_range form in one comma-separated set."
+        ],
+        "negative": [
+          "Omit the braces around the range list."
+        ],
+        "notes": [
+          "The tolerance operator glyphs are flagged for visual review."
+        ],
+        "positive": [
+          "Parse inside sets containing values, ordinary ranges, open $ ranges, and both tolerance-range spellings."
+        ]
+      },
+      "id": "SV-2023-11-INSIDE-EXPRESSION-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a packed aggregate that is singular."
+        ],
+        "negative": [
+          "Use an unpacked aggregate as the left operand."
+        ],
+        "notes": [],
+        "positive": [
+          "Use singular integral and nonintegral values on the left."
+        ]
+      },
+      "id": "SV-2023-11-INSIDE-LEFT-OPERAND-SINGULAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use zero, 100, fractional, and sign-varying percentage expressions."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Test positive and negative centers with several percentage tolerances."
+        ]
+      },
+      "id": "SV-2023-11-INSIDE-RELATIVE-TOLERANCE-RANGE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Flatten a nested unpacked array containing a matching singular element."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Match and miss among scalar values, ranges, and recursively traversed unpacked-array elements."
+        ]
+      },
+      "id": "SV-2023-11-INSIDE-SET-SCAN-AND-ARRAY-FLATTEN"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use only false and x comparisons and observe x."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use a set with one true comparison and other x comparisons and observe true."
+        ]
+      },
+      "id": "SV-2023-11-INSIDE-UNKNOWN-NOMATCH-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare a no-base negative literal with an unsigned based literal carrying the same two's-complement bits."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use unbased and unsigned-based literals with identical bit patterns in sign-sensitive expressions."
+        ]
+      },
+      "id": "SV-2023-11-INTEGER-LITERAL-SIGNEDNESS-INTERPRETATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use bases -1 and 1 at both exponent parities."
+        ],
+        "negative": [],
+        "notes": [
+          "The table rows are fragmented in extracted text; verify the matrix layout visually during materialization."
+        ],
+        "positive": [
+          "Exercise positive odd/even and negative odd/even exponents for bases below -1, -1, 1, and above 1."
+        ]
+      },
+      "id": "SV-2023-11-INTEGRAL-POWER-SIGN-AND-SPECIAL-MATRIX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Evaluate zero raised to a negative integral exponent and observe all x."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Evaluate non-real powers with exponent zero and ordinary positive exponents."
+        ]
+      },
+      "id": "SV-2023-11-INTEGRAL-POWER-SPECIAL-RESULTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Choose a carry-producing subexpression whose significant bit is lost at the interim width."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Evaluate nested arithmetic with operands and assignment destinations of differing widths."
+        ]
+      },
+      "id": "SV-2023-11-INTERIM-RESULT-LARGEST-OPERAND-SIZE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Read negative, too-large, x-containing, and z-containing addresses in both state domains."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Read in-bounds known addresses from 2-state and 4-state objects."
+        ]
+      },
+      "id": "SV-2023-11-INVALID-BIT-SELECT-READ-VALUE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Read using negative, too-large, x-containing, and z-containing addresses across element types."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Read memory at each declared boundary."
+        ]
+      },
+      "id": "SV-2023-11-INVALID-MEMORY-ADDRESS-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Apply each pair to vectors producing 0, 1, and x."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare ~&, ~|, ~^, and ^~ reductions with explicit inversion of their positive reductions."
+        ]
+      },
+      "id": "SV-2023-11-INVERTED-REDUCTION-DEFINITION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Shift by zero, the operand width, and beyond the width."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Apply both left-shift spellings with several counts and compare results."
+        ]
+      },
+      "id": "SV-2023-11-LEFT-SHIFT-ZERO-FILL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use all-default arguments and a named argument after positional arguments."
+        ],
+        "negative": [
+          "Mix argument syntax in a form not admitted by the grammar."
+        ],
+        "notes": [
+          "Extracted punctuation is flagged for visual review."
+        ],
+        "positive": [
+          "Declare and instantiate lets with no ports, typed/untyped ports, defaults, dimensions, package scope, positional omissions, and named arguments."
+        ]
+      },
+      "id": "SV-2023-11-LET-DECLARATION-AND-EXPRESSION-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use nested scopes within each category."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare and instantiate a let in every enumerated design-unit or clocking scope."
+        ]
+      },
+      "id": "SV-2023-11-LET-DECLARATION-SCOPES-DESIGN-UNITS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use both sequential and parallel blocks and nested generate blocks."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare and instantiate a let in every enumerated lexical scope."
+        ]
+      },
+      "id": "SV-2023-11-LET-DECLARATION-SCOPES-LEXICAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a default event actual if otherwise legal."
+        ],
+        "negative": [
+          "Pass a nonevent expression or reference the event formal in an ordinary value position."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare an event-typed formal and pass event expressions used in event-expression positions."
+        ]
+      },
+      "id": "SV-2023-11-LET-EVENT-FORMAL-ARGUMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast package scope with hierarchical module-instance scope."
+        ],
+        "negative": [
+          "Reference a let by a hierarchical instance path."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a let through permitted lexical or package visibility."
+        ]
+      },
+      "id": "SV-2023-11-LET-HIERARCHICAL-REFERENCE-PROHIBITED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Instantiate a package let from an importing scope with shadowing identifiers."
+        ],
+        "negative": [
+          "Instantiate a let before its declaration in the same scope."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a declaration-scope variable despite a shadowing name at instantiation and instantiate after declaration."
+        ]
+      },
+      "id": "SV-2023-11-LET-NONFORMAL-NAME-RESOLUTION-AND-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Instantiate the same let under two different inferred clocks."
+        ],
+        "negative": [
+          "Instantiate one requiring a clock in a context where none can be inferred."
+        ],
+        "notes": [],
+        "positive": [
+          "Instantiate a sampled-value let where the clock is explicit and where the instantiation context supplies an inferred clock."
+        ]
+      },
+      "id": "SV-2023-11-LET-SAMPLED-VALUE-CLOCK-INFERENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Substitute compound expressions for formals used under several operators."
+        ],
+        "negative": [
+          "Instantiate actuals that make the expanded body illegal."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a let body whose precedence would change without enclosing parentheses."
+        ]
+      },
+      "id": "SV-2023-11-LET-SUBSTITUTION-PARENTHESES-AND-LEGALITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Instantiate a zero-port let and a let using defaulted ports."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Instantiate a let body with different actual arguments inside arithmetic, conditional, and assertion-related expressions."
+        ]
+      },
+      "id": "SV-2023-11-LET-TEMPLATE-INSTANTIATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise a default actual and an explicitly supplied equivalent value."
+        ],
+        "negative": [
+          "Pass a non-cast-compatible actual."
+        ],
+        "notes": [],
+        "positive": [
+          "Pass cast-compatible actuals requiring visible width or signedness conversion."
+        ]
+      },
+      "id": "SV-2023-11-LET-TYPED-NONEVENT-ACTUAL-CAST"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use each literal by itself as an expression."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Form expressions whose operands are an integral literal, a real literal, and a string literal."
+        ]
+      },
+      "id": "SV-2023-11-LITERAL-OPERANDS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare otherwise identical values with one uncertain bit and observe 1'bx."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare operands with x or z plus a known mismatch that determines equality."
+        ]
+      },
+      "id": "SV-2023-11-LOGICAL-EQUALITY-AMBIGUOUS-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare values containing x or z where known differing bits do and do not determine the result."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Apply == and != to known equal and unequal operands."
+        ]
+      },
+      "id": "SV-2023-11-LOGICAL-EQUALITY-DEFINITIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare real and shortreal operands."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare representative scalar and aggregate-compatible operands with == and !=."
+        ]
+      },
+      "id": "SV-2023-11-LOGICAL-EQUALITY-OPERATOR-TYPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use first operands whose truth value immediately determines the result."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Put an observable side effect in the first operand of each named operator."
+        ]
+      },
+      "id": "SV-2023-11-LOGICAL-FIRST-OPERAND-ALWAYS-EVALUATED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Negate four-state values whose truth is ambiguous and whose known bits determine nonzero."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Negate zero and multiple nonzero integral and real values."
+        ]
+      },
+      "id": "SV-2023-11-LOGICAL-NEGATION-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Negate zero and nonzero real values."
+        ],
+        "negative": [
+          "Apply ! to an unpacked aggregate."
+        ],
+        "notes": [],
+        "positive": [
+          "Apply ! to every permitted category."
+        ]
+      },
+      "id": "SV-2023-11-LOGICAL-NEGATION-TYPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Mix -> and <-> to observe their shared precedence and right associativity."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Evaluate unparenthesized expressions crossing relational, equality, &&, ||, conditional, implication, and equivalence levels."
+        ]
+      },
+      "id": "SV-2023-11-LOGICAL-OPERATOR-PRECEDENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use ambiguous four-state truth values and observe when the result remains x versus becomes determined."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Exercise known true and false input combinations for each logical connective."
+        ]
+      },
+      "id": "SV-2023-11-LOGICAL-OPERATOR-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use operand sizes whose context extension would change truth if operands were not self-determined."
+        ],
+        "negative": [],
+        "notes": [
+          "Verify implication glyph visually."
+        ],
+        "positive": [
+          "Apply every listed operator to differently sized operands and inspect one-bit results."
+        ]
+      },
+      "id": "SV-2023-11-LOGICAL-OPERATOR-SELF-DETERMINED-SIZE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Shift by zero, the operand width, and beyond."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Logically right-shift values with both zero and one most-significant bits."
+        ]
+      },
+      "id": "SV-2023-11-LOGICAL-RIGHT-SHIFT-ZERO-FILL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Shift a one-bit integral variable by zero."
+        ],
+        "negative": [
+          "Apply a logical-shift assignment operator to a real variable."
+        ],
+        "notes": [],
+        "positive": [
+          "Apply <<= and >>= to integral variables."
+        ]
+      },
+      "id": "SV-2023-11-LOGICAL-SHIFT-ASSIGNMENT-OPERAND-TYPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use expressions where the longest static prefix is respectively an identifier, field select, and indexing select."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Find the longest prefix in fully static and static-then-dynamic selection chains."
+        ]
+      },
+      "id": "SV-2023-11-LONGEST-STATIC-PREFIX-DEFINITION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Address each declared boundary element."
+        ],
+        "negative": [
+          "Omit the memory name or bracketed address expression."
+        ],
+        "notes": [],
+        "positive": [
+          "Address a memory element using a bracketed integer address expression."
+        ]
+      },
+      "id": "SV-2023-11-MEMORY-ADDRESS-EXPRESSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use conditional expressions inside each min/typ/max position."
+        ],
+        "negative": [
+          "Use two values or misplace parentheses where required by the containing construct."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse single and three-value ordinary and constant mintypmax expressions."
+        ]
+      },
+      "id": "SV-2023-11-MINTYPMAX-EXPRESSION-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Divide a 2-state value by zero and observe conversion when assigned separately to 2-state and 4-state destinations."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Combine 2-state and 4-state operands and compare with the corresponding all-4-state operation."
+        ]
+      },
+      "id": "SV-2023-11-MIXED-TWO-FOUR-STATE-OPERATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Apply %= to one-bit signed and unsigned integral variables."
+        ],
+        "negative": [
+          "Apply %= to a real or shortreal variable."
+        ],
+        "notes": [],
+        "positive": [
+          "Apply %= to an integral variable."
+        ]
+      },
+      "id": "SV-2023-11-MODULUS-ASSIGNMENT-OPERAND-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Select an element that is itself a packed vector versus a scalar."
+        ],
+        "negative": [
+          "Omit a required dimension when a final element is required or use a nonintegral address."
+        ],
+        "notes": [],
+        "positive": [
+          "Address two- and three-dimensional arrays with integer expressions in every dimension."
+        ]
+      },
+      "id": "SV-2023-11-MULTIDIMENSIONAL-ARRAY-ADDRESSING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare assignment to narrow and full-product-width destinations."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Multiply two narrow values into a destination wide enough for the full product."
+        ]
+      },
+      "id": "SV-2023-11-MULTIPLICATION-CONTEXT-PRESERVES-OVERFLOW"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a single-bit net directly as an operand."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use an entire packed net and selections from it as operands."
+        ]
+      },
+      "id": "SV-2023-11-NET-OPERANDS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use nested non-short-circuit operators with observable operand side effects."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use a side-effecting function in the right operand of bitwise & when the left operand is zero."
+        ]
+      },
+      "id": "SV-2023-11-NON-SHORT-CIRCUIT-OPERATORS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Select one bit with equal bounds."
+        ],
+        "negative": [
+          "Use a runtime-variable bound or reverse significance."
+        ],
+        "notes": [],
+        "positive": [
+          "Select contiguous ranges from vectors declared in both index directions using constant bounds."
+        ]
+      },
+      "id": "SV-2023-11-NONINDEXED-PART-SELECT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a specifically overridden operator result such as comparison."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Combine all-signed, mixed signed/unsigned, and real-containing operands under several operators."
+        ]
+      },
+      "id": "SV-2023-11-NONSELF-DETERMINED-RESULT-TYPE-HIERARCHY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare otherwise identical sized based literals with and without s."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Inspect signedness of decimal, based unsigned, and s-marked based literals."
+        ]
+      },
+      "id": "SV-2023-11-NUMERIC-LITERAL-SIGNEDNESS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use several distinct legal operand categories without applying an operator."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use a net bit-select or literal directly as a complete expression."
+        ]
+      },
+      "id": "SV-2023-11-OPERAND-ALONE-EXPRESSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Chain equivalence operators to distinguish right from left association."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Evaluate a mixed addition/subtraction chain and nested conditional and implication chains without parentheses."
+        ]
+      },
+      "id": "SV-2023-11-OPERATOR-ASSOCIATIVITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Check left association of chained exponentiation and right association of nested conditional operators."
+        ],
+        "negative": [],
+        "notes": [
+          "The extracted XOR/XNOR glyphs are merged; use the standard operator spellings ^, ~^, and ^~."
+        ],
+        "positive": [
+          "Evaluate unparenthesized expressions crossing every adjacent precedence boundary and chains at each associativity level."
+        ]
+      },
+      "id": "SV-2023-11-OPERATOR-PRECEDENCE-ARITHMETIC-THROUGH-CONDITIONAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Combine a unary reduction with member access and indexing."
+        ],
+        "negative": [],
+        "notes": [
+          "The rendered table is flagged for visual review; confirm token separation before spelling-sensitive cases."
+        ],
+        "positive": [
+          "Parse unparenthesized expressions combining member/index operations with unary operators."
+        ]
+      },
+      "id": "SV-2023-11-OPERATOR-PRECEDENCE-INITIAL-LEVELS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Nest implication and equivalence to observe right association."
+        ],
+        "negative": [],
+        "notes": [
+          "The assignment/distribution row is fragmented by extraction; verify its operator glyphs against the source table."
+        ],
+        "positive": [
+          "Parse expressions crossing conditional, implication, assignment, and concatenation precedence levels."
+        ]
+      },
+      "id": "SV-2023-11-OPERATOR-PRECEDENCE-LOWEST-LEVELS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Distinguish overlapping shift, streaming, and assignment tokens by grammar context."
+        ],
+        "negative": [
+          "Use a token not admitted by the relevant operator production."
+        ],
+        "notes": [
+          "The source annotation flags the rendered grammar for visual review; use the listed textual productions when materializing cases."
+        ],
+        "positive": [
+          "Parse representative unary, binary, conditional, assignment, increment, and stream operator forms."
+        ]
+      },
+      "id": "SV-2023-11-OPERATOR-TOKEN-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place a side effect or run-time error in the second operand skipped by a true first operand."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use a required second operand when the first operand is false."
+        ]
+      },
+      "id": "SV-2023-11-OR-SHORT-CIRCUIT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Read and write wholly and partially out-of-range selects on both ends, plus x/z selects."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Read and write fully in-range part-selects."
+        ]
+      },
+      "id": "SV-2023-11-OUT-OF-RANGE-PART-SELECT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a one-bit part-select of a parameter as an operand."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use ordinary, local, and specify parameters as operands; select bits and parts from suitably packed parameters."
+        ]
+      },
+      "id": "SV-2023-11-PARAMETER-OPERANDS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Nest several parenthesized assignment expressions."
+        ],
+        "negative": [
+          "Use an unparenthesized blocking assignment as an expression or include a timing control."
+        ],
+        "notes": [],
+        "positive": [
+          "Use parenthesized simple, compound, and nested blocking assignments within procedural expressions."
+        ]
+      },
+      "id": "SV-2023-11-PARENTHESIZED-BLOCKING-ASSIGNMENT-EXPRESSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Reduce one-bit vectors and vectors containing x or z."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Reduce vectors of several lengths with &, |, and ^ and compare with an explicit left fold."
+        ]
+      },
+      "id": "SV-2023-11-POSITIVE-REDUCTION-FOLD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a narrowly sized signed negative exponent in a wider result context."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use an exponent whose width and signedness would differ if context-determined."
+        ]
+      },
+      "id": "SV-2023-11-POWER-EXPONENT-SELF-DETERMINED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Raise a value to exponents zero and one."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Evaluate positive integral bases and exponents."
+        ]
+      },
+      "id": "SV-2023-11-POWER-OPERATOR-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Extend a one-bit operand with its high bit set under both propagated signednesses."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Propagate signed and unsigned wider contexts to simple operands."
+        ]
+      },
+      "id": "SV-2023-11-PROPAGATED-SIMPLE-OPERAND-CONVERSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare at a value where integral-to-real precision matters."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare a real value with equivalent and nonequivalent integral and shortreal values."
+        ]
+      },
+      "id": "SV-2023-11-REAL-EQUALITY-COMPARISON"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Increment and decrement 0.0 and a fractional value."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Apply prefix and postfix increment and decrement to positive and negative real variables."
+        ]
+      },
+      "id": "SV-2023-11-REAL-INCREMENT-DECREMENT-STEP"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare equal real values and test a real value at a set boundary."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Apply logical, relational, and membership operations to real values and observe one-bit results."
+        ]
+      },
+      "id": "SV-2023-11-REAL-LOGICAL-RELATIONAL-RESULT-WIDTH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Mix real and integral operands in both positions."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Exponentiate with a real base and separately with a real exponent and inspect result type."
+        ]
+      },
+      "id": "SV-2023-11-REAL-POWER-RESULT-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare a real value with an integral value at a precision boundary."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare a real operand with integral, shortreal, and real counterparts."
+        ]
+      },
+      "id": "SV-2023-11-REAL-RELATIONAL-COMPARISON"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a narrow integral subexpression that overflows before real conversion."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Combine real and non-real operands whose self-determined evaluation differs from prior real-context propagation."
+        ]
+      },
+      "id": "SV-2023-11-REAL-RESULT-OPERAND-CONVERSION-EXCEPTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a real-valued conditional predicate with non-real branches and verify the predicate does not promote the result."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Combine integral with real and shortreal operands and check the promoted result type."
+        ]
+      },
+      "id": "SV-2023-11-REAL-RESULT-TYPE-PROMOTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a long acyclic chain adjacent to a cycle."
+        ],
+        "negative": [
+          "Define direct and mutually recursive let instantiations."
+        ],
+        "notes": [],
+        "positive": [
+          "Instantiate acyclic chains of let templates."
+        ]
+      },
+      "id": "SV-2023-11-RECURSIVE-LET-PROHIBITED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify a known zero makes the reduction result 0 despite other x or z bits."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Reduce vectors containing every ordered adjacent pair of 0, 1, x, and z."
+        ]
+      },
+      "id": "SV-2023-11-REDUCTION-AND-FOLD-TRUTH-TABLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a narrow signed operand in a wider context."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Apply every operator to operands of multiple widths and inspect one-bit results."
+        ]
+      },
+      "id": "SV-2023-11-REDUCTION-NEGATION-SELF-DETERMINED-SIZE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Reduce a one-bit four-state operand."
+        ],
+        "negative": [
+          "Reduce a real value."
+        ],
+        "notes": [],
+        "positive": [
+          "Apply every reduction spelling to an integral vector."
+        ]
+      },
+      "id": "SV-2023-11-REDUCTION-OPERATOR-TYPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify a known one makes the reduction result 1 despite other x or z bits."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Reduce vectors containing every ordered adjacent pair of 0, 1, x, and z."
+        ]
+      },
+      "id": "SV-2023-11-REDUCTION-OR-FOLD-TRUTH-TABLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Include one x or z operand bit and observe an x result."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Reduce vectors with even and odd parity using ^."
+        ]
+      },
+      "id": "SV-2023-11-REDUCTION-XOR-FOLD-TRUTH-TABLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Evaluate <= and >= with equal operands."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Evaluate true and false cases for every relational operator."
+        ]
+      },
+      "id": "SV-2023-11-RELATIONAL-BOOLEAN-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare values at signed and unsigned boundaries under the applicable conversion rules."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Exercise each relation with less, equal, and greater known operand pairs."
+        ]
+      },
+      "id": "SV-2023-11-RELATIONAL-OPERATOR-DEFINITIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Combine subtraction and less-than in both operand positions."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Parse unparenthesized expressions combining several relational and arithmetic operators."
+        ]
+      },
+      "id": "SV-2023-11-RELATIONAL-OPERATOR-PRECEDENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare equal values at numeric type boundaries."
+        ],
+        "negative": [
+          "Compare unpacked aggregate operands relationally."
+        ],
+        "notes": [],
+        "positive": [
+          "Apply every relational operator to integral, real, and shortreal operands."
+        ]
+      },
+      "id": "SV-2023-11-RELATIONAL-OPERATOR-TYPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place one x or z in each operand position and observe exactly one-bit x."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare fully known four-state operands."
+        ]
+      },
+      "id": "SV-2023-11-RELATIONAL-XZ-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multiplier one and a large parameterized constant."
+        ],
+        "negative": [
+          "Use a negative, nonconstant, x-containing, or z-containing multiplier."
+        ],
+        "notes": [],
+        "positive": [
+          "Replicate single- and multi-expression concatenations using known nonnegative constant multipliers."
+        ]
+      },
+      "id": "SV-2023-11-REPLICATION-MULTIPLIER-AND-COPY-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a legal zero replication with a side-effecting operand and verify one evaluation."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Replicate a side-effecting operand with positive multipliers and count one evaluation."
+        ]
+      },
+      "id": "SV-2023-11-REPLICATION-OPERANDS-EVALUATED-ONCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Nest the replication within a larger concatenation in each prohibited context."
+        ],
+        "negative": [
+          "Use a replication-containing expression as an assignment target or output/inout connection."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a replication as a right-hand expression or input connection."
+        ]
+      },
+      "id": "SV-2023-11-REPLICATION-PROHIBITED-DESTINATION-CONTEXTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Combine multiple operators from one row with an operator from the adjacent row."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare grouping among multiplicative operators and across multiplicative and additive rows."
+        ]
+      },
+      "id": "SV-2023-11-SAME-ROW-PRECEDENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast a one-bit packed vector with a scalar category."
+        ],
+        "negative": [
+          "Bit- and part-select scalar and real objects."
+        ],
+        "notes": [],
+        "positive": [
+          "Select packed vectors and structures."
+        ]
+      },
+      "id": "SV-2023-11-SCALAR-REAL-SELECT-ILLEGAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a one-bit vector element and contrast it with a scalar element."
+        ],
+        "negative": [
+          "Part-select a scalar array element."
+        ],
+        "notes": [],
+        "positive": [
+          "Select fixed and variable bits and parts from packed-vector elements after all unpacked indices."
+        ]
+      },
+      "id": "SV-2023-11-SELECT-OF-ARRAY-ELEMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast a whole signed vector with its full-range part-select."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Select bits, proper parts, and the whole range from a signed vector and use them in extension-sensitive contexts."
+        ]
+      },
+      "id": "SV-2023-11-SELECT-RESULT-UNSIGNED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast a self-determined operand with a context-determined arithmetic expression."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Place a self-determined expression such as a delay value in several wider and narrower contexts."
+        ]
+      },
+      "id": "SV-2023-11-SELF-DETERMINED-EXPRESSION-DEFINITION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a signed narrow exponent or concatenation operand."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Place the same self-determined operand in signed, unsigned, wider, and narrower surroundings."
+        ]
+      },
+      "id": "SV-2023-11-SELF-DETERMINED-OPERAND-SIGN-SIZE-INDEPENDENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place the shift in signed and unsigned surrounding contexts."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use signed and unsigned declarations for identical shift-count bits and verify the same count."
+        ]
+      },
+      "id": "SV-2023-11-SHIFT-COUNT-AND-RESULT-SIGNEDNESS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Shift by zero and the operand width."
+        ],
+        "negative": [
+          "Shift a real operand."
+        ],
+        "notes": [],
+        "positive": [
+          "Apply logical and arithmetic shifts to integral operands."
+        ]
+      },
+      "id": "SV-2023-11-SHIFT-OPERATOR-TYPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a right operand wider than the left and vary surrounding context."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Apply each operator with differently sized left and right operands and inspect result width."
+        ]
+      },
+      "id": "SV-2023-11-SHIFT-POWER-RESULT-SIZE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place one x or z bit in the count and observe an unknown result."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Shift by fully known counts."
+        ]
+      },
+      "id": "SV-2023-11-SHIFT-UNKNOWN-COUNT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place a side effect or run-time error in an operand skipped by each named operator."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Place a side-effecting function in an operand that a logical operator does require."
+        ]
+      },
+      "id": "SV-2023-11-SHORT-CIRCUIT-OPERATORS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Assign -1 to same-width signed integral and real variables."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Observe two's-complement encoding of negative signed integral values and floating-point behavior of real variables."
+        ]
+      },
+      "id": "SV-2023-11-SIGNED-AND-REAL-REPRESENTATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a one-bit signed operand requiring sign extension."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Combine unequal-width signed operands and inspect result width and signedness."
+        ]
+      },
+      "id": "SV-2023-11-SIGNED-BINARY-BITWISE-SIZING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare a one-bit signed negative value against a wider all-ones signed value."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare unequal-width signed values requiring sign extension."
+        ]
+      },
+      "id": "SV-2023-11-SIGNED-EQUALITY-COMPARISON"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare a one-bit signed negative value with a wider signed value."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare unequal-width signed positive and negative operands."
+        ]
+      },
+      "id": "SV-2023-11-SIGNED-RELATIONAL-COMPARISON"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Convert a pattern whose most significant bit is 1 in both directions."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Apply $signed and $unsigned to identical bit patterns and inspect width, bits, and arithmetic interpretation."
+        ]
+      },
+      "id": "SV-2023-11-SIGNED-UNSIGNED-CAST-FUNCTIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place one x or z in nonsign and sign positions and inspect all-x value plus result type."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Apply nonlogical operations to fully known signed values."
+        ]
+      },
+      "id": "SV-2023-11-SIGNED-XZ-NONLOGICAL-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Sign-extend values whose sign bit is respectively x and z."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Sign-extend known positive and negative values."
+        ]
+      },
+      "id": "SV-2023-11-SIGNED-XZ-SIGN-EXTENSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Convert a pattern whose most significant bit is 1 in both directions."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Cast a fixed bit pattern between signed and unsigned forms and compare bits."
+        ]
+      },
+      "id": "SV-2023-11-SIGNEDNESS-CONVERSION-PRESERVES-BITS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Assign an unpacked aggregate between compatible types."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Assign values across representative scalar and aggregate types where assignment compatibility permits."
+        ]
+      },
+      "id": "SV-2023-11-SIMPLE-ASSIGNMENT-OPERAND-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast a primary with the same primary enclosed in parentheses."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Classify bare primaries as simple and parenthesized or operator expressions as nonsimple."
+        ]
+      },
+      "id": "SV-2023-11-SIMPLE-OPERAND-DEFINITION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Mix package, hierarchical, field, and multidimensional constant selects."
+        ],
+        "negative": [
+          "Classify an indexing chain with a runtime select expression as static beyond that dynamic operation."
+        ],
+        "notes": [],
+        "positive": [
+          "Classify every base form and recursively extended constant field/index chains."
+        ]
+      },
+      "id": "SV-2023-11-STATIC-PREFIX-RECURSIVE-DEFINITION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Mix 2-state and 4-state expressions to require state-domain conversion."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Stream several bit-stream expressions and a nested stream, checking left-to-right append order."
+        ]
+      },
+      "id": "SV-2023-11-STREAM-BITSTREAM-EXPRESSION-APPEND"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a stream width not divisible by slice size and verify the remainder block."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Apply both directions with several slice sizes to a recognizable bit sequence."
+        ]
+      },
+      "id": "SV-2023-11-STREAM-BLOCK-REORDER-DIRECTIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast access from within and outside the declaring class hierarchy."
+        ],
+        "negative": [
+          "Stream from a scope unable to access a local or protected member."
+        ],
+        "notes": [],
+        "positive": [
+          "Stream an object where all members are accessible."
+        ]
+      },
+      "id": "SV-2023-11-STREAM-INACCESSIBLE-CLASS-MEMBER-ILLEGAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multiple inheritance levels and nested streamable member types."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Stream base and derived objects with recognizable member bit patterns."
+        ]
+      },
+      "id": "SV-2023-11-STREAM-NONNULL-CLASS-MEMBER-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Stream only a null handle and do not require a warning."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Stream a list containing a null handle between known stream expressions and verify it contributes nothing."
+        ]
+      },
+      "id": "SV-2023-11-STREAM-NULL-CLASS-SKIPPED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Stream a one-bit integral value."
+        ],
+        "negative": [
+          "Stream a real value as an integral stream operand."
+        ],
+        "notes": [],
+        "positive": [
+          "Apply both streaming directions to integral packed values."
+        ]
+      },
+      "id": "SV-2023-11-STREAM-OPERATOR-TYPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place multiple skippable items between valid stream expressions."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Place a skippable null handle between streamable items and verify it contributes no bits while later items are processed."
+        ]
+      },
+      "id": "SV-2023-11-STREAM-SKIPPED-ITEM-PROCEDURE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use slice sizes one, the stream width, and greater than the stream width."
+        ],
+        "negative": [
+          "Use zero or negative constant slice sizes."
+        ],
+        "notes": [],
+        "positive": [
+          "Use omitted, positive constant, and simple-type slice sizes."
+        ]
+      },
+      "id": "SV-2023-11-STREAM-SLICE-SIZE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a dynamic element width that does not divide the stream width."
+        ],
+        "negative": [
+          "Assign a stream to a narrower fixed-size target."
+        ],
+        "notes": [],
+        "positive": [
+          "Assign streams to equal-width, wider fixed, and dynamically resized targets."
+        ]
+      },
+      "id": "SV-2023-11-STREAM-SOURCE-TARGET-WIDENING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a one-member struct and nested structs."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Stream a struct with members of differing widths and nested aggregate types."
+        ]
+      },
+      "id": "SV-2023-11-STREAM-STRUCT-DECLARATION-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use sparse associative indices and multidimensional element values."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Stream fixed, dynamic, queue, and associative arrays and compare their required traversal order."
+        ]
+      },
+      "id": "SV-2023-11-STREAM-UNPACKED-ARRAY-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place an unsupported expression between valid stream expressions."
+        ],
+        "negative": [
+          "Use an unsupported expression category and require an error."
+        ],
+        "notes": [],
+        "positive": [
+          "Stream expressions belonging to each supported category."
+        ]
+      },
+      "id": "SV-2023-11-STREAM-UNSUPPORTED-EXPRESSION-ERROR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use later union members of different type or width and verify the first declaration controls traversal."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Stream unions whose first member has a recognizable layout."
+        ]
+      },
+      "id": "SV-2023-11-STREAM-UNTAGGED-UNION-FIRST-MEMBER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use complex integral expressions in range endpoints."
+        ],
+        "negative": [
+          "Use malformed brackets or omit the expression before with."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse all four with-range forms on stream expressions."
+        ]
+      },
+      "id": "SV-2023-11-STREAM-WITH-EXPRESSION-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Inspect generated nonexistent-entry values for several element types."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Pack exact, subset, and oversized ranges from fixed and dynamic arrays."
+        ]
+      },
+      "id": "SV-2023-11-STREAM-WITH-PACK-EXTENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Reference a length field positioned after the array and verify its previous value is used."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Set a range from an earlier unpacked length field."
+        ]
+      },
+      "id": "SV-2023-11-STREAM-WITH-RANGE-EVALUATION-TIME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use single-element and full-array ranges."
+        ],
+        "negative": [
+          "Use nonintegral ranges, out-of-bound fixed-array values, or nonpositive dynamic extents where prohibited."
+        ],
+        "notes": [],
+        "positive": [
+          "Use in-bound integral ranges on fixed, dynamic, and queue expressions."
+        ]
+      },
+      "id": "SV-2023-11-STREAM-WITH-RANGE-TYPE-AND-BOUNDS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a zero-change partial range boundary and preserve untouched elements."
+        ],
+        "negative": [
+          "Use an out-of-extent fixed range and require an error while checking in-range updates."
+        ],
+        "notes": [],
+        "positive": [
+          "Unpack exact and partial ranges into fixed and dynamic arrays."
+        ]
+      },
+      "id": "SV-2023-11-STREAM-WITH-UNPACK-EXTENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the streaming concatenation as a bit-stream cast operand."
+        ],
+        "negative": [
+          "Use an uncast streaming concatenation as a general expression operand or assign it to a non-bit-stream nonstreaming target."
+        ],
+        "notes": [],
+        "positive": [
+          "Cast a streaming concatenation before arithmetic use and assign one to a bit-stream object or streaming target."
+        ]
+      },
+      "id": "SV-2023-11-STREAMING-CONCATENATION-EXPRESSION-AND-SOURCE-RESTRICTIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a simple type as slice size and nest a streaming concatenation as a primary."
+        ],
+        "negative": [
+          "Use a nonconstant expression where a constant slice size is required."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse both directions, omitted and explicit slice sizes, multiple stream expressions, and every with-range form."
+        ]
+      },
+      "id": "SV-2023-11-STREAMING-CONCATENATION-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Nest one streaming concatenation inside another."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use a streaming concatenation in every enumerated context."
+        ]
+      },
+      "id": "SV-2023-11-STREAMING-CONCATENATION-LEGAL-CONTEXTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a 4-state component whose current value contains only 0 and 1; its type still makes the stream 4-state."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Pack all-2-state inputs and a mixture containing one 4-state component and inspect result domain."
+        ]
+      },
+      "id": "SV-2023-11-STREAMING-PACK-STATE-DOMAIN"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use data whose intermediate and final ordering differ substantially."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare a streaming pack against explicit concatenate-then-reorder reference results."
+        ]
+      },
+      "id": "SV-2023-11-STREAMING-PACK-TWO-STAGE-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Round-trip a heterogeneous bit-stream-compatible aggregate."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Pack and unpack representative bit-stream types with both stream directions."
+        ]
+      },
+      "id": "SV-2023-11-STREAMING-PACK-UNPACK-DIRECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Mix null and preexisting non-null handles in a target hierarchy."
+        ],
+        "negative": [
+          "Expect unpacking through a null handle to allocate an object."
+        ],
+        "notes": [],
+        "positive": [
+          "Preconstruct an object hierarchy and unpack into its declared properties."
+        ]
+      },
+      "id": "SV-2023-11-STREAMING-UNPACK-CLASS-OBJECTS-PREEXIST"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Record implicit random-mode state before and after unpack and verify it is unchanged."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Unpack into explicit object data members."
+        ]
+      },
+      "id": "SV-2023-11-STREAMING-UNPACK-EXPLICIT-PROPERTIES-ONLY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Provide one extra or one missing source bit."
+        ],
+        "negative": [
+          "Unpack from an undersized source or a non-bit-stream source."
+        ],
+        "notes": [],
+        "positive": [
+          "Unpack exact-width and oversized streams and verify leftmost bits are consumed."
+        ]
+      },
+      "id": "SV-2023-11-STREAMING-UNPACK-SOURCE-AND-SIZE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Unpack x or z from a 4-state stream into a 2-state target."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Unpack 2-state to 4-state and known 4-state to 2-state targets."
+        ]
+      },
+      "id": "SV-2023-11-STREAMING-UNPACK-STATE-CAST"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place the sole string operand at each position among several operands."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Concatenate only strings and mix a string operand with implicitly convertible non-string operands."
+        ]
+      },
+      "id": "SV-2023-11-STRING-CONCATENATION-CONVERSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast a string concatenation with an integral concatenation of writable variables."
+        ],
+        "negative": [
+          "Use a string concatenation as an assignment target."
+        ],
+        "notes": [],
+        "positive": [
+          "Assign a string-concatenation result to a string variable."
+        ]
+      },
+      "id": "SV-2023-11-STRING-CONCATENATION-NOT-LVALUE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Assign an empty and a very long result."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Assign concatenated and replicated strings longer and shorter than the destination's previous content."
+        ]
+      },
+      "id": "SV-2023-11-STRING-CONCATENATION-RESIZES-NOT-TRUNCATES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare and concatenate empty and NUL-containing values."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Copy, concatenate, and equality-compare literals directly and values stored in vectors."
+        ]
+      },
+      "id": "SV-2023-11-STRING-LITERAL-COPY-CONCATENATE-COMPARE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use empty, one-character, and multicharacter literals."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Inspect numeric encoding and apply arithmetic, bitwise, equality, and shift operators to string literals."
+        ]
+      },
+      "id": "SV-2023-11-STRING-LITERAL-NUMERIC-ASCII-BEHAVIOR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a destination exactly one bit wider than the literal encoding."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Assign one- and multicharacter literals to vectors wider by several bits and bytes."
+        ]
+      },
+      "id": "SV-2023-11-STRING-LITERAL-VECTOR-LEFT-ZERO-PADDING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multipliers zero, one, and a runtime-updated value."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Replicate a string literal and a string concatenation using a runtime integer multiplier."
+        ]
+      },
+      "id": "SV-2023-11-STRING-REPLICATION-NONCONSTANT-MULTIPLIER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare and concatenate values where padding zeros and explicit NUL characters occupy analogous positions."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Assign a short literal to a wider vector and inspect leading zeros."
+        ]
+      },
+      "id": "SV-2023-11-STRING-VECTOR-PADDING-INDISTINGUISHABLE-FROM-NUL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Select one bit and a part from a packed structure as operands."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use packed and unpacked structure values and members as operands."
+        ]
+      },
+      "id": "SV-2023-11-STRUCTURE-OPERANDS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Nest a tagged union expression inside another tagged member."
+        ],
+        "negative": [
+          "Use an unknown context, nonexistent member, or member value of incompatible type."
+        ],
+        "notes": [],
+        "positive": [
+          "Provide type via assignment, explicit cast, and nested-expression context using valid members."
+        ]
+      },
+      "id": "SV-2023-11-TAGGED-UNION-CONTEXTUAL-TYPE-CHECK"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a complex primary as the member value."
+        ],
+        "negative": [
+          "Supply a primary for a void member or omit one for a nonvoid member."
+        ],
+        "notes": [],
+        "positive": [
+          "Construct tagged expressions for valued and void members of packed and unpacked tagged unions."
+        ]
+      },
+      "id": "SV-2023-11-TAGGED-UNION-EXPRESSION-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change the active tag and repeat identical dot accesses."
+        ],
+        "negative": [
+          "Read or assign a member different from the current tag."
+        ],
+        "notes": [],
+        "positive": [
+          "Read and update the active member and its nested fields."
+        ]
+      },
+      "id": "SV-2023-11-TAGGED-UNION-MEMBER-ACCESS-TAG-CHECK"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Choose fractional tolerances immediately above and below a rounding boundary."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use positive and negative signed and unsigned centers and inspect normalized bounds and type."
+        ]
+      },
+      "id": "SV-2023-11-TOLERANCE-RANGE-NORMALIZATION-AND-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare two type references for case equality and logical equality."
+        ],
+        "negative": [
+          "Use a type_reference constant_primary with arithmetic, relational, logical, or bitwise operators."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a type reference as static casting type and with each permitted equality category."
+        ]
+      },
+      "id": "SV-2023-11-TYPE-REFERENCE-CONSTANT-PRIMARY-OPERATORS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use one-bit and unusually wide operands."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Apply every listed unary operator to operands of several explicit widths."
+        ]
+      },
+      "id": "SV-2023-11-UNARY-ARITHMETIC-BITWISE-RESULT-SIZE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Combine unary minus with exponentiation according to the table's distinct precedence levels."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Evaluate an unparenthesized expression combining unary minus with multiplication and addition."
+        ]
+      },
+      "id": "SV-2023-11-UNARY-ARITHMETIC-PRECEDENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Negate the minimum signed integral value."
+        ],
+        "negative": [
+          "Apply unary minus to an unpacked aggregate."
+        ],
+        "notes": [],
+        "positive": [
+          "Apply both operators to each permitted category."
+        ]
+      },
+      "id": "SV-2023-11-UNARY-ARITHMETIC-TYPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Negate x and z bits and a one-bit operand."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Negate multi-bit two-state and four-state patterns."
+        ]
+      },
+      "id": "SV-2023-11-UNARY-BITWISE-NEGATION-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Negate a one-bit four-state operand."
+        ],
+        "negative": [
+          "Apply ~ to a real operand."
+        ],
+        "notes": [],
+        "positive": [
+          "Apply ~ to integral operands."
+        ]
+      },
+      "id": "SV-2023-11-UNARY-BITWISE-NEGATION-TYPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Apply ~ to a one-bit signed and unsigned operand."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Apply ~ to otherwise identical signed and unsigned vectors and inspect result type."
+        ]
+      },
+      "id": "SV-2023-11-UNARY-BITWISE-RESULT-SIGNEDNESS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Negate the minimum representable signed value at a fixed width."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Apply unary plus and minus to positive, negative, and zero values."
+        ]
+      },
+      "id": "SV-2023-11-UNARY-PLUS-MINUS-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a with extent to allocate a later dynamic field that greedy behavior would leave empty."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Unpack into one and several dynamic fields with fixed fields following them."
+        ]
+      },
+      "id": "SV-2023-11-UNBOUNDED-DYNAMIC-UNPACK-GREEDY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a bit-select and part-select of a packed union as operands."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use packed, unpacked, and tagged union values and union members as operands."
+        ]
+      },
+      "id": "SV-2023-11-UNION-OPERANDS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Combine a short signed operand with its high bit set and a longer unsigned operand."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Combine unequal-width operands when either operand is unsigned."
+        ]
+      },
+      "id": "SV-2023-11-UNSIGNED-BINARY-BITWISE-SIZING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare a short signed value with its most significant bit set against a wider unsigned value."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare unequal-width operands when either operand is unsigned."
+        ]
+      },
+      "id": "SV-2023-11-UNSIGNED-EQUALITY-COMPARISON"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare a short signed negative pattern against a longer unsigned operand."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare unequal-width operands when either or both are unsigned."
+        ]
+      },
+      "id": "SV-2023-11-UNSIGNED-RELATIONAL-COMPARISON"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use observable independent assignment side effects without assuming a relative order."
+        ],
+        "negative": [],
+        "notes": [
+          "Do not require or forbid an optional warning."
+        ],
+        "positive": [
+          "Run the specified conflicting-update expression and accept only the enumerated outcomes."
+        ]
+      },
+      "id": "SV-2023-11-UNSPECIFIED-INTRAEXPRESSION-ASSIGNMENT-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a function returning an aggregate operand type."
+        ],
+        "negative": [
+          "Attempt to use a void-returning call as a value operand."
+        ],
+        "notes": [],
+        "positive": [
+          "Use results of a user function, system function, and method as operands."
+        ]
+      },
+      "id": "SV-2023-11-VALUE-RETURNING-CALL-OPERAND"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a one-bit variable directly as an operand."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use an entire packed variable and selections from it as operands."
+        ]
+      },
+      "id": "SV-2023-11-VARIABLE-OPERANDS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Choose a target type where implicit casting visibly changes element interpretation."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Assign a widened stream to bit-stream targets with differing aggregate layout or state domain."
+        ]
+      },
+      "id": "SV-2023-11-WIDENED-STREAM-IMPLICIT-TARGET-CAST"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a short signed left operand whose sign extension meets right-side wildcard positions."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Wildcard-compare unequal-width signed and unsigned operand pairs."
+        ]
+      },
+      "id": "SV-2023-11-WILDCARD-EQUALITY-EXTENSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Reverse operands to demonstrate that left-side x and z are not wildcards."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use x and z independently as right-side wildcard bits with every possible left-side value."
+        ]
+      },
+      "id": "SV-2023-11-WILDCARD-EQUALITY-MATCHING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use wildcard bits only in the right operand."
+        ],
+        "negative": [
+          "Apply wildcard equality to real operands."
+        ],
+        "notes": [],
+        "positive": [
+          "Wildcard-compare integral vectors containing X or Z."
+        ]
+      },
+      "id": "SV-2023-11-WILDCARD-EQUALITY-OPERATOR-TYPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Chain wildcard and logical equality operators to observe equal precedence and associativity."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Combine wildcard equality with relational and logical equality operators without parentheses."
+        ]
+      },
+      "id": "SV-2023-11-WILDCARD-EQUALITY-PRECEDENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Leave a left-side x or z uncovered by a right-side wildcard and observe 1'bx."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Produce known true and false wildcard comparisons."
+        ]
+      },
+      "id": "SV-2023-11-WILDCARD-EQUALITY-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare same-object, distinct-object, and null handle pairs."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare handles and null with ==? and == and verify equivalent results."
+        ]
+      },
+      "id": "SV-2023-11-WILDCARD-HANDLE-EQUALITY-EQUIVALENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Drive the multiplier to zero at a parameter boundary."
+        ],
+        "negative": [
+          "Use a zero replication alone or inside a concatenation with no positive-size operand."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a zero replication beside a positive-size concatenation operand in parameterized code."
+        ]
+      },
+      "id": "SV-2023-11-ZERO-MULTIPLIER-REPLICATION"
+    }
+  ],
+  "schema_version": 1
+}

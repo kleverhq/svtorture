@@ -1,0 +1,157 @@
+{
+  "authority": "1800-2023",
+  "part": "G",
+  "requirements": [
+    {
+      "hints": {
+        "edge": [
+          "Contrast explicit and default mailbox type parameters."
+        ],
+        "negative": [
+          "Retrieve its message into an incompatible destination and observe the clause 15.4 result."
+        ],
+        "notes": [
+          "Use 15.4 for precise operation outcomes."
+        ],
+        "positive": [
+          "Transfer a compatible message through an unparameterized mailbox."
+        ]
+      },
+      "id": "SV-2023-G-MAILBOX-DYNAMIC-TYPE-CHECKING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Omit the type parameter and constructor bound."
+        ],
+        "negative": [
+          "Pass a mismatched message type to a typed mailbox."
+        ],
+        "notes": [],
+        "positive": [
+          "Instantiate a typed mailbox and invoke every declared method with matching types."
+        ]
+      },
+      "id": "SV-2023-G-MAILBOX-PROTOTYPE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Attempt to derive a class from process."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare and use a process handle."
+        ]
+      },
+      "id": "SV-2023-G-PROCESS-FINAL-CLASS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Round-trip a string between get_randstate and set_randstate."
+        ],
+        "negative": [
+          "Call srandom or set_randstate with an incompatible argument."
+        ],
+        "notes": [],
+        "positive": [
+          "Obtain process::self() and type-check calls to every declared method."
+        ]
+      },
+      "id": "SV-2023-G-PROCESS-METHOD-PROTOTYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Cover all five declared states in a case statement."
+        ],
+        "negative": [
+          "Refer to a nonexistent process state literal."
+        ],
+        "notes": [],
+        "positive": [
+          "Compare process.status() with each process state enum literal."
+        ]
+      },
+      "id": "SV-2023-G-PROCESS-STATE-ENUM"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an empty variable list where grammar permits."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Call std::randomize on eligible variables and consume its int result."
+        ]
+      },
+      "id": "SV-2023-G-RANDOMIZE-FUNCTION-PROTOTYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use every declared default argument."
+        ],
+        "negative": [
+          "Call a method with an argument incompatible with int."
+        ],
+        "notes": [],
+        "positive": [
+          "Construct std::semaphore and call every declared method."
+        ]
+      },
+      "id": "SV-2023-G-SEMAPHORE-PROTOTYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise both omitted parentheses and empty parentheses followed by a with constraint block."
+        ],
+        "negative": [
+          "Reject std::randomize(null) and a scope call using with (identifier_list) before its constraint block."
+        ],
+        "notes": [
+          "Visually confirm punctuation-sensitive grouping in G.5 and apply the scope-randomize restrictions in A.10 footnote 43."
+        ],
+        "positive": [
+          "Parse std::randomize(x) with { x > 0; } and a form carrying an attribute after randomize."
+        ]
+      },
+      "id": "SV-2023-G-STD-RANDOMIZE-CALL-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call static get_id without a weak_reference instance."
+        ],
+        "negative": [
+          "Construct it with an object incompatible with T."
+        ],
+        "notes": [],
+        "positive": [
+          "Construct a weak_reference from T, call get and clear, and call get_id on T."
+        ]
+      },
+      "id": "SV-2023-G-WEAK-REFERENCE-METHOD-PROTOTYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Instantiate it with a derived class type."
+        ],
+        "negative": [
+          "Instantiate weak_reference with a non-class integral type."
+        ],
+        "notes": [],
+        "positive": [
+          "Instantiate weak_reference with a class handle type."
+        ]
+      },
+      "id": "SV-2023-G-WEAK-REFERENCE-TYPE-CONSTRAINT"
+    }
+  ],
+  "schema_version": 1
+}

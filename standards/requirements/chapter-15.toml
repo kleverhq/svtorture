@@ -1,0 +1,1708 @@
+schema_version = 3
+part = "15"
+
+[[requirements]]
+id = "SV-2023-15-BLOCKING-EVENT-TRIGGER"
+standard_revision = "1800-2023"
+part = "15"
+clause = "15.5.1"
+anchors = [
+    "[2023:15.5.1:P003:p378]",
+]
+summary = "Executing -> on a named event unblocks every process currently waiting on that event."
+related_clauses = [
+    "15.5.2",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "15.5.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "15.5.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "15.5.1"
+
+[[requirements]]
+id = "SV-2023-15-EVENT-ARRAY-INDEX-NOT-TRIGGER"
+standard_revision = "1800-2023"
+part = "15"
+clause = "15.5.1"
+anchors = [
+    "[2023:15.5.1:P002:p378]",
+]
+summary = "Changing the index used to select a named-event array element in an event-control expression does not cause an event occurrence."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "15.5.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "15.5.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "15.5.1"
+
+[[requirements]]
+id = "SV-2023-15-EVENT-BOOLEAN-VALUE"
+standard_revision = "1800-2023"
+part = "15"
+clause = "15.5.5.3"
+anchors = [
+    "[2023:15.5.5.3:L005:p381]",
+]
+summary = "When an event variable is tested as a Boolean value, it shall yield zero if null and one otherwise."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "15.5.5.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "15.5.5.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "15.5.5.3"
+
+[[requirements]]
+id = "SV-2023-15-EVENT-COMPARISON-OPERATORS"
+standard_revision = "1800-2023"
+part = "15"
+clause = "15.5.5.3"
+anchors = [
+    "[2023:15.5.5.3:P001:p381]",
+    "[2023:15.5.5.3:L001:p381]",
+    "[2023:15.5.5.3:L002:p381]",
+    "[2023:15.5.5.3:L003:p381]",
+    "[2023:15.5.5.3:L004:p381]",
+]
+summary = "Event variables may be compared only with another event or null using ==, !=, ===, or !==; for events, case equality has the same semantics as equality and case inequality the same semantics as inequality."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "15.5.5.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "15.5.5.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "15.5.5.3"
+
+[[requirements]]
+id = "SV-2023-15-EVENT-CONTROL-WAIT"
+standard_revision = "1800-2023"
+part = "15"
+clause = "15.5.2"
+anchors = [
+    "[2023:15.5.2:P001:p378]",
+    "[2023:15.5.2:C001:p378]",
+    "[2023:15.5.2:P002:p378]",
+    "[2023:15.5.2:P003:p378]",
+    "[2023:15.5.1:P003:p378]",
+    "[2023:15.5:P001:p377]",
+    "[2023:15.5:P002:p377]",
+]
+summary = "An @ named-event control blocks its process until that event is triggered; for -> to unblock it, the @ statement must execute first, because a prior trigger is one-shot and not retained."
+related_clauses = [
+    "15.5.1",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "15.5.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "15.5.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "15.5.2"
+
+[[requirements]]
+id = "SV-2023-15-EVENT-MERGE"
+standard_revision = "1800-2023"
+part = "15"
+clause = "15.5.5.1"
+anchors = [
+    "[2023:15.5.5.1:P001:p380]",
+    "[2023:15.5.5:P001:p380]",
+    "[2023:15.5:P001:p377]",
+]
+summary = "Assigning one named event to another merges their handles onto the source event's synchronization queue, so subsequent waits through either handle are affected by triggering either handle."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "15.5.5.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "15.5.5.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "15.5.5.1"
+
+[[requirements]]
+id = "SV-2023-15-EVENT-MERGE-NOT-RETROACTIVE"
+standard_revision = "1800-2023"
+part = "15"
+clause = "15.5.5.1"
+anchors = [
+    "[2023:15.5.5.1:P003:p381]",
+    "[2023:15.5.5.1:P004:p381]",
+]
+summary = "Event assignment affects only subsequent waits; a process already waiting on the destination's former synchronization object remains there and shall not be unblocked by triggers on the newly assigned source."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "15.5.5.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "15.5.5.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "15.5.5.1"
+
+[[requirements]]
+id = "SV-2023-15-EVENT-NULL-ASSIGNMENT"
+standard_revision = "1800-2023"
+part = "15"
+clause = "15.5.5.2"
+anchors = [
+    "[2023:15.5.5.2:P001:p381]",
+    "[2023:15.5.5.2:P002:p381]",
+]
+summary = "Assigning null to an event variable breaks its association with the synchronization queue, and triggering that null event shall have no effect."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "15.5.5.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "15.5.5.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "15.5.5.2"
+
+[[requirements]]
+id = "SV-2023-15-EVENT-TRIGGER-SYNTAX"
+standard_revision = "1800-2023"
+part = "15"
+clause = "15.5.1"
+anchors = [
+    "[2023:15.5.1:P001:p378]",
+    "[2023:15.5.1:G001:p378]",
+    "[2023:15.5:P001:p377]",
+]
+summary = "An event trigger statement is either -> followed by a hierarchical event identifier, optional nonrange selects, and semicolon, or ->> with an optional delay/event control before that event identifier and semicolon."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "changed-expectation"
+clause = "15.5.1"
+note = "The 2012 grammar permits only a hierarchical event identifier; the later optional nonrange selects are absent."
+
+[requirements.revision_applicability.1800-2017]
+status = "changed-expectation"
+clause = "15.5.1"
+note = "The 2017 event-trigger grammar ends each form at hierarchical_event_identifier and does not include the 2023 nonrange_select suffix."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "15.5.1"
+
+[[requirements]]
+id = "SV-2023-15-EVENT-TRIGGERED-METHOD"
+standard_revision = "1800-2023"
+part = "15"
+clause = "15.5.3"
+anchors = [
+    "[2023:15.5.3:P001:p378]",
+    "[2023:15.5.3:C001:p378]",
+    "[2023:15.5.3:P003:p378]",
+]
+summary = "A named event's zero-argument triggered() bit function returns 1 if that event was triggered in the current time step and 0 otherwise; its triggered state persists until simulation time advances, and a null event returns 0."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "changed-expectation"
+clause = "15.5.3"
+note = "The 2012 revision defines triggered as a property used with method-like .triggered syntax, not as a zero-argument triggered() bit function."
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "15.5.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "15.5.3"
+
+[[requirements]]
+id = "SV-2023-15-EVENT-TRIGGERED-WAIT"
+standard_revision = "1800-2023"
+part = "15"
+clause = "15.5.3"
+anchors = [
+    "[2023:15.5.3:P005:p378-379]",
+    "[2023:15.5.3:C002:p378]",
+    "[2023:15.5.3:P001:p378]",
+    "[2023:15.5.3:P003:p378]",
+    "[2023:15.5:P002:p377]",
+]
+summary = "A process waiting on a named event's triggered state unblocks for a trigger in the same simulation time step regardless of whether the wait or trigger executes first."
+related_clauses = [
+    "15.5.2",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "15.5.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "15.5.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "15.5.3"
+
+[[requirements]]
+id = "SV-2023-15-MAILBOX-CLASS-INHERITANCE"
+standard_revision = "1800-2023"
+part = "15"
+clause = "15.2"
+anchors = [
+    "[2023:15.2:P004:p372]",
+]
+summary = "The built-in mailbox type is a class and may be used as the base class of a user-defined derived class."
+related_clauses = [
+    "8.13",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "15.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "15.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "15.2"
+
+[[requirements]]
+id = "SV-2023-15-MAILBOX-CONSTRUCTOR"
+standard_revision = "1800-2023"
+part = "15"
+clause = "15.4.1"
+anchors = [
+    "[2023:15.4.1:C001:p374]",
+    "[2023:15.4.1:P003:p374]",
+    "[2023:15.4:P002:p374]",
+]
+summary = "mailbox::new takes an optional int bound defaulting to zero and returns a mailbox handle; bound zero creates an unbounded mailbox whose put() never blocks for capacity, while a nonzero bound sets the queue capacity."
+related_clauses = [
+    "15.4.3",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "15.4.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "15.4.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "15.4.1"
+
+[[requirements]]
+id = "SV-2023-15-MAILBOX-GET-BLOCKING-REMOVE"
+standard_revision = "1800-2023"
+part = "15"
+clause = "15.4.5"
+anchors = [
+    "[2023:15.4.5:P004:p375-376]",
+    "[2023:15.4.5:P001:p375]",
+]
+summary = "When a mailbox contains a message, mailbox::get retrieves and removes one message from the queue."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "15.4.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "15.4.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "15.4.5"
+
+[[requirements]]
+id = "SV-2023-15-MAILBOX-GET-DESTINATION"
+standard_revision = "1800-2023"
+part = "15"
+clause = "15.4.5"
+anchors = [
+    "[2023:15.4.5:C001:p375]",
+    "[2023:15.4.5:P003:p375]",
+]
+summary = "mailbox::get is a task whose ref message argument may have any singular type but shall be a valid left-hand expression."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "15.4.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "15.4.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "15.4.5"
+
+[[requirements]]
+id = "SV-2023-15-MAILBOX-GET-EMPTY-BLOCKING"
+standard_revision = "1800-2023"
+part = "15"
+clause = "15.4.5"
+anchors = [
+    "[2023:15.4.5:P004:p375-376]",
+]
+summary = "Calling mailbox::get on an empty mailbox blocks the calling process until a message is put into the mailbox."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "15.4.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "15.4.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "15.4.5"
+
+[[requirements]]
+id = "SV-2023-15-MAILBOX-GET-RUNTIME-TYPE-CHECK"
+standard_revision = "1800-2023"
+part = "15"
+clause = "15.4.5"
+anchors = [
+    "[2023:15.4.5:P004:p375-376]",
+    "[2023:15.4.5:P005:p376]",
+]
+summary = "For a nonparameterized mailbox, get() performs run-time checking against the stored message's maintained data type and generates a run-time error when the destination type is not equivalent."
+related_clauses = [
+    "15.4.9",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "15.4.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "15.4.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "15.4.5"
+
+[[requirements]]
+id = "SV-2023-15-MAILBOX-NEGATIVE-BOUND-ILLEGAL"
+standard_revision = "1800-2023"
+part = "15"
+clause = "15.4.1"
+anchors = [
+    "[2023:15.4.1:P004:p374]",
+]
+summary = "Constructing a mailbox with a negative bound is illegal."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "15.4.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "15.4.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "15.4.1"
+
+[[requirements]]
+id = "SV-2023-15-MAILBOX-NUM"
+standard_revision = "1800-2023"
+part = "15"
+clause = "15.4.2"
+anchors = [
+    "[2023:15.4.2:P001:p375]",
+    "[2023:15.4.2:C001:p375]",
+    "[2023:15.4.2:P003:p375]",
+]
+summary = "mailbox::num is a zero-argument int function that returns the number of messages currently in the mailbox."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "15.4.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "15.4.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "15.4.2"
+
+[[requirements]]
+id = "SV-2023-15-MAILBOX-PEEK-BEHAVIOR"
+standard_revision = "1800-2023"
+part = "15"
+clause = "15.4.7"
+anchors = [
+    "[2023:15.4.7:P001:p376]",
+    "[2023:15.4.7:P004:p376]",
+]
+summary = "When a mailbox contains a message, mailbox::peek copies the front message without removing it from the queue."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "15.4.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "15.4.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "15.4.7"
+
+[[requirements]]
+id = "SV-2023-15-MAILBOX-PEEK-DESTINATION"
+standard_revision = "1800-2023"
+part = "15"
+clause = "15.4.7"
+anchors = [
+    "[2023:15.4.7:C001:p376]",
+    "[2023:15.4.7:P003:p376]",
+]
+summary = "mailbox::peek is a task whose ref message argument may have any singular type but shall be a valid left-hand expression."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "15.4.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "15.4.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "15.4.7"
+
+[[requirements]]
+id = "SV-2023-15-MAILBOX-PEEK-EMPTY-BLOCKING"
+standard_revision = "1800-2023"
+part = "15"
+clause = "15.4.7"
+anchors = [
+    "[2023:15.4.7:P004:p376]",
+]
+summary = "Calling mailbox::peek on an empty mailbox blocks the calling process until a message is put into the mailbox."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "15.4.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "15.4.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "15.4.7"
+
+[[requirements]]
+id = "SV-2023-15-MAILBOX-PEEK-TYPE-ERROR"
+standard_revision = "1800-2023"
+part = "15"
+clause = "15.4.7"
+anchors = [
+    "[2023:15.4.7:P004:p376]",
+]
+summary = "mailbox::peek generates a run-time error when the destination variable's type is not equivalent to the queued message's type."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "15.4.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "15.4.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "15.4.7"
+
+[[requirements]]
+id = "SV-2023-15-MAILBOX-PEEK-UNBLOCKS-WAITERS"
+standard_revision = "1800-2023"
+part = "15"
+clause = "15.4.7"
+anchors = [
+    "[2023:15.4.7:P005:p376]",
+]
+summary = "While a message remains queued, every process blocked in peek() or get() shall become unblocked, allowing one nonremoving peek to unblock multiple waiters."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "15.4.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "15.4.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "15.4.7"
+
+[[requirements]]
+id = "SV-2023-15-MAILBOX-PUT-BOUNDED-BLOCKING"
+standard_revision = "1800-2023"
+part = "15"
+clause = "15.4.3"
+anchors = [
+    "[2023:15.4.3:P004:p375]",
+    "[2023:15.4:P002:p374]",
+]
+summary = "When a bounded mailbox lacks queue room, mailbox::put suspends the calling process until room becomes available."
+related_clauses = [
+    "15.4.1",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "15.4.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "15.4.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "15.4.3"
+
+[[requirements]]
+id = "SV-2023-15-MAILBOX-PUT-FIFO-BLOCKING"
+standard_revision = "1800-2023"
+part = "15"
+clause = "15.4.3"
+anchors = [
+    "[2023:15.4.3:P004:p375]",
+    "[2023:15.4.3:P001:p375]",
+]
+summary = "mailbox::put stores messages in strict FIFO order."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "15.4.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "15.4.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "15.4.3"
+
+[[requirements]]
+id = "SV-2023-15-MAILBOX-PUT-MESSAGE-TYPE"
+standard_revision = "1800-2023"
+part = "15"
+clause = "15.4.3"
+anchors = [
+    "[2023:15.4.3:C001:p375]",
+    "[2023:15.4.3:P003:p375]",
+]
+summary = "mailbox::put is a task accepting a message that may be any singular expression, including an object handle."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "15.4.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "15.4.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "15.4.3"
+
+[[requirements]]
+id = "SV-2023-15-MAILBOX-STD-SCOPE"
+standard_revision = "1800-2023"
+part = "15"
+clause = "15.2"
+anchors = [
+    "[2023:15.2:P004:p372]",
+]
+summary = "The built-in mailbox class resides in package std, so user code may declare the name mailbox in another scope without redefining std::mailbox."
+related_clauses = [
+    "26.7",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "15.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "15.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "15.2"
+
+[[requirements]]
+id = "SV-2023-15-MAILBOX-TRY-GET"
+standard_revision = "1800-2023"
+part = "15"
+clause = "15.4.6"
+anchors = [
+    "[2023:15.4.6:P001:p376]",
+    "[2023:15.4.6:C001:p376]",
+    "[2023:15.4.6:P003:p376]",
+]
+summary = "mailbox::try_get is a nonblocking int function whose ref message argument shall be a singular valid left-hand expression."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "15.4.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "15.4.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "15.4.6"
+
+[[requirements]]
+id = "SV-2023-15-MAILBOX-TRY-GET-EMPTY"
+standard_revision = "1800-2023"
+part = "15"
+clause = "15.4.6"
+anchors = [
+    "[2023:15.4.6:P004:p376]",
+]
+summary = "mailbox::try_get returns 0 immediately when the mailbox is empty."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "15.4.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "15.4.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "15.4.6"
+
+[[requirements]]
+id = "SV-2023-15-MAILBOX-TRY-GET-SUCCESS"
+standard_revision = "1800-2023"
+part = "15"
+clause = "15.4.6"
+anchors = [
+    "[2023:15.4.6:P004:p376]",
+]
+summary = "When an equivalent-typed message is available, mailbox::try_get retrieves and removes one message and returns a positive integer."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "15.4.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "15.4.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "15.4.6"
+
+[[requirements]]
+id = "SV-2023-15-MAILBOX-TRY-GET-TYPE-MISMATCH"
+standard_revision = "1800-2023"
+part = "15"
+clause = "15.4.6"
+anchors = [
+    "[2023:15.4.6:P004:p376]",
+]
+summary = "mailbox::try_get returns a negative integer when the queued message type is not equivalent to the destination type."
+related_clauses = [
+    "15.4.9",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "15.4.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "15.4.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "15.4.6"
+
+[[requirements]]
+id = "SV-2023-15-MAILBOX-TRY-PEEK"
+standard_revision = "1800-2023"
+part = "15"
+clause = "15.4.8"
+anchors = [
+    "[2023:15.4.8:P001:p376]",
+    "[2023:15.4.8:C001:p376]",
+    "[2023:15.4.8:P003:p376]",
+]
+summary = "mailbox::try_peek is a nonblocking int function whose ref message argument shall be a singular valid left-hand expression."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "15.4.8"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "15.4.8"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "15.4.8"
+
+[[requirements]]
+id = "SV-2023-15-MAILBOX-TRY-PEEK-EMPTY"
+standard_revision = "1800-2023"
+part = "15"
+clause = "15.4.8"
+anchors = [
+    "[2023:15.4.8:P004:p377]",
+]
+summary = "mailbox::try_peek returns 0 immediately when the mailbox is empty."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "15.4.8"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "15.4.8"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "15.4.8"
+
+[[requirements]]
+id = "SV-2023-15-MAILBOX-TRY-PEEK-SUCCESS"
+standard_revision = "1800-2023"
+part = "15"
+clause = "15.4.8"
+anchors = [
+    "[2023:15.4.8:P004:p377]",
+]
+summary = "When an equivalent-typed message is available, mailbox::try_peek copies the front message without removing it and returns a positive integer."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "15.4.8"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "15.4.8"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "15.4.8"
+
+[[requirements]]
+id = "SV-2023-15-MAILBOX-TRY-PEEK-TYPE-MISMATCH"
+standard_revision = "1800-2023"
+part = "15"
+clause = "15.4.8"
+anchors = [
+    "[2023:15.4.8:P004:p377]",
+]
+summary = "mailbox::try_peek returns a negative integer when the queued message type is not equivalent to the destination type."
+related_clauses = [
+    "15.4.9",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "15.4.8"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "15.4.8"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "15.4.8"
+
+[[requirements]]
+id = "SV-2023-15-MAILBOX-TRY-PUT"
+standard_revision = "1800-2023"
+part = "15"
+clause = "15.4.4"
+anchors = [
+    "[2023:15.4.4:P001:p375]",
+    "[2023:15.4.4:C001:p375]",
+    "[2023:15.4.4:P003:p375]",
+]
+summary = "mailbox::try_put is an int function accepting a message that may be any singular expression, including an object handle."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "15.4.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "15.4.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "15.4.4"
+
+[[requirements]]
+id = "SV-2023-15-MAILBOX-TRY-PUT-FULL"
+standard_revision = "1800-2023"
+part = "15"
+clause = "15.4.4"
+anchors = [
+    "[2023:15.4.4:P004:p375]",
+]
+summary = "When a bounded mailbox is full, mailbox::try_put returns 0 immediately without inserting the specified message."
+related_clauses = [
+    "15.4.1",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "15.4.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "15.4.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "15.4.4"
+
+[[requirements]]
+id = "SV-2023-15-MAILBOX-TRY-PUT-SUCCESS"
+standard_revision = "1800-2023"
+part = "15"
+clause = "15.4.4"
+anchors = [
+    "[2023:15.4.4:P004:p375]",
+]
+summary = "When a mailbox is not full, mailbox::try_put inserts the specified message in strict FIFO order and returns a positive integer."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "15.4.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "15.4.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "15.4.4"
+
+[[requirements]]
+id = "SV-2023-15-MAILBOX-TYPE-PARAMETER"
+standard_revision = "1800-2023"
+part = "15"
+clause = "15.4.9"
+anchors = [
+    "[2023:15.4.9:P001:p377]",
+    "[2023:15.4.9:P002:p377]",
+    "[2023:15.4.9:C001:p377]",
+    "[2023:15.4.9:P003:p377]",
+]
+summary = "mailbox accepts a class-style type parameter; its default dynamic_type makes the mailbox typeless with run-time type checking, while specifying a type creates a typed mailbox."
+related_clauses = [
+    "8.25",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "15.4.9"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "15.4.9"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "15.4.9"
+
+[[requirements]]
+id = "SV-2023-15-MAILBOX-WAIT-FIFO"
+standard_revision = "1800-2023"
+part = "15"
+clause = "15.4.5"
+anchors = [
+    "[2023:15.4.5:P006:p376]",
+]
+summary = "A mailbox preserves the arrival order of processes in its waiting queue (FIFO), without defining the order in which concurrent processes arrive at that queue."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "15.4.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "15.4.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "15.4.5"
+
+[[requirements]]
+id = "SV-2023-15-NONBLOCKING-EVENT-TRIGGER"
+standard_revision = "1800-2023"
+part = "15"
+clause = "15.5.1"
+anchors = [
+    "[2023:15.5.1:P004:p378]",
+]
+summary = "The ->> event trigger does not block its executing process and schedules an update at expiration of its delay/event control that triggers the referenced event in the nonblocking-assignment region."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "15.5.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "15.5.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "15.5.1"
+
+[[requirements]]
+id = "SV-2023-15-SEMAPHORE-CLASS-INHERITANCE"
+standard_revision = "1800-2023"
+part = "15"
+clause = "15.2"
+anchors = [
+    "[2023:15.2:P004:p372]",
+]
+summary = "The built-in semaphore type is a class and may be used as the base class of a user-defined derived class."
+related_clauses = [
+    "8.13",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "15.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "15.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "15.2"
+
+[[requirements]]
+id = "SV-2023-15-SEMAPHORE-CONSTRUCTOR"
+standard_revision = "1800-2023"
+part = "15"
+clause = "15.3.1"
+anchors = [
+    "[2023:15.3.1:C001:p373]",
+    "[2023:15.3.1:P003:p373]",
+    "[2023:15.3.1:P004:p373]",
+]
+summary = "Calling semaphore::new with an int keyCount creates and returns a semaphore handle with keyCount initially available keys; omitting keyCount uses zero."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "15.3.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "15.3.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "15.3.1"
+
+[[requirements]]
+id = "SV-2023-15-SEMAPHORE-GET"
+standard_revision = "1800-2023"
+part = "15"
+clause = "15.3.3"
+anchors = [
+    "[2023:15.3.3:C001:p373]",
+    "[2023:15.3.3:P001:p373]",
+    "[2023:15.3.3:P003:p373]",
+]
+summary = "semaphore::get is a task whose optional int keyCount specifies the requested number of keys and defaults to one."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "15.3.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "15.3.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "15.3.3"
+
+[[requirements]]
+id = "SV-2023-15-SEMAPHORE-GET-BLOCKING"
+standard_revision = "1800-2023"
+part = "15"
+clause = "15.3.3"
+anchors = [
+    "[2023:15.3.3:P004:p373]",
+]
+summary = "When fewer than the requested keyCount keys are available, semaphore::get blocks until that many keys become available."
+related_clauses = [
+    "15.3.2",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "15.3.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "15.3.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "15.3.3"
+
+[[requirements]]
+id = "SV-2023-15-SEMAPHORE-GET-NEGATIVE-ERROR"
+standard_revision = "1800-2023"
+part = "15"
+clause = "15.3.3"
+anchors = [
+    "[2023:15.3.3:P003:p373]",
+]
+summary = "Passing a negative keyCount to semaphore::get shall result in an error."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 does not specify an error for a negative semaphore get key count."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 does not specify an error for a negative semaphore get key count."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "15.3.3"
+
+[[requirements]]
+id = "SV-2023-15-SEMAPHORE-GET-SUCCESS"
+standard_revision = "1800-2023"
+part = "15"
+clause = "15.3.3"
+anchors = [
+    "[2023:15.3.3:P004:p373]",
+    "[2023:15.3.1:P003:p373]",
+]
+summary = "When the requested keyCount is less than or equal to the available key count, semaphore::get reduces the available count by keyCount and returns so execution continues."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "15.3.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "15.3.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "15.3.3"
+
+[[requirements]]
+id = "SV-2023-15-SEMAPHORE-KEY-COUNT-GROWTH"
+standard_revision = "1800-2023"
+part = "15"
+clause = "15.3.1"
+anchors = [
+    "[2023:15.3.1:P003:p373]",
+]
+summary = "Putting more keys into a semaphore than have been removed may increase its available key count beyond the constructor's keyCount."
+related_clauses = [
+    "15.3.2",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "15.3.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "15.3.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "15.3.1"
+
+[[requirements]]
+id = "SV-2023-15-SEMAPHORE-KEY-COUNT-RANGE"
+standard_revision = "1800-2023"
+part = "15"
+clause = "15.3.1"
+anchors = [
+    "[2023:15.3.1:P003:p373]",
+]
+summary = "A semaphore may be constructed with a negative initial key count."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 does not state that a semaphore may be constructed with a negative initial key count."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 does not permit or otherwise specify construction of a semaphore with a negative initial key count."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "15.3.1"
+
+[[requirements]]
+id = "SV-2023-15-SEMAPHORE-PUT-KEYS"
+standard_revision = "1800-2023"
+part = "15"
+clause = "15.3.2"
+anchors = [
+    "[2023:15.3.2:P004:p373]",
+    "[2023:15.3.2:P001:p373]",
+    "[2023:15.3.2:P003:p373]",
+]
+summary = "Calling semaphore::put increases the semaphore's available key count by the specified keyCount."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "15.3.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "15.3.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "15.3.2"
+
+[[requirements]]
+id = "SV-2023-15-SEMAPHORE-PUT-NEGATIVE-ERROR"
+standard_revision = "1800-2023"
+part = "15"
+clause = "15.3.2"
+anchors = [
+    "[2023:15.3.2:P003:p373]",
+]
+summary = "Passing a negative keyCount to semaphore::put shall result in an error."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 does not specify an error for a negative semaphore put key count."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 does not specify an error for a negative semaphore put key count."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "15.3.2"
+
+[[requirements]]
+id = "SV-2023-15-SEMAPHORE-PUT-RESUMES-WAITER"
+standard_revision = "1800-2023"
+part = "15"
+clause = "15.3.2"
+anchors = [
+    "[2023:15.3.2:P004:p373]",
+]
+summary = "When put() returns enough keys to satisfy a process suspended on that semaphore, the waiting process shall resume execution."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "15.3.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "15.3.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "15.3.2"
+
+[[requirements]]
+id = "SV-2023-15-SEMAPHORE-PUT-SIGNATURE"
+standard_revision = "1800-2023"
+part = "15"
+clause = "15.3.2"
+anchors = [
+    "[2023:15.3.2:C001:p373]",
+    "[2023:15.3.2:P001:p373]",
+    "[2023:15.3.2:P003:p373]",
+]
+summary = "semaphore::put is a void function whose optional int keyCount specifies the number of keys to return and defaults to one."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "15.3.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "15.3.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "15.3.2"
+
+[[requirements]]
+id = "SV-2023-15-SEMAPHORE-STD-SCOPE"
+standard_revision = "1800-2023"
+part = "15"
+clause = "15.2"
+anchors = [
+    "[2023:15.2:P004:p372]",
+]
+summary = "The built-in semaphore class resides in package std, so user code may declare the name semaphore in another scope without redefining std::semaphore."
+related_clauses = [
+    "26.7",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "15.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "15.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "15.2"
+
+[[requirements]]
+id = "SV-2023-15-SEMAPHORE-TRY-GET-INSUFFICIENT"
+standard_revision = "1800-2023"
+part = "15"
+clause = "15.3.4"
+anchors = [
+    "[2023:15.3.4:P004:p374]",
+]
+summary = "When fewer than the requested keyCount keys are available, semaphore::try_get returns 0 without blocking or removing keys."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "15.3.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "15.3.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "15.3.4"
+
+[[requirements]]
+id = "SV-2023-15-SEMAPHORE-TRY-GET-NEGATIVE"
+standard_revision = "1800-2023"
+part = "15"
+clause = "15.3.4"
+anchors = [
+    "[2023:15.3.4:P004:p374]",
+]
+summary = "If semaphore::try_get receives a negative keyCount, it returns zero and shall result in an error."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 does not define a zero return plus error for negative semaphore try_get keyCount."
+
+[requirements.revision_applicability.1800-2017]
+status = "not-applicable"
+note = "IEEE 1800-2017 does not define the return value or required error behavior for a negative semaphore try_get key count."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "15.3.4"
+
+[[requirements]]
+id = "SV-2023-15-SEMAPHORE-TRY-GET-NONBLOCKING"
+standard_revision = "1800-2023"
+part = "15"
+clause = "15.3.4"
+anchors = [
+    "[2023:15.3.4:P001:p373]",
+    "[2023:15.3.4:C001:p374]",
+    "[2023:15.3.4:P003:p374]",
+]
+summary = "semaphore::try_get is a nonblocking int function whose optional int keyCount specifies the requested key count and defaults to one."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "15.3.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "15.3.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "15.3.4"
+
+[[requirements]]
+id = "SV-2023-15-SEMAPHORE-TRY-GET-SUCCESS"
+standard_revision = "1800-2023"
+part = "15"
+clause = "15.3.4"
+anchors = [
+    "[2023:15.3.4:P004:p374]",
+    "[2023:15.3.1:P003:p373]",
+]
+summary = "When the requested keyCount is less than or equal to the available key count, semaphore::try_get removes keyCount keys and returns a positive integer."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "15.3.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "15.3.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "15.3.4"
+
+[[requirements]]
+id = "SV-2023-15-SEMAPHORE-WAIT-FIFO"
+standard_revision = "1800-2023"
+part = "15"
+clause = "15.3.3"
+anchors = [
+    "[2023:15.3.3:P005:p373]",
+]
+summary = "A semaphore preserves the arrival order of processes in its waiting queue (FIFO), without defining the order in which concurrent processes arrive at that queue."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "15.3.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "15.3.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "15.3.3"
+
+[[requirements]]
+id = "SV-2023-15-TRIGGERED-REEVALUATION"
+standard_revision = "1800-2023"
+part = "15"
+clause = "15.5.3"
+anchors = [
+    "[2023:15.5.3:P009:p379]",
+]
+summary = "An event expression or wait condition is reevaluated only when an expression operand changes; triggered() reverting from true to false at the end of a time step does not itself cause reevaluation of a control waiting on it."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "not-applicable"
+note = "IEEE 1800-2012 does not specify that end-of-step clearing of the triggered property leaves event expressions and wait conditions unevaluated."
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "15.5.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "15.5.3"
+
+[[requirements]]
+id = "SV-2023-15-TYPED-MAILBOX-COMPILE-CHECK"
+standard_revision = "1800-2023"
+part = "15"
+clause = "15.4.9"
+anchors = [
+    "[2023:15.4.9:P006:p377]",
+]
+summary = "For a parameterized mailbox, the compiler shall require arguments to put, try_put, peek, try_peek, get, and try_get to have types equivalent to the mailbox type, catching mismatches before run time."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "15.4.9"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "15.4.9"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "15.4.9"
+
+[[requirements]]
+id = "SV-2023-15-TYPED-MAILBOX-METHODS"
+standard_revision = "1800-2023"
+part = "15"
+clause = "15.4.9"
+anchors = [
+    "[2023:15.4.9:P005:p377]",
+]
+summary = "A parameterized mailbox provides the same new, num, put, try_put, get, try_get, peek, and try_peek methods as a dynamic mailbox."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "15.4.9"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "15.4.9"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "15.4.9"
+
+[[requirements]]
+id = "SV-2023-15-WAIT-ORDER-FAILURE-ACTION"
+standard_revision = "1800-2023"
+part = "15"
+clause = "15.5.4"
+anchors = [
+    "[2023:15.5.4:P005:p380]",
+]
+summary = "When wait_order fails, it executes the else statement if supplied; without an else clause, failure generates a run-time error by calling $error."
+related_clauses = [
+    "20.10",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "changed-expectation"
+clause = "15.5.4"
+note = "IEEE 1800-2012 requires the supplied fail statement or, when absent, a run-time error, but does not specify that the default error is generated by calling $error."
+
+[requirements.revision_applicability.1800-2017]
+status = "changed-expectation"
+clause = "15.5.4"
+note = "IEEE 1800-2017 requires a run-time error when no fail statement is supplied but does not specify that the error is generated by calling $error."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "15.5.4"
+
+[[requirements]]
+id = "SV-2023-15-WAIT-ORDER-FIRST-PERSISTENT"
+standard_revision = "1800-2023"
+part = "15"
+clause = "15.5.4"
+anchors = [
+    "[2023:15.5.4:P004:p380]",
+]
+summary = "Only the first event listed in wait_order can be satisfied from its persistent triggered state."
+related_clauses = [
+    "15.5.3",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "15.5.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "15.5.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "15.5.4"
+
+[[requirements]]
+id = "SV-2023-15-WAIT-ORDER-PRECEDING-RETRIGGER"
+standard_revision = "1800-2023"
+part = "15"
+clause = "15.5.4"
+anchors = [
+    "[2023:15.5.4:P003:p380]",
+]
+summary = "After an event has occurred in its prescribed wait_order position, that preceding event may trigger again without causing the sequence to fail."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "15.5.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "15.5.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "15.5.4"
+
+[[requirements]]
+id = "SV-2023-15-WAIT-ORDER-SYNTAX-SEMANTICS"
+standard_revision = "1800-2023"
+part = "15"
+clause = "15.5.4"
+anchors = [
+    "[2023:15.5.4:P001:p379]",
+    "[2023:15.5.4:G001:p379-380]",
+]
+summary = "wait_order accepts one or more named-event identifiers followed by an action block; it suspends until they trigger left-to-right and then executes the success statement, but fails if an as-yet-untriggered later event triggers out of order."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "15.5.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "changed-expectation"
+clause = "15.5.4"
+note = "IEEE 1800-2017 requires a nonnull statement after else in action_block, whereas the 2023 grammar permits statement_or_null there."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "15.5.4"

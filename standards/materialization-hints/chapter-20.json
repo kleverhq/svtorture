@@ -1,0 +1,2550 @@
+{
+  "authority": "1800-2023",
+  "part": "20",
+  "requirements": [
+    {
+      "hints": {
+        "edge": [
+          "Check C-compatible out-of-domain behavior."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Check -1, 0, and 1."
+        ]
+      },
+      "id": "SV-2023-20-ACOS-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Check C-compatible input below 1."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Check 1 and values above 1."
+        ]
+      },
+      "id": "SV-2023-20-ACOSH-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Express packed dimensions through an intermediate typedef and verify expansion does not alter numbering."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Query each dimension of a mixed unpacked/packed multidimensional array and verify slow-to-fast numbering."
+        ]
+      },
+      "id": "SV-2023-20-ARRAY-DIMENSION-NUMBERING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify `string` and simple-bit-vector-equivalent nonarrays return 1 while unrelated scalars/types return 0."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Query mixed packed/unpacked arrays and verify the total dimension count."
+        ]
+      },
+      "id": "SV-2023-20-ARRAY-DIMENSIONS-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Check a single-element range whose left and right bounds are equal."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Verify `$high` on both ascending and descending declared ranges."
+        ]
+      },
+      "id": "SV-2023-20-ARRAY-HIGH-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify queue and dynamic-array dimensions return -1 regardless of current size."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Check descending and ascending fixed ranges produce 1 and -1 respectively."
+        ]
+      },
+      "id": "SV-2023-20-ARRAY-INCREMENT-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify an empty queue and empty dynamic array both return 0."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Check ascending and descending packed/static dimensions and populated dynamic arrays."
+        ]
+      },
+      "id": "SV-2023-20-ARRAY-LEFT-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Check a single-element range whose left and right bounds are equal."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Verify `$low` on both ascending and descending declared ranges."
+        ]
+      },
+      "id": "SV-2023-20-ARRAY-LOW-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a typedef whose expansion is fixed-size."
+        ],
+        "negative": [
+          "Reject constant-expression use when the first argument's type is variable-sized or the dimension expression is nonconstant."
+        ],
+        "notes": [],
+        "positive": [
+          "Use `$size` of a fixed-size packed or unpacked type with a constant dimension to size a declaration."
+        ]
+      },
+      "id": "SV-2023-20-ARRAY-QUERY-CONSTANT-EXPRESSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Select packed, unpacked, associative, dynamic-array, and queue dimensions explicitly."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Omit the dimension on a multidimensional array and compare with explicit dimension 1.",
+          "Query dynamic arrays and queues before and after resizing."
+        ]
+      },
+      "id": "SV-2023-20-ARRAY-QUERY-DIMENSION-SELECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast a dynamic object expression with its dynamically sized type name."
+        ],
+        "negative": [
+          "Diagnose direct use on a dynamic-array or queue type identifier."
+        ],
+        "notes": [],
+        "positive": [
+          "Apply an array query at runtime to a dynamic-array object."
+        ]
+      },
+      "id": "SV-2023-20-ARRAY-QUERY-DYNAMIC-TYPE-ERROR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify `'x` for a nonarray type with zero dimensions and for dimension indices 0 and above the available count."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Query a valid in-range dimension and obtain a concrete result."
+        ]
+      },
+      "id": "SV-2023-20-ARRAY-QUERY-INVALID-SELECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Select the dynamic subarray first and query it as dimension 1, which is permitted."
+        ],
+        "negative": [
+          "Diagnose `$size(v,2)` when dimension 2 of `v` is dynamic."
+        ],
+        "notes": [],
+        "positive": [
+          "Query dimension 1 of a dynamic subarray expression and a fixed dimension greater than 1."
+        ]
+      },
+      "id": "SV-2023-20-ARRAY-QUERY-NESTED-VARIABLE-DIMENSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare 2-state and 4-state predefined integer types of different widths."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Verify dimension count, bounds, and size for each predefined-width integer type."
+        ]
+      },
+      "id": "SV-2023-20-ARRAY-QUERY-PREDEFINED-INTEGER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Query an integral scalar type as well as multidimensional packed and unpacked arrays."
+        ],
+        "negative": [
+          "Reject a dimension argument on `$dimensions` and `$unpacked_dimensions`."
+        ],
+        "notes": [],
+        "positive": [
+          "Invoke dimension-count functions on expressions and data types, and dimension-specific functions with and without a dimension argument."
+        ]
+      },
+      "id": "SV-2023-20-ARRAY-QUERY-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify an empty queue and dynamic array return -1."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Check ascending and descending packed/static dimensions."
+        ]
+      },
+      "id": "SV-2023-20-ARRAY-RIGHT-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify an empty dynamic dimension reports size 0."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Check fixed dimensions of several range directions and current dynamic-array sizes."
+        ]
+      },
+      "id": "SV-2023-20-ARRAY-SIZE-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify a packed-only array and a nonarray type return 0."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Query arrays with zero, one, and multiple unpacked dimensions, including dynamic dimensions."
+        ]
+      },
+      "id": "SV-2023-20-ARRAY-UNPACKED-DIMENSIONS-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Check C-compatible out-of-domain behavior."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Check -1, 0, and 1."
+        ]
+      },
+      "id": "SV-2023-20-ASIN-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Check large magnitude."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Check zero and signed values."
+        ]
+      },
+      "id": "SV-2023-20-ASINH-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Disable actions before the first counted attempt."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Toggle pass/fail/vacuity action controls while successes and failures occur; verify counters continue updating."
+        ]
+      },
+      "id": "SV-2023-20-ASSERT-ACTION-CONTROL-COUNTERS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise the maximum-argument form and empty optional positions."
+        ],
+        "negative": [
+          "Reject a nonhierarchical expression in the scope/assertion list."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse each shorthand task and `$assertcontrol` forms with omitted intermediate optional arguments."
+        ]
+      },
+      "id": "SV-2023-20-ASSERT-CONTROL-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify targeted `$assertkill` produces both reset and disable callbacks."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Register the listed system-wide and targeted callbacks, then invoke every assertion-control shorthand task in both forms."
+        ]
+      },
+      "id": "SV-2023-20-ASSERT-CONTROL-VPI-CALLBACKS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Omit the selector and verify all categories are affected."
+        ],
+        "negative": [
+          "Diagnose a noninteger assertion-type expression."
+        ],
+        "notes": [],
+        "positive": [
+          "Select every category individually and combine categories with bitwise OR."
+        ]
+      },
+      "id": "SV-2023-20-ASSERTCONTROL-ASSERTION-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Switch complementary On/Off and action modes sequentially."
+        ],
+        "negative": [
+          "Diagnose a noninteger or unsupported control value."
+        ],
+        "notes": [
+          "Detailed effects of each named mode are specified by following prose."
+        ],
+        "positive": [
+          "Invoke each valid control value on a targeted assertion and observe its defined control mode."
+        ]
+      },
+      "id": "SV-2023-20-ASSERTCONTROL-CONTROL-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Omit the selector and verify all directive categories are affected."
+        ],
+        "negative": [
+          "Diagnose a noninteger directive-type expression."
+        ],
+        "notes": [],
+        "positive": [
+          "Select each directive category separately and combine Assert plus Cover with mask 3."
+        ]
+      },
+      "id": "SV-2023-20-ASSERTCONTROL-DIRECTIVE-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Apply during active action."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Suppress then restore fail actions."
+        ]
+      },
+      "id": "SV-2023-20-ASSERTCONTROL-FAILOFF"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Apply during active action."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Enable explicit and default fail actions."
+        ]
+      },
+      "id": "SV-2023-20-ASSERTCONTROL-FAILON"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Check expect is unaffected."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Kill an active assertion with queued reports."
+        ]
+      },
+      "id": "SV-2023-20-ASSERTCONTROL-KILL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Omit levels and verify default depth 0 behavior."
+        ],
+        "negative": [
+          "Diagnose a noninteger levels expression."
+        ],
+        "notes": [],
+        "positive": [
+          "Apply explicit depth values to nested assertion scopes."
+        ]
+      },
+      "id": "SV-2023-20-ASSERTCONTROL-LEVELS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Unlock then apply control."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Lock a target then apply Off."
+        ]
+      },
+      "id": "SV-2023-20-ASSERTCONTROL-LOCK"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Apply NonvacuousOn while vacuous pass actions are already enabled and verify they remain enabled."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "After PassOff disables both pass-action kinds, apply NonvacuousOn and verify only a nonvacuous success executes its pass action."
+        ]
+      },
+      "id": "SV-2023-20-ASSERTCONTROL-NONVACUOUSON"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Let queued reports mature after Off."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Apply Off with active and future attempts."
+        ]
+      },
+      "id": "SV-2023-20-ASSERTCONTROL-OFF"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Check expect is unaffected."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Re-enable an Off assertion."
+        ]
+      },
+      "id": "SV-2023-20-ASSERTCONTROL-ON"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Apply during active action."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Disable then selectively restore pass actions."
+        ]
+      },
+      "id": "SV-2023-20-ASSERTCONTROL-PASSOFF"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Apply during active action."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Enable both pass action kinds."
+        ]
+      },
+      "id": "SV-2023-20-ASSERTCONTROL-PASSON"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Supply multiple scopes and assertions in one list."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Target one whole scope and one individually named assertion."
+        ]
+      },
+      "id": "SV-2023-20-ASSERTCONTROL-SCOPE-SELECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Unlock an unlocked target."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Unlock a locked target."
+        ]
+      },
+      "id": "SV-2023-20-ASSERTCONTROL-UNLOCK"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify nonvacuous pass behavior is unchanged."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Suppress a vacuous pass action then restore it with PassOn."
+        ]
+      },
+      "id": "SV-2023-20-ASSERTCONTROL-VACUOUSOFF"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify targeted Kill produces both reset and disable callbacks."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Register every system-wide and targeted callback, then invoke `$assertcontrol` with each mode 1 through 11 in both forms."
+        ]
+      },
+      "id": "SV-2023-20-ASSERTCONTROL-VPI-CALLBACKS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Omit all optional arguments."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare fail-action suppression of both forms."
+        ]
+      },
+      "id": "SV-2023-20-ASSERTFAILOFF-EQUIVALENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Omit all optional arguments."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare fail-action effects of both forms."
+        ]
+      },
+      "id": "SV-2023-20-ASSERTFAILON-EQUIVALENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Omit all optional arguments."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare effects of both forms on active selected attempts."
+        ]
+      },
+      "id": "SV-2023-20-ASSERTKILL-EQUIVALENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Omit all optional arguments."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare nonvacuous pass-action effects of both forms."
+        ]
+      },
+      "id": "SV-2023-20-ASSERTNONVACUOUSON-EQUIVALENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Omit all optional arguments."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare effects of both forms on selected hierarchy."
+        ]
+      },
+      "id": "SV-2023-20-ASSERTOFF-EQUIVALENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Omit all optional arguments."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare effects of both forms on selected hierarchy."
+        ]
+      },
+      "id": "SV-2023-20-ASSERTON-EQUIVALENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Omit all optional arguments."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare pass-action suppression of both forms."
+        ]
+      },
+      "id": "SV-2023-20-ASSERTPASSOFF-EQUIVALENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Omit all optional arguments."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare pass-action effects of both forms."
+        ]
+      },
+      "id": "SV-2023-20-ASSERTPASSON-EQUIVALENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Omit all optional arguments."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare vacuous pass-action suppression of both forms."
+        ]
+      },
+      "id": "SV-2023-20-ASSERTVACUOUSOFF-EQUIVALENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "On an empty associative array, verify `$low` and `$high` are `'x` and `$size` is 0."
+        ],
+        "negative": [
+          "Reject dimension-specific querying of an associative array with a nonintegral index type."
+        ],
+        "notes": [],
+        "positive": [
+          "Populate an integral-index associative array sparsely and verify all six dimension query results."
+        ]
+      },
+      "id": "SV-2023-20-ASSOCIATIVE-ARRAY-QUERY-RESULTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Check large magnitudes."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Check zero and signed finite values."
+        ]
+      },
+      "id": "SV-2023-20-ATAN-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Check zero coordinates consistently with C."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Check points in all four quadrants."
+        ]
+      },
+      "id": "SV-2023-20-ATAN2-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Check domain boundaries consistently with C."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Check zero and interior-domain signed values."
+        ]
+      },
+      "id": "SV-2023-20-ATANH-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use several constant control bits with `$countbits`."
+        ],
+        "negative": [
+          "Reject constant-expression use with a nonconstant argument."
+        ],
+        "notes": [],
+        "positive": [
+          "Use each function with constant arguments in a parameter initializer."
+        ]
+      },
+      "id": "SV-2023-20-BIT-VECTOR-FUNCTION-CONSTANTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use exactly one `$countbits` control bit."
+        ],
+        "negative": [
+          "Reject `$countbits` without a control bit and multiple arguments to `$onehot`."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse every function with its required argument form and `$countbits` with multiple controls."
+        ]
+      },
+      "id": "SV-2023-20-BIT-VECTOR-FUNCTION-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Statically check the `int` versus `bit` result widths."
+        ],
+        "negative": [
+          "Diagnose a non-bit-stream expression."
+        ],
+        "notes": [],
+        "positive": [
+          "Apply each function to streamable packed and aggregate expressions and use results in matching typed contexts."
+        ]
+      },
+      "id": "SV-2023-20-BIT-VECTOR-FUNCTION-TYPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast fixed and dynamically sized expressions with otherwise identical element types."
+        ],
+        "negative": [
+          "Reject elaboration-time-constant use when the expression contains a dynamically sized data type."
+        ],
+        "notes": [],
+        "positive": [
+          "Use `$bits` of a fixed-size expression to size a declaration."
+        ]
+      },
+      "id": "SV-2023-20-BITS-DYNAMIC-ELABORATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use empty dynamic arrays and queues with different element widths and verify each still returns 0."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Apply `$bits` to an empty dynamic array or queue and verify result 0."
+        ]
+      },
+      "id": "SV-2023-20-BITS-DYNAMIC-EXPRESSION-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Diagnose `$bits` around a function returning a dynamic array or queue."
+        ],
+        "notes": [],
+        "positive": [
+          "Apply `$bits` to a function whose return type is fixed-size."
+        ]
+      },
+      "id": "SV-2023-20-BITS-DYNAMIC-FUNCTION-ERROR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast the legal object expression and illegal type identifier for the same element type."
+        ],
+        "negative": [
+          "Diagnose direct application to a dynamic-array or queue type identifier."
+        ],
+        "notes": [],
+        "positive": [
+          "Apply `$bits` at runtime to a dynamic-array object expression."
+        ]
+      },
+      "id": "SV-2023-20-BITS-DYNAMIC-TYPE-ERROR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use nested fixed-size aggregate types."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use `$bits` of a fixed packed struct in another type's range and in a net declaration."
+        ]
+      },
+      "id": "SV-2023-20-BITS-FIXED-SIZE-CONSTANT"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Diagnose `$bits` on an interface-class object."
+        ],
+        "notes": [],
+        "positive": [
+          "Apply `$bits` to an ordinary fixed-size class member expression."
+        ]
+      },
+      "id": "SV-2023-20-BITS-INTERFACE-CLASS-ERROR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a short-circuit or conditional expression whose branches would have side effects."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use an expression containing an observable side-effecting function and verify `$bits` does not call it."
+        ]
+      },
+      "id": "SV-2023-20-BITS-NON-EVALUATING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Confirm 4-state implementation storage does not increase the reported count."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Verify `$bits` of `logic [31:0]` is 32 and of a packed struct containing one logic plus eight bits is 9."
+        ]
+      },
+      "id": "SV-2023-20-BITS-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an anonymous aggregate data type argument."
+        ],
+        "negative": [
+          "Reject `$bits()` and a multiple-argument invocation."
+        ],
+        "notes": [],
+        "positive": [
+          "Invoke `$bits` with an expression and directly with a data type."
+        ]
+      },
+      "id": "SV-2023-20-BITS-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Round-trip signed zero and special representable patterns."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Verify `$bitstoreal($realtobits(r))` reproduces representative real values."
+        ]
+      },
+      "id": "SV-2023-20-BITSTOREAL-INVERSE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Round-trip signed zero and special representable patterns."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Verify `$bitstoshortreal($shortrealtobits(r))` reproduces representative shortreal values."
+        ]
+      },
+      "id": "SV-2023-20-BITSTOSHORTREAL-INVERSE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Check integral input."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Check positive and negative fractions."
+        ]
+      },
+      "id": "SV-2023-20-CEIL-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify 0 returns 0 and a bit pattern with its sign bit set is treated unsigned."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Verify powers of two and adjacent values, including arbitrarily wide vectors."
+        ]
+      },
+      "id": "SV-2023-20-CLOG2-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Nest inverse conversion functions in a constant expression."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use conversion-function results to initialize constants and parameter-dependent widths."
+        ]
+      },
+      "id": "SV-2023-20-CONVERSIONS-IN-CONSTANT-EXPRESSIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Check large arguments."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Check zero and representative radians."
+        ]
+      },
+      "id": "SV-2023-20-COS-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Check large magnitude."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Check zero and signed values."
+        ]
+      },
+      "id": "SV-2023-20-COSH-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a heterogeneous streamable aggregate whose flattened positions are readily checked."
+        ],
+        "negative": [
+          "Diagnose a non-bit-stream expression argument."
+        ],
+        "notes": [],
+        "positive": [
+          "Count states in packed aggregates and streamable unpacked aggregates according to rightward streaming order."
+        ]
+      },
+      "id": "SV-2023-20-COUNTBITS-BITSTREAM-INPUT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Repeat the same control value and verify each matching expression bit is counted once."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Pass a wide control whose LSB selects the intended state."
+        ]
+      },
+      "id": "SV-2023-20-COUNTBITS-CONTROL-NORMALIZATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Count in a vector containing all four logic values."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Count ones alone, known bits using 0 and 1, and unknown/high-impedance bits using x and z."
+        ]
+      },
+      "id": "SV-2023-20-COUNTBITS-MATCH-COUNT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Supply two variable controls that currently hold the same value and verify duplicate normalization."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Change variable control bits between x and z and verify the selected count changes."
+        ]
+      },
+      "id": "SV-2023-20-COUNTBITS-VARIABLE-CONTROLS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Check zero-width-equivalent empty streamable content where legal."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare both calls on vectors containing 0, 1, x, and z."
+        ]
+      },
+      "id": "SV-2023-20-COUNTONES-EQUIVALENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Repeat with an `expect` statement that omits its fail action."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Apply FailOff before a failing assertion without an explicit `else` and verify its default `$error` action is suppressed."
+        ]
+      },
+      "id": "SV-2023-20-DEFAULT-ASSERT-FAIL-SUPPRESSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Add an explicit `else` and verify it replaces the default action."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Fail each construct without an `else` action and verify a run-time error."
+        ]
+      },
+      "id": "SV-2023-20-DEFAULT-FAIL-ACTION-ERROR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the minimum legal degree-of-freedom value 1."
+        ],
+        "negative": [],
+        "notes": [
+          "Use exact standardized reference sequences; an unspecified finite-sample statistical spread threshold is not a trustworthy oracle."
+        ],
+        "positive": [
+          "For a fixed seed, compare chi-square and t sequences at two positive degrees-of-freedom values with the standardized Annex N reference algorithm."
+        ]
+      },
+      "id": "SV-2023-20-DIST-DEGREES-OF-FREEDOM"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise standard deviation 0, which is not prohibited by this subclause."
+        ],
+        "negative": [],
+        "notes": [
+          "Use exact standardized reference sequences; an unspecified finite-sample statistical spread threshold is not a trustworthy oracle."
+        ],
+        "positive": [
+          "For a fixed seed, compare `$dist_normal` sequences at two standard-deviation values with the standardized Annex N reference algorithm."
+        ]
+      },
+      "id": "SV-2023-20-DIST-NORMAL-STANDARD-DEVIATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use adjacent start/end values."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Sample repeatedly and verify every value lies within the specified bounds."
+        ]
+      },
+      "id": "SV-2023-20-DIST-UNIFORM-BOUNDS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the minimum valid value 1."
+        ],
+        "negative": [
+          "Diagnose zero or negative constrained parameters and noninteger arguments."
+        ],
+        "notes": [],
+        "positive": [
+          "Call each function with valid positive shape parameters."
+        ]
+      },
+      "id": "SV-2023-20-DISTRIBUTION-ARGUMENT-CONSTRAINTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use complex integer expressions for non-seed inputs."
+        ],
+        "negative": [
+          "Reject missing or extra distribution arguments."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse every function with exactly its declared arguments."
+        ]
+      },
+      "id": "SV-2023-20-DISTRIBUTION-FUNCTION-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the minimum legal positive mean for distributions that require one."
+        ],
+        "negative": [],
+        "notes": [
+          "Use exact standardized reference sequences; an unspecified finite-sample convergence tolerance is not a trustworthy oracle."
+        ],
+        "positive": [
+          "For fixed seeds and requested means, compare each function's deterministic output sequence with the standardized Annex N reference algorithm."
+        ]
+      },
+      "id": "SV-2023-20-DISTRIBUTION-MEAN"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a narrow valid uniform interval and verify both the reference sequence and bounded results."
+        ],
+        "negative": [],
+        "notes": [
+          "Use exact standardized algorithm outputs rather than probabilistic pass thresholds."
+        ],
+        "positive": [
+          "For fixed seeds, compare every named distribution function with its standardized Annex N reference sequence."
+        ]
+      },
+      "id": "SV-2023-20-DISTRIBUTION-RESULT-CHARACTERISTIC"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare independent seed variables initialized identically."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Replay identical initialized seed/call sequences and verify identical values and seed updates."
+        ]
+      },
+      "id": "SV-2023-20-DISTRIBUTION-SEED-STATE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multiple `$error` calls and verify their presence does not require immediate elaboration abort."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Retain `$error` alongside later elaboration work and verify elaboration continues while simulation is withheld."
+        ]
+      },
+      "id": "SV-2023-20-ELABORATION-ERROR-BEHAVIOR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place other elaboration severity calls after it without requiring those calls to execute or a particular finish-number effect."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Retain an elaboration `$fatal` and verify its message is output and simulation does not start."
+        ]
+      },
+      "id": "SV-2023-20-ELABORATION-FATAL-BEHAVIOR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a constant function depending on parameters."
+        ],
+        "negative": [
+          "Diagnose a nonconstant variable expression in the argument list."
+        ],
+        "notes": [],
+        "positive": [
+          "Use literals, parameters, and a constant function in an elaboration severity message."
+        ]
+      },
+      "id": "SV-2023-20-ELABORATION-SEVERITY-ARGUMENTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Generate away an elaboration severity call."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Place a severity call in a conditional generate branch and another in an initial procedure, verifying elaboration versus runtime activation."
+        ]
+      },
+      "id": "SV-2023-20-ELABORATION-SEVERITY-CONTEXT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use nested generated scopes and a source include."
+        ],
+        "negative": [],
+        "notes": [
+          "Do not constrain tool-specific formatting."
+        ],
+        "positive": [
+          "Call an elaboration severity task in a named generated hierarchy and verify severity, file, line, and scope are represented."
+        ]
+      },
+      "id": "SV-2023-20-ELABORATION-SEVERITY-CONTEXT-OUTPUT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Generate away one call while retaining another and verify only the retained call executes."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Retain multiple nonfatal severity calls through generate expansion and verify each executes without assuming their order."
+        ]
+      },
+      "id": "SV-2023-20-ELABORATION-SEVERITY-EXECUTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an empty user string."
+        ],
+        "negative": [],
+        "notes": [
+          "Do not constrain surrounding tool-specific output."
+        ],
+        "positive": [
+          "Supply a formatted constant message and verify it appears in elaboration output."
+        ]
+      },
+      "id": "SV-2023-20-ELABORATION-SEVERITY-USER-MESSAGE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use both calls in generated scopes."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Retain `$warning` and `$info`, verify both messages, successful elaboration, and subsequent simulation."
+        ]
+      },
+      "id": "SV-2023-20-ELABORATION-WARNING-INFO-BEHAVIOR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Invoke with and without message arguments."
+        ],
+        "negative": [],
+        "notes": [
+          "Do not depend on implementation-specific diagnostic wording."
+        ],
+        "positive": [
+          "Invoke `$error` and verify a run-time error is reported."
+        ]
+      },
+      "id": "SV-2023-20-ERROR-TASK-BEHAVIOR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call `$exit` when all program blocks are already complete and verify termination."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Call `$exit` while another program block has pending work; verify that work completes before simulation terminates."
+        ]
+      },
+      "id": "SV-2023-20-EXIT-WAITS-THEN-FINISHES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Check large magnitudes."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Check zero and signed arguments."
+        ]
+      },
+      "id": "SV-2023-20-EXP-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise finish numbers 0, 1, and 2 and verify corresponding diagnostic information levels."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Invoke `$fatal(0)` before a later side effect and verify error termination without that side effect."
+        ]
+      },
+      "id": "SV-2023-20-FATAL-TASK-BEHAVIOR"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Invoke `$finish` before a later side effect and verify the process terminates without that side effect."
+        ]
+      },
+      "id": "SV-2023-20-FINISH-TERMINATES-SIMULATOR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Check integral input."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Check positive and negative fractions."
+        ]
+      },
+      "id": "SV-2023-20-FLOOR-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Check zero and large magnitudes."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Check a 3-4-5 pair and signed operands."
+        ]
+      },
+      "id": "SV-2023-20-HYPOT-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Invoke with and without user message arguments."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Invoke `$info` and verify a non-error informational message."
+        ]
+      },
+      "id": "SV-2023-20-INFO-TASK-BEHAVIOR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Query both package-scoped and hierarchical parameter identifiers."
+        ],
+        "negative": [
+          "Reject `$isunbounded` with a variable or arbitrary expression argument."
+        ],
+        "notes": [],
+        "positive": [
+          "Query a parameter initialized to `$` and one initialized to a finite integer, expecting true and false respectively."
+        ]
+      },
+      "id": "SV-2023-20-ISUNBOUNDED-PARAMETER-QUERY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Check all-known vectors and mixed vectors with one unknown position."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Check vectors containing x and z separately."
+        ]
+      },
+      "id": "SV-2023-20-ISUNKNOWN-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Convert negative and boundary integer values."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Verify `$itor(123)` produces real value 123.0."
+        ]
+      },
+      "id": "SV-2023-20-ITOR-CONVERTS-TO-REAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Check C-compatible domain behavior."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Check 1 and another positive value."
+        ]
+      },
+      "id": "SV-2023-20-LN-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Check C-compatible domain behavior."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Check powers of ten."
+        ]
+      },
+      "id": "SV-2023-20-LOG10-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Nest real and integer math calls in a constant expression."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use integer and real math function results in parameter initializers."
+        ]
+      },
+      "id": "SV-2023-20-MATH-FUNCTIONS-CONSTANT-EXPRESSIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Check zero and multiple ones, with x/z positions present."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Check vectors with exactly one 1 at several positions."
+        ]
+      },
+      "id": "SV-2023-20-ONEHOT-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Check two ones and vectors containing x/z but no more than one 1."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Check vectors containing zero or one 1."
+        ]
+      },
+      "id": "SV-2023-20-ONEHOT0-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use all-selected and none-selected personality words."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Encode selected and unselected inputs with 1 and 0 and verify resulting logic equation."
+        ]
+      },
+      "id": "SV-2023-20-PLA-ARRAY-FORMAT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use single-element ranges."
+        ],
+        "negative": [
+          "Diagnose descending specification."
+        ],
+        "notes": [],
+        "positive": [
+          "Use ascending ranges for all three categories."
+        ]
+      },
+      "id": "SV-2023-20-PLA-ASCENDING-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change input and memory in the same time slot."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Independently change each input and personality-memory word and observe reevaluation."
+        ]
+      },
+      "id": "SV-2023-20-PLA-ASYNCHRONOUS-EVALUATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Modify personality memory at the same simulation time as an input trigger."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Modify personality memory after initial evaluation and trigger the next evaluation."
+        ]
+      },
+      "id": "SV-2023-20-PLA-DYNAMIC-PERSONALITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Modify only selected personality words procedurally."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Load equivalent personalities by each file task and procedural writes and compare behavior."
+        ]
+      },
+      "id": "SV-2023-20-PLA-PERSONALITY-LOADING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use one input or one output term."
+        ],
+        "negative": [
+          "Diagnose or reject mismatched width or depth."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare personality memory with dimensions matching several input/output counts."
+        ]
+      },
+      "id": "SV-2023-20-PLA-PERSONALITY-SHAPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare z and ? encodings and propagate unknown input through x worst-case encoding."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Exercise every encoding on both 0 and 1 input values and verify selected term behavior."
+        ]
+      },
+      "id": "SV-2023-20-PLA-PLANE-FORMAT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change several inputs before one synchronous execution and verify that execution evaluates their latest values."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Change inputs between two synchronous task executions and verify evaluation/output update occurs at the next execution rather than at the input change."
+        ]
+      },
+      "id": "SV-2023-20-PLA-SYNCHRONOUS-EVALUATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use complex input expressions and selected variable lvalues."
+        ],
+        "negative": [
+          "Reject an unsupported name component or wrong argument count."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse every array-type, logic, and format combination."
+        ]
+      },
+      "id": "SV-2023-20-PLA-TASK-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a variable part-select output lvalue."
+        ],
+        "negative": [
+          "Reject a net as an output term."
+        ],
+        "notes": [],
+        "positive": [
+          "Use net and variable inputs with variable outputs."
+        ]
+      },
+      "id": "SV-2023-20-PLA-TERM-KINDS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Observe from another process without assuming active-region process order; compare timestamps rather than same-region statement order."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Trigger each synchronous and asynchronous form and verify the output-change simulation time equals the evaluation-trigger time."
+        ]
+      },
+      "id": "SV-2023-20-PLA-ZERO-DELAY-OUTPUT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Check zero and negative bases."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Check integral and fractional exponents."
+        ]
+      },
+      "id": "SV-2023-20-POW-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use `$root` and verify the simulation time unit is displayed."
+        ],
+        "negative": [],
+        "notes": [
+          "Check represented values independently of the separately required output format."
+        ],
+        "positive": [
+          "Print a named module's explicitly declared time unit and precision.",
+          "Use `$unit` and verify compilation-unit timescale information."
+        ]
+      },
+      "id": "SV-2023-20-PRINTTIMESCALE-ARGUMENT-TARGET"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Invoke from nested scopes and verify selection of the containing design element's timescale."
+        ],
+        "negative": [],
+        "notes": [
+          "Verify the represented unit and precision without relying on diagnostic formatting."
+        ],
+        "positive": [
+          "Invoke no-argument `$printtimescale` in a module with explicit unit and precision and verify both are displayed."
+        ]
+      },
+      "id": "SV-2023-20-PRINTTIMESCALE-CURRENT-SCOPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify `$unit` and `$root` appear literally as their output design-element names."
+        ],
+        "negative": [],
+        "notes": [
+          "The standard mandates this wording structure; tolerate only environmental line-ending differences."
+        ],
+        "positive": [
+          "Capture output for a named module and verify the prescribed text structure, name, unit, and precision."
+        ]
+      },
+      "id": "SV-2023-20-PRINTTIMESCALE-OUTPUT-FORMAT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a deeply nested hierarchical identifier."
+        ],
+        "negative": [
+          "Reject `$printtimescale();` and `$printtimescale(top.u, top.v);`."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse `$printtimescale;` and `$printtimescale(top.u);`."
+        ]
+      },
+      "id": "SV-2023-20-PRINTTIMESCALE-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise boundary-valued valid parameters while comparing exact reference outputs."
+        ],
+        "negative": [],
+        "notes": [
+          "Use the normative Annex N algorithm as the oracle rather than agreement between two implementations."
+        ],
+        "positive": [
+          "For fixed initial states and call sequences, compare each distribution function result with the standardized Annex N algorithm."
+        ]
+      },
+      "id": "SV-2023-20-PROBABILITY-RNG-REPEATABILITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Add to a full or nonexistent queue and check status."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Add identifiable jobs with distinct information values and later verify stored values."
+        ]
+      },
+      "id": "SV-2023-20-Q-ADD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Query empty, full, and never-used queues."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Drive controlled arrival/removal times and verify every statistic code."
+        ]
+      },
+      "id": "SV-2023-20-Q-EXAM"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Query a nonexistent queue identifier and verify the Table 20-11 undefined-ID status."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Query below and at maximum queue length and verify 0 then 1."
+        ]
+      },
+      "id": "SV-2023-20-Q-FULL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise invalid creation conditions and verify the defined status code."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Initialize a bounded queue and verify additions cannot exceed its maximum and success status is returned."
+        ]
+      },
+      "id": "SV-2023-20-Q-INITIALIZE-LENGTH-STATUS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Create both queue types at maximum length 1."
+        ],
+        "negative": [
+          "Attempt to initialize a duplicate queue identifier."
+        ],
+        "notes": [],
+        "positive": [
+          "Initialize unique FIFO and LIFO queues and verify their later removal order."
+        ]
+      },
+      "id": "SV-2023-20-Q-INITIALIZE-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Remove from an empty or nonexistent queue and verify status."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Remove from FIFO and LIFO queues and verify job and information values and ordering."
+        ]
+      },
+      "id": "SV-2023-20-Q-REMOVE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "If a controlled allocation-failure environment is available, verify status 7 for insufficient memory."
+        ],
+        "negative": [],
+        "notes": [
+          "The standard does not define precedence when several invalid creation conditions hold; isolate one condition per scenario. Forced memory exhaustion is not generally a portable oracle."
+        ],
+        "positive": [
+          "Trigger controllable conditions for status codes 0 through 6 one at a time and verify each exact value."
+        ]
+      },
+      "id": "SV-2023-20-QUEUE-STATUS-CODES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise seeds producing negative and nonnegative results."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Call repeatedly and verify 32-bit signed result typing and stream advancement."
+        ]
+      },
+      "id": "SV-2023-20-RANDOM-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Reuse the same initialized seed in independent runs and compare sequences."
+        ],
+        "negative": [
+          "Reject a literal or nonintegral seed argument."
+        ],
+        "notes": [],
+        "positive": [
+          "Initialize integral seed variables to distinct values and verify distinct repeatable streams."
+        ]
+      },
+      "id": "SV-2023-20-RANDOM-SEED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the no-parentheses argumentless form."
+        ],
+        "negative": [
+          "Reject multiple seed arguments."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse `$random` and `$random(seed)`."
+        ]
+      },
+      "id": "SV-2023-20-RANDOM-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Check vector result widths exactly at 64 and 32 bits."
+        ],
+        "negative": [
+          "Reject an invocation with an incorrect argument count."
+        ],
+        "notes": [],
+        "positive": [
+          "Use each function in a context checking its declared result type and width."
+        ]
+      },
+      "id": "SV-2023-20-REAL-CONVERSION-SIGNATURES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Invoke `$realtime` from modules with different time units at the same simulation instant."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "At a fractional module-time-unit instant, verify `$realtime` preserves the real-valued scaled time."
+        ]
+      },
+      "id": "SV-2023-20-REALTIME-RETURN-VALUE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise signed zero and a nonintegral finite value."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Convert a real to bits and check the 64-bit result against a known representation."
+        ]
+      },
+      "id": "SV-2023-20-REALTOBITS-REPRESENTATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare `$rtoi` with an integer cast at a value where rounding and truncation differ."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Verify `$rtoi(123.45)` yields 123 and a negative fractional input truncates toward zero."
+        ]
+      },
+      "id": "SV-2023-20-RTOI-TRUNCATES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise `$past` with omitted intermediate optional arguments and an explicit clocking event."
+        ],
+        "negative": [
+          "Reject extra arguments to global-clocking functions and malformed omitted optional positions."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse every function in its minimal form and all optional `$past`/clock-event argument positions."
+        ]
+      },
+      "id": "SV-2023-20-SAMPLED-VALUE-FUNCTION-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Invoke at simulation time zero from a deeply nested named scope."
+        ],
+        "negative": [],
+        "notes": [
+          "Validate required information without imposing tool-specific formatting."
+        ],
+        "positive": [
+          "Invoke a severity task in a nested scope and verify severity, file, line, hierarchy, and simulation time are represented."
+        ]
+      },
+      "id": "SV-2023-20-SEVERITY-REQUIRED-CONTEXT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Parse empty-parentheses forms where grammar permits."
+        ],
+        "negative": [
+          "Reject `$fatal(3)` and a missing terminating semicolon."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse argumentless and argument-bearing forms of every severity task."
+        ]
+      },
+      "id": "SV-2023-20-SEVERITY-TASK-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use no user message and an empty formatting string."
+        ],
+        "negative": [],
+        "notes": [
+          "Do not constrain surrounding tool-specific text."
+        ],
+        "positive": [
+          "Pass a format string and several values to each severity task and verify the formatted message is included."
+        ]
+      },
+      "id": "SV-2023-20-SEVERITY-USER-MESSAGE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise signed zero and a nonintegral finite value."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Convert a shortreal and verify the 32-bit representation."
+        ]
+      },
+      "id": "SV-2023-20-SHORTREALTOBITS-REPRESENTATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the high bit set so signed and unsigned downstream comparisons differ."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Apply each function to the same bit pattern and verify unchanged size/value but signed or unsigned result respectively."
+        ]
+      },
+      "id": "SV-2023-20-SIGNEDNESS-CAST-FUNCTIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Accept `$exit;` as well as `$exit();`."
+        ],
+        "negative": [
+          "Reject `$exit(1);` and a control task statement lacking its terminating semicolon."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse `$stop;`, `$finish(0);`, and `$exit();` as simulation control task statements."
+        ]
+      },
+      "id": "SV-2023-20-SIMULATION-CONTROL-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Check large arguments."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Check zero and representative radians."
+        ]
+      },
+      "id": "SV-2023-20-SIN-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Check large magnitude."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Check zero and signed values."
+        ]
+      },
+      "id": "SV-2023-20-SINH-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Check C-compatible negative-input behavior."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Check zero and positive squares."
+        ]
+      },
+      "id": "SV-2023-20-SQRT-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call directly from a top-level initial process."
+        ],
+        "negative": [],
+        "notes": [
+          "Do not constrain implementation-dependent frame formatting or detail."
+        ],
+        "positive": [
+          "Call through several nested functions/tasks and verify task output and function string represent a stack reaching the top-level process."
+        ]
+      },
+      "id": "SV-2023-20-STACKTRACE-BEHAVIOR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use it as a bare task statement and as an expression."
+        ],
+        "negative": [
+          "Reject arguments to `$stacktrace`."
+        ],
+        "notes": [],
+        "positive": [
+          "Use `$stacktrace` in task and expression contexts without parentheses."
+        ]
+      },
+      "id": "SV-2023-20-STACKTRACE-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "At a scaled time exceeding 32 bits, verify `$stime` returns the low-order 32 bits."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Verify `$stime` is a 32-bit unsigned value scaled to the caller's module time unit."
+        ]
+      },
+      "id": "SV-2023-20-STIME-RETURN-VALUE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify `$q_full`'s two-argument form."
+        ],
+        "negative": [
+          "Reject missing or extra arguments."
+        ],
+        "notes": [],
+        "positive": [
+          "Invoke every queue operation with exactly its declared arguments."
+        ]
+      },
+      "id": "SV-2023-20-STOCHASTIC-QUEUE-TASK-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare omitted-argument behavior with `$finish(1)`."
+        ],
+        "negative": [],
+        "notes": [
+          "Check required information rather than implementation-specific wording or formatting."
+        ],
+        "positive": [
+          "Execute `$finish(0)` and verify no diagnostic message is printed.",
+          "Execute `$finish(1)` and verify simulation time and invocation location are reported.",
+          "Execute `$finish(2)` and verify time, location, memory statistics, and simulation CPU time are reported."
+        ]
+      },
+      "id": "SV-2023-20-STOP-FINISH-DIAGNOSTIC-ARGUMENT"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [
+          "Materialization requires a portable harness capable of observing and resuming a suspended simulation."
+        ],
+        "positive": [
+          "Execute `$stop` after an observable assignment and verify simulation enters its suspended control state."
+        ]
+      },
+      "id": "SV-2023-20-STOP-SUSPENDS-SIMULATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call without a string and compare with host C `system(NULL)` behavior."
+        ],
+        "negative": [],
+        "notes": [
+          "Tests must sandbox host command side effects."
+        ],
+        "positive": [
+          "Execute a harmless command in task form and a known-status command in function form, verifying the integer result."
+        ]
+      },
+      "id": "SV-2023-20-SYSTEM-CALL-BEHAVIOR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an empty string literal."
+        ],
+        "negative": [
+          "Reject multiple arguments or a non-string grammar form."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse `$system()` and `$system(\"command\")`."
+        ]
+      },
+      "id": "SV-2023-20-SYSTEM-CALL-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Check near a tangent pole."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Check zero and representative radians."
+        ]
+      },
+      "id": "SV-2023-20-TAN-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Check asymptotic large magnitudes."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Check zero and signed values."
+        ]
+      },
+      "id": "SV-2023-20-TANH-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a time function without parentheses."
+        ],
+        "negative": [
+          "Reject a misspelled time system function name."
+        ],
+        "notes": [],
+        "positive": [
+          "Use each of `$time`, `$stime`, and `$realtime` in an expression."
+        ]
+      },
+      "id": "SV-2023-20-TIME-FUNCTION-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Choose a module time precision finer than its time unit and verify it does not alter `$time`'s integer conversion."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "With a 10 ns module time unit, observe `$time` at 16 ns and verify the scaled 1.6 result rounds to 2."
+        ]
+      },
+      "id": "SV-2023-20-TIME-INTEGER-ROUNDING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Observe `$time` at an instant requiring conversion from the global simulation precision."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "From modules with different time units at the same simulation instant, verify `$time` values are scaled to each invoking module's unit."
+        ]
+      },
+      "id": "SV-2023-20-TIME-RETURN-SCALING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use several modules whose smallest ``timescale`` precision is declared outside the formatting scope."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Without an explicit `$timeformat`, verify `%t` uses the smallest source ``timescale`` precision, no fractional digits, no suffix, and a 20-character minimum field."
+        ]
+      },
+      "id": "SV-2023-20-TIMEFORMAT-DEFAULTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Invoke `$timeformat` twice and verify subsequent `%t` conversions use the second settings."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Set a distinctive `$timeformat`, format time through display and file output in another scope, and verify all four settings apply."
+        ]
+      },
+      "id": "SV-2023-20-TIMEFORMAT-GLOBAL-EFFECT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use 2 and -15 as boundary values."
+        ],
+        "negative": [
+          "Diagnose a unit or precision argument outside 2 through -15."
+        ],
+        "notes": [],
+        "positive": [
+          "Use valid endpoint and intermediate unit/precision encodings."
+        ]
+      },
+      "id": "SV-2023-20-TIMEFORMAT-NUMERIC-ARGUMENTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the argumentless form without parentheses."
+        ],
+        "negative": [
+          "Reject a `$timeformat` invocation supplying only a subset of the four arguments."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse `$timeformat;` and `$timeformat(-9, 2, \" ns\", 12);`."
+        ]
+      },
+      "id": "SV-2023-20-TIMEFORMAT-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify endpoint encodings 2 for 100 s and -15 for 1 fs."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Query design elements spanning seconds, milliseconds, microseconds, nanoseconds, picoseconds, and femtoseconds and verify each integer encoding."
+        ]
+      },
+      "id": "SV-2023-20-TIMESCALE-RETRIEVAL-ENCODING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a deeply nested hierarchical identifier."
+        ],
+        "negative": [
+          "Reject empty parentheses and invocations with two arguments."
+        ],
+        "notes": [],
+        "positive": [
+          "Use bare `$timeunit` and `$timeprecision(top.u)` with a design-element hierarchy."
+        ]
+      },
+      "id": "SV-2023-20-TIMESCALE-RETRIEVAL-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify `$unit` selects compilation-unit settings and both functions return the simulation time unit for `$root`."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare no-argument results in scopes with distinct time declarations.",
+          "Query a named design element and verify its unit and precision values."
+        ]
+      },
+      "id": "SV-2023-20-TIMESCALE-RETRIEVAL-TARGET"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Declare multiple distinct anonymous types in one scope."
+        ],
+        "negative": [],
+        "notes": [
+          "Do not require a particular implementation-generated identity beyond the mandated generated-name presence."
+        ],
+        "positive": [
+          "Query anonymous struct, union, and enum types and verify each result includes a system-generated type name."
+        ]
+      },
+      "id": "SV-2023-20-TYPENAME-ANONYMOUS-AGGREGATE-NAMES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multiple unpacked dimensions on the anonymous array."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Query an anonymous unpacked array type and verify `$` occupies its name position."
+        ]
+      },
+      "id": "SV-2023-20-TYPENAME-ANONYMOUS-ARRAY-PLACEHOLDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use negative and expression-derived constant bounds."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Query arrays whose source bounds use sized literals and verify unsized decimal bounds in the result."
+        ]
+      },
+      "id": "SV-2023-20-TYPENAME-ARRAY-RANGE-FORMAT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast a disallowed dynamic-object element with an allowed local static aggregate element."
+        ],
+        "negative": [
+          "Diagnose elaboration-time constant uses containing a hierarchy reference or dynamic-array element reference."
+        ],
+        "notes": [],
+        "positive": [
+          "Use `$typename` of a local static expression as a parameter string."
+        ]
+      },
+      "id": "SV-2023-20-TYPENAME-CONSTANT-EXPRESSION-REFERENCES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast default signing with a nondefault signing that must remain distinguishable."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare explicitly written default signing with omitted default signing and verify identical result strings."
+        ]
+      },
+      "id": "SV-2023-20-TYPENAME-DEFAULT-SIGNING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a nonconsecutive explicit enum value."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Query an enum with implicit and explicit values and verify each named constant carries its encoded value."
+        ]
+      },
+      "id": "SV-2023-20-TYPENAME-ENUM-ENCODINGS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an expression whose self-determined type differs from a surrounding context-determined type."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Apply `$typename` to an expression with an observable side effect and verify the side effect is not executed."
+        ]
+      },
+      "id": "SV-2023-20-TYPENAME-EXPRESSION-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Repeat for multiple predefined widths."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare a predefined-width integral type with an equal-width explicitly ranged bit vector and verify distinct strings."
+        ]
+      },
+      "id": "SV-2023-20-TYPENAME-PREDEFINED-WIDTH-DISTINCTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare expression and direct data-type arguments having the same resolved type."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Query a built-in type and verify the returned string identifies that resolved built-in type."
+        ]
+      },
+      "id": "SV-2023-20-TYPENAME-RESOLVED-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Query an imported package type from outside its defining package."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Define same-spelled types in two packages or scopes and verify each result carries its defining namespace."
+        ]
+      },
+      "id": "SV-2023-20-TYPENAME-SCOPE-QUALIFICATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a parameterized user-defined data type argument."
+        ],
+        "negative": [
+          "Reject `$typename()` and an invocation with multiple arguments."
+        ],
+        "notes": [],
+        "positive": [
+          "Invoke `$typename` on a variable expression and directly on a data type."
+        ]
+      },
+      "id": "SV-2023-20-TYPENAME-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Chain multiple equivalent typedefs before querying the type."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare `$typename` for an equivalent typedef and its underlying type and verify identical resolved strings."
+        ]
+      },
+      "id": "SV-2023-20-TYPENAME-TYPEDEF-RESOLUTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use adjacent identifiers/keywords that require exactly one separating space."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare equivalent types with varied source whitespace and verify identical canonical strings."
+        ]
+      },
+      "id": "SV-2023-20-TYPENAME-WHITESPACE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Invoke with and without user message arguments."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Invoke `$warning` and verify warning severity."
+        ]
+      },
+      "id": "SV-2023-20-WARNING-TASK-BEHAVIOR"
+    }
+  ],
+  "schema_version": 1
+}

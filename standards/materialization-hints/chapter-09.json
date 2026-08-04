@@ -1,0 +1,2312 @@
+{
+  "authority": "1800-2023",
+  "part": "9",
+  "requirements": [
+    {
+      "hints": {
+        "edge": [
+          "Compare disjoint and overlapping packed or unpacked selections using longest static prefixes."
+        ],
+        "negative": [
+          "Write the same variable from an always_comb procedure and another process.",
+          "Write overlapping static-prefix selections from separate processes.",
+          "Call a function that writes a variable also written by another process."
+        ],
+        "notes": [],
+        "positive": [
+          "Have one always_comb procedure write one array element and another process write a distinct nonoverlapping element.",
+          "Call a task that writes a variable also written elsewhere."
+        ]
+      },
+      "id": "SV-2023-09-ALWAYS-COMB-EXCLUSIVE-WRITERS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare a zero-time task or function call with a task call that can suspend."
+        ],
+        "negative": [
+          "Call a task that blocks execution."
+        ],
+        "notes": [],
+        "positive": [
+          "Use assignments and function calls that complete without suspending execution."
+        ]
+      },
+      "id": "SV-2023-09-ALWAYS-COMB-NO-BLOCKING-STATEMENTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Put the prohibited control in a nested statement."
+        ],
+        "negative": [
+          "Place a delay or blocking event control in the procedure."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a timing-control-free procedure body."
+        ]
+      },
+      "id": "SV-2023-09-ALWAYS-COMB-NO-BLOCKING-TIMING-CONTROLS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Try each fork join variant where grammar permits."
+        ],
+        "negative": [
+          "Place a fork-join block in the procedure."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a sequential begin-end block."
+        ]
+      },
+      "id": "SV-2023-09-ALWAYS-COMB-NO-FORK-JOIN"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare a value in the assertion condition with one used only in its action block."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Change a value used only in an immediate assertion condition and observe reevaluation."
+        ]
+      },
+      "id": "SV-2023-09-ALWAYS-COMB-SENSITIVITY-IMMEDIATE-ASSERTIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a local declared inside a called function."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use a block-local temporary in an expression and verify external operands, not the local itself, control reevaluation."
+        ]
+      },
+      "id": "SV-2023-09-ALWAYS-COMB-SENSITIVITY-LOCAL-EXCLUSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare a static class-scope function call with an object method call."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Read a package function input internally and observe reevaluation when it changes.",
+          "Pass a changing expression as an object-method argument and observe reevaluation."
+        ]
+      },
+      "id": "SV-2023-09-ALWAYS-COMB-SENSITIVITY-METHOD-CALLS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare static and dynamic selects."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Read a selected aggregate element in always_comb and change a value covered by its longest static prefix.",
+          "Read a value inside a called function and change it."
+        ]
+      },
+      "id": "SV-2023-09-ALWAYS-COMB-SENSITIVITY-READS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Pass an expression that also depends on a value read inside the task."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Call a task with a changing argument expression and observe reevaluation.",
+          "Change a value read only inside the task and observe that it does not itself trigger reevaluation."
+        ]
+      },
+      "id": "SV-2023-09-ALWAYS-COMB-SENSITIVITY-TASK-CALLS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Also read the same identifier in an ordinary expression, making it sensitivity-relevant."
+        ],
+        "negative": [],
+        "notes": [
+          "Other restrictions may make timing controls in always_comb diagnostically relevant; isolate sensitivity semantics carefully."
+        ],
+        "positive": [
+          "Reference an identifier only in a timing-control expression within always_comb and vary it."
+        ]
+      },
+      "id": "SV-2023-09-ALWAYS-COMB-SENSITIVITY-TIMING-EXCLUSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Read and write the variable inside a called function."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Read and write the same variable in an always_comb block and distinguish changes to that variable from changes to another read-only input."
+        ]
+      },
+      "id": "SV-2023-09-ALWAYS-COMB-SENSITIVITY-WRITTEN-EXCLUSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call a task whose body completes without timing controls and distinguish task-call legality from sensitivity to values read inside it."
+        ],
+        "negative": [],
+        "notes": [
+          "A task call that blocks execution is separately prohibited; isolate call legality with a zero-time task."
+        ],
+        "positive": [
+          "Call a zero-time task from an always_comb or always_latch procedure."
+        ]
+      },
+      "id": "SV-2023-09-ALWAYS-COMB-TASK-CALLS-PERMITTED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Coordinate an initial procedure and always_comb to observe the required startup ordering without relying on an active-region race."
+        ],
+        "negative": [],
+        "notes": [
+          "Avoid race-dependent ordering within a scheduling region."
+        ],
+        "positive": [
+          "Use initialized inputs that never change and observe the always_comb output computed at time zero."
+        ]
+      },
+      "id": "SV-2023-09-ALWAYS-COMB-TIME-ZERO-TRIGGER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an empty begin-end statement as the required statement."
+        ],
+        "negative": [
+          "An always-family keyword followed only by a semicolon."
+        ],
+        "notes": [],
+        "positive": [
+          "One construct using each of the four always-family keywords with a valid statement."
+        ]
+      },
+      "id": "SV-2023-09-ALWAYS-CONSTRUCT-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place the prohibited control in a nested statement."
+        ],
+        "negative": [
+          "Add a delay or blocking event control inside always_ff."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a single event control followed by timing-control-free statements."
+        ]
+      },
+      "id": "SV-2023-09-ALWAYS-FF-NO-BLOCKING-TIMING-CONTROLS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use one event expression containing multiple event terms."
+        ],
+        "negative": [
+          "Use no event control.",
+          "Use a second event control in the body."
+        ],
+        "notes": [],
+        "positive": [
+          "Use one edge-sensitive event control in always_ff."
+        ]
+      },
+      "id": "SV-2023-09-ALWAYS-FF-ONE-EVENT-CONTROL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Terminate immediately after a known iteration count."
+        ],
+        "negative": [],
+        "notes": [
+          "Include a blocking timing control to avoid a zero-time infinite loop."
+        ],
+        "positive": [
+          "Use a delayed always procedure and observe multiple iterations before termination."
+        ]
+      },
+      "id": "SV-2023-09-ALWAYS-REPEATS-UNTIL-TERMINATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Leave a blocked process with no possible future wakeup and determine whether any activity remains under scheduler rules."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Allow all processes and scheduled activity to finish without calling $finish and verify simulation terminates."
+        ]
+      },
+      "id": "SV-2023-09-AUTOMATIC-SIMULATION-TERMINATION-NO-ACTIVITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Check each parallel-block join variant."
+        ],
+        "negative": [
+          "Use different names at the opening and closing delimiters."
+        ],
+        "notes": [],
+        "positive": [
+          "Use matching opening and closing names, or omit the closing name."
+        ]
+      },
+      "id": "SV-2023-09-BLOCK-END-NAME-MUST-MATCH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare the finish conditions of join, join_any, and join_none."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Place an observable statement after a delayed begin-end or fork-join block and verify it runs only after block completion."
+        ]
+      },
+      "id": "SV-2023-09-BLOCK-FINISH-BEFORE-FOLLOWING-STATEMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Test both sequential and parallel blocks."
+        ],
+        "negative": [
+          "Specify both naming forms on one block."
+        ],
+        "notes": [],
+        "positive": [
+          "Use either a leading label or an opening block name, but not both."
+        ]
+      },
+      "id": "SV-2023-09-BLOCK-LABEL-AND-OPENING-NAME-MUTUALLY-EXCLUSIVE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Apply the rule with join, join_any, and join_none."
+        ],
+        "negative": [
+          "Use a nonmatching closing name."
+        ],
+        "notes": [],
+        "positive": [
+          "Label a begin-end or fork-join block and use a matching closing name."
+        ]
+      },
+      "id": "SV-2023-09-BLOCK-LABEL-EQUIVALENT-TO-BLOCK-NAME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare an explicitly static variable with an automatic variable in a context where both are legal."
+        ],
+        "negative": [],
+        "notes": [
+          "Apply the declaration lifetime rules of Clause 6 when choosing the variable; this anchor explains static storage behavior rather than overriding explicit automatic lifetime."
+        ],
+        "positive": [
+          "Reenter a block containing a static variable and observe its retained value."
+        ]
+      },
+      "id": "SV-2023-09-BLOCK-VARIABLE-STATIC-STORAGE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a repeat event control."
+        ],
+        "negative": [
+          "Omit the RHS expression after the intra-assignment control."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a delay and an event control between = and the RHS expression."
+        ]
+      },
+      "id": "SV-2023-09-BLOCKING-INTRA-ASSIGNMENT-CONTROL-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare raw signal transitions with sampled clocking-block input transitions."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use a clocking input in an event control and correlate triggering with its sampled value."
+        ]
+      },
+      "id": "SV-2023-09-CLOCKING-BLOCK-EVENT-CONTROL-SAMPLED-VALUE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a deeply hierarchical identifier."
+        ],
+        "negative": [
+          "Use an arbitrary nonparenthesized expression after @."
+        ],
+        "notes": [],
+        "positive": [
+          "Use each permitted clocking-event operand form."
+        ]
+      },
+      "id": "SV-2023-09-CLOCKING-EVENT-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare positional and named argument binding."
+        ],
+        "negative": [
+          "Pass the comma event expression positionally without the required grouping parentheses."
+        ],
+        "notes": [],
+        "positive": [
+          "Pass a parenthesized comma event expression as a positional actual argument."
+        ]
+      },
+      "id": "SV-2023-09-COMMA-EVENT-ACTUAL-ARGUMENT-PARENTHESES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare labeling of concurrent and immediate assertions in their legal contexts."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Label a concurrent assertion statement."
+        ]
+      },
+      "id": "SV-2023-09-CONCURRENT-ASSERTION-LABEL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise four-state iff values."
+        ],
+        "negative": [
+          "Cause the source event while the iff condition is false or unknown and verify no trigger."
+        ],
+        "notes": [],
+        "positive": [
+          "Cause the source event with the iff condition true and observe triggering."
+        ]
+      },
+      "id": "SV-2023-09-CONDITIONAL-EVENT-IFF-QUALIFIER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a zero delay value."
+        ],
+        "negative": [
+          "Use an unparenthesized mintypmax triplet after #."
+        ],
+        "notes": [],
+        "positive": [
+          "Use # with a delay value and with a parenthesized mintypmax expression."
+        ]
+      },
+      "id": "SV-2023-09-DELAY-CONTROL-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use repeat(0) with an event control."
+        ],
+        "negative": [
+          "Use repeat(expression) without a following event control."
+        ],
+        "notes": [],
+        "positive": [
+          "Use each of the three grammar alternatives."
+        ]
+      },
+      "id": "SV-2023-09-DELAY-OR-EVENT-CONTROL-FORMS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use activations at different nesting depths."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Enable the same task concurrently more than once, disable it by name, and verify every activation stops."
+        ]
+      },
+      "id": "SV-2023-09-DISABLE-ALL-TASK-ACTIVATIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place the disable in a nested statement within the target."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Self-disable a named block and a task."
+        ]
+      },
+      "id": "SV-2023-09-DISABLE-CONTAINING-SCOPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use descendants under a join_none child that terminates before its own child."
+        ],
+        "negative": [
+          "Keep an unrelated process active and verify it is unaffected."
+        ],
+        "notes": [],
+        "positive": [
+          "Create immediate children, grandchildren, and a surviving grandchild whose parent has ended, then execute disable fork from the ancestor and verify all descendants stop."
+        ]
+      },
+      "id": "SV-2023-09-DISABLE-FORK-PARENT-CHILD-SCOPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a nested named block in the function."
+        ],
+        "negative": [
+          "Attempt to disable the function itself."
+        ],
+        "notes": [],
+        "positive": [
+          "Disable a named block within a function."
+        ]
+      },
+      "id": "SV-2023-09-DISABLE-IN-FUNCTION-TARGETS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Later enter the named block and verify the earlier disable was not pending."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Issue disable against an inactive named block and verify unrelated execution continues."
+        ]
+      },
+      "id": "SV-2023-09-DISABLE-INACTIVE-BLOCK-NO-EFFECT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Disable a labeled deferred assertion before its deferred activity completes."
+        ],
+        "negative": [
+          "Attempt to target either assertion form without a label."
+        ],
+        "notes": [],
+        "positive": [
+          "Disable an active labeled deferred assertion and an active labeled procedural concurrent assertion."
+        ]
+      },
+      "id": "SV-2023-09-DISABLE-LABELED-ASSERTION-TARGET"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Disable a labeled nested statement."
+        ],
+        "negative": [
+          "Attempt to disable an unlabeled single statement by an invented name."
+        ],
+        "notes": [],
+        "positive": [
+          "Disable an active labeled statement and compare with an equivalent named block."
+        ]
+      },
+      "id": "SV-2023-09-DISABLE-LABELED-STATEMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Disable on the final iteration."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Disable a named loop-body block and verify remaining body statements are skipped and the next iteration begins."
+        ]
+      },
+      "id": "SV-2023-09-DISABLE-LOOP-BODY-ACTS-CONTINUE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Include nested activity within the disabled scope."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Disable an active named block from a child and from an unrelated process."
+        ]
+      },
+      "id": "SV-2023-09-DISABLE-NAMED-SCOPE-STOPS-ACTIVITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a deeply hierarchical named-block target."
+        ],
+        "negative": [
+          "Omit the required semicolon or target."
+        ],
+        "notes": [],
+        "positive": [
+          "Use each of the three disable target forms."
+        ]
+      },
+      "id": "SV-2023-09-DISABLE-STATEMENT-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Disable the currently executing named block from within itself."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Disable a named block and a task and observe continuation at each specified following statement."
+        ]
+      },
+      "id": "SV-2023-09-DISABLE-TARGET-AND-RESUMPTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify a task above the disabled task resumes according to disable rules."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Create a three-task enable chain, disable the middle task, and verify it and lower tasks terminate."
+        ]
+      },
+      "id": "SV-2023-09-DISABLE-TASK-DOWNWARD-CHAIN"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Include delayed and event-blocked nested activity."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Spawn nested activity inside a named scope, disable the scope, and verify nested activity stops."
+        ]
+      },
+      "id": "SV-2023-09-DISABLE-TERMINATES-ENABLED-ACTIVITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare otherwise identical methods in a class and an interface class."
+        ],
+        "negative": [
+          "Put a dynamic override specifier on a module-level subroutine.",
+          "Put one on a method in an interface class."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a virtual method in a class."
+        ]
+      },
+      "id": "SV-2023-09-DYNAMIC-OVERRIDE-DECLARATION-SCOPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise X-to-Z and Z-to-X, which are not edges."
+        ],
+        "negative": [
+          "Apply transitions classified as neither posedge nor negedge."
+        ],
+        "notes": [],
+        "positive": [
+          "Verify edge triggers on every posedge and negedge four-state transition."
+        ]
+      },
+      "id": "SV-2023-09-EDGE-DETECTION-UNION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a one-bit expression."
+        ],
+        "negative": [
+          "Change only a non-LSB bit and verify no edge event is detected."
+        ],
+        "notes": [],
+        "positive": [
+          "Change the LSB through a qualifying transition and observe the edge."
+        ]
+      },
+      "id": "SV-2023-09-EDGE-EVENT-USES-LSB"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use edge with a multibit expression."
+        ],
+        "negative": [
+          "Use a different keyword as an edge identifier."
+        ],
+        "notes": [],
+        "positive": [
+          "Use each edge identifier in an event expression."
+        ]
+      },
+      "id": "SV-2023-09-EDGE-IDENTIFIER-KEYWORDS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare virtual and non-virtual object methods."
+        ],
+        "negative": [
+          "Call a task in an event-control expression.",
+          "Use a method returning an aggregate result."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a non-virtual method and an aggregate built-in function returning a singular value."
+        ]
+      },
+      "id": "SV-2023-09-EVENT-CONTROL-FUNCTION-CALLS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an expression transition that does not satisfy an added edge qualifier."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Synchronize statements separately to each supported event source."
+        ]
+      },
+      "id": "SV-2023-09-EVENT-CONTROL-SYNCHRONIZATION-SOURCES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare the two wildcard spellings."
+        ],
+        "negative": [
+          "Use @ without an identifier, wildcard, or parenthesized event expression."
+        ],
+        "notes": [],
+        "positive": [
+          "Use @*, @(*), and a clocking event."
+        ]
+      },
+      "id": "SV-2023-09-EVENT-CONTROL-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Apply a reduction to an aggregate-derived expression."
+        ],
+        "negative": [
+          "Use a complete aggregate as the event expression without reducing it to a singular value."
+        ],
+        "notes": [],
+        "positive": [
+          "Use an aggregate element or object member in an expression whose result is integral or another singular type."
+        ]
+      },
+      "id": "SV-2023-09-EVENT-EXPRESSION-SINGULAR-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Nest combined event expressions."
+        ],
+        "negative": [
+          "Put iff before the triggering expression."
+        ],
+        "notes": [],
+        "positive": [
+          "Exercise plain, posedge, negedge, edge, iff, sequence-instance, or, comma, and parenthesized forms."
+        ]
+      },
+      "id": "SV-2023-09-EVENT-EXPRESSION-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change an unrelated member and distinguish the separately permitted extra reevaluation."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Change a member read by a method, an aggregate element read by a function, and a referenced dynamic array's size."
+        ]
+      },
+      "id": "SV-2023-09-EVENT-FUNCTION-DEPENDENCY-REEVALUATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Combine edge-qualified and unqualified constituent events."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Trigger each member of or-separated, comma-separated, and mixed event lists independently."
+        ]
+      },
+      "id": "SV-2023-09-EVENT-OR-OPERATOR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use logically redundant operands whose individual changes cancel in the result."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Change operands while preserving an expression result and verify no event, then change the result and observe one."
+        ]
+      },
+      "id": "SV-2023-09-EVENT-REQUIRES-EXPRESSION-RESULT-CHANGE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "End simulation at time zero and compare the two observations."
+        ],
+        "negative": [],
+        "notes": [
+          "Requires a PLI-capable test harness."
+        ],
+        "positive": [
+          "Record ordering from a final procedure and an end-of-simulation PLI callback."
+        ]
+      },
+      "id": "SV-2023-09-FINAL-BEFORE-END-OF-SIMULATION-PLI"
+    },
+    {
+      "hints": {
+        "edge": [
+          "A final construct with an empty begin-end block."
+        ],
+        "negative": [
+          "A final construct containing a statement form prohibited in a function."
+        ],
+        "notes": [],
+        "positive": [
+          "A final construct containing a legal function statement."
+        ]
+      },
+      "id": "SV-2023-09-FINAL-CONSTRUCT-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "End simulation at time zero and observe the final procedure."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Set state during simulation and observe it from a final procedure when simulation ends."
+        ]
+      },
+      "id": "SV-2023-09-FINAL-ENABLED-AT-END"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multiple final procedures and verify each executes once."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Increment or report a counter from a final procedure and observe one execution."
+        ]
+      },
+      "id": "SV-2023-09-FINAL-EXECUTES-ONCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a nested block containing only function-legal statements."
+        ],
+        "negative": [
+          "Put a delay, event control, or other function-illegal statement in final."
+        ],
+        "notes": [],
+        "positive": [
+          "Use assignments and function calls legal in a function inside final."
+        ]
+      },
+      "id": "SV-2023-09-FINAL-FUNCTION-STATEMENTS-ZERO-TIME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Run the same elaborated design repeatedly and check that its implementation-chosen order is deterministic."
+        ],
+        "negative": [],
+        "notes": [
+          "Do not require a particular source or hierarchy order."
+        ],
+        "positive": [
+          "Use multiple final procedures that record their sequence and verify sequential, noninterleaved execution."
+        ]
+      },
+      "id": "SV-2023-09-FINAL-SINGLE-PROCESS-SEQUENTIAL-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare the SystemVerilog task and corresponding PLI finish mechanisms."
+        ],
+        "negative": [],
+        "notes": [
+          "PLI variants require a suitable portable integration harness."
+        ],
+        "positive": [
+          "Call $finish within a final procedure and verify a following statement in that same final does not execute."
+        ]
+      },
+      "id": "SV-2023-09-FINISH-WITHIN-FINAL-STOPS-IMMEDIATELY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare one grouped branch with two ungrouped fork statements."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Put two dependent statements in one begin-end fork branch and verify they form one sequential child."
+        ]
+      },
+      "id": "SV-2023-09-FORK-BEGIN-END-SINGLE-CHILD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare a fork-block declaration with a declaration inside a spawned begin-end branch."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "In a loop, initialize an automatic fork-block variable from the loop index and observe a unique value per iteration."
+        ]
+      },
+      "id": "SV-2023-09-FORK-BLOCK-DECLARATION-INITIALIZATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Have the parent terminate immediately after join_none."
+        ],
+        "negative": [],
+        "notes": [
+          "Use race-free synchronization to observe the start constraint."
+        ],
+        "positive": [
+          "With join_none, perform a parent action before it blocks, then verify child actions occur afterward."
+        ]
+      },
+      "id": "SV-2023-09-FORK-CHILD-START-AFTER-PARENT-BLOCKS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use one immediately terminating branch and one delayed branch."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use two branches of unequal duration and verify the parent resumes when the first finishes."
+        ]
+      },
+      "id": "SV-2023-09-FORK-JOIN-ANY-WAITS-ONE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use only immediately completing child processes."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Verify a statement after join_none executes while delayed child branches remain active."
+        ]
+      },
+      "id": "SV-2023-09-FORK-JOIN-NONE-NONBLOCKING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an empty fork-join or a branch that terminates immediately."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use two branches of unequal duration and verify the parent resumes after both finish."
+        ]
+      },
+      "id": "SV-2023-09-FORK-JOIN-WAITS-ALL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Invoke the function from a task and verify the restriction still applies."
+        ],
+        "negative": [
+          "Call process::self().suspend() from a function."
+        ],
+        "notes": [],
+        "positive": [
+          "Have a function suspend a different process where otherwise legal."
+        ]
+      },
+      "id": "SV-2023-09-FUNCTION-CANNOT-SELF-SUSPEND"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare leading-label and post-begin naming forms."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Place a leading label before a generate begin-end block."
+        ]
+      },
+      "id": "SV-2023-09-GENERATE-BLOCK-LEADING-LABEL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Nest named generate blocks."
+        ],
+        "negative": [
+          "Use different opening and closing names on a generate block."
+        ],
+        "notes": [],
+        "positive": [
+          "Use matching names on a generate begin-end block or omit the closing name."
+        ]
+      },
+      "id": "SV-2023-09-GENERATE-END-NAME-MUST-MATCH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Assign null and transition between null and non-null."
+        ],
+        "negative": [
+          "Rewrite the same handle value and verify no event."
+        ],
+        "notes": [],
+        "positive": [
+          "Assign a different object handle or chandle value and observe the event."
+        ]
+      },
+      "id": "SV-2023-09-HANDLE-EVENT-ON-UNEQUAL-WRITE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Make condition and source change in controlled separate scheduling steps."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Change the source while the condition is true, then change only the condition and distinguish the outcomes."
+        ]
+      },
+      "id": "SV-2023-09-IFF-CONDITION-CHANGE-NOT-EVENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use distinct conditions and events to distinguish alternative groupings."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare an unparenthesized mixed iff/or expression with explicit parentheses reflecting iff precedence."
+        ]
+      },
+      "id": "SV-2023-09-IFF-PRECEDENCE-OVER-OR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the same hierarchical identifier in both an lvalue and an ordinary read."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Assign to a hierarchical lvalue while reading a separate input and verify only the read input contributes."
+        ]
+      },
+      "id": "SV-2023-09-IMPLICIT-EVENT-HIERARCHICAL-LVALUE-EXCLUSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an index variable solely to select an assignment lvalue element."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Change a value used in each enumerated context and observe the @*-controlled statement reevaluate."
+        ]
+      },
+      "id": "SV-2023-09-IMPLICIT-EVENT-INCLUDED-USES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a begin-end statement group with intermediate variables."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Change each value read directly or through an expression in the controlled statement and observe reevaluation."
+        ]
+      },
+      "id": "SV-2023-09-IMPLICIT-EVENT-READ-SET"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Also read the timing-control identifier in an ordinary expression."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use one identifier only in a nested timing control and another in an ordinary read; only the latter enters @*."
+        ]
+      },
+      "id": "SV-2023-09-IMPLICIT-EVENT-TIMING-CONTROL-EXCLUSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use procedures whose first action records the current simulation time."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Observe an initial and an always procedure both perform their first action at simulation start."
+        ]
+      },
+      "id": "SV-2023-09-INITIAL-ALWAYS-START-OF-SIMULATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an empty begin-end statement after initial."
+        ],
+        "negative": [
+          "An initial keyword with no statement or semicolon."
+        ],
+        "notes": [],
+        "positive": [
+          "An initial block containing a statement.",
+          "An initial keyword followed by a null statement."
+        ]
+      },
+      "id": "SV-2023-09-INITIAL-CONSTRUCT-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an initial procedure whose statement completes at time zero."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Increment a counter in an initial procedure and observe exactly one increment."
+        ]
+      },
+      "id": "SV-2023-09-INITIAL-EXECUTES-ONCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use zero delay and observe scheduling while retaining encounter-time evaluation."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Change the right-hand source during an intra-assignment delay and verify the earlier captured value is assigned later."
+        ]
+      },
+      "id": "SV-2023-09-INTRA-ASSIGNMENT-TIMING-EVALUATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare join with join_any and join_none under otherwise identical code."
+        ],
+        "negative": [
+          "Directly reference a non-static ref formal in a join_any or join_none child."
+        ],
+        "notes": [],
+        "positive": [
+          "Capture a ref formal in a fork block-item initializer.",
+          "Reference a ref static formal from a join_none child."
+        ]
+      },
+      "id": "SV-2023-09-JOIN-ANY-NONE-REF-ARGUMENT-USE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare a for loop that declares its control variable with one using a previously declared variable."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Label a foreach loop and a for loop with a declared initialization variable, then refer to the resulting named scope."
+        ]
+      },
+      "id": "SV-2023-09-LOOP-LABEL-NAMES-IMPLICIT-BLOCK"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Reference an item in a nested named block."
+        ],
+        "negative": [
+          "Attempt the same access through a nonexistent block scope."
+        ],
+        "notes": [],
+        "positive": [
+          "Hierarchically reference a variable, parameter, and named event declared in a named block."
+        ]
+      },
+      "id": "SV-2023-09-NAMED-BLOCK-HIERARCHICAL-ITEM-ACCESS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Nest two differently named blocks."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Name a begin-end block and a fork-join block and resolve each scope."
+        ]
+      },
+      "id": "SV-2023-09-NAMED-BLOCK-HIERARCHY-SCOPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Disable a nested named block."
+        ],
+        "negative": [
+          "Target an unnamed block by an invented name."
+        ],
+        "notes": [],
+        "positive": [
+          "Target a named active block with disable."
+        ]
+      },
+      "id": "SV-2023-09-NAMED-BLOCK-STATEMENT-REFERENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise the minimum representable signed value."
+        ],
+        "negative": [],
+        "notes": [
+          "Choose time precision and value width so the resulting delay is practical to simulate."
+        ],
+        "positive": [
+          "Use a small negative delay expression and compare its interpreted value with same-width unsigned conversion."
+        ]
+      },
+      "id": "SV-2023-09-NEGATIVE-DELAY-UNSIGNED-CONVERSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Distinguish X-to-0 and Z-to-0 from X-to-Z."
+        ],
+        "negative": [
+          "Exercise transitions not classified as negedge."
+        ],
+        "notes": [],
+        "positive": [
+          "Exercise every listed four-state negedge transition."
+        ]
+      },
+      "id": "SV-2023-09-NEGEDGE-DETECTION-TRANSITIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Have a final procedure observe state before the pending event would update it."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Leave a later scheduled update pending when $finish ends simulation and verify it never executes after finals."
+        ]
+      },
+      "id": "SV-2023-09-NO-EVENTS-AFTER-FINALS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Check all join variants."
+        ],
+        "negative": [
+          "Place label: before a block closing keyword."
+        ],
+        "notes": [],
+        "positive": [
+          "Place an optional matching name after a closer."
+        ]
+      },
+      "id": "SV-2023-09-NO-LABEL-BEFORE-BLOCK-CLOSER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use zero delay."
+        ],
+        "negative": [
+          "Place the timing control after the RHS expression."
+        ],
+        "notes": [],
+        "positive": [
+          "Use nonblocking assignments with and without an intra-assignment delay or event control."
+        ]
+      },
+      "id": "SV-2023-09-NONBLOCKING-INTRA-ASSIGNMENT-CONTROL-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change between X and Z values."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Change a multibit expression result in a non-LSB bit and observe a non-edge event."
+        ]
+      },
+      "id": "SV-2023-09-NONEDGE-EVENT-RESULT-CHANGE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare with a labeled foreach loop's implicit block."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Label an assignment or conditional and resolve the resulting named scope."
+        ]
+      },
+      "id": "SV-2023-09-OTHER-STATEMENT-LABEL-CREATES-NAMED-BLOCK"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use branches with different delays and observe completion order independent of source order."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Start two delayed branches in fork-join and observe delays measured from their common start."
+        ]
+      },
+      "id": "SV-2023-09-PARALLEL-BLOCK-CONCURRENT-START"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Attach attributes to the permitted forms."
+        ],
+        "negative": [
+          "Use a declaration form not admitted as a block item."
+        ],
+        "notes": [],
+        "positive": [
+          "Use each permitted declaration form before parallel statements."
+        ]
+      },
+      "id": "SV-2023-09-PARALLEL-BLOCK-DECLARATION-FORMS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an empty fork-join block."
+        ],
+        "negative": [
+          "End a fork block with end."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse one fork block with each join variant."
+        ]
+      },
+      "id": "SV-2023-09-PARALLEL-BLOCK-DELIMITERS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a parallel block containing only declarations or null statements."
+        ],
+        "negative": [
+          "Place a block item declaration after a parallel statement."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare block-local data before forked statements."
+        ]
+      },
+      "id": "SV-2023-09-PARALLEL-BLOCK-ITEM-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use each join keyword on named blocks."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use a named fork-join block with identifiers at both delimiters.",
+          "Use an unnamed parallel block."
+        ]
+      },
+      "id": "SV-2023-09-PARALLEL-BLOCK-OPTIONAL-IDENTIFIERS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Nest a fork block after a preceding delay and verify branch delays start at nested-block entry."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use parallel branches with different delays and observe each completion time relative to common block entry."
+        ]
+      },
+      "id": "SV-2023-09-PARALLEL-BLOCK-RELATIVE-DELAYS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Distinguish X-to-1 and Z-to-1 from X-to-Z."
+        ],
+        "negative": [
+          "Exercise transitions not classified as posedge."
+        ],
+        "notes": [],
+        "positive": [
+          "Exercise every listed four-state posedge transition."
+        ]
+      },
+      "id": "SV-2023-09-POSEDGE-DETECTION-TRANSITIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use zero delay."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Place a timed assignment after a preceding statement and verify the execution-time difference equals the delay."
+        ]
+      },
+      "id": "SV-2023-09-PROCEDURAL-DELAY-EXECUTION-TIME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Label a null statement."
+        ],
+        "negative": [
+          "Apply this statement-label syntax to a declaration."
+        ],
+        "notes": [],
+        "positive": [
+          "Label several procedural statement forms using name: statement."
+        ]
+      },
+      "id": "SV-2023-09-PROCEDURAL-STATEMENT-LABEL-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare an ordinary delay with a cycle delay."
+        ],
+        "negative": [
+          "Use a timing construct outside these grammar alternatives."
+        ],
+        "notes": [],
+        "positive": [
+          "Use each permitted timing-control category in a legal procedural context."
+        ]
+      },
+      "id": "SV-2023-09-PROCEDURAL-TIMING-CONTROL-FORMS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a null statement after the control."
+        ],
+        "negative": [
+          "Use a procedural timing control without a following statement or null statement."
+        ],
+        "notes": [],
+        "positive": [
+          "Follow a delay or event control with a statement or semicolon."
+        ]
+      },
+      "id": "SV-2023-09-PROCEDURAL-TIMING-CONTROL-STATEMENT-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Pass the current handle through another routine before calling await."
+        ],
+        "negative": [
+          "Call process::self().await()."
+        ],
+        "notes": [],
+        "positive": [
+          "Await a different process."
+        ]
+      },
+      "id": "SV-2023-09-PROCESS-AWAIT-SELF-ERROR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Await an already terminated process."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Await separate normally finishing and killed processes and verify return after termination."
+        ]
+      },
+      "id": "SV-2023-09-PROCESS-AWAIT-TERMINATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Pass process handles through tasks and store them in user objects."
+        ],
+        "negative": [
+          "Call a method with an incompatible argument or return usage."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare process handles and type-check calls to every declared method with correct signatures."
+        ]
+      },
+      "id": "SV-2023-09-PROCESS-CLASS-API"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Attempt indirect extension through an intermediate class where parsing permits."
+        ],
+        "negative": [
+          "Declare a class extending process."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare variables and containers of process handle type without deriving."
+        ]
+      },
+      "id": "SV-2023-09-PROCESS-CLASS-NONEXTENSIBLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a deeply nested fork descendant of an initial procedure."
+        ],
+        "negative": [
+          "Apply the methods to a process originating outside the permitted ancestry."
+        ],
+        "notes": [],
+        "positive": [
+          "Use the methods on handles originating from initial, always, and their fork descendants."
+        ]
+      },
+      "id": "SV-2023-09-PROCESS-CONTROL-METHOD-ORIGIN-RESTRICTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Arrange for a child to be capable of normal completion concurrently with kill()."
+        ],
+        "negative": [],
+        "notes": [
+          "Accept normal termination races permitted during kill()."
+        ],
+        "positive": [
+          "After kill() returns, verify target and descendants are no longer running while accepting FINISHED or KILLED outcomes from races."
+        ]
+      },
+      "id": "SV-2023-09-PROCESS-KILL-COMPLETES-BEFORE-RETURN"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a KILLED target with a surviving descendant."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Retain a finished parent's handle while a descendant survives, call kill(), and verify the descendant terminates."
+        ]
+      },
+      "id": "SV-2023-09-PROCESS-KILL-FINISHED-TARGET-DESCENDANTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Kill a process whose immediate child ended while a grandchild remains."
+        ],
+        "negative": [
+          "Keep an unrelated process alive and verify it is unaffected."
+        ],
+        "notes": [],
+        "positive": [
+          "Kill a process having children and grandchildren and verify all are terminated."
+        ]
+      },
+      "id": "SV-2023-09-PROCESS-KILL-TERMINATES-DESCENDANTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Attempt construction in a declaration initializer."
+        ],
+        "negative": [
+          "Attempt to construct a process object with new."
+        ],
+        "notes": [],
+        "positive": [
+          "Obtain a process handle through self() in a spawned process."
+        ]
+      },
+      "id": "SV-2023-09-PROCESS-OBJECT-INTERNAL-CREATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call resume twice after one successful suspension."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Call resume() on RUNNING, WAITING, FINISHED, and KILLED unsuspended targets and verify no state change caused by the call."
+        ]
+      },
+      "id": "SV-2023-09-PROCESS-RESUME-NONSUSPENDED-NO-EFFECT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Resume in a later scheduling region of the same time step."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Suspend a running design process and a running program process, then verify appropriate current-time-step resumption."
+        ]
+      },
+      "id": "SV-2023-09-PROCESS-RESUME-RUNNING-ORIGIN"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Resume exactly at the original delay expiration time."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "While suspended, make a wait condition true or allow a delay deadline to pass, then resume and observe immediate current-step scheduling."
+        ]
+      },
+      "id": "SV-2023-09-PROCESS-RESUME-SATISFIED-WAIT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Let an event occur only while desensitized, then resume."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Suspend and resume processes blocked on event, wait, and delay controls, then verify renewed sensitivity."
+        ]
+      },
+      "id": "SV-2023-09-PROCESS-RESUME-WAITING-RESENSITIZES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call self() from the initial process and compare with a child handle."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Call self() from distinct spawned processes and verify each receives its own handle."
+        ]
+      },
+      "id": "SV-2023-09-PROCESS-SELF-CURRENT-HANDLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use exhaustive case analysis over the five states."
+        ],
+        "negative": [
+          "Refer to a nonexistent process state enumerator."
+        ],
+        "notes": [],
+        "positive": [
+          "Refer to each process state enumerator and use it with status()."
+        ]
+      },
+      "id": "SV-2023-09-PROCESS-STATE-ENUMERATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare normal termination with kill()."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Allow a child to return normally, retain its handle, and observe FINISHED."
+        ]
+      },
+      "id": "SV-2023-09-PROCESS-STATUS-FINISHED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare with normal FINISHED status."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Force termination through kill() and through disable, then query retained process handles."
+        ]
+      },
+      "id": "SV-2023-09-PROCESS-STATUS-KILLED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Query a process immediately around a state transition using synchronization."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Call status() on handles in several lifecycle states and type-check the result as process::state."
+        ]
+      },
+      "id": "SV-2023-09-PROCESS-STATUS-RETURNS-STATE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Distinguish a process blocked on an event from one executing."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Observe a synchronized child while it is executing nonblocking procedural code."
+        ]
+      },
+      "id": "SV-2023-09-PROCESS-STATUS-RUNNING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Suspend a process that was previously WAITING."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Suspend a live process and observe SUSPENDED before resuming it."
+        ]
+      },
+      "id": "SV-2023-09-PROCESS-STATUS-SUSPENDED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare event-waiting with explicitly suspended."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Block a child on an event or delay and query its status from another process."
+        ]
+      },
+      "id": "SV-2023-09-PROCESS-STATUS-WAITING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Race target termination with suspension and accept termination."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Suspend another live process and verify it is stopped on return.",
+          "Self-suspend from a procedural context that can later be resumed."
+        ]
+      },
+      "id": "SV-2023-09-PROCESS-SUSPEND-TARGET-AND-COMPLETION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call suspend repeatedly on an already suspended process."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Call suspend() on targets in each listed state and verify state and behavior do not change."
+        ]
+      },
+      "id": "SV-2023-09-PROCESS-SUSPEND-TERMINAL-NO-EFFECT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Resume only after the original event has passed."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Suspend processes waiting on each of an event, wait condition, and delay, then satisfy the original wakeup while suspended."
+        ]
+      },
+      "id": "SV-2023-09-PROCESS-SUSPEND-WAITING-DESENSITIZES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use one program block with a join_none child."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Let all program blocks reach their ends while a spawned child remains active and verify automatic termination."
+        ]
+      },
+      "id": "SV-2023-09-PROGRAM-COMPLETION-TERMINATES-SIMULATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use repeat(1)."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use repeat(3) on an event and verify assignment after the third occurrence."
+        ]
+      },
+      "id": "SV-2023-09-REPEAT-EVENT-CONTROL-COUNT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change the count in the same time step after scheduling using race-free ordering."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Schedule with a variable repeat count, then change the variable and verify the original count remains effective."
+        ]
+      },
+      "id": "SV-2023-09-REPEAT-EVENT-COUNT-SAMPLED-ONCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare signed negative and the same bit pattern interpreted unsigned."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Exercise zero, negative, X, and Z repeat counts and compare with the underlying event control without repeat."
+        ]
+      },
+      "id": "SV-2023-09-REPEAT-EVENT-NONPOSITIVE-UNKNOWN-COUNT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare simultaneous and separated occurrences of the same event alternatives."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Cause two distinct constituent edge events at the same simulation time and verify the repeat count advances by two."
+        ]
+      },
+      "id": "SV-2023-09-REPEAT-EVENT-SIMULTANEOUS-CONSTITUENTS-COUNT-SEPARATELY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare return with disable applied to a multiply active task."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Return from one concurrently active task invocation and verify only its executing process terminates."
+        ]
+      },
+      "id": "SV-2023-09-RETURN-FROM-TASK-TERMINATES-CURRENT-PROCESS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Nest return inside a begin-end statement within the fork."
+        ],
+        "negative": [
+          "Place return within a fork branch."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a fork-join block without return in a subroutine."
+        ]
+      },
+      "id": "SV-2023-09-RETURN-ILLEGAL-IN-FORK-JOIN"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the overridden parameter inside a compound expression."
+        ],
+        "negative": [],
+        "notes": [
+          "Requires an SDF-capable test harness."
+        ],
+        "positive": [
+          "Annotate an override for a specify parameter and observe the changed procedural delay."
+        ]
+      },
+      "id": "SV-2023-09-SDF-OVERRIDDEN-DELAY-REEVALUATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Overlap sequence attempts."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use a sequence whose matching attempts begin at multiple times and synchronize to an endpoint."
+        ]
+      },
+      "id": "SV-2023-09-SEQUENCE-EVENT-ASSERT-LIKE-INSTANTIATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use sequences with different start times but the same endpoint condition."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Start a sequence event control and verify the process remains blocked until a successful endpoint."
+        ]
+      },
+      "id": "SV-2023-09-SEQUENCE-EVENT-BLOCK-UNTIL-ENDPOINT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Cause the endpoint at time zero."
+        ],
+        "negative": [],
+        "notes": [
+          "Use race-free scheduling-region observations."
+        ],
+        "positive": [
+          "Coordinate a sequence endpoint and region-aware observations to verify procedural resumption occurs after Observed processing."
+        ]
+      },
+      "id": "SV-2023-09-SEQUENCE-EVENT-RESUME-AFTER-OBSERVED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare otherwise identical static and automatic declarations."
+        ],
+        "negative": [
+          "Pass an automatic variable as the sequence-event argument."
+        ],
+        "notes": [],
+        "positive": [
+          "Pass a static variable as a sequence-event argument."
+        ]
+      },
+      "id": "SV-2023-09-SEQUENCE-EVENT-STATIC-ARGUMENTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Have one sequence endpoint trigger actions in multiple processes."
+        ],
+        "negative": [
+          "Provide a trace that does not match the sequence and verify no action."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a named sequence instance as an event and observe the procedural action on a successful match."
+        ]
+      },
+      "id": "SV-2023-09-SEQUENCE-INSTANCE-EVENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Create multiple delta cycles without advancing simulation time."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Read triggered in multiple later regions of the endpoint time step, then after time advances."
+        ]
+      },
+      "id": "SV-2023-09-SEQUENCE-TRIGGERED-PERSISTS-TIME-STEP"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Reach an endpoint at time zero."
+        ],
+        "negative": [],
+        "notes": [
+          "Use race-free scheduling-region observations."
+        ],
+        "positive": [
+          "Use region-aware synchronization to observe triggered becoming set with sequence endpoint processing."
+        ]
+      },
+      "id": "SV-2023-09-SEQUENCE-TRIGGERED-SET-IN-OBSERVED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use two named sequences ending at different times."
+        ],
+        "negative": [
+          "Query triggered in a time step with no endpoint and observe false."
+        ],
+        "notes": [],
+        "positive": [
+          "Wait on sequence.triggered and observe true after its endpoint."
+        ]
+      },
+      "id": "SV-2023-09-SEQUENCE-TRIGGERED-STATUS-VALUE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Attach an attribute instance to each declaration form."
+        ],
+        "negative": [
+          "Place a declaration form not admitted as a block item."
+        ],
+        "notes": [],
+        "positive": [
+          "Place each permitted declaration form before block statements."
+        ]
+      },
+      "id": "SV-2023-09-SEQUENTIAL-BLOCK-DECLARATION-FORMS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an empty begin-end block."
+        ],
+        "negative": [
+          "Use begin without a matching end."
+        ],
+        "notes": [],
+        "positive": [
+          "Group statements between begin and end."
+        ]
+      },
+      "id": "SV-2023-09-SEQUENTIAL-BLOCK-DELIMITERS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a block containing only declarations or only null statements."
+        ],
+        "negative": [
+          "Place a block item declaration after a procedural statement."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a local variable before statements in a begin-end block."
+        ]
+      },
+      "id": "SV-2023-09-SEQUENTIAL-BLOCK-ITEM-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Provide only the opening optional identifier where otherwise permitted by later name-matching rules."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use a named begin-end block with identifiers at both delimiters.",
+          "Use an unnamed begin-end block."
+        ]
+      },
+      "id": "SV-2023-09-SEQUENTIAL-BLOCK-OPTIONAL-IDENTIFIERS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Mix zero-time statements with a delayed middle statement."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Perform dependent blocking assignments in a begin-end block and observe source-order results."
+        ]
+      },
+      "id": "SV-2023-09-SEQUENTIAL-BLOCK-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Combine a zero delay with nonzero delays."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use successive delayed statements and observe cumulative execution times."
+        ]
+      },
+      "id": "SV-2023-09-SEQUENTIAL-BLOCK-RELATIVE-DELAYS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the parameter in a compound delay expression."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use a specify parameter as a procedural delay."
+        ]
+      },
+      "id": "SV-2023-09-SPECIFY-PARAMETER-DELAY-EXPRESSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Block one always-family procedure while another runs."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Instantiate each always-family form and verify one can wait or trigger independently of the others."
+        ]
+      },
+      "id": "SV-2023-09-THREAD-FOR-ALWAYS-PROCEDURE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Create a dynamic process from another process."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Create multiple dynamic processes and observe independent states and execution."
+        ]
+      },
+      "id": "SV-2023-09-THREAD-FOR-DYNAMIC-PROCESS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Have one initial procedure block while another continues."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Run multiple initial procedures and observe independently schedulable execution."
+        ]
+      },
+      "id": "SV-2023-09-THREAD-FOR-INITIAL-PROCEDURE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Check all three join variants."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use multiple parallel statements with unequal waits and observe independent execution."
+        ]
+      },
+      "id": "SV-2023-09-THREAD-FOR-PARALLEL-STATEMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Generate a count above a tool's common small internal threshold."
+        ],
+        "negative": [],
+        "notes": [
+          "Resource exhaustion is not a language-conformance oracle."
+        ],
+        "positive": [
+          "Compile a module containing many initial and always procedures."
+        ]
+      },
+      "id": "SV-2023-09-UNBOUNDED-INITIAL-ALWAYS-COUNT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a partially unknown multibit delay."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use delay expressions containing X and Z and observe zero-delay execution."
+        ]
+      },
+      "id": "SV-2023-09-UNKNOWN-DELAY-IS-ZERO"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Put a declaration only in a nested block and distinguish the outer block's scope creation."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Place a direct variable declaration in an unnamed block and test lexical scoping."
+        ]
+      },
+      "id": "SV-2023-09-UNNAMED-BLOCK-DECLARATION-SCOPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare otherwise identical named and unnamed blocks."
+        ],
+        "negative": [
+          "Attempt a hierarchical reference to an item declared in an unnamed block."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a declared item lexically within its unnamed block."
+        ]
+      },
+      "id": "SV-2023-09-UNNAMED-BLOCK-NO-HIERARCHICAL-ACCESS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Execute wait fork with no live immediate children."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Spawn immediate children and descendants, then verify wait fork requires immediate-child termination but does not directly wait on descendants."
+        ]
+      },
+      "id": "SV-2023-09-WAIT-FORK-WAITS-FOR-TERMINATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise X and Z condition values before transition to true."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Enter wait while false, then make the condition true and observe continuation.",
+          "Enter wait while already true and observe immediate continuation."
+        ]
+      },
+      "id": "SV-2023-09-WAIT-LEVEL-SENSITIVE-BLOCKING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a null statement after wait(expression)."
+        ],
+        "negative": [
+          "Use wait_order with no hierarchical identifier."
+        ],
+        "notes": [],
+        "positive": [
+          "Use each of the three wait statement forms."
+        ]
+      },
+      "id": "SV-2023-09-WAIT-STATEMENT-SYNTAX"
+    }
+  ],
+  "schema_version": 1
+}

@@ -1,0 +1,2121 @@
+{
+  "authority": "1800-2023",
+  "part": "10",
+  "requirements": [
+    {
+      "hints": {
+        "edge": [
+          "Verify complete recursive coverage of a multidimensional array."
+        ],
+        "negative": [
+          "Leave at least one array element unmatched."
+        ],
+        "notes": [],
+        "positive": [
+          "Cover selected elements explicitly and all remaining elements with default or type keys."
+        ]
+      },
+      "id": "SV-2023-10-ARRAY-PATTERN-COMPLETE-COVERAGE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Combine explicit index, type, and default keys to test precedence."
+        ],
+        "negative": [
+          "Use a default value that is neither directly applicable nor recursively applicable to an unmatched target."
+        ],
+        "notes": [],
+        "positive": [
+          "Set all unmatched scalar elements with a castable default and recursively default nested arrays or structures."
+        ]
+      },
+      "id": "SV-2023-10-ARRAY-PATTERN-DEFAULT-KEY-MATCHING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use signed and unsigned element types."
+        ],
+        "negative": [],
+        "notes": [
+          "Size warnings for valid contextual conversions are not required and must not be the oracle."
+        ],
+        "positive": [
+          "Initialize bit and int arrays from differently sized literal pattern items and verify per-element conversion."
+        ]
+      },
+      "id": "SV-2023-10-ARRAY-PATTERN-ELEMENT-CONTEXT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast with unpacked concatenation flattening of that same array item."
+        ],
+        "negative": [
+          "Use an array-valued item where a scalar element type is required."
+        ],
+        "notes": [],
+        "positive": [
+          "Use pattern items each having exactly the target element type."
+        ]
+      },
+      "id": "SV-2023-10-ARRAY-PATTERN-ELEMENT-EXACT-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Mix index keys with type and default keys."
+        ],
+        "negative": [
+          "Use a value not castable to the indexed element type."
+        ],
+        "notes": [],
+        "positive": [
+          "Set selected array indices with values castable to each element type."
+        ]
+      },
+      "id": "SV-2023-10-ARRAY-PATTERN-INDEX-KEY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use distinct constant expressions that evaluate to the same index."
+        ],
+        "negative": [
+          "Repeat an index key in one pattern."
+        ],
+        "notes": [],
+        "positive": [
+          "Specify each keyed index once."
+        ]
+      },
+      "id": "SV-2023-10-ARRAY-PATTERN-INDEX-UNIQUE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Nest one replication per dimension."
+        ],
+        "negative": [
+          "Use a replication count that does not cover the represented dimension."
+        ],
+        "notes": [],
+        "positive": [
+          "Use one replication for a one-dimensional array and nested replications for each dimension of a multidimensional array."
+        ]
+      },
+      "id": "SV-2023-10-ARRAY-PATTERN-REPLICATION-DIMENSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise braces whose meaning is resolved by the assignment target."
+        ],
+        "negative": [
+          "Use the wrong element count or brace dimensionality."
+        ],
+        "notes": [],
+        "positive": [
+          "Initialize a multidimensional array with matching element count and nested braces."
+        ]
+      },
+      "id": "SV-2023-10-ARRAY-PATTERN-SHAPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Provide multiple matching type keys and observe the last value."
+        ],
+        "negative": [
+          "Supply a matched type-key value not castable to the element type."
+        ],
+        "notes": [],
+        "positive": [
+          "Use type keys across an array of structures and a multidimensional array, with an index key taking precedence."
+        ]
+      },
+      "id": "SV-2023-10-ARRAY-PATTERN-TYPE-KEY-MATCHING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use unsized operands whose expression sizing interacts with target context."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Assign a context-determined expression to targets of different widths and compare results."
+        ]
+      },
+      "id": "SV-2023-10-ASSIGNMENT-CONTEXT-SIZING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an assignment pattern as the left side with a typed right side."
+        ],
+        "negative": [
+          "Use an assignment pattern where neither side supplies a self-determined type."
+        ],
+        "notes": [],
+        "positive": [
+          "Assign a pattern to a typed structure or array so the target determines member correspondence and types."
+        ]
+      },
+      "id": "SV-2023-10-ASSIGNMENT-PATTERN-CONTEXT-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Select fields with different widths or signedness in one pattern."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use a keyed nondefault assignment-pattern item whose expression needs the selected field's type context."
+        ]
+      },
+      "id": "SV-2023-10-ASSIGNMENT-PATTERN-CORRESPONDENCE-CONTEXT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a parameter identifier as the pattern-expression type."
+        ],
+        "negative": [
+          "Use an unsupported key form or omit required apostrophe/braces."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse positional, keyed, default, type-keyed, replicated, and explicitly typed pattern forms."
+        ]
+      },
+      "id": "SV-2023-10-ASSIGNMENT-PATTERN-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a fractional time-unit literal on a continuous assignment."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use explicit ns delays before a blocking assignment, on its right-hand side, on a nonblocking assignment, and on a continuous assignment."
+        ]
+      },
+      "id": "SV-2023-10-ASSIGNMENT-TIME-UNIT-LITERAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Truncate a negative signed value far enough to change the result's sign."
+        ],
+        "negative": [],
+        "notes": [
+          "An implementation may diagnose size mismatch or truncation but is not required to do so; do not use diagnostic presence as the oracle."
+        ],
+        "positive": [
+          "Assign wider signed and unsigned vectors to narrower targets and verify the least-significant target-width bits remain."
+        ]
+      },
+      "id": "SV-2023-10-ASSIGNMENT-TRUNCATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Include unknown bits at the sign position."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Assign narrow positive and negative signed values and a narrow unsigned value to wider targets."
+        ]
+      },
+      "id": "SV-2023-10-ASSIGNMENT-WIDENING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast assignment context with a self-determined expression context."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use a context-sensitive expression in equivalent continuous and procedural assignments and observe target-context conversion."
+        ]
+      },
+      "id": "SV-2023-10-ASSIGNMENTS-ARE-ASSIGNMENT-LIKE-CONTEXTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Assign a whole composite value of the nettype."
+        ],
+        "negative": [
+          "Continuously assign to a member, bit-select, or part-select within its data type."
+        ],
+        "notes": [],
+        "positive": [
+          "Continuously assign a whole atomic user-defined nettype net."
+        ]
+      },
+      "id": "SV-2023-10-ATOMIC-NET-WHOLE-VALUE-DRIVE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise arithmetic, bitwise, logical-shift, and arithmetic-shift compound assignments."
+        ],
+        "negative": [
+          "Use a non-grammar assignment operator or omit the required right-hand expression."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse ordinary blocking, compound, dynamic-array new, class new, and increment/decrement assignment forms."
+        ]
+      },
+      "id": "SV-2023-10-BLOCKING-ASSIGNMENT-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Repeat with a class handle or virtual-interface reference."
+        ],
+        "negative": [],
+        "notes": [
+          "Avoid assuming an evaluation order when no timing control is present; that order is undefined."
+        ],
+        "positive": [
+          "Change an array index across an intra-assignment delay and observe selection at the specified timing-control time."
+        ]
+      },
+      "id": "SV-2023-10-BLOCKING-INTRA-ASSIGNMENT-LVALUE-TIMING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Join the branches after their independently timed effects."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Place a delayed blocking assignment in one fork branch and observe another branch proceed independently."
+        ]
+      },
+      "id": "SV-2023-10-BLOCKING-PARALLEL-FLOW"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an intra-assignment delay and verify the following sequential statement waits for completion."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Assign a value with `=` and consume it in the next sequential statement."
+        ]
+      },
+      "id": "SV-2023-10-BLOCKING-SEQUENTIAL-FLOW"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Specify charge strength on a wire declaration."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a trireg with charge strength."
+        ]
+      },
+      "id": "SV-2023-10-CHARGE-STRENGTH-TRIREG-ONLY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use scalar operands that convert differently under array versus vector interpretation."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use identical brace text with unpacked-array, string, and packed-vector targets and verify context-specific interpretation."
+        ]
+      },
+      "id": "SV-2023-10-CONCAT-BRACE-CONTEXT-RESOLUTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Repeat while reversing source order of the concurrent blocks."
+        ],
+        "negative": [
+          "Require one source block's value when no ordering relation exists."
+        ],
+        "notes": [
+          "The oracle must accept every result permitted by the indeterminate update order and reject values not assigned by either update."
+        ],
+        "positive": [
+          "Run two concurrent blocks that schedule different values to one variable at the same time and accept either assigned final value."
+        ]
+      },
+      "id": "SV-2023-10-CONCURRENT-NBA-INDETERMINATE-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use replication with a constant count and members."
+        ],
+        "negative": [
+          "Include a runtime variable member in a constant assignment pattern."
+        ],
+        "notes": [],
+        "positive": [
+          "Use only parameter and literal members in a constant pattern."
+        ]
+      },
+      "id": "SV-2023-10-CONSTANT-PATTERN-MEMBERS-CONSTANT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change an operand without changing the expression result and confirm no value transition is introduced."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Change a right-hand operand and observe the target update to a differing reevaluated result."
+        ]
+      },
+      "id": "SV-2023-10-CONTINUOUS-ASSIGNMENT-DRIVE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use optional drive strength on a net assignment."
+        ],
+        "negative": [
+          "Omit `assign`, `=`, the expression, or terminating semicolon."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse net and variable continuous assignments, including comma-separated lists and optional delay."
+        ]
+      },
+      "id": "SV-2023-10-CONTINUOUS-ASSIGNMENT-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Create a pulse shorter than the delay and observe cancellation of the pending propagation; also change the source back to the current target value."
+        ],
+        "negative": [],
+        "notes": [
+          "Use transition timing and values as the oracle rather than scheduler internals."
+        ],
+        "positive": [
+          "Create a source pulse longer than the assignment delay and observe both delayed transitions."
+        ]
+      },
+      "id": "SV-2023-10-CONTINUOUS-DELAY-INERTIAL-SCHEDULING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Specify distinct rise, fall, and turn-off delays."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Measure a delayed scalar continuous assignment after source transitions."
+        ]
+      },
+      "id": "SV-2023-10-CONTINUOUS-DELAY-MEANING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast a scalar net with a vector net target."
+        ],
+        "negative": [
+          "Specify a continuous-assignment drive strength for a supply0 net."
+        ],
+        "notes": [],
+        "positive": [
+          "Specify drive strength on a scalar wire continuous assignment."
+        ]
+      },
+      "id": "SV-2023-10-CONTINUOUS-DRIVE-STRENGTH-APPLICABILITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use nested concatenations."
+        ],
+        "negative": [
+          "Include an otherwise illegal target inside the concatenation."
+        ],
+        "notes": [],
+        "positive": [
+          "Assign continuously to a concatenation of net selects."
+        ]
+      },
+      "id": "SV-2023-10-CONTINUOUS-LHS-CONCATENATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a packed-variable bit while respecting single-driver restrictions."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Continuously assign to a constant-selected bit of a vector net."
+        ]
+      },
+      "id": "SV-2023-10-CONTINUOUS-LHS-CONSTANT-BIT-SELECT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use both net and packed-variable vectors."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Assign continuously to a constant part-select."
+        ]
+      },
+      "id": "SV-2023-10-CONTINUOUS-LHS-CONSTANT-PART-SELECT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise a variable target while respecting its detailed driver restrictions."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Continuously assign to scalar and vector net targets."
+        ]
+      },
+      "id": "SV-2023-10-CONTINUOUS-LHS-NET-OR-VARIABLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast with a context where implicit net declarations are disabled."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Continuously assign to an undeclared simple net name where implicit nets are enabled."
+        ]
+      },
+      "id": "SV-2023-10-CONTINUOUS-NET-IMPLICIT-DECLARATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Observe both driven 1 and driven 0 resolution."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Resolve an unstrengthened continuous driver against a weaker explicit driver."
+        ]
+      },
+      "id": "SV-2023-10-CONTINUOUS-STRENGTH-DEFAULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a pair whose 0 and 1 strengths differ so each driven value has a distinct resolution outcome."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Resolve a strengthened continuous driver against another driver for both driven 0 and driven 1."
+        ]
+      },
+      "id": "SV-2023-10-CONTINUOUS-STRENGTH-EFFECT"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Use either ordering of the all-highz pair."
+        ],
+        "notes": [],
+        "positive": [
+          "Use highz1 paired with a non-highz 0-strength."
+        ]
+      },
+      "id": "SV-2023-10-CONTINUOUS-STRENGTH-NOT-BOTH-HIGHZ"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Reverse a pair containing one high-impedance strength."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use equivalent legal strength pairs in both orders."
+        ]
+      },
+      "id": "SV-2023-10-CONTINUOUS-STRENGTH-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise highz1 and highz0 in otherwise legal pairs."
+        ],
+        "negative": [
+          "Use a 0-strength keyword in the 1-strength position or omit one member of the pair."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a legal 1-strength and 0-strength pair and observe resolution for both driven values."
+        ]
+      },
+      "id": "SV-2023-10-CONTINUOUS-STRENGTH-PAIR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the corresponding strength position in a net declaration assignment."
+        ],
+        "negative": [
+          "Place the strength specification after the delay."
+        ],
+        "notes": [],
+        "positive": [
+          "Place a strength pair immediately after `assign` and before a delay."
+        ]
+      },
+      "id": "SV-2023-10-CONTINUOUS-STRENGTH-POSITION-AND-EFFECT"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Continuously assign an undeclared identifier as though it were a variable."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a variable before continuously assigning it."
+        ]
+      },
+      "id": "SV-2023-10-CONTINUOUS-VARIABLE-EXPLICIT-DECLARATION"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Drive the same variable from two continuous assignments or from a continuous assignment and module output."
+        ],
+        "notes": [],
+        "positive": [
+          "Drive a variable from exactly one continuous assignment."
+        ]
+      },
+      "id": "SV-2023-10-CONTINUOUS-VARIABLE-SINGLE-DRIVER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Check output-driven variables as well as continuously assigned variables."
+        ],
+        "negative": [
+          "Add either a declaration initializer or procedural assignment to the driven variable."
+        ],
+        "notes": [],
+        "positive": [
+          "Continuously drive a variable with no initializer or procedural writer."
+        ]
+      },
+      "id": "SV-2023-10-CONTINUOUSLY-DRIVEN-VARIABLE-NO-PROCEDURAL-OR-INITIALIZER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change the former right-hand operands after deassign and observe no continued tracking."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Activate assign and then deassign the same variable."
+        ]
+      },
+      "id": "SV-2023-10-DEASSIGN-ENDS-PROCEDURAL-ASSIGN"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Follow deassign first with an ordinary procedural assignment and then with a new procedural assign."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Deassign a driven variable and observe its last value persist."
+        ]
+      },
+      "id": "SV-2023-10-DEASSIGN-RETAINS-VALUE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Give the other driver its own delay and verify only that driver's delay applies to its changes."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Combine a delayed declaration assignment with another driver and observe no added delay on the other driver."
+        ]
+      },
+      "id": "SV-2023-10-DECLARATION-ASSIGNMENT-DELAY-NOT-NET-DELAY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change multiple bits so individual bit directions differ while the vector transition selects one delay."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use a vector declaration assignment with distinct rise and fall delays and observe delay selection for whole-vector transitions."
+        ]
+      },
+      "id": "SV-2023-10-DECLARATION-ASSIGNMENT-VECTOR-DELAY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise module, interface, and program declarations."
+        ],
+        "negative": [
+          "Context-size the declaration expression as though it were a port connection."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a declaration port expression requiring self-determined sizing."
+        ]
+      },
+      "id": "SV-2023-10-DECLARATION-PORT-EXPRESSION-NOT-ASSIGNMENT-LIKE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast default and explicit keyed entries for the same field type."
+        ],
+        "negative": [
+          "Apply the selected field type as assignment-like context to a default expression."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a default pattern item whose expression would differ if context-sized by each selected field, and verify that field assignment-like context is not applied."
+        ]
+      },
+      "id": "SV-2023-10-DEFAULT-PATTERN-NOT-ASSIGNMENT-LIKE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Mix gate, module-output, and continuous drivers."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Force a multiply driven net, alter underlying drivers, then release and observe the current resolved value immediately."
+        ]
+      },
+      "id": "SV-2023-10-FORCE-NET-OVERRIDE-AND-RELEASE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Force a variable with both continuous and procedural assignments."
+        ],
+        "notes": [],
+        "positive": [
+          "Force a variable having only a permitted single assignment category."
+        ]
+      },
+      "id": "SV-2023-10-FORCE-NO-MIXED-ASSIGNED-VARIABLE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Force a variable bit-select and a select within a user-defined-nettype net."
+        ],
+        "notes": [],
+        "positive": [
+          "Force a whole variable or whole user-defined-nettype net."
+        ]
+      },
+      "id": "SV-2023-10-FORCE-NO-VARIABLE-OR-UDN-SELECT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a concatenation mixing variables, nets, and constant net selects."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Force and release each legal whole target, constant net select, and concatenation form."
+        ]
+      },
+      "id": "SV-2023-10-FORCE-RELEASE-LHS-FORMS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change the underlying driver while force remains active."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Force a variable under each underlying assignment kind and observe the forced expression control it."
+        ]
+      },
+      "id": "SV-2023-10-FORCE-VARIABLE-OVERRIDE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use differing expression and return widths."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Return a context-sensitive expression from a function with an explicit return type."
+        ]
+      },
+      "id": "SV-2023-10-FUNCTION-RETURN-ASSIGNMENT-LIKE-CONTEXT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast with input and output port connections."
+        ],
+        "negative": [
+          "Rely on assignment-like conversion for an incompatible inout or ref connection."
+        ],
+        "notes": [],
+        "positive": [
+          "Connect a type-compatible object to inout and ref ports."
+        ]
+      },
+      "id": "SV-2023-10-INOUT-REF-PORT-CONNECTION-NOT-ASSIGNMENT-LIKE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Give an interconnect net an `= expression` declaration assignment."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare an interconnect net without an initializer."
+        ]
+      },
+      "id": "SV-2023-10-INTERCONNECT-NO-DECLARATION-ASSIGNMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Mix explicit element keys with a default key."
+        ],
+        "negative": [
+          "Omit the apostrophe from an assignment pattern."
+        ],
+        "notes": [],
+        "positive": [
+          "Construct keyed structure and array assignment patterns, including default entries."
+        ]
+      },
+      "id": "SV-2023-10-KEYED-ASSIGNMENT-PATTERN-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a relational `<=` expression as the right-hand side of a nonblocking assignment."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use `<=` both in a comparison expression and in a nonblocking assignment in one module."
+        ]
+      },
+      "id": "SV-2023-10-LESS-EQUAL-CONTEXT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multiple NBA updates before the generated blocking event."
+        ],
+        "negative": [],
+        "notes": [
+          "Choose value observations that distinguish event-region order without relying on implementation tracing."
+        ],
+        "positive": [
+          "Have an NBA update trigger a blocking assignment and observe that blocking event after the scheduled NBA events."
+        ]
+      },
+      "id": "SV-2023-10-NBA-GENERATED-BLOCKING-EVENT-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use equal update times reached through different intra-assignment delays while retaining a determinate execution order."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Execute two same-delay nonblocking assignments to one variable sequentially and observe the second assigned value as the final value."
+        ]
+      },
+      "id": "SV-2023-10-NBA-ORDER-PRESERVATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Schedule several updates from a zero-time loop for distinct future times."
+        ],
+        "negative": [
+          "Treat a later nonblocking assignment as canceling an earlier pending update."
+        ],
+        "notes": [],
+        "positive": [
+          "Schedule alternating values with increasing nonblocking delays and observe every queued transition."
+        ]
+      },
+      "id": "SV-2023-10-NBA-PENDING-UPDATES-NOT-CANCELED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Nest parentheses around a conditional expression."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Place parenthesized, mintypmax, and conditional expressions under a typed assignment-like context and verify each designated nested expression receives that context."
+        ]
+      },
+      "id": "SV-2023-10-NESTED-ASSIGNMENT-LIKE-CONTEXT-PROPAGATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Express equivalent cumulative connectivity with different legal alias decompositions."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Overlap two alias statements and verify nets connected through the overlap share wires."
+        ]
+      },
+      "id": "SV-2023-10-NET-ALIAS-CUMULATIVE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change every driver over time while connectivity remains permanent."
+        ],
+        "negative": [
+          "Attempt to conditionally or procedurally remove established alias connectivity."
+        ],
+        "notes": [],
+        "positive": [
+          "Elaborate aliases and observe shared connectivity throughout simulation."
+        ]
+      },
+      "id": "SV-2023-10-NET-ALIAS-ELABORATION-PERMANENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use differently partitioned concatenations with equal total width."
+        ],
+        "negative": [
+          "Alias net lvalues with different widths."
+        ],
+        "notes": [],
+        "positive": [
+          "Alias equal-width nets and concatenations."
+        ]
+      },
+      "id": "SV-2023-10-NET-ALIAS-EQUAL-SIZE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use three net lvalues in one alias chain."
+        ],
+        "negative": [
+          "Provide fewer than two net lvalues or omit the semicolon."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse two- and multi-member alias chains, selected nets, concatenations, and pattern net lvalues."
+        ]
+      },
+      "id": "SV-2023-10-NET-ALIAS-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use byte-oriented rearrangement that would expose host-endianness dependence."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Alias corresponding bits through differently partitioned packed vectors and verify standard bit order."
+        ]
+      },
+      "id": "SV-2023-10-NET-ALIAS-HOST-INDEPENDENT-OVERLAY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Disable implicit nets and use the same undeclared identifier."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use undeclared alias identifiers where implicit nets are enabled and connect them through automatic port binding."
+        ]
+      },
+      "id": "SV-2023-10-NET-ALIAS-IMPLICIT-NET"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast a local interface net with a hierarchical reference to it."
+        ],
+        "negative": [
+          "Use a variable or hierarchical net reference in an alias statement."
+        ],
+        "notes": [],
+        "positive": [
+          "Alias locally declared net lvalues."
+        ]
+      },
+      "id": "SV-2023-10-NET-ALIAS-NETS-ONLY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use syntactically different statements that duplicate only selected correspondences."
+        ],
+        "negative": [
+          "Repeat all or some of the same bit-to-bit alias correspondence."
+        ],
+        "notes": [],
+        "positive": [
+          "Specify distinct, nonoverlapping alias relationships."
+        ]
+      },
+      "id": "SV-2023-10-NET-ALIAS-NO-DUPLICATE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Create only a partial self-overlap within a three-member alias chain."
+        ],
+        "negative": [
+          "Alias a signal directly to itself or arrange concatenations so some bits map to themselves."
+        ],
+        "notes": [],
+        "positive": [
+          "Alias distinct nets with no same-bit correspondence."
+        ]
+      },
+      "id": "SV-2023-10-NET-ALIAS-NO-SELF"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use aliases in a wrapper alongside an instance."
+        ],
+        "negative": [
+          "Place alias where module instance statements are not allowed."
+        ],
+        "notes": [],
+        "positive": [
+          "Place alias statements in legal module-instance placement contexts."
+        ]
+      },
+      "id": "SV-2023-10-NET-ALIAS-PLACEMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Alias only the least- and most-significant byte slices of a larger bus."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Alias buses with reordered byte slices, drive either side, and observe bidirectional shared resolution."
+        ]
+      },
+      "id": "SV-2023-10-NET-ALIAS-SAME-PHYSICAL-NET"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use two aliased names in different legal net contexts."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use an aliased net in another statement exactly as permitted by its declaration."
+        ]
+      },
+      "id": "SV-2023-10-NET-ALIAS-SYNTACTIC-BEHAVIOR-UNCHANGED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use user-defined nettypes with identical versus distinct declarations."
+        ],
+        "negative": [
+          "Alias wand to wor or another differing net type."
+        ],
+        "notes": [],
+        "positive": [
+          "Alias two wire nets of equal width."
+        ]
+      },
+      "id": "SV-2023-10-NET-ALIAS-TYPE-COMPATIBLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a variable member to trigger the same fatal-error class."
+        ],
+        "negative": [
+          "Create an invalid-width or invalid-type alias and require fatal rejection."
+        ],
+        "notes": [
+          "Do not depend on diagnostic wording."
+        ],
+        "positive": [
+          "Compile a legal alias and continue elaboration."
+        ]
+      },
+      "id": "SV-2023-10-NET-ALIAS-VIOLATION-FATAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Declare multiple nets with separate declaration assignments."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare a wire with `= expression` and observe continuous drive behavior."
+        ]
+      },
+      "id": "SV-2023-10-NET-DECLARATION-ASSIGNMENT-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Attempt a second declaration of the same net with another declaration assignment."
+        ],
+        "notes": [],
+        "positive": [
+          "Give one declaration assignment to a net."
+        ]
+      },
+      "id": "SV-2023-10-NET-DECLARATION-ASSIGNMENT-UNIQUE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multiple drivers."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare `wire #10 w` and observe each external driver change delayed."
+        ]
+      },
+      "id": "SV-2023-10-NET-DELAY-ALL-DRIVERS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Drive conflicting values and observe resolution."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Drive a resolved wire from two continuous assignments and mixed output sources."
+        ]
+      },
+      "id": "SV-2023-10-NET-MULTIPLE-CONTINUOUS-ASSIGNMENTS"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Omit the right-hand expression or use a non-variable target."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse nonblocking assignments with no timing control, a delay, and an event control."
+        ]
+      },
+      "id": "SV-2023-10-NONBLOCKING-ASSIGNMENT-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Repeat with a class handle or virtual-interface reference."
+        ],
+        "negative": [],
+        "notes": [
+          "Do not depend on the undefined relative order of left- and right-side evaluation."
+        ],
+        "positive": [
+          "Schedule an indexed nonblocking assignment and change the index before update; observe the originally evaluated target update."
+        ]
+      },
+      "id": "SV-2023-10-NONBLOCKING-LVALUE-EVALUATION-TIME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast static and automatic lifetime declarations in otherwise identical procedures."
+        ],
+        "negative": [
+          "Target an automatic task-local variable with `<=`."
+        ],
+        "notes": [],
+        "positive": [
+          "Use nonblocking assignment on a static variable."
+        ]
+      },
+      "id": "SV-2023-10-NONBLOCKING-NO-AUTOMATIC-VARIABLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast with a fixed-size array element target."
+        ],
+        "negative": [
+          "Target a dynamic-array element with `<=`."
+        ],
+        "notes": [],
+        "positive": [
+          "Use blocking assignment on a dynamic-array element."
+        ]
+      },
+      "id": "SV-2023-10-NONBLOCKING-NO-DYNAMIC-ARRAY-ELEMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Schedule several independent nonblocking assignments in one time step."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Place a delayed nonblocking assignment before an immediate statement and observe the immediate statement execute before the update."
+        ]
+      },
+      "id": "SV-2023-10-NONBLOCKING-NONBLOCKING-FLOW"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use explicit intra-assignment delays that schedule updates at different times."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Schedule `a <= b` and `b <= a` together and observe a value swap."
+        ]
+      },
+      "id": "SV-2023-10-NONBLOCKING-TWO-STEP-UPDATE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Place one in a module, interface, or program declaration port expression."
+        ],
+        "notes": [],
+        "positive": [
+          "Use an assignment-pattern expression in an ordinary typed assignment."
+        ]
+      },
+      "id": "SV-2023-10-PATTERN-EXPRESSION-NO-DECLARATION-PORT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use members with equal widths but differing signedness where assignment compatible."
+        ],
+        "negative": [
+          "Use a non-bit-stream member, incompatible type, or differing bit count."
+        ],
+        "notes": [],
+        "positive": [
+          "Deconstruct into same-width compatible bit-stream members."
+        ]
+      },
+      "id": "SV-2023-10-PATTERN-LHS-MEMBER-COMPATIBILITY"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Use keyed notation in an untyped pattern target."
+        ],
+        "notes": [],
+        "positive": [
+          "Deconstruct an array with a positional pattern target."
+        ]
+      },
+      "id": "SV-2023-10-PATTERN-LHS-POSITIONAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise module, interface, and program ports."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Exercise context-sensitive values through input and output connections under their applicable port direction/type rules."
+        ]
+      },
+      "id": "SV-2023-10-PORT-CONNECTION-ASSIGNMENT-LIKE-CONTEXT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use members with distinct types to verify positional correspondence."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Initialize arrays and structures with positional assignment patterns and destructure an array with a positional pattern target."
+        ]
+      },
+      "id": "SV-2023-10-POSITIONAL-ASSIGNMENT-PATTERN"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a nested concatenation of whole variables if permitted by the grammar context."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Procedurally assign a whole singular variable and a concatenation of whole variables."
+        ]
+      },
+      "id": "SV-2023-10-PROCEDURAL-ASSIGN-LHS-FORMS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast a concatenation of whole variables with one containing a select."
+        ],
+        "negative": [
+          "Use a bit-select and a part-select as procedural assign targets."
+        ],
+        "notes": [],
+        "positive": [
+          "Procedurally assign the whole variable."
+        ]
+      },
+      "id": "SV-2023-10-PROCEDURAL-ASSIGN-NO-SELECT-LHS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change the procedural-assign expression after the overridden assignment."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Activate procedural assign, execute an ordinary procedural assignment to the same variable, and observe the continuous assigned value remain controlling."
+        ]
+      },
+      "id": "SV-2023-10-PROCEDURAL-ASSIGN-OVERRIDES-PROCEDURAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change operands of both old and new expressions after replacement."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Apply a second procedural assign with a different expression and observe only the new expression control the variable."
+        ]
+      },
+      "id": "SV-2023-10-PROCEDURAL-ASSIGN-REPLACEMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "A later procedural assignment replaces the retained value."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Assign a variable, change the source afterward, and observe retention."
+        ]
+      },
+      "id": "SV-2023-10-PROCEDURAL-ASSIGNMENT-RETENTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Prevent execution from reaching an assignment with a false branch, then trigger it through an event control."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Reach an assignment through a true conditional and observe its effect."
+        ]
+      },
+      "id": "SV-2023-10-PROCEDURAL-ASSIGNMENT-TRIGGER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise both variable and net force/release forms."
+        ],
+        "negative": [
+          "Use deassign on a net lvalue or omit the expression from force assignment syntax."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse each assign/deassign and force/release grammar form with its permitted target category."
+        ]
+      },
+      "id": "SV-2023-10-PROCEDURAL-CONTINUOUS-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a function call whose argument changes in the forced expression."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Force a target to an expression, change each operand separately, and observe the forced value update."
+        ]
+      },
+      "id": "SV-2023-10-PROCEDURAL-CONTINUOUS-REEVALUATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use whole one-dimensional and multidimensional array targets."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Procedurally assign a compatible value to an entire array."
+        ]
+      },
+      "id": "SV-2023-10-PROCEDURAL-LHS-ARRAY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a runtime index."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Procedurally assign a selected array element."
+        ]
+      },
+      "id": "SV-2023-10-PROCEDURAL-LHS-ARRAY-ELEMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Select a boundary slice."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Procedurally assign a compatible value to an unpacked-array slice."
+        ]
+      },
+      "id": "SV-2023-10-PROCEDURAL-LHS-ARRAY-SLICE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use nested concatenations."
+        ],
+        "negative": [
+          "Include an illegal target in the concatenation."
+        ],
+        "notes": [],
+        "positive": [
+          "Assign procedurally to a concatenation of variable selects."
+        ]
+      },
+      "id": "SV-2023-10-PROCEDURAL-LHS-CONCATENATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Select boundary words."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Procedurally assign one word of a memory."
+        ]
+      },
+      "id": "SV-2023-10-PROCEDURAL-LHS-MEMORY-WORD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a variable index for a bit-select."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Assign to bit-, part-, and slice-selects of a packed variable."
+        ]
+      },
+      "id": "SV-2023-10-PROCEDURAL-LHS-PACKED-SELECT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Assign a multidimensional aggregate variable."
+        ],
+        "negative": [
+          "Use a net as a procedural-assignment target."
+        ],
+        "notes": [],
+        "positive": [
+          "Procedurally assign singular and aggregate variables."
+        ]
+      },
+      "id": "SV-2023-10-PROCEDURAL-LHS-VARIABLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise assignment compatibility with aggregate targets."
+        ],
+        "negative": [
+          "Assign an expression disallowed by the target variable type."
+        ],
+        "notes": [],
+        "positive": [
+          "Assign a type-compatible expression to a variable."
+        ]
+      },
+      "id": "SV-2023-10-PROCEDURAL-RHS-TYPE-COMPATIBILITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast ref with input, output, and inout subroutine arguments."
+        ],
+        "negative": [
+          "Rely on assignment-like conversion to make a mismatched ref actual compatible."
+        ],
+        "notes": [],
+        "positive": [
+          "Pass a type-equivalent variable to a ref formal without assignment conversion."
+        ]
+      },
+      "id": "SV-2023-10-REF-ARGUMENT-NOT-ASSIGNMENT-LIKE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise both ordinary continuous and procedural continuous underlying assignments."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Release a forced continuously driven variable and observe its current underlying expression reappear."
+        ]
+      },
+      "id": "SV-2023-10-RELEASE-VARIABLE-REESTABLISHES-CONTINUOUS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change values used by the former force expression after release."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Release a procedurally assigned variable and observe retention until its next procedural assignment."
+        ]
+      },
+      "id": "SV-2023-10-RELEASE-VARIABLE-RETENTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Cast between differing widths and signedness."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Static-cast a context-sensitive expression to a target type and compare with assignment to a variable of that type."
+        ]
+      },
+      "id": "SV-2023-10-STATIC-CAST-ASSIGNMENT-LIKE-CONTEXT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Read a declaration-initialized static class member from the earliest procedural activity."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Read a declaration-initialized static variable in an initial block at time zero."
+        ]
+      },
+      "id": "SV-2023-10-STATIC-INITIALIZATION-BEFORE-PROCEDURES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Combine member, matching type, and default keys for one member."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Combine a default with an explicit member key and observe the member-specific value."
+        ]
+      },
+      "id": "SV-2023-10-STRUCTURE-MEMBER-KEY-PRECEDENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use nested structure members whose nested braces are context-determined."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Assign an untyped braced pattern to an explicitly typed structure."
+        ]
+      },
+      "id": "SV-2023-10-STRUCTURE-PATTERN-BRACE-CONTEXT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify complete recursive coverage of nested structures."
+        ],
+        "negative": [
+          "Leave one member uncovered."
+        ],
+        "notes": [],
+        "positive": [
+          "Explicitly set some members and cover all remaining members with type or default keys."
+        ]
+      },
+      "id": "SV-2023-10-STRUCTURE-PATTERN-COMPLETE-COVERAGE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use members with different widths that can each accept the default value."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Initialize all members of a structure using one default key."
+        ]
+      },
+      "id": "SV-2023-10-STRUCTURE-PATTERN-DEFAULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Combine member, type, and default keys to test precedence and recursion."
+        ],
+        "negative": [
+          "Use an inapplicable, noncastable default for an unmatched member."
+        ],
+        "notes": [],
+        "positive": [
+          "Default unmatched scalar members and recursively default nested structure and array members."
+        ]
+      },
+      "id": "SV-2023-10-STRUCTURE-PATTERN-DEFAULT-MATCHING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare positional and named forms for identical contextual conversion."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Assign differently sized expressions to structure members with distinct declared types."
+        ]
+      },
+      "id": "SV-2023-10-STRUCTURE-PATTERN-MEMBER-CONTEXT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use nested structures with repeated member names."
+        ],
+        "negative": [
+          "Supply a value not castable to the named member type."
+        ],
+        "notes": [],
+        "positive": [
+          "Set a top-level member that shares its name with a nested member and observe only the top-level member selected."
+        ]
+      },
+      "id": "SV-2023-10-STRUCTURE-PATTERN-MEMBER-KEY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use declaration order that differs from alphabetical member order."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Construct the same structure once positionally and once with member-name keys, then deconstruct it."
+        ]
+      },
+      "id": "SV-2023-10-STRUCTURE-PATTERN-POSITIONAL-OR-NAMED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Combine replicated and nonreplicated positional items to exactly cover members."
+        ],
+        "negative": [
+          "Replicate too few or too many values."
+        ],
+        "notes": [],
+        "positive": [
+          "Use replication whose expanded count equals the member count."
+        ]
+      },
+      "id": "SV-2023-10-STRUCTURE-PATTERN-REPLICATION-COUNT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Repeat a type key and observe the last value for otherwise unmatched fields."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use a type key for several matching fields while overriding one by member name."
+        ]
+      },
+      "id": "SV-2023-10-STRUCTURE-PATTERN-TYPE-KEY-MATCHING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use related but distinct integral member types to exercise exact matching rules supplied by following text."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use type keys and a default in one pattern and observe matching members receive type-key values."
+        ]
+      },
+      "id": "SV-2023-10-STRUCTURE-TYPE-KEY-OVERRIDES-DEFAULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use packed actual and formal values whose widths differ."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Exercise context-sensitive values through input, output, and inout arguments under their applicable direction/type rules."
+        ]
+      },
+      "id": "SV-2023-10-SUBROUTINE-ARGUMENT-ASSIGNMENT-LIKE-CONTEXT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use members with differing widths or signedness."
+        ],
+        "negative": [
+          "Supply a value incompatible with the selected tagged member."
+        ],
+        "notes": [],
+        "positive": [
+          "Construct a tagged union with a context-sensitive member expression."
+        ]
+      },
+      "id": "SV-2023-10-TAGGED-UNION-ASSIGNMENT-LIKE-CONTEXT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Override a typed class parameter through class instantiation and class scope resolution."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Pass a context-sensitive value to an explicitly typed parameter declaration and override it at instantiation."
+        ]
+      },
+      "id": "SV-2023-10-TYPED-PARAMETER-ASSIGNMENT-LIKE-CONTEXT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a right-hand untyped pattern whose type is supplied by the target."
+        ],
+        "negative": [
+          "Mismatch a target member width or the self-determined source's total width."
+        ],
+        "notes": [],
+        "positive": [
+          "Deconstruct a typed array with exactly matching member and source widths."
+        ]
+      },
+      "id": "SV-2023-10-TYPED-PATTERN-LHS-COMPATIBILITY"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Use keyed notation in a typed-pattern target."
+        ],
+        "notes": [],
+        "positive": [
+          "Deconstruct an array using a positional typed-pattern target."
+        ]
+      },
+      "id": "SV-2023-10-TYPED-PATTERN-LHS-POSITIONAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Nest typed patterns and cast the resulting value."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Evaluate a typed packed-array pattern and verify its resulting packed value."
+        ]
+      },
+      "id": "SV-2023-10-TYPED-PATTERN-RHS-VALUE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Nest typed packed-array patterns under a size cast."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use a typed assignment-pattern expression as a nested value expression outside an assignment-like context."
+        ]
+      },
+      "id": "SV-2023-10-TYPED-PATTERN-SELF-DETERMINED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an array of user-defined-nettype nets."
+        ],
+        "negative": [
+          "Specify rise/fall delay pairs for that target."
+        ],
+        "notes": [],
+        "positive": [
+          "Apply one delay to a whole user-defined-nettype net."
+        ]
+      },
+      "id": "SV-2023-10-UDN-CONTINUOUS-SINGLE-DELAY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a typed array expression containing strings."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Mix typed array-pattern expressions, unpacked arrays, and scalar elements and verify flattening."
+        ]
+      },
+      "id": "SV-2023-10-UNPACKED-CONCAT-ARRAY-FLATTENING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Assign exactly the maximum size and verify no overflow elements."
+        ],
+        "negative": [],
+        "notes": [
+          "Do not depend on diagnostic wording."
+        ],
+        "positive": [
+          "Assign an oversized concatenation to a bounded queue and verify the retained prefix plus a diagnostic."
+        ]
+      },
+      "id": "SV-2023-10-UNPACKED-CONCAT-BOUNDED-QUEUE-OVERFLOW"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use it as a subroutine input actual, which is assignment-like."
+        ],
+        "negative": [
+          "Use it as a standalone self-determined expression outside assignment-like context."
+        ],
+        "notes": [],
+        "positive": [
+          "Assign an unpacked array concatenation to an array target."
+        ]
+      },
+      "id": "SV-2023-10-UNPACKED-CONCAT-CONTEXT-ONLY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use flattened array items whose combined count exactly matches."
+        ],
+        "negative": [
+          "Provide too few and too many elements."
+        ],
+        "notes": [],
+        "positive": [
+          "Provide exactly the fixed target's element count."
+        ]
+      },
+      "id": "SV-2023-10-UNPACKED-CONCAT-FIXED-SIZE-MATCH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Assign an empty concatenation to a queue or dynamic array."
+        ],
+        "negative": [
+          "Use malformed separators or delimiters."
+        ],
+        "notes": [],
+        "positive": [
+          "Use empty, one-item, and multiple-item unpacked concatenations."
+        ]
+      },
+      "id": "SV-2023-10-UNPACKED-CONCAT-GRAMMAR-EMPTY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Mix typed pattern-expression and unpacked-concatenation subarrays."
+        ],
+        "negative": [
+          "Use an unpacked concatenation as a default pattern value."
+        ],
+        "notes": [],
+        "positive": [
+          "Use unpacked concatenations as explicit positional items in a pattern building a jagged array."
+        ]
+      },
+      "id": "SV-2023-10-UNPACKED-CONCAT-IN-NONDEFAULT-PATTERN-ITEM"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast literal null with a differently typed expression whose runtime value is null."
+        ],
+        "negative": [
+          "Use a non-self-determined item or null for a nonpermitted element type."
+        ],
+        "notes": [],
+        "positive": [
+          "Use null elements for each permitted handle-like target category."
+        ]
+      },
+      "id": "SV-2023-10-UNPACKED-CONCAT-ITEM-LEGALITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast nested braces interpreted as a string or vector concatenation."
+        ],
+        "negative": [
+          "Directly nest an unpacked array concatenation as an item."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a self-determined typed array expression as an item."
+        ]
+      },
+      "id": "SV-2023-10-UNPACKED-CONCAT-NO-DIRECT-NESTING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Include an explicitly typed array expression as an item rather than typing the concatenation itself."
+        ],
+        "negative": [
+          "Use replication, default syntax, or explicit concatenation typing."
+        ],
+        "notes": [],
+        "positive": [
+          "Compose a result from mixed scalar and array items."
+        ]
+      },
+      "id": "SV-2023-10-UNPACKED-CONCAT-NO-REPLICATION-DEFAULT-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast with a packed vector concatenation."
+        ],
+        "negative": [
+          "Use an unpacked concatenation where a self-determined expression is required."
+        ],
+        "notes": [],
+        "positive": [
+          "Use braces under an unpacked-array target that supplies element type."
+        ]
+      },
+      "id": "SV-2023-10-UNPACKED-CONCAT-NOT-SELF-DETERMINED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use array items with descending declared indices."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Concatenate scalar and array items with distinct values and verify result order."
+        ]
+      },
+      "id": "SV-2023-10-UNPACKED-CONCAT-RESULT-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use assignment-compatible items with differing widths."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Mix compatible scalar element items in an unpacked array concatenation."
+        ]
+      },
+      "id": "SV-2023-10-UNPACKED-CONCAT-SINGLE-ELEMENT-ITEM"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a multidimensional target and vary only its slowest-varying dimension kind."
+        ],
+        "negative": [
+          "Target a scalar, packed-only object, or associative array."
+        ],
+        "notes": [],
+        "positive": [
+          "Assign concatenations to fixed unpacked arrays, queues, and dynamic arrays."
+        ]
+      },
+      "id": "SV-2023-10-UNPACKED-CONCAT-TARGET-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use inner braces whose operands make the nested item unambiguously vector or string typed."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Place a string concatenation inside an unpacked concatenation targeting a queue of strings."
+        ]
+      },
+      "id": "SV-2023-10-UNPACKED-CONCAT-VECTOR-STRING-ITEM"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast equivalent-looking wire and logic declaration assignments."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Initialize a logic variable from another value, then change the source and observe no continuous tracking."
+        ]
+      },
+      "id": "SV-2023-10-VARIABLE-DECLARATION-INITIALIZATION-NOT-CONTINUOUS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change operands used by the initializer after initialization."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Initialize a variable in its declaration and observe retention until a later procedural assignment."
+        ]
+      },
+      "id": "SV-2023-10-VARIABLE-INITIALIZATION-RETENTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise transitions involving x and mixed vector bits."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Observe distinct timing for nonzero-to-zero, to-z, and other vector transitions."
+        ]
+      },
+      "id": "SV-2023-10-VECTOR-CONTINUOUS-DELAY-SELECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multiple packed dimensions."
+        ],
+        "negative": [
+          "Use vectored on a scalar net without a packed dimension."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a packed net as vectored or scalared."
+        ]
+      },
+      "id": "SV-2023-10-VECTORED-SCALARED-REQUIRES-PACKED-DIMENSION"
+    }
+  ],
+  "schema_version": 1
+}

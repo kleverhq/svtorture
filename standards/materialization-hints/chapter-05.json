@@ -1,0 +1,1622 @@
+{
+  "authority": "1800-2023",
+  "part": "5",
+  "requirements": [
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Use a nonconstant member expression while requiring array-literal status."
+        ],
+        "notes": [],
+        "positive": [
+          "Use constant expressions as array-literal members."
+        ]
+      },
+      "id": "SV-2023-05-ARRAY-LITERAL-CONSTANT-MEMBERS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a one-element dimension."
+        ],
+        "negative": [
+          "Flatten multidimensional elements into one brace level."
+        ],
+        "notes": [],
+        "positive": [
+          "Initialize a multidimensional array with one assignment-pattern level per dimension."
+        ]
+      },
+      "id": "SV-2023-05-ARRAY-LITERAL-DIMENSION-BRACES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Nest a replication count of one."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use nested replication to populate two dimensions."
+        ]
+      },
+      "id": "SV-2023-05-ARRAY-LITERAL-NESTED-REPLICATION"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Use an unprefixed array pattern without a typing context."
+        ],
+        "notes": [],
+        "positive": [
+          "Use explicit type prefix and contextual assignment typing in separate array literals."
+        ]
+      },
+      "id": "SV-2023-05-ARRAY-LITERAL-TYPE-SOURCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a one-element array of a one-member structure."
+        ],
+        "negative": [
+          "Flatten array elements and structure members into one brace level."
+        ],
+        "notes": [],
+        "positive": [
+          "Initialize a two-element array with a nested structure pattern for each element."
+        ]
+      },
+      "id": "SV-2023-05-ARRAY-OF-STRUCTURES-NESTED-BRACES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Replicate a multi-element list once."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare a replicated element list with its explicitly expanded assignment pattern."
+        ]
+      },
+      "id": "SV-2023-05-ARRAY-REPLICATION-BRACE-REMOVAL"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Use one replication as though it directly spans two dimensions."
+        ],
+        "notes": [],
+        "positive": [
+          "Use separate nested replications for separate dimensions."
+        ]
+      },
+      "id": "SV-2023-05-ARRAY-REPLICATION-ONE-DIMENSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Mix valued and valueless specifications in one instance."
+        ],
+        "negative": [
+          "Use a nonidentifier name or a nonconstant value expression."
+        ],
+        "notes": [],
+        "positive": [
+          "Use single and multiple attributes, with and without constant-expression values."
+        ]
+      },
+      "id": "SV-2023-05-ATTRIBUTE-INSTANCE-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Attempt one nesting level."
+        ],
+        "negative": [
+          "Place an attribute instance within the constant expression of another attribute."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a constant attribute value without nested attributes."
+        ]
+      },
+      "id": "SV-2023-05-ATTRIBUTE-NESTING-ILLEGAL"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Insert white space after the apostrophe."
+        ],
+        "notes": [],
+        "positive": [
+          "Keep apostrophe adjacent to b, o, d, or h."
+        ]
+      },
+      "id": "SV-2023-05-BASED-LITERAL-APOSTROPHE-ADJACENCY"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Use an unsupported base letter."
+        ],
+        "notes": [],
+        "positive": [
+          "Exercise each base and uppercase/lowercase signedness and base letters."
+        ]
+      },
+      "id": "SV-2023-05-BASED-LITERAL-BASE-FORMAT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Macro-substitute all three components."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Construct a based literal by macro-substituting its component tokens."
+        ]
+      },
+      "id": "SV-2023-05-BASED-LITERAL-MACRO-TOKENS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Apply unary plus to an unsized based literal."
+        ],
+        "negative": [
+          "Put minus between h and the hexadecimal value."
+        ],
+        "notes": [],
+        "positive": [
+          "Apply unary minus before a sized based literal."
+        ]
+      },
+      "id": "SV-2023-05-BASED-LITERAL-SIGN-POSITION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use size 1."
+        ],
+        "negative": [
+          "Specify zero or a signed size."
+        ],
+        "notes": [],
+        "positive": [
+          "Use an 8-bit size with a two-hex-digit value."
+        ]
+      },
+      "id": "SV-2023-05-BASED-LITERAL-SIZE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Omit the base format or value digits."
+        ],
+        "notes": [],
+        "positive": [
+          "Use sized and unsized based literals."
+        ]
+      },
+      "id": "SV-2023-05-BASED-LITERAL-TOKEN-FORM"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place the value immediately after the base format with no white space."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Separate a based literal's base format and value token with white space."
+        ]
+      },
+      "id": "SV-2023-05-BASED-LITERAL-VALUE-POSITION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use x, z, or ? where the selected base permits those digits."
+        ],
+        "negative": [
+          "Use an out-of-range digit for binary or octal."
+        ],
+        "notes": [],
+        "positive": [
+          "Use legal value digits under binary, octal, decimal, and hexadecimal bases."
+        ]
+      },
+      "id": "SV-2023-05-BASED-LITERAL-VALUE-TOKEN"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use one special digit as the entire based value."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Observe x and z digits in binary, octal, and hexadecimal literals."
+        ]
+      },
+      "id": "SV-2023-05-BASED-X-Z-DIGIT-EXPANSION"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Place both intended operands on the same side of a binary operator."
+        ],
+        "notes": [],
+        "positive": [
+          "Form an expression with an operator between two primary expressions."
+        ]
+      },
+      "id": "SV-2023-05-BINARY-OPERATOR-POSITION"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Leave a block comment without its */ terminator."
+        ],
+        "notes": [],
+        "positive": [
+          "Place arbitrary text and newlines between /* and */ before valid source."
+        ]
+      },
+      "id": "SV-2023-05-BLOCK-COMMENT-DELIMITERS"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Attempt to nest /* ... */ within an outer block comment."
+        ],
+        "notes": [],
+        "positive": [
+          "Use sequential, nonoverlapping block comments."
+        ]
+      },
+      "id": "SV-2023-05-BLOCK-COMMENTS-NONNESTING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place */ immediately before the newline ending a one-line comment."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Place /* and */ after //, then put valid source after the terminating newline."
+        ]
+      },
+      "id": "SV-2023-05-BLOCK-MARKERS-IN-LINE-COMMENT-INERT"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Prefix the built-in method name with $ in an intended method call."
+        ],
+        "notes": [],
+        "positive": [
+          "Call a defined built-in method using object.method syntax without $."
+        ]
+      },
+      "id": "SV-2023-05-BUILTIN-METHOD-NO-DOLLAR-PREFIX"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Attempt to register a PLI task as a replacement for a built-in method."
+        ],
+        "notes": [
+          "Requires a controlled PLI integration capable of attempting registration without relying on diagnostic wording."
+        ],
+        "positive": [
+          "Use a standard built-in method with its standardized behavior in a PLI-enabled environment."
+        ]
+      },
+      "id": "SV-2023-05-BUILTIN-METHOD-NOT-PLI-REDEFINABLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place // immediately before the active */ block-comment terminator."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Place // and following text inside a block comment, followed by valid source after */."
+        ]
+      },
+      "id": "SV-2023-05-COMMENT-MARKERS-INERT"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Attempt the directive name without its grave-accent introducer."
+        ],
+        "notes": [],
+        "positive": [
+          "Invoke a standard compiler directive with a grave accent immediately before its name."
+        ]
+      },
+      "id": "SV-2023-05-COMPILER-DIRECTIVE-INTRODUCER"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Omit either conditional-operator character or one of the three operands."
+        ],
+        "notes": [],
+        "positive": [
+          "Use condition ? true_expression : false_expression."
+        ]
+      },
+      "id": "SV-2023-05-CONDITIONAL-OPERATOR-SHAPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use ? as the sole decimal value digit and observe z semantics."
+        ],
+        "negative": [
+          "Mix a decimal digit with x, z, or ? in a decimal value token."
+        ],
+        "notes": [],
+        "positive": [
+          "Use sized decimal 'dx and 'dz single-digit values."
+        ]
+      },
+      "id": "SV-2023-05-DECIMAL-X-Z-DIGIT-RESTRICTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Supersede the directive in the later file and observe the replacement behavior."
+        ],
+        "negative": [],
+        "notes": [
+          "Materialization must control which files belong to one compilation unit."
+        ],
+        "positive": [
+          "Apply a stateful directive in one file and observe its effect in a later file of the same compilation unit."
+        ]
+      },
+      "id": "SV-2023-05-DIRECTIVE-COMPILATION-UNIT-SCOPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast otherwise identical source immediately before and after a state-changing directive."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Place source affected by a directive immediately after that directive."
+        ]
+      },
+      "id": "SV-2023-05-DIRECTIVE-EFFECT-IMMEDIATE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the same identifier text in both units under differing directive state."
+        ],
+        "negative": [],
+        "notes": [
+          "Materialization must establish separate compilation units rather than merely separate files."
+        ],
+        "positive": [
+          "Compile two controlled compilation units and verify a stateful directive in the first does not alter the second."
+        ]
+      },
+      "id": "SV-2023-05-DIRECTIVE-NO-CROSS-UNIT-EFFECT"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Call a defined dollar-prefixed system task."
+        ]
+      },
+      "id": "SV-2023-05-DOLLAR-NAME-SYSTEM-TF"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Use only two backslashes while expecting line continuation."
+        ],
+        "notes": [],
+        "positive": [
+          "Use three backslashes before newline to retain one backslash and continue the string."
+        ]
+      },
+      "id": "SV-2023-05-DOUBLE-BACKSLASH-BEFORE-NEWLINE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Duplicate a valueless and valued specification in each order."
+        ],
+        "negative": [],
+        "notes": [
+          "A duplicate warning is permitted but not required; do not depend on it.",
+          "Materialization requires the standardized VPI attribute access described in 37.83."
+        ],
+        "positive": [
+          "Attach duplicate names with distinct values and inspect the effective attribute value through the standardized VPI attribute interface."
+        ]
+      },
+      "id": "SV-2023-05-DUPLICATE-ATTRIBUTE-LAST-WINS"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Reference one escaped name using different terminating white-space characters."
+        ]
+      },
+      "id": "SV-2023-05-ESCAPED-IDENTIFIER-DELIMITERS-EXCLUDED"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Leave an escaped name unterminated."
+        ],
+        "notes": [],
+        "positive": [
+          "Use punctuation in a white-space-terminated escaped name."
+        ]
+      },
+      "id": "SV-2023-05-ESCAPED-IDENTIFIER-FORM"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare an escaped active keyword as a name."
+        ]
+      },
+      "id": "SV-2023-05-ESCAPED-KEYWORD-IS-IDENTIFIER"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare cpu3 and reference it as escaped cpu3."
+        ]
+      },
+      "id": "SV-2023-05-ESCAPED-SIMPLE-NAME-EQUIVALENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Keep the terminating white space required for an escaped identifier while varying other layout."
+        ],
+        "negative": [],
+        "notes": [
+          "Do not remove an escaped identifier's required white-space terminator."
+        ],
+        "positive": [
+          "Compare equivalent declarations separated by spaces versus newlines."
+        ]
+      },
+      "id": "SV-2023-05-FREE-FORM-TOKEN-LAYOUT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Mix uppercase and lowercase alphabetic digits within one hexadecimal value."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare otherwise identical hexadecimal literals using lowercase and uppercase alphabetic digits."
+        ]
+      },
+      "id": "SV-2023-05-HEXADECIMAL-DIGITS-CASE-INSENSITIVE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast identifiers whose distinguishing character occurs near position 1024."
+        ],
+        "negative": [],
+        "notes": [
+          "An implementation may support identifiers longer than 1024 characters."
+        ],
+        "positive": [
+          "Declare and reference a 1024-character identifier."
+        ]
+      },
+      "id": "SV-2023-05-IDENTIFIER-LIMIT-MINIMUM"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Differ only the first letter's case."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare and independently reference two identifiers differing only in case."
+        ]
+      },
+      "id": "SV-2023-05-IDENTIFIERS-CASE-SENSITIVE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Omit parentheses in that context despite the method requiring no arguments."
+        ],
+        "notes": [],
+        "positive": [
+          "Use the required empty parentheses for a built-in method in an implicit-variable context."
+        ]
+      },
+      "id": "SV-2023-05-IMPLICIT-VARIABLE-METHOD-PARENTHESES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a one-bit literal and verify range [0:0]."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Query the type, width, and bounds of an explicitly sized integer literal."
+        ]
+      },
+      "id": "SV-2023-05-INTEGER-LITERAL-LOGIC-VECTOR-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a pattern whose most significant bit is 1."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare equal based bit patterns with and without s in a signedness-sensitive expression."
+        ]
+      },
+      "id": "SV-2023-05-INTEGER-LITERAL-SIGNEDNESS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast an active keyword with a longer identifier containing that keyword text."
+        ],
+        "negative": [
+          "Use an active language keyword as a declared name."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a non-keyword simple identifier in a declaration."
+        ]
+      },
+      "id": "SV-2023-05-KEYWORD-NOT-USER-IDENTIFIER"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Use uppercase spelling where grammar requires a keyword."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a case-altered keyword spelling as a legal name."
+        ]
+      },
+      "id": "SV-2023-05-KEYWORDS-LOWERCASE-ONLY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an empty one-line comment consisting of // immediately followed by newline."
+        ],
+        "negative": [
+          "End a source file after // comment text without the required terminating newline."
+        ],
+        "notes": [],
+        "positive": [
+          "Place comment text after // and a declaration after the terminating newline."
+        ]
+      },
+      "id": "SV-2023-05-LINE-COMMENT-DELIMITERS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call a zero-argument method."
+        ],
+        "negative": [
+          "Omit the dot between object and method name."
+        ],
+        "notes": [],
+        "positive": [
+          "Call an object's task and function using object.method(...)."
+        ]
+      },
+      "id": "SV-2023-05-METHOD-DOT-CALL-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast with a method having one required argument."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Call a zero-argument method and an all-defaulted method both with and without empty parentheses."
+        ]
+      },
+      "id": "SV-2023-05-METHOD-OPTIONAL-EMPTY-PARENTHESES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Check -1 at a small explicit width."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Observe the fixed-width bit pattern of a negative integer literal."
+        ]
+      },
+      "id": "SV-2023-05-NEGATIVE-TWOS-COMPLEMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a two-level structure with one member at each level."
+        ],
+        "negative": [
+          "Flatten all nested member values into one assignment-pattern list."
+        ],
+        "notes": [],
+        "positive": [
+          "Initialize nested structures with one brace level per nested aggregate."
+        ]
+      },
+      "id": "SV-2023-05-NESTED-STRUCTURE-LITERAL-BRACES"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Embed a space inside an unsigned number or based value token."
+        ],
+        "notes": [],
+        "positive": [
+          "Use underscores rather than spaces between digits."
+        ]
+      },
+      "id": "SV-2023-05-NUMBER-EMBEDDED-SPACES-ILLEGAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise uppercase and lowercase base letters and x, z, and ? where admitted."
+        ],
+        "negative": [
+          "Use a digit outside the selected base's digit set."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse representative decimal, binary, octal, and hexadecimal literals using their legal digit sets."
+        ]
+      },
+      "id": "SV-2023-05-NUMERIC-LITERAL-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use consecutive and trailing underscores where admitted by the numeric grammar."
+        ],
+        "negative": [
+          "Start a number with underscore."
+        ],
+        "notes": [],
+        "positive": [
+          "Place underscores between and after number digits."
+        ]
+      },
+      "id": "SV-2023-05-NUMERIC-UNDERSCORE-PLACEMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multiple consecutive underscores where legal."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare equal literals with and without embedded underscores."
+        ]
+      },
+      "id": "SV-2023-05-NUMERIC-UNDERSCORES-IGNORED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use identifiers exactly at and one character beyond the implementation-specific limit."
+        ],
+        "negative": [
+          "Use an identifier longer than the implementation-specific limit and require an error."
+        ],
+        "notes": [
+          "Materialization depends on a discoverable implementation-specific limit; no over-limit case exists for an effectively unlimited implementation."
+        ],
+        "positive": []
+      },
+      "id": "SV-2023-05-OVERLIMIT-IDENTIFIER-DIAGNOSTIC"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use ? as the only value digit."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare ? and z in each nondecimal base."
+        ]
+      },
+      "id": "SV-2023-05-QUESTION-MARK-Z-DIGIT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Represent each excluded character with an escape sequence."
+        ],
+        "negative": [
+          "Place a raw double quote or newline before the closing delimiter."
+        ],
+        "notes": [],
+        "positive": [
+          "Use ordinary ASCII characters directly in a quoted string."
+        ]
+      },
+      "id": "SV-2023-05-QUOTED-STRING-ITEMS"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Put an unescaped newline inside a quoted string."
+        ],
+        "notes": [],
+        "positive": [
+          "Continue a quoted string with backslash immediately before newline."
+        ]
+      },
+      "id": "SV-2023-05-QUOTED-STRING-SINGLE-LINE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Try .5, 5., and 5.e2."
+        ],
+        "notes": [],
+        "positive": [
+          "Use 0.5 and 5.0."
+        ]
+      },
+      "id": "SV-2023-05-REAL-DECIMAL-POINT-DIGITS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use uppercase E and a zero exponent."
+        ],
+        "negative": [
+          "Omit the exponent digits or place a sign before e/E."
+        ],
+        "notes": [],
+        "positive": [
+          "Use exponent-form reals with and without fractional part and exponent sign."
+        ]
+      },
+      "id": "SV-2023-05-REAL-EXPONENT-LITERAL-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Check an exponent-form literal with no decimal point."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use type expressions for fixed-point and exponent literals in type-equivalence checks against real."
+        ]
+      },
+      "id": "SV-2023-05-REAL-LITERAL-DEFAULT-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise a value at a binary64 rounding boundary and compare its standardized double-precision bit representation."
+        ],
+        "negative": [],
+        "notes": [
+          "Use IEEE 754 value/bit semantics rather than host-language floating-point formatting."
+        ],
+        "positive": [
+          "Use a literal value whose binary64 representation distinguishes it from shortreal precision."
+        ]
+      },
+      "id": "SV-2023-05-REAL-LITERAL-IEEE-754"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a one-digit literal."
+        ],
+        "negative": [
+          "Include a nondecimal digit."
+        ],
+        "notes": [],
+        "positive": [
+          "Use unsigned, unary-plus, and unary-minus decimal literals."
+        ]
+      },
+      "id": "SV-2023-05-SIMPLE-DECIMAL-LITERAL-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use each allowed continuation character in one identifier."
+        ],
+        "negative": [
+          "Use a digit or dollar sign as the first character of a simple identifier."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare names beginning with a letter and underscore and containing allowed continuation characters."
+        ]
+      },
+      "id": "SV-2023-05-SIMPLE-IDENTIFIER-CHARACTERS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Truncate exactly one high bit."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use 4'hF1 and observe the low four bits."
+        ]
+      },
+      "id": "SV-2023-05-SIZED-LITERAL-LEFT-TRUNCATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an explicit size one bit wider than the supplied value."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Widen based literals whose highest supplied digit expands to x or z."
+        ]
+      },
+      "id": "SV-2023-05-SIZED-LITERAL-X-Z-EXTENSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a value one bit shorter than its size."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Assign 8'b1 and observe 00000001."
+        ]
+      },
+      "id": "SV-2023-05-SIZED-LITERAL-ZERO-EXTENSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a destination one bit wider than the literal."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Assign a short signed negative literal to wider signed and unsigned logic vectors and compare extension bits."
+        ]
+      },
+      "id": "SV-2023-05-SIZED-SIGNED-LITERAL-ASSIGNMENT-EXTENSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Invoke the task among zero-delay operations in one time slot."
+        ],
+        "negative": [],
+        "notes": [
+          "Select a standard task whose other effects do not terminate simulation."
+        ],
+        "positive": [
+          "Measure simulation time immediately before and after a standard system task call."
+        ]
+      },
+      "id": "SV-2023-05-STANDARD-SYSTEM-TASKS-ZERO-TIME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a narrowing cast."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare cast and assignment results for width-matched and mismatched packed and unpacked arrays."
+        ]
+      },
+      "id": "SV-2023-05-STRING-ARRAY-CAST-ASSIGNMENT-RULES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a multi-character string to verify byte order."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare packed values of ordinary characters and equivalent escaped characters."
+        ]
+      },
+      "id": "SV-2023-05-STRING-ASCII-PACKING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a destination width not divisible by eight."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Assign a string literal to equal-width and differing-width packed integral objects."
+        ]
+      },
+      "id": "SV-2023-05-STRING-ASSIGNABLE-TO-INTEGRAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place the continuation between two word characters."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare continued quoted and triple-quoted strings with equivalent uninterrupted content."
+        ]
+      },
+      "id": "SV-2023-05-STRING-BACKSLASH-NEWLINE-IGNORED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place a tab immediately inside a string delimiter."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare string values differing only by an embedded blank or tab."
+        ]
+      },
+      "id": "SV-2023-05-STRING-BLANKS-TABS-SIGNIFICANT"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare the escaped result with the ASCII backslash value."
+        ]
+      },
+      "id": "SV-2023-05-STRING-ESCAPE-BACKSLASH"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Inspect the ASCII byte produced by backslash-a."
+        ]
+      },
+      "id": "SV-2023-05-STRING-ESCAPE-BELL"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use escaped double quote in each string form."
+        ]
+      },
+      "id": "SV-2023-05-STRING-ESCAPE-DOUBLE-QUOTE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Inspect the byte produced by backslash-f."
+        ]
+      },
+      "id": "SV-2023-05-STRING-ESCAPE-FORM-FEED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use minimum and maximum digit counts."
+        ],
+        "negative": [
+          "Use too many digits in an intended numeric escape."
+        ],
+        "notes": [],
+        "positive": [
+          "Exercise direct-character, octal, and hexadecimal escape forms."
+        ]
+      },
+      "id": "SV-2023-05-STRING-ESCAPE-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare backslash-n in both string forms with the expected ASCII newline byte."
+        ]
+      },
+      "id": "SV-2023-05-STRING-ESCAPE-NEWLINE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Inspect the byte produced by backslash-t."
+        ]
+      },
+      "id": "SV-2023-05-STRING-ESCAPE-TAB"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Inspect the byte produced by backslash-v."
+        ]
+      },
+      "id": "SV-2023-05-STRING-ESCAPE-VERTICAL-TAB"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a one-character string with its high ASCII bit set via escape."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use a string literal in an integral expression and inspect its unsigned behavior."
+        ]
+      },
+      "id": "SV-2023-05-STRING-EXPRESSION-INTEGER-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise values 00 and FF."
+        ],
+        "negative": [
+          "Follow a one-digit escape with another hexadecimal digit while intending separate content."
+        ],
+        "notes": [],
+        "positive": [
+          "Use one- and two-digit hexadecimal escapes followed by unambiguous content."
+        ]
+      },
+      "id": "SV-2023-05-STRING-HEX-ESCAPE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Use x or z in its digit positions."
+        ],
+        "notes": [],
+        "positive": [
+          "Use ordinary hexadecimal digits in a hex escape."
+        ]
+      },
+      "id": "SV-2023-05-STRING-HEX-ESCAPE-NO-X-Z"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an empty literal in each form."
+        ],
+        "negative": [
+          "Leave either form without its closing delimiter."
+        ],
+        "notes": [],
+        "positive": [
+          "Use both quoted and triple-quoted string literals."
+        ]
+      },
+      "id": "SV-2023-05-STRING-LITERAL-DELIMITERS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an empty literal in both contexts."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Assign a literal to string and combine a literal with a string-typed operand."
+        ]
+      },
+      "id": "SV-2023-05-STRING-LITERAL-IMPLICIT-CONVERSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Query an empty and a one-character literal."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Query packed widths of literals containing differing character counts."
+        ]
+      },
+      "id": "SV-2023-05-STRING-LITERAL-PACKED-WIDTH"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [
+          "Resource exhaustion is not evidence of a language-defined length limit."
+        ],
+        "positive": [
+          "Compile progressively long string literals beyond common line-length boundaries."
+        ]
+      },
+      "id": "SV-2023-05-STRING-LITERAL-UNBOUNDED-LENGTH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a destination that truncates part of the leftmost character."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Assign a multi-character string to a destination that retains only the rightmost character."
+        ]
+      },
+      "id": "SV-2023-05-STRING-NARROWING-LEFT-TRUNCATE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise values 0 and 377."
+        ],
+        "negative": [
+          "Follow a short octal escape with another octal digit while intending it as separate content."
+        ],
+        "notes": [],
+        "positive": [
+          "Use one-, two-, and three-digit octal escapes with an unambiguous following character."
+        ]
+      },
+      "id": "SV-2023-05-STRING-OCTAL-ESCAPE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Use x or z in the escape's digit positions."
+        ],
+        "notes": [],
+        "positive": [
+          "Use only digits 0 through 7 in an octal escape."
+        ]
+      },
+      "id": "SV-2023-05-STRING-OCTAL-ESCAPE-NO-X-Z"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an array one byte wider than the string."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Assign a string to equal-size, wider, and narrower unpacked byte arrays."
+        ]
+      },
+      "id": "SV-2023-05-STRING-TO-UNPACKED-BYTE-ARRAY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Assign an empty string."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Successively assign shorter and longer literals to one string variable."
+        ]
+      },
+      "id": "SV-2023-05-STRING-VARIABLE-DYNAMIC-RESIZE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a destination one bit wider than the string value."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Assign a one-character string to a wider packed vector and inspect leading zeros."
+        ]
+      },
+      "id": "SV-2023-05-STRING-WIDENING-ZERO-PAD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use constant expressions rather than only literal tokens."
+        ],
+        "negative": [
+          "Attempt to treat a pattern with a nonconstant member expression as a structure literal."
+        ],
+        "notes": [],
+        "positive": [
+          "Use constant member expressions in a structure assignment pattern."
+        ]
+      },
+      "id": "SV-2023-05-STRUCTURE-LITERAL-CONSTANT-MEMBERS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Nest replication within an aggregate member."
+        ],
+        "negative": [
+          "Use a replication count that does not supply the required member count."
+        ],
+        "notes": [],
+        "positive": [
+          "Initialize a three-member structure with a three-fold single-value replication."
+        ]
+      },
+      "id": "SV-2023-05-STRUCTURE-LITERAL-REPLICATION"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Use an untyped structure pattern where no assignment-like context supplies a type."
+        ],
+        "notes": [],
+        "positive": [
+          "Use both an explicitly typed structure literal and one context-typed by assignment."
+        ]
+      },
+      "id": "SV-2023-05-STRUCTURE-LITERAL-TYPE-SOURCE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Use an argument arrangement admitted by no alternative."
+        ],
+        "notes": [
+          "Select a system routine compatible with the form."
+        ],
+        "positive": [
+          "Exercise each parenthesized system-call grammar form."
+        ]
+      },
+      "id": "SV-2023-05-SYSTEM-TF-CALL-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Insert space after $."
+        ],
+        "notes": [],
+        "positive": [
+          "Keep $ adjacent to the name."
+        ]
+      },
+      "id": "SV-2023-05-SYSTEM-TF-DOLLAR-NO-WHITESPACE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Use disallowed punctuation in a system name."
+        ],
+        "notes": [],
+        "positive": [
+          "Use each permitted character in a system name."
+        ]
+      },
+      "id": "SV-2023-05-SYSTEM-TF-IDENTIFIER-CHARACTERS"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Attempt escaped-identifier syntax for a system name."
+        ],
+        "notes": [],
+        "positive": [
+          "Use an ordinary dollar-prefixed system identifier."
+        ]
+      },
+      "id": "SV-2023-05-SYSTEM-TF-IDENTIFIER-NOT-ESCAPED"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Insert white space before the unit."
+        ],
+        "notes": [],
+        "positive": [
+          "Use integer and fixed-point magnitudes with time units."
+        ]
+      },
+      "id": "SV-2023-05-TIME-LITERAL-NO-UNIT-SEPARATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a fractional magnitude requiring scaling."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Evaluate the same time literal under controlled differing current time units."
+        ]
+      },
+      "id": "SV-2023-05-TIME-LITERAL-SCALING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Include one or two consecutive double quotes without closing the literal."
+        ],
+        "negative": [
+          "Use a raw backslash as content."
+        ],
+        "notes": [],
+        "positive": [
+          "Include direct newlines and double quotes in a triple-quoted string."
+        ]
+      },
+      "id": "SV-2023-05-TRIPLE-QUOTED-STRING-ITEMS"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Place a unary operator after its intended operand."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a prefix unary operator on a primary expression."
+        ]
+      },
+      "id": "SV-2023-05-UNARY-OPERATOR-POSITION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Assign '? to a multi-bit destination and observe the same high-impedance fill as 'z."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Assign '0, '1, 'x, and 'z to multi-bit destinations."
+        ]
+      },
+      "id": "SV-2023-05-UNBASED-UNSIZED-FILL-VALUE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare uppercase and lowercase x and z spellings."
+        ],
+        "negative": [
+          "Use a decimal digit other than 0 or 1 after the apostrophe."
+        ],
+        "notes": [],
+        "positive": [
+          "Use each legal unbased-unsized value spelling."
+        ]
+      },
+      "id": "SV-2023-05-UNBASED-UNSIZED-LITERAL-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise uppercase X and Z and the ? spelling."
+        ],
+        "negative": [
+          "Insert white space after the apostrophe."
+        ],
+        "notes": [],
+        "positive": [
+          "Keep the apostrophe adjacent to each legal unbased-unsized value character."
+        ]
+      },
+      "id": "SV-2023-05-UNBASED-UNSIZED-NO-WHITESPACE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise each of 0, 1, x, and z."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Query the width of an unbased unsized literal in a self-determined context."
+        ]
+      },
+      "id": "SV-2023-05-UNBASED-UNSIZED-SELF-WIDTH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use punctuation not assigned a special escape."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare backslash-b with b in otherwise identical strings."
+        ]
+      },
+      "id": "SV-2023-05-UNRECOGNIZED-STRING-ESCAPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a positive signed value just beyond the 32-bit signed range."
+        ],
+        "negative": [],
+        "notes": [
+          "The specified widths are minima; an implementation may use a wider representation."
+        ],
+        "positive": [
+          "Check that small and greater-than-32-bit signed and unsigned unsized literals meet their required minimum widths."
+        ]
+      },
+      "id": "SV-2023-05-UNSIZED-NUMBER-MINIMUM-WIDTH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare x-leading and z-leading extension."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Place an unsized based x-leading or z-leading literal in a wider expression."
+        ]
+      },
+      "id": "SV-2023-05-UNSIZED-X-Z-EXPRESSION-EXTENSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a one-bit expression to contrast with a valueless attribute."
+        ],
+        "negative": [],
+        "notes": [
+          "Materialization requires the standardized VPI attribute interface described in 37.83."
+        ],
+        "positive": [
+          "Use valued attributes with constant expressions of differing types and inspect their types through standardized VPI attribute access."
+        ]
+      },
+      "id": "SV-2023-05-VALUED-ATTRIBUTE-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [
+          "Materialization requires the standardized VPI attribute interface described in 37.83."
+        ],
+        "positive": [
+          "Inspect a valueless attribute through standardized VPI attribute access and verify bit type with value 1."
+        ]
+      },
+      "id": "SV-2023-05-VALUELESS-ATTRIBUTE-DEFAULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "End a source file immediately after a complete token."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Separate declaration tokens with each applicable white-space character."
+        ]
+      },
+      "id": "SV-2023-05-WHITE-SPACE-CHARACTERS"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Remove white space where doing so merges adjacent token text."
+        ],
+        "notes": [],
+        "positive": [
+          "Vary spaces, tabs, and newlines between already separated tokens without changing syntax."
+        ]
+      },
+      "id": "SV-2023-05-WHITE-SPACE-IGNORED"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare values formed with x/X and z/Z spellings."
+        ]
+      },
+      "id": "SV-2023-05-X-Z-DIGITS-CASE-INSENSITIVE"
+    }
+  ],
+  "schema_version": 1
+}

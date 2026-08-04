@@ -1,0 +1,3195 @@
+{
+  "authority": "1800-2023",
+  "part": "23",
+  "requirements": [
+    {
+      "hints": {
+        "edge": [
+          "Map distinct external ports to different slices of one internal array."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Map explicit ANSI ports to an array slice, structure member, concatenation, and assignment-pattern expression."
+        ]
+      },
+      "id": "SV-2023-23-ANSI-EXPLICIT-PORT-EXPRESSIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Declare multiple generic interface ports in one ANSI header."
+        ],
+        "negative": [
+          "Attempt to define a generic interface port through a non-ANSI bare port list plus body declaration."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a generic interface port as interface p in an ANSI header."
+        ]
+      },
+      "id": "SV-2023-23-ANSI-GENERIC-INTERFACE-PORT-ONLY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Follow the import with both a parameter-port list and a port-declaration list."
+        ],
+        "negative": [
+          "End an ANSI module header immediately after a package import without either required following list."
+        ],
+        "notes": [],
+        "positive": [
+          "Follow an ANSI-header package import with a typed port declaration list."
+        ]
+      },
+      "id": "SV-2023-23-ANSI-IMPORT-HEADER-FOLLOWER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an ANSI header with both a parameter-port list and typed directional ports."
+        ],
+        "negative": [
+          "Omit the semicolon after an otherwise complete ANSI module header."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare input and output port characteristics directly in an ANSI module header and terminate it with a semicolon."
+        ]
+      },
+      "id": "SV-2023-23-ANSI-MODULE-HEADER-FORM"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Declare several complete ANSI ports sharing declaration attributes."
+        ],
+        "negative": [
+          "Redeclare an ANSI header port in the module body."
+        ],
+        "notes": [],
+        "positive": [
+          "Fully specify an ANSI port only in the header."
+        ]
+      },
+      "id": "SV-2023-23-ANSI-PORT-COMPLETE-NONREDECLARABLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an empty ANSI port-declaration list and an attributed multi-entry list."
+        ],
+        "negative": [
+          "Place a port declaration outside the required parenthesized ANSI port list."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare ANSI net, variable, interface, and explicitly named directional ports using the respective grammar forms."
+        ]
+      },
+      "id": "SV-2023-23-ANSI-PORT-DECLARATION-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use distinct external names mapped to slices of the same internal object."
+        ],
+        "negative": [
+          "Define two explicitly named ANSI ports with the same external identifier."
+        ],
+        "notes": [],
+        "positive": [
+          "Define ANSI ports with distinct external identifiers."
+        ]
+      },
+      "id": "SV-2023-23-ANSI-UNIQUE-PORT-NAME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Connect a net source to a variable sink through an output port."
+        ],
+        "negative": [
+          "Connect data types that are not assignment compatible where no conversion is permitted."
+        ],
+        "notes": [],
+        "positive": [
+          "Connect assignment-compatible integral, aggregate, and user-defined types through suitable input and output ports."
+        ]
+      },
+      "id": "SV-2023-23-ASSIGNMENT-COMPATIBLE-PORT-DATA"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast an automatic local with a hierarchically accessible object in a static subroutine where otherwise permitted."
+        ],
+        "negative": [
+          "Reference an automatic task or function local through a hierarchical path from outside."
+        ],
+        "notes": [],
+        "positive": [
+          "Access an automatic subroutine object only through legal subroutine-local operations."
+        ]
+      },
+      "id": "SV-2023-23-AUTOMATIC-SUBROUTINE-OBJECT-NO-HIERARCHICAL-ACCESS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a type parameter override and a complex port expression in one bound instantiation."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Bind a parameterized module using named parameter assignments plus explicit, implicit, wildcard, and expression port associations where legal."
+        ]
+      },
+      "id": "SV-2023-23-BIND-COMPLETE-INSTANTIATION-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise mapping for both target-scope selection and bound-instantiation cell elaboration."
+        ],
+        "negative": [
+          "Use the target instance's mapping to choose the bound implementation."
+        ],
+        "notes": [],
+        "positive": [
+          "Use distinguishable bind-associated and target-instance library mappings and verify bound cell selection follows the bind mapping."
+        ]
+      },
+      "id": "SV-2023-23-BIND-CONTROLLING-LIBRARY-MAPPING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Select an arrayed target instance using a constant bit select."
+        ],
+        "negative": [
+          "Use a target category or bound instantiation category not admitted by bind grammar."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse scope-wide, scope-plus-instance-list, and single-hierarchical-instance bind forms with each legal instantiation category."
+        ]
+      },
+      "id": "SV-2023-23-BIND-DIRECTIVE-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a compilation-unit bind targeting a module declared later."
+        ],
+        "negative": [
+          "Place bind inside a procedural block where it is not an admitted placement scope."
+        ],
+        "notes": [],
+        "positive": [
+          "Place equivalent legal bind directives separately in module, interface, and compilation-unit scopes."
+        ]
+      },
+      "id": "SV-2023-23-BIND-DIRECTIVE-PLACEMENT-SCOPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Test both interface-scope and individual interface-instance target forms."
+        ],
+        "negative": [
+          "Bind a module or program instance to an interface target."
+        ],
+        "notes": [],
+        "positive": [
+          "Bind an interface instance and a checker instance to interface targets."
+        ]
+      },
+      "id": "SV-2023-23-BIND-INTERFACE-TARGET-INSTANTIATION-KIND"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use target-local constants in parameter overrides and target-local signals in ports."
+        ],
+        "negative": [
+          "Resolve unqualified bound actuals against the bind directive's containing scope instead of the target."
+        ],
+        "notes": [],
+        "positive": [
+          "Bind from a scope containing shadowing names into a target with its own names and verify bound ports and parameter expressions use target-scope objects."
+        ]
+      },
+      "id": "SV-2023-23-BIND-PORT-EXPRESSIONS-RESOLVE-IN-TARGET"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Select multiple instances from separate hierarchy branches."
+        ],
+        "negative": [
+          "List an instance that is not an instance of the specified target scope."
+        ],
+        "notes": [],
+        "positive": [
+          "Bind without a list and observe insertion into every target-module instance; bind with a list and observe insertion only into selected instances."
+        ]
+      },
+      "id": "SV-2023-23-BIND-SCOPE-INSTANCE-SELECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Create an instance identifier colliding with a module identifier and verify instance-only binding."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Bind to one hierarchical instance and verify sibling instances are unaffected."
+        ]
+      },
+      "id": "SV-2023-23-BIND-SINGLE-INSTANCE-PRECEDENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Bind multiple auxiliary instances to the same target in different source orders."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Reverse two independent bind statements and verify identical bound hierarchy and behavior."
+        ]
+      },
+      "id": "SV-2023-23-BIND-STATEMENT-ORDER-INDEPENDENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use equivalent aliases whose matching status satisfies type-name rules in both scopes."
+        ],
+        "negative": [
+          "Use a type visible in only one scope or same-spelled names denoting different types."
+        ],
+        "notes": [],
+        "positive": [
+          "Import the same package typedef into both scopes and use it for a bound type override."
+        ]
+      },
+      "id": "SV-2023-23-BIND-TYPE-OVERRIDE-NAME-VISIBILITY-MATCH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use consecutive blank positions for an unconnected output and a defaulted input."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Leave an output position blank and verify it is unconnected; leave a defaulted input position blank and verify its default."
+        ]
+      },
+      "id": "SV-2023-23-BLANK-ORDERED-CONNECTION-UNCONNECTED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change the body-local parameter indirectly by overriding a header parameter used in its expression."
+        ],
+        "negative": [
+          "Attempt to directly override a body parameter in a module that has a parameter-port list."
+        ],
+        "notes": [],
+        "positive": [
+          "Override a header parameter while a body parameter derives from it."
+        ]
+      },
+      "id": "SV-2023-23-BODY-PARAMETER-LOCAL-WHEN-HEADER-LIST-EXISTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Target a deeply nested parameter while remaining entirely within bound hierarchy."
+        ],
+        "negative": [
+          "From bound hierarchy, target a parameter in the surrounding target scope or sibling hierarchy."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a defparam inside bound auxiliary hierarchy to target its own descendant."
+        ]
+      },
+      "id": "SV-2023-23-BOUND-HIERARCHY-DEFPARAM-CONFINEMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare a wildcard candidate referenced earlier in target scope with one referenced only by bind."
+        ],
+        "negative": [
+          "Rely on bind to activate an otherwise unreferenced wildcard import candidate or on a $unit-only declaration."
+        ],
+        "notes": [],
+        "positive": [
+          "Use target declarations and explicitly or previously wildcard-imported names in a bound instance."
+        ]
+      },
+      "id": "SV-2023-23-BOUND-INSTANCE-END-OF-TARGET-VISIBILITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Put a bind statement inside a multiply instantiated module such that repeated execution would introduce the same name into one target."
+        ],
+        "negative": [
+          "Use a bound instance name matching an existing target item or another bound instance name."
+        ],
+        "notes": [],
+        "positive": [
+          "Bind multiple auxiliary instances with unique names into a target."
+        ]
+      },
+      "id": "SV-2023-23-BOUND-INSTANCE-NAME-NO-CLASH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Bind different supported categories into separate instances of one target module."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Bind each supported instance category and reference its created instance beneath the target hierarchy."
+        ]
+      },
+      "id": "SV-2023-23-BOUND-INSTANCE-PART-OF-TARGET"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast with a hierarchical parameter of an ordinarily instantiated module where other rules permit constant use."
+        ],
+        "negative": [
+          "Use a hierarchical bound-parameter reference in an external packed range, type description, or generate-if condition."
+        ],
+        "notes": [],
+        "positive": [
+          "Use the bound parameter internally or reference it externally only in a context not requiring a constant expression."
+        ]
+      },
+      "id": "SV-2023-23-BOUND-PARAMETER-NOT-EXTERNAL-CONSTANT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a concatenation consisting solely of net selects."
+        ],
+        "negative": [
+          "Connect a built-in-net inout port to a variable."
+        ],
+        "notes": [],
+        "positive": [
+          "Connect an inout wire to a compatible net and net concatenation, and leave another unconnected."
+        ]
+      },
+      "id": "SV-2023-23-BUILTIN-NET-INOUT-CONNECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Connect an expression requiring a permitted assignment conversion."
+        ],
+        "negative": [
+          "Connect an assignment-incompatible expression to a built-in-net input."
+        ],
+        "notes": [],
+        "positive": [
+          "Connect a wire input to compatible net, variable, and compound expression sources."
+        ]
+      },
+      "id": "SV-2023-23-BUILTIN-NET-INPUT-CONNECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Connect to a concatenation of net and variable slices."
+        ],
+        "negative": [
+          "Connect to an assignment-incompatible target."
+        ],
+        "notes": [],
+        "positive": [
+          "Connect a wire output to a net, variable, and mixed-variable concatenation in separate instances."
+        ]
+      },
+      "id": "SV-2023-23-BUILTIN-NET-OUTPUT-CONNECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise selection in each hierarchy direction."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Give selected and nonselected nets distinguishable delays and observe the collapsed connection uses the selected net's delay."
+        ]
+      },
+      "id": "SV-2023-23-COLLAPSED-NET-DOMINATING-DELAY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare otherwise identical collapse with and without an explicit trireg strength."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Collapse a net with a strength-specified selected trireg and observe stored/resolved strength semantics."
+        ]
+      },
+      "id": "SV-2023-23-COLLAPSED-TRIREG-DOMINATING-STRENGTH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Include both signedness and packed range in the complete port declaration."
+        ],
+        "negative": [
+          "Redeclare a completely typed non-ANSI port in a later net or variable declaration."
+        ],
+        "notes": [],
+        "positive": [
+          "Fully declare a typed signed ranged port in one non-ANSI port declaration."
+        ]
+      },
+      "id": "SV-2023-23-COMPLETE-PORT-DECLARATION-NO-REDECLARATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the same complete path from multiple depths of the design."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "From one top-level hierarchy, reference an object under a different top-level module using its complete rooted path."
+        ]
+      },
+      "id": "SV-2023-23-COMPLETE-ROOTED-PATH-GLOBAL-USABILITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Target a parameter several hierarchy levels below the defparam statement."
+        ],
+        "negative": [
+          "Target a localparam or nonexistent hierarchical parameter."
+        ],
+        "notes": [],
+        "positive": [
+          "Use defparam from a containing module to override parameters in module, interface, and program instances."
+        ]
+      },
+      "id": "SV-2023-23-DEFPARAM-HIERARCHICAL-TARGET"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Target a descendant beneath the same generate iteration while not crossing its scope boundary."
+        ],
+        "negative": [
+          "From one loop-generate iteration target the next iteration, and from one instance-array element target another."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a defparam within a generate instance to target a parameter inside its own hierarchy."
+        ]
+      },
+      "id": "SV-2023-23-DEFPARAM-NO-CROSS-GENERATE-OR-ARRAY-SIBLING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a named instance override and a hierarchical defparam conflict."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Assign distinguishable values through instance #() and defparam to the same parameter and observe the defparam value."
+        ]
+      },
+      "id": "SV-2023-23-DEFPARAM-OVERRIDE-PRECEDENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Reference a local parameter declared in the same module."
+        ],
+        "negative": [
+          "Reference a variable, function result, or parameter declared in another module on the right-hand side."
+        ],
+        "notes": [],
+        "positive": [
+          "Assign a defparam expression combining literals and parameters declared beside the defparam."
+        ]
+      },
+      "id": "SV-2023-23-DEFPARAM-RHS-CONSTANT-LOCAL-PARAMETERS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a type parameter with no default and verify dependent evaluation waits for the mandatory instance override."
+        ],
+        "negative": [
+          "Reject the legal overriding instance because the dependent default would have been illegal under the unused default type."
+        ],
+        "notes": [],
+        "positive": [
+          "Give a default class type that would make a dependent integer default illegal, override it with an integral type, and verify elaboration succeeds without evaluating under the class type."
+        ]
+      },
+      "id": "SV-2023-23-DEPENDENT-DEFAULT-USES-OVERRIDDEN-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise base overrides by both defparam and instance parameter assignment."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Override a base size parameter and observe a derived memory-size parameter recompute; then directly override the derived parameter and observe that value wins."
+        ]
+      },
+      "id": "SV-2023-23-DEPENDENT-PARAMETER-RECOMPUTATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Nest a class declaration in a package and verify both scope boundaries participate in lookup."
+        ],
+        "negative": [
+          "Expect an unqualified declaration in one such scope to be the same declaration as a same-named item in another scope."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare the same local identifier independently inside representative module, interface, program, checker, package, and class scopes."
+        ]
+      },
+      "id": "SV-2023-23-DESIGN-DECLARATION-SCOPE-KINDS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Include multiple independent top-level modules."
+        ],
+        "negative": [
+          "Attempt to elaborate a selected design in which every included module appears in an instantiation statement and no top level remains."
+        ],
+        "notes": [],
+        "positive": [
+          "Elaborate a design containing one uninstantiated module definition."
+        ]
+      },
+      "id": "SV-2023-23-DESIGN-HAS-TOP-LEVEL-MODULE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Include a third instance using all defaults."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Instantiate one module with ordered #() overrides and another with named #(.P()) overrides in the same parent."
+        ]
+      },
+      "id": "SV-2023-23-DIFFERENT-INSTANCES-MAY-USE-DIFFERENT-PARAMETER-STYLES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Search through several nested named blocks before finding the declaration."
+        ],
+        "negative": [
+          "Resolve an unqualified name from a sibling branch."
+        ],
+        "notes": [],
+        "positive": [
+          "Shadow an enclosing variable with a local declaration and separately resolve an unshadowed enclosing declaration."
+        ]
+      },
+      "id": "SV-2023-23-DIRECT-IDENTIFIER-LEXICAL-UPWARD-LOOKUP"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the same spelling for a variable and higher-level task to verify lookup category controls the boundary."
+        ],
+        "negative": [
+          "Allow unqualified variable lookup to cross beyond the containing module boundary."
+        ],
+        "notes": [],
+        "positive": [
+          "Access a containing module variable from a task and resolve a named subroutine in a higher enclosing module."
+        ]
+      },
+      "id": "SV-2023-23-DIRECT-IDENTIFIER-SEARCH-BOUNDARY-BY-KIND"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Swap internal and external positions for an asymmetric table pairing."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Exercise one table pair with a dominating type and one pair with no dominator, observing the selected resulting net behavior."
+        ]
+      },
+      "id": "SV-2023-23-DISSIMILAR-NETTYPE-SELECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise both internal-dominates and external-dominates table cases."
+        ],
+        "negative": [],
+        "notes": [
+          "The merge itself is permitted rather than mandatory; choose observations required regardless of implementation representation."
+        ],
+        "positive": [
+          "Connect a Table-23-1 dominating net type to a dominated type and observe behavior consistent with the dominating type after collapse."
+        ]
+      },
+      "id": "SV-2023-23-DOMINATING-NET-COLLAPSE-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an object name that is also available as a nonselected candidate in another scope and verify simple-identifier resolution controls."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Resolve s.member where s is a visible structure object and ifp.member where ifp is an interface port."
+        ]
+      },
+      "id": "SV-2023-23-DOTTED-DATA-OBJECT-MEMBER-SELECT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Give a directly visible scope the same spelling as a wildcard-import candidate and verify the direct scope determines hierarchical classification."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use block.item where block is a directly visible named scope."
+        ]
+      },
+      "id": "SV-2023-23-DOTTED-DIRECT-SCOPE-HIERARCHICAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare imported scope resolution with a directly visible same-shaped scope."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Wildcard-import package function f and resolve f.local equivalently to pkg::f.local where hierarchical access is otherwise legal."
+        ]
+      },
+      "id": "SV-2023-23-DOTTED-IMPORTED-SCOPE-PACKAGE-PREFIX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a path resolved by hierarchical upward search after immediate simple lookup reports not found."
+        ],
+        "negative": [
+          "Treat an unresolved first component as a member-select base object."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a valid upward or rooted hierarchical path whose first component is not found by immediate simple-name lookup."
+        ]
+      },
+      "id": "SV-2023-23-DOTTED-UNFOUND-FIRST-COMPONENT-HIERARCHICAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast the early defparam binding with an identical non-defparam hierarchical name resolved after elaboration."
+        ],
+        "negative": [
+          "Create a named generated scope that causes the defparam path to bind to a different parameter after full elaboration."
+        ],
+        "notes": [],
+        "positive": [
+          "Use an early-resolved defparam path whose binding remains unchanged after generate elaboration."
+        ]
+      },
+      "id": "SV-2023-23-EARLY-DEFPARAM-NAME-RESOLUTION-STABILITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Mix .P() with other named parameters that receive explicit values."
+        ],
+        "negative": [
+          "Omit parentheses in the explicit named parameter assignment form."
+        ],
+        "notes": [],
+        "positive": [
+          "Use #(.P()) and verify P keeps its declared default."
+        ]
+      },
+      "id": "SV-2023-23-EMPTY-NAMED-PARAMETER-ASSIGNMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast omission of a defaulted input from the list with an explicit .input() entry."
+        ],
+        "negative": [
+          "Omit the required parentheses from the fully explicit empty form when not using implicit .name syntax."
+        ],
+        "notes": [],
+        "positive": [
+          "Use .out() to leave an output unconnected and .in() to leave a defaulted input explicitly unconnected."
+        ]
+      },
+      "id": "SV-2023-23-EXPLICIT-EMPTY-NAMED-CONNECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Instantiate the same module under two distinct instance names and observe distinct hierarchical state."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Instantiate a leaf module inside a parent and reference the resulting child instance hierarchically."
+        ]
+      },
+      "id": "SV-2023-23-EXPLICIT-MODULE-INSTANTIATION-HIERARCHY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Map a module port to an instantiating-scope expression with a different identifier."
+        ],
+        "negative": [
+          "Use a named port identifier absent from the instantiated module declaration."
+        ],
+        "notes": [],
+        "positive": [
+          "Connect two ports in reverse textual order using .port(expression) and verify mapping by name."
+        ]
+      },
+      "id": "SV-2023-23-EXPLICIT-NAMED-PORT-MAPPING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place an explicit port after an output variable port and derive its type from its own expression rather than inheriting variable type."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Place an explicit port after a fully declared input net port and verify only input direction carries over."
+        ]
+      },
+      "id": "SV-2023-23-EXPLICIT-PORT-DIRECTION-ONLY-INHERITANCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a concatenation whose self-determined type fixes the external port width."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Map an explicit port to an expression whose self-determined width differs from assignment-context sizing and observe the port width."
+        ]
+      },
+      "id": "SV-2023-23-EXPLICIT-PORT-EXPRESSION-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a parameterized extern whose parameter-dependent ports are matched by .*."
+        ],
+        "negative": [
+          "Use .* for an undefined module lacking any declaration of its ports."
+        ],
+        "notes": [],
+        "positive": [
+          "Instantiate an externally declared module with .* and same-named compatible signals."
+        ]
+      },
+      "id": "SV-2023-23-EXTERN-ENABLES-WILDCARD-PORTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an ANSI extern with value and type parameters."
+        ],
+        "negative": [
+          "Write an extern module declaration without a module name or port-list parentheses."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare and instantiate extern modules using parameterized ANSI and non-ANSI header forms."
+        ]
+      },
+      "id": "SV-2023-23-EXTERN-MODULE-DECLARATION-FORMS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use same-named hierarchy-local extern declarations in separate branches."
+        ],
+        "negative": [
+          "Attempt to rely on that extern declaration from a sibling or outer hierarchy level."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare an extern inside one hierarchy level and instantiate the declared module within that level."
+        ]
+      },
+      "id": "SV-2023-23-EXTERN-MODULE-HIERARCHY-LOCAL-VISIBILITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use distinct typedef spellings that denote equivalent types."
+        ],
+        "negative": [
+          "Mismatch a port name, list position, parameter name, or type between extern and definition."
+        ],
+        "notes": [],
+        "positive": [
+          "Provide extern and definition with matching ordered names and equivalent port/parameter types."
+        ]
+      },
+      "id": "SV-2023-23-EXTERN-MODULE-MATCHES-DEFINITION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Declare an interconnect first port without a data type and do not infer logic."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare a first ANSI port with direction but no data type and exercise logic value semantics."
+        ]
+      },
+      "id": "SV-2023-23-FIRST-ANSI-PORT-DATATYPE-DEFAULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast an omitted first-port direction with an explicit input direction."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Omit direction from the first typed ANSI port and connect it bidirectionally."
+        ]
+      },
+      "id": "SV-2023-23-FIRST-ANSI-PORT-DIRECTION-DEFAULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Specify only a data type on the first port and verify the list is ANSI style."
+        ],
+        "negative": [
+          "Start with a bare first port but attempt to treat later entries as ANSI declarations."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a bare first identifier with body declarations for a non-ANSI header, and a directional first port for an ANSI header."
+        ]
+      },
+      "id": "SV-2023-23-FIRST-PORT-DETERMINES-HEADER-STYLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use nested generate constructs requiring multiple expand/finalize/revisit iterations."
+        ],
+        "negative": [
+          "Elaborate a generate scheme before applying a defparam whose target is already resolvable in the expanded nongenerate hierarchy."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a defparam that finalizes a parameter controlling a generate condition and verify the resulting generated hierarchy follows the final value."
+        ]
+      },
+      "id": "SV-2023-23-GENERATE-AWARE-ELABORATION-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Connect a derived usage through a higher-level generic interface port."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Connect separate instances of a module's generic interface port to two distinct interface types."
+        ]
+      },
+      "id": "SV-2023-23-GENERIC-INTERFACE-PORT-ANY-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use no intermediate component for a simple identifier and several selected components for a deep path."
+        ],
+        "negative": [
+          "Use a nonconstant select in an intermediate hierarchical component."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse unrooted and $root-rooted hierarchical identifiers, including a selected arrayed-instance component."
+        ]
+      },
+      "id": "SV-2023-23-HIERARCHICAL-IDENTIFIER-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Leave the select off only when the array name itself is the final path element."
+        ],
+        "negative": [
+          "Use an out-of-range, nonconstant, or omitted intermediate instance select."
+        ],
+        "notes": [],
+        "positive": [
+          "Reference arrayed_instance[legal_constant].member and a selected loop-generate block item."
+        ]
+      },
+      "id": "SV-2023-23-HIERARCHICAL-INSTANCE-SELECT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Perform these operations from a parallel top-level hierarchy using a complete path."
+        ],
+        "negative": [
+          "Write through a hierarchical name to an object whose declaration or kind is not legally assignable."
+        ],
+        "notes": [],
+        "positive": [
+          "Use hierarchical names to sample a value, assign a variable, trigger on an event expression, and call a subroutine."
+        ]
+      },
+      "id": "SV-2023-23-HIERARCHICAL-NAME-OBJECT-OPERATIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multiple escaped components in one full path."
+        ],
+        "negative": [
+          "Place a period immediately after an escaped identifier without required terminating whitespace."
+        ],
+        "notes": [],
+        "positive": [
+          "Reference a deeply nested object with period-separated components and with an escaped intermediate identifier followed by whitespace and a period."
+        ]
+      },
+      "id": "SV-2023-23-HIERARCHICAL-NAME-SEPARATORS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use named task and generate-block prefixes in upward-resolved paths."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Resolve a path prefix locally and another in a higher module; create same-named instance and module and verify the instance wins."
+        ]
+      },
+      "id": "SV-2023-23-HIERARCHICAL-PREFIX-UPWARD-LOOKUP-PRECEDENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Reference an element of an arrayed instance through its branch and selected index."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Create representative named constructs and access same-named leaves through their distinct hierarchy branches."
+        ]
+      },
+      "id": "SV-2023-23-HIERARCHY-BRANCH-CREATING-SCOPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use same spelling in distinct name spaces where Clause 3.13 permits it."
+        ],
+        "negative": [
+          "Declare the same identifier twice in one applicable namespace and scope."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare the same identifier in two distinct hierarchy-node scopes."
+        ]
+      },
+      "id": "SV-2023-23-HIERARCHY-NODE-SEPARATE-SCOPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a legal type override on one instance and an illegal override on another."
+        ],
+        "negative": [
+          "Override an integral type parameter with a class type when a dependent parameter default assigns an integer literal incompatibly."
+        ],
+        "notes": [],
+        "positive": [
+          "Override a type dependency with a type for which the dependent default expression remains legal."
+        ]
+      },
+      "id": "SV-2023-23-ILLEGAL-DEPENDENT-PARAMETER-ELABORATION-FAILURE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use only signed as the implicit data type, with and without var."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare a ranged ANSI port without var and a matching port with var, then distinguish net and variable semantics."
+        ]
+      },
+      "id": "SV-2023-23-IMPLICIT-DATA-TYPE-PORT-KIND"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use equivalent typedef aliases on the port and same-named local item."
+        ],
+        "negative": [
+          "Use .data when no same-named item exists or when its type is not equivalent to the port type."
+        ],
+        "notes": [],
+        "positive": [
+          "Use .data where the declared port and same-named local signal have equivalent types."
+        ]
+      },
+      "id": "SV-2023-23-IMPLICIT-NAMED-CONNECTION-COMPATIBILITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare the required error for implicit .n with the explicit .n(n) diagnostic rule."
+        ],
+        "negative": [
+          "Use implicit .n where the two same-named nets have dissimilar net types."
+        ],
+        "notes": [],
+        "positive": [
+          "Use implicit .n between same-named nets of the same net type."
+        ]
+      },
+      "id": "SV-2023-23-IMPLICIT-NAMED-DISSIMILAR-NET-TYPES-ERROR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use both forms on separate instances of the same module."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare runtime values through .p and .p(p) when p is declared with an equivalent type."
+        ]
+      },
+      "id": "SV-2023-23-IMPLICIT-NAMED-EQUIVALENT-TO-EXPLICIT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast failing .missing with omission of that defaulted port from the list, which selects its default."
+        ],
+        "negative": [
+          "Use .signal with no same-named declaration while implicit nets are otherwise enabled, including for a defaulted input."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a same-named signal before using .signal."
+        ]
+      },
+      "id": "SV-2023-23-IMPLICIT-NAMED-NO-IMPLICIT-NET"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a prior implicit declaration under settings that permit implicit nets."
+        ],
+        "negative": [
+          "Declare the same-named item only after the .p instance connection."
+        ],
+        "notes": [],
+        "positive": [
+          "Use .p after a local declaration, explicit package import, and wildcard package import in separate scenarios."
+        ]
+      },
+      "id": "SV-2023-23-IMPLICIT-NAMED-PRIOR-DECLARATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an undeclared implicit net unrelated to a port and verify unsigned semantics."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare expression behavior of implicit port nets from unsigned and signed port declarations."
+        ]
+      },
+      "id": "SV-2023-23-IMPLICIT-PORT-NET-SIGNEDNESS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Supplement an untyped port with a scalar declaration."
+        ],
+        "negative": [
+          "Give the port declaration and supplemental vector declaration different ranges."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare an untyped non-ANSI output and supplement it with a compatible ranged logic declaration."
+        ]
+      },
+      "id": "SV-2023-23-INCOMPLETE-PORT-COMPATIBLE-REDECLARATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Try a concatenation containing a variable on the external side."
+        ],
+        "negative": [
+          "Use a variable internally or externally on an inout connection."
+        ],
+        "notes": [],
+        "positive": [
+          "Connect an inout net port to a compatible net."
+        ]
+      },
+      "id": "SV-2023-23-INOUT-NO-VARIABLE-SIDE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise strength resolution across an inout connection and verify the connection itself does not reduce strength."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Drive an inout net from either side and observe bidirectional value propagation."
+        ]
+      },
+      "id": "SV-2023-23-INOUT-PORT-TRANSISTOR-CONNECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change `default_nettype before the module and verify the omitted port kind follows it."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Omit kind on input and inout ports and use them as nets."
+        ]
+      },
+      "id": "SV-2023-23-INPUT-INOUT-PORT-KIND-DEFAULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Connect a variable on the sink side and observe updates from the continuous port assignment."
+        ],
+        "negative": [
+          "Attempt a connection in which direction leaves no valid source-to-sink relationship."
+        ],
+        "notes": [],
+        "positive": [
+          "Change an input source and output source over time and observe continuous propagation to their respective sinks."
+        ]
+      },
+      "id": "SV-2023-23-INPUT-OUTPUT-PORT-CONTINUOUS-ASSIGNMENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Shadow a referenced parameter name in the instantiating scope and verify the defining-module value is selected."
+        ],
+        "negative": [
+          "Use a nonconstant runtime variable as an input-port default."
+        ],
+        "notes": [],
+        "positive": [
+          "Give a singular input a default referring to a defining-module parameter and omit the connection from an instance in a scope containing a same-named symbol."
+        ]
+      },
+      "id": "SV-2023-23-INPUT-PORT-DEFAULT-CONSTANT-SCOPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use nonzero and descending packed bounds while checking right-hand-index-first mapping."
+        ],
+        "negative": [
+          "Provide one port-width chunk too many or too few for all instances."
+        ],
+        "notes": [],
+        "positive": [
+          "Connect a correctly sized packed vector to a multidimensional instance array and verify the specified chunk ordering."
+        ]
+      },
+      "id": "SV-2023-23-INSTANCE-ARRAY-PACKED-CONNECTION-PARTITION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Broadcast a packed vector matching each element's vector port rather than the full instance array."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Connect one scalar-compatible clock signal to a one-dimensional and multidimensional array of instances and observe every element receives it."
+        ]
+      },
+      "id": "SV-2023-23-INSTANCE-ARRAY-SCALAR-PORT-BROADCAST"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use equal sizes but opposite numeric index directions to verify left-to-left mapping rather than numeric-index equality."
+        ],
+        "negative": [
+          "Use a slowest-varying unpacked dimension whose size differs from the corresponding instance-array dimension."
+        ],
+        "notes": [],
+        "positive": [
+          "Connect matching unpacked arrays to ascending and descending instance ranges and verify endpoint-to-endpoint index mapping."
+        ]
+      },
+      "id": "SV-2023-23-INSTANCE-ARRAY-UNPACKED-CONNECTION-MAPPING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Declare multiple portless instances in one statement, each with its own ()."
+        ],
+        "negative": [
+          "Instantiate a portless module with only its module and instance identifiers and a semicolon."
+        ],
+        "notes": [],
+        "positive": [
+          "Instantiate a portless module using ()."
+        ]
+      },
+      "id": "SV-2023-23-INSTANCE-PARENTHESES-REQUIRED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Swap which hierarchy side supplies the concrete net type."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Connect interconnect-to-interconnect and verify intermediate merged type; connect interconnect to a concrete built-in net type and observe that concrete type."
+        ]
+      },
+      "id": "SV-2023-23-INTERCONNECT-MERGED-NET-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place interconnect on the internal side and then the external side."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Connect an interconnect net through a module port and observe one merged connectivity domain."
+        ]
+      },
+      "id": "SV-2023-23-INTERCONNECT-PORT-MANDATORY-NET-MERGE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Declare an interconnect port with the signed keyword."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare an interconnect port without signed."
+        ]
+      },
+      "id": "SV-2023-23-INTERCONNECT-PORT-NOT-SIGNED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an interconnect declaration with inferred characteristics and verify the primitive terminal still treats it as scalar wire."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Connect an interconnect net to a built-in primitive terminal and a UDP terminal and observe scalar-wire terminal behavior."
+        ]
+      },
+      "id": "SV-2023-23-INTERCONNECT-PRIMITIVE-TERMINAL-AS-SCALAR-WIRE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Pass one interface instance through multiple hierarchy levels."
+        ],
+        "negative": [
+          "Leave an interface port unconnected or connect it to a noninterface object."
+        ],
+        "notes": [],
+        "positive": [
+          "Connect an interface port to an interface instance and, through hierarchy, to a higher-level interface port."
+        ]
+      },
+      "id": "SV-2023-23-INTERFACE-PORT-CONNECTION-REQUIRED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Repeat with both internal wire and internal tri aliases."
+        ],
+        "negative": [],
+        "notes": [
+          "Use the rendered table to choose representative external columns and their observable resolution behavior."
+        ],
+        "positive": [
+          "Connect an internal wire or tri through a port to representative external wand, trireg, tri0, uwire, and supply nets and observe external-type semantics."
+        ]
+      },
+      "id": "SV-2023-23-INTERNAL-WIRE-TRI-EXTERNAL-NETTYPE-WINS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a selected aggregate element whose resolved type is legal for the port."
+        ],
+        "negative": [
+          "Use an expression category prohibited for the port type."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a port expression compatible with the declared module port type."
+        ]
+      },
+      "id": "SV-2023-23-LEGAL-PORT-EXPRESSION-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Have the local parameter expression depend on an earlier overridden parameter and verify indirect recomputation."
+        ],
+        "negative": [
+          "Attempt to consume an ordered override position for the local parameter."
+        ],
+        "notes": [],
+        "positive": [
+          "Place localparam between two overridable header parameters and map two ordered values to the overridable parameters around it."
+        ]
+      },
+      "id": "SV-2023-23-LOCALPARAM-EXCLUDED-FROM-ORDERED-OVERRIDES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Declare otherwise equivalent definitions using module and macromodule keywords."
+        ],
+        "negative": [],
+        "notes": [
+          "Do not require a particular implementation-specific difference in treatment of macromodule definitions."
+        ],
+        "positive": [
+          "Define and instantiate a module whose declaration begins with macromodule."
+        ]
+      },
+      "id": "SV-2023-23-MACROMODULE-INTERCHANGEABLE-KEYWORD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Apply drivers on both sides and observe resolution on the merged net."
+        ],
+        "negative": [
+          "Connect differing user-defined nettypes on both sides of a port."
+        ],
+        "notes": [],
+        "positive": [
+          "Connect matching user-defined nettypes through a port and observe one resolved simulated net."
+        ]
+      },
+      "id": "SV-2023-23-MATCHING-USER-NETTYPE-PORT-MERGE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise 256 ports in both ANSI and non-ANSI header styles."
+        ],
+        "negative": [],
+        "notes": [
+          "The standard permits failure above the implementation's documented limit; do not assume support for 257 ports."
+        ],
+        "positive": [
+          "Compile a module definition containing exactly 256 simple ports."
+        ]
+      },
+      "id": "SV-2023-23-MINIMUM-MODULE-PORT-CAPACITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Add an endmodule label to a legal module declaration."
+        ],
+        "negative": [
+          "Place a timeunits declaration after a module item rather than in its grammar position."
+        ],
+        "notes": [],
+        "positive": [
+          "Parse minimal declarations using each of the ordinary ANSI, non-ANSI, wildcard-port, and extern forms."
+        ]
+      },
+      "id": "SV-2023-23-MODULE-DECLARATION-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use forward and backward module references in the same compilation unit."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Instantiate a module whose definition appears later in the compilation input."
+        ]
+      },
+      "id": "SV-2023-23-MODULE-DECLARATION-ORDER-INDEPENDENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a legal escaped identifier as the module name."
+        ],
+        "negative": [
+          "Write a module keyword without the required following module identifier."
+        ],
+        "notes": [],
+        "positive": [
+          "Define module leaf; and instantiate leaf by that declared name."
+        ]
+      },
+      "id": "SV-2023-23-MODULE-DEFINITION-NAME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use ascending and descending instance ranges and verify element indexing."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Instantiate a module with a nontrivial instance range and reference individual array elements."
+        ]
+      },
+      "id": "SV-2023-23-MODULE-INSTANCE-ARRAY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Connect an input to a compound expression and an interface port to an interface instance."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Connect suitable ports to a net, variable, interface, event, and expression."
+        ]
+      },
+      "id": "SV-2023-23-MODULE-INSTANCE-CONNECTION-EXPRESSION-KINDS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an empty #() parameter assignment and empty instance port list."
+        ],
+        "negative": [
+          "Omit the instance port parentheses or statement semicolon."
+        ],
+        "notes": [],
+        "positive": [
+          "Instantiate one module once and multiple times in one statement, with and without parameter overrides and unpacked instance dimensions."
+        ]
+      },
+      "id": "SV-2023-23-MODULE-INSTANTIATION-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Combine nested declarations, a generate construct, and attributed instantiations as module items."
+        ],
+        "negative": [
+          "Place a construct not admitted as a module_item directly in a module body."
+        ],
+        "notes": [],
+        "positive": [
+          "Compile minimal modules with zero items and representative legal port and non-port module items."
+        ]
+      },
+      "id": "SV-2023-23-MODULE-ITEM-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place two separately and correctly delimited module definitions in one compilation unit."
+        ],
+        "negative": [
+          "Omit endmodule from an otherwise minimal module definition."
+        ],
+        "notes": [],
+        "positive": [
+          "Compile a minimal module declaration delimited by module and endmodule."
+        ]
+      },
+      "id": "SV-2023-23-MODULE-KEYWORD-ENCLOSURE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise the same forms on interfaces and programs."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare parameters only in a header, only as body items, in both locations, and no parameters."
+        ]
+      },
+      "id": "SV-2023-23-MODULE-PARAMETER-DECLARATION-LOCATIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place the two bind statements in separate source scopes while targeting the same module."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Bind two distinctly named auxiliary instances into one target scope."
+        ]
+      },
+      "id": "SV-2023-23-MULTIPLE-BINDS-SAME-TARGET-PERMITTED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place three defparams for one parameter in one source text and verify the last encountered statement wins."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Place two defparams for one parameter in one source text and verify the later statement wins."
+        ]
+      },
+      "id": "SV-2023-23-MULTIPLE-DEFPARAM-SOURCE-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Connect by name to a selected aggregate member."
+        ],
+        "negative": [
+          "Place syntactically invalid expression text inside a named connection."
+        ],
+        "notes": [],
+        "positive": [
+          "Connect an input by name to a compound arithmetic or concatenation expression."
+        ]
+      },
+      "id": "SV-2023-23-NAMED-CONNECTION-EXPRESSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use explicit named connections to override selected ports alongside one wildcard connection."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use .p(expr), .q, and .* together in one instance while avoiding duplicate coverage."
+        ]
+      },
+      "id": "SV-2023-23-NAMED-CONNECTION-FORMS-MAY-MIX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Interleave named connections in an order unrelated to the module declaration."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Reverse the textual order of two named connections and verify unchanged associations."
+        ]
+      },
+      "id": "SV-2023-23-NAMED-CONNECTION-ORDER-INDEPENDENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an escaped declared port identifier in a named connection."
+        ],
+        "negative": [
+          "Use an undeclared port name, bit-selected port name, part-selected port name, or concatenated port names after the dot."
+        ],
+        "notes": [],
+        "positive": [
+          "Connect an instance using a declared simple or escaped port name."
+        ]
+      },
+      "id": "SV-2023-23-NAMED-CONNECTION-PORT-NAME-FORM"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an escaped identifier as an implicit port expression and connect with its resulting port name."
+        ],
+        "negative": [
+          "Attempt a named connection to an implicit port expression that is a bit-select or concatenation."
+        ],
+        "notes": [],
+        "positive": [
+          "Connect by name to an implicit port whose expression is a simple identifier and to an explicit port with a distinct external name."
+        ]
+      },
+      "id": "SV-2023-23-NAMED-CONNECTION-TO-IMPLICIT-PORT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use two separately declared but structurally similar interface types to verify identity, not structure, controls."
+        ],
+        "negative": [
+          "Connect it to an instance of a different interface type with similar members."
+        ],
+        "notes": [],
+        "positive": [
+          "Connect a named interface port to an instance of its declared interface type."
+        ]
+      },
+      "id": "SV-2023-23-NAMED-INTERFACE-PORT-IDENTICAL-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use .P() and .P(value) together and verify duplicate-name rejection."
+        ],
+        "negative": [
+          "Write #(.P(1), .P(2)) for one instance."
+        ],
+        "notes": [],
+        "positive": [
+          "Assign each named parameter at most once."
+        ]
+      },
+      "id": "SV-2023-23-NAMED-PARAMETER-ASSIGNED-ONCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Override a type parameter by its exact declared name."
+        ],
+        "negative": [
+          "Use a named override identifier not declared as a parameter by the instantiated module."
+        ],
+        "notes": [],
+        "positive": [
+          "Override a declared parameter using #(.WIDTH(value))."
+        ]
+      },
+      "id": "SV-2023-23-NAMED-PARAMETER-ASSIGNMENT-IDENTIFIER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a named list containing one value and leave value and type parameters unspecified."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Override only the last of several parameters by name and verify earlier defaults remain."
+        ]
+      },
+      "id": "SV-2023-23-NAMED-PARAMETER-PARTIAL-OVERRIDE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Declare nested modules with and without ports in separate enclosing modules."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare a minimal module within an enclosing module and instantiate it locally."
+        ]
+      },
+      "id": "SV-2023-23-NESTED-MODULE-DECLARATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Declare a local name matching an outer name and verify the local declaration hides the outer one."
+        ],
+        "negative": [
+          "Attempt to rely on outer visibility when declaration and instantiation are not in the same scope."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare and instantiate a nested module in one outer scope and reference an outer signal without a port."
+        ]
+      },
+      "id": "SV-2023-23-NESTED-MODULE-DECLARATION-AND-OUTER-VISIBILITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the same nested module name at multiple nonoverlapping hierarchy scopes."
+        ],
+        "negative": [
+          "Attempt to instantiate one outer module's local nested definition from an unrelated scope."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare nested module helper with different behavior in two outer modules and instantiate each locally."
+        ]
+      },
+      "id": "SV-2023-23-NESTED-MODULE-NAME-SCOPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Target a parameter in a nested named block with a hierarchical defparam."
+        ],
+        "negative": [
+          "Attempt to name a task-local parameter in a module instance #() override list."
+        ],
+        "notes": [],
+        "positive": [
+          "Directly override a named-block, task, or function parameter with defparam."
+        ]
+      },
+      "id": "SV-2023-23-NESTED-SCOPE-PARAMETER-DIRECT-OVERRIDE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Attempt a continuous assignment targeting the input variable."
+        ],
+        "negative": [
+          "Procedurally assign to an input port variable inside the module."
+        ],
+        "notes": [],
+        "positive": [
+          "Read an input variable without assigning it inside the module."
+        ]
+      },
+      "id": "SV-2023-23-NO-ASSIGNMENT-TO-INPUT-PORT-VARIABLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Attempt a two-level chain where the second bind targets the first bound instance's child scope."
+        ],
+        "negative": [
+          "Target a scope nested below an instance that was itself introduced by bind."
+        ],
+        "notes": [],
+        "positive": [
+          "Bind independent auxiliary instances directly into ordinary design scopes."
+        ]
+      },
+      "id": "SV-2023-23-NO-BIND-BENEATH-BOUND-INSTANCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast prohibited reference into a checker with a legal reference to a similarly named item inside a module instance."
+        ],
+        "negative": [
+          "Attempt to reference an item inside a checker using its hierarchical instance path."
+        ],
+        "notes": [],
+        "positive": [
+          "Access checker data through language mechanisms explicitly provided by checker semantics rather than an external hierarchical path."
+        ]
+      },
+      "id": "SV-2023-23-NO-HIERARCHICAL-REFERENCE-INTO-CHECKER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use several hierarchy levels of interconnect before one concrete terminal net resolves the type."
+        ],
+        "negative": [
+          "Construct a fully interconnect-only merged chain whose simulated net remains interconnect at end of elaboration."
+        ],
+        "notes": [],
+        "positive": [
+          "Ensure an interconnect chain eventually merges with a concrete net type before elaboration completes."
+        ]
+      },
+      "id": "SV-2023-23-NO-INTERCONNECT-SIMULATED-NET-AFTER-ELABORATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use different styles in different modules within the same compilation unit."
+        ],
+        "negative": [
+          "Mix an ANSI directional declaration with a non-ANSI bare port entry in one header."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare one module entirely in ANSI style and another entirely in non-ANSI style."
+        ]
+      },
+      "id": "SV-2023-23-NO-MIXED-MODULE-PORT-HEADER-STYLES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an empty expression in a named parameter assignment where the grammar permits it."
+        ],
+        "negative": [
+          "Mix an ordered parameter expression with a named parameter assignment in one #() list."
+        ],
+        "notes": [],
+        "positive": [
+          "Override parameters using an all-ordered list and, separately, an all-named list."
+        ]
+      },
+      "id": "SV-2023-23-NO-MIXED-PARAMETER-ASSIGNMENT-STYLES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Combine explicit named, implicit named, and .* forms, all within the named connection grammar."
+        ],
+        "negative": [
+          "Mix a positional expression and .port(expression) in the same instance connection list."
+        ],
+        "notes": [],
+        "positive": [
+          "Instantiate using an all-ordered connection list and another instance using all named forms."
+        ]
+      },
+      "id": "SV-2023-23-NO-MIXED-PORT-CONNECTION-STYLES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an empty non-ANSI port list followed by the header-terminating semicolon."
+        ],
+        "negative": [
+          "Place a non-ANSI port-characteristic declaration before the semicolon that completes the header."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare names in a non-ANSI header port list, terminate the header with a semicolon, then declare their directions and types in the module body."
+        ]
+      },
+      "id": "SV-2023-23-NONANSI-MODULE-HEADER-FORM"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Give a listed port both its required output declaration and a separate compatible data declaration."
+        ],
+        "negative": [
+          "List a non-ANSI header identifier but provide only an internal net declaration and no port-direction or interface declaration."
+        ],
+        "notes": [],
+        "positive": [
+          "List a signal in a non-ANSI header and declare it as input in the module body."
+        ]
+      },
+      "id": "SV-2023-23-NONANSI-PORT-BODY-DECLARATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Attach an attribute instance to each permitted port-declaration category."
+        ],
+        "negative": [
+          "Declare an inout variable port or a ref net port."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare separate non-ANSI input net, input variable, output net, output variable, inout net, ref variable, interface, and interface-modport ports."
+        ]
+      },
+      "id": "SV-2023-23-NONANSI-PORT-DECLARATION-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an empty positional port entry and a braced group of selected port references."
+        ],
+        "negative": [
+          "Put a general arithmetic expression where the non-ANSI grammar requires a port reference."
+        ],
+        "notes": [],
+        "positive": [
+          "Use positional references and named .p(expr) entries in non-ANSI module port lists with separate direction declarations."
+        ]
+      },
+      "id": "SV-2023-23-NONANSI-PORT-LIST-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Concatenate a simple identifier with bit- and part-select references."
+        ],
+        "negative": [
+          "Use an arithmetic expression as a non-ANSI port reference."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare non-ANSI ports using an escaped identifier, bit-select, part-select, concatenation, and omitted expression."
+        ]
+      },
+      "id": "SV-2023-23-NONANSI-PORT-REFERENCE-FORMS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Override one defaulted input explicitly while omitting another."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Omit a defaulted input in an instance and observe the default value inside the module."
+        ]
+      },
+      "id": "SV-2023-23-OMITTED-DEFAULTED-INPUT-CONNECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Omit one nondefaulted port while explicitly leaving another empty."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Omit a nondefaulted output port from an otherwise named connection list."
+        ]
+      },
+      "id": "SV-2023-23-OMITTED-NAMED-NONDEFAULT-PORT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast mutually exclusive conditional-generate blocks with ordinary generate blocks."
+        ],
+        "negative": [
+          "Declare duplicate variables, a task and variable, or gate instance and net with one identifier in one scope; duplicate names in uninstantiated ordinary generate blocks."
+        ],
+        "notes": [],
+        "positive": [
+          "Reuse an identifier in separate scopes and use the permitted conditional-generate naming exception."
+        ]
+      },
+      "id": "SV-2023-23-ONE-ITEM-PER-IDENTIFIER-PER-SCOPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place connected and internally unconnected explicit ports in the same ANSI list."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare an explicitly named port with empty parentheses."
+        ]
+      },
+      "id": "SV-2023-23-OPTIONAL-EXPLICIT-PORT-EXPRESSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Supply a concatenation expression to an input port."
+        ],
+        "negative": [
+          "Use an output-incompatible expression where connection-direction rules prohibit it."
+        ],
+        "notes": [],
+        "positive": [
+          "Use ordered net, variable, input-expression, and blank connections in suitable positions."
+        ]
+      },
+      "id": "SV-2023-23-ORDERED-CONNECTION-FORMS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Include a blank middle position and verify later expressions retain their declaration-port positions."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Connect distinguishable values positionally to a two-input module and observe each declared port receives the corresponding ordinal value."
+        ]
+      },
+      "id": "SV-2023-23-ORDERED-CONNECTION-MAPS-BY-PORT-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Explicitly repeat an earlier parameter's default value to reach and override a later parameter."
+        ],
+        "negative": [
+          "Attempt to skip the first parameter while overriding the second by ordered position."
+        ],
+        "notes": [],
+        "positive": [
+          "Override only the first parameter, or the first two parameters, leaving trailing defaults."
+        ]
+      },
+      "id": "SV-2023-23-ORDERED-PARAMETER-OVERRIDE-PREFIX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Connect a concatenation and separately drive one constituent variable."
+        ],
+        "negative": [
+          "Also assign the connected variable procedurally or with assign."
+        ],
+        "notes": [],
+        "positive": [
+          "Drive a connected variable solely from one instance output."
+        ]
+      },
+      "id": "SV-2023-23-OUTPUT-CONNECTED-VARIABLE-SINGLE-DRIVER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast output integer with output signed [7:0], whose latter implicit data type defaults to a net."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare output integer x without var and use x as a variable output."
+        ]
+      },
+      "id": "SV-2023-23-OUTPUT-EXPLICIT-DATATYPE-KIND-DEFAULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Set `default_nettype to a non-wire net type and verify the output default follows it."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare outputs with omitted kind and either omitted type or only a packed range, then drive them as nets."
+        ]
+      },
+      "id": "SV-2023-23-OUTPUT-IMPLICIT-TYPE-KIND-DEFAULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Override both value and type parameters on the same parameterized module instance."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Override a value parameter in one instance and a type parameter in another."
+        ]
+      },
+      "id": "SV-2023-23-OVERRIDABLE-PARAMETER-KINDS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Override the controlling parameter and verify the elaborated port width or type changes accordingly."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use value parameters for a port range and a type parameter for a port data type."
+        ]
+      },
+      "id": "SV-2023-23-PARAMETER-DEPENDENT-PORT-DECLARATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use named override to change only one of several eligible parameters."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Override eligible parameters using defparam, ordered #(), named #(.P()), and configuration mechanisms in separate scenarios."
+        ]
+      },
+      "id": "SV-2023-23-PARAMETER-OVERRIDE-MECHANISMS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Mix an initial parameter assignment list with a following explicit parameter-port declaration."
+        ],
+        "negative": [
+          "Use an unparenthesized parameter list after # in a module header."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a module with an empty #() parameter-port list and modules with value and type parameters."
+        ]
+      },
+      "id": "SV-2023-23-PARAMETER-PORT-LIST-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Leave one instance at the default type while overriding another instance."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Instantiate one parameterized module twice with different type-parameter overrides and use each resulting port type."
+        ]
+      },
+      "id": "SV-2023-23-PER-INSTANCE-PARAMETER-TYPE-REDEFINITION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Follow an explicit interconnect port and verify only direction, not interconnect kind, is inherited."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Follow an explicit input port by a bare port and verify input direction plus default net kind and logic type."
+        ]
+      },
+      "id": "SV-2023-23-PORT-AFTER-EXPLICIT-DEFAULTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Instantiate a ported module using empty connections where separately permitted by connection rules."
+        ],
+        "negative": [
+          "Provide a connection expression when instantiating a module defined with no ports."
+        ],
+        "notes": [],
+        "positive": [
+          "Instantiate a portless module with empty parentheses and a ported module with a connection."
+        ]
+      },
+      "id": "SV-2023-23-PORT-CONNECTIONS-ONLY-FOR-PORTED-MODULE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Declare a port using a typedef-named structure containing a union member."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare separate module ports using an interface, event, variable, net, array, structure, and union type."
+        ]
+      },
+      "id": "SV-2023-23-PORT-DECLARATION-KINDS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the permitted supplemental variable declaration without introducing a second port declaration."
+        ],
+        "negative": [
+          "Repeat an input declaration for the same port name."
+        ],
+        "notes": [],
+        "positive": [
+          "Use each non-ANSI port name in exactly one port declaration."
+        ]
+      },
+      "id": "SV-2023-23-PORT-DECLARATION-NAME-NONREUSE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an ANSI input variable port with a constant default."
+        ],
+        "negative": [
+          "Specify defaults on an output, a non-ANSI input, and an interconnect input."
+        ],
+        "notes": [],
+        "positive": [
+          "Specify a default on an ANSI singular input port."
+        ]
+      },
+      "id": "SV-2023-23-PORT-DEFAULT-ELIGIBILITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise both input-used-as-output and output-used-as-input cases."
+        ],
+        "negative": [],
+        "notes": [
+          "Oracle must accommodate the explicitly permitted coercion choice while requiring a warning on the noncoercing path."
+        ],
+        "positive": [
+          "Use a declared directional port bidirectionally and accept either inout coercion or the mandated warning when not coerced."
+        ]
+      },
+      "id": "SV-2023-23-PORT-DIRECTION-COERCION-OR-WARNING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an unsized expression whose assignment-context sizing affects the received value."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Connect differently sized signed and unsigned expressions through directional ports and compare with equivalent assignments."
+        ]
+      },
+      "id": "SV-2023-23-PORT-EXPRESSION-ASSIGNMENT-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Reuse a port identifier in a different module's independent port-list namespace."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use the same simple identifier as an internal item reference and external port name."
+        ]
+      },
+      "id": "SV-2023-23-PORT-IDENTIFIER-NAMESPACE-AND-SIMPLE-MAPPING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Distinguish an output var initializer from an input default value."
+        ],
+        "negative": [
+          "Attach an initializer to an input, inout, ref, or net output port."
+        ],
+        "notes": [],
+        "positive": [
+          "Initialize an ANSI output variable port."
+        ]
+      },
+      "id": "SV-2023-23-PORT-INITIALIZER-OUTPUT-VARIABLE-ONLY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Specify signed consistently on both declarations."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Put signed only on the port declaration and observe signed expression behavior, then only on the supplemental object declaration."
+        ]
+      },
+      "id": "SV-2023-23-PORT-SIGNEDNESS-PROPAGATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise compatibility involving implicit conversion permitted by assignment rules."
+        ],
+        "negative": [
+          "Connect assignment-incompatible aggregate types."
+        ],
+        "notes": [],
+        "positive": [
+          "Connect assignment-compatible but nonidentical integral types through a directional port."
+        ]
+      },
+      "id": "SV-2023-23-PORT-TYPE-ASSIGNMENT-COMPATIBILITY"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Connect a variable port object to an interconnect port and, separately, an interconnect net."
+        ],
+        "notes": [],
+        "positive": [
+          "Connect an interconnect port using legal net-like objects."
+        ]
+      },
+      "id": "SV-2023-23-PORT-VARIABLE-NOT-TO-INTERCONNECT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an override requiring truncation to the declared range."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Override parameter [2:0] P with a wider signed or real-convertible value and observe unsigned three-bit conversion."
+        ]
+      },
+      "id": "SV-2023-23-RANGED-UNTYPED-PARAMETER-OVERRIDE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an implicit data type in a legal inout net-port form."
+        ],
+        "negative": [
+          "Declare a ref net port and, separately, an inout variable port."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare a ref variable port and an inout net port."
+        ]
+      },
+      "id": "SV-2023-23-REF-AND-INOUT-PORT-TYPE-RESTRICTIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Connect through matching typedef aliases."
+        ],
+        "negative": [
+          "Leave a ref port unconnected or connect a net or nonequivalent variable type."
+        ],
+        "notes": [],
+        "positive": [
+          "Connect a ref port to an equivalent variable."
+        ]
+      },
+      "id": "SV-2023-23-REF-PORT-CONNECTION-REQUIRED-EQUIVALENT-VARIABLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Pass the same variable through nested ref ports and observe shared identity."
+        ],
+        "negative": [
+          "Connect a nonvariable object to a ref port."
+        ],
+        "notes": [],
+        "positive": [
+          "Modify a variable through a ref port and observe the change through the caller's variable."
+        ]
+      },
+      "id": "SV-2023-23-REF-PORT-SHARED-VARIABLE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a visible sibling-descendant path according to scope lookup rules."
+        ],
+        "negative": [
+          "Begin a relative path with a node not visible from the use scope."
+        ],
+        "notes": [],
+        "positive": [
+          "From a parent module, reference child.grandchild.item without beginning at a top level."
+        ]
+      },
+      "id": "SV-2023-23-RELATIVE-DOWNWARD-HIERARCHICAL-PATH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Repeat both matching timeunit and timeprecision values in a legal declaration form."
+        ],
+        "negative": [
+          "Repeat a timeunit or timeprecision declaration with a different value in the same module time scope."
+        ],
+        "notes": [],
+        "positive": [
+          "Repeat an identical timeunit declaration as a module item after the scope's initial declaration."
+        ]
+      },
+      "id": "SV-2023-23-REPEATED-MODULE-TIMEUNITS-MUST-MATCH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Access an item several instance levels below a top-level instance."
+        ],
+        "negative": [
+          "Use $root followed by a name that is not a top-level-rooted path."
+        ],
+        "notes": [],
+        "positive": [
+          "Reference a top-level instance item through $root.top.item from a nested scope."
+        ]
+      },
+      "id": "SV-2023-23-ROOTED-HIERARCHICAL-NAME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use no lexical-scope match and verify resolution proceeds to the subsequent upward-search step."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Place a matching named scope in an enclosing lexical scope and verify it is selected for downward resolution."
+        ]
+      },
+      "id": "SV-2023-23-SCOPE-NAME-RESOLUTION-LOCAL-THEN-ENCLOSING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Require multiple instantiation-parent steps before finding the scope prefix."
+        ],
+        "negative": [
+          "Continue upward after an intermediate component has resolved to a data object but a later member is absent."
+        ],
+        "notes": [],
+        "positive": [
+          "Resolve an enclosing-parent scope prefix and its complete downward item path."
+        ]
+      },
+      "id": "SV-2023-23-SCOPE-NAME-UPWARD-PARENT-SEARCH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a program-instance scope prefix where programs are supported."
+        ],
+        "negative": [
+          "Use a prefix that denotes neither a permitted scope nor a resolvable hierarchical scope."
+        ],
+        "notes": [],
+        "positive": [
+          "Use scope.item references with an enclosing subroutine, module instance, interface instance, and generate block prefix."
+        ]
+      },
+      "id": "SV-2023-23-SCOPE-NAME-UPWARD-REFERENCE-FORM"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a class typedef alias as a normally resolvable prefix."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Resolve an accessible class prefix and a package prefix in separate :: names."
+        ]
+      },
+      "id": "SV-2023-23-SCOPE-RESOLUTION-OPERATOR-CLASSIFICATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a prefix spelling also present in hierarchy and verify :: prevents upward hierarchical interpretation."
+        ],
+        "negative": [
+          "Expect an unresolved ::-prefixed suffix to be found by searching enclosing module hierarchy."
+        ],
+        "notes": [],
+        "positive": [
+          "Resolve pkg::nested::item and Class::member downward within the selected scope."
+        ]
+      },
+      "id": "SV-2023-23-SCOPE-RESOLUTION-PREFIX-DOWNWARD-ONLY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an override that truncates while preserving declared signed interpretation."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Override a signed [3:0] parameter with wider positive and negative values and observe four-bit signed conversion."
+        ]
+      },
+      "id": "SV-2023-23-SIGNED-RANGED-PARAMETER-OVERRIDE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Declare only one side signed and verify the other side retains its own unsigned type semantics."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare both internal and external connected objects signed and observe signed arithmetic on each side."
+        ]
+      },
+      "id": "SV-2023-23-SIGNEDNESS-DOES-NOT-CROSS-PORT-HIERARCHY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use explicit named connections with .* while ensuring no port receives multiple connections."
+        ],
+        "negative": [
+          "Repeat the same named input, output, or inout port with two expressions."
+        ],
+        "notes": [],
+        "positive": [
+          "Connect each input, output, and inout port exactly once by name."
+        ]
+      },
+      "id": "SV-2023-23-SINGLE-CONNECTION-PER-INSTANCE-PORT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise both input and output source-to-sink directions."
+        ],
+        "negative": [
+          "Use one user-defined nettype on an inout connection or mismatched data types."
+        ],
+        "notes": [],
+        "positive": [
+          "Connect one user-defined-nettype side to a matching-data-type input or output side."
+        ]
+      },
+      "id": "SV-2023-23-SINGLE-USER-NETTYPE-PORT-CONNECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Combine one .* with explicit named overrides."
+        ],
+        "negative": [
+          "Place two .* entries in one instance port list."
+        ],
+        "notes": [],
+        "positive": [
+          "Use one .* connection in a named port list."
+        ]
+      },
+      "id": "SV-2023-23-SINGLE-WILDCARD-PORT-CONNECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Nest unnamed procedural blocks and a generate block and verify each lexical scope boundary."
+        ],
+        "negative": [
+          "Attempt to use a block-local declaration as though it belonged to the enclosing scope."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare same-named locals in distinct task, function, named/unnamed procedural block, and generate-block scopes."
+        ]
+      },
+      "id": "SV-2023-23-SUBROUTINE-AND-BLOCK-SCOPE-KINDS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "After one failed local compilation-unit search, climb hierarchy without repeating that search at each parent."
+        ],
+        "negative": [
+          "Allow a reference to bind through this special search to a matching function in a different compilation unit."
+        ],
+        "notes": [],
+        "positive": [
+          "Resolve a same-compilation-unit function during the first upward-resolution pass."
+        ]
+      },
+      "id": "SV-2023-23-SUBROUTINE-COMPILATION-UNIT-SEARCH-ONCE-LOCAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Provide both a lexical subroutine and a compilation-unit subroutine of the same name and verify lexical lookup wins."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Call a compilation-unit function declared textually after the calling task when no lexical match exists."
+        ]
+      },
+      "id": "SV-2023-23-SUBROUTINE-NAME-COMPILATION-UNIT-LOOKUP"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Specify a subsequent interconnect port and verify no logic data type is inferred."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Specify direction on a subsequent port but omit data type and exercise logic semantics."
+        ]
+      },
+      "id": "SV-2023-23-SUBSEQUENT-ANSI-PORT-DATATYPE-DEFAULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change kind or explicit data type on the subsequent port while inheriting direction."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare input logic a, integer b and verify b inherits input direction."
+        ]
+      },
+      "id": "SV-2023-23-SUBSEQUENT-ANSI-PORT-DIRECTION-INHERITANCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Follow an interconnect port with a bare identifier and verify interconnect inheritance."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare a fully specified first ANSI port followed by a bare identifier and verify inherited direction, kind, and type."
+        ]
+      },
+      "id": "SV-2023-23-SUBSEQUENT-ANSI-PORT-FULL-INHERITANCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change the subsequent port's explicit data type and verify output kind follows the explicit-versus-implicit type rule."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "After an output variable port, declare an input port with omitted kind and verify it defaults to a net."
+        ]
+      },
+      "id": "SV-2023-23-SUBSEQUENT-ANSI-PORT-KIND-DEFAULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise the warning-marked supply pairing and require a warning."
+        ],
+        "negative": [],
+        "notes": [
+          "Consult the rendered table for exact warning-cell alignment."
+        ],
+        "positive": [
+          "Connect internal supply0 to representative nonsupply external net types and verify supply0 domination; connect it to an external supply net and verify external selection."
+        ]
+      },
+      "id": "SV-2023-23-TABLE-INTERNAL-SUPPLY0-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise the warning-marked supply pairing and require a warning."
+        ],
+        "negative": [],
+        "notes": [
+          "Consult the rendered table for exact warning-cell alignment."
+        ],
+        "positive": [
+          "Connect internal supply1 to representative nonsupply external net types and verify supply1 domination; connect it to an external supply net and verify external selection."
+        ]
+      },
+      "id": "SV-2023-23-TABLE-INTERNAL-SUPPLY1-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise a warning-marked pairing from the rendered row."
+        ],
+        "negative": [],
+        "notes": [
+          "Consult the rendered table for exact warning cells."
+        ],
+        "positive": [
+          "Connect internal tri0 to external wire and trireg in separate cases and observe internal tri0 selection; test an external-dominating pairing."
+        ]
+      },
+      "id": "SV-2023-23-TABLE-INTERNAL-TRI0-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise a warning-marked pairing from the rendered row."
+        ],
+        "negative": [],
+        "notes": [
+          "Consult the rendered table for exact warning cells."
+        ],
+        "positive": [
+          "Connect internal tri1 to external wire and trireg in separate cases and observe internal tri1 selection; test an external-dominating pairing."
+        ]
+      },
+      "id": "SV-2023-23-TABLE-INTERNAL-TRI1-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a warning-marked pairing from the rendered table."
+        ],
+        "negative": [],
+        "notes": [
+          "Consult the rendered table for exact warning cells."
+        ],
+        "positive": [
+          "Connect internal trireg to external wire and observe trireg behavior; test an external-dominating pairing."
+        ]
+      },
+      "id": "SV-2023-23-TABLE-INTERNAL-TRIREG-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise a warning-marked pairing and require the warning."
+        ],
+        "negative": [],
+        "notes": [
+          "Consult the rendered table for exact warning cells."
+        ],
+        "positive": [
+          "Connect internal uwire to representative external ordinary and charge-storage nets and verify uwire selection; connect it to external supply nets and verify external selection."
+        ]
+      },
+      "id": "SV-2023-23-TABLE-INTERNAL-UWIRE-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise a pairing marked warn in the rendered row and require a warning without depending on wording."
+        ],
+        "negative": [],
+        "notes": [
+          "Consult the visually rendered Table 23-1 to select an exact warning-marked pairing."
+        ],
+        "positive": [
+          "Connect internal wand to external wire and verify wand domination; connect it to an external dominating type and verify external selection."
+        ]
+      },
+      "id": "SV-2023-23-TABLE-INTERNAL-WAND-TRIAND-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise a pairing marked warn in the rendered row and require a warning."
+        ],
+        "negative": [],
+        "notes": [
+          "Consult the visually rendered Table 23-1 for warning-column alignment."
+        ],
+        "positive": [
+          "Connect internal wor to external wire and verify wor domination; connect it to an external dominating type and verify external selection."
+        ]
+      },
+      "id": "SV-2023-23-TABLE-INTERNAL-WOR-TRIOR-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use two top-level module definitions and verify one implicit instance of each."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Observe initialization in an uninstantiated module once and reference its top instance by the module name."
+        ]
+      },
+      "id": "SV-2023-23-TOP-LEVEL-IMPLICIT-INSTANCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Mention a module only in an unelaborated generate block and verify it is not implicitly treated as top level."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Provide one uninstantiated module and verify it becomes top level."
+        ]
+      },
+      "id": "SV-2023-23-TOP-LEVEL-MODULE-DETERMINATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change an integral type dependency to another integral type with different width."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use a value parameter to size another parameter and a type parameter as another parameter's type, then override each dependency."
+        ]
+      },
+      "id": "SV-2023-23-TYPE-DEPENDENT-PARAMETER-RECOMPUTATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Override a signed typed parameter with differently sized final values."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Override typed unranged signed and unsigned parameters and observe conversion plus signed-range derivation."
+        ]
+      },
+      "id": "SV-2023-23-TYPED-UNRANGED-PARAMETER-OVERRIDE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast an unconnected net input with an unconnected variable input's type-specific initial value."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Leave scalar and vector wire input ports unconnected and observe all bits at z."
+        ]
+      },
+      "id": "SV-2023-23-UNCONNECTED-BUILTIN-NET-INPUT-Z"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare an unconnected input with an explicitly defaulted input port."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Leave variable input ports of representative 2-state and 4-state types unconnected and observe their type-specific initial values."
+        ]
+      },
+      "id": "SV-2023-23-UNCONNECTED-VARIABLE-INPUT-INITIAL-VALUE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place ported and portless uninstantiated nested modules together and distinguish ignored versus implicit-instantiation behavior."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare a ported nested module but do not instantiate it, and verify no nested instance or initialization behavior appears."
+        ]
+      },
+      "id": "SV-2023-23-UNINSTANTIATED-PORTED-NESTED-MODULE-IGNORED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare implicit portless nested instance with an explicitly instantiated copy."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare an uninstantiated portless nested module with observable initialization and verify one implicit instance under its module name."
+        ]
+      },
+      "id": "SV-2023-23-UNINSTANTIATED-PORTLESS-NESTED-MODULE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use identical leaf names under named blocks in different instance branches."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare same local identifier names in separate module instances and reference each by its unique full path."
+        ]
+      },
+      "id": "SV-2023-23-UNIQUE-HIERARCHICAL-PATH-PER-IDENTIFIER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use distinct external names whose internal port expressions reference the same internal signal."
+        ],
+        "negative": [
+          "Define two non-ANSI explicit ports with the same external port identifier."
+        ],
+        "notes": [],
+        "positive": [
+          "Define non-ANSI ports with distinct external names."
+        ]
+      },
+      "id": "SV-2023-23-UNIQUE-PORT-DEFINITION-NAME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Instantiate a module inside an unnamed generate and access the enclosing branch from that child hierarchy."
+        ],
+        "negative": [
+          "Attempt a hierarchical reference to that object from an unrelated outside scope."
+        ],
+        "notes": [],
+        "positive": [
+          "Reference an unnamed-generate object from within the block or a child instance."
+        ]
+      },
+      "id": "SV-2023-23-UNNAMED-GENERATE-BRANCH-VISIBILITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use differing index bounds or directions that preserve corresponding dimension sizes."
+        ],
+        "negative": [
+          "Connect arrays with differing dimension counts or a differing size in one corresponding dimension."
+        ],
+        "notes": [],
+        "positive": [
+          "Connect arrays with matching one-dimensional and multidimensional unpacked shapes."
+        ]
+      },
+      "id": "SV-2023-23-UNPACKED-ARRAY-PORT-SHAPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Omit the dimension on the second port and verify it is scalar rather than inheriting the first port's unpacked array shape."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Repeat the same unpacked dimension on each of two ports."
+        ]
+      },
+      "id": "SV-2023-23-UNPACKED-PORT-DIMENSIONS-NOT-INHERITED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use $root where the top-level module name alone would be shadowed by a local instance name."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Create matching local and top-level A.B paths and verify unrooted A.B selects local while $root.A.B selects top-level."
+        ]
+      },
+      "id": "SV-2023-23-UNROOTED-HIERARCHICAL-LOCAL-PRECEDENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Apply multiple override mechanisms whose precedence determines the final value and therefore type/range."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Override an untyped unranged parameter with values of distinguishable widths and types and observe the final parameter type and range."
+        ]
+      },
+      "id": "SV-2023-23-UNTYPED-UNRANGED-PARAMETER-OVERRIDE-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use repeated enclosing module types and verify search proceeds through enclosing modules toward root."
+        ],
+        "negative": [
+          "Expect upward lookup to search a sibling instance for the prefix name."
+        ],
+        "notes": [],
+        "positive": [
+          "From a deeply nested instance, reference an enclosing module's variable through its module or instance name and find a named block in an enclosing module."
+        ]
+      },
+      "id": "SV-2023-23-UPWARD-MODULE-NAME-SEARCH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Reference a parameter and a subroutine through an enclosing module identifier."
+        ],
+        "negative": [
+          "Use a nonlisted item category as item_name in this upward-reference form."
+        ],
+        "notes": [],
+        "positive": [
+          "Use upward references to each grammar-listed item category."
+        ]
+      },
+      "id": "SV-2023-23-UPWARD-NAME-REFERENCE-GRAMMAR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Force a nonmerged connection with uwire on the internal side and then on the external side, requiring a warning in each case."
+        ],
+        "negative": [],
+        "notes": [
+          "Check diagnostic presence, not wording."
+        ],
+        "positive": [
+          "Connect matching collapsible uwire nets through a port so they merge."
+        ]
+      },
+      "id": "SV-2023-23-UWIRE-UNMERGED-PORT-WARNING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change the connected variable and observe continuous updates at the input."
+        ],
+        "negative": [
+          "Connect an assignment-incompatible expression."
+        ],
+        "notes": [],
+        "positive": [
+          "Connect a variable input to a compatible variable and to a compatible compound expression."
+        ]
+      },
+      "id": "SV-2023-23-VARIABLE-INPUT-CONNECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Connect an output to a concatenation of net slices with another driver."
+        ],
+        "negative": [
+          "Connect an assignment-incompatible net type."
+        ],
+        "notes": [],
+        "positive": [
+          "Connect two output instances to a resolving net and observe resolution."
+        ]
+      },
+      "id": "SV-2023-23-VARIABLE-OUTPUT-TO-NET-MULTIDRIVER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Connect slices of distinct variables via a concatenation."
+        ],
+        "negative": [
+          "Connect an output to an assignment-incompatible variable."
+        ],
+        "notes": [],
+        "positive": [
+          "Connect an output to a compatible variable and to a concatenation of variables, then observe updates."
+        ]
+      },
+      "id": "SV-2023-23-VARIABLE-OUTPUT-TO-VARIABLE-CONNECTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare explicit package import, wildcard import plus .p, and wildcard import plus only .*."
+        ],
+        "negative": [
+          "Expect .* alone to cause a wildcard-imported package name to be selected for a port."
+        ],
+        "notes": [],
+        "positive": [
+          "Wildcard-import a package signal and explicitly use .p or .p(p) with .* to establish the reference."
+        ]
+      },
+      "id": "SV-2023-23-WILDCARD-DOES-NOT-TRIGGER-PACKAGE-IMPORT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Mix explicit named exceptions with .* and compare remaining connections to .name semantics."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare .* and a set of equivalent .name connections where every same-named item is locally declared."
+        ]
+      },
+      "id": "SV-2023-23-WILDCARD-EQUIVALENT-TO-IMPLICIT-NAMED"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Add .p() beside .* and verify p is unconnected rather than defaulted."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use .* with no local name for a defaulted input and observe the default."
+        ]
+      },
+      "id": "SV-2023-23-WILDCARD-MISSING-NAME-USES-DEFAULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Explicitly handle a same-named port before .* and verify it is not connected twice."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use .* with .renamed(expr) and .unused() exceptions."
+        ]
+      },
+      "id": "SV-2023-23-WILDCARD-NAMED-EXPLICIT-OVERRIDE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Provide matches for only a subset and handle exceptions explicitly."
+        ],
+        "negative": [
+          "Rely on .* for a port whose same-named signal has a nonequivalent type."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare same-named equivalent-typed signals for all instance ports and connect with .*."
+        ]
+      },
+      "id": "SV-2023-23-WILDCARD-NAMED-MATCHING-CONNECTIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Put explicit overrides on both sides of .*."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Place .* first, middle, and last in otherwise equivalent named connection lists."
+        ]
+      },
+      "id": "SV-2023-23-WILDCARD-PLACEMENT-IN-NAMED-LIST"
+    }
+  ],
+  "schema_version": 1
+}

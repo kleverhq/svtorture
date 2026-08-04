@@ -1,0 +1,898 @@
+{
+  "authority": "1800-2023",
+  "part": "3",
+  "requirements": [
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Attempt a nonattribute declaration inside attribute syntax."
+        ],
+        "notes": [],
+        "positive": [
+          "Use an attribute name matching an ordinary identifier without namespace conflict."
+        ]
+      },
+      "id": "SV-2023-03-ATTRIBUTE-NAMESPACE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Reuse a name in separate sibling block namespaces."
+        ],
+        "negative": [
+          "Give a local variable and named block the same name in one block namespace."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare distinct local variable and type names in a function."
+        ]
+      },
+      "id": "SV-2023-03-BLOCK-NAMESPACE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast same-unit lexical lookup with forbidden package-import and hierarchical access."
+        ],
+        "negative": [
+          "Reject importing the compilation-unit scope or reaching one of its declarations by hierarchical path."
+        ],
+        "notes": [],
+        "positive": [
+          "Use ordinary same-unit lookup for a compilation-unit declaration without importing its scope."
+        ]
+      },
+      "id": "SV-2023-03-COMPILATION-UNIT-ACCESS-LIMITS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a same-named declaration in another namespace."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Place a package-permitted declaration and bind construct at compilation-unit scope."
+        ]
+      },
+      "id": "SV-2023-03-COMPILATION-UNIT-CONTENTS"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Give a compilation-unit variable and type the same name."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare distinct kinds with distinct names at compilation-unit scope."
+        ]
+      },
+      "id": "SV-2023-03-COMPILATION-UNIT-NAMESPACE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Forward-reference a task or function name under its stated exception."
+        ],
+        "negative": [
+          "Reject qualified and unqualified references to a later compilation-unit variable."
+        ],
+        "notes": [],
+        "positive": [
+          "Reference an earlier compilation-unit variable, qualified and unqualified."
+        ]
+      },
+      "id": "SV-2023-03-COMPILATION-UNIT-PRIOR-DECLARATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compile the same files separately and observe distinct local compilation-unit scopes."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compile two files as one unit and declare an outermost item belonging to their shared compilation-unit scope."
+        ]
+      },
+      "id": "SV-2023-03-COMPILATION-UNIT-SCOPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Shadow a top-level name with a compilation-unit declaration and verify local resolution wins."
+        ],
+        "negative": [
+          "Reject the reference when neither local/imported nor a valid rooted hierarchy path exists."
+        ],
+        "notes": [],
+        "positive": [
+          "From compilation-unit scope, reference a top-level hierarchy name not shadowed locally and resolve it from $root."
+        ]
+      },
+      "id": "SV-2023-03-COMPILATION-UNIT-UPWARD-REFERENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place a declaration in the first file and reference it from the second."
+        ],
+        "negative": [],
+        "notes": [
+          "Invocation syntax is tool-specific; only availability and language effects of both use models are required."
+        ],
+        "positive": [
+          "Compile two files once as one unit and once as separate units, observing corresponding name visibility."
+        ]
+      },
+      "id": "SV-2023-03-COMPILATION-UNIT-USE-MODELS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an error detectable only after parameter computation."
+        ],
+        "negative": [
+          "Do not begin simulation before reporting a required compile-time error."
+        ],
+        "notes": [
+          "The oracle is the pre-simulation deadline, not an implementation's internal phase boundary."
+        ],
+        "positive": [
+          "Report an elaboration-dependent compile-time error after parsing but before simulation."
+        ]
+      },
+      "id": "SV-2023-03-COMPILE-TIME-DIAGNOSTIC-DEADLINE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Select between same-named cells in different libraries."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use a configuration and library map to select a particular implementation for a module instance."
+        ]
+      },
+      "id": "SV-2023-03-CONFIGURATION-BINDING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast a globally visible package with an ordinary item declared at compilation-unit scope."
+        ],
+        "negative": [
+          "Reject a source-language name reference to an ordinary compilation-unit-scope variable from another unit."
+        ],
+        "notes": [],
+        "positive": [
+          "Reference a module declared in another compilation unit."
+        ]
+      },
+      "id": "SV-2023-03-CROSS-UNIT-VISIBILITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast a nested declaration with a nonnested one."
+        ],
+        "negative": [
+          "Reuse one global name for a module and interface in different units."
+        ],
+        "notes": [],
+        "positive": [
+          "Give different global names to a module and interface across units."
+        ]
+      },
+      "id": "SV-2023-03-DEFINITIONS-NAMESPACE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compile the same files as one unit and separately to observe the permitted semantic difference."
+        ],
+        "negative": [
+          "Verify the directive does not leak into a separately compiled unit."
+        ],
+        "notes": [],
+        "positive": [
+          "Set a directive in one unit and observe its effect on later text in that unit."
+        ]
+      },
+      "id": "SV-2023-03-DIRECTIVE-UNIT-ISOLATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Resolve a path through a parameter-selected generated hierarchy."
+        ],
+        "negative": [
+          "Diagnose an unresolved hierarchical path before simulation begins."
+        ],
+        "notes": [],
+        "positive": [
+          "Resolve a hierarchical reference to a member of an elaborated child instance."
+        ]
+      },
+      "id": "SV-2023-03-ELABORATION-HIERARCHICAL-NAME-RESOLUTION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Bind both an implicit top-level component and an explicitly nested instance."
+        ],
+        "negative": [
+          "Diagnose an instance whose referenced design component cannot be bound before simulation starts."
+        ],
+        "notes": [],
+        "positive": [
+          "Elaborate a module containing nested module, interface, and primitive instances and observe the resulting instance hierarchy."
+        ]
+      },
+      "id": "SV-2023-03-ELABORATION-INSTANCE-EXPANSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Establish connectivity through multiple hierarchy levels."
+        ],
+        "negative": [
+          "Diagnose a port connection that cannot establish legal net connectivity before simulation."
+        ],
+        "notes": [],
+        "positive": [
+          "Elaborate connected module ports and observe that the resulting nets carry values between instances."
+        ]
+      },
+      "id": "SV-2023-03-ELABORATION-NET-CONNECTIVITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compute a dependent parameter chain before sizing an elaborated object."
+        ],
+        "negative": [
+          "Diagnose a parameter expression that cannot be validly computed for elaboration."
+        ],
+        "notes": [],
+        "positive": [
+          "Override a parameter and observe an elaborated width derived from its computed value."
+        ]
+      },
+      "id": "SV-2023-03-ELABORATION-PARAMETER-COMPUTATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use all four argument directions in one function declaration."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Define and call functions using each of input, output, inout, and ref arguments."
+        ]
+      },
+      "id": "SV-2023-03-FUNCTION-ARGUMENT-DIRECTIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Fork a process from a function and allow the forked process, rather than the function execution, to block time."
+        ],
+        "negative": [
+          "Reject a function body that directly blocks simulation time."
+        ],
+        "notes": [],
+        "positive": [
+          "Call a function that returns in the current simulation time."
+        ]
+      },
+      "id": "SV-2023-03-FUNCTION-NONBLOCKING-TIME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call both forms from the same procedural context."
+        ],
+        "negative": [
+          "Reject using a void function call as an expression operand."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a nonvoid function call in an expression and call a void function as a statement."
+        ]
+      },
+      "id": "SV-2023-03-FUNCTION-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Provide the minimum via each of the three specification forms in turn."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use several precision sources and verify simulation advances at the finest precision."
+        ]
+      },
+      "id": "SV-2023-03-GLOBAL-TIME-PRECISION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Reference both upward and downward across multiple levels."
+        ],
+        "negative": [
+          "Reject a hierarchical path with a nonexistent component."
+        ],
+        "notes": [],
+        "positive": [
+          "Reference a nested instance member from a different hierarchy branch using a full hierarchical path."
+        ]
+      },
+      "id": "SV-2023-03-HIERARCHICAL-PATH-REFERENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Instantiate each allowed building-block category from a module and interface."
+        ],
+        "negative": [
+          "Reject a building-block instantiation inside a primitive."
+        ],
+        "notes": [],
+        "positive": [
+          "Instantiate a checker inside a program and another checker."
+        ]
+      },
+      "id": "SV-2023-03-HIERARCHY-INSTANTIATION-MATRIX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Also explicitly instantiate another module and verify that this rule does not create an additional implicit top for it."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Elaborate one uninstantiated module and one uninstantiated program and observe one top-level instance of each."
+        ]
+      },
+      "id": "SV-2023-03-IMPLICIT-TOP-LEVEL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use nested includes and verify all included text belongs to the outer file's compilation unit."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Include a file declaring a compilation-unit item and reference it later in the including unit."
+        ]
+      },
+      "id": "SV-2023-03-INCLUDE-COMPILATION-UNIT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Chain an incomplete declaration across more than two files."
+        ],
+        "negative": [
+          "Omit the completing text and diagnose the incomplete declaration."
+        ],
+        "notes": [],
+        "positive": [
+          "Split a module declaration across successive files and compile them as the extended unit."
+        ]
+      },
+      "id": "SV-2023-03-INCOMPLETE-DECLARATION-UNIT-EXTENSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify hierarchical paths include each created instance level."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Instantiate a child module and interface and observe the additional instance hierarchy level."
+        ]
+      },
+      "id": "SV-2023-03-INSTANTIATION-HIERARCHY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Pass the same interface instance through an interface port and select a member at the receiving instance."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Connect one interface instance to module and program interface ports and select its component signals through each port."
+        ]
+      },
+      "id": "SV-2023-03-INTERFACE-CAPABILITIES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use interface member subroutines and processes together in one interface instance."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare each permitted data, type, subroutine, process, and continuous-assignment category in an interface."
+        ]
+      },
+      "id": "SV-2023-03-INTERFACE-PERMITTED-CONTENTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the same local identifier spelling in a module and a checker."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare the same local identifier independently in two sibling modules without conflict."
+        ]
+      },
+      "id": "SV-2023-03-LOCAL-AND-PACKAGE-SCOPES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Place the initial definition and redefinition in different files of one compilation unit and vary their input order."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Redefine a macro and observe the new replacement only in source text following the redefinition."
+        ]
+      },
+      "id": "SV-2023-03-MACRO-DEFINITION-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a macro later in another file that belongs to the same compilation unit."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use the same spelling for a text macro and a language identifier without a namespace conflict."
+        ]
+      },
+      "id": "SV-2023-03-MACRO-NAMESPACE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Check multiple top-level elements across compilation units."
+        ],
+        "negative": [
+          "Combine one explicitly timed design element with another having no specified unit or precision."
+        ],
+        "notes": [],
+        "positive": [
+          "Give every design element an explicit or directive-derived time specification."
+        ]
+      },
+      "id": "SV-2023-03-MIXED-TIME-SPECIFICATION-ERROR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Expose different interface subroutine sets through two modports."
+        ],
+        "negative": [
+          "Reject a module call to an interface subroutine excluded by its modport."
+        ],
+        "notes": [],
+        "positive": [
+          "Call an interface subroutine made available to a module through its modport."
+        ]
+      },
+      "id": "SV-2023-03-MODPORT-SUBROUTINE-ACCESS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Provide opposite modport direction views of the same interface signals to two modules."
+        ],
+        "negative": [
+          "Reject a module drive through a modport member that is input from that module's view."
+        ],
+        "notes": [],
+        "positive": [
+          "Connect a module through a modport and observe each signal direction from that module's view."
+        ]
+      },
+      "id": "SV-2023-03-MODPORT-VIEW-AND-SUBROUTINE-ACCESS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Reuse a member name in a separate enclosing construct's namespace."
+        ],
+        "negative": [
+          "Declare a variable and task with the same name in one module namespace."
+        ],
+        "notes": [],
+        "positive": [
+          "Use distinct names for members of each listed declaration category in one enclosing construct."
+        ]
+      },
+      "id": "SV-2023-03-MODULE-NAMESPACE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a module and a program as simultaneous top-level blocks."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Elaborate two independent top-level modules in one design."
+        ]
+      },
+      "id": "SV-2023-03-MULTIPLE-TOP-LEVEL-BLOCKS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise the explicit port-name completion exception."
+        ],
+        "negative": [
+          "Redeclare a variable name in the same scope and namespace."
+        ],
+        "notes": [],
+        "positive": [
+          "Use the same spelling in distinct namespaces."
+        ]
+      },
+      "id": "SV-2023-03-NAMESPACE-NO-REDECLARATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast package ordering with mutually referenced design elements allowed by normal order independence."
+        ],
+        "negative": [
+          "Place a package-item reference before compilation of that package."
+        ],
+        "notes": [],
+        "positive": [
+          "Compile a package before a source unit importing and referencing its item."
+        ]
+      },
+      "id": "SV-2023-03-PACKAGE-COMPILE-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Redeclare the same package name in another unit."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare uniquely named packages in separate units."
+        ]
+      },
+      "id": "SV-2023-03-PACKAGE-NAMESPACE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast an imported package name with an unimported declaration that is not introduced as a local unqualified name."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Import a package declaration into a module and into another package."
+        ]
+      },
+      "id": "SV-2023-03-PACKAGE-SHARED-IMPORTABLE-SCOPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Include ordinary compilation-unit-scope declarations that source-language names cannot access cross-unit, while confirming that their compilation units remain traversable through the PLI."
+        ],
+        "negative": [],
+        "notes": [
+          "This is an API-facing oracle independent of source-language cross-unit name visibility."
+        ],
+        "positive": [
+          "Use the standard PLI compilation-unit iterator to traverse a design containing two compilation units and observe both units."
+        ]
+      },
+      "id": "SV-2023-03-PLI-COMPILATION-UNIT-ITERATOR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise input, output, inout, and ref port kinds."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare a port and complete it with a same-name net or variable declaration in the module namespace."
+        ]
+      },
+      "id": "SV-2023-03-PORT-NAMESPACE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Check each prohibited instance category independently."
+        ],
+        "negative": [
+          "Reject a program containing an always procedure or a module, interface, primitive, or nested program instance."
+        ],
+        "notes": [],
+        "positive": [
+          "Compile a program containing data, a class, a task, an object, initial, and final procedures."
+        ]
+      },
+      "id": "SV-2023-03-PROGRAM-CONTENTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Combine a program with a clocking block and verify race-free sampled/driven design-testbench interaction."
+        ],
+        "negative": [],
+        "notes": [
+          "Avoid depending on nondeterministic ordering among processes within one region."
+        ],
+        "positive": [
+          "Have module and program processes respond in the same time slot and observe program reactive-region ordering."
+        ]
+      },
+      "id": "SV-2023-03-PROGRAM-REACTIVE-SCHEDULING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the same declaration name in a program and an enclosing compilation-unit scope and verify that the scopes remain distinct."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare program data and a task in a program and reference them through the program scope."
+        ]
+      },
+      "id": "SV-2023-03-PROGRAM-SCOPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use step as a delay unit while confirming it remains illegal as a scope time setting."
+        ],
+        "negative": [
+          "Reject step in a timeunit or timeprecision declaration."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a physical time unit in a timeunit and timeprecision declaration."
+        ]
+      },
+      "id": "SV-2023-03-STEP-DECLARATION-PROHIBITION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change the design's finest precision and observe the corresponding step duration."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use a step delay and observe that it equals one global-precision quantum."
+        ]
+      },
+      "id": "SV-2023-03-STEP-TIME-UNIT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Define a task with no arguments and another using all four directions."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Define and call tasks using each of input, output, inout, and ref arguments."
+        ]
+      },
+      "id": "SV-2023-03-TASK-ARGUMENT-DIRECTIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Contrast a zero-time task with a task that advances simulation time."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Call a task containing a timing control and observe exit at a later simulation time."
+        ]
+      },
+      "id": "SV-2023-03-TASK-BLOCKING-TIME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Call a task with no arguments and ignore no return value."
+        ],
+        "negative": [
+          "Reject use of a task call as an expression operand."
+        ],
+        "notes": [],
+        "positive": [
+          "Call a task as a procedural statement."
+        ]
+      },
+      "id": "SV-2023-03-TASK-SEMANTICS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Nest a module under an enclosing module while a conflicting preceding `timescale and compilation-unit declaration exist."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Construct scopes exercising each fallback level and verify the selected unit and precision."
+        ]
+      },
+      "id": "SV-2023-03-TIME-DEFAULT-PRECEDENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the combined and separate forms in different design elements."
+        ],
+        "negative": [
+          "Reject a non-time-literal declaration value."
+        ],
+        "notes": [],
+        "positive": [
+          "Declare timeunit 100ps; timeprecision 10fs; and equivalently timeunit 100ps/10fs."
+        ]
+      },
+      "id": "SV-2023-03-TIME-KEYWORD-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use equal time unit and precision."
+        ],
+        "negative": [
+          "Reject timeunit 1ns with timeprecision 1us."
+        ],
+        "notes": [],
+        "positive": [
+          "Use timeunit 1ns with timeprecision 1ps."
+        ]
+      },
+      "id": "SV-2023-03-TIME-PRECISION-NOT-COARSER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Apply the same rules at compilation-unit scope and in each listed design element."
+        ],
+        "negative": [
+          "Reject conflicting repetitions or an initial declaration after another scope item."
+        ],
+        "notes": [],
+        "positive": [
+          "Place timeunit/timeprecision first and repeat identical declarations later."
+        ]
+      },
+      "id": "SV-2023-03-TIME-SCOPE-DECLARATION-CONSTRAINTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use equal unit and precision, then a finer precision, and compare represented delays."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare a time unit and precision and observe delay scaling and accuracy."
+        ]
+      },
+      "id": "SV-2023-03-TIME-UNIT-AND-PRECISION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise the largest 100s unit and smallest 1fs unit and compare equivalent scaled delays."
+        ],
+        "negative": [
+          "Reject an unlisted time suffix or magnitude."
+        ],
+        "notes": [],
+        "positive": [
+          "Use each listed suffix with allowed magnitudes in timeunit/timeprecision declarations."
+        ]
+      },
+      "id": "SV-2023-03-TIME-UNIT-STRINGS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare equal unit/precision integer rounding and two elements with different precisions."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "With 1ns/100ps, observe a 2.75ns delay rounded to 2.8ns."
+        ]
+      },
+      "id": "SV-2023-03-TIME-VALUE-ROUNDING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Reorder files in one compilation unit and observe the inherited default change for an element without local declarations."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Place two modules after one `timescale and verify both inherit it; replace it before a third."
+        ]
+      },
+      "id": "SV-2023-03-TIMESCALE-EFFECT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Vary whitespace around the slash while preserving the required form."
+        ],
+        "negative": [
+          "Reject a `timescale directive missing its precision or slash separator."
+        ],
+        "notes": [],
+        "positive": [
+          "Specify a valid time unit and precision with the slash-separated `timescale form."
+        ]
+      },
+      "id": "SV-2023-03-TIMESCALE-SYNTAX"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use $unit:: from a nested task and module scope."
+        ],
+        "negative": [
+          "Reject $unit:: selection of a name absent from the current compilation unit."
+        ],
+        "notes": [],
+        "positive": [
+          "Shadow a compilation-unit variable locally and select the outer declaration with $unit::."
+        ]
+      },
+      "id": "SV-2023-03-UNIT-SCOPE-QUALIFICATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Remove candidates successively to exercise compilation-unit and hierarchy fallback."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Provide candidates at all three levels and verify the nested declaration wins."
+        ]
+      },
+      "id": "SV-2023-03-UNQUALIFIED-NAME-LOOKUP-ORDER"
+    }
+  ],
+  "schema_version": 1
+}

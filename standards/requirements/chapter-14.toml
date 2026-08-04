@@ -1,0 +1,2150 @@
+schema_version = 3
+part = "14"
+
+[[requirements]]
+id = "SV-2023-14-CLOCKING-BLOCK-EVENT-OBSERVED"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.10"
+anchors = [
+    "[2023:14.10:P001:p360]",
+    "[2023:14.10:P003:p360]",
+]
+summary = "Processing a block's specified clocking event triggers the event named by that clocking block in the Observed region; a process sensitive to the block event resumes in the first subsequent Active region."
+related_clauses = [
+    "4.4.1",
+    "14.13",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "same-rule-different-clause"
+clause = "14.13"
+note = "IEEE 1800-2012 places the Observed-region clocking-block event rule under input sampling rather than clocking block events."
+
+[requirements.revision_applicability.1800-2017]
+status = "same-rule-different-clause"
+clause = "14.13"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.10"
+
+[[requirements]]
+id = "SV-2023-14-CLOCKING-BLOCK-IMPLICIT-INSTANCE"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.7"
+anchors = [
+    "[2023:14.7:P001:p358]",
+]
+summary = "A clocking-block declaration creates one clocking-block instance for each instance of its containing design block without a separate instantiation step."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.7"
+
+[[requirements]]
+id = "SV-2023-14-CLOCKING-BLOCK-STATIC-LOCAL-SCOPE"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.7"
+anchors = [
+    "[2023:14.7:P003:p358]",
+]
+summary = "A clocking block has static lifetime and a scope local to its enclosing module, interface, or program."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.7"
+
+[[requirements]]
+id = "SV-2023-14-CLOCKING-DECLARATION-LOCATIONS"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.7"
+anchors = [
+    "[2023:14.7:P002:p358]",
+]
+summary = "A clocking block may be declared only within a module, interface, checker, or program; it cannot be nested in another clocking block, placed in a function, task, or package, or placed at compilation-unit scope."
+related_clauses = [
+    "24",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.7"
+
+[[requirements]]
+id = "SV-2023-14-CLOCKING-DECLARATION-SYNTAX"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.3"
+anchors = [
+    "[2023:14.3:G001:p354-355]",
+    "[2023:14.3:P009:p356]",
+]
+summary = "A non-global clocking declaration shall match the defined grammar, including its optional default prefix and identifier, required clocking event, permitted clocking items, and optional end label."
+related_clauses = [
+    "A.6.11",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "changed-expectation"
+clause = "14.3"
+note = "The 2012 clocking_event grammar permits @ identifier or @(event_expression), whereas the 2023 grammar directly permits @ ps_identifier and @ hierarchical_identifier; the declaration grammar therefore differs materially."
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.3"
+
+[[requirements]]
+id = "SV-2023-14-CLOCKING-EVENT-GOVERNS-TIMING"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.3"
+anchors = [
+    "[2023:14.3:P005:p355]",
+]
+summary = "The declared clocking event is the clock for the block and governs when every clocking signal in that block is sampled or driven."
+related_clauses = [
+    "14.13",
+    "14.16",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.3"
+
+[[requirements]]
+id = "SV-2023-14-CLOCKING-INOUT-DUAL-DIRECTION-LEGALITY"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.5"
+anchors = [
+    "[2023:14.5:P004:p358]",
+]
+summary = "A clocking inout is the combination of input and output clocking declarations for one signal; it must satisfy both direction-specific connection rules, need not satisfy module-inout-port restrictions, and may designate a variable."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.5"
+
+[[requirements]]
+id = "SV-2023-14-CLOCKING-INPUT-EXPRESSION-PORT-LEGALITY"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.5"
+anchors = [
+    "[2023:14.5:P003:p358]",
+]
+summary = "An expression assigned in a clocking input or inout declaration shall be legal as a connection to a module input port."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.5"
+
+[[requirements]]
+id = "SV-2023-14-CLOCKING-NET-DRIVER-INITIAL-Z"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.16"
+anchors = [
+    "[2023:14.16:P003:p368]",
+]
+summary = "The implicit driver for a net-target clocking output is initialized to 'z and has no influence on the target net until the first synchronous drive."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.16"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.16"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.16"
+
+[[requirements]]
+id = "SV-2023-14-CLOCKING-NET-DRIVER-STRENGTH"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.16"
+anchors = [
+    "[2023:14.16:P003:p368]",
+]
+summary = "The implicit driver created for a net-target clocking output has (strong1, strong0) drive strength."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.16"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.16"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.16"
+
+[[requirements]]
+id = "SV-2023-14-CLOCKING-NET-IMPLICIT-DRIVER"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.16"
+anchors = [
+    "[2023:14.16:P003:p368]",
+]
+summary = "Each net-target clocking output creates an implicit continuous-assignment-like driver fed by an invisible clocking-block variable that a synchronous drive updates in the Re-NBA region."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.16"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.16"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.16"
+
+[[requirements]]
+id = "SV-2023-14-CLOCKING-OUTPUT-ASSIGNS-ONLY-ON-DRIVE"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.16.2"
+anchors = [
+    "[2023:14.16.2:P009:p371]",
+]
+summary = "A clocking block output assigns a value to its associated signal only in a clock cycle in which a synchronous drive to that output occurs."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.16.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.16.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.16.2"
+
+[[requirements]]
+id = "SV-2023-14-CLOCKING-OUTPUT-EXPRESSION-PORT-LEGALITY"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.5"
+anchors = [
+    "[2023:14.5:P003:p358]",
+]
+summary = "An expression assigned in a clocking output or inout declaration shall be legal as a connection to a module output port."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.5"
+
+[[requirements]]
+id = "SV-2023-14-CLOCKING-SIGNAL-CLOCKVAR-DEFINITION"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.3"
+anchors = [
+    "[2023:14.3:P004:p355]",
+]
+summary = "Each clocking signal declaration defines a clockvar in the clocking block; when no assigned expression is used, its signal identifier identifies a net or variable in the enclosing scope."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.3"
+
+[[requirements]]
+id = "SV-2023-14-CLOCKING-SIGNAL-MEMBER-ACCESS"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.7"
+anchors = [
+    "[2023:14.7:P001:p358]",
+]
+summary = "A clocking signal is accessible as a member selected with the clocking-block name and dot operator."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.7"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.7"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.7"
+
+[[requirements]]
+id = "SV-2023-14-CLOCKVAR-NAME-MATCH"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.3"
+anchors = [
+    "[2023:14.3:P004:p355]",
+]
+summary = "Unless a hierarchical expression supplies the clocking signal, the clockvar name and clocking-signal name shall be identical."
+related_clauses = [
+    "14.5",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.3"
+
+[[requirements]]
+id = "SV-2023-14-CLOCKVAR-WRITES-REQUIRE-SYNCHRONOUS-DRIVE"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.16"
+anchors = [
+    "[2023:14.16:P014:p369]",
+]
+summary = "A clockvar may be written only with synchronous-drive syntax; ordinary assignments, continuous assignments, procedural continuous assignments, and force are illegal clockvar writes."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.16"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.16"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.16"
+
+[[requirements]]
+id = "SV-2023-14-CYCLE-DELAY-NONNEGATIVE-INTEGER"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.11"
+anchors = [
+    "[2023:14.11:P003:p361]",
+]
+summary = "A cycle-delay expression shall evaluate to a non-negative integer value."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.11"
+note = "Although one 2012 sentence says positive integer, the same clause explicitly defines legal ##0 behavior, so the effective permitted domain is non-negative integers."
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.11"
+note = "Although the general expression sentence says positive integer, the same subclause explicitly defines ##0 behavior, so the permitted values and behavior match."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.11"
+
+[[requirements]]
+id = "SV-2023-14-CYCLE-DELAY-NOT-INTRA-ASSIGNMENT"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.11"
+anchors = [
+    "[2023:14.11:P008:p361]",
+]
+summary = "A cycle-delay timing control is illegal as an intra-assignment delay in either a blocking or nonblocking assignment."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.11"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.11"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.11"
+
+[[requirements]]
+id = "SV-2023-14-CYCLE-DELAY-REQUIRES-DEFAULT-CLOCKING"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.11"
+anchors = [
+    "[2023:14.11:P004:p361]",
+]
+summary = "A cycle-delay operation uses the default clocking in effect to define cycles; using it where the containing module, interface, checker, or program has no default clocking requires a compile-time error."
+related_clauses = [
+    "14.12",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.11"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.11"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.11"
+
+[[requirements]]
+id = "SV-2023-14-CYCLE-DELAY-SYNTAX"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.11"
+anchors = [
+    "[2023:14.11:G001:p361]",
+]
+summary = "A procedural cycle delay has the form ## followed by an integral number, identifier, or parenthesized expression."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.11"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.11"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.11"
+
+[[requirements]]
+id = "SV-2023-14-CYCLE-DELAY-WAITS-EVENT-COUNT"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.11"
+anchors = [
+    "[2023:14.11:P001:p361]",
+    "[2023:14.11:P006:p361]",
+]
+summary = "A cycle delay waits for the specified count of clocking-block events, so ##1 begun between events resumes at the next event rather than after a full period."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.11"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.11"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.11"
+
+[[requirements]]
+id = "SV-2023-14-DEFAULT-CLOCKING-CONTROLS-CYCLE-DELAYS"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.12"
+anchors = [
+    "[2023:14.12:P001:p361]",
+]
+summary = "A module, interface, program, or checker may designate one clocking block as the default governing all cycle-delay operations in that construct."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.12"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.12"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.12"
+
+[[requirements]]
+id = "SV-2023-14-DEFAULT-CLOCKING-IDENTIFIER-DENOTES-BLOCK"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.12"
+anchors = [
+    "[2023:14.12:P003:p362]",
+]
+summary = "The identifier in a default clocking specification shall denote a clocking block."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.12"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.12"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.12"
+
+[[requirements]]
+id = "SV-2023-14-DEFAULT-CLOCKING-LEXICAL-SCOPE"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.12"
+anchors = [
+    "[2023:14.12:P005:p362]",
+]
+summary = "A default clocking applies within its containing scope and lexically nested module, interface, or checker declarations, but does not propagate into instantiated modules, interfaces, or checkers."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.12"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.12"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.12"
+
+[[requirements]]
+id = "SV-2023-14-DEFAULT-CLOCKING-SKEWS"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.3"
+anchors = [
+    "[2023:14.3:P013:p356]",
+]
+summary = "In the absence of an explicit applicable skew, a clocking input uses a 1step skew and a clocking output uses a zero skew."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.3"
+
+[[requirements]]
+id = "SV-2023-14-DEFAULT-CLOCKING-SYNTAX"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.12"
+anchors = [
+    "[2023:14.12:G001:p362]",
+]
+summary = "A default clocking is specified either by declaring a clocking block with the default prefix or by a `default clocking clocking_identifier;` declaration in a permitted containing construct."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.12"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.12"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.12"
+
+[[requirements]]
+id = "SV-2023-14-DIFFERENT-FUTURE-DRIVES-EACH-MATURE"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.16.2"
+anchors = [
+    "[2023:14.16.2:P006:p370]",
+]
+summary = "Multiple synchronous drives to one output scheduled by cycle delays for different future times each mature in their corresponding future cycle."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.16.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.16.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.16.2"
+
+[[requirements]]
+id = "SV-2023-14-DRIVE-RHS-CYCLE-DELAY-SEMANTICS"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.16"
+anchors = [
+    "[2023:14.16:P007:p368-369]",
+]
+summary = "An RHS cycle delay in a synchronous drive does not block execution of the calling process."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.16"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.16"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.16"
+
+[[requirements]]
+id = "SV-2023-14-DRIVE-RHS-IMMEDIATE-CAPTURE"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.16"
+anchors = [
+    "[2023:14.16:P007:p368-369]",
+]
+summary = "The right-hand expression of a synchronous drive is evaluated immediately even when an RHS cycle delay is present."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.16"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.16"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.16"
+
+[[requirements]]
+id = "SV-2023-14-DRIVE-RHS-TARGET-CYCLE-SKEW-MATURITY"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.16"
+anchors = [
+    "[2023:14.16:P007:p368-369]",
+]
+summary = "An RHS cycle delay postpones a synchronous drive's target update by the specified number of events of the target clockvar's clocking block, followed by that clockvar's output skew."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.16"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.16"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.16"
+
+[[requirements]]
+id = "SV-2023-14-EDGE-SKEW-SELECTS-SIGNAL-EDGE"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.3"
+anchors = [
+    "[2023:14.3:P009:p356]",
+]
+summary = "For a simple clocking event, a clocking skew may select a specific edge of the clocking-event signal instead of a numeric offset."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.3"
+
+[[requirements]]
+id = "SV-2023-14-EFFECTIVE-GLOBAL-CLOCKING-LOOKUP"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.14"
+anchors = [
+    "[2023:14.14:P004:p364]",
+    "[2023:14.14:L001:p364]",
+    "[2023:14.14:L002:p364]",
+]
+summary = "`$global_clock` denotes the event expression of the closest global clocking declaration found first in the enclosing instance and then by ascending parent instance scopes; reaching a top-level hierarchy block without finding one is an error."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.14"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.14"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.14"
+
+[[requirements]]
+id = "SV-2023-14-EVENT-CONTROL-CLOCKING-SYNCHRONIZATION"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.15"
+anchors = [
+    "[2023:14.15:P001:p367]",
+]
+summary = "An event control may explicitly synchronize a process by waiting for a clocking-block event or an applicable clocking-signal value change."
+related_clauses = [
+    "9.4.2",
+    "14.10",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.15"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.15"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.15"
+
+[[requirements]]
+id = "SV-2023-14-EVENT-CONTROL-CLOCKVAR-SLICE"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.15"
+anchors = [
+    "[2023:14.15:P003:p367]",
+]
+summary = "An event-control expression may denote a clocking input or inout clockvar, or a slice of one."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.15"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.15"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.15"
+
+[[requirements]]
+id = "SV-2023-14-EVENT-CONTROL-DYNAMIC-INDEX-SNAPSHOT"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.15"
+anchors = [
+    "[2023:14.15:P003:p367]",
+]
+summary = "A dynamic index in a clockvar slice used by an event control is evaluated once when the event-control expression executes."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.15"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.15"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.15"
+
+[[requirements]]
+id = "SV-2023-14-GLOBAL-CLOCK-ASSERTION-REFERENCE-POINT"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.14"
+anchors = [
+    "[2023:14.14:P005:p364]",
+]
+summary = "For global-clock references in sequences, properties, named sequence/property actuals, or checker actuals, hierarchical lookup occurs after Annex F rewriting: from the assertion statement location for instantiated sequences/properties and after actual-for-formal substitution inside a checker."
+related_clauses = [
+    "F.4",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.14"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.14"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.14"
+
+[[requirements]]
+id = "SV-2023-14-GLOBAL-CLOCKING-DECLARATION-RESTRICTIONS"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.14"
+anchors = [
+    "[2023:14.14:P003:p364]",
+]
+summary = "A global clocking declaration may appear in a module, interface, checker, or program."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.14"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.14"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.14"
+
+[[requirements]]
+id = "SV-2023-14-GLOBAL-CLOCKING-NOT-IN-GENERATE"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.14"
+anchors = [
+    "[2023:14.14:P003:p364]",
+]
+summary = "A global clocking declaration is illegal within a generate block."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.14"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.14"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.14"
+
+[[requirements]]
+id = "SV-2023-14-GLOBAL-CLOCKING-ONE-PER-CONSTRUCT"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.14"
+anchors = [
+    "[2023:14.14:P003:p364]",
+]
+summary = "A module, interface, checker, or program shall contain at most one global clocking declaration."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.14"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.14"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.14"
+
+[[requirements]]
+id = "SV-2023-14-GLOBAL-CLOCKING-SYNTAX"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.14"
+anchors = [
+    "[2023:14.14:G001:p363-364]",
+]
+summary = "A global clocking declaration consists of `global clocking`, an optional identifier, a clocking event, a semicolon, an empty body, and `endclocking` with an optional end label."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.14"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.14"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.14"
+
+[[requirements]]
+id = "SV-2023-14-HIERARCHICAL-CLOCKING-SIGNAL-ASSOCIATION"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.3"
+anchors = [
+    "[2023:14.3:P010:p356]",
+]
+summary = "When a clockvar declaration has an assigned expression, that clockvar is associated with the signal denoted by the specified hierarchical expression rather than requiring a same-named local signal."
+related_clauses = [
+    "14.5",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.3"
+
+[[requirements]]
+id = "SV-2023-14-HIERARCHICAL-EXPRESSION-FORMS"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.5"
+anchors = [
+    "[2023:14.5:P001:p357]",
+    "[2023:14.5:P002:p357]",
+]
+summary = "A clocking signal may be associated through its assignment with a hierarchical expression, including a signal slice, concatenation, or combination from current or other scopes."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.5"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.5"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.5"
+
+[[requirements]]
+id = "SV-2023-14-INOUT-CLOCKVAR-READ-SEMANTICS"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.3"
+anchors = [
+    "[2023:14.3:P008:p355]",
+]
+summary = "Reading an inout clockvar is equivalent to reading its input-side clockvar associated with the same clocking signal."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.3"
+
+[[requirements]]
+id = "SV-2023-14-INOUT-CLOCKVAR-WRITE-SEMANTICS"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.3"
+anchors = [
+    "[2023:14.3:P008:p355]",
+]
+summary = "Writing an inout clockvar is equivalent to writing its output-side clockvar associated with the same clocking signal."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.3"
+
+[[requirements]]
+id = "SV-2023-14-INOUT-DRIVE-PRESERVES-SAMPLED-INPUT"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.16.1"
+anchors = [
+    "[2023:14.16.1:P001:p369]",
+]
+summary = "Driving an inout clockvar does not alter its input-side value; reads continue to return the value sampled at the most recent clocking event rather than the driven value."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.16.1"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.16.1"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.16.1"
+
+[[requirements]]
+id = "SV-2023-14-INPUT-CLOCKVAR-MOST-RECENT-SAMPLE"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.13"
+anchors = [
+    "[2023:14.13:P004:p363]",
+]
+summary = "In any expression, an input or inout clockvar yields the clocking signal value sampled at that block's most recent clocking event."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.13"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.13"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.13"
+
+[[requirements]]
+id = "SV-2023-14-INPUT-CLOCKVAR-NOT-WRITABLE"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.3"
+anchors = [
+    "[2023:14.3:P006:p355]",
+]
+summary = "Writing a clockvar declared with input direction is illegal."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.3"
+
+[[requirements]]
+id = "SV-2023-14-INPUT-OUTPUT-SKEW-DIRECTION"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.3"
+anchors = [
+    "[2023:14.3:P009:p356]",
+    "[2023:14.4:P001:p356]",
+    "[2023:14.16:P001:p368]",
+]
+summary = "A numeric input skew denotes sampling before the clocking event, while a numeric output skew denotes driving after the clocking event."
+related_clauses = [
+    "14.4",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.3"
+
+[[requirements]]
+id = "SV-2023-14-MULTIPLE-BLOCK-VARIABLE-LAST-DRIVE"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.16.2"
+anchors = [
+    "[2023:14.16.2:P008:p371]",
+    "[2023:14.16.2:P009:p371]",
+]
+summary = "When one variable is an output of multiple clocking blocks, its value is the value most recently assigned by a synchronous drive from any of those blocks."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.16.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.16.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.16.2"
+
+[[requirements]]
+id = "SV-2023-14-MULTIPLE-BLOCKS-INDEPENDENT-INPUT-SAMPLING"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.13"
+anchors = [
+    "[2023:14.13:P005:p363]",
+]
+summary = "When one signal is an input to multiple clocking blocks, each block samples it independently at that block's own clocking event."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.13"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.13"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.13"
+
+[[requirements]]
+id = "SV-2023-14-MULTIPLE-CLOCKING-NET-DRIVER-RESOLUTION"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.16.2"
+anchors = [
+    "[2023:14.16.2:P011:p371]",
+]
+summary = "Each clocking output associated with the same net contributes its own implicit driver, and all such drivers plus other net drivers shall resolve according to the net type."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.16.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.16.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.16.2"
+
+[[requirements]]
+id = "SV-2023-14-NO-PROCEDURAL-LOCAL-CLOCKING-SIGNAL"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.3"
+anchors = [
+    "[2023:14.3:P004:p355]",
+]
+summary = "A clocking signal shall not designate a variable whose use is restricted to a procedural block."
+related_clauses = [
+    "6.21",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.3"
+
+[[requirements]]
+id = "SV-2023-14-NO-REGULAR-INTRA-ASSIGNMENT-DRIVE-DELAY"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.16"
+anchors = [
+    "[2023:14.16:P008:p369]",
+    "[2023:14.16.1:P001:p369]",
+]
+summary = "A synchronous clockvar drive shall not use any intra-assignment delay form other than the clocking RHS cycle-delay syntax."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.16"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.16"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.16"
+
+[[requirements]]
+id = "SV-2023-14-NONZERO-CYCLE-DELAY-FUTURE-RE-NBA"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.16"
+anchors = [
+    "[2023:14.16:P002:p368]",
+]
+summary = "A synchronous drive with nonzero cycle delay schedules the corresponding signal update in the Re-NBA region of a future time step."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.16"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.16"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.16"
+
+[[requirements]]
+id = "SV-2023-14-NONZERO-INPUT-SKEW-SAMPLE-VALUE"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.13"
+anchors = [
+    "[2023:14.13:P001:p363]",
+]
+summary = "A clocking input with a skew other than explicit #0 samples the signal's Postponed-region value from the time step located the specified skew before the clocking event."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.13"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.13"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.13"
+
+[[requirements]]
+id = "SV-2023-14-NONZERO-OUTPUT-SKEW-FUTURE-RE-NBA"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.16"
+anchors = [
+    "[2023:14.16:P002:p368]",
+    "[2023:14.16:P011:p369]",
+]
+summary = "A synchronous drive with nonzero output skew schedules the corresponding signal update in the Re-NBA region of the future time step selected by that skew after the applicable clocking event."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.16"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.16"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.16"
+
+[[requirements]]
+id = "SV-2023-14-OFF-EVENT-DRIVE-IMMEDIATE-CAPTURE"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.16"
+anchors = [
+    "[2023:14.16:P012:p369]",
+]
+summary = "A synchronous drive executed at a time not coincident with its clocking event evaluates its right-hand expression immediately, before drive processing at the next event."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.16"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.16"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.16"
+
+[[requirements]]
+id = "SV-2023-14-OFF-EVENT-DRIVE-NONBLOCKING"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.16"
+anchors = [
+    "[2023:14.16:P012:p369]",
+]
+summary = "A synchronous drive executed at a time not coincident with its clocking event executes without blocking the calling process."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.16"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.16"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.16"
+
+[[requirements]]
+id = "SV-2023-14-OFF-EVENT-SYNCHRONOUS-DRIVE"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.16"
+anchors = [
+    "[2023:14.16:P012:p369]",
+]
+summary = "A synchronous drive executed at a time not coincident with its clocking event is processed as if the drive had executed at the next clocking event."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.16"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.16"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.16"
+
+[[requirements]]
+id = "SV-2023-14-ONE-DEFAULT-CLOCKING-PER-CONSTRUCT"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.12"
+anchors = [
+    "[2023:14.12:P004:p362]",
+]
+summary = "A module, interface, program, or checker may specify default clocking only once; a second specification in the same construct requires a compile-time error."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.12"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.12"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.12"
+
+[[requirements]]
+id = "SV-2023-14-ONE-STEP-INPUT-SAMPLING"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.3"
+anchors = [
+    "[2023:14.3:P013:p356]",
+    "[2023:14.4:P003:p357]",
+]
+summary = "A 1step input skew samples the signal's last value immediately before the clock event, at the end of the preceding time step in its Postponed region."
+related_clauses = [
+    "3.14.3",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.3"
+
+[[requirements]]
+id = "SV-2023-14-OUTPUT-CLOCKVAR-NOT-READABLE"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.3"
+anchors = [
+    "[2023:14.3:P007:p355]",
+]
+summary = "Reading the value of a clockvar declared with output direction is illegal."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.3"
+
+[[requirements]]
+id = "SV-2023-14-OUTPUT-CLOCKVAR-VARIABLE-NO-CONTINUOUS-DRIVERS"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.16.2"
+anchors = [
+    "[2023:14.16.2:P014:p371]",
+]
+summary = "A variable associated with an output clockvar shall not be written by a continuous assignment, procedural continuous assignment, or primitive."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.16.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.16.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.16.2"
+
+[[requirements]]
+id = "SV-2023-14-PREFIX-CYCLE-DELAY-BLOCKS-ON-DEFAULT"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.16"
+anchors = [
+    "[2023:14.16:P009:p369]",
+]
+summary = "A procedural cycle delay prefixed to a synchronous drive blocks the process for the specified number of default-clocking cycles, just as it does before any other procedural statement."
+related_clauses = [
+    "14.11",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.16"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.16"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.16"
+
+[[requirements]]
+id = "SV-2023-14-PROCEDURAL-WRITE-TO-OUTPUT-SIGNAL-VARIABLE"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.16.2"
+anchors = [
+    "[2023:14.16.2:P012:p371]",
+]
+summary = "A procedural assignment may write the variable associated with an output clockvar; that value persists until replaced by another procedural assignment or a synchronous clocking-output drive."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.16.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.16.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.16.2"
+
+[[requirements]]
+id = "SV-2023-14-RE-NBA-ITERATION-DRIVE-GLITCH"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.16.2"
+anchors = [
+    "[2023:14.16.2:P004:p370]",
+]
+summary = "If a time step iterates through Re-NBA more than once, synchronous drives assigning different clockvar values in different iterations update the associated clocking signal more than once in that time step."
+related_clauses = [
+    "4.4",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.16.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.16.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.16.2"
+
+[[requirements]]
+id = "SV-2023-14-SAME-CLOCK-BLOCKS-SHARE-EVENT"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.6"
+anchors = [
+    "[2023:14.6:P001:p358]",
+]
+summary = "Clocking blocks using the same clock or clocking expression shall share the same synchronization event."
+related_clauses = [
+    "14.13",
+    "14.16",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.6"
+
+[[requirements]]
+id = "SV-2023-14-SAME-RE-NBA-LAST-DRIVE-WINS"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.16.2"
+anchors = [
+    "[2023:14.16.2:P001:p370]",
+]
+summary = "If multiple synchronous drives of one clocking output mature in the same Re-NBA region of one time step, only the last value is driven, whether the drives executed on or between clocking events."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.16.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.16.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.16.2"
+
+[[requirements]]
+id = "SV-2023-14-SAME-STEP-NBA-AND-DRIVE-ARBITRARY-ORDER"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.16.2"
+anchors = [
+    "[2023:14.16.2:P013:p371]",
+]
+summary = "If a synchronous drive and a procedural nonblocking assignment write the same variable in one time step, their write order is arbitrary; either ordering is conforming."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.16.2"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.16.2"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.16.2"
+
+[[requirements]]
+id = "SV-2023-14-SAMPLES-UPDATED-BEFORE-BLOCK-EVENT"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.13"
+anchors = [
+    "[2023:14.13:P002:p363]",
+]
+summary = "On a clocking event, the block updates its sampled values before triggering its block event, so a process synchronized to the block event reads the newly sampled values regardless of the regions of the waiter and trigger."
+related_clauses = [
+    "14.10",
+]
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.13"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.13"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.13"
+
+[[requirements]]
+id = "SV-2023-14-SIGNALS-MAY-APPEAR-IN-MULTIPLE-CLOCKING-BLOCKS"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.6"
+anchors = [
+    "[2023:14.6:P001:p358]",
+]
+summary = "The same clock, input, inout, or output signal may appear in more than one clocking block."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.6"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.6"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.6"
+
+[[requirements]]
+id = "SV-2023-14-SKEW-DELAY-CONSTANT-NONNEGATIVE"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.3"
+anchors = [
+    "[2023:14.3:P002:p355]",
+    "[2023:14.3:G001:p354-355]",
+    "[2023:14.4:P002:p357]",
+]
+summary = "A clocking skew delay control shall be a time literal or a constant expression whose value is a non-negative integer."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.3"
+note = "Although the 2012 declaration sentence says positive integer, the same chapter explicitly defines legal #0 skew behavior; the effective skew domain includes zero."
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.3"
+note = "The general sentence says positive integer, while the same chapter explicitly defines legal #0 clocking skews; together the permitted non-negative domain matches."
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.3"
+
+[[requirements]]
+id = "SV-2023-14-SKEW-DOES-NOT-SUSPEND-PROCESS"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.4"
+anchors = [
+    "[2023:14.4:P005:p357]",
+]
+summary = "A declarative clocking skew, including explicit #0 skew, does not suspend any process."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.4"
+
+[[requirements]]
+id = "SV-2023-14-SKEW-TIME-UNIT-INTERPRETATION"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.4"
+anchors = [
+    "[2023:14.4:P002:p357]",
+]
+summary = "A clocking skew with no explicit time unit uses the current time unit, and a numeric skew is interpreted using the timescale of the scope containing it."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.4"
+
+[[requirements]]
+id = "SV-2023-14-SYNCHRONIZATION-USES-SAMPLED-VALUES"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.15"
+anchors = [
+    "[2023:14.15:P006:p367]",
+]
+summary = "A synchronization event control over a clockvar detects events using the synchronous values sampled at the corresponding clocking events."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.15"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.15"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.15"
+
+[[requirements]]
+id = "SV-2023-14-SYNCHRONOUS-DRIVE-ASSIGNMENT-COMPATIBILITY"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.16"
+anchors = [
+    "[2023:14.16:P006:p368]",
+]
+summary = "The value expression of a synchronous drive shall be assignment compatible with the corresponding signal's type."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.16"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.16"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.16"
+
+[[requirements]]
+id = "SV-2023-14-SYNCHRONOUS-DRIVE-SYNTAX"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.16"
+anchors = [
+    "[2023:14.16:G001:p368]",
+]
+summary = "A synchronous-drive statement has a clockvar expression, `<=`, an optional cycle delay, an expression, and a semicolon, as defined by the clocking-drive grammar."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.16"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.16"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.16"
+
+[[requirements]]
+id = "SV-2023-14-SYNCHRONOUS-DRIVE-TARGET-FORMS"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.16"
+anchors = [
+    "[2023:14.16:P005:p368]",
+]
+summary = "A synchronous-drive target shall be an entire clocking output, bit-select, or slice; a concatenation is not permitted."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.16"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.16"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.16"
+
+[[requirements]]
+id = "SV-2023-14-UNNAMED-CLOCKING-DECLARATIONS-UNREFERENCEABLE"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.3"
+anchors = [
+    "[2023:14.3:P003:p355]",
+]
+summary = "Declarations contained in an unnamed clocking block cannot be referenced."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.3"
+
+[[requirements]]
+id = "SV-2023-14-UNNAMED-CLOCKING-DEFAULT-ONLY"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.3"
+anchors = [
+    "[2023:14.3:P003:p355]",
+]
+summary = "A non-global clocking block may omit its identifier only when declared as a default clocking block."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.3"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.3"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.3"
+
+[[requirements]]
+id = "SV-2023-14-ZERO-CYCLE-DELAY-DRIVE-NO-EFFECT"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.11"
+anchors = [
+    "[2023:14.11:P007:p361]",
+]
+summary = "A ##0 cycle delay on the right-hand side of a synchronous drive has no effect and behaves as though omitted."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.11"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.11"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.11"
+
+[[requirements]]
+id = "SV-2023-14-ZERO-CYCLE-DELAY-PROCEDURAL"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.11"
+anchors = [
+    "[2023:14.11:P007:p361]",
+]
+summary = "A procedural ##0 suspends until the associated block event if it has not occurred in the current time step, but continues without suspension if that event has already occurred in the time step."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.11"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.11"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.11"
+
+[[requirements]]
+id = "SV-2023-14-ZERO-INPUT-SAMPLE-AVAILABLE-END-OBSERVED"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.13"
+anchors = [
+    "[2023:14.13:P001:p363]",
+]
+summary = "A value sampled by an explicit-#0 clocking input becomes available for reading at the end of Observed-region processing."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.13"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.13"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.13"
+
+[[requirements]]
+id = "SV-2023-14-ZERO-INPUT-SKEW-OBSERVED-SAMPLING"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.4"
+anchors = [
+    "[2023:14.4:P004:p357]",
+    "[2023:14.4:P005:p357]",
+    "[2023:14.13:P001:p363]",
+]
+summary = "An input with explicit zero skew samples its signal at the clocking event in the Observed region."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.4"
+
+[[requirements]]
+id = "SV-2023-14-ZERO-OUTPUT-SKEW-RE-NBA-DRIVE"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.4"
+anchors = [
+    "[2023:14.4:P004:p357]",
+    "[2023:14.4:P005:p357]",
+    "[2023:14.16:P002:p368]",
+]
+summary = "An output with omitted or explicit zero skew is driven at its clocking event in the Re-NBA region."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.4"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.4"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.4"
+
+[[requirements]]
+id = "SV-2023-14-ZERO-SKEW-INPUT-NO-REPEAT-SAMPLE"
+standard_revision = "1800-2023"
+part = "14"
+clause = "14.13"
+anchors = [
+    "[2023:14.13:P001:p363]",
+]
+summary = "After a #0 clocking input is sampled and made readable at the end of Observed processing, repeated Observed-region execution without time advance shall not resample it unless a new clocking event occurs in the active region set."
+related_clauses = []
+tags = []
+
+[requirements.revision_applicability.1800-2012]
+status = "applicable"
+clause = "14.13"
+
+[requirements.revision_applicability.1800-2017]
+status = "applicable"
+clause = "14.13"
+
+[requirements.revision_applicability.1800-2023]
+status = "applicable"
+clause = "14.13"

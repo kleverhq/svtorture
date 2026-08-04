@@ -1,0 +1,4603 @@
+{
+  "authority": "1800-2023",
+  "part": "38",
+  "requirements": [
+    {
+      "hints": {
+        "edge": [
+          "Omit an argument only where its routine definition specifically identifies it as optional."
+        ],
+        "negative": [
+          "Attempt to treat an argument not marked optional as omittable."
+        ],
+        "notes": [
+          "Materialize against a routine signature whose argument presence can be checked portably."
+        ],
+        "positive": [
+          "Call a PLI routine with every argument shown by its definition."
+        ]
+      },
+      "id": "SV-2023-38-PLI-ARGUMENTS-MANDATORY-BY-DEFAULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "End simulation by empty queue and by $finish."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Trigger each feasible action and verify its corresponding reason and phase."
+        ]
+      },
+      "id": "SV-2023-38-VPI-ACTION-CALLBACK-REASONS"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Trigger representative reasons and verify each mandatory reason-specific delivered field."
+        ]
+      },
+      "id": "SV-2023-38-VPI-ACTION-CB-DELIVERY-FIELDS"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Register action callbacks with only required fields initialized."
+        ]
+      },
+      "id": "SV-2023-38-VPI-ACTION-CB-REGISTRATION-FIELDS"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Verify mandatory action registration independent of optional features."
+        ]
+      },
+      "id": "SV-2023-38-VPI-ACTION-FEATURE-AVAILABILITY"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Assume default storage survives a subsequent retrieval."
+        ],
+        "notes": [],
+        "positive": [
+          "Retrieve using default allocation and consume or copy values before another call."
+        ]
+      },
+      "id": "SV-2023-38-VPI-ARRAY-DEFAULT-VPI-STORAGE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise an explicitly allowed two-state/four-state cross-format request."
+        ],
+        "negative": [
+          "Request an incompatible listed format."
+        ],
+        "notes": [],
+        "positive": []
+      },
+      "id": "SV-2023-38-VPI-ARRAY-INCOMPATIBLE-FORMAT-ERROR"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Retrieve known integral elements through integers."
+        ]
+      },
+      "id": "SV-2023-38-VPI-ARRAY-INT-FORMAT"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Request it for an incompatible element type."
+        ],
+        "notes": [],
+        "positive": [
+          "Retrieve each permitted integral array type as longints."
+        ]
+      },
+      "id": "SV-2023-38-VPI-ARRAY-LONGINT-FORMAT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Observe the rule in both VPI-allocated and user-allocated storage modes if each mode can portably produce the NULL result."
+        ],
+        "negative": [],
+        "notes": [
+          "The source specifies NULL implies an error; it does not say every retrieval error must produce NULL."
+        ],
+        "positive": [
+          "If a retrieval returns NULL in the selected value pointer, confirm that the call is treated as a VPI retrieval error."
+        ]
+      },
+      "id": "SV-2023-38-VPI-ARRAY-NULL-VALUE-ERROR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Request vpiRawFourStateVal for a two-state array and vpiRawTwoStateVal for a four-state array, without assuming an unspecified X/Z conversion result."
+        ],
+        "negative": [],
+        "notes": [
+          "The cited block permits cross-state requests but does not define how X or Z is represented in a two-state result."
+        ],
+        "positive": [
+          "Exercise native four-state and two-state raw retrieval formats."
+        ]
+      },
+      "id": "SV-2023-38-VPI-ARRAY-RAW-FORMAT-COMPATIBILITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use widths 8 and 9."
+        ],
+        "negative": [
+          "Interleave A/B per byte."
+        ],
+        "notes": [],
+        "positive": [
+          "Retrieve two non-byte-aligned elements and verify group offsets and total size."
+        ]
+      },
+      "id": "SV-2023-38-VPI-ARRAY-RAW-FOUR-STATE-LAYOUT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a 33-bit element."
+        ],
+        "negative": [
+          "Reverse significance order."
+        ],
+        "notes": [],
+        "positive": [
+          "Retrieve a value with bits set at positions 0, 8, and 32 and verify placement."
+        ]
+      },
+      "id": "SV-2023-38-VPI-ARRAY-RAW-SIGNIFICANCE-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Allocate using generic scalar size instead of raw sizing."
+        ],
+        "notes": [],
+        "positive": [
+          "Retrieve non-byte-aligned two-state elements with correctly sized storage."
+        ]
+      },
+      "id": "SV-2023-38-VPI-ARRAY-RAW-TWO-STATE-LAYOUT"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Request vpiShortIntVal for an incompatible array."
+        ],
+        "notes": [],
+        "positive": [
+          "Retrieve byte and shortint arrays through shortints."
+        ]
+      },
+      "id": "SV-2023-38-VPI-ARRAY-SHORTINT-FORMAT"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Request it for a real or integral array."
+        ],
+        "notes": [],
+        "positive": [
+          "Retrieve a shortreal array through shortreals."
+        ]
+      },
+      "id": "SV-2023-38-VPI-ARRAY-SHORTREAL-FORMAT"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Supply fewer indices than unpacked dimensions."
+        ],
+        "notes": [],
+        "positive": [
+          "Retrieve from a multidimensional array with distinguishable indices."
+        ]
+      },
+      "id": "SV-2023-38-VPI-ARRAY-START-INDICES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a[2:0][3:5] starting at [1][4]."
+        ],
+        "negative": [
+          "Traverse numeric ascending order when declaration direction differs."
+        ],
+        "notes": [],
+        "positive": [
+          "Retrieve across a multidimensional range boundary and verify the specified sequence."
+        ]
+      },
+      "id": "SV-2023-38-VPI-ARRAY-TRAVERSAL-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Request an unlisted format and inspect VPI error status."
+        ],
+        "notes": [],
+        "positive": []
+      },
+      "id": "SV-2023-38-VPI-ARRAY-UNSUPPORTED-FORMAT-ERROR"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [
+          "The cited rule assumes sufficient storage and does not define an undersized-buffer outcome."
+        ],
+        "positive": [
+          "Set vpiUserAllocFlag and provide a correctly sized buffer for a non-raw, non-vector format."
+        ]
+      },
+      "id": "SV-2023-38-VPI-ARRAY-USER-ALLOCATED-STORAGE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [
+          "Materialize only with a retrieval condition that portably produces the specified NULL overwrite; the rule does not say every error does so."
+        ],
+        "positive": [
+          "Retain the original application allocation pointer across a retrieval that returns NULL in the value field, then free the allocation through the retained pointer."
+        ]
+      },
+      "id": "SV-2023-38-VPI-ARRAY-USER-MEMORY-FREE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use element widths 32 and 33."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Retrieve wide four-state elements and verify consecutive word groups and storage size."
+        ]
+      },
+      "id": "SV-2023-38-VPI-ARRAY-VECTOR-FORMAT"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Assume incompatible pointer types."
+        ],
+        "notes": [],
+        "positive": [
+          "Compile C code accessing all members."
+        ]
+      },
+      "id": "SV-2023-38-VPI-ARRAYVALUE-STRUCTURE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Deep-copy needed callback data before returning."
+        ]
+      },
+      "id": "SV-2023-38-VPI-CALLBACK-DATA-LIFETIME"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Register distinct reasons and verify each fires at its defined point."
+        ]
+      },
+      "id": "SV-2023-38-VPI-CALLBACK-REASON"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Register a counting routine and verify it is invoked."
+        ]
+      },
+      "id": "SV-2023-38-VPI-CALLBACK-ROUTINE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Retain an event handle through occurrence where possible, then cancel and verify no error."
+        ]
+      },
+      "id": "SV-2023-38-VPI-CANCEL-OCCURRED-EVENT"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Cause inertial scheduling to cancel an older event, cancel the new event, and verify the older event is not restored."
+        ]
+      },
+      "id": "SV-2023-38-VPI-CANCEL-PRESERVES-PRIOR-EFFECTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use zero delay."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Register delays ending at occupied and empty queues and verify timing."
+        ]
+      },
+      "id": "SV-2023-38-VPI-CB-AFTER-DELAY"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Change a multidimensional array member and verify value, rightmost index, and full index iteration."
+        ]
+      },
+      "id": "SV-2023-38-VPI-CB-ARRAY-MEMBER-DATA"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Execute assign and deassign and verify callbacks afterward."
+        ]
+      },
+      "id": "SV-2023-38-VPI-CB-ASSIGN-DEASSIGN"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Assign new, aliased, and null class references and inspect callback NULL value and object ID."
+        ]
+      },
+      "id": "SV-2023-38-VPI-CB-CLASS-VAR-CHANGE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Construct and shallow-copy class objects and inspect completed state."
+        ]
+      },
+      "id": "SV-2023-38-VPI-CB-CREATE-OBJ"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify p_cb_data is the structure pointer typedef and cb_rtn accepts a t_cb_data pointer."
+        ],
+        "negative": [
+          "Assume an incompatible type for a specified member."
+        ],
+        "notes": [],
+        "positive": [
+          "Compile C code accessing every specified s_cb_data member through vpi_user.h."
+        ]
+      },
+      "id": "SV-2023-38-VPI-CB-DATA-STRUCTURE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Disable a qualifying task and verify callback."
+        ]
+      },
+      "id": "SV-2023-38-VPI-CB-DISABLE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Disable representative supported constructs and verify obj type."
+        ]
+      },
+      "id": "SV-2023-38-VPI-CB-DISABLE-OBJECT"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Create a transient object whose deletion results from a simulation event and observe cbEndOfObject before deletion."
+        ]
+      },
+      "id": "SV-2023-38-VPI-CB-END-OBJECT"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Execute a registered event statement and verify callback plus NULL value."
+        ]
+      },
+      "id": "SV-2023-38-VPI-CB-EVENT-STMT-VALUE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Force and release an object and verify post-operation callbacks."
+        ]
+      },
+      "id": "SV-2023-38-VPI-CB-FORCE-RELEASE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Trigger a four-state value and inspect binary string."
+        ]
+      },
+      "id": "SV-2023-38-VPI-CB-FORMAT-BINARY"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Trigger a known integer and inspect decimal callback string."
+        ]
+      },
+      "id": "SV-2023-38-VPI-CB-FORMAT-DECIMAL"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Trigger values containing hexadecimal digits and unknown states."
+        ]
+      },
+      "id": "SV-2023-38-VPI-CB-FORMAT-HEX"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Trigger a known integer transition and compare callback value."
+        ]
+      },
+      "id": "SV-2023-38-VPI-CB-FORMAT-INTEGER"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Register on several object types and verify resulting formats."
+        ]
+      },
+      "id": "SV-2023-38-VPI-CB-FORMAT-OBJECT-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Trigger values containing octal digits and unknown states."
+        ]
+      },
+      "id": "SV-2023-38-VPI-CB-FORMAT-OCTAL"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Trigger a nonintegral real transition and compare double."
+        ]
+      },
+      "id": "SV-2023-38-VPI-CB-FORMAT-REAL"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Trigger applicable scalar states and inspect constants."
+        ]
+      },
+      "id": "SV-2023-38-VPI-CB-FORMAT-SCALAR"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [
+          "The cited row defines this format only for scalar objects and does not specify an error outcome for other objects."
+        ],
+        "positive": [
+          "Trigger a scalar with known value and drive strength and inspect both."
+        ]
+      },
+      "id": "SV-2023-38-VPI-CB-FORMAT-STRENGTH"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Trigger a string-representable value and compare ASCII result."
+        ]
+      },
+      "id": "SV-2023-38-VPI-CB-FORMAT-STRING"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Trigger a time value exceeding 32 bits and verify high/low words."
+        ]
+      },
+      "id": "SV-2023-38-VPI-CB-FORMAT-TIME"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Trigger a vector containing 0,1,X,Z and inspect A/B words."
+        ]
+      },
+      "id": "SV-2023-38-VPI-CB-FORMAT-VECTOR"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "At cbStartOfFrame observe initialized automatic variables, and observe cbEndOfFrame after the associated task or function completes."
+        ]
+      },
+      "id": "SV-2023-38-VPI-CB-FRAME-LIFECYCLE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Schedule distinct future queues and verify callback before the nearest next queue."
+        ]
+      },
+      "id": "SV-2023-38-VPI-CB-NEXT-SIM-TIME"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Perform each operation and compare returned statement handle and resultant value."
+        ]
+      },
+      "id": "SV-2023-38-VPI-CB-OPERATION-DATA"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Avoid navigation or callback registration through the handle."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Inspect direct properties during reclaim and verify time NULL."
+        ]
+      },
+      "id": "SV-2023-38-VPI-CB-RECLAIM-DATA"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Arrange for a class object to become unused and observe cbReclaimObj before reclamation."
+        ]
+      },
+      "id": "SV-2023-38-VPI-CB-RECLAIM-OBJ"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [
+          "The cited block defines behavior only for legal operating-system signals."
+        ],
+        "positive": [
+          "Register a legal catchable operating-system signal, deliver it, and verify the simulator traps it and invokes the callback after reaching a safe point if possible."
+        ]
+      },
+      "id": "SV-2023-38-VPI-CB-SIGNAL-HANDLER"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Resize each supported dynamic container and verify callback."
+        ]
+      },
+      "id": "SV-2023-38-VPI-CB-SIZE-CHANGE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Observe state before the statement executes."
+        ]
+      },
+      "id": "SV-2023-38-VPI-CB-STMT"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Register callbacks across representative stmt-class objects."
+        ]
+      },
+      "id": "SV-2023-38-VPI-CB-STMT-ALL-STMT-OBJECTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use empty and multi-statement blocks."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Execute each block kind and verify one pre-block callback with block handle."
+        ]
+      },
+      "id": "SV-2023-38-VPI-CB-STMT-BLOCK-OBJECTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use zero delay."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Execute a nonzero delay control and verify callback at encounter before time advances."
+        ]
+      },
+      "id": "SV-2023-38-VPI-CB-STMT-DELAY-CONTROL"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Register with simulation time and suppression and inspect every delivered field."
+        ]
+      },
+      "id": "SV-2023-38-VPI-CB-STMT-DELIVERY"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Encounter an event control and verify callback before trigger/resumption."
+        ]
+      },
+      "id": "SV-2023-38-VPI-CB-STMT-EVENT-CONTROL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use zero iterations."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Instrument initialization/condition/increment side effects and verify callback points."
+        ]
+      },
+      "id": "SV-2023-38-VPI-CB-STMT-FOR"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Run a forever loop terminated after several iterations and verify callback at first encounter and each iteration."
+        ]
+      },
+      "id": "SV-2023-38-VPI-CB-STMT-FOREVER"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Execute if and if-else statements and observe callback before condition side effects."
+        ]
+      },
+      "id": "SV-2023-38-VPI-CB-STMT-IF"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Register module-wide across protected and unprotected regions; only unprotected statements fire."
+        ]
+      },
+      "id": "SV-2023-38-VPI-CB-STMT-MODULE-PROTECTED"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Remove returned module callback handle and verify no member statement callbacks remain."
+        ]
+      },
+      "id": "SV-2023-38-VPI-CB-STMT-MODULE-REMOVE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Include nested scopes."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Register on a module with varied statements and verify each eligible one."
+        ]
+      },
+      "id": "SV-2023-38-VPI-CB-STMT-MODULE-WIDE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Register identical cbStmt data twice and verify two invocations."
+        ]
+      },
+      "id": "SV-2023-38-VPI-CB-STMT-MULTIPLE-REGISTRATIONS"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Register on a protected statement and verify NULL and error."
+        ],
+        "notes": [],
+        "positive": []
+      },
+      "id": "SV-2023-38-VPI-CB-STMT-PROTECTED-ERROR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use representative eligible statement object types from Table 38-6."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Register cbStmt with each allowed time mode and verify value and index registration inputs are unused."
+        ]
+      },
+      "id": "SV-2023-38-VPI-CB-STMT-REGISTRATION-FIELDS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use repeat(0)."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Run repeat(3) and verify callbacks at encounter and each later iteration per table semantics."
+        ]
+      },
+      "id": "SV-2023-38-VPI-CB-STMT-REPEAT"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Execute each listed statement type and verify callback precedes its observable effect."
+        ]
+      },
+      "id": "SV-2023-38-VPI-CB-STMT-SIMPLE-PREEXECUTION"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Call user and system tasks and verify callback before effects."
+        ]
+      },
+      "id": "SV-2023-38-VPI-CB-STMT-TASK-CALL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a false initial condition."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Run multiple iterations and count one pre-condition callback each."
+        ]
+      },
+      "id": "SV-2023-38-VPI-CB-STMT-WHILE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Change only drive strength and verify callback."
+        ]
+      },
+      "id": "SV-2023-38-VPI-CB-STRENGTH-CHANGE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Create, suspend and resume, and end a thread while recording callback order and confirming its frames end before cbEndOfThread."
+        ]
+      },
+      "id": "SV-2023-38-VPI-CB-THREAD-LIFECYCLE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Verify post-NBA state and ordering before read-only synchronization."
+        ]
+      },
+      "id": "SV-2023-38-VPI-CB-TIME-END"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Schedule NBA updates and verify callback sees pre-NBA state."
+        ]
+      },
+      "id": "SV-2023-38-VPI-CB-TIME-NBA-SYNCH"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Attempt a value write or immediate event schedule."
+        ],
+        "notes": [],
+        "positive": [
+          "Read stable values during callback."
+        ]
+      },
+      "id": "SV-2023-38-VPI-CB-TIME-READ-ONLY"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Register read-write synchronization and observe ordering with ordinary and NBA events."
+        ]
+      },
+      "id": "SV-2023-38-VPI-CB-TIME-READ-WRITE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Register at occupied and empty times and verify pre-event invocation."
+        ]
+      },
+      "id": "SV-2023-38-VPI-CB-TIME-START"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Attempt registration for excluded objects."
+        ],
+        "notes": [],
+        "positive": [
+          "Change a supported variable and verify callback after change."
+        ]
+      },
+      "id": "SV-2023-38-VPI-CB-VALUE-CHANGE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Attempt each of cbForce, cbRelease, and cbDisable on a variable bit-select and verify the registration is not accepted as legal."
+        ],
+        "notes": [
+          "The cited block states illegality but does not prescribe an error-status value or diagnostic wording."
+        ],
+        "positive": []
+      },
+      "id": "SV-2023-38-VPI-CB-VAR-BIT-SELECT-ILLEGAL"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [
+          "Choose an induced error whose portable fields can be checked without relying on diagnostic wording."
+        ],
+        "positive": [
+          "Cause a VPI error and pass a valid structure pointer, then inspect the returned error information."
+        ]
+      },
+      "id": "SV-2023-38-VPI-CHK-ERROR-INFO-POPULATED"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Cause an error and call vpi_chk_error(NULL), checking the severity return without a structure."
+        ]
+      },
+      "id": "SV-2023-38-VPI-CHK-ERROR-NULL-INFO"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "After producing an error, call vpi_chk_error twice and verify both calls observe the same status."
+        ]
+      },
+      "id": "SV-2023-38-VPI-CHK-ERROR-PRESERVES-STATUS"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [
+          "The cited text orders the severity constants but does not specify a portable operation that must produce each severity."
+        ],
+        "positive": [
+          "After a VPI error, pass a valid error-info structure and verify the returned integer equals the populated severity level and is one of the defined severity constants."
+        ]
+      },
+      "id": "SV-2023-38-VPI-CHK-ERROR-RETURNS-SEVERITY"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Make a successful VPI call and immediately verify vpi_chk_error returns zero."
+        ]
+      },
+      "id": "SV-2023-38-VPI-CHK-ERROR-RETURNS-ZERO"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Call vpi_chk_error with a mismatched argument signature."
+        ],
+        "notes": [],
+        "positive": [
+          "Compile a VPI application that calls vpi_chk_error with a p_vpi_error_info argument."
+        ]
+      },
+      "id": "SV-2023-38-VPI-CHK-ERROR-SIGNATURE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Track class-member handles through null, aliasing, and reassignment."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare handles whose indexed expressions currently resolve to the same array element."
+        ]
+      },
+      "id": "SV-2023-38-VPI-COMPARE-OBJECTS-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Call vpi_compare_objects with the wrong arity."
+        ],
+        "notes": [],
+        "positive": [
+          "Compile a call to vpi_compare_objects with two vpiHandle values."
+        ]
+      },
+      "id": "SV-2023-38-VPI-COMPARE-OBJECTS-SIGNATURE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Request vpiFinish and observe termination upon callback return."
+        ]
+      },
+      "id": "SV-2023-38-VPI-CONTROL-FINISH"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [
+          "The cited block does not define the outcome for a handle outside vpiScope."
+        ],
+        "positive": [
+          "Set interactive scope with a handle to an object in the vpiScope class and observe the immediate scope change."
+        ]
+      },
+      "id": "SV-2023-38-VPI-CONTROL-INTERACTIVE-SCOPE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Omit one reset argument."
+        ],
+        "notes": [],
+        "positive": [
+          "Request vpiReset with all three integer arguments."
+        ]
+      },
+      "id": "SV-2023-38-VPI-CONTROL-RESET"
+    },
+    {
+      "hints": {
+        "edge": [
+          "For an invocation that portably produces a defined failure, verify the return is 0."
+        ],
+        "negative": [],
+        "notes": [
+          "The cited return row maps status but does not itself specify which operation/argument combinations must succeed or fail."
+        ],
+        "positive": [
+          "For a vpi_control invocation that completes successfully, verify the return is 1."
+        ]
+      },
+      "id": "SV-2023-38-VPI-CONTROL-RETURN-STATUS"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Omit required operation arguments."
+        ],
+        "notes": [],
+        "positive": [
+          "Call with an operation and its required arguments."
+        ]
+      },
+      "id": "SV-2023-38-VPI-CONTROL-SIGNATURE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Request vpiStop with a diagnostic level and observe stop upon callback return."
+        ]
+      },
+      "id": "SV-2023-38-VPI-CONTROL-STOP"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Assume an incompatible member type."
+        ],
+        "notes": [],
+        "positive": [
+          "Compile C code accessing every member."
+        ]
+      },
+      "id": "SV-2023-38-VPI-DELAY-STRUCTURE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify p_vpi_error_info is a pointer typedef for the structure."
+        ],
+        "negative": [
+          "Compile code assuming a specified member has an incompatible type."
+        ],
+        "notes": [],
+        "positive": [
+          "Compile C code that accesses every specified s_vpi_error_info member using vpi_user.h."
+        ]
+      },
+      "id": "SV-2023-38-VPI-ERROR-INFO-STRUCTURE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use consecutive non-check VPI calls after an error."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Produce an error, invoke another successful VPI routine, then observe that error status is cleared."
+        ]
+      },
+      "id": "SV-2023-38-VPI-ERROR-STATUS-RESET"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Compare callback fields with registration while verifying structure pointer differs."
+        ]
+      },
+      "id": "SV-2023-38-VPI-EVENT-CB-DELIVERY-DATA"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Exercise each special obj interpretation."
+        ]
+      },
+      "id": "SV-2023-38-VPI-EVENT-CB-OBJECT-FIELD"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Request each time representation and verify special callbacks omit time."
+        ]
+      },
+      "id": "SV-2023-38-VPI-EVENT-CB-TIME-FIELD"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Request supported formats and verify cbStmt omits value."
+        ]
+      },
+      "id": "SV-2023-38-VPI-EVENT-CB-VALUE-FIELD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Flush when buffers are empty."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Write buffered output, call vpi_flush, and verify it becomes externally visible in both applicable destinations."
+        ]
+      },
+      "id": "SV-2023-38-VPI-FLUSH-BUFFERS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise a portable failure condition if available."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Flush valid output buffers and expect zero."
+        ]
+      },
+      "id": "SV-2023-38-VPI-FLUSH-RETURN"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Pass an argument to vpi_flush."
+        ],
+        "notes": [],
+        "positive": [
+          "Compile and call vpi_flush()."
+        ]
+      },
+      "id": "SV-2023-38-VPI-FLUSH-SIGNATURE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Request the same Boolean property on objects for which it is true and false, expecting 1 and 0 respectively."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-BOOLEAN-ENCODING"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [
+          "The cited block assigns allocation responsibility but does not define an invalid-storage outcome."
+        ],
+        "positive": [
+          "Allocate writable s_cb_data storage in the application and pass its address to vpi_get_cb_info."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-CB-INFO-CALLER-STORAGE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [
+          "Avoid depending on pointer identity where the standard only requires equivalent callback information."
+        ],
+        "positive": [
+          "Register a callback, retrieve its information, and compare portable fields such as reason and object."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-CB-INFO-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Pass an incompatible destination pointer."
+        ],
+        "notes": [],
+        "positive": [
+          "Compile a void call with a simulation-callback handle and p_cb_data destination."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-CB-INFO-SIGNATURE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Call from an unrelated callback reason."
+        ],
+        "notes": [],
+        "positive": [
+          "Call from cbStartOfRestart and cbEndOfRestart callbacks."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-DATA-CALLBACK-CONTEXT"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [
+          "The cited text does not define zero-count legality or behavior for insufficient/invalid storage."
+        ],
+        "positive": [
+          "Allocate at least numOfBytes of writable storage at dataLoc before a retrieval of a positive byte count."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-DATA-CALLER-STORAGE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Overread after one or more prior partial retrievals."
+        ],
+        "negative": [
+          "Request more bytes than remain and verify warning status, retained data, zero padding, and actual-byte return count."
+        ],
+        "notes": [
+          "Do not depend on warning wording."
+        ],
+        "positive": []
+      },
+      "id": "SV-2023-38-VPI-GET-DATA-OVERREAD"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Leave stored bytes unread when restart processing ends."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Store a larger block and retrieve only a prefix without error."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-DATA-PARTIAL-READ-PERMITTED"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [
+          "The source maps failure to zero but does not identify a portable failure-inducing input in this block."
+        ],
+        "positive": [
+          "Retrieve available stored bytes and verify the returned count equals the actual number retrieved."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-DATA-RETURN-COUNT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Retrieve with several differently sized calls."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Store distinct byte segments, then retrieve them in multiple calls and verify sequential continuation."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-DATA-SEQUENTIAL-READ"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Compile a call whose arity or declared argument types do not match the specified signature."
+        ],
+        "notes": [],
+        "positive": [
+          "Compile a call with a PLI_INT32 save/restart ID, writable PLI_BYTE8 storage pointer, and PLI_INT32 requested count."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-DATA-SIGNATURE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Reuse application storage across calls only while the structure and its da array remain sufficiently sized."
+        ],
+        "negative": [],
+        "notes": [
+          "The source assigns allocation responsibility but does not define an invalid-storage outcome."
+        ],
+        "positive": [
+          "Allocate writable s_vpi_delay storage before calling vpi_get_delays."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-DELAYS-CALLER-STORAGE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare required array size with each flag disabled and enabled."
+        ],
+        "negative": [],
+        "notes": [
+          "The cited block does not define behavior for an undersized array."
+        ],
+        "positive": [
+          "Allocate da from the requested delay count and selected MTM/pulse-rejection flags, then retrieve values into it."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-DELAYS-DA-ARRAY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use several path delays with distinct values."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Declare distinguishable ordered delays and verify da preserves description order."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-DELAYS-DESCRIPTION-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Vary the nested s_vpi_time type while holding s_vpi_delay.time_type fixed and verify the returned format is unchanged."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-DELAYS-IGNORES-TIME-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Use count 1 for an intermodule path."
+        ],
+        "notes": [],
+        "positive": [
+          "Retrieve intermodule path delays with counts 2 and 3."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-DELAYS-INTERMODULE-COUNT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use one delay with distinguishable minimum, typical, and maximum values."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Retrieve two MTM delays without pulse rejection and verify six values grouped min/typ/max per delay."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-DELAYS-MTM-LAYOUT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use distinct values for all nine components."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Retrieve two MTM pulse-rejection delays and verify nine ordered values per delay."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-DELAYS-MTM-PULSE-LAYOUT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise the minimum and maximum legal counts."
+        ],
+        "negative": [
+          "Use a path delay count outside 1, 2, 3, 6, and 12."
+        ],
+        "notes": [],
+        "positive": [
+          "Retrieve path delays using each legal count."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-DELAYS-PATH-COUNT"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Set no_of_delays to 1 for a primitive."
+        ],
+        "notes": [],
+        "positive": [
+          "Retrieve primitive delays with no_of_delays set to 2 and to 3."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-DELAYS-PRIMITIVE-COUNT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use distinct values for all three fields."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Retrieve two pulse-rejection delays without MTM and verify delay/reject/error groups."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-DELAYS-PULSE-LAYOUT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Retrieve pulse limits from an object type that supports them."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Retrieve known object delays and compare the returned structure values."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-DELAYS-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Pass an incompatible delay destination pointer."
+        ],
+        "notes": [],
+        "positive": [
+          "Compile a void call with an applicable object handle and p_vpi_delay."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-DELAYS-SIGNATURE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use the maximum legal no_of_delays for an applicable path."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Retrieve multiple distinct delays with both flags false and verify one ordered array element per delay."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-DELAYS-SINGLE-VALUE-LAYOUT"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Retrieve the same delay using supported time_type settings and verify each corresponding representation."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-DELAYS-TIME-FORMAT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise timing checks with one and multiple limits."
+        ],
+        "negative": [
+          "Use a no_of_delays value different from the timing check's limit count."
+        ],
+        "notes": [],
+        "positive": [
+          "Retrieve a timing check with two limits using no_of_delays equal to two."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-DELAYS-TIMING-CHECK-COUNT"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Make an invalid vpi_get request and verify the result is vpiUndefined."
+        ],
+        "notes": [],
+        "positive": []
+      },
+      "id": "SV-2023-38-VPI-GET-ERROR-RETURN"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use simulation settings in which time unit and time precision differ, confirming that the NULL vpiTimePrecision query still follows the cited simulation-time-unit rule."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Call vpi_get(vpiTimeUnit, NULL) and vpi_get(vpiTimePrecision, NULL) and verify each returns the simulation time unit."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-NULL-TIME-PROPERTY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Request an integer property whose legal value is not restricted to Boolean encoding."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Request a defined integer property such as vpiSize and compare the PLI_INT32 result with the object's specified property value."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-PROPERTY-VALUE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise a protected-object property that is explicitly permitted and do not apply the default error rule."
+        ],
+        "negative": [
+          "Request an otherwise-unspecified property from a protected object and verify that an error is recorded."
+        ],
+        "notes": [
+          "Use VPI error status rather than diagnostic wording."
+        ],
+        "positive": []
+      },
+      "id": "SV-2023-38-VPI-GET-PROTECTED-OBJECT-ERROR"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Pass a non-handle as the object argument."
+        ],
+        "notes": [],
+        "positive": [
+          "Call vpi_get with an integer property constant and an applicable object handle."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-SIGNATURE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Request an empty legal string property."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Request a known vpiDefName and compare the returned character string."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-STR-PROPERTY-VALUE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Do not apply the default where access is explicitly permitted."
+        ],
+        "negative": [
+          "Request an otherwise-unspecified string property from a protected object and check VPI error status."
+        ],
+        "notes": [],
+        "positive": []
+      },
+      "id": "SV-2023-38-VPI-GET-STR-PROTECTED-OBJECT-ERROR"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Obtain a vpi_get_str result and an s_vpi_value string result and verify one retrieval does not use the other's required buffer."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-STR-SEPARATE-VALUE-BUFFER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Copy the first value before the second call when both values must be retained."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Call vpi_get_str for two distinct values and treat the first pointer's content as temporary."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-STR-SHARED-TEMPORARY"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Compile a call whose arity or declared argument types do not match the specified signature."
+        ],
+        "notes": [],
+        "positive": [
+          "Compile a call with a PLI_INT32 string-property selector and a vpiHandle."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-STR-SIGNATURE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [
+          "The source assigns allocation responsibility but does not define an invalid-storage outcome."
+        ],
+        "positive": [
+          "Allocate writable s_vpi_systf_data storage before passing it to vpi_get_systf_info."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-SYSTF-INFO-CALLER-STORAGE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Retrieve information for both a task and a function callback."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Register a user system task, retrieve its information, and compare type and name."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-SYSTF-INFO-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Pass an incompatible destination pointer."
+        ],
+        "notes": [],
+        "positive": [
+          "Compile a void call with a system callback handle and structure pointer."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-SYSTF-INFO-SIGNATURE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [
+          "The source assigns allocation responsibility but does not define an invalid-storage outcome."
+        ],
+        "positive": [
+          "Allocate writable s_vpi_time storage before passing it to vpi_get_time."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-TIME-CALLER-STORAGE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Call vpi_get_time(NULL, ...) at a known time and verify simulation-unit representation."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-TIME-NULL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Choose a time requiring conversion between simulation and object units."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "At a known simulation time, retrieve time for objects with differing time units and verify scaling."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-TIME-OBJECT-TIMESCALE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare with current time to ensure the scheduled, not current, time is returned."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Obtain a time-queue event handle and verify its future scheduled time."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-TIME-QUEUE-EVENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a time with a fractional scaled-real representation."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Retrieve the same time with vpiScaledRealTime and vpiSimTime and verify corresponding fields."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-TIME-REPRESENTATION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use NULL as the object where permitted."
+        ],
+        "negative": [
+          "Pass an incompatible destination pointer."
+        ],
+        "notes": [],
+        "positive": [
+          "Compile a void call with an object handle and allocated time structure."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-TIME-SIGNATURE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Associate different values with distinct call handles."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Store a distinctive pointer with vpi_put_userdata and retrieve the same value."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-USERDATA-ASSOCIATED-VALUE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Associate user data, perform a reset or restart, and verify a subsequent vpi_get_userdata call returns NULL."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-USERDATA-CLEARED-BY-RESET-RESTART"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [
+          "The cited block maps failure to NULL but does not specify a portable failure-inducing input."
+        ],
+        "positive": [
+          "For a vpi_get_userdata invocation that portably produces a failure, verify the return is NULL."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-USERDATA-FAILURE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Call on a valid system call handle before associating data and expect NULL."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-USERDATA-NONE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Compile a call whose arity or declared argument type does not match the specified signature."
+        ],
+        "notes": [],
+        "positive": [
+          "Compile calls using both a system-task call handle and a system-function call handle and consume the void-pointer result."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-USERDATA-SIGNATURE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [
+          "The source assigns allocation responsibility but does not define an invalid-storage outcome."
+        ],
+        "positive": [
+          "Allocate writable s_vpi_arrayvalue structure storage before retrieval."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-VALUE-ARRAY-CALLER-STRUCTURE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Distinguish one fully indexed element from a partially indexed unpacked subarray."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "For a multidimensional unpacked array of packed vectors, retrieve members addressed by all unpacked indices and verify packed-vector element values."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-VALUE-ARRAY-ELEMENT-DEFINITION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a multidimensional static array with all indices of the starting element specified."
+        ],
+        "negative": [
+          "Attempt retrieval from a dynamic array, string-element array, or array of unpacked structs."
+        ],
+        "notes": [],
+        "positive": [
+          "Retrieve contiguous elements from a static unpacked array of packed integral elements."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-VALUE-ARRAY-ELIGIBILITY"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Retrieve the same eligible array using multiple compatible formats."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-VALUE-ARRAY-FORMAT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Retrieve one element and a section ending at the array boundary."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Retrieve a known contiguous section and compare each returned value."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-VALUE-ARRAY-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a multidimensional start-index array."
+        ],
+        "negative": [
+          "Pass the wrong index-pointer or count type."
+        ],
+        "notes": [],
+        "positive": [
+          "Compile a call with an array handle, destination, start indices, and count."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-VALUE-ARRAY-SIGNATURE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Accept non-binary digit characters."
+        ],
+        "notes": [],
+        "positive": [
+          "Retrieve a value containing all four states as vpiBinStrVal."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-VALUE-BINARY-STRING"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [
+          "The source assigns allocation responsibility but does not define an invalid-storage outcome."
+        ],
+        "positive": [
+          "Allocate writable s_vpi_value structure storage before calling vpi_get_value."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-VALUE-CALLER-STORAGE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Retrieve zero."
+        ],
+        "negative": [
+          "Return hexadecimal alphabetic digits."
+        ],
+        "notes": [],
+        "positive": [
+          "Retrieve a known integer as vpiDecStrVal and verify decimal digits."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-VALUE-DECIMAL-STRING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Retrieve x[my_func(a)] and verify the index function is called exactly as expression evaluation requires."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Retrieve i++ and verify the old value is returned and i increments."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-VALUE-EVALUATION-SIDE-EFFECTS"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Return lowercase x for a partially-X hex group."
+        ],
+        "notes": [],
+        "positive": [
+          "Retrieve hex groups wholly X, partly X, wholly Z, and partly Z and verify case."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-VALUE-HEX-STRING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use known bits around unknown bits to verify positional mapping."
+        ],
+        "negative": [
+          "Preserve X or Z in the two-state integer result."
+        ],
+        "notes": [],
+        "positive": [
+          "Retrieve an integer-format four-state vector containing X and Z and verify those bits become zero."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-VALUE-INTEGER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "For a scalar, accept either permitted representation."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Request vpiObjTypeVal for each mapped category."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-VALUE-OBJECT-TYPE-FORMAT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Mix known and unknown bits in one octal group."
+        ],
+        "negative": [
+          "Return lowercase x for a partially-X group."
+        ],
+        "notes": [],
+        "positive": [
+          "Retrieve octal groups that are wholly X, partly X, wholly Z, and partly Z and verify case."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-VALUE-OCTAL-STRING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Copy a vector spanning multiple words."
+        ],
+        "negative": [
+          "Retain only the transient pointer across another call."
+        ],
+        "notes": [],
+        "positive": [
+          "Deep-copy a pointer-valued result before another retrieval."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-VALUE-PRESERVE-COPY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a nonintegral real value."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Retrieve a known real value and compare the double result."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-VALUE-REAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise half-way values."
+        ],
+        "negative": [
+          "Use truncation where 6.12.1 requires another rounded value."
+        ],
+        "notes": [],
+        "positive": [
+          "Retrieve positive and negative fractional real values as vpiIntVal and verify prescribed rounding."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-VALUE-REAL-CONVERSION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a value requiring rounding within the precision limit."
+        ],
+        "negative": [
+          "Return more than 16 digits of precision."
+        ],
+        "notes": [],
+        "positive": [
+          "Retrieve a nonintegral real as a string and verify decimal notation and precision bound."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-VALUE-REAL-STRING"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Retrieve the same object in two supported requested formats and verify each representation."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-VALUE-REQUESTED-FORMAT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Retrieve a four-state value containing X or Z using an appropriate format."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Retrieve a known expression value and compare the structure result."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-VALUE-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Return a scalar constant outside the defined set."
+        ],
+        "notes": [],
+        "positive": [
+          "Retrieve scalar values covering 0, 1, X, Z, H, and L where applicable."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-VALUE-SCALAR"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Retrieve strings through both routines and verify one routine's retrieval does not use the other's required buffer."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-VALUE-SEPARATE-STRING-BUFFER"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Pass an incompatible destination pointer."
+        ],
+        "notes": [],
+        "positive": [
+          "Compile a void call with an expression handle and value structure."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-VALUE-SIGNATURE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise differing zero and one strengths."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Retrieve a driven net with known logic and strength."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-VALUE-STRENGTH"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare a one-bit scalar with a multi-bit vector."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Retrieve a multi-bit vector with vpiStrengthVal and inspect a distinct returned s_vpi_strengthval element for every bit."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-VALUE-STRENGTH-ARRAY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multiple bytes with distinguishable characters."
+        ],
+        "negative": [
+          "Interpret groups with a width other than 8 bits."
+        ],
+        "notes": [],
+        "positive": [
+          "Retrieve a packed value whose bytes encode a known ASCII string."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-VALUE-STRING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Copy the first string before the second call when both values must be retained."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Retrieve two distinct string values and verify the second call overwrites the routine's string-buffer content from the first."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-VALUE-STRING-BUFFER-OVERWRITE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Request an unrelated format for a vpiStringConst."
+        ],
+        "notes": [],
+        "positive": [
+          "Retrieve the same string constant in both permitted formats."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-VALUE-STRING-CONSTANT-FORMAT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise a value crossing the low-word boundary."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Retrieve a time value exceeding 32 bits and verify high/low representation."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-VALUE-TIME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use more than four symbols to cross an array-element boundary."
+        ],
+        "negative": [
+          "Reverse abit/bbit byte ordering."
+        ],
+        "notes": [],
+        "positive": [
+          "Retrieve UDP entries containing one- and two-character symbols and verify byte order and NUL padding."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-VALUE-UDP-TABLE-ENCODING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Alternate different pointer-valued formats."
+        ],
+        "negative": [
+          "Assume returned union storage remains valid after another vpi_get_value call."
+        ],
+        "notes": [],
+        "positive": [
+          "Retrieve a pointer-valued representation and consume it before the next call."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-VALUE-UNION-MEMORY-LIFETIME"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise 0, 1, X, and Z variable values."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Retrieve strength for a variable and expect strong regardless of its logic value."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-VALUE-VARIABLE-STRONG"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a vector wider than 32 bits."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Retrieve a vector containing 0, 1, X, and Z and verify aval/bval words."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-VALUE-VECTOR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Run with no user options and verify the reported count and argument representation."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Invoke with known options and verify argc/argv plus non-NULL product and version information."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-VLOG-INFO-CONTENTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise a specified failure and expect 0."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Retrieve execution information successfully and expect 1."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-VLOG-INFO-RETURN"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Pass an incompatible pointer."
+        ],
+        "notes": [],
+        "positive": [
+          "Compile a call with a writable s_vpi_vlog_info pointer."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET-VLOG-INFO-SIGNATURE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Make an invalid vpi_get64 request and expect vpiUndefined."
+        ],
+        "notes": [],
+        "positive": []
+      },
+      "id": "SV-2023-38-VPI-GET64-ERROR-RETURN"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a value exceeding the PLI_INT32 range."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Request a defined 64-bit property and compare the PLI_INT64 result with its specified value."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET64-PROPERTY-VALUE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Do not apply this default where a property is explicitly permitted."
+        ],
+        "negative": [
+          "Request an otherwise-unspecified 64-bit property from a protected object and check VPI error status."
+        ],
+        "notes": [],
+        "positive": []
+      },
+      "id": "SV-2023-38-VPI-GET64-PROTECTED-OBJECT-ERROR"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Compile a call whose arity or declared argument types do not match the specified signature."
+        ],
+        "notes": [],
+        "positive": [
+          "Compile a call with a PLI_INT32 property selector and vpiHandle and consume the PLI_INT64 result."
+        ]
+      },
+      "id": "SV-2023-38-VPI-GET64-SIGNATURE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Distinguish a legal select whose current value is unknown from an illegal select expression."
+        ],
+        "negative": [
+          "Use an out-of-range or otherwise illegal index select and expect NULL."
+        ],
+        "notes": [],
+        "positive": []
+      },
+      "id": "SV-2023-38-VPI-HANDLE-BY-INDEX-INVALID-NULL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Respect any explicit access exception."
+        ],
+        "negative": [
+          "Index an otherwise-inaccessible protected object and inspect error status."
+        ],
+        "notes": [],
+        "positive": []
+      },
+      "id": "SV-2023-38-VPI-HANDLE-BY-INDEX-PROTECTED-ERROR"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [
+          "This rule constrains the reference object but does not itself define the outcome for a non-indexable object."
+        ],
+        "positive": [
+          "Call with a net or array object having the access-by-index property."
+        ]
+      },
+      "id": "SV-2023-38-VPI-HANDLE-BY-INDEX-REFERENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise boundary indices in both declaration directions."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Retrieve a net bit and an unpacked array element by legal indices."
+        ]
+      },
+      "id": "SV-2023-38-VPI-HANDLE-BY-INDEX-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Pass an incompatible index type."
+        ],
+        "notes": [],
+        "positive": [
+          "Compile a call with an indexable object and index."
+        ]
+      },
+      "id": "SV-2023-38-VPI-HANDLE-BY-INDEX-SIGNATURE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use too many indices."
+        ],
+        "negative": [
+          "Supply an illegal multidimensional selection and expect NULL."
+        ],
+        "notes": [],
+        "positive": []
+      },
+      "id": "SV-2023-38-VPI-HANDLE-BY-MULTI-INDEX-INVALID-NULL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Append a legal packed bit index."
+        ],
+        "negative": [
+          "Reverse dimension order."
+        ],
+        "notes": [],
+        "positive": [
+          "Use distinct indices for each dimension and verify left-to-right interpretation."
+        ]
+      },
+      "id": "SV-2023-38-VPI-HANDLE-BY-MULTI-INDEX-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Respect explicit access exceptions."
+        ],
+        "negative": [
+          "Select an inaccessible protected subobject and inspect error status."
+        ],
+        "notes": [],
+        "positive": []
+      },
+      "id": "SV-2023-38-VPI-HANDLE-BY-MULTI-INDEX-PROTECTED-ERROR"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [
+          "The rule constrains obj but does not define an outcome for violating the precondition."
+        ],
+        "positive": [
+          "Use a multidimensional array object having the access-by-index property."
+        ]
+      },
+      "id": "SV-2023-38-VPI-HANDLE-BY-MULTI-INDEX-REFERENCE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Retrieve an array element followed by a packed bit select."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Retrieve a known multidimensional array element."
+        ]
+      },
+      "id": "SV-2023-38-VPI-HANDLE-BY-MULTI-INDEX-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Include a legal optional trailing bit-select index."
+        ],
+        "negative": [
+          "Compile a call whose arity or declared argument types do not match the specified signature."
+        ],
+        "notes": [],
+        "positive": [
+          "Compile a call with a vpiHandle, PLI_INT32 count, and pointer to a PLI_INT32 index array."
+        ]
+      },
+      "id": "SV-2023-38-VPI-HANDLE-BY-MULTI-INDEX-SIGNATURE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Respect an explicit exception where specified."
+        ],
+        "negative": [
+          "Lookup directly in a protected scope and through a hierarchical name crossing it."
+        ],
+        "notes": [],
+        "positive": []
+      },
+      "id": "SV-2023-38-VPI-HANDLE-BY-NAME-PROTECTED-ERROR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Resolve an escaped identifier if fullname syntax permits it."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Resolve the same object by a hierarchical name and by a simple name within its scope."
+        ]
+      },
+      "id": "SV-2023-38-VPI-HANDLE-BY-NAME-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compare NULL-scope hierarchical lookup with scoped simple lookup."
+        ],
+        "negative": [
+          "Resolve an out-of-scope sibling during scoped lookup."
+        ],
+        "notes": [],
+        "positive": [
+          "Use duplicate simple names in separate scopes and verify scoped lookup isolation."
+        ]
+      },
+      "id": "SV-2023-38-VPI-HANDLE-BY-NAME-SEARCH-SCOPE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use NULL scope for top-level search."
+        ],
+        "negative": [
+          "Pass an incompatible name pointer."
+        ],
+        "notes": [],
+        "positive": [
+          "Compile calls with simple and hierarchical names plus scope handles."
+        ]
+      },
+      "id": "SV-2023-38-VPI-HANDLE-BY-NAME-SIGNATURE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multiple input and output port references of one common width."
+        ],
+        "negative": [
+          "Supply output-port and input-port references having different widths."
+        ],
+        "notes": [
+          "The paragraph's statements that vpi_handle_multi can obtain the path and that ports can be at different hierarchy levels are capability statements, not independent shall requirements."
+        ],
+        "positive": [
+          "Supply same-width output-port and input-port references."
+        ]
+      },
+      "id": "SV-2023-38-VPI-HANDLE-MULTI-INTERMOD-PATH"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Supply fewer than two reference handles."
+        ],
+        "notes": [],
+        "positive": [
+          "Compile a supported many-to-one call with at least two references."
+        ]
+      },
+      "id": "SV-2023-38-VPI-HANDLE-MULTI-SIGNATURE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Do not apply the default where access is explicitly allowed."
+        ],
+        "negative": [
+          "Traverse an otherwise-unpermitted relationship from a protected object and inspect error status."
+        ],
+        "notes": [],
+        "positive": []
+      },
+      "id": "SV-2023-38-VPI-HANDLE-PROTECTED-OBJECT-ERROR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise a relationship for which no associated object exists."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Traverse a documented single-arrow relationship and verify the returned object type and identity."
+        ]
+      },
+      "id": "SV-2023-38-VPI-HANDLE-RELATIONSHIP"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Compile a call whose arity or declared argument types do not match the specified signature."
+        ],
+        "notes": [],
+        "positive": [
+          "Compile a call with a PLI_INT32 object-type selector and vpiHandle reference and consume the returned vpiHandle."
+        ]
+      },
+      "id": "SV-2023-38-VPI-HANDLE-SIGNATURE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Request a valid relationship with zero associated objects and expect NULL."
+        ]
+      },
+      "id": "SV-2023-38-VPI-ITERATE-EMPTY-NULL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Respect explicit access exceptions."
+        ],
+        "negative": [
+          "Iterate an inaccessible protected object and inspect error status."
+        ],
+        "notes": [],
+        "positive": []
+      },
+      "id": "SV-2023-38-VPI-ITERATE-PROTECTED-ERROR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify no duplicate or omitted objects."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Iterate a module's nets and scan every associated net."
+        ]
+      },
+      "id": "SV-2023-38-VPI-ITERATE-RELATIONSHIP"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use NULL reference where a documented top-level iteration permits it."
+        ],
+        "negative": [
+          "Compile a call whose arity or declared argument types do not match the specified signature."
+        ],
+        "notes": [],
+        "positive": [
+          "Compile a call with a PLI_INT32 requested object type and vpiHandle reference and consume the iterator vpiHandle."
+        ]
+      },
+      "id": "SV-2023-38-VPI-ITERATE-SIGNATURE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise a traversal that terminates with an error and returns NULL."
+        ],
+        "negative": [],
+        "notes": [
+          "The cited paragraph says vpi_release_handle may be used and should be called after an abandoned traversal; those are not independent mandatory requirements."
+        ],
+        "positive": [
+          "Scan an iterator through completion and verify the terminal call returns NULL."
+        ]
+      },
+      "id": "SV-2023-38-VPI-ITERATOR-AUTOMATIC-RELEASE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Create an iterator and verify its vpiUse handle compares equal to the original reference."
+        ]
+      },
+      "id": "SV-2023-38-VPI-ITERATOR-USE-RELATIONSHIP"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Combine descriptor 1 with closable channels and inspect the returned unclosed-channel MCD."
+        ],
+        "negative": [
+          "Attempt to close descriptor 1 and verify it remains available."
+        ],
+        "notes": [],
+        "positive": []
+      },
+      "id": "SV-2023-38-VPI-MCD-CLOSE-DESCRIPTOR-1"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Open a file with $fopen, pass its descriptor to vpi_mcd_close(), and verify the close succeeds."
+        ]
+      },
+      "id": "SV-2023-38-VPI-MCD-CLOSE-FOPEN-DESCRIPTORS"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Close valid selected channels and verify zero."
+        ]
+      },
+      "id": "SV-2023-38-VPI-MCD-CLOSE-RETURN"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Close a descriptor selecting exactly one channel."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Open multiple MCD channels, combine their descriptor bits, close the combined descriptor, and confirm all selected channels are closed."
+        ]
+      },
+      "id": "SV-2023-38-VPI-MCD-CLOSE-SELECTED-CHANNELS"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Pass an incompatible descriptor type."
+        ],
+        "notes": [],
+        "positive": [
+          "Compile a call with an MCD returned by vpi_mcd_open."
+        ]
+      },
+      "id": "SV-2023-38-VPI-MCD-CLOSE-SIGNATURE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Treat an MSB-set fd as a compatible MCD."
+        ],
+        "notes": [],
+        "positive": [
+          "Use each MCD source with both a built-in MCD task and a VPI MCD routine."
+        ]
+      },
+      "id": "SV-2023-38-VPI-MCD-COMPATIBILITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Flush an empty buffer."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Write buffered data to multiple selected files, flush, and verify visibility."
+        ]
+      },
+      "id": "SV-2023-38-VPI-MCD-FLUSH-BUFFERS"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [
+          "No portable failure trigger is specified."
+        ],
+        "positive": [
+          "Flush valid open MCD channels and expect zero."
+        ]
+      },
+      "id": "SV-2023-38-VPI-MCD-FLUSH-RETURN"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Pass an incompatible descriptor type."
+        ],
+        "notes": [],
+        "positive": [
+          "Compile a call with an MCD for open files."
+        ]
+      },
+      "id": "SV-2023-38-VPI-MCD-FLUSH-SIGNATURE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [
+          "No portable error-inducing descriptor is specified."
+        ],
+        "positive": [
+          "For a portably produced error, verify NULL."
+        ]
+      },
+      "id": "SV-2023-38-VPI-MCD-NAME-ERROR-NULL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a path-containing file name."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Open a named file and compare the returned name."
+        ]
+      },
+      "id": "SV-2023-38-VPI-MCD-NAME-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Pass an incompatible descriptor type."
+        ],
+        "notes": [],
+        "positive": [
+          "Compile a call with a valid channel descriptor."
+        ]
+      },
+      "id": "SV-2023-38-VPI-MCD-NAME-SIGNATURE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Assume earlier string content remains unchanged after another call."
+        ],
+        "notes": [],
+        "positive": [
+          "Call for two files and verify the later call overwrites earlier string content."
+        ]
+      },
+      "id": "SV-2023-38-VPI-MCD-NAME-TRANSIENT"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [
+          "No environment-independent error-inducing path is specified."
+        ],
+        "positive": [
+          "For a vpi_mcd_open invocation that portably produces an error, verify zero."
+        ]
+      },
+      "id": "SV-2023-38-VPI-MCD-OPEN-ERROR-ZERO"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Open the same file twice and compare descriptors; repeat after opening it via $fopen."
+        ]
+      },
+      "id": "SV-2023-38-VPI-MCD-OPEN-EXISTING-DESCRIPTOR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a path in a writable temporary directory."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Open a temporary file and write through the returned MCD."
+        ]
+      },
+      "id": "SV-2023-38-VPI-MCD-OPEN-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Pass an incompatible name pointer."
+        ],
+        "notes": [],
+        "positive": [
+          "Compile a call with a writable-file name."
+        ]
+      },
+      "id": "SV-2023-38-VPI-MCD-OPEN-SIGNATURE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Include channel 1 with a file channel."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Select multiple open channels in one MCD and verify identical output to each."
+        ]
+      },
+      "id": "SV-2023-38-VPI-MCD-PRINTF-CHANNEL-SELECTION"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Attempt to use an MSB-set fd with vpi_mcd_printf."
+        ],
+        "notes": [],
+        "positive": [
+          "Write using an MCD-form $fopen result."
+        ]
+      },
+      "id": "SV-2023-38-VPI-MCD-PRINTF-FOPEN-COMPATIBILITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Write an empty string and expect zero."
+        ],
+        "negative": [
+          "Induce an output error and verify EOF."
+        ],
+        "notes": [],
+        "positive": [
+          "Write a known string and verify its character count."
+        ]
+      },
+      "id": "SV-2023-38-VPI-MCD-PRINTF-RETURN"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use literal percent and no-conversion strings."
+        ],
+        "negative": [
+          "Use a format unsupported by C fprintf."
+        ],
+        "notes": [],
+        "positive": [
+          "Write standard C integer, string, and floating conversions."
+        ]
+      },
+      "id": "SV-2023-38-VPI-MCD-PRINTF-SIGNATURE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Inspect an $fopen fd with MSB set."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Verify ordinary vpi_mcd_open allocations do not repurpose reserved bits."
+        ]
+      },
+      "id": "SV-2023-38-VPI-MCD-RESERVED-BITS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use multiple selected channels and an $fopen MCD."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Render identical arguments through printf and vprintf variants and compare channel output."
+        ]
+      },
+      "id": "SV-2023-38-VPI-MCD-VPRINTF-BEHAVIOR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Write an empty string."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Write a fixed expected rendering and compare the count."
+        ]
+      },
+      "id": "SV-2023-38-VPI-MCD-VPRINTF-RETURN"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a format consuming multiple argument types."
+        ],
+        "negative": [
+          "Compile a call whose declared fixed argument types do not match the signature."
+        ],
+        "notes": [],
+        "positive": [
+          "Wrap the routine in a variadic helper, call va_start, and pass the started va_list with a matching C printf format."
+        ]
+      },
+      "id": "SV-2023-38-VPI-MCD-VPRINTF-SIGNATURE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise operation when no current log file exists."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Call while a log is active and verify identical text in output and log."
+        ]
+      },
+      "id": "SV-2023-38-VPI-PRINTF-OUTPUT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Print an empty string."
+        ],
+        "negative": [
+          "Induce an output error and verify EOF."
+        ],
+        "notes": [],
+        "positive": [
+          "Print a known string and verify its character count."
+        ]
+      },
+      "id": "SV-2023-38-VPI-PRINTF-RETURN"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a literal percent and an empty rendering."
+        ],
+        "negative": [
+          "Compile a call whose fixed format-pointer argument type does not match the signature."
+        ],
+        "notes": [
+          "Executing mismatched variadic argument types has no defined oracle here."
+        ],
+        "positive": [
+          "Compile and execute calls whose standard C conversion specifications match the corresponding variadic arguments."
+        ]
+      },
+      "id": "SV-2023-38-VPI-PRINTF-SIGNATURE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Set known integral elements using integers."
+        ]
+      },
+      "id": "SV-2023-38-VPI-PUT-ARRAY-INT-FORMAT"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [
+          "The paragraph calls this format appropriate for vpiLongIntVar arrays but does not define a wrong-target outcome."
+        ],
+        "positive": [
+          "Set a vpiLongIntVar array section using one long value per target element through longints."
+        ]
+      },
+      "id": "SV-2023-38-VPI-PUT-ARRAY-LONGINT-FORMAT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Change drivers of only a subset."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Override selected net-array elements, then change one driver and verify resolution resumes for that element."
+        ]
+      },
+      "id": "SV-2023-38-VPI-PUT-ARRAY-NET-OVERRIDE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Specify a scheduling delay flag and inspect error status."
+        ],
+        "notes": [],
+        "positive": [
+          "Update immediately using each supported flag combination."
+        ]
+      },
+      "id": "SV-2023-38-VPI-PUT-ARRAY-NO-DELAY-FLAGS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Select one element."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Fill a multi-element section from one supplied value."
+        ]
+      },
+      "id": "SV-2023-38-VPI-PUT-ARRAY-ONE-VALUE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Update multiple array elements in one operation."
+        ],
+        "negative": [],
+        "notes": [
+          "The source's statement that a later update event may be required during active simulation is not an independent mandatory requirement."
+        ],
+        "positive": [
+          "Update with vpiPropagateOff and verify fanouts are not notified of the value changes."
+        ]
+      },
+      "id": "SV-2023-38-VPI-PUT-ARRAY-PROPAGATE-OFF"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Provide nonzero B bits to a two-state target and verify they are ignored."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Exercise native and cross-state writes."
+        ]
+      },
+      "id": "SV-2023-38-VPI-PUT-ARRAY-RAW-COMPATIBILITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use widths 8 and 9."
+        ],
+        "negative": [
+          "Interleave A/B bytes."
+        ],
+        "notes": [],
+        "positive": [
+          "Set non-byte-aligned four-state elements and verify group offsets."
+        ]
+      },
+      "id": "SV-2023-38-VPI-PUT-ARRAY-RAW-FOUR-STATE-LAYOUT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a 9-bit element."
+        ],
+        "negative": [
+          "Reverse byte significance."
+        ],
+        "notes": [],
+        "positive": [
+          "Set bits 0 and 8 and verify target positions."
+        ]
+      },
+      "id": "SV-2023-38-VPI-PUT-ARRAY-RAW-SIGNIFICANCE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Include B groups."
+        ],
+        "notes": [],
+        "positive": [
+          "Set non-byte-aligned two-state elements."
+        ]
+      },
+      "id": "SV-2023-38-VPI-PUT-ARRAY-RAW-TWO-STATE-LAYOUT"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [
+          "No outcome for an inappropriate target type is defined here."
+        ],
+        "positive": [
+          "Set vpiShortIntVar, vpiIntVar, and vpiLongIntVar array sections from num shorts through shortints."
+        ]
+      },
+      "id": "SV-2023-38-VPI-PUT-ARRAY-SHORTINT-FORMAT"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [
+          "No outcome for an inappropriate target type is defined here."
+        ],
+        "positive": [
+          "Set a vpiShortRealVar array section from num floats through shortrealvals."
+        ]
+      },
+      "id": "SV-2023-38-VPI-PUT-ARRAY-SHORTREAL-FORMAT"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [
+          "No wrong-index-count outcome is defined."
+        ],
+        "positive": [
+          "Set a multidimensional section using one index per unpacked dimension in left-to-right HDL order."
+        ]
+      },
+      "id": "SV-2023-38-VPI-PUT-ARRAY-START-INDICES"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a[2:0][3:5] from [1][4]."
+        ],
+        "negative": [
+          "Use numeric ascending order contrary to declaration direction."
+        ],
+        "notes": [],
+        "positive": [
+          "Update across a multidimensional boundary and verify order."
+        ]
+      },
+      "id": "SV-2023-38-VPI-PUT-ARRAY-TRAVERSAL"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Specify an unlisted format and inspect error status."
+        ],
+        "notes": [],
+        "positive": []
+      },
+      "id": "SV-2023-38-VPI-PUT-ARRAY-UNSUPPORTED-FORMAT-ERROR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use widths 32 and 33."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Set wide four-state elements and verify word groups."
+        ]
+      },
+      "id": "SV-2023-38-VPI-PUT-ARRAY-VECTOR-FORMAT"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [
+          "Calls from other contexts are forbidden, but no violation outcome is specified."
+        ],
+        "positive": [
+          "Call from application routines invoked for cbStartOfSave and cbEndOfSave."
+        ]
+      },
+      "id": "SV-2023-38-VPI-PUT-DATA-CALLBACK-CONTEXT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Alternate one-byte writes across IDs."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Interleave writes for two IDs and verify each stream restores independently."
+        ]
+      },
+      "id": "SV-2023-38-VPI-PUT-DATA-ID-INTERLEAVING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Make many small calls."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Call repeatedly for one ID and verify all written segments can be restored in order."
+        ]
+      },
+      "id": "SV-2023-38-VPI-PUT-DATA-REPEATED-CALLS"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [
+          "The zero-on-error rule gives no portable error-inducing input."
+        ],
+        "positive": [
+          "Write valid data and verify the returned requested byte count."
+        ]
+      },
+      "id": "SV-2023-38-VPI-PUT-DATA-RETURN"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Compile a call whose arity or declared argument types do not match the signature."
+        ],
+        "notes": [],
+        "positive": [
+          "Compile a call with PLI_INT32 ID, PLI_BYTE8 data pointer, and positive PLI_INT32 byte count."
+        ]
+      },
+      "id": "SV-2023-38-VPI-PUT-DATA-SIGNATURE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Split one written chunk across multiple reads and combine multiple writes in one read."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Write several unequal chunks and retrieve using different chunk boundaries."
+        ]
+      },
+      "id": "SV-2023-38-VPI-PUT-DATA-STREAM-CHUNKING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Write one byte."
+        ],
+        "negative": [],
+        "notes": [
+          "numOfBytes must exceed zero, but no zero-count outcome is defined."
+        ],
+        "positive": [
+          "Write distinctive positive-length data and retrieve it during restart."
+        ]
+      },
+      "id": "SV-2023-38-VPI-PUT-DATA-WRITE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise all flag combinations."
+        ],
+        "negative": [],
+        "notes": [
+          "No undersized-array outcome is defined."
+        ],
+        "positive": [
+          "Allocate and populate the exact s_vpi_time element count selected by delay count and flags."
+        ]
+      },
+      "id": "SV-2023-38-VPI-PUT-DELAYS-DA-ARRAY"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Reverse source order."
+        ],
+        "notes": [],
+        "positive": [
+          "Set distinguishable path delays in source order and retrieve them."
+        ]
+      },
+      "id": "SV-2023-38-VPI-PUT-DELAYS-DESCRIPTION-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Use a cardinality inconsistent with selected flags."
+        ],
+        "notes": [],
+        "positive": [
+          "Set delays for each combination of MTM and pulse-rejection flags using the table layout."
+        ]
+      },
+      "id": "SV-2023-38-VPI-PUT-DELAYS-FLAG-LAYOUT"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [
+          "Other counts violate the requirement, but no violation outcome is defined."
+        ],
+        "positive": [
+          "Set intermodule path delays using counts 2 and 3."
+        ]
+      },
+      "id": "SV-2023-38-VPI-PUT-DELAYS-INTERMODULE-COUNT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use one delay and multiple delays."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Set two MTM delays with distinguishable min/typ/max triples."
+        ]
+      },
+      "id": "SV-2023-38-VPI-PUT-DELAYS-MTM-LAYOUT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify the boundary between consecutive nine-element groups."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Set two delays with nine distinct components each."
+        ]
+      },
+      "id": "SV-2023-38-VPI-PUT-DELAYS-MTM-PULSE-LAYOUT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise the minimum and maximum legal counts."
+        ],
+        "negative": [],
+        "notes": [
+          "No outcome for an illegal count is defined."
+        ],
+        "positive": [
+          "Set path delays using each legal count: 1, 2, 3, 6, and 12."
+        ]
+      },
+      "id": "SV-2023-38-VPI-PUT-DELAYS-PATH-COUNT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use distinct reject and error limits."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Establish pulse limits, update only delay values, and retrieve to verify limits are preserved."
+        ]
+      },
+      "id": "SV-2023-38-VPI-PUT-DELAYS-PRESERVE-PULSE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [
+          "No outcome for an illegal count is defined."
+        ],
+        "positive": [
+          "Set primitive delays using counts 2 and 3."
+        ]
+      },
+      "id": "SV-2023-38-VPI-PUT-DELAYS-PRIMITIVE-COUNT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use one and multiple delays."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Set two pulse-limited delays with distinct delay/reject/error triples."
+        ]
+      },
+      "id": "SV-2023-38-VPI-PUT-DELAYS-PULSE-LAYOUT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Set timing-check limits where applicable."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Set distinct ordered delays and retrieve them to verify values and ordering."
+        ]
+      },
+      "id": "SV-2023-38-VPI-PUT-DELAYS-SET"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Pass an incompatible delay pointer."
+        ],
+        "notes": [],
+        "positive": [
+          "Compile a void call with an applicable object and delay structure."
+        ]
+      },
+      "id": "SV-2023-38-VPI-PUT-DELAYS-SIGNATURE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Set multiple distinct delays with both flags false and verify one value per delay."
+        ]
+      },
+      "id": "SV-2023-38-VPI-PUT-DELAYS-SINGLE-VALUE-LAYOUT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise both one- and two-limit checks."
+        ],
+        "negative": [],
+        "notes": [
+          "No mismatched-count outcome is defined."
+        ],
+        "positive": [
+          "Set all limits of one-limit and two-limit timing checks using the exact existing limit count."
+        ]
+      },
+      "id": "SV-2023-38-VPI-PUT-DELAYS-TIMING-CHECK-COUNT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use distinct values on two call handles."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Associate a distinctive pointer and retrieve the identical value."
+        ]
+      },
+      "id": "SV-2023-38-VPI-PUT-USERDATA-ASSOCIATION"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [
+          "No portable failure-inducing request is specified."
+        ],
+        "positive": [
+          "Associate data with a valid system-call handle and expect 1."
+        ]
+      },
+      "id": "SV-2023-38-VPI-PUT-USERDATA-RETURN"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Compile a call whose arity or declared argument types do not match the signature."
+        ],
+        "notes": [],
+        "positive": [
+          "Compile a call with a system-task/function instance vpiHandle and void pointer."
+        ]
+      },
+      "id": "SV-2023-38-VPI-PUT-USERDATA-SIGNATURE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [
+          "No invalid-storage outcome is defined."
+        ],
+        "positive": [
+          "Allocate s_vpi_arrayvalue and all referenced storage for the selected representation, then populate the values."
+        ]
+      },
+      "id": "SV-2023-38-VPI-PUT-VALUE-ARRAY-CALLER-STORAGE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Treat a partially indexed unpacked subarray as one element."
+        ],
+        "notes": [],
+        "positive": [
+          "Update fully indexed elements of a multidimensional unpacked array."
+        ]
+      },
+      "id": "SV-2023-38-VPI-PUT-VALUE-ARRAY-ELEMENT-DEFINITION"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [
+          "Dynamic arrays/elements and unpacked element types are outside the permitted domain; no violation outcome is defined."
+        ],
+        "positive": [
+          "Update a static-lifetime vpiStaticArray variable or net array of packed, nondynamic elements."
+        ]
+      },
+      "id": "SV-2023-38-VPI-PUT-VALUE-ARRAY-ELIGIBILITY"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Set the same array with several compatible formats."
+        ]
+      },
+      "id": "SV-2023-38-VPI-PUT-VALUE-ARRAY-FORMAT"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Pass mismatched index pointer/count types."
+        ],
+        "notes": [],
+        "positive": [
+          "Compile a contiguous section update."
+        ]
+      },
+      "id": "SV-2023-38-VPI-PUT-VALUE-ARRAY-SIGNATURE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [
+          "No invalid-storage outcome is defined."
+        ],
+        "positive": [
+          "Allocate s_vpi_value, all referenced representation storage, and any passed s_vpi_time structure."
+        ]
+      },
+      "id": "SV-2023-38-VPI-PUT-VALUE-CALLER-STORAGE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [
+          "No invalid-pointer outcome is defined."
+        ],
+        "positive": [
+          "Allocate and populate application-owned storage for each pointer-valued input representation."
+        ]
+      },
+      "id": "SV-2023-38-VPI-PUT-VALUE-CALLER-UNION-MEMORY"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [
+          "No outcome is defined for a non-vpiSchedEvent target."
+        ],
+        "positive": [
+          "Schedule an event, cancel its vpiSchedEvent handle with NULL value/time pointers, and verify removal and handle release."
+        ]
+      },
+      "id": "SV-2023-38-VPI-PUT-VALUE-CANCEL-FLAG"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [
+          "No unsupported-target outcome is defined by this rule."
+        ],
+        "positive": [
+          "Force a procedurally force-supported object with NULL time and verify procedural-force semantics."
+        ]
+      },
+      "id": "SV-2023-38-VPI-PUT-VALUE-FORCE-FLAG"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Pre-schedule events, apply inertial update, and verify only the new event remains."
+        ]
+      },
+      "id": "SV-2023-38-VPI-PUT-VALUE-INERTIAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Toggle repeatedly."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Call with NULL value and verify waiting event controls trigger."
+        ]
+      },
+      "id": "SV-2023-38-VPI-PUT-VALUE-NAMED-EVENT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise each listed mode."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Override a multiply-driven net, then change a driver and verify normal resolution resumes."
+        ]
+      },
+      "id": "SV-2023-38-VPI-PUT-VALUE-NET-OVERRIDE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Set with NULL time_p and observe immediate value."
+        ]
+      },
+      "id": "SV-2023-38-VPI-PUT-VALUE-NO-DELAY"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Schedule several events and verify all survive addition of a pure-transport event."
+        ]
+      },
+      "id": "SV-2023-38-VPI-PUT-VALUE-PURE-TRANSPORT"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Classify vpiStringVal writes to real variables and vpiRealFunc calls as illegal."
+        ],
+        "notes": [
+          "The rule does not specify diagnostic text or an error-status oracle."
+        ],
+        "positive": []
+      },
+      "id": "SV-2023-38-VPI-PUT-VALUE-REAL-STRING-ILLEGAL"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Release a pointer-valued format and honor interface ownership."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Release a forced object with NULL time and inspect updated value_p."
+        ]
+      },
+      "id": "SV-2023-38-VPI-PUT-VALUE-RELEASE-FLAG"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Test each NULL-return condition."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Schedule delayed event with mask and verify handle type."
+        ]
+      },
+      "id": "SV-2023-38-VPI-PUT-VALUE-RETURN-EVENT"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Interpret scaled real time solely in simulation units."
+        ],
+        "notes": [],
+        "positive": [
+          "Schedule equal real delays on objects with different timescales and verify scaled times."
+        ]
+      },
+      "id": "SV-2023-38-VPI-PUT-VALUE-SCALED-TIME"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Compile a call whose arity or declared argument types do not match the signature."
+        ],
+        "notes": [],
+        "positive": [
+          "Compile a call with all four typed arguments and consume the returned vpiHandle."
+        ]
+      },
+      "id": "SV-2023-38-VPI-PUT-VALUE-SIGNATURE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Attempt outside active calltf and verify it is ignored."
+        ],
+        "notes": [],
+        "positive": [
+          "Set return value during calltf with vpiNoDelay."
+        ]
+      },
+      "id": "SV-2023-38-VPI-PUT-VALUE-SYSTEM-FUNCTION-ACTIVE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Schedule earlier and later events, insert a middle transport event, and verify only later ones are removed."
+        ]
+      },
+      "id": "SV-2023-38-VPI-PUT-VALUE-TRANSPORT"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Classify any other delay mode for a UDP instance as an error."
+        ],
+        "notes": [
+          "No diagnostic text or error-status value is specified here."
+        ],
+        "positive": [
+          "Set a sequential UDP with vpiNoDelay and verify immediate update regardless of primitive delay."
+        ]
+      },
+      "id": "SV-2023-38-VPI-PUT-VALUE-UDP-NO-DELAY"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Classify a vpiStrengthVal write to a vector object as illegal."
+        ],
+        "notes": [
+          "No diagnostic text or error-status value is specified here."
+        ],
+        "positive": []
+      },
+      "id": "SV-2023-38-VPI-PUT-VALUE-VECTOR-STRENGTH-ILLEGAL"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Pass an incompatible structure pointer."
+        ],
+        "notes": [],
+        "positive": [
+          "Compile registration with a populated s_cb_data and inspect returned callback handle."
+        ]
+      },
+      "id": "SV-2023-38-VPI-REGISTER-CB-SIGNATURE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [
+          "The source's compilation/execution encounter timing is stated as a capability, not an independent shall requirement."
+        ],
+        "positive": [
+          "Register callbacks for both a user-defined system task and a user-defined system function."
+        ]
+      },
+      "id": "SV-2023-38-VPI-REGISTER-SYSTF-BEHAVIOR"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Register valid task/function data and verify a callback handle."
+        ]
+      },
+      "id": "SV-2023-38-VPI-REGISTER-SYSTF-SIGNATURE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Treat handle release as cancellation."
+        ],
+        "notes": [],
+        "positive": [
+          "Schedule, release its handle, and verify event still executes."
+        ]
+      },
+      "id": "SV-2023-38-VPI-RELEASE-EVENT-HANDLE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [
+          "The source gives no invalid-handle call outcome; its safe/advisable/leak discussion is nonmandatory."
+        ],
+        "positive": [
+          "Release an unneeded valid persistent handle."
+        ]
+      },
+      "id": "SV-2023-38-VPI-RELEASE-HANDLE-MEMORY"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Exercise a defined failure and verify 0."
+        ],
+        "notes": [],
+        "positive": [
+          "Release a valid releasable handle and verify 1."
+        ]
+      },
+      "id": "SV-2023-38-VPI-RELEASE-HANDLE-SIGNATURE-RESULT"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Exercise removal failure and verify 0."
+        ],
+        "notes": [],
+        "positive": [
+          "Register then remove a callback and verify success, no invocation, and invalidated handle."
+        ]
+      },
+      "id": "SV-2023-38-VPI-REMOVE-CB-CONTRACT"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Reset by both mechanisms and verify callback ordering, time zero, restored values, and pre-procedural phase."
+        ]
+      },
+      "id": "SV-2023-38-VPI-RESET-CALLBACK-ORDER"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Save with multiple callback types, restart, and verify only start/end restart registrations survive."
+        ]
+      },
+      "id": "SV-2023-38-VPI-RESTART-CALLBACK-PRESERVATION"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Pass a populated iterator and verify returned object handles."
+        ]
+      },
+      "id": "SV-2023-38-VPI-SCAN-SIGNATURE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an empty iterator."
+        ],
+        "negative": [
+          "Reuse iterator after NULL."
+        ],
+        "notes": [],
+        "positive": [
+          "Scan all objects until NULL and verify expected traversal."
+        ]
+      },
+      "id": "SV-2023-38-VPI-SCAN-TRAVERSAL"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [
+          "The source says tasks/functions appearing in a compiled description are generally registered this way; that practice is not an additional shall requirement."
+        ],
+        "positive": [
+          "Register a user-defined system task and function from routines in the startup array."
+        ]
+      },
+      "id": "SV-2023-38-VPI-STARTUP-ARRAY-SYSTF-PURPOSE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Add a registration function to the supplied startup file and link it."
+        ]
+      },
+      "id": "SV-2023-38-VPI-STARTUP-ARRAY-VENDOR-FILE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Omit terminator."
+        ],
+        "notes": [],
+        "positive": [
+          "Supply multiple routines plus NULL terminator and verify startup invocation."
+        ]
+      },
+      "id": "SV-2023-38-VPI-STARTUP-ROUTINES-ARRAY"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Link a user startup entry using vendor procedure and verify invocation."
+        ]
+      },
+      "id": "SV-2023-38-VPI-STARTUP-ROUTINES-PROVISIONING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise X or Z logic with strengths."
+        ],
+        "negative": [
+          "Treat a strength member as an incompatible type."
+        ],
+        "notes": [],
+        "positive": [
+          "Compile C code using all strength members."
+        ]
+      },
+      "id": "SV-2023-38-VPI-STRENGTHVAL-STRUCTURE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Implement calltf without a put and verify zero result."
+        ]
+      },
+      "id": "SV-2023-38-VPI-SYSTEM-FUNCTION-DEFAULT-ZERO"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Register selected NULL/non-NULL routines and verify build, interactive, and repeated-call timing."
+        ]
+      },
+      "id": "SV-2023-38-VPI-SYSTF-CALLBACK-TIMING"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Compile code assigning an ABI-incompatible type to a member."
+        ],
+        "notes": [
+          "tfname syntax and sizetf eligibility are covered by separate semantic requirements."
+        ],
+        "positive": [
+          "Compile C code using s_vpi_systf_data, p_vpi_systf_data, and every member with its declared type."
+        ]
+      },
+      "id": "SV-2023-38-VPI-SYSTF-DATA-STRUCTURE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Test maximum identifier length."
+        ],
+        "negative": [
+          "Try missing $, empty suffix, or illegal characters."
+        ],
+        "notes": [],
+        "positive": [
+          "Register names using letters, digits, underscore, and dollar."
+        ]
+      },
+      "id": "SV-2023-38-VPI-SYSTF-NAME"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Register functions for each return category and verify values."
+        ]
+      },
+      "id": "SV-2023-38-VPI-SYSTF-RETURN-TYPE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Provide sizetf for an ineligible type and ensure it is not called."
+        ],
+        "notes": [],
+        "positive": [
+          "Register sized signed/unsigned functions with and without sizetf and verify widths."
+        ]
+      },
+      "id": "SV-2023-38-VPI-SYSTF-SIZE-CALLBACK"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Register one task and one function with corresponding constants."
+        ]
+      },
+      "id": "SV-2023-38-VPI-SYSTF-TYPE-FIELD"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Provide a sentinel pointer and verify each routine receives only that argument."
+        ]
+      },
+      "id": "SV-2023-38-VPI-SYSTF-USER-DATA-ARGUMENT"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Verify distinct structure pointer, current time, and preserved user data."
+        ]
+      },
+      "id": "SV-2023-38-VPI-TIME-CB-DELIVERY"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Attempt registration during cbReadOnlySynch."
+        ],
+        "notes": [],
+        "positive": []
+      },
+      "id": "SV-2023-38-VPI-TIME-CB-READONLY-RW-ERROR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Bound recursion."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Register one nested zero-delay callback and verify same-slice execution."
+        ]
+      },
+      "id": "SV-2023-38-VPI-TIME-CB-REENTRANT-START"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Use vpiSuppressTime or NULL time."
+        ],
+        "notes": [],
+        "positive": [
+          "Register absolute/delay callbacks in both time formats and cbNextSimTime with arbitrary numeric data."
+        ]
+      },
+      "id": "SV-2023-38-VPI-TIME-CB-REGISTRATION-TIME"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Use objects with differing timescales and compare scaled callback times."
+        ]
+      },
+      "id": "SV-2023-38-VPI-TIME-CB-SCALED-OBJECT"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Vary value field without changing callback behavior."
+        ]
+      },
+      "id": "SV-2023-38-VPI-TIME-CB-VALUE-IGNORED"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Register zero-delay start callback mid-slice outside a start callback."
+        ],
+        "notes": [],
+        "positive": []
+      },
+      "id": "SV-2023-38-VPI-TIME-CB-ZERO-START-ERROR"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Treat high or low as signed."
+        ],
+        "notes": [],
+        "positive": [
+          "Compile C code using all members."
+        ]
+      },
+      "id": "SV-2023-38-VPI-TIME-STRUCTURE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Assume userdata association survives automatically."
+        ],
+        "notes": [],
+        "positive": [
+          "Persist and restore data before reassociation."
+        ]
+      },
+      "id": "SV-2023-38-VPI-USERDATA-SAVE-RESTORE-RESPONSIBILITY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Trigger a vector wider than 32 bits."
+        ],
+        "negative": [
+          "Use the array after callback return."
+        ],
+        "notes": [],
+        "positive": [
+          "Receive a vector value-change callback and inspect its system-provided array during the callback."
+        ]
+      },
+      "id": "SV-2023-38-VPI-VALUE-CHANGE-VECTOR-MEMORY"
+    },
+    {
+      "hints": {
+        "edge": [
+          "An implementation with no alternative types need not use misc."
+        ],
+        "negative": [
+          "Expose misc values without any corresponding format."
+        ],
+        "notes": [],
+        "positive": [
+          "If an implementation exposes a misc value type, verify a corresponding format selector exists."
+        ]
+      },
+      "id": "SV-2023-38-VPI-VALUE-MISC-FORMATS"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [
+          "Assume incompatible member types."
+        ],
+        "notes": [],
+        "positive": [
+          "Compile C code accessing every union member."
+        ]
+      },
+      "id": "SV-2023-38-VPI-VALUE-STRUCTURE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Exercise sizes 1, 32, 33, and 64."
+        ],
+        "negative": [
+          "Treat bit 32 as belonging to element 0."
+        ],
+        "notes": [],
+        "positive": [
+          "Retrieve 33-bit and 65-bit vectors and verify array size and bit placement across word boundaries."
+        ]
+      },
+      "id": "SV-2023-38-VPI-VECVAL-ARRAY-LAYOUT"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use a vector spanning words."
+        ],
+        "negative": [
+          "Use another encoding."
+        ],
+        "notes": [],
+        "positive": [
+          "Put and retrieve a vector containing all four states."
+        ]
+      },
+      "id": "SV-2023-38-VPI-VECVAL-STRUCTURE-ENCODING"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Invoke with only the tool name."
+        ],
+        "negative": [
+          "Return a count inconsistent with the number of entries."
+        ],
+        "notes": [],
+        "positive": [
+          "Invoke with known options and verify count, NUL-terminated strings, and tool name at entry zero."
+        ]
+      },
+      "id": "SV-2023-38-VPI-VLOG-INFO-ARGV"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Use an option file that references another option file."
+        ],
+        "negative": [
+          "Flatten file contents contrary to the required nested representation."
+        ],
+        "notes": [],
+        "positive": [
+          "Use a supported option file and verify option name, file name, parsed entries, and NULL terminator."
+        ]
+      },
+      "id": "SV-2023-38-VPI-VLOG-INFO-OPTION-FILE"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify p_vpi_vlog_info is the pointer typedef."
+        ],
+        "negative": [
+          "Assume an incompatible argv indirection."
+        ],
+        "notes": [],
+        "positive": [
+          "Compile C code accessing all four members with their declared types."
+        ]
+      },
+      "id": "SV-2023-38-VPI-VLOG-INFO-STRUCTURE"
+    },
+    {
+      "hints": {
+        "edge": [],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Emit equivalent data with vpi_printf and forwarded vpi_vprintf and compare tool output/log."
+        ]
+      },
+      "id": "SV-2023-38-VPI-VPRINTF-BEHAVIOR"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Write an empty formatted result."
+        ],
+        "negative": [],
+        "notes": [],
+        "positive": [
+          "Forward a va_list with multiple conversions and compare output length."
+        ]
+      },
+      "id": "SV-2023-38-VPI-VPRINTF-SIGNATURE"
+    }
+  ],
+  "schema_version": 1
+}

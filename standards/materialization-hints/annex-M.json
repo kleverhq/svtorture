@@ -1,0 +1,231 @@
+{
+  "authority": "1800-2023",
+  "part": "M",
+  "requirements": [
+    {
+      "hints": {
+        "edge": [
+          "Include sv_vpi_user.h from a C++ translation unit."
+        ],
+        "negative": [
+          "Attempt to build a VPI application when the simulator distribution does not provide sv_vpi_user.h."
+        ],
+        "notes": [
+          "Materialization requires the simulator's supported VPI native-code build flow."
+        ],
+        "positive": [
+          "Compile a VPI application that includes sv_vpi_user.h using the simulator-provided include search path."
+        ]
+      },
+      "id": "SV-2023-M-SV-VPI-HEADER-PROVISION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Compile separate uses of the failExpr and step alternatives of the detail union without assuming structure padding."
+        ],
+        "negative": [
+          "Check a header with an omitted or differently typed structure member, callback parameter, return type, or registration parameter."
+        ],
+        "notes": [
+          "Check declaration and member type compatibility; implementation-specific padding is not an oracle."
+        ],
+        "positive": [
+          "Compile C source that initializes every listed structure and union member, checks the pointer typedef targets, assigns a matching function to vpi_assertion_callback_func, and type-checks a vpi_register_assertion_cb call."
+        ]
+      },
+      "id": "SV-2023-M-VPI-ASSERTION-API-DECLARATIONS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Check nonconsecutive lock/unlock and vacuous/nonvacuous action callback values."
+        ],
+        "negative": [
+          "Check a header where any listed assertion callback-reason identifier is absent or numerically different."
+        ],
+        "notes": [],
+        "positive": [
+          "Compile static checks for every identifier in the assertion callback and assertion system callback sections."
+        ]
+      },
+      "id": "SV-2023-M-VPI-ASSERTION-CALLBACK-CONSTANTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Check distinct per-assertion and assertion-system lock, action-enable, action-disable, and vacuity-control identifiers."
+        ],
+        "negative": [
+          "Check a header where any listed assertion control identifier is absent or assigned a different integer."
+        ],
+        "notes": [],
+        "positive": [
+          "Compile static checks for every identifier in the assertion control constants section."
+        ]
+      },
+      "id": "SV-2023-M-VPI-ASSERTION-CONTROL-CONSTANTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Check thread/frame reasons 600 through 605 and object lifecycle reasons 700 through 702."
+        ],
+        "negative": [
+          "Check a header where one callback-reason constant is absent or has a different integer."
+        ],
+        "notes": [],
+        "positive": [
+          "Compile static checks for all nine callback-reason constants in this source block."
+        ]
+      },
+      "id": "SV-2023-M-VPI-CALLBACK-REASON-CONSTANTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify both the backward-compatible vpiCoverMax name and vpiCoveredMax resolve to 766."
+        ],
+        "negative": [
+          "Check a header where any listed coverage model identifier is absent or has a different integer value."
+        ],
+        "notes": [],
+        "positive": [
+          "Compile static checks for every listed coverage type, status, assertion-coverage, FSM-property, and FSM-handle identifier."
+        ]
+      },
+      "id": "SV-2023-M-VPI-COVERAGE-CONSTANTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Check both runtime control identifiers through vpiCoverageCheck and persistence identifiers vpiCoverageMerge and vpiCoverageSave."
+        ],
+        "negative": [
+          "Check a header where a coverage-control identifier is absent or has a different value."
+        ],
+        "notes": [],
+        "positive": [
+          "Compile static checks for all six coverage-control identifiers and their consecutive values."
+        ]
+      },
+      "id": "SV-2023-M-VPI-COVERAGE-CONTROL-CONSTANTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Check that values reused by unrelated property categories remain available under each specified category-specific name."
+        ],
+        "negative": [
+          "Check a header where any listed extended property identifier or value is absent or assigned a different integer."
+        ],
+        "notes": [
+          "Numeric overlap across identifier categories is intentional."
+        ],
+        "positive": [
+          "Compile static checks for every property identifier and enumerated value in this source block."
+        ]
+      },
+      "id": "SV-2023-M-VPI-EXTENDED-PROPERTY-CONSTANTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Check that category-local reused values retain their distinct macro names."
+        ],
+        "negative": [
+          "Check a header where any listed generic property identifier or enumerated value is missing or numerically different."
+        ],
+        "notes": [
+          "Numeric overlap between different identifier categories is intentional."
+        ],
+        "positive": [
+          "Compile static checks for every generic property identifier and enumerated value in this source block."
+        ]
+      },
+      "id": "SV-2023-M-VPI-GENERIC-PROPERTY-CONSTANTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Include sv_vpi_user.h after vpi_user.h and also as the first VPI header in separate translation units."
+        ],
+        "negative": [
+          "Check a header variant with the inclusion guard, vpi_user.h inclusion, or conditional C-linkage wrapper removed."
+        ],
+        "notes": [
+          "C001 opens the guard and C-linkage block; C006 supplies their required closing directives."
+        ],
+        "positive": [
+          "Compile C and C++ translation units that include sv_vpi_user.h twice; in C++, link an Annex M function declaration against a C-linkage definition."
+        ]
+      },
+      "id": "SV-2023-M-VPI-HEADER-COMPOSITION"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify aliases such as vpiVarBit, vpiLogicVar, vpiArrayVar, and vpiArrayNet resolve to their specified base identifiers."
+        ],
+        "negative": [
+          "Check a header where any listed object/type macro is absent, has a different integer, or resolves to a different base VPI identifier."
+        ],
+        "notes": [
+          "Alias checks use vpi_user.h from the same installation; repeated numbers in unrelated categories are permitted."
+        ],
+        "positive": [
+          "Compile static checks for every object/type identifier and alias preceding the METHODS section."
+        ]
+      },
+      "id": "SV-2023-M-VPI-OBJECT-TYPE-CONSTANTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Check distinct encodings for overlapping and nonoverlapping implication/followed_by and for pre/post increment and decrement."
+        ],
+        "negative": [
+          "Check a header where any listed VPI operator identifier is missing or assigned a different integer."
+        ],
+        "notes": [],
+        "positive": [
+          "Compile static checks for every operator identifier from vpiImplyOp through vpiAssignmentOp."
+        ]
+      },
+      "id": "SV-2023-M-VPI-OPERATOR-CONSTANTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify qualifier flags retain their bit values and deprecated vpiValidUnknown remains defined as 2."
+        ],
+        "negative": [
+          "Check a header where any listed property or enumerated value is absent or numerically different."
+        ],
+        "notes": [
+          "Retained compatibility names remain part of the normative header."
+        ],
+        "positive": [
+          "Compile static checks for every property identifier and value in this block outside the Operators and CALLBACK REASONS sections."
+        ]
+      },
+      "id": "SV-2023-M-VPI-PROPERTY-AND-VALUE-CONSTANTS"
+    },
+    {
+      "hints": {
+        "edge": [
+          "Verify vpiConcurrentAssertions aliases vpiConcurrentAssertion and vpiInstance remains available for both relationship cardinalities."
+        ],
+        "negative": [
+          "Check a header where any listed relationship macro is missing, numerically different, or aliases a different identifier."
+        ],
+        "notes": [],
+        "positive": [
+          "Compile static checks for every traversal relationship identifier in the METHODS section."
+        ]
+      },
+      "id": "SV-2023-M-VPI-RELATIONSHIP-CONSTANTS"
+    }
+  ],
+  "schema_version": 1
+}
