@@ -41,6 +41,37 @@ function mergeTone(
   return left;
 }
 
+export function scrollTreeCardIntoView(card: HTMLElement): () => void {
+  const margin = Number.parseFloat(getComputedStyle(card).scrollMarginTop);
+  if (
+    Number.isFinite(margin) &&
+    document.scrollingElement &&
+    typeof window.scrollTo === "function"
+  ) {
+    const align = () => {
+      if (!card.isConnected) return;
+      window.scrollTo({
+        top: Math.max(
+          0,
+          window.scrollY + card.getBoundingClientRect().top - margin,
+        ),
+        behavior: "auto",
+      });
+    };
+    align();
+    let correctionFrame = 0;
+    const layoutFrame = window.requestAnimationFrame(() => {
+      correctionFrame = window.requestAnimationFrame(align);
+    });
+    return () => {
+      window.cancelAnimationFrame(layoutFrame);
+      window.cancelAnimationFrame(correctionFrame);
+    };
+  }
+  card.scrollIntoView?.({ block: "start", behavior: "auto" });
+  return () => undefined;
+}
+
 export function standardTreeTone(statuses: Status[]): StandardTreeTone {
   let tone: StandardTreeTone = "gray";
   for (const status of statuses) {

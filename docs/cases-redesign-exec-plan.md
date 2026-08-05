@@ -26,6 +26,7 @@ This work does not change case metadata, case execution, conformance judgments, 
 - [x] (2026-08-04 10:32Z) Follow-up: removed the complete Cases Advanced filters disclosure, deleted obsolete control code/styles, and made Cases ignore all removed Advanced fields so hidden URL state cannot silently filter cards.
 - [x] (2026-08-04 22:45Z) PR review follow-up: addressed Codex and four independent correctness, KISS/YAGNI, accessibility, and scaling reviews. Exposed and cleared Requirement scope, retained stale tags as clearable zero-count choices, cleared incompatible hierarchy state on supporting-case navigation, simplified filter dependencies/fallbacks/catalog parsing, corrected tree semantics/names, added destination focus, strengthened hierarchy validation, and removed card ref churn.
 - [x] (2026-08-04 23:05Z) Merged latest `origin/main`, including the complete 6,719-requirement corpus, then addressed the independent control review. Requirements cards now mount in 100-card batches with selected deep links retained, navigation-only URL changes no longer recompute the corpus, and collapsing source details clears detached viewer state.
+- [x] (2026-08-05 09:54Z) Navigation follow-up: fixed random chapter and copied deep-link landings by rendering the natural 100-card window around an out-of-range target instead of appending that card out of order, cancelling stale selection scroll state, aligning after sticky layout settles, and sorting Requirement/Case cards by the canonical standard hierarchy.
 
 ## Surprises & Discoveries
 
@@ -229,3 +230,5 @@ Revision note (2026-08-04 22:29Z): Addressed PR review by exposing the exact Req
 Revision note (2026-08-04 22:45Z): Recorded the broader PR review fixes: stale tag recovery, cross-corpus section clearing, KISS/YAGNI simplifications, accessible tree semantics and navigation focus, complete hierarchy validation, and stable DOM-anchor navigation.
 
 Revision note (2026-08-04 23:05Z): Recorded the latest-main merge and control-review fixes required by the resulting 6,719-requirement corpus: incremental card mounting, semantic corpus memoization, selected-target retention, and source-viewer collapse cleanup.
+
+Revision note (2026-08-05 09:54Z): Recorded the navigation-order fix after production debugging with repeated chapter 3/5/12/20 clicks and a copied chapter-20 deep link at 1450×900. Every target now remains in canonical order and aligns at the same 271 px sticky offset.

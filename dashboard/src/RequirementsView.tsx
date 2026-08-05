@@ -20,7 +20,7 @@ import {
   fallbackSections,
   sectionContains,
 } from "./requirementHierarchy";
-import { StandardTree } from "./StandardTree";
+import { StandardTree, scrollTreeCardIntoView } from "./StandardTree";
 import { ToolEvidenceRow } from "./ToolEvidence";
 import type {
   Campaign,
@@ -301,6 +301,7 @@ export function RequirementsView({
   onFocusedRequirement = NOOP,
 }: RequirementsProps) {
   const navigationScrollId = useRef("");
+  const navigationAlignmentCleanup = useRef<() => void>(() => undefined);
   const loadMoreRef = useRef<HTMLButtonElement>(null);
   const focusedRequirementId = useRef("");
   const suppressNextSelectedScroll = useRef(false);
@@ -316,15 +317,10 @@ export function RequirementsView({
     () => decodeSectionSelection(selectedSections, tree),
     [selectedSections, tree],
   );
-  const [cardBatch, setCardBatch] = useState(() => ({
-    requirements,
-    selected,
-    limit: CARD_BATCH_SIZE,
-  }));
-  const cardLimit =
-    cardBatch.requirements === requirements && cardBatch.selected === selected
-      ? cardBatch.limit
-      : CARD_BATCH_SIZE;
+  useEffect(
+    () => () => navigationAlignmentCleanup.current(),
+    [],
+  );
   const selectedTagSet = useMemo(() => new Set(selectedTags), [selectedTags]);
   const profiles = useMemo(
     () =>
@@ -417,12 +413,28 @@ export function RequirementsView({
     () => allRequirements.map((requirement) => requirement.clause),
     [allRequirements],
   );
+  const sectionOrder = useMemo(
+    () => new Map(sections.map((section, index) => [section.clause, index])),
+    [sections],
+  );
+  const orderedRequirements = useMemo(
+    () =>
+      [...requirements].sort(
+        (left, right) =>
+          (sectionOrder.get(left.clause) ?? Number.MAX_SAFE_INTEGER) -
+            (sectionOrder.get(right.clause) ?? Number.MAX_SAFE_INTEGER) ||
+          left.id.localeCompare(right.id),
+      ),
+    [requirements, sectionOrder],
+  );
   const visibleRequirements = useMemo(
     () =>
       selected.size === 0
-        ? requirements
-        : requirements.filter((requirement) => selected.has(requirement.clause)),
-    [requirements, selected],
+        ? orderedRequirements
+        : orderedRequirements.filter((requirement) =>
+            selected.has(requirement.clause),
+          ),
+    [orderedRequirements, selected],
   );
 
   const selectedRequirement = useMemo(
@@ -430,16 +442,35 @@ export function RequirementsView({
       visibleRequirements.find((item) => item.id === selectedRequirementId),
     [selectedRequirementId, visibleRequirements],
   );
-  const renderedRequirements = useMemo(() => {
-    const rendered = visibleRequirements.slice(0, cardLimit);
-    if (
-      selectedRequirement &&
-      !rendered.some((item) => item.id === selectedRequirement.id)
-    ) {
-      rendered.push(selectedRequirement);
-    }
-    return rendered;
-  }, [cardLimit, selectedRequirement, visibleRequirements]);
+  const selectedRequirementIndex = selectedRequirement
+    ? visibleRequirements.indexOf(selectedRequirement)
+    : -1;
+  const defaultCardStart =
+    selectedRequirementIndex < 0
+      ? 0
+      : Math.min(
+          Math.floor(selectedRequirementIndex / CARD_BATCH_SIZE) *
+            CARD_BATCH_SIZE,
+          Math.max(0, visibleRequirements.length - CARD_BATCH_SIZE),
+        );
+  const [cardBatch, setCardBatch] = useState(() => ({
+    items: visibleRequirements,
+    targetId: selectedRequirementId,
+    start: defaultCardStart,
+    limit: defaultCardStart + CARD_BATCH_SIZE,
+  }));
+  const batchMatches =
+    cardBatch.items === visibleRequirements &&
+    cardBatch.targetId === selectedRequirementId;
+  const cardStart = batchMatches ? cardBatch.start : defaultCardStart;
+  const cardLimit = batchMatches
+    ? cardBatch.limit
+    : defaultCardStart + CARD_BATCH_SIZE;
+  const renderedRequirements = useMemo(
+    () => visibleRequirements.slice(cardStart, cardLimit),
+    [cardLimit, cardStart, visibleRequirements],
+  );
+  const hasEarlierCards = cardStart > 0;
   const hasMoreCards = cardLimit < visibleRequirements.length;
 
   useEffect(() => {
@@ -448,15 +479,22 @@ export function RequirementsView({
     const observer = new IntersectionObserver((entries) => {
       if (entries.some((entry) => entry.isIntersecting)) {
         setCardBatch({
-          requirements,
-          selected,
+          items: visibleRequirements,
+          targetId: selectedRequirementId,
+          start: cardStart,
           limit: cardLimit + CARD_BATCH_SIZE,
         });
       }
     });
     observer.observe(target);
     return () => observer.disconnect();
-  }, [cardLimit, hasMoreCards, requirements, selected]);
+  }, [
+    cardLimit,
+    cardStart,
+    hasMoreCards,
+    selectedRequirementId,
+    visibleRequirements,
+  ]);
 
   useEffect(() => {
     if (!selectedRequirement) return;
@@ -465,32 +503,38 @@ export function RequirementsView({
     const suppressScroll =
       !focusRequirementId && suppressNextSelectedScroll.current;
     if (suppressScroll) suppressNextSelectedScroll.current = false;
-    window.requestAnimationFrame(() => {
-      const card = document.getElementById(
-        `requirement-card-${selectedRequirement.id}`,
-      );
-      if (!suppressScroll) {
-        const reduceMotion =
-          window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
-        card?.scrollIntoView?.({
-          block: "start",
-          behavior: navigatedInView && !reduceMotion ? "smooth" : "auto",
-        });
-      }
-      if (
-        (navigatedInView || focusRequirementId === selectedRequirement.id) &&
-        focusedRequirementId.current !== selectedRequirement.id
-      ) {
-        const heading = card?.querySelector("h3");
-        if (heading instanceof HTMLElement) {
-          heading.tabIndex = -1;
-          heading.focus({ preventScroll: true });
-          focusedRequirementId.current = selectedRequirement.id;
-          suppressNextSelectedScroll.current = true;
-          onFocusedRequirement();
+    let scrollFrame = 0;
+    let cancelAlignment: () => void = () => undefined;
+    const layoutFrame = window.requestAnimationFrame(() => {
+      scrollFrame = window.requestAnimationFrame(() => {
+        const card = document.getElementById(
+          `requirement-card-${selectedRequirement.id}`,
+        );
+        if (!suppressScroll && card) {
+          cancelAlignment = scrollTreeCardIntoView(card);
         }
-      }
+        if (
+          (navigatedInView || focusRequirementId === selectedRequirement.id) &&
+          focusedRequirementId.current !== selectedRequirement.id
+        ) {
+          const heading = card?.querySelector("h3");
+          if (heading instanceof HTMLElement) {
+            heading.tabIndex = -1;
+            heading.focus({ preventScroll: true });
+            focusedRequirementId.current = selectedRequirement.id;
+            if (focusRequirementId === selectedRequirement.id) {
+              suppressNextSelectedScroll.current = true;
+              onFocusedRequirement();
+            }
+          }
+        }
+      });
     });
+    return () => {
+      window.cancelAnimationFrame(layoutFrame);
+      window.cancelAnimationFrame(scrollFrame);
+      cancelAlignment();
+    };
   }, [focusRequirementId, onFocusedRequirement, selectedRequirement]);
 
   const navigateToSection = (clause: string) => {
@@ -502,14 +546,25 @@ export function RequirementsView({
     navigationScrollId.current = card ? "" : requirement.id;
     if (card && requirement.id !== selectedRequirementId) {
       suppressNextSelectedScroll.current = true;
+    } else if (!card) {
+      suppressNextSelectedScroll.current = false;
+      const index = visibleRequirements.indexOf(requirement);
+      const start = Math.min(
+        Math.floor(index / CARD_BATCH_SIZE) * CARD_BATCH_SIZE,
+        Math.max(0, visibleRequirements.length - CARD_BATCH_SIZE),
+      );
+      setCardBatch({
+        items: visibleRequirements,
+        targetId: requirement.id,
+        start,
+        limit: start + CARD_BATCH_SIZE,
+      });
     }
     onSelectRequirement(requirement.id);
-    const reduceMotion =
-      window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
-    card?.scrollIntoView?.({
-      block: "start",
-      behavior: reduceMotion ? "auto" : "smooth",
-    });
+    navigationAlignmentCleanup.current();
+    navigationAlignmentCleanup.current = card
+      ? scrollTreeCardIntoView(card)
+      : () => undefined;
     const heading = card?.querySelector("h3");
     if (heading instanceof HTMLElement) {
       heading.tabIndex = -1;
@@ -546,6 +601,27 @@ export function RequirementsView({
               </button>
             )}
           </header>
+          {hasEarlierCards && (
+            <button
+              type="button"
+              className="button button--quiet requirement-cards__more"
+              onClick={() => {
+                const start = Math.max(0, cardStart - CARD_BATCH_SIZE);
+                navigationScrollId.current = "";
+                onSelectRequirement("");
+                setCardBatch({
+                  items: visibleRequirements,
+                  targetId: "",
+                  start,
+                  limit: start + CARD_BATCH_SIZE,
+                });
+              }}
+            >
+              Show earlier requirements · {cardStart + 1}–
+              {Math.min(cardLimit, visibleRequirements.length)} of{" "}
+              {visibleRequirements.length}
+            </button>
+          )}
           {visibleRequirements.length ? (
             renderedRequirements.map((requirement) => (
               <div
@@ -583,8 +659,9 @@ export function RequirementsView({
               className="button button--quiet requirement-cards__more"
               onClick={() =>
                 setCardBatch({
-                  requirements,
-                  selected,
+                  items: visibleRequirements,
+                  targetId: selectedRequirementId,
+                  start: cardStart,
                   limit: cardLimit + CARD_BATCH_SIZE,
                 })
               }

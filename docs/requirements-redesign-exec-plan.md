@@ -24,6 +24,7 @@ This work does not redesign the Cases tab, remove its Advanced filters, change c
 - [x] (2026-08-03 18:19Z) Milestone 3: replaced the one-item selector with the complete expandable hierarchy and all-card scroller, added URL-backed tri-state subtree filtering, one-tool worst-status tones, applicability and tags, lazy collapsed evidence, responsive layout, and focused tests; all 91 frontend tests, type checking, production build, and desktop/mobile headless visual checks passed.
 - [x] (2026-08-03 19:04Z) Milestone 4: passed authoritative annotation regeneration, `just smoke`, full Docker/network `just ci`, final production build, visual checks, and all delayed read-only review lanes; fixed every substantive correctness, accessibility, contract, and scaling finding and audited every acceptance criterion.
 - [x] (2026-08-04 08:55Z) Follow-up: changed wide Requirements to global card scrolling with sticky TOC and evidence headers below the sticky quick filters, added a collapsed URL-backed tag cloud and clickable card tags with AND semantics, and fixed sticky-header scroll offsets and direct-URL tag canonicalization after focused review.
+- [x] (2026-08-05 09:54Z) Follow-up: corrected chapter-tree and Copy Link navigation under 100-card incremental rendering. Out-of-range targets now load in their natural canonical window, repeated navigation cancels stale scroll state, sticky alignment is corrected after layout settles, and Cases shares canonical clause ordering and the corrected scroll primitive.
 
 ## Surprises & Discoveries
 
@@ -246,3 +247,5 @@ Revision note (2026-08-03 18:52Z): Completed the initial Milestone 4 audit after
 Revision note (2026-08-03 19:04Z): Reopened and completed Milestone 4 when delayed independent review lanes returned. Recorded and resolved repeated corpus filtering, large-card rerenders, offscreen rendering, scroll targeting/effects, native list semantics, live-region scope, reduced motion, nested indentation, complete-present catalog enforcement, and historical bundle integration coverage.
 
 Revision note (2026-08-04 08:55Z): Added the requested global-scroll sticky table context and multi-tag filtering follow-up. Recorded AND semantics, shared cloud/card controls, Cases isolation, canonical URLs, sticky scroll margins, focused review, and refreshed local viewing data.
+
+Revision note (2026-08-05 09:54Z): Recorded the production-debugged navigation fix. Repeated chapter 3/5/12/20 clicks and a copied chapter-20 deep link at 1450×900 now resolve to the intended first card in canonical order at the same 271 px sticky offset.

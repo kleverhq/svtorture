@@ -78,15 +78,20 @@ describe("RequirementsView", () => {
     expect(standardTreeTone(["harness-error"])).toBe("red");
   });
 
-  it("mounts large result sets in batches while retaining a selected target", () => {
+  it("mounts large result sets in batches while retaining a selected target", async () => {
     const dataset = makeTestDataset();
     const first = dataset.requirements[0];
     if (!first) throw new Error("incomplete test dataset");
-    const requirements = Array.from({ length: 105 }, (_, index) => ({
+    const requirements = Array.from({ length: 205 }, (_, index) => ({
       ...first,
       id: `SV-2023-13-BATCH-${String(index).padStart(3, "0")}`,
       summary: `Batch requirement ${index}`,
     }));
+    const scrollIntoView = vi.fn();
+    Object.defineProperty(HTMLElement.prototype, "scrollIntoView", {
+      configurable: true,
+      value: scrollIntoView,
+    });
 
     const view = render(
       <RequirementsView
@@ -106,10 +111,21 @@ describe("RequirementsView", () => {
       />,
     );
 
-    expect(screen.getAllByRole("article")).toHaveLength(101);
+    expect(screen.getAllByRole("article")).toHaveLength(100);
+    await waitFor(() =>
+      expect(scrollIntoView).toHaveBeenCalledWith({
+        block: "start",
+        behavior: "auto",
+      }),
+    );
+    expect(
+      screen.getByRole("article", {
+        name: `Requirement ${requirements[104]!.id}`,
+      }),
+    ).toBeTruthy();
     fireEvent.click(
       screen.getByRole("button", {
-        name: "Show more requirements · 101 of 105",
+        name: "Show more requirements · 100 of 205",
       }),
     );
     expect(screen.getAllByRole("article")).toHaveLength(105);
@@ -133,7 +149,90 @@ describe("RequirementsView", () => {
         onInspectEvidence={() => undefined}
       />,
     );
-    expect(screen.getAllByRole("article")).toHaveLength(101);
+    expect(screen.getAllByRole("article")).toHaveLength(100);
+  });
+
+  it("mounts and scrolls to an out-of-range chapter target in clause order", async () => {
+    const dataset = makeTestDataset();
+    const first = dataset.requirements[0];
+    if (!first) throw new Error("incomplete test dataset");
+    const chapter13 = Array.from({ length: 150 }, (_, index) => ({
+      ...first,
+      id: `SV-2023-13-NAV-${String(index).padStart(3, "0")}`,
+      summary: `Chapter 13 requirement ${index}`,
+    }));
+    const target = {
+      ...first,
+      id: "SV-2023-14-NAV-TARGET",
+      clause: "14",
+      part: "14",
+      summary: "Chapter 14 navigation target",
+    };
+    const scrollIntoView = vi.fn();
+    Object.defineProperty(HTMLElement.prototype, "scrollIntoView", {
+      configurable: true,
+      value: scrollIntoView,
+    });
+    Object.defineProperty(window, "matchMedia", {
+      configurable: true,
+      value: vi.fn(() => ({ matches: true })),
+    });
+
+    function NavigationHarness() {
+      const [selectedRequirementId, setSelectedRequirementId] = useState("");
+      return (
+        <RequirementsView
+          requirements={[target, ...chapter13]}
+          allRequirements={[target, ...chapter13]}
+          standardSections={dataset.standard_sections}
+          selectedSections={[]}
+          onSelectedSectionsChange={() => undefined}
+          cases={[]}
+          campaign={dataset.campaigns[0]}
+          toolFilter=""
+          profileFilter=""
+          selectedRequirementId={selectedRequirementId}
+          onSelectRequirement={setSelectedRequirementId}
+          onInspectCase={() => undefined}
+          onInspectEvidence={() => undefined}
+        />
+      );
+    }
+
+    render(<NavigationHarness />);
+    expect(
+      screen.queryByRole("article", { name: `Requirement ${target.id}` }),
+    ).toBeNull();
+    fireEvent.click(screen.getByRole("button", { name: "14 Clocking blocks" }));
+
+    const targetCard = await screen.findByRole("article", {
+      name: `Requirement ${target.id}`,
+    });
+    await waitFor(() =>
+      expect(scrollIntoView).toHaveBeenCalledWith({
+        block: "start",
+        behavior: "auto",
+      }),
+    );
+    expect(document.activeElement).toBe(
+      within(targetCard).getByRole("heading", { name: target.summary }),
+    );
+    const renderedIds = screen
+      .getAllByRole("article", { name: /^Requirement / })
+      .map((card) => card.getAttribute("aria-label"));
+    expect(renderedIds.at(-1)).toBe(`Requirement ${target.id}`);
+
+    fireEvent.click(
+      screen.getByRole("button", {
+        name: "13 Tasks and functions (subroutines)",
+      }),
+    );
+    await waitFor(() => expect(scrollIntoView).toHaveBeenCalledTimes(2));
+    fireEvent.click(screen.getByRole("button", { name: "14 Clocking blocks" }));
+    await waitFor(() => expect(scrollIntoView).toHaveBeenCalledTimes(3));
+    expect(document.activeElement).toBe(
+      screen.getByRole("heading", { name: target.summary }),
+    );
   });
 
   it("renders every compact card with applicability and expandable evidence", async () => {

@@ -20,7 +20,7 @@ import {
   fallbackSections,
   sectionContains,
 } from "./requirementHierarchy";
-import { StandardTree } from "./StandardTree";
+import { StandardTree, scrollTreeCardIntoView } from "./StandardTree";
 import { ToolEvidenceRow } from "./ToolEvidence";
 import type {
   Campaign,
@@ -662,7 +662,12 @@ export function EvidenceView({
   const sectionSelection = selectedSections ?? [];
   const changeSections = onSelectedSectionsChange ?? (() => undefined);
   const navigationScrollId = useRef("");
+  const navigationAlignmentCleanup = useRef<() => void>(() => undefined);
   const resultsHeadingRef = useRef<HTMLHeadingElement>(null);
+  useEffect(
+    () => () => navigationAlignmentCleanup.current(),
+    [],
+  );
   const requirementMap = useMemo(
     () => new Map(requirements.map((item) => [item.id, item])),
     [requirements],
@@ -711,15 +716,32 @@ export function EvidenceView({
   );
   const caseClause = (testCase: CaseDefinition) =>
     requirementMap.get(testCase.primary_requirement)?.clause;
+  const sectionOrder = useMemo(
+    () => new Map(sections.map((section, index) => [section.clause, index])),
+    [sections],
+  );
+  const orderedCases = useMemo(
+    () =>
+      [...cases].sort((left, right) => {
+        const leftClause = requirementMap.get(left.primary_requirement)?.clause;
+        const rightClause = requirementMap.get(right.primary_requirement)?.clause;
+        return (
+          (sectionOrder.get(leftClause ?? "") ?? Number.MAX_SAFE_INTEGER) -
+            (sectionOrder.get(rightClause ?? "") ?? Number.MAX_SAFE_INTEGER) ||
+          left.id.localeCompare(right.id)
+        );
+      }),
+    [cases, requirementMap, sectionOrder],
+  );
   const visibleCases = useMemo(
     () =>
       selected.size === 0
-        ? cases
-        : cases.filter((testCase) => {
+        ? orderedCases
+        : orderedCases.filter((testCase) => {
             const clause = requirementMap.get(testCase.primary_requirement)?.clause;
             return Boolean(clause && selected.has(clause));
           }),
-    [cases, requirementMap, selected],
+    [orderedCases, requirementMap, selected],
   );
   const selectedCase = useMemo(
     () => visibleCases.find((testCase) => testCase.id === selectedCaseId),
@@ -762,11 +784,15 @@ export function EvidenceView({
       navigationScrollId.current = "";
       return;
     }
-    window.requestAnimationFrame(() => {
-      document
-        .getElementById(`case-card-${selectedCase.id}`)
-        ?.scrollIntoView?.({ block: "start" });
+    let cancelAlignment: () => void = () => undefined;
+    const frame = window.requestAnimationFrame(() => {
+      const card = document.getElementById(`case-card-${selectedCase.id}`);
+      if (card) cancelAlignment = scrollTreeCardIntoView(card);
     });
+    return () => {
+      window.cancelAnimationFrame(frame);
+      cancelAlignment();
+    };
   }, [selectedCase]);
 
   useEffect(() => {
@@ -795,13 +821,11 @@ export function EvidenceView({
     if (!testCase) return;
     navigationScrollId.current = testCase.id === selectedCaseId ? "" : testCase.id;
     onSelectCase(testCase.id);
-    const reduceMotion =
-      window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
     const card = document.getElementById(`case-card-${testCase.id}`);
-    card?.scrollIntoView?.({
-      block: "start",
-      behavior: reduceMotion ? "auto" : "smooth",
-    });
+    navigationAlignmentCleanup.current();
+    navigationAlignmentCleanup.current = card
+      ? scrollTreeCardIntoView(card)
+      : () => undefined;
     const heading = card?.querySelector("h3");
     if (heading instanceof HTMLElement) {
       heading.tabIndex = -1;

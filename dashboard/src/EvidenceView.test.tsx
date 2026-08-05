@@ -94,7 +94,10 @@ describe("EvidenceView", () => {
     const view = render(<EvidenceView {...props} selectedCaseId={second.id} />);
 
     await waitFor(() =>
-      expect(scrollIntoView).toHaveBeenCalledWith({ block: "start" }),
+      expect(scrollIntoView).toHaveBeenCalledWith({
+        block: "start",
+        behavior: "auto",
+      }),
     );
     expect(
       screen.getByRole("heading", { name: "Case selected from a deep link" }),
@@ -103,7 +106,10 @@ describe("EvidenceView", () => {
     scrollIntoView.mockReset();
     view.rerender(<EvidenceView {...props} selectedCaseId={first.id} />);
     await waitFor(() =>
-      expect(scrollIntoView).toHaveBeenCalledWith({ block: "start" }),
+      expect(scrollIntoView).toHaveBeenCalledWith({
+        block: "start",
+        behavior: "auto",
+      }),
     );
   });
 
@@ -195,8 +201,8 @@ describe("EvidenceView", () => {
 
     render(
       <EvidenceView
-        cases={[firstCase, secondCase]}
-        allCases={[firstCase, secondCase]}
+        cases={[secondCase, firstCase]}
+        allCases={[secondCase, firstCase]}
         requirements={[firstRequirement, secondRequirement]}
         standardSections={[
           { clause: "13", title: "Tasks and functions" },
@@ -217,7 +223,11 @@ describe("EvidenceView", () => {
       />,
     );
 
-    expect(screen.getAllByRole("article", { name: /^Case / })).toHaveLength(2);
+    expect(
+      screen
+        .getAllByRole("article", { name: /^Case / })
+        .map((card) => card.getAttribute("aria-label")),
+    ).toEqual([`Case ${firstCase.id}`, `Case ${secondCase.id}`]);
     const firstCard = screen.getByRole("article", { name: `Case ${firstCase.id}` });
     const copyOut = within(firstCard).getByRole("button", { name: "copy-out" });
     expect(copyOut.getAttribute("aria-pressed")).toBe("true");
