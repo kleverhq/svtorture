@@ -12,6 +12,7 @@ from pydantic import BaseModel, ConfigDict, Field, field_validator, model_valida
 
 ID_RE = re.compile(r"^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$")
 REQUIREMENT_ID_RE = re.compile(r"^SV-(?:2012|2017|2023)-(?:[0-9]{2}|[A-Q])-[A-Z0-9-]+$")
+WAIVER_ID_RE = re.compile(r"^WV-2023-(?:[0-9]{2}|[A-Q])-[A-Z0-9-]+$")
 TOP_RE = re.compile(r"^[A-Za-z_][A-Za-z0-9_$]*$")
 SHA_RE = re.compile(r"^[0-9a-f]{40}$")
 SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
@@ -334,6 +335,46 @@ class RequirementPart(StrictModel):
             raise ValueError("requirement part does not match part file")
         if ids != sorted(ids):
             raise ValueError("requirements must be sorted by id")
+        return self
+
+
+class Waiver(StrictModel):
+    id: str
+    part: StandardPart
+    anchors: tuple[StandardAnchor, ...] = Field(
+        min_length=1, json_schema_extra={"uniqueItems": True}
+    )
+    reason: SafeText
+
+    @field_validator("id")
+    @classmethod
+    def valid_id(cls, value: str) -> str:
+        if WAIVER_ID_RE.fullmatch(value) is None:
+            raise ValueError("invalid IEEE 1800-2023 waiver id")
+        return value
+
+    @model_validator(mode="after")
+    def unique_anchors(self) -> Self:
+        if len(self.anchors) != len(set(self.anchors)):
+            raise ValueError("waiver anchors must be unique")
+        return self
+
+
+class WaiverPart(StrictModel):
+    authority: StandardRevision
+    part: StandardPart
+    schema_version: ContractSchemaVersion
+    waivers: tuple[Waiver, ...] = Field(min_length=1)
+
+    @model_validator(mode="after")
+    def valid_part(self) -> Self:
+        if self.authority is not StandardRevision.IEEE_1800_2023:
+            raise ValueError("waiver authority must be IEEE 1800-2023")
+        ids = [waiver.id for waiver in self.waivers]
+        if len(ids) != len(set(ids)):
+            raise ValueError("duplicate waiver ids in part")
+        if any(waiver.part != self.part for waiver in self.waivers):
+            raise ValueError("waiver part does not match part file")
         return self
 
 
@@ -1081,6 +1122,7 @@ class CorpusPartMetric(CorpusMetricValues):
     id: str
     kind: StandardPartKind
     title: str = Field(min_length=1, max_length=500)
+    waived: int = Field(strict=True, ge=0)
 
     @model_validator(mode="after")
     def valid_part_id(self) -> Self:

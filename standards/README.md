@@ -9,12 +9,14 @@ The requirement-loop publication also supplies three JSON sidecar collections:
 `waivers/` records why source anchors were not materialized as independent
 requirements, `materialization-hints/` records guidance for future cases, and
 `historical-evidence/` records IEEE 1800-2012 and IEEE 1800-2017 refinement
-evidence. These sidecars cover chapters 3–41 and annexes A–Q. They are retained
-for review and case authoring but are not loaded into the runtime catalog and do
-not affect coverage, scoring, bundles, or the dashboard. Extraction session
+evidence. Waivers cover every standard part and are loaded into the runtime
+catalog: waiver-only anchors are excluded from the Requirements Coverage
+denominator, and effective waived counts appear in its dashboard breakdown.
+They do not affect requirements, cases, scoring, or tool results. The other
+sidecars remain review and case-authoring inputs only. Extraction session
 manifests are intentionally not retained.
 
-The consolidated publication contains 6,719 requirements and 1,900 waivers. Its
+The consolidated publication contains 6,719 requirements and 1,910 waivers. Its
 files were copied without semantic modification from the final requirement-loop
 runs; the 12 earlier case-facing requirements were deduplicated by remapping
 those cases to the corresponding consolidated records.
