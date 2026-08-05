@@ -29,7 +29,7 @@ This change does not waive case failures, change evaluator judgments, alter Case
 - [x] (2026-08-05 19:21Z) Committed implementation milestones as `82b0dd1` and `a4e7fef` using Conventional Commits.
 - [x] (2026-08-05 19:48Z) Completed parallel code, architecture, and documentation review, fixed all findings, passed focused recheck, fixed the control pass's waiver-ID/part invariant, and received a clean final control recheck.
 - [x] (2026-08-05 19:45Z) Built local dashboard assets and exported fresh campaign `20260805T193924Z-fb89a80e0e85e398`; served it at `http://127.0.0.1:4173` and verified both HTML and data endpoints return HTTP 200.
-- [ ] Push `feat-waivers` and open a GitHub pull request against `main`.
+- [x] (2026-08-05 19:55Z) Pushed `feat-waivers` and opened GitHub pull request `https://github.com/kleverhq/svtorture/pull/3` against `main`.
 
 ## Surprises & Discoveries
 
@@ -81,7 +81,7 @@ This change does not waive case failures, change evaluator judgments, alter Case
 
 ## Outcomes & Retrospective
 
-Source disposition and implementation are complete: chapter 1 has seven waiver records covering 129 anchors, chapter 2 has three records covering 33 anchors, the full inventory has zero open anchors, runtime validation loads all 58 sidecars, and new campaign metrics report adjusted Requirements Coverage of `8696 / 8696` plus 8,267 effective waived anchors. Requirements Density remains `10771 / 8696`, Cases metrics remain unchanged, and the Requirements breakdown alone renders the Waived column. Focused checks, `just smoke`, and `just ci` pass. Parallel review and both control passes are complete with every substantive finding fixed and a final clean result. A fresh Icarus campaign was exported into a production dashboard and is running locally at `http://127.0.0.1:4173`. Only push and pull-request creation remain.
+The plan is complete. Chapter 1 has seven grounded waiver records covering 129 anchors, chapter 2 has three covering 33 anchors, and the full inventory has zero open anchors. Runtime validation loads all 58 sidecars. New campaign metrics report adjusted Requirements Coverage of `8696 / 8696`, Requirements Density of `10771 / 8696`, and 8,267 effective waived anchors; Cases remain unchanged. The Requirements breakdown alone renders the Waived column. Focused checks, `just smoke`, and final `just ci` pass. Parallel review and both control passes completed with every finding fixed and a clean final result. Production dashboard data from fresh campaign `20260805T195208Z-241f22980e32aa45` is served at `http://127.0.0.1:4173`. Branch `feat-waivers` is pushed and pull request `https://github.com/kleverhq/svtorture/pull/3` is open against `main`.
 
 ## Context and Orientation
 
@@ -202,3 +202,5 @@ Plan revision note: 2026-08-05 validation and demonstration milestones completed
 Plan revision note: 2026-08-05 first control review found one source-identity invariant: the part encoded in a waiver ID must match its record part. The model and strict rejection tests now enforce it, and `just smoke` passes after the fix.
 
 Plan revision note: 2026-08-05 final control recheck returned no substantive findings. Review is complete; only commit delivery, push, and pull-request creation remain.
+
+Plan revision note: 2026-08-05 delivery completed. Final `just ci` passed after all review fixes, the dashboard was rebuilt from campaign `20260805T195208Z-241f22980e32aa45`, branch `feat-waivers` was pushed, and pull request 3 was opened against `main`. No planned work remains.
