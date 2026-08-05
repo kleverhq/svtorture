@@ -480,7 +480,11 @@ def test_covered_anchor_takes_precedence_over_waiver(catalog: Catalog, tmp_path:
         ),
         (
             lambda value: value["waivers"][0].update(part="2"),
-            "waiver part does not match",
+            "waiver id part does not match",
+        ),
+        (
+            lambda value: value["waivers"][0].update(id="WV-2023-02-WRONG-ID-PART"),
+            "waiver id part does not match",
         ),
         (
             lambda value: value["waivers"][0]["anchors"].append(value["waivers"][0]["anchors"][0]),
@@ -512,14 +516,14 @@ def test_malformed_waiver_is_rejected(
 def test_duplicate_waiver_id_is_rejected(catalog: Catalog, tmp_path: Path) -> None:
     root = tmp_path / "repo"
     _copy_catalog_tree(catalog, root)
-    chapter_one = root / "standards" / "waivers" / "chapter-01.json"
-    chapter_two = root / "standards" / "waivers" / "chapter-02.json"
-    first_id = json.loads(chapter_one.read_text(encoding="utf-8"))["waivers"][0]["id"]
-    value = json.loads(chapter_two.read_text(encoding="utf-8"))
-    value["waivers"][0]["id"] = first_id
-    chapter_two.write_text(json.dumps(value), encoding="utf-8")
+    path = root / "standards" / "waivers" / "chapter-01.json"
+    value = json.loads(path.read_text(encoding="utf-8"))
+    duplicate = dict(value["waivers"][1])
+    duplicate["id"] = value["waivers"][0]["id"]
+    value["waivers"].append(duplicate)
+    path.write_text(json.dumps(value), encoding="utf-8")
 
-    with pytest.raises(CatalogError, match="duplicate waiver id"):
+    with pytest.raises(CatalogError, match="duplicate waiver ids in part"):
         load_catalog(root)
 
 

@@ -25,10 +25,10 @@ This change does not waive case failures, change evaluator judgments, alter Case
 - [x] (2026-08-05 19:10Z) Adjusted Requirements Coverage and carried per-part effective waived counts through new campaign and bundle models while leaving Cases unchanged.
 - [x] (2026-08-05 19:18Z) Added the Waived column only to the Requirements breakdown and updated concise metric documentation and copy.
 - [x] (2026-08-05 19:20Z) Regenerated public schemas and added deterministic backend and frontend tests, including strict bundle fixtures.
-- [ ] Run focused checks, `just smoke`, and `just ci` where Docker and network access permit. Completed: focused checks and `just smoke` passed; remaining: `just ci`.
+- [x] (2026-08-05 19:40Z) Passed focused checks, `just smoke`, and complete `just ci`, including 197 unit tests, 108 frontend tests, 11 Docker tests, production build, and a five-case Icarus campaign.
 - [x] (2026-08-05 19:21Z) Committed implementation milestones as `82b0dd1` and `a4e7fef` using Conventional Commits.
-- [ ] Run parallel code, architecture, and documentation review lanes, fix findings, and run a clean control review. Completed: three initial lanes returned one shared Cases invariant and one architecture-doc omission; both are fixed. Remaining: focused recheck and clean control review.
-- [ ] Build local dashboard assets and data for human inspection.
+- [x] (2026-08-05 19:48Z) Completed parallel code, architecture, and documentation review, fixed all findings, passed focused recheck, fixed the control pass's waiver-ID/part invariant, and received a clean final control recheck.
+- [x] (2026-08-05 19:45Z) Built local dashboard assets and exported fresh campaign `20260805T193924Z-fb89a80e0e85e398`; served it at `http://127.0.0.1:4173` and verified both HTML and data endpoints return HTTP 200.
 - [ ] Push `feat-waivers` and open a GitHub pull request against `main`.
 
 ## Surprises & Discoveries
@@ -50,6 +50,9 @@ This change does not waive case failures, change evaluator judgments, alter Case
 
 - Observation: The shared per-part public model can structurally carry `waived` for Cases even though the UI hides it.
   Evidence: Initial code and architecture reviewers independently identified that malformed external campaign data could set a nonzero Cases waiver. `CorpusMetrics` now rejects that contradictory state.
+
+- Observation: The first control pass found that a syntactically valid waiver ID could encode a different part from its record.
+  Evidence: `Waiver.valid_waiver()` now applies the same part-token consistency rule used by requirements, and focused metadata tests reject both record-part and ID-part contradictions.
 
 - Observation: Campaigns freeze complete aggregate and per-part corpus metric operands at collection time, and dashboard bundles copy those operands rather than reading `standards/` in the browser.
   Evidence: `src/svtorture/campaign.py` constructs `corpus_metrics=catalog.corpus_metrics()`, and `src/svtorture/bundle.py` copies `campaign.corpus_metrics` into bundle models.
@@ -78,7 +81,7 @@ This change does not waive case failures, change evaluator judgments, alter Case
 
 ## Outcomes & Retrospective
 
-Source disposition and implementation are complete: chapter 1 has seven waiver records covering 129 anchors, chapter 2 has three records covering 33 anchors, the full inventory has zero open anchors, runtime validation loads all 58 sidecars, and new campaign metrics report adjusted Requirements Coverage of `8696 / 8696` plus 8,267 effective waived anchors. Requirements Density remains `10771 / 8696`, Cases metrics remain unchanged, and the Requirements breakdown alone renders the Waived column. Focused backend tests, all frontend tests, and `just smoke` pass. Full CI, review, local dashboard demonstration, push, and pull request remain.
+Source disposition and implementation are complete: chapter 1 has seven waiver records covering 129 anchors, chapter 2 has three records covering 33 anchors, the full inventory has zero open anchors, runtime validation loads all 58 sidecars, and new campaign metrics report adjusted Requirements Coverage of `8696 / 8696` plus 8,267 effective waived anchors. Requirements Density remains `10771 / 8696`, Cases metrics remain unchanged, and the Requirements breakdown alone renders the Waived column. Focused checks, `just smoke`, and `just ci` pass. Parallel review and both control passes are complete with every substantive finding fixed and a final clean result. A fresh Icarus campaign was exported into a production dashboard and is running locally at `http://127.0.0.1:4173`. Only push and pull-request creation remain.
 
 ## Context and Orientation
 
@@ -193,3 +196,9 @@ Plan revision note: 2026-08-05 source milestone completed after deterministic an
 Plan revision note: 2026-08-05 runtime and dashboard milestones completed in commits `82b0dd1` and `a4e7fef`. Progress now records strict waiver loading, adjusted frozen metrics, schema/test updates, the requested UI column, and passing `just smoke`; remaining work is CI, review, local demonstration, and GitHub delivery.
 
 Plan revision note: 2026-08-05 initial parallel review completed. The plan and architecture documentation now describe the implemented runtime path, and the public model enforces the reviewers' Cases-waiver invariant; focused recheck and a fresh control pass remain.
+
+Plan revision note: 2026-08-05 validation and demonstration milestones completed. Full `just ci` passed and produced fresh campaign `20260805T193924Z-fb89a80e0e85e398`; its exported dashboard reports coverage `8696/8696`, density `10771/8696`, 8,267 effective waived anchors, zero Cases waivers, and is served locally on port 4173.
+
+Plan revision note: 2026-08-05 first control review found one source-identity invariant: the part encoded in a waiver ID must match its record part. The model and strict rejection tests now enforce it, and `just smoke` passes after the fix.
+
+Plan revision note: 2026-08-05 final control recheck returned no substantive findings. Review is complete; only commit delivery, push, and pull-request creation remain.

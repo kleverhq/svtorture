@@ -354,9 +354,12 @@ class Waiver(StrictModel):
         return value
 
     @model_validator(mode="after")
-    def unique_anchors(self) -> Self:
+    def valid_waiver(self) -> Self:
         if len(self.anchors) != len(set(self.anchors)):
             raise ValueError("waiver anchors must be unique")
+        id_part = f"{int(self.part):02d}" if self.part.isdigit() else self.part
+        if not self.id.startswith(f"WV-2023-{id_part}-"):
+            raise ValueError("waiver id part does not match part field")
         return self
 
 
