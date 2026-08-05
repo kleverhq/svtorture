@@ -49,7 +49,7 @@ function formulaCopy(
   if (kind === "requirements") {
     return {
       coverage:
-        "Coverage = unique referenced anchors / all standard anchors × 100. " +
+        "Coverage = unique referenced anchors / eligible standard anchors after waiver-only exclusions × 100. " +
         `${formatOperands(metric.coverage)} × 100 = ${coverageValue}.`,
       density:
         "Density = unique requirement–anchor links / unique referenced anchors. " +
@@ -105,7 +105,9 @@ export function CorpusCoverage({ kind, metric }: CorpusCoverageProps) {
           </span>
         </summary>
         <div className="corpus-coverage__table-wrap">
-          <table className="corpus-coverage__table">
+          <table
+            className={`corpus-coverage__table corpus-coverage__table--${kind}`}
+          >
             <caption className="visually-hidden">
               {label} coverage and density by standard chapter and annex
             </caption>
@@ -113,6 +115,7 @@ export function CorpusCoverage({ kind, metric }: CorpusCoverageProps) {
               <tr>
                 <th scope="col">Part</th>
                 <th scope="col">Coverage</th>
+                {kind === "requirements" && <th scope="col">Waived</th>}
                 <th scope="col">Density</th>
               </tr>
             </thead>
@@ -137,6 +140,9 @@ export function CorpusCoverage({ kind, metric }: CorpusCoverageProps) {
                     <strong>{formatPercentage(part.coverage)}</strong>
                     <small>{formatOperands(part.coverage)}</small>
                   </td>
+                  {kind === "requirements" && (
+                    <td>{INTEGER_FORMAT.format(part.waived)}</td>
+                  )}
                   <td>
                     <strong>{formatDensity(part.density)}</strong>
                     <small>{formatOperands(part.density)}</small>

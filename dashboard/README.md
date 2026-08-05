@@ -29,7 +29,8 @@ The interface provides six URL-backed views. **Overview** is shown by default:
 
 Requirements and Cases include a compact corpus summary that expands into all
 standard chapters and annexes. Requirements Coverage is unique referenced
-anchors divided by all standard anchors; its Density is unique
+anchors divided by eligible standard anchors after waiver-only exclusions; its
+breakdown also shows the excluded count, and its Density is unique
 requirement–anchor links divided by covered anchors. Cases Coverage is unique
 requirements linked from cases divided by all catalog requirements; its Density
 is unique case–requirement links divided by covered requirements. Primary and

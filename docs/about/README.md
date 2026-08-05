@@ -29,12 +29,12 @@ A requirement is a testable statement supported by one or more anchored source
 blocks, such as paragraphs, list items, tables, or figures. Its metadata records
 revision applicability.
 
-Corpus coverage is the share of anchors cited; density is the number of
-requirement-to-anchor links per cited anchor. See
+Corpus coverage is the share of eligible anchors cited after waiver-only
+exclusions; density is the number of requirement-to-anchor links per cited anchor. See
 [annotation](../annotation.md) for anchor construction and
 [methodology](../methodology.md) for the metric definitions.
 
-![Diagram linking standard anchors to a requirement and corpus metrics](assets/traceable-requirements.drawio.png "Each requirement retains links to the standard text it came from. Paragraph, list item, table, and figure anchors can support a requirement. Related clause references record its context. Coverage measures how many anchors are cited; density measures the number of links to cited anchors.")
+![Diagram linking standard anchors to a requirement and corpus metrics](assets/traceable-requirements.drawio.png "Each requirement retains links to the standard text it came from. Paragraph, list item, table, and figure anchors can support a requirement. Related clause references record its context. Coverage measures how many eligible anchors are cited after waiver-only exclusions; density measures the number of links to cited anchors.")
 
 ## Cases
 

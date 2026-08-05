@@ -284,9 +284,11 @@ describe("TrendsView", () => {
     const description = document.getElementById(
       coverage.getAttribute("aria-describedby")!,
     );
-    expect(description?.textContent).toContain("referenced anchors");
+    expect(description?.textContent).toContain(
+      "eligible anchors after waiver-only exclusions",
+    );
     expect(coverage.closest("label")?.getAttribute("title")).toContain(
-      "referenced anchors",
+      "eligible anchors after waiver-only exclusions",
     );
     fireEvent.click(screen.getByRole("radio", { name: "Density" }));
     expect(onTrendChange).toHaveBeenCalledWith("density");
