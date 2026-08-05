@@ -18,9 +18,9 @@ This change does not waive case failures, change evaluator judgments, alter Case
 
 - [x] (2026-08-05 18:35Z) Inspected the existing waiver sidecars, corpus metric path, campaign snapshots, bundle projection, dashboard coverage component, and trend computation.
 - [x] (2026-08-05 18:35Z) Resolved the product semantics: covered anchors take precedence over waived anchors; only waiver-only anchors leave the denominator.
-- [ ] Commit this initial ExecPlan.
-- [ ] Materialize and inspect the IEEE 1800-2023 annotated corpus and PDF pages for the uncovered chapter 1 and chapter 2 anchors.
-- [ ] Add complete chapter 1 and chapter 2 waiver sidecars with concise, grounded reasons.
+- [x] (2026-08-05 18:36Z) Committed the initial ExecPlan as `1a2ff7a`.
+- [x] (2026-08-05 18:42Z) Materialized and verified all 16,963 anchors from the matching IEEE 1800-2023 PDF, then inspected generated text and PDF pages 42–50 for chapters 1 and 2.
+- [x] (2026-08-05 18:50Z) Added complete chapter 1 and chapter 2 waiver sidecars with 10 grounded records covering all 162 formerly open anchors.
 - [ ] Add strict waiver loading and validation to the runtime catalog.
 - [ ] Adjust Requirements Coverage and carry per-part effective waived counts through new campaigns and dashboard bundles.
 - [ ] Add the Waived column to the Requirements breakdown and update concise metric documentation.
@@ -38,6 +38,12 @@ This change does not waive case failures, change evaluator judgments, alter Case
 
 - Observation: All 162 anchors currently in neither set belong to chapters 1 and 2.
   Evidence: The same comparison grouped the open set as chapter 1: 129 and chapter 2: 33.
+
+- Observation: The authoritative PDF bundled with the SystemVerilog skill exactly matches the annotator's reference hash, and complete regeneration matches the committed anchor index.
+  Evidence: `sha256sum` returned `203fbcccbbae90cef401a3acd31835c8cd1507e8f12b2e069046d4f316e317c9`; `just annotate-check` reported 58/58 files, 16,963 globally unique anchors, and `verification: PASS`.
+
+- Observation: Two existing waiver anchors are intentionally present in more than one waiver record, while no record repeats an anchor internally.
+  Evidence: `[2023:5.2:P001:p073]` and `[2023:6.9.2:P001:p108]` each support two different waiver rationales. Runtime validation must reject duplicates within a record but permit cross-record reuse.
 
 - Observation: Campaigns freeze complete aggregate and per-part corpus metric operands at collection time, and dashboard bundles copy those operands rather than reading `standards/` in the browser.
   Evidence: `src/svtorture/campaign.py` constructs `corpus_metrics=catalog.corpus_metrics()`, and `src/svtorture/bundle.py` copies `campaign.corpus_metrics` into bundle models.
@@ -66,7 +72,7 @@ This change does not waive case failures, change evaluator judgments, alter Case
 
 ## Outcomes & Retrospective
 
-Implementation is not yet complete. The expected final state is zero anchors outside the union of requirement-covered and waived anchors, adjusted Requirements Coverage of 100% for the current corpus, unchanged Requirements Density and Cases metrics, a per-part Waived column in the Requirements breakdown, passing repository checks, a locally viewable dashboard, and an open pull request.
+Source disposition is complete: chapter 1 now has seven waiver records covering 129 anchors, chapter 2 has three records covering 33 anchors, and the full inventory has zero anchors outside the requirement/waiver union. Runtime, dashboard, validation, review, and delivery work remain. The expected final state is adjusted Requirements Coverage of 100% for the current corpus, unchanged Requirements Density and Cases metrics, a per-part Waived column in the Requirements breakdown, passing repository checks, a locally viewable dashboard, and an open pull request.
 
 ## Context and Orientation
 
@@ -175,3 +181,5 @@ The final Python catalog interface must retain `Catalog.corpus_metrics() -> Corp
 The waiver loader must consume the committed version-2 JSON sidecars and return a canonical immutable representation or a frozen anchor set. It must not require the IEEE PDF or generated annotated text during ordinary validation, campaign collection, replay, bundling, or dashboard serving.
 
 Plan revision note: 2026-08-05 initial plan created after repository and data-flow analysis. It records the agreed KISS semantics, chapter 1–2 completion requirement, immutable campaign behavior, validation path, review process, and delivery steps.
+
+Plan revision note: 2026-08-05 source milestone completed after deterministic annotation verification and direct inspection of IEEE Std 1800-2023 Clauses 1 and 2. The progress, discoveries, and interim outcome now record complete anchor disposition and the existing cross-record anchor reuse that runtime validation must preserve.
