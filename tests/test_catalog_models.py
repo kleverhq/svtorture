@@ -124,6 +124,7 @@ def test_schema_generation_removes_retired_snapshots(catalog: Catalog, tmp_path:
     write_json_schema(catalog.root, output)
 
     assert not retired.exists()
+    assert (output / "waiver-part.schema.json").is_file()
     index_schema = json.loads((output / "standards-index.schema.json").read_text())
     assert index_schema["properties"]["parts"]["minItems"] == 1
     assert index_schema["properties"]["parts"]["uniqueItems"] is True
@@ -436,6 +437,105 @@ clause = "A"
     assert case_annex.density.denominator == 1
 
 
+def test_waivers_adjust_requirement_coverage(catalog: Catalog) -> None:
+    metrics = catalog.corpus_metrics()
+    chapter_one = metrics.requirements.breakdown[0]
+
+    assert metrics.requirements.coverage.numerator == 8696
+    assert metrics.requirements.coverage.denominator == 8696
+    assert metrics.requirements.density.numerator == 10771
+    assert metrics.requirements.density.denominator == 8696
+    assert sum(part.waived for part in metrics.requirements.breakdown) == 8267
+    assert chapter_one.coverage.numerator == 0
+    assert chapter_one.coverage.denominator == 0
+    assert chapter_one.waived == 129
+    assert all(part.waived == 0 for part in metrics.cases.breakdown)
+
+
+def test_covered_anchor_takes_precedence_over_waiver(catalog: Catalog, tmp_path: Path) -> None:
+    root = tmp_path / "repo"
+    _copy_catalog_tree(catalog, root)
+    original_metrics = catalog.corpus_metrics()
+    covered_anchor = next(
+        anchor
+        for requirement in catalog.inventory.requirements
+        if requirement.part == "4"
+        for anchor in requirement.anchors
+        if anchor not in catalog.waived_anchors
+    )
+    path = root / "standards" / "waivers" / "chapter-04.json"
+    value = json.loads(path.read_text(encoding="utf-8"))
+    value["waivers"][0]["anchors"].append(covered_anchor)
+    path.write_text(json.dumps(value), encoding="utf-8")
+
+    assert load_catalog(root).corpus_metrics() == original_metrics
+
+
+@pytest.mark.parametrize(
+    ("mutate", "message"),
+    (
+        (
+            lambda value: value.update(schema_version=1),
+            "schema_version",
+        ),
+        (
+            lambda value: value["waivers"][0].update(part="2"),
+            "waiver id part does not match",
+        ),
+        (
+            lambda value: value["waivers"][0].update(id="WV-2023-02-WRONG-ID-PART"),
+            "waiver id part does not match",
+        ),
+        (
+            lambda value: value["waivers"][0]["anchors"].append(value["waivers"][0]["anchors"][0]),
+            "waiver anchors must be unique",
+        ),
+        (
+            lambda value: value["waivers"][0]["anchors"].append("[2023:2:H:p048]"),
+            "anchors absent from declared",
+        ),
+    ),
+)
+def test_malformed_waiver_is_rejected(
+    catalog: Catalog,
+    tmp_path: Path,
+    mutate,
+    message: str,
+) -> None:
+    root = tmp_path / "repo"
+    _copy_catalog_tree(catalog, root)
+    path = root / "standards" / "waivers" / "chapter-01.json"
+    value = json.loads(path.read_text(encoding="utf-8"))
+    mutate(value)
+    path.write_text(json.dumps(value), encoding="utf-8")
+
+    with pytest.raises(CatalogError, match=message):
+        load_catalog(root)
+
+
+def test_duplicate_waiver_id_is_rejected(catalog: Catalog, tmp_path: Path) -> None:
+    root = tmp_path / "repo"
+    _copy_catalog_tree(catalog, root)
+    path = root / "standards" / "waivers" / "chapter-01.json"
+    value = json.loads(path.read_text(encoding="utf-8"))
+    duplicate = dict(value["waivers"][1])
+    duplicate["id"] = value["waivers"][0]["id"]
+    value["waivers"].append(duplicate)
+    path.write_text(json.dumps(value), encoding="utf-8")
+
+    with pytest.raises(CatalogError, match="duplicate waiver ids in part"):
+        load_catalog(root)
+
+
+def test_missing_waiver_part_is_rejected(catalog: Catalog, tmp_path: Path) -> None:
+    root = tmp_path / "repo"
+    _copy_catalog_tree(catalog, root)
+    (root / "standards" / "waivers" / "chapter-01.json").unlink()
+
+    with pytest.raises(CatalogError, match="part index mismatch"):
+        load_catalog(root)
+
+
 def test_unknown_controlled_tag_is_rejected(catalog: Catalog, tmp_path: Path) -> None:
     root = tmp_path / "repo"
     _copy_catalog_tree(catalog, root)
@@ -583,6 +683,10 @@ def test_version_four_campaign_is_rejected(catalog: Catalog, tmp_path: Path) -> 
                 {"title": "Changed title"}
             ),
             "same parts",
+        ),
+        (
+            lambda value: value["corpus_metrics"]["cases"]["breakdown"][0].update({"waived": 1}),
+            "case metrics cannot contain waived anchors",
         ),
     ),
 )
