@@ -26,6 +26,14 @@ function formatDensity(ratio: CorpusRatio): string {
   return DENSITY_FORMAT.format(ratio.numerator / ratio.denominator);
 }
 
+function coverageTone(ratio: CorpusRatio): string {
+  if (ratio.denominator === 0 || ratio.numerator === 0) return "zero";
+  const coverage = ratio.numerator / ratio.denominator;
+  if (coverage < 0.3) return "low";
+  if (coverage < 0.8) return "medium";
+  return "high";
+}
+
 function formatOperands(ratio: CorpusRatio): string {
   return `${INTEGER_FORMAT.format(ratio.numerator)} / ${INTEGER_FORMAT.format(
     ratio.denominator,
@@ -73,6 +81,11 @@ export function CorpusCoverage({ kind, metric }: CorpusCoverageProps) {
       </span>
       <details>
         <summary aria-describedby={formulaId}>
+          <span className="corpus-coverage__context">
+            {kind === "requirements"
+              ? "Standard anchors vs requirements:"
+              : "Requirements vs cases:"}
+          </span>
           <span
             className="corpus-coverage__metric"
             title={formulas.coverage}
@@ -105,7 +118,10 @@ export function CorpusCoverage({ kind, metric }: CorpusCoverageProps) {
             </thead>
             <tbody>
               {metric.breakdown.map((part) => (
-                <tr key={`${part.kind}:${part.id}`}>
+                <tr
+                  className={`corpus-coverage__row--${coverageTone(part.coverage)}`}
+                  key={`${part.kind}:${part.id}`}
+                >
                   <th
                     scope="row"
                     aria-label={`${part.kind === "chapter" ? "Chapter" : "Annex"} ${part.id}: ${part.title}`}

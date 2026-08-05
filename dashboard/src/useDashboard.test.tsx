@@ -107,6 +107,11 @@ describe("useDashboard", () => {
       `/data/campaigns/${data.manifest.id}/verdicts.json`,
     ]);
     expect(requested.some((path) => path.includes("/evidence/"))).toBe(false);
+    expect(result.current.dataset?.standard_sections).toHaveLength(1740);
+    expect(result.current.dataset?.standard_sections[0]).toEqual({
+      clause: "1",
+      title: "Overview",
+    });
 
     let results = await result.current.loadCaseEvidence!(data.catalog.cases[0]!.id);
     expect(results[0]?.observations.length).toBeGreaterThan(0);

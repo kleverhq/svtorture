@@ -2,6 +2,7 @@ import {
   useCallback,
   useEffect,
   useLayoutEffect,
+  useMemo,
   useRef,
   useState,
   type CSSProperties,
@@ -18,9 +19,13 @@ import { TrendsView } from "./TrendsView";
 import { RequirementsView } from "./RequirementsView";
 import {
   EMPTY_FILTERS,
+  casesFilters,
   filterCorpus,
+  filterValueList,
   filtersFromSearch,
   filtersToSearch,
+  requirementsQuickFilters,
+  toggleFilterValue,
   corpusTrendPointKey,
   toolTrendPointKey,
   trendStateFromSearch,
@@ -28,7 +33,7 @@ import {
   type TrendRange,
 } from "./model";
 import { ThemeControl } from "./ThemeControl";
-import type { CampaignSummary, DashboardIndex } from "./types";
+import type { CampaignSummary, CaseDefinition, DashboardIndex } from "./types";
 import { useDashboard } from "./useDashboard";
 
 type View = "overview" | "matrix" | "evidence" | "trends" | "campaigns" | "about";
@@ -217,6 +222,8 @@ export default function App() {
     trendStateFromSearch(window.location.search),
   );
   const [workspaceHeight, setWorkspaceHeight] = useState(0);
+  const [focusRequirementId, setFocusRequirementId] = useState("");
+  const [focusCaseTarget, setFocusCaseTarget] = useState("");
   const workspaceRef = useRef<HTMLElement>(null);
   const availableIds = new Set(state.index?.campaigns.map((campaign) => campaign.id) ?? []);
   const rangedCampaigns = (state.trends?.campaigns ?? [])
@@ -343,6 +350,129 @@ export default function App() {
       setTrend((current) => ({ ...current, parts, point: "" })),
     [],
   );
+  const selectedRequirementTags = useMemo(
+    () => filterValueList(filters.requirementTags),
+    [filters.requirementTags],
+  );
+  const selectedCaseTags = useMemo(
+    () => filterValueList(filters.caseTags),
+    [filters.caseTags],
+  );
+  const selectedSections = useMemo(
+    () => filters.sections.split(",").filter(Boolean),
+    [filters.sections],
+  );
+  const corpusFilters = useMemo(() => {
+    if (view === "matrix") return requirementsQuickFilters(filters);
+    if (view === "evidence") return casesFilters(filters);
+    return filters;
+  }, [filters, view]);
+  const selectedCampaign = useMemo(
+    () =>
+      state.dataset?.campaigns.find((item) => item.id === state.selectedId),
+    [state.dataset, state.selectedId],
+  );
+  const corpusFilterKey = JSON.stringify(corpusFilters);
+  const filteredCorpus = useMemo(
+    () =>
+      state.dataset && view !== "about" && view !== "trends"
+        ? filterCorpus(state.dataset, corpusFilters, selectedCampaign)
+        : undefined,
+    [corpusFilterKey, selectedCampaign, state.dataset, view],
+  );
+  const requirementEvidenceCases = useMemo(() => {
+    const result = new Map<string, CaseDefinition[]>();
+    if (!state.dataset || view !== "matrix") return result;
+    for (const tool of selectedCampaign?.tools ?? []) {
+      for (const profile of tool.profile_ids) {
+        result.set(
+          `${tool.definition.id}/${profile}`,
+          filterCorpus(
+            state.dataset,
+            {
+              ...corpusFilters,
+              tool: tool.definition.id,
+              profile,
+            },
+            selectedCampaign,
+          ).requirementCases,
+        );
+      }
+    }
+    return result;
+  }, [corpusFilterKey, selectedCampaign, state.dataset, view]);
+  const inspectRequirementToolCases = useCallback(
+    (tool: string, profile: string, requirement: string) => {
+      setFilters((current) => ({
+        ...casesFilters(current),
+        tool,
+        profile,
+        requirement,
+        sections: "",
+        caseId: "",
+        requirementId: "",
+      }));
+      setFocusCaseTarget("results");
+      setView("evidence");
+    },
+    [],
+  );
+  const inspectCase = useCallback((caseId: string) => {
+    setFilters((current) => ({
+      ...EMPTY_FILTERS,
+      campaign: current.campaign,
+      dateFrom: current.dateFrom,
+      dateTo: current.dateTo,
+      tool: current.tool,
+      profile: current.profile,
+      caseId,
+    }));
+    setFocusCaseTarget(caseId);
+    setView("evidence");
+  }, []);
+  const selectRequirement = useCallback((requirementId: string) => {
+    setFilters((current) => ({ ...current, requirementId }));
+  }, []);
+  const inspectRequirement = useCallback((requirementId: string) => {
+    setFilters((current) => ({
+      ...EMPTY_FILTERS,
+      campaign: current.campaign,
+      dateFrom: current.dateFrom,
+      dateTo: current.dateTo,
+      tool: current.tool,
+      profile: current.profile,
+      requirementId,
+    }));
+    setFocusRequirementId(requirementId);
+    setView("matrix");
+  }, []);
+  const clearFocusedRequirement = useCallback(
+    () => setFocusRequirementId(""),
+    [],
+  );
+  const clearFocusedCase = useCallback(() => setFocusCaseTarget(""), []);
+  const changeSelectedSections = useCallback((sections: string[]) => {
+    setFilters((current) => ({
+      ...current,
+      sections: sections.join(","),
+      requirementId: "",
+      caseId: "",
+    }));
+  }, []);
+  const toggleRequirementTag = useCallback((tag: string) => {
+    setFilters((current) => ({
+      ...current,
+      requirementTags: toggleFilterValue(current.requirementTags, tag),
+      requirementId: "",
+    }));
+  }, []);
+  const toggleCaseTag = useCallback((tag: string) => {
+    setFilters((current) => ({
+      ...current,
+      caseTags: toggleFilterValue(current.caseTags, tag),
+      caseId: "",
+    }));
+  }, []);
   const selectableCampaigns =
     view === "trends" || view === "about"
       ? (state.trends?.campaigns ?? []).filter((campaign) => availableIds.has(campaign.id))
@@ -463,7 +593,6 @@ export default function App() {
               history={state.trends}
               filters={filters}
               setFilters={setFilters}
-              onReset={() => undefined}
               mode="trends"
               trendKind={trend.kind}
               standardParts={latest?.corpus_metrics.requirements.breakdown ?? []}
@@ -527,26 +656,8 @@ export default function App() {
   }
 
   const dataset = state.dataset;
-  const campaign = dataset.campaigns.find((item) => item.id === state.selectedId);
-  const filtered = filterCorpus(dataset, filters, campaign);
-  const requirementEvidenceCases = new Map<string, typeof dataset.cases>();
-  for (const tool of campaign?.tools ?? []) {
-    for (const profile of tool.profile_ids) {
-      const key = `${tool.definition.id}/${profile}`;
-      requirementEvidenceCases.set(
-        key,
-        filterCorpus(
-          dataset,
-          {
-            ...filters,
-            tool: tool.definition.id,
-            profile,
-          },
-          campaign,
-        ).requirementCases,
-      );
-    }
-  }
+  const campaign = selectedCampaign;
+  const filtered = filteredCorpus!;
   const visibleCampaigns = campaign
     ? [campaign].filter(
         (item) =>
@@ -558,13 +669,6 @@ export default function App() {
           ),
       )
     : [];
-  const resetLocalFilters = () =>
-    setFilters((current) => ({
-      ...EMPTY_FILTERS,
-      campaign: current.campaign,
-      dateFrom: current.dateFrom,
-      dateTo: current.dateTo,
-    }));
   const inspectToolCases = (
     tool: string,
     profile: string,
@@ -580,45 +684,6 @@ export default function App() {
       requirement,
     }));
     setView("evidence");
-  };
-  const inspectRequirementToolCases = (
-    tool: string,
-    profile: string,
-    requirement: string,
-  ) => {
-    setFilters((current) => ({
-      ...current,
-      tool,
-      profile,
-      requirement,
-      caseId: "",
-      requirementId: "",
-    }));
-    setView("evidence");
-  };
-  const inspectCase = (caseId: string) => {
-    setFilters((current) => ({
-      ...EMPTY_FILTERS,
-      campaign: current.campaign,
-      dateFrom: current.dateFrom,
-      dateTo: current.dateTo,
-      tool: current.tool,
-      profile: current.profile,
-      caseId,
-    }));
-    setView("evidence");
-  };
-  const inspectRequirement = (requirementId: string) => {
-    setFilters((current) => ({
-      ...EMPTY_FILTERS,
-      campaign: current.campaign,
-      dateFrom: current.dateFrom,
-      dateTo: current.dateTo,
-      tool: current.tool,
-      profile: current.profile,
-      requirementId,
-    }));
-    setView("matrix");
   };
   return (
     <>
@@ -665,11 +730,12 @@ export default function App() {
               history={state.trends}
               filters={filters}
               setFilters={setFilters}
-              onReset={resetLocalFilters}
               mode={
-                view === "matrix" || view === "evidence"
-                  ? "corpus"
-                  : view
+                view === "matrix"
+                  ? "requirements"
+                  : view === "evidence"
+                    ? "cases"
+                    : view
               }
               trendKind={view === "trends" ? trend.kind : undefined}
               standardParts={dataset.corpus_coverage.requirements.breakdown}
@@ -699,27 +765,41 @@ export default function App() {
           {view === "matrix" && (
             <RequirementsView
               requirements={filtered.requirements}
+              allRequirements={dataset.requirements}
+              standardSections={dataset.standard_sections}
+              selectedSections={selectedSections}
+              onSelectedSectionsChange={changeSelectedSections}
+              selectedTags={selectedRequirementTags}
+              onToggleTag={toggleRequirementTag}
               cases={filtered.requirementCases}
               evidenceCasesByProfile={requirementEvidenceCases}
               campaign={campaign}
               toolFilter={filters.tool}
               profileFilter={filters.profile}
               selectedRequirementId={filters.requirementId}
-              onSelectRequirement={(requirementId) =>
-                setFilters((current) => ({ ...current, requirementId }))
-              }
+              onSelectRequirement={selectRequirement}
               onInspectCase={inspectCase}
               onInspectEvidence={inspectRequirementToolCases}
+              focusRequirementId={focusRequirementId}
+              onFocusedRequirement={clearFocusedRequirement}
             />
           )}
           {view === "evidence" && (
             <EvidenceView
               requirements={dataset.requirements}
               cases={filtered.cases}
+              allCases={dataset.cases}
+              standardSections={dataset.standard_sections}
+              selectedSections={selectedSections}
+              onSelectedSectionsChange={changeSelectedSections}
+              selectedTags={selectedCaseTags}
+              onToggleTag={toggleCaseTag}
               campaign={campaign}
               toolFilter={filters.tool}
               profileFilter={filters.profile}
               selectedCaseId={filters.caseId}
+              focusTarget={focusCaseTarget}
+              onFocusedTarget={clearFocusedCase}
               onSelectCase={(caseId) =>
                 setFilters((current) => ({ ...current, caseId }))
               }

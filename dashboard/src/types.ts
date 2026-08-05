@@ -15,6 +15,11 @@ export interface RevisionRule {
   note?: string | null;
 }
 
+export interface StandardSection {
+  clause: string;
+  title: string;
+}
+
 export interface Requirement {
   id: string;
   standard_revision: string;
@@ -234,6 +239,7 @@ export interface Dataset {
   generated_from: string[];
   visibility: "local" | "public";
   corpus_coverage: CorpusCoverage;
+  standard_sections: StandardSection[];
   requirements: Requirement[];
   cases: CaseDefinition[];
   campaigns: Campaign[];
@@ -292,6 +298,7 @@ export interface CampaignCatalog {
   requirements: Requirement[];
   cases: CaseDefinition[];
   corpus_metrics: CorpusMetrics;
+  standard_sections?: StandardSection[];
 }
 
 export interface CampaignVerdict {

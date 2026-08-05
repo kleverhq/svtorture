@@ -288,6 +288,38 @@ def test_catalog_accepts_an_explicit_runtime_anchor_index(catalog: Catalog, tmp_
     anchor_index = catalog.root / "standards" / "ieee-1800-2023-anchors.json"
     loaded = load_catalog(root, anchor_index=anchor_index)
     assert loaded.anchor_index == anchor_index.resolve()
+    assert loaded.standard_sections[0].clause == "1"
+    assert loaded.standard_sections[0].title == "Overview"
+    assert len(loaded.standard_sections) == 1740
+
+
+def test_catalog_rejects_noncanonical_standard_sections(catalog: Catalog, tmp_path: Path) -> None:
+    root = tmp_path / "repo"
+    _copy_catalog_tree(catalog, root)
+    index_path = root / "standards" / "ieee-1800-2023-anchors.json"
+    index = json.loads(index_path.read_text(encoding="utf-8"))
+    index["sections"][1], index["sections"][2] = (
+        index["sections"][2],
+        index["sections"][1],
+    )
+    index_path.write_text(json.dumps(index), encoding="utf-8")
+
+    with pytest.raises(CatalogError, match="canonical order"):
+        load_catalog(root)
+
+
+def test_catalog_requires_sections_to_match_heading_anchors(
+    catalog: Catalog, tmp_path: Path
+) -> None:
+    root = tmp_path / "repo"
+    _copy_catalog_tree(catalog, root)
+    index_path = root / "standards" / "ieee-1800-2023-anchors.json"
+    index = json.loads(index_path.read_text(encoding="utf-8"))
+    del index["sections"][1]
+    index_path.write_text(json.dumps(index), encoding="utf-8")
+
+    with pytest.raises(CatalogError, match="match heading anchors"):
+        load_catalog(root)
 
 
 def test_catalog_rejects_noncanonical_anchor_part_order(catalog: Catalog, tmp_path: Path) -> None:

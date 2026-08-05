@@ -1338,6 +1338,34 @@ def part_title_from_text(text: str, part: DocumentPart) -> str:
     return part_title_from_heading("\n".join(lines[first + 1 : end]).strip(), part)
 
 
+def heading_location(anchor: str) -> str:
+    return anchor[1:-1].split(":", 3)[1]
+
+
+def heading_title(record: AnchoredContent) -> str:
+    location = heading_location(record.anchor)
+    lines = [
+        line.strip()
+        for line in record.content.splitlines()
+        if line.strip() and REVIEW_MARKER_RE.fullmatch(line.strip()) is None
+    ]
+    if re.fullmatch(r"[A-Q]", location):
+        lines = [
+            line
+            for line in lines
+            if line != f"Annex {location}"
+            and not re.fullmatch(r"\((?:normative|informative)\)", line)
+        ]
+        if not lines:
+            raise RuntimeError(f"cannot derive title for Annex {location}")
+        return " ".join(lines)
+
+    match = re.fullmatch(rf"{re.escape(location)}\.?\s+(.+)", " ".join(lines))
+    if not match:
+        raise RuntimeError(f"cannot derive title for heading {location}: {record.content!r}")
+    return match.group(1)
+
+
 def render_anchors_index(part_texts: dict[str, str], source_sha256: str) -> str:
     missing_parts = set(PARTS) - set(part_texts)
     extra_parts = set(part_texts) - set(PARTS)
@@ -1349,12 +1377,19 @@ def render_anchors_index(part_texts: dict[str, str], source_sha256: str) -> str:
 
     clauses: list[dict[str, object]] = []
     annexes: list[dict[str, object]] = []
+    sections: list[dict[str, str]] = []
     all_anchors: list[str] = []
     for part_id, part in PARTS.items():
         text = part_texts[part_id]
         validate_output(text)
-        anchors = [line for line in text.splitlines() if line.startswith("[2023:")]
+        _, records = parse_rendered_text(text)
+        anchors = [record.anchor for record in records]
         all_anchors.extend(anchors)
+        sections.extend(
+            {"clause": heading_location(record.anchor), "title": heading_title(record)}
+            for record in records
+            if ":H:" in record.anchor
+        )
         entry = {
             "id": part.number,
             "title": part_title_from_text(text, part),
@@ -1367,11 +1402,16 @@ def render_anchors_index(part_texts: dict[str, str], source_sha256: str) -> str:
     if len(all_anchors) != len(set(all_anchors)):
         raise RuntimeError("anchor index contains globally duplicate anchors")
 
+    section_locations = [section["clause"] for section in sections]
+    if len(section_locations) != len(set(section_locations)):
+        raise RuntimeError("anchor index contains duplicate heading locations")
+
     index = {
-        "schema_version": 1,
+        "schema_version": 2,
         "edition": "2023",
         "source_sha256": source_sha256,
         "anchor_count": len(all_anchors),
+        "sections": sections,
         "clauses": clauses,
         "annexes": annexes,
     }

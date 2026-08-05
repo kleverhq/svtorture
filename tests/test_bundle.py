@@ -27,6 +27,7 @@ from svtorture.catalog import Catalog
 from svtorture.dashboard_models import (
     ArchiveMetadata,
     CampaignCaseVerdicts,
+    CampaignCatalog,
     CampaignSummary,
     CampaignVerdict,
     CampaignVerdicts,
@@ -40,6 +41,7 @@ from svtorture.models import (
     Phase,
     ReasonCode,
     ResultStatus,
+    standard_location_sort_key,
 )
 from svtorture.publish import PublicationError
 from tests.helpers import campaign_tool, make_campaign, normalized, observation
@@ -82,6 +84,42 @@ def test_bundle_export_is_compact_complete_and_deterministic(
     assert first_manifest.resources.verdicts.case_count == 2
     assert first_manifest.resources.verdicts.result_count == 2
     assert first_manifest.metrics[0].corpus_sha == campaign.hashes.cases
+    exported_catalog = CampaignCatalog.model_validate_json(
+        (first / "catalog.json").read_text(encoding="utf-8")
+    )
+    assert exported_catalog.standard_sections == catalog.standard_sections
+    assert len(exported_catalog.standard_sections) == 1740
+
+    historical_catalog = exported_catalog.model_dump(mode="json")
+    del historical_catalog["standard_sections"]
+    assert CampaignCatalog.model_validate(historical_catalog).standard_sections == ()
+
+    empty_catalog = exported_catalog.model_dump(mode="json")
+    empty_catalog["standard_sections"] = []
+    with pytest.raises(ValidationError, match="at least 1740 items"):
+        CampaignCatalog.model_validate(empty_catalog)
+
+    malformed_catalog = exported_catalog.model_dump(mode="json")
+    malformed_catalog["standard_sections"][0], malformed_catalog["standard_sections"][1] = (
+        malformed_catalog["standard_sections"][1],
+        malformed_catalog["standard_sections"][0],
+    )
+    with pytest.raises(ValidationError, match="canonically sorted"):
+        CampaignCatalog.model_validate(malformed_catalog)
+
+    missing_requirement_clause = exported_catalog.model_dump(mode="json")
+    required_clause = missing_requirement_clause["requirements"][0]["clause"]
+    section = next(
+        item
+        for item in missing_requirement_clause["standard_sections"]
+        if item["clause"] == required_clause
+    )
+    section["clause"] = "41.999.999"
+    missing_requirement_clause["standard_sections"].sort(
+        key=lambda item: standard_location_sort_key(item["clause"])
+    )
+    with pytest.raises(ValidationError, match="contain every requirement clause"):
+        CampaignCatalog.model_validate(missing_requirement_clause)
 
     first_files = {
         path.relative_to(first).as_posix(): path.read_bytes()
@@ -132,6 +170,31 @@ def _write_compact(path: Path, value: object) -> bytes:
     data = canonical_json_bytes(value)
     path.write_bytes(data)
     return data
+
+
+def test_historical_bundle_without_standard_sections_still_validates_and_assembles(
+    catalog: Catalog, tmp_path: Path
+) -> None:
+    root = export_campaign_bundle(catalog, _campaign(catalog), tmp_path / "historical")
+    catalog_path = root / "catalog.json"
+    historical_catalog = json.loads(catalog_path.read_text(encoding="utf-8"))
+    del historical_catalog["standard_sections"]
+    catalog_bytes = canonical_json_bytes(historical_catalog)
+    catalog_path.write_bytes(catalog_bytes)
+
+    manifest_path = root / "manifest.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    manifest["resources"]["catalog"]["bytes"] = len(catalog_bytes)
+    manifest["resources"]["catalog"]["sha256"] = sha256_bytes(catalog_bytes)
+    manifest_path.write_bytes(canonical_json_bytes(manifest))
+
+    assert validate_campaign_bundle(root).id == manifest["id"]
+    index = assemble_dashboard_data(
+        (root,),
+        tmp_path / "data",
+        Path(__file__).resolve().parents[1] / "schemas",
+    )
+    assert index.default_campaign_id == manifest["id"]
 
 
 def test_bundle_validation_recomputes_selection_judgments_and_metrics(
@@ -503,6 +566,9 @@ def test_dashboard_schema_snapshots_require_discriminants_and_reuse_summary_sche
     catalog = json.loads((root / "campaign-catalog.schema.json").read_text(encoding="utf-8"))
     source_links = catalog["$defs"]["DashboardCase"]["properties"]["source_links"]
     assert source_links["additionalProperties"]["pattern"].startswith("^(?:https://")
+    assert catalog["properties"]["standard_sections"]["items"] == {
+        "$ref": "#/$defs/StandardSection"
+    }
 
 
 def test_compact_verdict_and_evidence_packing_scale_to_ten_thousand_cases() -> None:

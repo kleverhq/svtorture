@@ -10,20 +10,23 @@ import type { Dataset } from "./types";
 afterEach(cleanup);
 
 function FilterHarness({
-  mode = "corpus",
+  mode = "cases",
   dataset = makeTestDataset(),
   trendKind = "pass-rate",
   requirement = "",
+  caseTags = "",
 }: {
   mode?: FilterMode;
   dataset?: Dataset;
   trendKind?: TrendKind;
   requirement?: string;
+  caseTags?: string;
 }) {
   const [filters, setFilters] = useState({
     ...EMPTY_FILTERS,
     status: "conforming",
     requirement,
+    caseTags,
   });
   const [selectedParts, setSelectedParts] = useState<string[]>([]);
   return (
@@ -32,7 +35,6 @@ function FilterHarness({
       campaign={selectedCampaign(dataset, "")}
       filters={filters}
       setFilters={setFilters}
-      onReset={() => setFilters({ ...EMPTY_FILTERS })}
       mode={mode}
       trendKind={mode === "trends" ? trendKind : undefined}
       standardParts={dataset.corpus_coverage.requirements.breakdown}
@@ -43,19 +45,6 @@ function FilterHarness({
 }
 
 describe("Filters", () => {
-  it("keeps broad and exact status filters mutually exclusive", () => {
-    render(<FilterHarness />);
-
-    const exact = screen.getByLabelText("Exact result") as HTMLSelectElement;
-    expect(exact.value).toBe("conforming");
-
-    fireEvent.click(screen.getByRole("button", { name: "Fail 0" }));
-    expect(exact.value).toBe("");
-    expect(
-      screen.getByRole("button", { name: "Fail 0" }).getAttribute("aria-pressed"),
-    ).toBe("true");
-  });
-
   it("shows side-by-side corpus facets and clear result labels", () => {
     render(<FilterHarness />);
 
@@ -86,32 +75,74 @@ describe("Filters", () => {
     ).toBeTruthy();
   });
 
-  it("opens Advanced filters for an exact Requirement", () => {
-    const dataset = makeTestDataset();
-    const requirement = dataset.requirements[0];
-    if (!requirement) throw new Error("incomplete test dataset");
+  it("exposes and clears a Requirement navigation scope on Cases", () => {
+    render(<FilterHarness requirement="SV-2023-13-OUTPUT-COPYOUT" />);
 
-    const view = render(
-      <FilterHarness dataset={dataset} requirement={requirement.id} />,
+    const scope = screen.getByRole("group", { name: "Requirement scope" });
+    fireEvent.click(
+      within(scope).getByRole("button", {
+        name: "SV-2023-13-OUTPUT-COPYOUT · Clear",
+      }),
     );
+    expect(screen.queryByRole("group", { name: "Requirement scope" })).toBeNull();
+  });
 
-    const select = screen.getByLabelText("Requirement") as HTMLSelectElement;
-    expect(select.value).toBe(requirement.id);
-    const summary = screen.getByText("Advanced filters");
-    expect(summary.closest("details")?.open).toBe(true);
+  it("keeps quick filters but removes Advanced filters from Requirements", () => {
+    render(<FilterHarness mode="requirements" />);
 
-    fireEvent.click(summary);
-    view.rerender(
-      <FilterHarness
-        dataset={dataset}
-        requirement={requirement.id}
-        mode="overview"
-      />,
-    );
-    view.rerender(
-      <FilterHarness dataset={dataset} requirement={requirement.id} />,
-    );
-    expect(screen.getByText("Advanced filters").closest("details")?.open).toBe(true);
+    expect(screen.getByRole("group", { name: "Tools" })).toBeTruthy();
+    expect(screen.getByRole("group", { name: "Profiles" })).toBeTruthy();
+    expect(screen.getByRole("group", { name: "Results" })).toBeTruthy();
+    expect(screen.getByRole("group", { name: "Comparison" })).toBeTruthy();
+    expect(screen.queryByText("Advanced filters")).toBeNull();
+    expect(screen.queryByLabelText("Search")).toBeNull();
+  });
+
+  it("expands a multi-select Requirement tag cloud", () => {
+    render(<FilterHarness mode="requirements" />);
+
+    const disclosure = screen.getByText("Tags");
+    expect(disclosure.closest("details")?.open).toBe(false);
+    fireEvent.click(disclosure);
+    const cloud = within(screen.getByRole("group", { name: "Requirement tags" }));
+    const copyOut = cloud.getByRole("button", { name: /copy-out/ });
+    const output = cloud.getByRole("button", { name: /output/ });
+    fireEvent.click(copyOut);
+    fireEvent.click(output);
+
+    expect(copyOut.getAttribute("aria-pressed")).toBe("true");
+    expect(output.getAttribute("aria-pressed")).toBe("true");
+    expect(screen.getByText("2 selected")).toBeTruthy();
+  });
+
+  it("uses a multi-select Case tag cloud instead of the legacy Tag select", () => {
+    render(<FilterHarness mode="cases" />);
+
+    fireEvent.click(screen.getByText("Tags"));
+    const cloud = within(screen.getByRole("group", { name: "Case tags" }));
+    const copyOut = cloud.getByRole("button", { name: /copy-out/ });
+    const output = cloud.getByRole("button", { name: /output/ });
+    fireEvent.click(copyOut);
+    fireEvent.click(output);
+
+    expect(copyOut.getAttribute("aria-pressed")).toBe("true");
+    expect(output.getAttribute("aria-pressed")).toBe("true");
+    expect(screen.queryByText("Advanced filters")).toBeNull();
+    expect(screen.queryByLabelText("Phase")).toBeNull();
+  });
+
+  it("keeps stale selected Case tags visible and clearable", () => {
+    render(<FilterHarness caseTags="removed-tag" />);
+
+    fireEvent.click(screen.getByText("Tags"));
+    const staleTag = within(
+      screen.getByRole("group", { name: "Case tags" }),
+    ).getByRole("button", { name: "removed-tag 0" });
+    expect(staleTag.getAttribute("aria-pressed")).toBe("true");
+    fireEvent.click(staleTag);
+    expect(
+      screen.queryByRole("button", { name: "removed-tag 0" }),
+    ).toBeNull();
   });
 
   it("shows quick trend facets without Advanced filters", () => {

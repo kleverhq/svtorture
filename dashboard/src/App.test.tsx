@@ -191,7 +191,8 @@ describe("App overview navigation", () => {
     const detail = await screen.findByRole("article", {
       name: `Requirement ${related.id}`,
     });
-    const supportingCase = within(detail).getByText(testCase.title);
+    fireEvent.click(within(detail).getByText(/Supporting cases/));
+    const supportingCase = await within(detail).findByText(testCase.title);
     expect(supportingCase).toBeTruthy();
 
     fireEvent.click(supportingCase);
@@ -206,35 +207,185 @@ describe("App overview navigation", () => {
     });
   });
 
-  it("recovers when filters hide the selected requirement", async () => {
+  it("ignores stale Cases-only advanced filters on Requirements", async () => {
     const dataset = makeTestDataset();
-    const original = dataset.requirements[0];
-    if (!original) throw new Error("incomplete test dataset");
-    const visible = {
-      ...original,
-      id: "SV-2023-05-FILTER-RECOVERY",
-      part: "5",
-      clause: "5.1",
-      summary: "First requirement left by the active filters",
-    };
-    dataset.requirements.push(visible);
+    const requirement = dataset.requirements[0];
+    if (!requirement) throw new Error("incomplete test dataset");
     window.history.replaceState(
       null,
       "",
-      `/?view=matrix&requirementId=${original.id}&part=5`,
+      `/?view=matrix&requirementId=${requirement.id}&part=5&search=hidden`,
     );
     mockDataset(dataset);
 
     render(<App />);
 
     expect(
-      await screen.findByRole("heading", { name: visible.summary }),
+      await screen.findByRole("heading", { name: requirement.summary }),
     ).toBeTruthy();
-    await waitFor(() =>
-      expect(new URLSearchParams(window.location.search).get("requirementId")).toBe(
-        visible.id,
-      ),
+    expect(screen.queryByText("Advanced filters")).toBeNull();
+  });
+
+  it("stores Requirements tree selection in the URL", async () => {
+    const dataset = makeTestDataset();
+    const original = dataset.requirements[0];
+    if (!original) throw new Error("incomplete test dataset");
+    const clocking = {
+      ...original,
+      id: "SV-2023-14-CLOCKING",
+      part: "14",
+      clause: "14",
+      summary: "Clocking requirement",
+    };
+    dataset.requirements.push(clocking);
+    window.history.replaceState(null, "", "/?view=matrix");
+    mockDataset(dataset);
+
+    render(<App />);
+    fireEvent.click(
+      await screen.findByLabelText("Select 14 Clocking blocks"),
     );
+
+    await waitFor(() => {
+      expect(new URLSearchParams(window.location.search).get("sections")).toBe(
+        "14",
+      );
+    });
+    expect(screen.getAllByRole("article")).toHaveLength(1);
+    expect(
+      screen.getByRole("article", { name: `Requirement ${clocking.id}` }),
+    ).toBeTruthy();
+  });
+
+  it("filters Requirements by clickable tags with AND semantics", async () => {
+    const dataset = makeTestDataset();
+    const original = dataset.requirements[0];
+    if (!original) throw new Error("incomplete test dataset");
+    dataset.requirements.push(
+      {
+        ...original,
+        id: "SV-2023-13-COPY-OUT-TAG",
+        summary: "Copy-out tag only",
+        tags: ["copy-out"],
+      },
+      {
+        ...original,
+        id: "SV-2023-13-OUTPUT-TAG",
+        summary: "Output tag only",
+        tags: ["output"],
+      },
+    );
+    window.history.replaceState(null, "", "/?view=matrix");
+    mockDataset(dataset);
+
+    render(<App />);
+    const originalCard = await screen.findByRole("article", {
+      name: `Requirement ${original.id}`,
+    });
+    fireEvent.click(within(originalCard).getByRole("button", { name: "copy-out" }));
+    expect(await screen.findAllByRole("article")).toHaveLength(2);
+    fireEvent.click(within(originalCard).getByRole("button", { name: "output" }));
+
+    await waitFor(() => {
+      expect(screen.getAllByRole("article")).toHaveLength(1);
+      expect(
+        new URLSearchParams(window.location.search).get("requirementTags"),
+      ).toBe("copy-out,output");
+    });
+  });
+
+  it("moves focus to a Requirement opened from a Case card", async () => {
+    const dataset = makeTestDataset();
+    const testCase = dataset.cases[0];
+    const requirement = dataset.requirements[0];
+    if (!testCase || !requirement) throw new Error("incomplete test dataset");
+    window.history.replaceState(null, "", "/?view=evidence");
+    mockDataset(dataset);
+
+    render(<App />);
+    const caseCard = await screen.findByRole("article", {
+      name: `Case ${testCase.id}`,
+    });
+    fireEvent.click(within(caseCard).getByText(/Requirements/));
+    fireEvent.click(
+      await within(caseCard).findByRole("button", { name: new RegExp(requirement.id) }),
+    );
+
+    const requirementHeading = await screen.findByRole("heading", {
+      name: requirement.summary,
+    });
+    await waitFor(() => expect(document.activeElement).toBe(requirementHeading));
+
+    fireEvent.click(screen.getByRole("tab", { name: "Cases" }));
+    await screen.findByRole("heading", { name: "1 case" });
+    const requirementsTab = screen.getByRole("tab", { name: "Requirements" });
+    fireEvent.click(requirementsTab);
+    const returnedHeading = await screen.findByRole("heading", {
+      name: requirement.summary,
+    });
+    await waitFor(() => expect(document.activeElement).not.toBe(returnedHeading));
+  });
+
+  it("moves focus to a Case opened from a Requirement card", async () => {
+    const dataset = makeTestDataset();
+    const testCase = dataset.cases[0];
+    const requirement = dataset.requirements[0];
+    if (!testCase || !requirement) throw new Error("incomplete test dataset");
+    window.history.replaceState(null, "", "/?view=matrix");
+    mockDataset(dataset);
+
+    render(<App />);
+    const requirementCard = await screen.findByRole("article", {
+      name: `Requirement ${requirement.id}`,
+    });
+    fireEvent.click(within(requirementCard).getByText(/Supporting cases/));
+    fireEvent.click(
+      await within(requirementCard).findByRole("button", {
+        name: new RegExp(testCase.title),
+      }),
+    );
+
+    const caseHeading = await screen.findByRole("heading", {
+      name: testCase.title,
+    });
+    await waitFor(() => expect(document.activeElement).toBe(caseHeading));
+  });
+
+  it("filters Cases by clickable tags with AND semantics", async () => {
+    const dataset = makeTestDataset();
+    const original = dataset.cases[0];
+    if (!original) throw new Error("incomplete test dataset");
+    dataset.cases.push(
+      {
+        ...original,
+        id: "ch13-copy-out-case-tag",
+        title: "Copy-out case tag only",
+        tags: ["copy-out"],
+      },
+      {
+        ...original,
+        id: "ch13-output-case-tag",
+        title: "Output case tag only",
+        tags: ["output"],
+      },
+    );
+    window.history.replaceState(null, "", "/?view=evidence");
+    mockDataset(dataset);
+
+    render(<App />);
+    const originalCard = await screen.findByRole("article", {
+      name: `Case ${original.id}`,
+    });
+    fireEvent.click(within(originalCard).getByRole("button", { name: "copy-out" }));
+    expect(await screen.findAllByRole("article", { name: /^Case / })).toHaveLength(2);
+    fireEvent.click(within(originalCard).getByRole("button", { name: "output" }));
+
+    await waitFor(() => {
+      expect(screen.getAllByRole("article", { name: /^Case / })).toHaveLength(1);
+      const parameters = new URLSearchParams(window.location.search);
+      expect(parameters.get("caseTags")).toBe("copy-out,output");
+      expect(parameters.get("tag")).toBeNull();
+    });
   });
 
   it("opens case details from a direct link", async () => {
@@ -270,11 +421,14 @@ describe("App overview navigation", () => {
         "aria-selected",
       ),
     ).toBe("true");
-    expect(screen.getByRole("heading", { name: testCase.title })).toBeTruthy();
+    const linkedCard = screen
+      .getByRole("heading", { name: testCase.title })
+      .closest("article");
+    if (!linkedCard) throw new Error("missing linked Case card");
     expect((screen.getByLabelText("Campaign") as HTMLSelectElement).value).toBe(
       olderCampaign.id,
     );
-    expect(screen.getByRole("button", { name: "Copy link" })).toBeTruthy();
+    expect(within(linkedCard).getByRole("button", { name: "Copy link" })).toBeTruthy();
   });
 
   it("opens Cases with the clicked Overview tool profile selected", async () => {
@@ -381,23 +535,29 @@ describe("App overview navigation", () => {
     window.history.replaceState(
       null,
       "",
-      `/?view=matrix&requirementId=${related.id}&phase=simulate&statusGroup=pass`,
+      `/?view=matrix&requirementId=${related.id}&phase=simulate&statusGroup=pass&sections=5`,
     );
     mockDataset(dataset);
 
     render(<App />);
+    const relatedCard = await screen.findByRole("article", {
+      name: `Requirement ${related.id}`,
+    });
+    fireEvent.click(within(relatedCard).getByText(/Tool evidence/));
+    const alternateProfile = await within(relatedCard).findByText("fake/alternate");
+    expect(alternateProfile.closest("summary")?.textContent).toContain(
+      "Not evaluated",
+    );
+    fireEvent.click(alternateProfile);
     expect(
-      await screen.findByRole("button", {
-        name: new RegExp(
-          `^View cases for ${related.id} with fake/alternate — Not evaluated`,
-        ),
+      await within(relatedCard).findByRole("button", {
+        name: `View cases for ${related.id} with fake/alternate`,
       }),
     ).toBeTruthy();
+    fireEvent.click(within(relatedCard).getByText("fake/simulator"));
     fireEvent.click(
-      screen.getByRole("button", {
-        name: new RegExp(
-          `^View cases for ${related.id} with fake/simulator —`,
-        ),
+      within(relatedCard).getByRole("button", {
+        name: `View cases for ${related.id} with fake/simulator`,
       }),
     );
 
@@ -407,23 +567,35 @@ describe("App overview navigation", () => {
     const caseHeading = screen.getByRole("heading", { name: testCase.title });
     const caseDetail = caseHeading.closest("article");
     if (!caseDetail) throw new Error("missing Case detail");
-    expect(caseHeading).toBeTruthy();
-    expect(within(caseDetail).getByText(original.summary)).toBeTruthy();
+    const casesHeading = screen.getByRole("heading", { name: "1 case" });
+    await waitFor(() => expect(document.activeElement).toBe(casesHeading));
+    fireEvent.click(within(caseDetail).getByText(/Requirements/));
+    expect(await within(caseDetail).findByText(original.summary)).toBeTruthy();
     expect(within(caseDetail).getByText(related.summary)).toBeTruthy();
     expect(screen.queryByText(failingCase.title)).toBeNull();
-    const requirementFilter = screen.getByLabelText(
-      "Requirement",
-    ) as HTMLSelectElement;
-    expect(requirementFilter.value).toBe(related.id);
-    expect(screen.getByText("Advanced filters").closest("details")?.open).toBe(true);
+    expect(screen.queryByText("Advanced filters")).toBeNull();
+    expect(screen.queryByLabelText("Requirement")).toBeNull();
     await waitFor(() => {
       const parameters = new URLSearchParams(window.location.search);
       expect(parameters.get("view")).toBe("evidence");
       expect(parameters.get("tool")).toBe("fake");
       expect(parameters.get("profile")).toBe("simulator");
       expect(parameters.get("requirement")).toBe(related.id);
-      expect(parameters.get("phase")).toBe("simulate");
+      expect(parameters.get("phase")).toBeNull();
+      expect(parameters.get("sections")).toBeNull();
       expect(parameters.get("statusGroup")).toBe("pass");
+    });
+
+    fireEvent.click(
+      within(screen.getByRole("group", { name: "Requirement scope" })).getByRole(
+        "button",
+        { name: `${related.id} · Clear` },
+      ),
+    );
+    await waitFor(() => {
+      expect(
+        new URLSearchParams(window.location.search).get("requirement"),
+      ).toBeNull();
     });
   });
 

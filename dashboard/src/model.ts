@@ -112,6 +112,8 @@ export interface Filters {
   expectation: string;
   casePresence: string;
   tag: string;
+  requirementTags: string;
+  caseTags: string;
   requirement: string;
   tool: string;
   profile: string;
@@ -123,8 +125,67 @@ export interface Filters {
   dateTo: string;
   caseId: string;
   requirementId: string;
+  sections: string;
   changed: boolean;
   disagreement: boolean;
+}
+
+export function requirementsQuickFilters(filters: Filters): Filters {
+  return {
+    ...filters,
+    search: "",
+    revision: "",
+    part: "",
+    clause: "",
+    phase: "",
+    expectation: "",
+    casePresence: "",
+    tag: "",
+    caseTags: "",
+    requirement: "",
+    status: "",
+    reason: "",
+    campaign: "",
+    dateFrom: "",
+    dateTo: "",
+    caseId: "",
+    requirementId: "",
+    sections: "",
+  };
+}
+
+export function casesFilters(filters: Filters): Filters {
+  return {
+    ...filters,
+    search: "",
+    status: "",
+    revision: "",
+    part: "",
+    clause: "",
+    phase: "",
+    expectation: "",
+    casePresence: "",
+    tag: "",
+    reason: "",
+    requirementTags: "",
+    campaign: "",
+    dateFrom: "",
+    dateTo: "",
+    caseId: "",
+    requirementId: "",
+    sections: "",
+  };
+}
+
+export function filterValueList(value: string): string[] {
+  return [...new Set(value.split(",").filter(Boolean))].sort();
+}
+
+export function toggleFilterValue(value: string, item: string): string {
+  const selected = new Set(filterValueList(value));
+  if (selected.has(item)) selected.delete(item);
+  else selected.add(item);
+  return [...selected].sort().join(",");
 }
 
 export const EMPTY_FILTERS: Filters = {
@@ -136,6 +197,8 @@ export const EMPTY_FILTERS: Filters = {
   expectation: "",
   casePresence: "",
   tag: "",
+  requirementTags: "",
+  caseTags: "",
   requirement: "",
   tool: "",
   profile: "",
@@ -147,6 +210,7 @@ export const EMPTY_FILTERS: Filters = {
   dateTo: "",
   caseId: "",
   requirementId: "",
+  sections: "",
   changed: false,
   disagreement: false,
 };
@@ -303,6 +367,8 @@ export function filtersFromSearch(search: string): Filters {
       result[key] = parameters.get(key) ?? "";
     }
   }
+  result.requirementTags = filterValueList(result.requirementTags).join(",");
+  result.caseTags = filterValueList(result.caseTags).join(",");
   return result;
 }
 
@@ -568,6 +634,8 @@ export function filterCorpus(
     }
   }
   const needle = filters.search.toLocaleLowerCase();
+  const requirementTags = filterValueList(filters.requirementTags);
+  const caseTags = filterValueList(filters.caseTags);
   const candidateResultsByCase = new Map<string, Result[]>();
   for (const result of resultMap.values()) {
     if (
@@ -620,6 +688,7 @@ export function filterCorpus(
         )) &&
       (!filters.phase || testCase.target_phase === filters.phase) &&
       (!filters.expectation || testCase.expectation === filters.expectation) &&
+      caseTags.every((tag) => testCase.tags.includes(tag)) &&
       (!filters.tag ||
         testCase.tags.includes(filters.tag) ||
         contextRequirements.some((requirement) =>
@@ -696,6 +765,7 @@ export function filterCorpus(
       (!filters.tag ||
         requirement.tags.includes(filters.tag) ||
         matchingCases.some((testCase) => testCase.tags.includes(filters.tag))) &&
+      requirementTags.every((tag) => requirement.tags.includes(tag)) &&
       (!caseSpecificFilter || matchingCases.length > 0)
     );
   });

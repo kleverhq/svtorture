@@ -1,40 +1,51 @@
-import { useEffect, useId, useMemo, useRef, useState } from "react";
+import {
+  memo,
+  useCallback,
+  useEffect,
+  useId,
+  useMemo,
+  useRef,
+  useState,
+  type ReactNode,
+} from "react";
 
 import { CopyLinkButton } from "./CopyLinkButton";
 import {
   resultsByKey,
-  STATUS_GROUP_LABELS,
-  STATUS_GROUP_SYMBOLS,
   standardLocationLabel,
-  statusGroup,
 } from "./model";
-import { StatusBadge } from "./StatusBadge";
+import {
+  buildSectionTree,
+  decodeSectionSelection,
+  fallbackSections,
+  sectionContains,
+} from "./requirementHierarchy";
+import { StandardTree, scrollTreeCardIntoView } from "./StandardTree";
+import { ToolEvidenceRow } from "./ToolEvidence";
 import type {
   Campaign,
   CampaignTool,
   CaseDefinition,
   Requirement,
   Result,
+  StandardSection,
 } from "./types";
-import {
-  useRevealSplitSelection,
-  useViewportWorkspaceHeight,
-} from "./useSplitWorkspace";
 
 interface SourceContent {
   name: string;
   text: string;
 }
 
-interface OpenSource extends SourceContent {
-  caseId: string;
-  campaignId: string;
-}
-
 type SourceTarget =
   | { kind: "embedded"; text: string }
   | { kind: "external"; href: string }
   | { kind: "unavailable" };
+
+interface VisibleProfile {
+  key: string;
+  toolId: string;
+  profileId: string;
+}
 
 function sourceTarget(link: string | undefined): SourceTarget {
   const prefix = "data:text/plain;charset=utf-8,";
@@ -104,18 +115,17 @@ function SourceLinks({
         }
         if (target.kind === "external") {
           return (
-            <a
-              key={source}
-              href={target.href}
-              target="_blank"
-              rel="noreferrer"
-            >
+            <a key={source} href={target.href} target="_blank" rel="noreferrer">
               {source} ↗
             </a>
           );
         }
         return (
-          <span className="source-unavailable" title="Source content unavailable" key={source}>
+          <span
+            className="source-unavailable"
+            title="Source content unavailable"
+            key={source}
+          >
             {source} · unavailable
           </span>
         );
@@ -189,7 +199,7 @@ function ObservationDetail({
         </p>
       )}
       {result.observations.map((observation) => (
-        <article className="observation" key={observation.stage_id}>
+        <div className="observation" key={observation.stage_id}>
           <div className="observation__facts">
             <strong>{observation.stage_id}</strong>
             <span>through {observation.attempted_through_phase}</span>
@@ -222,7 +232,7 @@ function ObservationDetail({
               </details>
             );
           })}
-        </article>
+        </div>
       ))}
       {reproduce && (
         <div className="reproduce">
@@ -236,242 +246,255 @@ function ObservationDetail({
   );
 }
 
-export function EvidenceView({
-  cases,
-  requirements,
-  campaign,
-  toolFilter,
-  profileFilter,
-  selectedCaseId,
-  onSelectCase,
-  onInspectRequirement,
-  loadCaseEvidence,
+function LazyDetails({
+  label,
+  count,
+  onOpen,
+  onOpenChange,
+  renderContent,
 }: {
-  cases: CaseDefinition[];
-  requirements: Requirement[];
+  label: string;
+  count: number;
+  onOpen?: (() => void) | undefined;
+  onOpenChange?: ((open: boolean) => void) | undefined;
+  renderContent: () => ReactNode;
+}) {
+  const [open, setOpen] = useState(false);
+  return (
+    <details
+      className="requirement-card__details"
+      open={open}
+      onToggle={(event) => {
+        const nextOpen = event.currentTarget.open;
+        setOpen(nextOpen);
+        onOpenChange?.(nextOpen);
+        if (nextOpen) onOpen?.();
+      }}
+    >
+      <summary>
+        {label} <span>{count}</span>
+      </summary>
+      {open && renderContent()}
+    </details>
+  );
+}
+
+function applicabilityLabel(status: string): string {
+  return status
+    .split("-")
+    .map((part) => `${part.slice(0, 1).toUpperCase()}${part.slice(1)}`)
+    .join(" ");
+}
+
+interface CaseCardProps {
+  testCase: CaseDefinition;
+  requirement?: Requirement | undefined;
+  relatedRequirements: Requirement[];
   campaign?: Campaign | undefined;
-  toolFilter: string;
-  profileFilter: string;
-  selectedCaseId: string;
-  onSelectCase: (caseId: string) => void;
+  profiles: VisibleProfile[];
+  compactResults: ReadonlyMap<string, Result>;
+  selectedTags: ReadonlySet<string>;
+  onToggleTag: (tag: string) => void;
   onInspectRequirement: (requirementId: string) => void;
   loadCaseEvidence?: ((caseId: string) => Promise<Result[]>) | undefined;
-}) {
-  const [openSource, setOpenSource] = useState<OpenSource | undefined>();
+}
+
+const CaseCard = memo(function CaseCard({
+  testCase,
+  requirement,
+  relatedRequirements,
+  campaign,
+  profiles,
+  compactResults,
+  selectedTags,
+  onToggleTag,
+  onInspectRequirement,
+  loadCaseEvidence,
+}: CaseCardProps) {
+  const [openSource, setOpenSource] = useState<SourceContent | undefined>();
   const sourceTriggerRef = useRef<HTMLButtonElement | null>(null);
-  const workspaceRef = useViewportWorkspaceHeight<HTMLDivElement>();
-  const evidencePaneRef = useRef<HTMLElement | null>(null);
-  const caseButtonRefs = useRef(new Map<string, HTMLButtonElement>());
   const sourceViewerId = useId();
-  const resultMap = useMemo(() => resultsByKey(campaign), [campaign]);
+  const evidenceRequested = useRef(false);
+  const evidenceRequestGeneration = useRef(0);
+  const [toolEvidenceOpen, setToolEvidenceOpen] = useState(false);
   const [detail, setDetail] = useState<{
-    caseId: string;
     results?: Result[];
     error?: string;
   }>();
-  const profiles =
-    campaign?.tools.flatMap((tool) =>
-      tool.profile_ids.map((profile) => ({
-        key: `${tool.definition.id}/${profile}`,
-        toolId: tool.definition.id,
-        profileId: profile,
-      })),
-    ) ?? [];
-  const visibleProfiles = profiles.filter(
-    (profile) =>
-      (!toolFilter || profile.toolId === toolFilter) &&
-      (!profileFilter || profile.profileId === profileFilter),
-  );
-  const requirementMap = new Map(requirements.map((item) => [item.id, item]));
-  const selected = selectedCaseId
-    ? cases.find((testCase) => testCase.id === selectedCaseId)
-    : cases[0];
-  const selectedCaseIndex = selected
-    ? cases.findIndex((testCase) => testCase.id === selected.id)
-    : -1;
-  const requirement = selected
-    ? requirementMap.get(selected.primary_requirement)
-    : undefined;
   const campaignId = campaign?.id ?? "";
-  const visibleSource =
-    openSource &&
-    openSource.caseId === selected?.id &&
-    openSource.campaignId === campaignId
-      ? openSource
-      : undefined;
-  const closeSource = () => {
-    sourceTriggerRef.current?.focus();
-    setOpenSource(undefined);
-  };
-  useRevealSplitSelection(
-    selected?.id,
-    selectedCaseIndex,
-    caseButtonRefs,
-    evidencePaneRef,
-  );
+
+  const requestEvidence = useCallback(() => {
+    if (!loadCaseEvidence || evidenceRequested.current) return;
+    evidenceRequested.current = true;
+    const generation = ++evidenceRequestGeneration.current;
+    setDetail({});
+    loadCaseEvidence(testCase.id)
+      .then((results) => {
+        if (generation === evidenceRequestGeneration.current) {
+          setDetail({ results });
+        }
+      })
+      .catch((error: unknown) => {
+        if (generation !== evidenceRequestGeneration.current) return;
+        evidenceRequested.current = false;
+        setDetail({
+          error: error instanceof Error ? error.message : String(error),
+        });
+      });
+  }, [loadCaseEvidence, testCase.id]);
+
   useEffect(() => {
     setOpenSource(undefined);
     sourceTriggerRef.current = null;
-  }, [campaignId, selected?.id]);
-  useEffect(() => {
-    if (!selected || !loadCaseEvidence) {
-      setDetail(undefined);
-      return;
-    }
-    let active = true;
-    setDetail({ caseId: selected.id });
-    loadCaseEvidence(selected.id)
-      .then((results) => {
-        if (active) setDetail({ caseId: selected.id, results });
-      })
-      .catch((error: unknown) => {
-        if (active) {
-          setDetail({
-            caseId: selected.id,
-            error: error instanceof Error ? error.message : String(error),
-          });
-        }
-      });
-    return () => {
-      active = false;
-    };
-  }, [loadCaseEvidence, selected]);
+    evidenceRequested.current = false;
+    evidenceRequestGeneration.current += 1;
+    setDetail(undefined);
+    if (toolEvidenceOpen) requestEvidence();
+  }, [campaignId]);
+
   const detailResults = useMemo(
     () =>
       loadCaseEvidence
         ? new Map(
-            (detail?.caseId === selected?.id ? detail?.results ?? [] : []).map(
-              (result) => [
-                `${result.case_id}:${result.tool_id}:${result.profile_id}`,
-                result,
-              ],
-            ),
+            (detail?.results ?? []).map((result) => [
+              `${result.case_id}:${result.tool_id}:${result.profile_id}`,
+              result,
+            ]),
           )
-        : resultMap,
-    [detail, loadCaseEvidence, resultMap, selected?.id],
+        : compactResults,
+    [compactResults, detail?.results, loadCaseEvidence],
   );
+  const linkedRequirements = requirement
+    ? [requirement, ...relatedRequirements]
+    : relatedRequirements;
+  const closeSource = () => {
+    sourceTriggerRef.current?.focus();
+    setOpenSource(undefined);
+  };
 
   return (
-    <section className="panel evidence" aria-label="Case evidence">
-      {selected ? (
-        <div className="evidence-workspace" ref={workspaceRef}>
-          <nav className="case-list" aria-label="Cases">
-            {cases.map((testCase) => {
-              const itemRequirement = requirementMap.get(testCase.primary_requirement);
-              return (
+    <article className="requirement-card case-card" aria-label={`Case ${testCase.id}`}>
+      <header className="requirement-card__header">
+        <div>
+          <span className="section-label">
+            {requirement
+              ? standardLocationLabel(requirement.clause)
+              : "Unknown standard location"}
+            {" · "}{testCase.target_phase} · {testCase.expectation}
+          </span>
+          <h3>{testCase.title}</h3>
+          <code>{testCase.id}</code>
+        </div>
+        <CopyLinkButton
+          target={{
+            view: "evidence",
+            parameter: "caseId",
+            id: testCase.id,
+            campaignId: campaign?.id,
+          }}
+        />
+      </header>
+
+      <p className="case-card__description">{testCase.description}</p>
+
+      <section className="requirement-card__applicability">
+        <h4>Revision applicability</h4>
+        <div className="requirement-card__table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Revision</th>
+                <th scope="col">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {Object.entries(testCase.revision_applicability).map(
+                ([revision, status]) => (
+                  <tr key={revision}>
+                    <th scope="row">{revision}</th>
+                    <td>{applicabilityLabel(status)}</td>
+                  </tr>
+                ),
+              )}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section className="requirement-card__tags" aria-label="Case tags">
+        <h4>Tags</h4>
+        <div>
+          {testCase.tags.length ? (
+            testCase.tags.map((tag) => (
+              <button
+                type="button"
+                aria-pressed={selectedTags.has(tag)}
+                key={tag}
+                onClick={() => onToggleTag(tag)}
+              >
+                {tag}
+              </button>
+            ))
+          ) : (
+            <span className="requirement-card__empty">No tags</span>
+          )}
+        </div>
+      </section>
+
+      <LazyDetails
+        label="Requirements"
+        count={linkedRequirements.length}
+        renderContent={() =>
+          linkedRequirements.length ? (
+            <div className="supporting-case-list case-card__requirements">
+              {linkedRequirements.map((item, index) => (
                 <button
                   type="button"
-                  className={testCase.id === selected.id ? "is-selected" : ""}
-                  aria-current={testCase.id === selected.id ? "true" : undefined}
-                  key={testCase.id}
-                  ref={(node) => {
-                    if (node) caseButtonRefs.current.set(testCase.id, node);
-                    else caseButtonRefs.current.delete(testCase.id);
-                  }}
-                  onClick={() => onSelectCase(testCase.id)}
+                  key={item.id}
+                  onClick={() => onInspectRequirement(item.id)}
                 >
-                  <span className="case-list__clause">
-                    {itemRequirement
-                      ? standardLocationLabel(itemRequirement.clause)
-                      : "—"} · {testCase.target_phase}
-                  </span>
-                  <strong>{testCase.title}</strong>
-                  <code>{testCase.id}</code>
-                  <span className="case-list__verdicts">
-                    {visibleProfiles.map((profile) => {
-                      const result = resultMap.get(
-                        `${testCase.id}:${profile.toolId}:${profile.profileId}`,
-                      );
-                      const group = statusGroup(result?.status ?? "not-run");
-                      return (
-                        <span
-                          className={`verdict-dot status--${group}`}
-                          title={`${profile.key}: ${
-                            result?.reason ?? STATUS_GROUP_LABELS[group]
-                          }`}
-                          aria-label={`${profile.key}: ${STATUS_GROUP_LABELS[group]}`}
-                          key={profile.key}
-                        >
-                          {STATUS_GROUP_SYMBOLS[group]}
-                        </span>
-                      );
-                    })}
-                  </span>
+                  <span>{index === 0 && item.id === requirement?.id ? "Primary" : "Related"}</span>
+                  <strong>{item.summary}</strong>
+                  <code>{item.id}</code>
                 </button>
-              );
-            })}
-          </nav>
+              ))}
+            </div>
+          ) : (
+            <p>The referenced requirement is unavailable.</p>
+          )
+        }
+      />
 
-          <article className="evidence-pane" ref={evidencePaneRef}>
-            <header className="evidence-pane__header">
-              <div>
-                <span className="section-label">
-                  {requirement ? standardLocationLabel(requirement.clause) : "Unknown part"} ·{" "}
-                  {selected.target_phase} ·{" "}
-                  {selected.expectation}
-                </span>
-                <h3>{selected.title}</h3>
-                <code>{selected.id}</code>
-              </div>
-              <div className="evidence-pane__meta">
-                <CopyLinkButton
-                  target={{
-                    view: "evidence",
-                    parameter: "caseId",
-                    id: selected.id,
-                    campaignId: campaign?.id,
-                  }}
-                />
-                <div className="tag-list">
-                  {selected.tags.map((tag) => (
-                    <span key={tag}>{tag}</span>
-                  ))}
-                </div>
-              </div>
-            </header>
-            <p className="evidence-pane__description">{selected.description}</p>
+      <LazyDetails
+        label="Oracle and sources"
+        count={testCase.sources.length}
+        onOpenChange={(open) => {
+          if (open) return;
+          setOpenSource(undefined);
+          sourceTriggerRef.current = null;
+        }}
+        renderContent={() => (
+          <div className="case-card__definition">
             <dl className="fact-grid case-facts">
               <div>
-                <dt>Requirement</dt>
-                <dd>
-                  <button
-                    type="button"
-                    className="relationship-link"
-                    onClick={() => onInspectRequirement(selected.primary_requirement)}
-                  >
-                    <strong>{selected.primary_requirement}</strong>
-                    <span>{requirement?.summary}</span>
-                  </button>
-                </dd>
+                <dt>Target phase</dt>
+                <dd>{testCase.target_phase}</dd>
               </div>
-              {selected.related_requirements.length > 0 && (
-                <div>
-                  <dt>Related requirements</dt>
-                  <dd className="relationship-list">
-                    {selected.related_requirements.map((requirementId) => {
-                      const related = requirementMap.get(requirementId);
-                      return (
-                        <button
-                          type="button"
-                          className="relationship-link"
-                          key={requirementId}
-                          onClick={() => onInspectRequirement(requirementId)}
-                        >
-                          <strong>{requirementId}</strong>
-                          <span>{related?.summary}</span>
-                        </button>
-                      );
-                    })}
-                  </dd>
-                </div>
-              )}
+              <div>
+                <dt>Expectation</dt>
+                <dd>{testCase.expectation}</dd>
+              </div>
+              <div>
+                <dt>Evidence</dt>
+                <dd>{testCase.evidence}</dd>
+              </div>
               <div>
                 <dt>Oracle</dt>
                 <dd>
-                  <strong>{selected.oracle.kind}</strong>
+                  <strong>{testCase.oracle.kind}</strong>
                   <code>
-                    {selected.oracle.marker ??
-                      selected.oracle.anchor ??
+                    {testCase.oracle.marker ??
+                      testCase.oracle.anchor ??
                       "target phase exit"}
                   </code>
                 </dd>
@@ -480,36 +503,32 @@ export function EvidenceView({
                 <dt>Sources</dt>
                 <dd>
                   <SourceLinks
-                    testCase={selected}
+                    testCase={testCase}
                     campaign={campaign}
-                    openSourceName={visibleSource?.name}
+                    openSourceName={openSource?.name}
                     viewerId={sourceViewerId}
                     onToggleSource={(source, trigger) => {
-                      if (visibleSource?.name === source.name) {
+                      if (openSource?.name === source.name) {
                         closeSource();
                         return;
                       }
                       sourceTriggerRef.current = trigger;
-                      setOpenSource({
-                        ...source,
-                        caseId: selected.id,
-                        campaignId,
-                      });
+                      setOpenSource(source);
                     }}
                   />
                 </dd>
               </div>
             </dl>
-            {visibleSource && (
+            {openSource && (
               <section
                 className="source-viewer"
                 id={sourceViewerId}
-                aria-label={`Source ${visibleSource.name}`}
+                aria-label={`Source ${openSource.name}`}
               >
                 <header>
                   <div>
                     <span>Case source</span>
-                    <strong>{visibleSource.name}</strong>
+                    <strong>{openSource.name}</strong>
                   </div>
                   <button
                     type="button"
@@ -521,71 +540,369 @@ export function EvidenceView({
                   </button>
                 </header>
                 <pre>
-                  <code>{visibleSource.text}</code>
+                  <code>{openSource.text}</code>
                 </pre>
               </section>
             )}
-            <div className="tool-judgments">
-              {visibleProfiles.map((profile) => {
-                const compactResult = resultMap.get(
-                  `${selected.id}:${profile.toolId}:${profile.profileId}`,
-                );
-                const result = detailResults.get(
-                  `${selected.id}:${profile.toolId}:${profile.profileId}`,
-                );
+          </div>
+        )}
+      />
+
+      <LazyDetails
+        label="Tool evidence"
+        count={profiles.length}
+        onOpen={requestEvidence}
+        onOpenChange={setToolEvidenceOpen}
+        renderContent={() => (
+          <div
+            className="tool-judgments"
+            aria-busy={Boolean(
+              loadCaseEvidence &&
+                evidenceRequested.current &&
+                !detail?.results &&
+                !detail?.error,
+            )}
+          >
+            <p className="visually-hidden" role="status">
+              {detail?.error
+                ? `Detailed evidence unavailable: ${detail.error}`
+                : detail?.results
+                  ? "Detailed evidence loaded"
+                  : loadCaseEvidence && evidenceRequested.current
+                    ? "Loading detailed evidence"
+                    : ""}
+            </p>
+            {detail?.error && (
+              <p className="tool-evidence-message">
+                Evidence unavailable: {detail.error}. Close and reopen this section to retry.
+              </p>
+            )}
+            {profiles.length ? (
+              profiles.map((profile) => {
+                const key = `${testCase.id}:${profile.toolId}:${profile.profileId}`;
+                const compactResult = compactResults.get(key);
+                const result = detailResults.get(key);
                 const tool = campaign?.tools.find(
                   (item) => item.definition.id === profile.toolId,
                 );
                 return (
-                  <details key={profile.key}>
-                    <summary>
-                      <strong>{profile.key}</strong>
-                      <StatusBadge
-                        status={compactResult?.status ?? "not-run"}
-                        reason={compactResult?.reason}
-                        knownIssue={compactResult?.known_issue}
-                      />
-                      <span>{compactResult?.reason ?? "no observation"}</span>
-                    </summary>
-                    {detail?.caseId === selected.id && detail.error ? (
-                      <p className="empty-state">Evidence unavailable: {detail.error}</p>
-                    ) : result ? (
-                      <ObservationDetail
-                        key={`${result.case_id}:${profile.key}`}
-                        result={result}
-                        tool={tool}
-                      />
-                    ) : compactResult ? (
-                      <p className="empty-state">Loading detailed evidence…</p>
+                  <ToolEvidenceRow
+                    key={profile.key}
+                    profileKey={profile.key}
+                    status={compactResult?.status ?? "not-run"}
+                    reason={compactResult?.reason}
+                    knownIssue={compactResult?.known_issue ?? undefined}
+                  >
+                    {result ? (
+                      <ObservationDetail result={result} tool={tool} />
+                    ) : detail?.error ? (
+                      <p className="tool-evidence-message">
+                        Detailed evidence unavailable.
+                      </p>
+                    ) : compactResult && loadCaseEvidence && !detail?.results ? (
+                      <p className="tool-evidence-message">
+                        Loading detailed evidence…
+                      </p>
                     ) : (
-                      <p className="empty-state">No result was recorded.</p>
+                      <p className="tool-evidence-message">
+                        No detailed result was recorded.
+                      </p>
                     )}
-                  </details>
+                  </ToolEvidenceRow>
                 );
-              })}
+              })
+            ) : (
+              <p>No tool evidence matches the current filters.</p>
+            )}
+          </div>
+        )}
+      />
+    </article>
+  );
+});
+
+export function EvidenceView({
+  cases,
+  allCases,
+  requirements,
+  standardSections,
+  selectedSections,
+  onSelectedSectionsChange,
+  selectedTags = [],
+  onToggleTag = () => undefined,
+  campaign,
+  toolFilter,
+  profileFilter,
+  selectedCaseId,
+  focusTarget = "",
+  onFocusedTarget = () => undefined,
+  onSelectCase,
+  onInspectRequirement,
+  loadCaseEvidence,
+}: {
+  cases: CaseDefinition[];
+  allCases?: CaseDefinition[] | undefined;
+  requirements: Requirement[];
+  standardSections?: StandardSection[] | undefined;
+  selectedSections?: string[] | undefined;
+  onSelectedSectionsChange?: ((sections: string[]) => void) | undefined;
+  selectedTags?: string[] | undefined;
+  onToggleTag?: ((tag: string) => void) | undefined;
+  campaign?: Campaign | undefined;
+  toolFilter: string;
+  profileFilter: string;
+  selectedCaseId: string;
+  focusTarget?: string | undefined;
+  onFocusedTarget?: (() => void) | undefined;
+  onSelectCase: (caseId: string) => void;
+  onInspectRequirement: (requirementId: string) => void;
+  loadCaseEvidence?: ((caseId: string) => Promise<Result[]>) | undefined;
+}) {
+  const completeCases = allCases ?? cases;
+  const sectionSelection = selectedSections ?? [];
+  const changeSections = onSelectedSectionsChange ?? (() => undefined);
+  const navigationScrollId = useRef("");
+  const navigationAlignmentCleanup = useRef<() => void>(() => undefined);
+  const resultsHeadingRef = useRef<HTMLHeadingElement>(null);
+  useEffect(
+    () => () => navigationAlignmentCleanup.current(),
+    [],
+  );
+  const requirementMap = useMemo(
+    () => new Map(requirements.map((item) => [item.id, item])),
+    [requirements],
+  );
+  const sections = useMemo(
+    () =>
+      standardSections?.length ? standardSections : fallbackSections(requirements),
+    [requirements, standardSections],
+  );
+  const tree = useMemo(() => buildSectionTree(sections), [sections]);
+  const selected = useMemo(
+    () => decodeSectionSelection(sectionSelection, tree),
+    [sectionSelection, tree],
+  );
+  const resultMap = useMemo(() => resultsByKey(campaign), [campaign]);
+  const profiles = useMemo(
+    () =>
+      campaign?.tools.flatMap((tool) =>
+        tool.profile_ids.flatMap((profileId) =>
+          (!toolFilter || tool.definition.id === toolFilter) &&
+          (!profileFilter || profileId === profileFilter)
+            ? [
+                {
+                  key: `${tool.definition.id}/${profileId}`,
+                  toolId: tool.definition.id,
+                  profileId,
+                },
+              ]
+            : [],
+        ),
+      ) ?? [],
+    [campaign, profileFilter, toolFilter],
+  );
+  const selectedTagSet = useMemo(() => new Set(selectedTags), [selectedTags]);
+  const relatedRequirementsByCase = useMemo(
+    () =>
+      new Map(
+        cases.map((testCase) => [
+          testCase.id,
+          testCase.related_requirements
+            .map((id) => requirementMap.get(id))
+            .filter((item): item is Requirement => Boolean(item)),
+        ]),
+      ),
+    [cases, requirementMap],
+  );
+  const caseClause = (testCase: CaseDefinition) =>
+    requirementMap.get(testCase.primary_requirement)?.clause;
+  const sectionOrder = useMemo(
+    () => new Map(sections.map((section, index) => [section.clause, index])),
+    [sections],
+  );
+  const orderedCases = useMemo(
+    () =>
+      [...cases].sort((left, right) => {
+        const leftClause = requirementMap.get(left.primary_requirement)?.clause;
+        const rightClause = requirementMap.get(right.primary_requirement)?.clause;
+        return (
+          (sectionOrder.get(leftClause ?? "") ?? Number.MAX_SAFE_INTEGER) -
+            (sectionOrder.get(rightClause ?? "") ?? Number.MAX_SAFE_INTEGER) ||
+          left.id.localeCompare(right.id)
+        );
+      }),
+    [cases, requirementMap, sectionOrder],
+  );
+  const visibleCases = useMemo(
+    () =>
+      selected.size === 0
+        ? orderedCases
+        : orderedCases.filter((testCase) => {
+            const clause = requirementMap.get(testCase.primary_requirement)?.clause;
+            return Boolean(clause && selected.has(clause));
+          }),
+    [orderedCases, requirementMap, selected],
+  );
+  const selectedCase = useMemo(
+    () => visibleCases.find((testCase) => testCase.id === selectedCaseId),
+    [selectedCaseId, visibleCases],
+  );
+  const treeItems = useMemo(
+    () =>
+      cases.flatMap((testCase) => {
+        const clause = requirementMap.get(testCase.primary_requirement)?.clause;
+        return clause
+          ? [
+              {
+                clause,
+                statuses: toolFilter
+                  ? profiles.map(
+                      (profile) =>
+                        resultMap.get(
+                          `${testCase.id}:${profile.toolId}:${profile.profileId}`,
+                        )?.status ?? "not-run",
+                    )
+                  : undefined,
+              },
+            ]
+          : [];
+      }),
+    [cases, profiles, requirementMap, resultMap, toolFilter],
+  );
+  const totalClauses = useMemo(
+    () =>
+      completeCases.flatMap((testCase) => {
+        const clause = requirementMap.get(testCase.primary_requirement)?.clause;
+        return clause ? [clause] : [];
+      }),
+    [completeCases, requirementMap],
+  );
+
+  useEffect(() => {
+    if (!selectedCase) return;
+    if (navigationScrollId.current === selectedCase.id) {
+      navigationScrollId.current = "";
+      return;
+    }
+    let cancelAlignment: () => void = () => undefined;
+    const frame = window.requestAnimationFrame(() => {
+      const card = document.getElementById(`case-card-${selectedCase.id}`);
+      if (card) cancelAlignment = scrollTreeCardIntoView(card);
+    });
+    return () => {
+      window.cancelAnimationFrame(frame);
+      cancelAlignment();
+    };
+  }, [selectedCase]);
+
+  useEffect(() => {
+    if (!focusTarget) return;
+    window.requestAnimationFrame(() => {
+      const target =
+        focusTarget === "results"
+          ? resultsHeadingRef.current
+          : selectedCase?.id === focusTarget
+            ? document
+                .getElementById(`case-card-${selectedCase.id}`)
+                ?.querySelector("h3")
+            : null;
+      if (!(target instanceof HTMLElement)) return;
+      target.tabIndex = -1;
+      target.focus({ preventScroll: true });
+      onFocusedTarget();
+    });
+  }, [focusTarget, onFocusedTarget, selectedCase]);
+
+  const navigateToSection = (clause: string) => {
+    const testCase = visibleCases.find((item) => {
+      const itemClause = caseClause(item);
+      return Boolean(itemClause && sectionContains(clause, itemClause));
+    });
+    if (!testCase) return;
+    navigationScrollId.current = testCase.id === selectedCaseId ? "" : testCase.id;
+    onSelectCase(testCase.id);
+    const card = document.getElementById(`case-card-${testCase.id}`);
+    navigationAlignmentCleanup.current();
+    navigationAlignmentCleanup.current = card
+      ? scrollTreeCardIntoView(card)
+      : () => undefined;
+    const heading = card?.querySelector("h3");
+    if (heading instanceof HTMLElement) {
+      heading.tabIndex = -1;
+      heading.focus({ preventScroll: true });
+    }
+  };
+
+  return (
+    <section className="panel evidence requirements" aria-label="Case evidence">
+      <div className="requirements-workspace cases-workspace">
+        <StandardTree
+          sections={sections}
+          totalClauses={totalClauses}
+          visibleItems={treeItems}
+          selectedSections={sectionSelection}
+          onSelectedSectionsChange={changeSections}
+          onNavigate={navigateToSection}
+          itemNoun="case"
+          matchingCount={cases.length}
+          totalCount={completeCases.length}
+          autoExpandClause={
+            selectedCase
+              ? requirementMap.get(selectedCase.primary_requirement)?.clause
+              : undefined
+          }
+          showTones={Boolean(toolFilter)}
+        />
+
+        <div className="requirement-cards case-cards">
+          <header className="requirement-cards__header">
+            <div>
+              <span className="section-label">Case evidence</span>
+              <h2 ref={resultsHeadingRef} aria-live="polite" aria-atomic="true">
+                {visibleCases.length} case{visibleCases.length === 1 ? "" : "s"}
+              </h2>
             </div>
-          </article>
+            {selected.size > 0 && (
+              <button type="button" onClick={() => changeSections([])}>
+                Show all sections
+              </button>
+            )}
+          </header>
+          {visibleCases.length ? (
+            visibleCases.map((testCase) => {
+              const requirement = requirementMap.get(testCase.primary_requirement);
+              const relatedRequirements =
+                relatedRequirementsByCase.get(testCase.id) ?? [];
+              return (
+                <div
+                  id={`case-card-${testCase.id}`}
+                  className="requirement-card-anchor"
+                  key={testCase.id}
+                >
+                  <CaseCard
+                    testCase={testCase}
+                    requirement={requirement}
+                    relatedRequirements={relatedRequirements}
+                    campaign={campaign}
+                    profiles={profiles}
+                    compactResults={resultMap}
+                    selectedTags={selectedTagSet}
+                    onToggleTag={onToggleTag}
+                    onInspectRequirement={onInspectRequirement}
+                    loadCaseEvidence={loadCaseEvidence}
+                  />
+                </div>
+              );
+            })
+          ) : (
+            <div className="empty-state">
+              {cases.length
+                ? "No cases belong to the selected standard sections."
+                : "No cases match the current filters."}
+            </div>
+          )}
         </div>
-      ) : selectedCaseId && cases.length ? (
-        <div className="empty-state">
-          <p>
-            Selected case <code>{selectedCaseId}</code> is unavailable under the current
-            filters.
-          </p>
-          <button
-            type="button"
-            className="button button--quiet"
-            onClick={() => {
-              const first = cases[0];
-              if (first) onSelectCase(first.id);
-            }}
-          >
-            Open first visible case
-          </button>
-        </div>
-      ) : (
-        <div className="empty-state">No cases match the current filters.</div>
-      )}
+      </div>
     </section>
   );
 }

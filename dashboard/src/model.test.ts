@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 import {
   aggregateStatus,
   campaignsInDateRange,
+  casesFilters,
   changedCaseKeys,
   compareCampaigns,
   EMPTY_FILTERS,
@@ -10,6 +11,7 @@ import {
   filterCorpus,
   filtersFromSearch,
   filtersToSearch,
+  requirementsQuickFilters,
   selectedCampaign,
   toolTrendPointKey,
   trendRangeBounds,
@@ -21,6 +23,134 @@ import { makeTestDataset } from "./testDataset";
 import type { Campaign, MetricPoint, Result } from "./types";
 
 const dataset = makeTestDataset();
+
+describe("Requirements filters", () => {
+  it("combines selected Requirement tags with AND semantics", () => {
+    const source = makeTestDataset();
+    const first = source.requirements[0];
+    if (!first) throw new Error("incomplete test dataset");
+    const copyOutOnly = {
+      ...first,
+      id: "SV-2023-13-COPY-OUT-ONLY",
+      tags: ["copy-out"],
+    };
+    const tagged = { ...source, requirements: [first, copyOutOnly] };
+
+    expect(
+      filterCorpus(
+        tagged,
+        { ...EMPTY_FILTERS, requirementTags: "copy-out,output" },
+        tagged.campaigns[0],
+      ).requirements.map((requirement) => requirement.id),
+    ).toEqual([first.id]);
+    expect(
+      filterCorpus(
+        tagged,
+        { ...EMPTY_FILTERS, requirementTags: "copy-out" },
+        tagged.campaigns[0],
+      ).requirements,
+    ).toHaveLength(2);
+  });
+
+  it("keeps quick facets and ignores Cases-only advanced values", () => {
+    const projected = requirementsQuickFilters({
+      ...EMPTY_FILTERS,
+      search: "hidden",
+      revision: "1800-2017",
+      clause: "13.5",
+      phase: "simulate",
+      tag: "copy-out",
+      status: "conforming",
+      reason: "expectation-met",
+      tool: "fake",
+      profile: "simulator",
+      statusGroup: "pass",
+      changed: true,
+      disagreement: true,
+      caseId: "case-navigation",
+      requirementId: "requirement-navigation",
+      sections: "13",
+    });
+
+    expect(projected).toMatchObject({
+      search: "",
+      revision: "",
+      clause: "",
+      phase: "",
+      tag: "",
+      status: "",
+      reason: "",
+      tool: "fake",
+      profile: "simulator",
+      statusGroup: "pass",
+      changed: true,
+      disagreement: true,
+      caseId: "",
+      requirementId: "",
+      sections: "",
+    });
+  });
+});
+
+describe("Cases filters", () => {
+  it("combines selected Case tags with AND semantics", () => {
+    const source = makeTestDataset();
+    const first = source.cases[0];
+    if (!first) throw new Error("incomplete test dataset");
+    const copyOutOnly = {
+      ...first,
+      id: "ch13-copy-out-only",
+      tags: ["copy-out"],
+    };
+    const tagged = { ...source, cases: [first, copyOutOnly] };
+
+    expect(
+      filterCorpus(
+        tagged,
+        { ...EMPTY_FILTERS, caseTags: "copy-out,output" },
+        tagged.campaigns[0],
+      ).cases.map((testCase) => testCase.id),
+    ).toEqual([first.id]);
+    expect(
+      filterCorpus(
+        tagged,
+        { ...EMPTY_FILTERS, caseTags: "copy-out" },
+        tagged.campaigns[0],
+      ).cases,
+    ).toHaveLength(2);
+  });
+
+  it("ignores hidden Advanced filters but keeps visible Case facets", () => {
+    const projected = casesFilters({
+      ...EMPTY_FILTERS,
+      requirementTags: "requirement-only",
+      tag: "legacy",
+      caseTags: "copy-out",
+      search: "case search",
+      phase: "simulate",
+      status: "conforming",
+      reason: "expectation-met",
+      statusGroup: "pass",
+      requirement: "SV-2023-13-OUTPUT-COPYOUT",
+      caseId: "case-navigation",
+      requirementId: "requirement-navigation",
+      sections: "13",
+    });
+
+    expect(projected.requirementTags).toBe("");
+    expect(projected.tag).toBe("");
+    expect(projected.caseTags).toBe("copy-out");
+    expect(projected.search).toBe("");
+    expect(projected.phase).toBe("");
+    expect(projected.status).toBe("");
+    expect(projected.reason).toBe("");
+    expect(projected.statusGroup).toBe("pass");
+    expect(projected.requirement).toBe("SV-2023-13-OUTPUT-COPYOUT");
+    expect(projected.caseId).toBe("");
+    expect(projected.requirementId).toBe("");
+    expect(projected.sections).toBe("");
+  });
+});
 
 describe("URL-backed filters", () => {
   it("round-trips meaningful filter state", () => {
@@ -36,12 +166,26 @@ describe("URL-backed filters", () => {
       dateTo: "2026-12-31",
       caseId: "ch13-output-copyout-width",
       requirementId: "SV-2023-13-OUTPUT-COPYOUT",
+      sections: "13.5,=14",
+      requirementTags: "copy-out,output",
+      caseTags: "runtime,simulation",
       changed: true,
       disagreement: true,
     };
     const encoded = filtersToSearch(value, "evidence");
     expect(encoded).toContain("view=evidence");
     expect(filtersFromSearch(encoded)).toEqual(value);
+  });
+
+  it("canonicalizes corpus tags from direct URLs", () => {
+    const parsed = filtersFromSearch(
+      "?view=evidence&requirementTags=output%2Ccopy-out%2Coutput&caseTags=simulation%2Cruntime%2Csimulation",
+    );
+    expect(parsed.requirementTags).toBe("copy-out,output");
+    expect(parsed.caseTags).toBe("runtime,simulation");
+    const encoded = filtersToSearch(parsed, "evidence");
+    expect(encoded).toContain("requirementTags=copy-out%2Coutput");
+    expect(encoded).toContain("caseTags=runtime%2Csimulation");
   });
 
   it("round-trips strict trend state and rejects unknown values", () => {

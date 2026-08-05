@@ -293,6 +293,11 @@ def standard_location_sort_key(location: str) -> tuple[int, int, tuple[int, ...]
     return (*standard_part_sort_key(part), tuple(int(value) for value in subclauses))
 
 
+class StandardSection(StrictModel):
+    clause: StandardLocation
+    title: str = Field(min_length=1, max_length=500)
+
+
 class StandardsIndex(StrictModel):
     schema_version: RequirementSchemaVersion
     authority: StandardRevision
