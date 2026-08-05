@@ -1171,6 +1171,8 @@ class CorpusMetrics(StrictModel):
         cases = tuple((part.kind, part.id, part.title) for part in self.cases.breakdown)
         if requirements != cases:
             raise ValueError("requirement and case metrics must describe the same parts")
+        if any(part.waived != 0 for part in self.cases.breakdown):
+            raise ValueError("case metrics cannot contain waived anchors")
         return self
 
 

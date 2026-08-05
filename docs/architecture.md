@@ -13,7 +13,7 @@ standards/ieee-1800-2023-anchors.json
           │ validates citations at runtime
           ▼
 standards/index.toml + requirements/{chapter-NN,annex-X}.toml
-          │
+          │              + waivers/{chapter-NN,annex-X}.json
           ▼
 cases/<id>/case.toml + ordered sources
           │
@@ -37,9 +37,11 @@ tools/tools.toml ──► tools/*/tool.toml ──► adapter ──► typed E
 ```
 
 `models.py` defines strict, frozen public models that reject unknown fields.
-`catalog.py` checks requirement citations against the committed anchor index. It
-also checks cross-references, safe paths, diagnostic anchors, marker uniqueness,
-source hashes, and the seed corpus. The annotator under
+`catalog.py` checks requirement citations and waiver anchors against the
+committed anchor index. Waiver-only anchors leave the Requirements Coverage
+denominator, while cited anchors remain covered. The catalog also checks
+cross-references, safe paths, diagnostic anchors, marker uniqueness, source
+hashes, and the seed corpus. The annotator under
 `standards/ieee-1800-2023-annotate/` builds the anchor index from a user-supplied
 PDF. Neither the annotator nor its generated text is part of runtime execution.
 

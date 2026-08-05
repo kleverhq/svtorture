@@ -680,6 +680,10 @@ def test_version_four_campaign_is_rejected(catalog: Catalog, tmp_path: Path) -> 
             ),
             "same parts",
         ),
+        (
+            lambda value: value["corpus_metrics"]["cases"]["breakdown"][0].update({"waived": 1}),
+            "case metrics cannot contain waived anchors",
+        ),
     ),
 )
 def test_campaign_requires_coherent_corpus_metrics(

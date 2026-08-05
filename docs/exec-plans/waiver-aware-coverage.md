@@ -27,7 +27,7 @@ This change does not waive case failures, change evaluator judgments, alter Case
 - [x] (2026-08-05 19:20Z) Regenerated public schemas and added deterministic backend and frontend tests, including strict bundle fixtures.
 - [ ] Run focused checks, `just smoke`, and `just ci` where Docker and network access permit. Completed: focused checks and `just smoke` passed; remaining: `just ci`.
 - [x] (2026-08-05 19:21Z) Committed implementation milestones as `82b0dd1` and `a4e7fef` using Conventional Commits.
-- [ ] Run parallel code, architecture, and documentation review lanes, fix findings, and run a clean control review.
+- [ ] Run parallel code, architecture, and documentation review lanes, fix findings, and run a clean control review. Completed: three initial lanes returned one shared Cases invariant and one architecture-doc omission; both are fixed. Remaining: focused recheck and clean control review.
 - [ ] Build local dashboard assets and data for human inspection.
 - [ ] Push `feat-waivers` and open a GitHub pull request against `main`.
 
@@ -47,6 +47,9 @@ This change does not waive case failures, change evaluator judgments, alter Case
 
 - Observation: Adding a required per-part `waived` operand changes all campaign and dashboard schemas that embed `CorpusMetrics`, but the existing projection code needs no special waiver path.
   Evidence: After adding the field to `CorpusPartMetric`, `just schemas` updated the campaign, manifest, catalog, summary, and trends schemas; bundle tests passed without changes to `src/svtorture/bundle.py`.
+
+- Observation: The shared per-part public model can structurally carry `waived` for Cases even though the UI hides it.
+  Evidence: Initial code and architecture reviewers independently identified that malformed external campaign data could set a nonzero Cases waiver. `CorpusMetrics` now rejects that contradictory state.
 
 - Observation: Campaigns freeze complete aggregate and per-part corpus metric operands at collection time, and dashboard bundles copy those operands rather than reading `standards/` in the browser.
   Evidence: `src/svtorture/campaign.py` constructs `corpus_metrics=catalog.corpus_metrics()`, and `src/svtorture/bundle.py` copies `campaign.corpus_metrics` into bundle models.
@@ -81,7 +84,7 @@ Source disposition and implementation are complete: chapter 1 has seven waiver r
 
 SVTORTURE treats an anchor as a stable identifier for one complete source block in IEEE Std 1800-2023. The committed anchor inventory is `standards/ieee-1800-2023-anchors.json`. Normative requirements in `standards/requirements/` cite anchors. JSON sidecars in `standards/waivers/` explain why source anchors did not become additional independent, portable requirements. A waiver is therefore catalog-authoring disposition, not a simulator-result exception.
 
-`src/svtorture/catalog.py` loads the anchor index, requirements, cases, suites, and tools into a frozen `Catalog`. `Catalog.corpus_metrics()` currently computes Requirements Coverage as unique cited anchors divided by all anchors, and computes Requirements Density as unique requirement-to-anchor links divided by cited anchors. `src/svtorture/campaign.py` stores these metrics in every new schema-version-5 campaign. `src/svtorture/bundle.py` projects the frozen values into schema-version-6 dashboard resources. `dashboard/src/useDashboard.ts` loads those static resources, and `dashboard/src/CorpusCoverage.tsx` renders the aggregate and per-part breakdown. The browser never reads the repository's `standards/` directory.
+`src/svtorture/catalog.py` loads the anchor index, requirements, waivers, cases, suites, and tools into a frozen `Catalog`. `Catalog.corpus_metrics()` computes Requirements Coverage as unique cited anchors divided by eligible anchors after waiver-only exclusions, and computes Requirements Density as unique requirement-to-anchor links divided by cited anchors. `src/svtorture/campaign.py` stores these metrics in every new schema-version-5 campaign. `src/svtorture/bundle.py` projects the frozen values into schema-version-6 dashboard resources. `dashboard/src/useDashboard.ts` loads those static resources, and `dashboard/src/CorpusCoverage.tsx` renders the aggregate and per-part breakdown. The browser never reads the repository's `standards/` directory.
 
 The waiver source shape is a JSON object with `authority`, `part`, `schema_version`, and `waivers`. Each waiver has `id`, `part`, a nonempty list of complete `anchors`, and a nonempty project-owned `reason`. Existing files use authority `1800-2023`, schema version 2, filenames `chapter-NN.json` or `annex-X.json`, globally unique IDs beginning with `WV-2023-`, and anchors belonging to the declared part.
 
@@ -89,7 +92,7 @@ For any standard part, let `A` be all anchors in the committed index, `R` be anc
 
 ## Open Questions
 
-There are no product-design questions left open. Implementation must still determine the smallest model placement for the per-part waived integer without creating a separate public waiver API. The preferred solution is a nonnegative `waived` field on the existing per-part metric model, populated for Requirements metrics and left at zero for Cases metrics, unless inspection reveals a comparably small shape with clearer ownership.
+There are no open product or implementation questions. The completed implementation places a required nonnegative `waived` integer on the existing per-part metric model, populates effective counts for Requirements, fixes Cases values at zero, and enforces that Cases invariant in `CorpusMetrics`.
 
 ## Plan of Work
 
@@ -188,3 +191,5 @@ Plan revision note: 2026-08-05 initial plan created after repository and data-fl
 Plan revision note: 2026-08-05 source milestone completed after deterministic annotation verification and direct inspection of IEEE Std 1800-2023 Clauses 1 and 2. The progress, discoveries, and interim outcome now record complete anchor disposition and the existing cross-record anchor reuse that runtime validation must preserve.
 
 Plan revision note: 2026-08-05 runtime and dashboard milestones completed in commits `82b0dd1` and `a4e7fef`. Progress now records strict waiver loading, adjusted frozen metrics, schema/test updates, the requested UI column, and passing `just smoke`; remaining work is CI, review, local demonstration, and GitHub delivery.
+
+Plan revision note: 2026-08-05 initial parallel review completed. The plan and architecture documentation now describe the implemented runtime path, and the public model enforces the reviewers' Cases-waiver invariant; focused recheck and a fresh control pass remain.
