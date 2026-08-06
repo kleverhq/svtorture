@@ -457,7 +457,7 @@ def test_unknown_requirement_tag_is_rejected(catalog: Catalog, tmp_path: Path) -
     chapter = root / "standards" / "requirements" / "chapter-04.toml"
     chapter.write_text(
         chapter.read_text(encoding="utf-8").replace(
-            "tags = []",
+            'tags = ["scheduling"]',
             'tags = ["zz-unknown"]',
             1,
         ),
