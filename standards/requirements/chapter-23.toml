@@ -11,7 +11,7 @@ anchors = [
 ]
 summary = "An explicitly named ANSI port may map its external port name to array or structure elements, concatenations of elements, or assignment-pattern expressions of elements declared in the enclosing module, interface, or program."
 related_clauses = []
-tags = []
+tags = ["connectivity", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -38,7 +38,7 @@ related_clauses = [
     "25.3.3",
     "23.2.2.1",
 ]
-tags = []
+tags = ["generic-interface", "grammar", "interface", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -63,7 +63,7 @@ anchors = [
 ]
 summary = "A package import declaration in an ANSI module header shall be followed by a parameter-port list, a port-declaration list, or both."
 related_clauses = []
-tags = []
+tags = ["import", "ports", "source-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -89,7 +89,7 @@ anchors = [
 ]
 summary = "In ANSI style, port direction and type declarations are part of the module header, and the header is terminated by a semicolon after the port-list closing parenthesis."
 related_clauses = []
-tags = []
+tags = ["grammar", "module", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -113,7 +113,7 @@ anchors = [
 ]
 summary = "Each ANSI port declaration completely specifies the port's direction, width, net or variable type, and signedness, and its identifier shall not be redeclared wholly or partly in the module body."
 related_clauses = []
-tags = []
+tags = ["ports", "redeclaration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -137,7 +137,7 @@ anchors = [
 ]
 summary = "An ANSI module header shall use the grammar-defined optional comma-separated ansi_port_declaration list, whose entries may be net, variable, interface, or explicitly named directional port forms with only the dimensions, constant expressions, directions, and types admitted by that grammar."
 related_clauses = []
-tags = []
+tags = ["grammar", "module", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -161,7 +161,7 @@ anchors = [
 ]
 summary = "After a port identifier is defined in a port list, no other port definition in that list may use the same name."
 related_clauses = []
-tags = []
+tags = ["namespace", "ports", "redeclaration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -185,7 +185,7 @@ anchors = [
 ]
 summary = "Variable and net values of any data type may pass through a port when the two sides of the connection have assignment-compatible data types, including continuous assignment to a variable where required by the port semantics."
 related_clauses = []
-tags = []
+tags = ["connectivity", "conversion", "ports", "type-compatibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -209,7 +209,7 @@ anchors = [
 ]
 summary = "An object declared within an automatic task or automatic function cannot be accessed by a hierarchical name reference."
 related_clauses = []
-tags = []
+tags = ["hierarchy", "name-resolution", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -233,7 +233,7 @@ anchors = [
 ]
 summary = "The bind_instantiation admits the complete applicable SystemVerilog instantiation syntax, including parameter assignments and port associations."
 related_clauses = []
-tags = []
+tags = ["bind", "grammar", "instantiation", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -260,7 +260,7 @@ related_clauses = [
     "33.3",
     "33.4",
 ]
-tags = []
+tags = ["bind", "elaboration", "library"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -286,7 +286,7 @@ anchors = [
 ]
 summary = "A bind directive shall target a module/interface scope optionally narrowed by a colon-separated instance list, or one hierarchical module/interface instance, and shall contain a complete program, module, interface, or checker instantiation."
 related_clauses = []
-tags = []
+tags = ["bind", "grammar", "instantiation"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -313,7 +313,7 @@ anchors = [
 ]
 summary = "A bind directive may appear in a module, an interface, or compilation-unit scope."
 related_clauses = []
-tags = []
+tags = ["bind", "compilation-unit", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -337,7 +337,7 @@ anchors = [
 ]
 summary = "When a bind target scope or target instance is an interface, the bound instantiation shall be an interface or checker instantiation."
 related_clauses = []
-tags = []
+tags = ["bind", "checker", "instantiation", "interface"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -362,7 +362,7 @@ anchors = [
 ]
 summary = "All actual port and parameter expressions in a bound instantiation are resolved from the bind target instance's point of view, independently of same-named objects visible in the scope containing the bind directive."
 related_clauses = []
-tags = []
+tags = ["bind", "name-resolution", "parameter", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -387,7 +387,7 @@ anchors = [
 ]
 summary = "For scope-form bind, the target scope shall be a module or interface and any listed targets shall be its module/interface instances; without an instance list the complete bound instantiation is inserted into every designwide instance of that scope, while with a list it is inserted only into listed instances."
 related_clauses = []
-tags = []
+tags = ["bind", "hierarchy", "instantiation", "module"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -411,7 +411,7 @@ anchors = [
 ]
 summary = "The single-target bind form inserts into one specified instance; if its target identifier resolves as both an instance name and module name, only the instance is bound."
 related_clauses = []
-tags = []
+tags = ["bind", "hierarchy", "name-resolution"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -435,7 +435,7 @@ anchors = [
 ]
 summary = "The order of multiple bind statements in a scope shall not affect semantics; an implementation may elaborate them in any order."
 related_clauses = []
-tags = []
+tags = ["bind", "source-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -459,7 +459,7 @@ anchors = [
 ]
 summary = "A user-defined type name used in a bound type-parameter override shall be visible and denote matching types in both the bind-containing scope and target scope."
 related_clauses = []
-tags = []
+tags = ["bind", "parameter", "type-equivalence", "visibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -483,7 +483,7 @@ anchors = [
 ]
 summary = "A blank entry in an ordered port-connection list represents an unconnected port, except that an omitted connection to an input with a default selects that default value."
 related_clauses = []
-tags = []
+tags = ["connectivity", "default-value", "elaboration", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -509,7 +509,7 @@ summary = "If a module has a parameter_port_list, every additional parameter dec
 related_clauses = [
     "6.20.1",
 ]
-tags = []
+tags = ["elaboration", "parameter"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -534,7 +534,7 @@ anchors = [
 ]
 summary = "A defparam located below a bound instance shall not affect a parameter outside that bound instance's local hierarchy."
 related_clauses = []
-tags = []
+tags = ["bind", "defparam", "hierarchy", "parameter"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -558,7 +558,7 @@ anchors = [
 ]
 summary = "A bound instance has visibility as if inserted at the end of the target scope: all declarations and imports in that target are visible, including already imported wildcard candidates; bind itself cannot activate a wildcard import, and compilation-unit declarations/imports are not visible through the bind statement."
 related_clauses = []
-tags = []
+tags = ["bind", "import", "visibility", "wildcard-import"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -584,7 +584,7 @@ summary = "A bound instantiation shall not introduce an instance name that clash
 related_clauses = [
     "3.13",
 ]
-tags = []
+tags = ["bind", "diagnostic", "namespace", "redeclaration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -609,7 +609,7 @@ anchors = [
 ]
 summary = "A program, module, interface, or checker instance inserted by bind becomes part of the bound target object with the same binding semantics for each supported instance category."
 related_clauses = []
-tags = []
+tags = ["bind", "hierarchy", "instantiation"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -633,7 +633,7 @@ anchors = [
 ]
 summary = "Outside a bound instantiation, a hierarchical reference to one of that instantiation's parameters shall not be used where a constant expression is required, including a type description or generate condition."
 related_clauses = []
-tags = []
+tags = ["bind", "name-resolution", "parameter"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -657,7 +657,7 @@ anchors = [
 ]
 summary = "An inout port declared with a built-in net type may connect to a compatible net or net concatenation, or be left unconnected, but shall not connect to a variable."
 related_clauses = []
-tags = []
+tags = ["connectivity", "nettype", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -681,7 +681,7 @@ anchors = [
 ]
 summary = "An input port declared with a built-in net type may connect to any expression of a compatible data type."
 related_clauses = []
-tags = []
+tags = ["connectivity", "nettype", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -705,7 +705,7 @@ anchors = [
 ]
 summary = "An output port declared with a built-in net type may connect to a compatible net, variable, or concatenation of nets or variables."
 related_clauses = []
-tags = []
+tags = ["connectivity", "nettype", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -730,7 +730,7 @@ anchors = [
 ]
 summary = "A simulated net produced by port collapse shall use the delay specified on the internal or external net selected by Table 23-1."
 related_clauses = []
-tags = []
+tags = ["connectivity", "nettype", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -755,7 +755,7 @@ anchors = [
 ]
 summary = "When Table 23-1 selects a trireg as the simulated net type, the strength specified on that trireg shall apply to the simulated net."
 related_clauses = []
-tags = []
+tags = ["connectivity", "nettype", "strength"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -779,7 +779,7 @@ anchors = [
 ]
 summary = "When a non-ANSI port declaration includes a net or variable type, it completely declares the port: all needed characteristics, including signedness and range, shall appear there, and a separate net or variable data-type redeclaration is an error."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "ports", "redeclaration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -803,7 +803,7 @@ anchors = [
 ]
 summary = "A complete hierarchical path begins at a top-level module and may be used to reference its object from any hierarchy level, including a parallel hierarchy."
 related_clauses = []
-tags = []
+tags = ["hierarchy", "name-resolution", "top-level"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -829,7 +829,7 @@ summary = "A defparam statement may change an overridable parameter in any modul
 related_clauses = [
     "23.6",
 ]
-tags = []
+tags = ["defparam", "hierarchy", "name-resolution", "parameter"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -859,7 +859,7 @@ related_clauses = [
     "28.3.5",
     "23.3.2",
 ]
-tags = []
+tags = ["defparam", "generate", "hierarchy"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -883,7 +883,7 @@ anchors = [
 ]
 summary = "If a defparam assignment conflicts with a module instance parameter-value assignment, the parameter shall take the value assigned by defparam."
 related_clauses = []
-tags = []
+tags = ["defparam", "parameter"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -907,7 +907,7 @@ anchors = [
 ]
 summary = "A defparam right-hand side shall be a constant expression containing only numbers and parameter references, and every referenced parameter shall be declared in the same module as the defparam statement."
 related_clauses = []
-tags = []
+tags = ["defparam", "elaboration", "parameter"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -932,7 +932,7 @@ anchors = [
 ]
 summary = "When an instance overrides a type parameter, defaults and assignments of parameters depending on it shall be evaluated only with the overridden type, never first with the default type; a required type parameter likewise supplies its override type before dependent evaluation."
 related_clauses = []
-tags = []
+tags = ["elaboration", "parameter", "type-parameter"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -957,7 +957,7 @@ anchors = [
 ]
 summary = "A parameter definition may depend on another parameter; overriding the dependency recomputes the dependent parameter, but directly overriding the dependent parameter replaces its definition expression and fixes it to that override regardless of later dependency values."
 related_clauses = []
-tags = []
+tags = ["elaboration", "parameter"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -987,7 +987,7 @@ anchors = [
 ]
 summary = "Each module, interface, program, checker, package, and class declaration defines a new scope."
 related_clauses = []
-tags = []
+tags = ["namespace", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1011,7 +1011,7 @@ anchors = [
 ]
 summary = "A design shall contain at least one top-level module."
 related_clauses = []
-tags = []
+tags = ["hierarchy", "module", "top-level"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1035,7 +1035,7 @@ anchors = [
 ]
 summary = "Different module instances in the same top-level module may use different legal parameter-redefinition styles, including ordered assignment for one instance and named assignment for another."
 related_clauses = []
-tags = []
+tags = ["instantiation", "parameter"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1059,7 +1059,7 @@ anchors = [
 ]
 summary = "An unqualified identifier referenced in a task, function, named block, or generate block shall resolve first to a local declaration, otherwise by searching enclosing scopes in the same name-tree branch until found or an applicable design-element boundary is reached."
 related_clauses = []
-tags = []
+tags = ["name-resolution", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1083,7 +1083,7 @@ anchors = [
 ]
 summary = "Unqualified variable lookup stops at a module boundary, while lookup for a task, function, named block, or generate block continues through higher-level enclosing modules until found."
 related_clauses = []
-tags = []
+tags = ["name-resolution", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1110,7 +1110,7 @@ anchors = [
 ]
 summary = "For dissimilar built-in net types connected through a port, the resulting simulated net takes the dominating net type identified by Table 23-1; when neither net type dominates, it shall take the external net type."
 related_clauses = []
-tags = []
+tags = ["connectivity", "net-resolution", "nettype"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1134,7 +1134,7 @@ anchors = [
 ]
 summary = "For dissimilar net types connected through a port, domination is determined by Table 23-1; an implementation may merge the dominating and dominated nets, but if merged the single simulated net shall have the dominating net's type."
 related_clauses = []
-tags = []
+tags = ["connectivity", "elaboration", "net-resolution", "nettype"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1160,7 +1160,7 @@ anchors = [
 ]
 summary = "At a dotted name's point of appearance, if its first component resolves as a simple identifier to a data object or interface port, the dotted name shall be treated as a member select of that object or port."
 related_clauses = []
-tags = []
+tags = ["name-resolution", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1186,7 +1186,7 @@ anchors = [
 ]
 summary = "At a dotted name's point of appearance, if its first component resolves as a simple identifier to a directly visible scope name, the dotted name shall be treated as a hierarchical name."
 related_clauses = []
-tags = []
+tags = ["hierarchy", "name-resolution", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1211,7 +1211,7 @@ anchors = [
 ]
 summary = "If the first component of a dotted name resolves to an imported scope name, the name shall resolve like a hierarchical name prefixed by the package from which that scope was imported."
 related_clauses = []
-tags = []
+tags = ["import", "name-resolution", "package", "visibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1236,7 +1236,7 @@ anchors = [
 ]
 summary = "If simple-identifier lookup does not find the first component of a dotted name at its point of appearance, the dotted name shall be treated as a hierarchical name."
 related_clauses = []
-tags = []
+tags = ["hierarchy", "name-resolution"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1260,7 +1260,7 @@ anchors = [
 ]
 summary = "It is an error if a hierarchical name in a defparam is resolved before complete hierarchy elaboration and that same name would resolve to a different target after full elaboration."
 related_clauses = []
-tags = []
+tags = ["defparam", "diagnostic", "elaboration", "name-resolution"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1284,7 +1284,7 @@ anchors = [
 ]
 summary = "A named parameter assignment may omit its expression to document the parameter without overriding it, but parentheses are required and the parameter retains its default value."
 related_clauses = []
-tags = []
+tags = ["instantiation", "parameter"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1310,7 +1310,7 @@ anchors = [
 ]
 summary = "An explicit named connection may omit its expression but shall retain parentheses; .port_name() leaves the port unconnected, including an input with a default, whose default is not used."
 related_clauses = []
-tags = []
+tags = ["connectivity", "elaboration", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1334,7 +1334,7 @@ anchors = [
 ]
 summary = "An explicit module instantiation creates a hierarchical instance of the identified module."
 related_clauses = []
-tags = []
+tags = ["hierarchy", "instantiation", "module"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1358,7 +1358,7 @@ anchors = [
 ]
 summary = "An explicit named module connection associates the specified port declaration name of the instantiated module with the specified expression in the instantiating scope."
 related_clauses = []
-tags = []
+tags = ["connectivity", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1382,7 +1382,7 @@ anchors = [
 ]
 summary = "An explicitly named .port_identifier(expression) declaration inherits only an omitted direction from the preceding port; it does not inherit port kind or other properties."
 related_clauses = []
-tags = []
+tags = ["argument-direction", "ports", "source-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1407,7 +1407,7 @@ anchors = [
 ]
 summary = "The type of an explicitly named port is the self-determined type of its port expression; the expression is not an assignment-like context."
 related_clauses = []
-tags = []
+tags = ["context", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1431,7 +1431,7 @@ anchors = [
 ]
 summary = "When an extern declaration exists for a module, an instance may use .* as though the extern declaration's ports and parameters were present on the module definition for wildcard matching."
 related_clauses = []
-tags = []
+tags = ["module", "ports", "visibility", "wildcard-connection"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1455,7 +1455,7 @@ anchors = [
 ]
 summary = "An extern module declaration may declare a module's ports without its definition by using extern module, the module name, and either an ANSI port-declaration list (optionally parameterized) or a non-ANSI port list."
 related_clauses = []
-tags = []
+tags = ["grammar", "module", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1479,7 +1479,7 @@ anchors = [
 ]
 summary = "An extern module declaration may appear at any instantiation-hierarchy level but is visible only within the hierarchy level where it is declared."
 related_clauses = []
-tags = []
+tags = ["hierarchy", "module", "visibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1503,7 +1503,7 @@ anchors = [
 ]
 summary = "An extern module declaration shall match the actual module definition's port and parameter lists in corresponding names, positions, and equivalent types."
 related_clauses = []
-tags = []
+tags = ["module", "ports", "type-equivalence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1528,7 +1528,7 @@ anchors = [
 ]
 summary = "When data type is omitted from the first ANSI port, it defaults to logic, except that an interconnect port has no data type."
 related_clauses = []
-tags = []
+tags = ["ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1553,7 +1553,7 @@ anchors = [
 ]
 summary = "When direction is omitted from the first port in an ANSI port list, its direction defaults to inout."
 related_clauses = []
-tags = []
+tags = ["argument-direction", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1577,7 +1577,7 @@ anchors = [
 ]
 summary = "If direction, port kind, and data type are all omitted from the first port, every port is interpreted as non-ANSI and its direction and optional type are declared after the list; otherwise every port is interpreted as ANSI."
 related_clauses = []
-tags = []
+tags = ["grammar", "module", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1605,7 +1605,7 @@ anchors = [
 ]
 summary = "Elaboration shall start from top-level modules, expand each hierarchy as far as possible without elaborating generate constructs while finalizing encountered parameters and resolvable defparams, defer unresolved defparams to later iterations, then evaluate encountered generate schemes and repeat expansion from each resulting generate-block instance until no new starting points remain."
 related_clauses = []
-tags = []
+tags = ["elaboration", "generate", "hierarchy"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1629,7 +1629,7 @@ anchors = [
 ]
 summary = "A generic interface port may connect to an interface instance of any interface type."
 related_clauses = []
-tags = []
+tags = ["connectivity", "generic-interface", "interface", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1654,7 +1654,7 @@ anchors = [
 ]
 summary = "A hierarchical_identifier may optionally begin with $root. and shall then consist of zero or more period-separated instance-name components, which may select array elements with constant bit selects, followed by a final identifier."
 related_clauses = []
-tags = []
+tags = ["grammar", "hierarchy", "name-resolution"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1678,7 +1678,7 @@ anchors = [
 ]
 summary = "An instance-array or loop-generate component in a hierarchical path may be followed by a constant-expression instance select, whose value shall be a legal array index; the select is mandatory when that array component is not the final path element."
 related_clauses = []
-tags = []
+tags = ["array-indexing", "generate", "hierarchy"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1703,7 +1703,7 @@ anchors = [
 ]
 summary = "Subject to accessibility restrictions, a known unique hierarchical name may read or write an object from elsewhere in the description, appear in an event expression, and reference a subroutine for a call."
 related_clauses = []
-tags = []
+tags = ["hierarchy", "name-resolution", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1727,7 +1727,7 @@ anchors = [
 ]
 summary = "A full hierarchical name is formed from containing hierarchy component names separated by periods; an escaped identifier component shall be followed by white-space termination and then the period separator."
 related_clauses = []
-tags = []
+tags = ["hierarchy", "lexical"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1751,7 +1751,7 @@ anchors = [
 ]
 summary = "A hierarchical path may begin with a module, interface, program, checker, instance, task, function, named-block, or named-generate-block name; lookup searches the current level then higher modules, and an instance-name match takes precedence over an equally named module, interface, program, or checker."
 related_clauses = []
-tags = []
+tags = ["hierarchy", "name-resolution", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1775,7 +1775,7 @@ anchors = [
 ]
 summary = "Each module instance (including array elements), generate block instance, task or function definition, named begin-end or fork-join block, nested named block, assertion label, and named assertion action block shall create a new hierarchy branch."
 related_clauses = []
-tags = []
+tags = ["block", "generate", "hierarchy", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -1803,7 +1803,7 @@ related_clauses = [
     "23.9",
     "3.13",
 ]
-tags = []
+tags = ["hierarchy", "namespace", "redeclaration", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1827,7 +1827,7 @@ anchors = [
 ]
 summary = "If a parameter override causes a dependent parameter assignment to become illegal, elaboration shall fail."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "elaboration", "parameter"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1851,7 +1851,7 @@ anchors = [
 ]
 summary = "A port declaration using implicit_data_type—signedness and/or packed dimensions without an explicit data_type—implies a net port unless the var keyword is present."
 related_clauses = []
-tags = []
+tags = ["implicit-net", "nettype", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1876,7 +1876,7 @@ anchors = [
 ]
 summary = "The implicit .name connection form connects an instance port to an instantiating-scope item only when the item name matches the instance port name and their data types are equivalent."
 related_clauses = []
-tags = []
+tags = ["connectivity", "implicit-connection", "ports", "type-equivalence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1902,7 +1902,7 @@ summary = "An implicit .port_identifier connection between nets of dissimilar ne
 related_clauses = [
     "23.3.3.7",
 ]
-tags = []
+tags = ["connectivity", "diagnostic", "implicit-connection", "nettype"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1926,7 +1926,7 @@ anchors = [
 ]
 summary = "Except for the implicit-connection declaration, type, and dissimilar-net restrictions, .port_identifier has the same connection semantics as .port_identifier(port_identifier)."
 related_clauses = []
-tags = []
+tags = ["connectivity", "implicit-connection", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1952,7 +1952,7 @@ anchors = [
 ]
 summary = "An implicit .port_identifier connection shall not create an implicit net; absence of a same-named connecting declaration is an error even when the instance port has a default value."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "implicit-connection", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1976,7 +1976,7 @@ anchors = [
 ]
 summary = "Before an implicit .port_identifier connection, that identifier shall already be declared explicitly or implicitly, or imported from a package by explicit or wildcard import; otherwise the connection is an error."
 related_clauses = []
-tags = []
+tags = ["implicit-connection", "import", "name-resolution", "visibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2002,7 +2002,7 @@ summary = "A net connected to a port without an explicit net declaration is unsi
 related_clauses = [
     "6.10",
 ]
-tags = []
+tags = ["implicit-net", "nettype", "ports", "signedness"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2026,7 +2026,7 @@ anchors = [
 ]
 summary = "A non-ANSI port declaration without a net or variable type may be supplemented by one net or variable declaration; if both declarations specify the port as a vector, their ranges shall be identical."
 related_clauses = []
-tags = []
+tags = ["ports", "redeclaration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2050,7 +2050,7 @@ anchors = [
 ]
 summary = "Neither side of an inout port connection may have a variable data type."
 related_clauses = []
-tags = []
+tags = ["connectivity", "diagnostic", "ports", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2074,7 +2074,7 @@ anchors = [
 ]
 summary = "An inout port connection is a non-strength-reducing transistor connection rather than a directional continuous assignment."
 related_clauses = []
-tags = []
+tags = ["connectivity", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2101,7 +2101,7 @@ summary = "When port kind is omitted for an input or inout ANSI port, it default
 related_clauses = [
     "22.8",
 ]
-tags = []
+tags = ["argument-direction", "nettype", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2125,7 +2125,7 @@ anchors = [
 ]
 summary = "Each input or output port connection shall establish a continuous assignment from the signal source side to the signal sink side, with one connected item acting as source and the other as sink."
 related_clauses = []
-tags = []
+tags = ["connectivity", "continuous-assignment", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2149,7 +2149,7 @@ anchors = [
 ]
 summary = "A singular input port may have a default value, which shall be a constant expression evaluated in the defining module's scope rather than the instantiating module's scope."
 related_clauses = []
-tags = []
+tags = ["argument-direction", "default-value", "ports", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2173,7 +2173,7 @@ anchors = [
 ]
 summary = "A packed-array connection to an instance array shall be partitioned into one part-select per instance, beginning at all right-hand indices with the rightmost part-select and iterating the rightmost dimension first; too many or too few bits is an error."
 related_clauses = []
-tags = []
+tags = ["connectivity", "layout", "ports", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2197,7 +2197,7 @@ anchors = [
 ]
 summary = "When a connection's size and type match one element instance's port, that same connection shall be made to every instance in the instance array."
 related_clauses = []
-tags = []
+tags = ["array", "connectivity", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2221,7 +2221,7 @@ anchors = [
 ]
 summary = "For an unpacked-array connection to an instance array, its slowest-varying dimensions shall exactly match the instance-array dimension sizes; elements map left index to left index and right index to right index, and a size mismatch is an error."
 related_clauses = []
-tags = []
+tags = ["array-mapping", "connectivity", "ports", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2245,7 +2245,7 @@ anchors = [
 ]
 summary = "Every module instance shall include port-list parentheses, including an instance of a module with no ports."
 related_clauses = []
-tags = []
+tags = ["instantiation", "module", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2269,7 +2269,7 @@ anchors = [
 ]
 summary = "If both sides of a port connection are interconnect nets, the merged net is interconnect; if exactly one side is interconnect, the merged net takes the other side's net type."
 related_clauses = []
-tags = []
+tags = ["connectivity", "interconnect", "nettype"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2293,7 +2293,7 @@ anchors = [
 ]
 summary = "Every port connection involving an interconnect net shall merge the dominating and dominated nets into a single net."
 related_clauses = []
-tags = []
+tags = ["connectivity", "interconnect"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2317,7 +2317,7 @@ anchors = [
 ]
 summary = "It is illegal to specify signed for a port declared as an interconnect port."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "interconnect", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2341,7 +2341,7 @@ anchors = [
 ]
 summary = "At a primitive or UDP terminal connection, an interconnect net shall be treated as though it connects to a scalar wire."
 related_clauses = []
-tags = []
+tags = ["connectivity", "interconnect", "primitive"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2365,7 +2365,7 @@ anchors = [
 ]
 summary = "A generic or named interface port instance shall connect to an interface instance or a higher-level interface port and shall not be left unconnected."
 related_clauses = []
-tags = []
+tags = ["connectivity", "diagnostic", "interface", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2399,7 +2399,7 @@ anchors = [
 ]
 summary = "When the internal port net is wire or tri, Table 23-1 selects the external net type as the resulting simulated net type for every external built-in net type column."
 related_clauses = []
-tags = []
+tags = ["connectivity", "net-resolution", "nettype"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2425,7 +2425,7 @@ summary = "An explicit port expression shall resolve to an expression legal for 
 related_clauses = [
     "23.3.3",
 ]
-tags = []
+tags = ["diagnostic", "ports", "type-compatibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2449,7 +2449,7 @@ anchors = [
 ]
 summary = "A local parameter cannot be overridden and does not occupy a position in an ordered instance parameter assignment, even when declared in the parameter_port_list; its value remains determined by its declaration expression."
 related_clauses = []
-tags = []
+tags = ["instantiation", "parameter"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2473,7 +2473,7 @@ anchors = [
 ]
 summary = "The macromodule keyword is permitted in place of module to define a module, with the definition still terminated by endmodule."
 related_clauses = []
-tags = []
+tags = ["grammar", "lexical", "module"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2497,7 +2497,7 @@ anchors = [
 ]
 summary = "When both internal and external sides of a port are user-defined nettypes, their nettypes shall match and the two sides shall be merged into one simulated net."
 related_clauses = []
-tags = []
+tags = ["connectivity", "net-resolution", "nettype"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2521,7 +2521,7 @@ anchors = [
 ]
 summary = "An implementation-defined limit on ports per module definition shall permit at least 256 ports."
 related_clauses = []
-tags = []
+tags = ["module", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2545,7 +2545,7 @@ anchors = [
 ]
 summary = "A module declaration shall conform to one of the defined forms: non-ANSI, ANSI, wildcard-port, extern non-ANSI, or extern ANSI, including the prescribed ordering of header, optional time-units declaration, module items, and endmodule components."
 related_clauses = []
-tags = []
+tags = ["grammar", "module", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2569,7 +2569,7 @@ anchors = [
 ]
 summary = "An explicit module instantiation may identify a module declared either before or after the instantiation in the source text."
 related_clauses = []
-tags = []
+tags = ["compilation-order", "instantiation", "module"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2593,7 +2593,7 @@ anchors = [
 ]
 summary = "The identifier immediately following the module keyword shall name the module being defined."
 related_clauses = []
-tags = []
+tags = ["module", "namespace"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2620,7 +2620,7 @@ related_clauses = [
     "28.3.5",
     "23.3.3.5",
 ]
-tags = []
+tags = ["array", "hierarchy", "instantiation", "module"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2646,7 +2646,7 @@ summary = "Subject to the module port connection rules, an instance port connect
 related_clauses = [
     "23.3.3",
 ]
-tags = []
+tags = ["connectivity", "instantiation", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2670,7 +2670,7 @@ anchors = [
 ]
 summary = "A module instantiation statement shall identify a module, optionally provide one parenthesized parameter-value assignment, declare one or more comma-separated named hierarchical instances with parenthesized port connections, and end with a semicolon; an instance name may include unpacked dimensions."
 related_clauses = []
-tags = []
+tags = ["grammar", "instantiation", "module", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2695,7 +2695,7 @@ anchors = [
 ]
 summary = "A module definition may contain zero or more module items, each of which shall be a port declaration followed by a semicolon or one of the grammar-defined non-port module items, declarations, instantiations, directives, assignments, assertions, procedural constructs, or generate constructs."
 related_clauses = []
-tags = []
+tags = ["grammar", "module", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2719,7 +2719,7 @@ anchors = [
 ]
 summary = "A module definition shall begin with module, or the permitted interchangeable macromodule keyword, and shall be terminated by endmodule."
 related_clauses = []
-tags = []
+tags = ["grammar", "module"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2746,7 +2746,7 @@ related_clauses = [
     "23.2",
     "6.20",
 ]
-tags = []
+tags = ["module", "parameter"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2770,7 +2770,7 @@ anchors = [
 ]
 summary = "More than one bind statement may insert bound instances into the same target scope, provided each insertion satisfies target namespace uniqueness rules."
 related_clauses = []
-tags = []
+tags = ["bind", "instantiation", "namespace"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2794,7 +2794,7 @@ anchors = [
 ]
 summary = "When multiple defparam statements for one parameter occur in one source-text ordering, the parameter takes the value of the last encountered statement."
 related_clauses = []
-tags = []
+tags = ["defparam", "parameter", "source-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2818,7 +2818,7 @@ anchors = [
 ]
 summary = "The expression in an explicit named port connection may be any otherwise valid expression suitable for the connected port."
 related_clauses = []
-tags = []
+tags = ["connectivity", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2842,7 +2842,7 @@ anchors = [
 ]
 summary = "Fully explicit named connections, implicit named connections, and a wildcard named connection may be mixed within one module instance's named connection list."
 related_clauses = []
-tags = []
+tags = ["connectivity", "implicit-connection", "ports", "wildcard-connection"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2866,7 +2866,7 @@ anchors = [
 ]
 summary = "The order of explicit named module port connections does not affect which declared ports they connect; association is by port name."
 related_clauses = []
-tags = []
+tags = ["connectivity", "ports", "source-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2890,7 +2890,7 @@ anchors = [
 ]
 summary = "The port name in an explicit named instance connection shall be a port name from the instantiated module declaration and shall not be a bit-select, part-select, or concatenation."
 related_clauses = []
-tags = []
+tags = ["grammar", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2917,7 +2917,7 @@ summary = "A port listed only by a port expression is implicit; it may be connec
 related_clauses = [
     "23.3.2.2",
 ]
-tags = []
+tags = ["implicit-connection", "name-resolution", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2941,7 +2941,7 @@ anchors = [
 ]
 summary = "A port declared with a named interface type shall connect only to an interface instance of that identical interface type."
 related_clauses = []
-tags = []
+tags = ["interface", "ports", "type-equivalence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2965,7 +2965,7 @@ anchors = [
 ]
 summary = "A parameter name shall not receive more than one assignment in a single named parameter assignment list."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "parameter"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2989,7 +2989,7 @@ anchors = [
 ]
 summary = "A named instance parameter assignment explicitly associates a new value with a parameter identifier that shall match a parameter name declared by the instantiated module."
 related_clauses = []
-tags = []
+tags = ["instantiation", "name-resolution", "parameter"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3013,7 +3013,7 @@ anchors = [
 ]
 summary = "A named parameter assignment list may specify only the parameters receiving new values; all unspecified parameters retain their applicable defaults."
 related_clauses = []
-tags = []
+tags = ["instantiation", "parameter"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3037,7 +3037,7 @@ anchors = [
 ]
 summary = "A module may be declared within another module."
 related_clauses = []
-tags = []
+tags = ["module", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3061,7 +3061,7 @@ anchors = [
 ]
 summary = "When a nested module is declared and instantiated in the same scope, names in the outer module namespace are visible inside it unless hidden by a local declaration."
 related_clauses = []
-tags = []
+tags = ["module", "scope", "visibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3086,7 +3086,7 @@ anchors = [
 ]
 summary = "A nested module declaration is local to its enclosing scope, so the same module identifier may denote different nested module definitions in different enclosing parts of a design."
 related_clauses = []
-tags = []
+tags = ["module", "namespace", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3112,7 +3112,7 @@ summary = "A parameter declared in a named block, task, or function can be direc
 related_clauses = [
     "23.10.3",
 ]
-tags = []
+tags = ["defparam", "parameter", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3136,7 +3136,7 @@ anchors = [
 ]
 summary = "Assignment to a variable declared as an input port is illegal."
 related_clauses = []
-tags = []
+tags = ["continuous-assignment", "diagnostic", "ports", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3160,7 +3160,7 @@ anchors = [
 ]
 summary = "It is an error for a bind statement to insert a bound instantiation underneath the scope of another bound instantiation."
 related_clauses = []
-tags = []
+tags = ["bind", "diagnostic", "hierarchy"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3186,7 +3186,7 @@ summary = "A hierarchical reference into a checker instance is not permitted."
 related_clauses = [
     "17",
 ]
-tags = []
+tags = ["checker", "diagnostic", "hierarchy", "name-resolution"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3212,7 +3212,7 @@ summary = "At the end of elaboration, it is illegal for any simulated net produc
 related_clauses = [
     "23.3.3.7",
 ]
-tags = []
+tags = ["diagnostic", "elaboration", "interconnect"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3238,7 +3238,7 @@ summary = "A module shall declare all header ports using either the non-ANSI lis
 related_clauses = [
     "23.2.2.1",
 ]
-tags = []
+tags = ["diagnostic", "grammar", "module", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3264,7 +3264,7 @@ anchors = [
 ]
 summary = "Within one module instance parameter-value assignment, assignments shall be either all ordered expressions or all named .parameter_identifier(expression) assignments."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "instantiation", "parameter"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3289,7 +3289,7 @@ anchors = [
 ]
 summary = "Within one hierarchical instance, the port-connection list shall use either ordered port connections throughout or named port connections throughout."
 related_clauses = []
-tags = []
+tags = ["connectivity", "diagnostic", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3315,7 +3315,7 @@ anchors = [
 ]
 summary = "In non-ANSI style, the module header contains a port list and ends with the semicolon following its closing parenthesis; declarations of port characteristics are local declarations within the module rather than part of that header."
 related_clauses = []
-tags = []
+tags = ["grammar", "module", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3339,7 +3339,7 @@ anchors = [
 ]
 summary = "Every port_identifier appearing in a non-ANSI header port expression shall also have a body declaration as input, output, inout, ref, or interface port, independently of any additional net or variable declaration."
 related_clauses = []
-tags = []
+tags = ["module", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3363,7 +3363,7 @@ anchors = [
 ]
 summary = "A non-ANSI port declaration shall use one of the grammar-defined inout, input, output, ref, or interface-port forms: inout is a net port, ref is a variable port, input and output admit their specified net or variable forms, and an interface port may optionally select a modport."
 related_clauses = []
-tags = []
+tags = ["grammar", "interface", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3388,7 +3388,7 @@ anchors = [
 ]
 summary = "A non-ANSI module header shall use a parenthesized comma-separated list of positional port expressions or named .port_identifier(port_expression) entries, with port expressions restricted to a port reference or a braced comma-separated set of port references; port characteristics are declared separately."
 related_clauses = []
-tags = []
+tags = ["grammar", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3416,7 +3416,7 @@ anchors = [
 ]
 summary = "A non-ANSI header port reference may be a simple or escaped identifier, a bit-select or part-select of a vector declared in the module, or a concatenation of those forms; the port expression may be omitted to define a port with no internal connection."
 related_clauses = []
-tags = []
+tags = ["grammar", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3441,7 +3441,7 @@ anchors = [
 ]
 summary = "When an instance omits a connection for an input port that has a default, elaboration shall supply that port's corresponding default value."
 related_clauses = []
-tags = []
+tags = ["argument-direction", "default-value", "elaboration", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3465,7 +3465,7 @@ anchors = [
 ]
 summary = "With explicit named connections, a port having no default may be left unconnected by omitting that port from the connection list."
 related_clauses = []
-tags = []
+tags = ["connectivity", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3491,7 +3491,7 @@ summary = "Within one scope, an identifier shall declare at most one item across
 related_clauses = [
     "27.6",
 ]
-tags = []
+tags = ["generate", "namespace", "redeclaration", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3515,7 +3515,7 @@ anchors = [
 ]
 summary = "The expression of an explicitly named port may be omitted, defining an external port with no connection to an internal item."
 related_clauses = []
-tags = []
+tags = ["connectivity", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3539,7 +3539,7 @@ anchors = [
 ]
 summary = "An ordered port connection may be a variable or net reference, an expression supplying an input value, or a blank connection."
 related_clauses = []
-tags = []
+tags = ["connectivity", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3563,7 +3563,7 @@ anchors = [
 ]
 summary = "In an ordered module port connection list, each instance-side port expression connects to the module-declaration port at the same ordinal position."
 related_clauses = []
-tags = []
+tags = ["connectivity", "ports", "source-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3587,7 +3587,7 @@ anchors = [
 ]
 summary = "Ordered instance parameter assignments correspond to declaration order and may override only a leading prefix: trailing parameters may be omitted and retain defaults, but an earlier parameter cannot be skipped to override a later one."
 related_clauses = []
-tags = []
+tags = ["instantiation", "parameter", "source-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3611,7 +3611,7 @@ anchors = [
 ]
 summary = "A variable connected to an instance output shall not also receive a procedural or continuous assignment."
 related_clauses = []
-tags = []
+tags = ["continuous-assignment", "diagnostic", "ports", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3635,7 +3635,7 @@ anchors = [
 ]
 summary = "When an output port omits port kind but declares its data type using explicit data_type syntax, its port kind defaults to variable."
 related_clauses = []
-tags = []
+tags = ["argument-direction", "ports", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3660,7 +3660,7 @@ anchors = [
 ]
 summary = "When output port kind is omitted and its data type is omitted or expressed with implicit_data_type syntax, the output defaults to a net of the current default net type."
 related_clauses = []
-tags = []
+tags = ["argument-direction", "nettype", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3687,7 +3687,7 @@ related_clauses = [
     "6.20.2",
     "6.20.3",
 ]
-tags = []
+tags = ["elaboration", "parameter", "type-parameter"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3711,7 +3711,7 @@ anchors = [
 ]
 summary = "A module port declaration may derive its characteristics, including ranges and data types, from module parameter declarations."
 related_clauses = []
-tags = []
+tags = ["parameter", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3737,7 +3737,7 @@ summary = "A nonlocal parameter may be altered by hierarchical defparam, by an o
 related_clauses = [
     "33.4.3",
 ]
-tags = []
+tags = ["configuration", "defparam", "instantiation", "parameter"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3761,7 +3761,7 @@ anchors = [
 ]
 summary = "A parameter-port list shall use # parentheses and may be empty or contain the grammar-defined parameter, local parameter, data-type assignment, and type-parameter declaration forms in their permitted comma-separated arrangements."
 related_clauses = []
-tags = []
+tags = ["grammar", "module", "parameter", "type-parameter"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3787,7 +3787,7 @@ summary = "A module parameter type may be redefined independently for each modul
 related_clauses = [
     "23.10",
 ]
-tags = []
+tags = ["instantiation", "parameter", "type-parameter"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3811,7 +3811,7 @@ anchors = [
 ]
 summary = "A port immediately following an explicit port declaration inherits only an omitted direction from that explicit port; its kind and data type are determined by the first-port default rules, not inherited from the explicit port."
 related_clauses = []
-tags = []
+tags = ["argument-direction", "ports", "source-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3835,7 +3835,7 @@ anchors = [
 ]
 summary = "A nonempty list of port connections shall be supplied only when the instantiated module is defined with ports."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "instantiation", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3859,7 +3859,7 @@ anchors = [
 ]
 summary = "A module port may declare an interface, event, variable, or net of any otherwise allowed data type, including array, structure, and union types."
 related_clauses = []
-tags = []
+tags = ["interface", "net", "ports", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3883,7 +3883,7 @@ anchors = [
 ]
 summary = "After a name is used in a port declaration, it shall not appear in another port declaration or in a data type declaration, apart from the specifically permitted supplemental net or variable declaration for an untyped port."
 related_clauses = []
-tags = []
+tags = ["namespace", "ports", "redeclaration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3908,7 +3908,7 @@ anchors = [
 ]
 summary = "A port default may be specified only for an input in an ANSI-style declaration, and shall not be specified for an interconnect port."
 related_clauses = []
-tags = []
+tags = ["argument-direction", "default-value", "diagnostic", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3932,7 +3932,7 @@ anchors = [
 ]
 summary = "An input used as output or inout, or an output used as input or inout, may be coerced to inout; if it is not coerced, a warning shall be issued."
 related_clauses = []
-tags = []
+tags = ["connectivity", "diagnostic", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3956,7 +3956,7 @@ anchors = [
 ]
 summary = "A port expression shall be typed, sized, and evaluated as an ordinary assignment expression, and its resulting value assigned to the object on the other side using assignment rules."
 related_clauses = []
-tags = []
+tags = ["connectivity", "context", "conversion", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3980,7 +3980,7 @@ anchors = [
 ]
 summary = "Port identifiers occupy a namespace local to each port list; a simple port identifier denotes both the referenced interface item and the external port identifier."
 related_clauses = []
-tags = []
+tags = ["name-resolution", "namespace", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4004,7 +4004,7 @@ anchors = [
 ]
 summary = "A port initializer is illegal unless the port is a variable output port."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "initialization", "ports", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4028,7 +4028,7 @@ anchors = [
 ]
 summary = "For corresponding non-ANSI port and net or variable declarations, signed may be written on either or both; if either declaration is signed, both the port and corresponding object are considered signed."
 related_clauses = []
-tags = []
+tags = ["ports", "signedness"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4054,7 +4054,7 @@ summary = "Port data-type compatibility shall be determined using the language's
 related_clauses = [
     "6.22.3",
 ]
-tags = []
+tags = ["conversion", "ports", "type-compatibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4078,7 +4078,7 @@ anchors = [
 ]
 summary = "Connecting a port variable to an interconnect port or interconnect net is illegal."
 related_clauses = []
-tags = []
+tags = ["connectivity", "diagnostic", "interconnect", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4103,7 +4103,7 @@ anchors = [
 ]
 summary = "A value parameter declared with a range but no type retains its declared range, is unsigned, and converts an override value to that parameter type and range."
 related_clauses = []
-tags = []
+tags = ["conversion", "parameter", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4128,7 +4128,7 @@ anchors = [
 ]
 summary = "A ref port shall have a variable type, whereas an inout port shall not have a variable type."
 related_clauses = []
-tags = []
+tags = ["argument-direction", "diagnostic", "ports", "reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4154,7 +4154,7 @@ summary = "A ref port shall connect to an equivalent variable data type and shal
 related_clauses = [
     "6.22.2",
 ]
-tags = []
+tags = ["connectivity", "diagnostic", "ports", "reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4179,7 +4179,7 @@ anchors = [
 ]
 summary = "A ref port passes a hierarchical reference to a variable, so the port and connected variable exhibit shared-variable behavior rather than value-copy or continuous-assignment behavior."
 related_clauses = []
-tags = []
+tags = ["connectivity", "ports", "reference", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4203,7 +4203,7 @@ anchors = [
 ]
 summary = "A hierarchical path may begin at a hierarchy node visible from the scope where the path is used, thereby referencing downward from that node."
 related_clauses = []
-tags = []
+tags = ["hierarchy", "name-resolution"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4227,7 +4227,7 @@ anchors = [
 ]
 summary = "A timeunits_declaration used as a non-port module item is legal only when it repeats and matches an earlier timeunits declaration in the same time scope."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "redeclaration", "source-order", "time-unit"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4252,7 +4252,7 @@ anchors = [
 ]
 summary = "$root denotes the root of the instantiation tree and prefixes an unambiguous path to a top-level instance or an item beneath it."
 related_clauses = []
-tags = []
+tags = ["hierarchy", "name-resolution", "top-level"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4277,7 +4277,7 @@ anchors = [
 ]
 summary = "To resolve scope_name.item_name, lookup first searches the current scope for scope_name, then successive enclosing scopes up to the design-element scope; if found, the reference is a downward reference from that scope, otherwise resolution proceeds to the upward module search."
 related_clauses = []
-tags = []
+tags = ["name-resolution", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4302,7 +4302,7 @@ anchors = [
 ]
 summary = "After lexical lookup fails for scope_name.item_name, resolution shall search each instantiation-parent scope upward; a found scope starts downward item-name matching, successful full matching terminates lookup, and matching a structure, union, class, or covergroup object component prevents any further upward step even if the remaining item name fails."
 related_clauses = []
-tags = []
+tags = ["hierarchy", "name-resolution", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4328,7 +4328,7 @@ anchors = [
 ]
 summary = "An upward reference may have form scope_name.item_name, where scope_name denotes a subroutine, module instance, program instance, interface instance, or generate block."
 related_clauses = []
-tags = []
+tags = ["hierarchy", "name-resolution", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4352,7 +4352,7 @@ anchors = [
 ]
 summary = "For prefix::name, if the prefix resolves by normal scope-resolution rules then :: is the class scope-resolution operator; otherwise it is the package scope-resolution operator."
 related_clauses = []
-tags = []
+tags = ["name-resolution", "namespace", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4376,7 +4376,7 @@ anchors = [
 ]
 summary = "A name prefixed by package or class scope resolution operator :: shall resolve only downward from that scope and shall not use upward name-resolution rules."
 related_clauses = []
-tags = []
+tags = ["name-resolution", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4401,7 +4401,7 @@ anchors = [
 ]
 summary = "A value parameter declared with signed type and an explicit range remains signed with its declared range, and an override value is converted to that type and range."
 related_clauses = []
-tags = []
+tags = ["conversion", "parameter", "signedness", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4425,7 +4425,7 @@ anchors = [
 ]
 summary = "A signed attribute does not propagate through a port across hierarchy; each object that is to be signed at a hierarchy level shall be declared signed at that level."
 related_clauses = []
-tags = []
+tags = ["conversion", "ports", "signedness"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4449,7 +4449,7 @@ anchors = [
 ]
 summary = "A module instance port shall not be connected more than once in the same instance connection list."
 related_clauses = []
-tags = []
+tags = ["connectivity", "diagnostic", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4473,7 +4473,7 @@ anchors = [
 ]
 summary = "When exactly one side of a port connection is a user-defined nettype, the sides shall have matching data types, the port shall be input or output, and the connection is a source-to-sink continuous assignment."
 related_clauses = []
-tags = []
+tags = ["connectivity", "continuous-assignment", "nettype", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4498,7 +4498,7 @@ anchors = [
 ]
 summary = "The .* wildcard token pair shall appear at most once in a module instance's port-connection list."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "ports", "wildcard-connection"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4527,7 +4527,7 @@ anchors = [
 ]
 summary = "Each task, function, begin-end block, fork-join block, and generate block defines a new scope, whether a procedural block is named or unnamed."
 related_clauses = []
-tags = []
+tags = ["block", "scope", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4551,7 +4551,7 @@ anchors = [
 ]
 summary = "The special compilation-unit task/function search occurs only on the first pass through upward resolution and shall never match a subroutine in a compilation unit other than the one enclosing the reference."
 related_clauses = []
-tags = []
+tags = ["compilation-unit", "name-resolution", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4577,7 +4577,7 @@ summary = "Task and function name resolution first performs lexical step-a looku
 related_clauses = [
     "23.8",
 ]
-tags = []
+tags = ["compilation-unit", "name-resolution", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4602,7 +4602,7 @@ anchors = [
 ]
 summary = "For a subsequent ANSI port that does not qualify for full inheritance and omits data type, data type defaults to logic, except an interconnect port has no data type."
 related_clauses = []
-tags = []
+tags = ["ports", "source-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4627,7 +4627,7 @@ anchors = [
 ]
 summary = "For a subsequent ANSI port that specifies some characteristics but omits direction, direction is inherited from the preceding port."
 related_clauses = []
-tags = []
+tags = ["argument-direction", "ports", "source-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4652,7 +4652,7 @@ anchors = [
 ]
 summary = "When a subsequent ANSI port omits direction, port kind, and data type, it inherits all three from the preceding port; if that preceding port is interconnect, the subsequent port is also interconnect."
 related_clauses = []
-tags = []
+tags = ["argument-direction", "ports", "source-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4677,7 +4677,7 @@ anchors = [
 ]
 summary = "For a subsequent ANSI port that does not qualify for full inheritance and omits port kind, kind is determined by the direction-and-data-type default rules rather than inherited unconditionally."
 related_clauses = []
-tags = []
+tags = ["argument-direction", "ports", "source-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4712,7 +4712,7 @@ anchors = [
 ]
 summary = "For an internal supply0 net, Table 23-1 selects the internal supply0 type against external wire/tri, wand/triand, wor/trior, trireg, tri0, tri1, or uwire, and selects the external type against external supply0 or supply1; the table-marked pairing shall issue a warning."
 related_clauses = []
-tags = []
+tags = ["connectivity", "diagnostic", "net-resolution", "nettype"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4747,7 +4747,7 @@ anchors = [
 ]
 summary = "For an internal supply1 net, Table 23-1 selects the internal supply1 type against external wire/tri, wand/triand, wor/trior, trireg, tri0, tri1, or uwire, and selects the external type against external supply0 or supply1; the table-marked pairing shall issue a warning."
 related_clauses = []
-tags = []
+tags = ["connectivity", "diagnostic", "net-resolution", "nettype"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4782,7 +4782,7 @@ anchors = [
 ]
 summary = "For an internal tri0 net, Table 23-1 selects the internal type against external wire/tri or trireg and selects the external type against the other listed external net types; table-marked pairings shall issue a warning."
 related_clauses = []
-tags = []
+tags = ["connectivity", "diagnostic", "net-resolution", "nettype"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4817,7 +4817,7 @@ anchors = [
 ]
 summary = "For an internal tri1 net, Table 23-1 selects the internal type against external wire/tri or trireg and selects the external type against the other listed external net types; table-marked pairings shall issue a warning."
 related_clauses = []
-tags = []
+tags = ["connectivity", "diagnostic", "net-resolution", "nettype"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4852,7 +4852,7 @@ anchors = [
 ]
 summary = "For an internal trireg net, Table 23-1 selects the internal type against an external wire or tri and selects the external type against every other listed external net type; table-marked pairings shall issue a warning."
 related_clauses = []
-tags = []
+tags = ["connectivity", "diagnostic", "net-resolution", "nettype"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4887,7 +4887,7 @@ anchors = [
 ]
 summary = "For an internal uwire net, Table 23-1 selects the internal type against external wire/tri, wand/triand, wor/trior, trireg, tri0, or tri1, and selects the external type against external uwire, supply0, or supply1; table-marked pairings shall issue a warning."
 related_clauses = []
-tags = []
+tags = ["connectivity", "diagnostic", "net-resolution", "nettype"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4922,7 +4922,7 @@ anchors = [
 ]
 summary = "For an internal wand or triand net, Table 23-1 selects the internal type against an external wire or tri and selects the external type against every other listed external net type; table-marked pairings shall issue a warning."
 related_clauses = []
-tags = []
+tags = ["connectivity", "diagnostic", "net-resolution", "nettype"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4957,7 +4957,7 @@ anchors = [
 ]
 summary = "For an internal wor or trior net, Table 23-1 selects the internal type against an external wire or tri and selects the external type against every other listed external net type; table-marked pairings shall issue a warning."
 related_clauses = []
-tags = []
+tags = ["connectivity", "diagnostic", "net-resolution", "nettype"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4981,7 +4981,7 @@ anchors = [
 ]
 summary = "Each top-level module is implicitly instantiated exactly once, with an instance name equal to its module name."
 related_clauses = []
-tags = []
+tags = ["hierarchy", "instantiation", "module", "top-level"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5008,7 +5008,7 @@ related_clauses = [
     "23.3.2",
     "27.3",
 ]
-tags = []
+tags = ["generate", "hierarchy", "module", "top-level"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5033,7 +5033,7 @@ anchors = [
 ]
 summary = "A parameter may have value or type dependencies on value and type parameters; changing a dependency shall recompute the dependent parameter using the new type or size."
 related_clauses = []
-tags = []
+tags = ["elaboration", "parameter", "type-parameter"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5058,7 +5058,7 @@ anchors = [
 ]
 summary = "A value parameter declared with a type but no range retains that type and converts its override to that type; if the parameter is signed, its range comes from the final override value."
 related_clauses = []
-tags = []
+tags = ["conversion", "parameter", "signedness", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5082,7 +5082,7 @@ anchors = [
 ]
 summary = "A built-in-net input port left unconnected shall have the value 'z."
 related_clauses = []
-tags = []
+tags = ["connectivity", "four-state", "literal", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5106,7 +5106,7 @@ anchors = [
 ]
 summary = "An unconnected variable input port has the default initial value of its data type."
 related_clauses = []
-tags = []
+tags = ["connectivity", "default-value", "initialization", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5130,7 +5130,7 @@ anchors = [
 ]
 summary = "A nested module that has ports and is not explicitly instantiated shall be ignored rather than implicitly instantiated."
 related_clauses = []
-tags = []
+tags = ["elaboration", "instantiation", "module"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5154,7 +5154,7 @@ anchors = [
 ]
 summary = "A nested module with no ports that is not explicitly instantiated shall be implicitly instantiated exactly once, with instance name equal to its module name."
 related_clauses = []
-tags = []
+tags = ["elaboration", "instantiation", "module"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5178,7 +5178,7 @@ anchors = [
 ]
 summary = "Every identifier in a SystemVerilog description shall have a unique hierarchical path determined by the enclosing module and nested scope hierarchy."
 related_clauses = []
-tags = []
+tags = ["hierarchy", "name-resolution", "namespace"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5202,7 +5202,7 @@ anchors = [
 ]
 summary = "Within a non-ANSI module port list, once a port name is defined, no other port definition in that list may use the same name."
 related_clauses = []
-tags = []
+tags = ["namespace", "ports", "redeclaration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5229,7 +5229,7 @@ summary = "An object in an unnamed generate block may be referenced hierarchical
 related_clauses = [
     "27",
 ]
-tags = []
+tags = ["generate", "hierarchy", "visibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5253,7 +5253,7 @@ anchors = [
 ]
 summary = "An unpacked array port and its connected array shall have the same number of unpacked dimensions, with equal sizes for each corresponding dimension."
 related_clauses = []
-tags = []
+tags = ["connectivity", "ports", "sizing", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5277,7 +5277,7 @@ anchors = [
 ]
 summary = "Unpacked dimensions are not inherited from a preceding ANSI port declaration and shall be repeated on every port intended to have those dimensions."
 related_clauses = []
-tags = []
+tags = ["layout", "ports", "source-order", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5301,7 +5301,7 @@ anchors = [
 ]
 summary = "When an unrooted hierarchical name can denote both a path from the current local scope and a top-level path, the local path takes precedence; prefixing $root selects the top-level path."
 related_clauses = []
-tags = []
+tags = ["hierarchy", "name-resolution", "top-level"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5326,7 +5326,7 @@ anchors = [
 ]
 summary = "A value parameter declared without type or range takes the type and range of its final assigned override value."
 related_clauses = []
-tags = []
+tags = ["conversion", "parameter", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5350,7 +5350,7 @@ anchors = [
 ]
 summary = "For an upward reference beginning with a module, task, function, named-block, or generate-block name, lookup shall search successive enclosing modules until the name is found or the hierarchy root is reached; it searches enclosing module definitions, not sibling or other instances."
 related_clauses = []
-tags = []
+tags = ["hierarchy", "name-resolution", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5374,7 +5374,7 @@ anchors = [
 ]
 summary = "An upward_name_reference has the form module_identifier.item_name, where item_name is a function, block, net, parameter, port, task, or variable identifier."
 related_clauses = []
-tags = []
+tags = ["grammar", "hierarchy", "name-resolution"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5400,7 +5400,7 @@ summary = "If either net connected through a port has net type uwire and the two
 related_clauses = [
     "23.3.3.7",
 ]
-tags = []
+tags = ["connectivity", "diagnostic", "nettype"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5424,7 +5424,7 @@ anchors = [
 ]
 summary = "A variable input port may connect to any compatible expression, and connecting a variable to it implies a continuous assignment into the input port."
 related_clauses = []
-tags = []
+tags = ["connectivity", "continuous-assignment", "ports", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5448,7 +5448,7 @@ anchors = [
 ]
 summary = "An output port may connect to a compatible net or net concatenation, and that net is permitted to have multiple drivers."
 related_clauses = []
-tags = []
+tags = ["connectivity", "continuous-assignment", "net", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5472,7 +5472,7 @@ anchors = [
 ]
 summary = "An output port may connect to a compatible variable or concatenation, with an implied continuous assignment from the instance output to the connected variable target."
 related_clauses = []
-tags = []
+tags = ["connectivity", "continuous-assignment", "ports", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5496,7 +5496,7 @@ anchors = [
 ]
 summary = "A .* connection alone is not a sufficient reference to activate a package wildcard import for a matching name; an explicit named or implicit .name connection alongside .* can provide that sufficient reference."
 related_clauses = []
-tags = []
+tags = ["import", "visibility", "wildcard-connection", "wildcard-import"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5520,7 +5520,7 @@ anchors = [
 ]
 summary = "For each declared instance port selected by .*, connection semantics are those of an implicit .port_identifier connection except for wildcard-specific default-value and package-import reference rules."
 related_clauses = []
-tags = []
+tags = ["implicit-connection", "ports", "wildcard-connection"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5544,7 +5544,7 @@ anchors = [
 ]
 summary = "When .* considers a defaulted input port and no same-named item exists in the instantiating scope, the port's default value is used; an explicit .port_identifier() alongside .* instead leaves that port unconnected."
 related_clauses = []
-tags = []
+tags = ["default-value", "elaboration", "ports", "wildcard-connection"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5568,7 +5568,7 @@ anchors = [
 ]
 summary = "Explicit named connections may be combined with one .* connection to override selected wildcard ports with different expressions or to leave selected ports unconnected."
 related_clauses = []
-tags = []
+tags = ["connectivity", "ports", "wildcard-connection"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5592,7 +5592,7 @@ anchors = [
 ]
 summary = "A .* module connection implicitly connects every otherwise unhandled instance port for which an instantiating-scope item has the same name and an equivalent data type."
 related_clauses = []
-tags = []
+tags = ["connectivity", "ports", "type-equivalence", "wildcard-connection"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5616,7 +5616,7 @@ anchors = [
 ]
 summary = "When mixed with named connections, the single .* entry may appear at any position in the port list."
 related_clauses = []
-tags = []
+tags = ["ports", "source-order", "wildcard-connection"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"

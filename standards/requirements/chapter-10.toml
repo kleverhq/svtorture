@@ -11,7 +11,7 @@ anchors = [
 ]
 summary = "Every array element shall be covered by an index key, type key, default key, or the applicable recursive matching rules of the array assignment pattern."
 related_clauses = []
-tags = []
+tags = ["array", "assignment-pattern"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -38,7 +38,7 @@ anchors = [
 ]
 summary = "An array-pattern `default:value` applies to elements or subarrays unmatched by index or type keys; directly applicable values are evaluated in each target's assignment context and shall be castable, while unmatched composite subarrays or structures recursively apply type and default keys, and an inapplicable noncastable default is an error."
 related_clauses = []
-tags = []
+tags = ["assignment-pattern", "default-value", "diagnostic", "type-compatibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -63,7 +63,7 @@ anchors = [
 ]
 summary = "Each array assignment-pattern item is evaluated in the assignment context of its corresponding array element type."
 related_clauses = []
-tags = []
+tags = ["array", "assignment-pattern", "context"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -88,7 +88,7 @@ anchors = [
 ]
 summary = "Every element item in an array assignment pattern shall have the same type as the target array's element type; an entire array is not accepted as one element merely because its elements match."
 related_clauses = []
-tags = []
+tags = ["array", "assignment-pattern", "type-equivalence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -113,7 +113,7 @@ anchors = [
 ]
 summary = "An array-pattern `index:value` key explicitly sets that indexed element; the value is evaluated in the indexed element's assignment context and shall be castable to its type."
 related_clauses = []
-tags = []
+tags = ["array", "assignment-pattern", "context", "type-compatibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -137,7 +137,7 @@ anchors = [
 ]
 summary = "The same index shall not be specified more than once in one array pattern expression."
 related_clauses = []
-tags = []
+tags = ["array", "assignment-pattern"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -164,7 +164,7 @@ summary = "Replication syntax is permitted in an array assignment pattern, and e
 related_clauses = [
     "11.4.12.1",
 ]
-tags = []
+tags = ["array", "array-dimension", "assignment-pattern", "replication"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -189,7 +189,7 @@ anchors = [
 ]
 summary = "In assignment context, brace nesting is interpreted from the array target; expressions shall correspond element-for-element and pattern brace nesting shall match the array dimensions."
 related_clauses = []
-tags = []
+tags = ["array", "array-dimension", "assignment-pattern"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -214,7 +214,7 @@ anchors = [
 ]
 summary = "An array-pattern `type:value` key sets each not-yet-index-set element or subarray whose type matches, using a value castable to that type; unmatched multidimensional subarrays and structure elements are searched recursively, and when multiple type keys match an element the last matching value wins."
 related_clauses = []
-tags = []
+tags = ["array", "assignment-pattern", "type-compatibility", "type-matching"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -242,7 +242,7 @@ summary = "The assignment left-hand size supplies the context for the right-hand
 related_clauses = [
     "11.8.1",
 ]
-tags = []
+tags = ["context", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -268,7 +268,7 @@ summary = "An assignment pattern has no self-determined data type and may occupy
 related_clauses = [
     "10.8",
 ]
-tags = []
+tags = ["assignment-pattern", "context", "type-inference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -292,7 +292,7 @@ anchors = [
 ]
 summary = "A nondefault correspondence between an assignment-pattern expression and a data-object field or element is an assignment-like context governed by that field or element."
 related_clauses = []
-tags = []
+tags = ["context"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -316,7 +316,7 @@ anchors = [
 ]
 summary = "Assignment-pattern grammar permits positional expressions, structure- or array-keyed expressions, and replication; keys may be member names, constant expressions, simple types, or default, and a pattern expression may be prefixed by an allowed type identifier, integer atom type, or type reference."
 related_clauses = []
-tags = []
+tags = ["assignment-pattern", "grammar"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -341,7 +341,7 @@ anchors = [
 ]
 summary = "A delay with an explicit time-unit suffix is permitted as a procedural delay before a blocking assignment, as an intra-assignment delay on the right-hand side of blocking or nonblocking assignment, and on a continuous assignment."
 related_clauses = []
-tags = []
+tags = ["literal", "simulation-time", "time-unit"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -371,7 +371,7 @@ summary = "When an assignment target is narrower than the right-hand value, the 
 related_clauses = [
     "6.24.1",
 ]
-tags = []
+tags = ["conversion", "signedness", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -397,7 +397,7 @@ summary = "When the right-hand value is narrower than the assignment target, it 
 related_clauses = [
     "11.6.1",
 ]
-tags = []
+tags = ["conversion", "signedness", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -421,7 +421,7 @@ anchors = [
 ]
 summary = "Both continuous assignments and procedural assignments are assignment-like contexts and apply the language's assignment-like contextual typing rules."
 related_clauses = []
-tags = []
+tags = ["context", "continuous-assignment", "procedural-assignment"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -445,7 +445,7 @@ anchors = [
 ]
 summary = "A continuous assignment to an atomic net shall drive the entire nettype value; its left-hand side shall not index or select into the user-defined nettype's data type."
 related_clauses = []
-tags = []
+tags = ["continuous-assignment", "net", "nettype"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -469,7 +469,7 @@ anchors = [
 ]
 summary = "A blocking assignment is formed by a variable lvalue, `=`, optional intra-assignment timing control, and expression; the grammar also permits dynamic-array allocation, class construction, operator assignment, and increment/decrement forms, with assignment operators `=`, compound arithmetic/bitwise operators, and compound shift operators."
 related_clauses = []
-tags = []
+tags = ["blocking-assignment", "grammar", "procedural-assignment"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -498,7 +498,7 @@ related_clauses = [
     "9.4.5",
     "4.9.3",
 ]
-tags = []
+tags = ["blocking-assignment", "scheduling", "timing-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -524,7 +524,7 @@ summary = "A blocking procedural assignment in one branch of a parallel block sh
 related_clauses = [
     "9.3.2",
 ]
-tags = []
+tags = ["blocking-assignment", "forkjoin"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -550,7 +550,7 @@ summary = "In a sequential block, a blocking procedural assignment completes bef
 related_clauses = [
     "9.3.1",
 ]
-tags = []
+tags = ["blocking-assignment", "sequential"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -574,7 +574,7 @@ anchors = [
 ]
 summary = "A charge strength in a net declaration is legal only with the `trireg` keyword."
 related_clauses = []
-tags = []
+tags = ["net", "strength", "trireg"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -601,7 +601,7 @@ summary = "Brace concatenation in an assignment-like context with an unpacked-ar
 related_clauses = [
     "11.4.12",
 ]
-tags = []
+tags = ["array-assignment", "concatenation", "context", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -627,7 +627,7 @@ anchors = [
 ]
 summary = "If concurrently executing procedural blocks issue unordered nonblocking assignments to the same variable for the same update time, the variable's final value is indeterminate among the assigned values."
 related_clauses = []
-tags = []
+tags = ["nba", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -651,7 +651,7 @@ anchors = [
 ]
 summary = "Every member expression of a constant assignment-pattern expression shall be a constant expression."
 related_clauses = []
-tags = []
+tags = ["assignment-pattern", "constant-expression"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -679,7 +679,7 @@ summary = "A continuous assignment drives a scalar or packed-vector net or varia
 related_clauses = [
     "10.3",
 ]
-tags = []
+tags = ["continuous-assignment", "value-change"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -703,7 +703,7 @@ anchors = [
 ]
 summary = "A continuous assign statement has the `assign` keyword, optional drive strength and delay for net assignments or optional delay control for variable assignments, a comma-separated assignment list, and a terminating semicolon; each assignment pairs a legal lvalue with an expression using `=`."
 related_clauses = []
-tags = []
+tags = ["continuous-assignment", "grammar", "net", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -731,7 +731,7 @@ anchors = [
 ]
 summary = "When a continuous-assignment operand changes before an earlier delayed result propagates, the right-hand side is reevaluated; a differently valued pending event is canceled, no event is scheduled if the new result equals the current target, and otherwise a newly calculated delayed event is scheduled from the current target to the new result."
 related_clauses = []
-tags = []
+tags = ["continuous-assignment", "scheduling", "simulation-time", "value-change"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -757,7 +757,7 @@ summary = "A continuous-assignment delay is the duration from a right-hand opera
 related_clauses = [
     "28.16",
 ]
-tags = []
+tags = ["continuous-assignment", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -781,7 +781,7 @@ anchors = [
 ]
 summary = "A user-specified continuous-assignment drive strength applies only to scalar nets and is not applicable to supply0 or supply1 nets."
 related_clauses = []
-tags = []
+tags = ["continuous-assignment", "drive-strength", "net"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -805,7 +805,7 @@ anchors = [
 ]
 summary = "A concatenation or nested concatenation composed solely of legal continuous-assignment left-hand sides is itself a legal continuous-assignment left-hand side."
 related_clauses = []
-tags = []
+tags = ["concatenation", "continuous-assignment", "lvalue"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -831,7 +831,7 @@ summary = "A constant bit-select of a vector net or packed variable is a legal l
 related_clauses = [
     "10.3",
 ]
-tags = []
+tags = ["array-indexing", "continuous-assignment", "lvalue", "vector"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -855,7 +855,7 @@ anchors = [
 ]
 summary = "A constant part-select of a vector net or packed variable is a legal continuous-assignment left-hand side."
 related_clauses = []
-tags = []
+tags = ["array-slice", "continuous-assignment", "lvalue", "vector"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -881,7 +881,7 @@ summary = "A scalar or vector net or variable is a legal left-hand side form for
 related_clauses = [
     "10.3",
 ]
-tags = []
+tags = ["continuous-assignment", "lvalue", "net", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -907,7 +907,7 @@ summary = "A continuous assignment may target either an explicitly declared net 
 related_clauses = [
     "6.10",
 ]
-tags = []
+tags = ["continuous-assignment", "implicit-net", "net"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -931,7 +931,7 @@ anchors = [
 ]
 summary = "A continuous assignment with no explicit drive strength uses (strong1, strong0)."
 related_clauses = []
-tags = []
+tags = ["continuous-assignment", "drive-strength", "net"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -955,7 +955,7 @@ anchors = [
 ]
 summary = "Whenever a continuous assignment with an explicit drive strength drives its net, the driven value shall be simulated with that specified strength."
 related_clauses = []
-tags = []
+tags = ["continuous-assignment", "drive-strength", "net"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -979,7 +979,7 @@ anchors = [
 ]
 summary = "The drive-strength pairs (highz1, highz0) and (highz0, highz1) are illegal."
 related_clauses = []
-tags = []
+tags = ["continuous-assignment", "diagnostic", "drive-strength", "net"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1003,7 +1003,7 @@ anchors = [
 ]
 summary = "The 1-strength and 0-strength members of a continuous-assignment drive-strength pair may appear in either order."
 related_clauses = []
-tags = []
+tags = ["continuous-assignment", "drive-strength", "net"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1030,7 +1030,7 @@ anchors = [
 ]
 summary = "A continuous-assignment drive-strength specification contains one strength for driven 1 and one for driven 0; the 1-strength is supply1, strong1, pull1, weak1, or highz1, and the 0-strength is supply0, strong0, pull0, weak0, or highz0."
 related_clauses = []
-tags = []
+tags = ["continuous-assignment", "drive-strength", "net"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1054,7 +1054,7 @@ anchors = [
 ]
 summary = "A continuous-assignment strength may appear in a net declaration or assign statement and shall immediately follow the net-type or `assign` keyword and precede any delay."
 related_clauses = []
-tags = []
+tags = ["continuous-assignment", "drive-strength", "grammar", "net"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1078,7 +1078,7 @@ anchors = [
 ]
 summary = "A variable targeted by a continuous assignment shall be explicitly declared before that assignment statement."
 related_clauses = []
-tags = []
+tags = ["continuous-assignment", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1104,7 +1104,7 @@ summary = "A variable may be driven by only one of: one continuous assignment, o
 related_clauses = [
     "6.5",
 ]
-tags = []
+tags = ["continuous-assignment", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1130,7 +1130,7 @@ summary = "A variable driven by a continuous assignment, primitive output, or mo
 related_clauses = [
     "6.5",
 ]
-tags = []
+tags = ["continuous-assignment", "procedural-assignment", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1154,7 +1154,7 @@ anchors = [
 ]
 summary = "A procedural `deassign` ends the active procedural continuous `assign` on its variable."
 related_clauses = []
-tags = []
+tags = ["procedural-continuous-assignment", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1178,7 +1178,7 @@ anchors = [
 ]
 summary = "After `deassign`, the variable retains its last driven value until a later procedural assignment or procedural continuous assignment gives it a new value."
 related_clauses = []
-tags = []
+tags = ["procedural-continuous-assignment", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1203,7 +1203,7 @@ anchors = [
 ]
 summary = "A delay in a net declaration assignment belongs only to that continuous-assignment driver and shall not be added to the delay of any other driver on the net."
 related_clauses = []
-tags = []
+tags = ["continuous-assignment", "net", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1227,7 +1227,7 @@ anchors = [
 ]
 summary = "For a vector net declaration assignment, its rising and falling delays apply to the vector transition rather than separately to individual bits."
 related_clauses = []
-tags = []
+tags = ["continuous-assignment", "layout", "net", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1252,7 +1252,7 @@ anchors = [
 ]
 summary = "A port expression in a module, interface, or program declaration is not an assignment-like context."
 related_clauses = []
-tags = []
+tags = ["context", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1277,7 +1277,7 @@ anchors = [
 ]
 summary = "A default correspondence between an assignment-pattern expression and an object field or element is not an assignment-like context."
 related_clauses = []
-tags = []
+tags = ["assignment-pattern", "context", "default-value"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1301,7 +1301,7 @@ anchors = [
 ]
 summary = "A force on a net overrides every gate, module-output, and continuous-assignment driver until release; release immediately restores the resolved value determined by those drivers."
 related_clauses = []
-tags = []
+tags = ["force-release", "net", "net-resolution"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1325,7 +1325,7 @@ anchors = [
 ]
 summary = "Force or release shall not be applied to a variable assigned by a mixture of continuous and procedural assignments."
 related_clauses = []
-tags = []
+tags = ["continuous-assignment", "force-release", "procedural-assignment", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1349,7 +1349,7 @@ anchors = [
 ]
 summary = "A bit-select or part-select of a variable or of a user-defined-nettype net shall not be a force target."
 related_clauses = []
-tags = []
+tags = ["force-release", "net", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1373,7 +1373,7 @@ anchors = [
 ]
 summary = "A force or release target may be a singular variable, net, constant bit- or part-select of a vector net, or a concatenation composed of those forms."
 related_clauses = []
-tags = []
+tags = ["force-release", "net", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1397,7 +1397,7 @@ anchors = [
 ]
 summary = "A force on a variable overrides procedural assignments, continuous assignments, and procedural continuous assigns until release."
 related_clauses = []
-tags = []
+tags = ["force-release", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1421,7 +1421,7 @@ anchors = [
 ]
 summary = "The expression in a function return statement is in an assignment-like context governed by the function return type."
 related_clauses = []
-tags = []
+tags = ["context", "function", "return-value"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1446,7 +1446,7 @@ anchors = [
 ]
 summary = "A connection to an inout or ref port of a module, interface, or program is not an assignment-like context."
 related_clauses = []
-tags = []
+tags = ["context", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1472,7 +1472,7 @@ summary = "An interconnect net shall not have a net declaration assignment."
 related_clauses = [
     "6.6.8",
 ]
-tags = []
+tags = ["interconnect", "net"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1497,7 +1497,7 @@ anchors = [
 ]
 summary = "An assignment pattern is apostrophe-prefixed and brace-delimited, and may use keys with expressions to specify field or element correspondence, including a default key."
 related_clauses = []
-tags = []
+tags = ["assignment-pattern", "grammar"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1521,7 +1521,7 @@ anchors = [
 ]
 summary = "The token `<=` is interpreted as a relational operator when used in an expression and as the nonblocking assignment operator when used in a nonblocking procedural assignment context."
 related_clauses = []
-tags = []
+tags = ["context", "nba", "operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1547,7 +1547,7 @@ summary = "Blocking-assignment events created by nonblocking-assignment events s
 related_clauses = [
     "4.5",
 ]
-tags = []
+tags = ["blocking-assignment", "nba", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1578,7 +1578,7 @@ summary = "When distinct nonblocking assignments to the same variable have a cle
 related_clauses = [
     "4.6",
 ]
-tags = []
+tags = ["nba", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1603,7 +1603,7 @@ anchors = [
 ]
 summary = "Distinct delayed nonblocking assignments schedule independent future updates; a later execution does not cancel earlier pending nonblocking updates."
 related_clauses = []
-tags = []
+tags = ["nba", "scheduling", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1630,7 +1630,7 @@ anchors = [
 ]
 summary = "When an expression is the right-hand value of an assignment-like context, that context propagates through parentheses to the enclosed expression, through a mintypmax expression to each colon-separated expression, and through a conditional expression to its second and third operands."
 related_clauses = []
-tags = []
+tags = ["context"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1655,7 +1655,7 @@ anchors = [
 ]
 summary = "A net may participate in multiple distinct alias statements, whose connectivity effects accumulate transitively."
 related_clauses = []
-tags = []
+tags = ["connectivity", "net-alias"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1679,7 +1679,7 @@ anchors = [
 ]
 summary = "Net alias connectivity is established at elaboration time and cannot be undone during simulation."
 related_clauses = []
-tags = []
+tags = ["elaboration", "net-alias"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1703,7 +1703,7 @@ anchors = [
 ]
 summary = "Every net lvalue member of an alias statement shall have the same bit size under packed-union overlay rules."
 related_clauses = []
-tags = []
+tags = ["layout", "net-alias"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1727,7 +1727,7 @@ anchors = [
 ]
 summary = "An alias statement consists of `alias`, two or more net lvalues separated by `=`, and a semicolon; each net lvalue may be a selected net identifier, concatenation of net lvalues, or optionally typed assignment-pattern net lvalue."
 related_clauses = []
-tags = []
+tags = ["grammar", "net-alias"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1751,7 +1751,7 @@ anchors = [
 ]
 summary = "Alias bit overlay follows packed-union overlay rules and its connectivity is independent of simulation-host representation."
 related_clauses = []
-tags = []
+tags = ["layout", "net-alias", "packed-union"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1776,7 +1776,7 @@ anchors = [
 ]
 summary = "An alias-statement identifier not declared as a data type is treated as an implicit net under the same implicit-net rules used for a module instance."
 related_clauses = []
-tags = []
+tags = ["implicit-net", "net", "net-alias"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1800,7 +1800,7 @@ anchors = [
 ]
 summary = "Variables and hierarchical references shall not be used as alias-statement members."
 related_clauses = []
-tags = []
+tags = ["net", "net-alias"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1825,7 +1825,7 @@ anchors = [
 ]
 summary = "The same alias connectivity shall not be specified more than once, including partially duplicated bit correspondences across different alias statements."
 related_clauses = []
-tags = []
+tags = ["connectivity", "net-alias"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1851,7 +1851,7 @@ anchors = [
 ]
 summary = "An alias shall not connect an individual signal or net bit to itself, including self-correspondence hidden within concatenated members or a multi-member alias chain."
 related_clauses = []
-tags = []
+tags = ["connectivity", "net-alias"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1876,7 +1876,7 @@ anchors = [
 ]
 summary = "An alias statement may appear anywhere a module instance statement may appear."
 related_clauses = []
-tags = []
+tags = ["grammar", "net-alias"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1903,7 +1903,7 @@ anchors = [
 ]
 summary = "An alias statement creates a bidirectional short-circuit connection in which all listed net bits share the same physical nets, including arbitrary bit rearrangements expressed by selects and concatenations."
 related_clauses = []
-tags = []
+tags = ["connectivity", "net-alias"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1927,7 +1927,7 @@ anchors = [
 ]
 summary = "Using a net in an alias statement does not alter that net's syntactic behavior or legal uses in other statements."
 related_clauses = []
-tags = []
+tags = ["net", "net-alias"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1951,7 +1951,7 @@ anchors = [
 ]
 summary = "All nets connected by an alias statement shall have the same net type; aliasing incompatible net types such as wand and wor is illegal."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "net", "net-alias", "type-compatibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1975,7 +1975,7 @@ anchors = [
 ]
 summary = "A violation of the alias size, type, or allowed-member rules shall be treated as a fatal error."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "net-alias"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2000,7 +2000,7 @@ anchors = [
 ]
 summary = "A net declaration may initialize each declared net with `= expression`; this declaration initializer constitutes a continuous assignment on that net."
 related_clauses = []
-tags = []
+tags = ["continuous-assignment", "grammar", "net"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2024,7 +2024,7 @@ anchors = [
 ]
 summary = "Because a net is declared only once, a particular net can have only one net declaration assignment."
 related_clauses = []
-tags = []
+tags = ["continuous-assignment", "net"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2050,7 +2050,7 @@ anchors = [
 ]
 summary = "A delay on a net declaration without a declaration assignment is a net delay and delays every value change applied to that net by other statements."
 related_clauses = []
-tags = []
+tags = ["continuous-assignment", "net", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2075,7 +2075,7 @@ anchors = [
 ]
 summary = "A net may receive multiple continuous assignments and a mixture of primitive outputs, module outputs, and continuous assignments, subject to net resolution."
 related_clauses = []
-tags = []
+tags = ["continuous-assignment", "net", "net-resolution"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2099,7 +2099,7 @@ anchors = [
 ]
 summary = "A nonblocking assignment consists of a variable lvalue, `<=`, an optional delay or event control, and a right-hand expression."
 related_clauses = []
-tags = []
+tags = ["grammar", "nba", "procedural-assignment"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2126,7 +2126,7 @@ related_clauses = [
     "9.4.5",
     "4.9.4",
 ]
-tags = []
+tags = ["evaluation-order", "nba"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2150,7 +2150,7 @@ anchors = [
 ]
 summary = "A nonblocking assignment to an automatic variable is illegal."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "nba", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2174,7 +2174,7 @@ anchors = [
 ]
 summary = "A nonblocking assignment to an element of a dynamically sized array variable is illegal."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "dynamic-array", "nba", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -2200,7 +2200,7 @@ anchors = [
 ]
 summary = "A nonblocking procedural assignment evaluates and schedules its update without blocking execution of subsequent statements in the procedural flow."
 related_clauses = []
-tags = []
+tags = ["nba", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2227,7 +2227,7 @@ summary = "A nonblocking assignment evaluates its right-hand side and schedules 
 related_clauses = [
     "4.5",
 ]
-tags = []
+tags = ["evaluation-order", "nba", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2251,7 +2251,7 @@ anchors = [
 ]
 summary = "An assignment-pattern expression shall not be used as a port expression in a module, interface, or program declaration."
 related_clauses = []
-tags = []
+tags = ["assignment-pattern", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2275,7 +2275,7 @@ anchors = [
 ]
 summary = "Each member of an untyped assignment-pattern target shall have a bit-stream type assignment-compatible with and exactly the same bit count as its corresponding right-hand element."
 related_clauses = []
-tags = []
+tags = ["assignment-pattern", "bit-stream", "type-compatibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2299,7 +2299,7 @@ anchors = [
 ]
 summary = "An untyped assignment pattern used on the left-hand side of an assignment-like context shall use positional notation."
 related_clauses = []
-tags = []
+tags = ["assignment-pattern", "grammar"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2325,7 +2325,7 @@ summary = "A connection to an input or output port of a module, interface, or pr
 related_clauses = [
     "23",
 ]
-tags = []
+tags = ["context", "conversion", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2350,7 +2350,7 @@ anchors = [
 ]
 summary = "An assignment pattern may use positional notation without keys, including on either side of an assignment-like context."
 related_clauses = []
-tags = []
+tags = ["assignment-pattern", "context"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2374,7 +2374,7 @@ anchors = [
 ]
 summary = "The left-hand side of a procedural continuous `assign` shall be a singular variable reference or a concatenation of variables."
 related_clauses = []
-tags = []
+tags = ["grammar", "lvalue", "procedural-continuous-assignment", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2398,7 +2398,7 @@ anchors = [
 ]
 summary = "A bit-select or part-select of a variable shall not be the left-hand side of a procedural continuous `assign`."
 related_clauses = []
-tags = []
+tags = ["lvalue", "procedural-continuous-assignment", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2422,7 +2422,7 @@ anchors = [
 ]
 summary = "While a procedural continuous `assign` is active on a variable, it overrides all procedural assignments to that variable."
 related_clauses = []
-tags = []
+tags = ["procedural-continuous-assignment", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2446,7 +2446,7 @@ anchors = [
 ]
 summary = "Applying procedural `assign` to a variable that already has an active procedural continuous assignment first deassigns the old assignment and then establishes the new one."
 related_clauses = []
-tags = []
+tags = ["procedural-continuous-assignment", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2472,7 +2472,7 @@ summary = "A procedural assignment places a value in a variable without duration
 related_clauses = [
     "10.4",
 ]
-tags = []
+tags = ["procedural-assignment", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2500,7 +2500,7 @@ related_clauses = [
     "12",
     "13",
 ]
-tags = []
+tags = ["procedural-assignment", "scheduling", "timing-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2525,7 +2525,7 @@ anchors = [
 ]
 summary = "A procedural continuous assignment is `assign` followed by a variable assignment, `deassign` followed by a variable lvalue, `force` followed by a variable or net assignment, or `release` followed by a variable or net lvalue; assignment forms pair the lvalue with an expression using `=`."
 related_clauses = []
-tags = []
+tags = ["force-release", "grammar", "procedural-continuous-assignment"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2551,7 +2551,7 @@ anchors = [
 ]
 summary = "While a procedural `assign` or `force` is in effect, its right-hand expression is reevaluated whenever any variable used by that expression changes, and the target is continuously driven to the new result."
 related_clauses = []
-tags = []
+tags = ["procedural-continuous-assignment", "scheduling", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2575,7 +2575,7 @@ anchors = [
 ]
 summary = "An array is a legal procedural-assignment left-hand side."
 related_clauses = []
-tags = []
+tags = ["array", "lvalue", "procedural-assignment"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2599,7 +2599,7 @@ anchors = [
 ]
 summary = "An array element select is a legal procedural-assignment left-hand side."
 related_clauses = []
-tags = []
+tags = ["array-indexing", "lvalue", "procedural-assignment"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2624,7 +2624,7 @@ anchors = [
 ]
 summary = "A slice of an unpacked array is a legal procedural-assignment left-hand side."
 related_clauses = []
-tags = []
+tags = ["array-slice", "procedural-assignment", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2648,7 +2648,7 @@ anchors = [
 ]
 summary = "A concatenation or nested concatenation composed solely of legal procedural-assignment left-hand sides is itself a legal procedural-assignment left-hand side."
 related_clauses = []
-tags = []
+tags = ["concatenation", "lvalue", "procedural-assignment", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2672,7 +2672,7 @@ anchors = [
 ]
 summary = "A memory word is a legal procedural-assignment left-hand side."
 related_clauses = []
-tags = []
+tags = ["array-indexing", "lvalue", "procedural-assignment"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2698,7 +2698,7 @@ anchors = [
 ]
 summary = "A bit-select, part-select, or slice of a packed variable is a legal procedural-assignment left-hand side."
 related_clauses = []
-tags = []
+tags = ["array-indexing", "array-slice", "lvalue", "procedural-assignment"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2725,7 +2725,7 @@ anchors = [
 ]
 summary = "A procedural-assignment left-hand side shall be a variable; legal whole-variable targets include singular and aggregate variables."
 related_clauses = []
-tags = []
+tags = ["lvalue", "procedural-assignment", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2749,7 +2749,7 @@ anchors = [
 ]
 summary = "A procedural-assignment right-hand side may be any value-producing expression that satisfies the restrictions imposed by the left-hand variable's type."
 related_clauses = []
-tags = []
+tags = ["procedural-assignment", "type-compatibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2774,7 +2774,7 @@ anchors = [
 ]
 summary = "Passing a value to a subroutine ref argument is not an assignment-like context."
 related_clauses = []
-tags = []
+tags = ["context", "reference-argument", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2798,7 +2798,7 @@ anchors = [
 ]
 summary = "Releasing a variable with an underlying continuous assignment or active procedural continuous assign reestablishes that assignment and schedules reevaluation in its continuous-assignment scheduling region."
 related_clauses = []
-tags = []
+tags = ["continuous-assignment", "force-release", "scheduling", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2822,7 +2822,7 @@ anchors = [
 ]
 summary = "When a forced variable has no continuous driver or active procedural continuous assign, release leaves its current value unchanged until the next procedural assignment."
 related_clauses = []
-tags = []
+tags = ["force-release", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2846,7 +2846,7 @@ anchors = [
 ]
 summary = "A static cast gives its expression an assignment-like context as though assigning the expression to a variable of the cast target type."
 related_clauses = []
-tags = []
+tags = ["cast", "context", "conversion"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2872,7 +2872,7 @@ summary = "A static variable's declaration initializer, including that of a stat
 related_clauses = [
     "6.21",
 ]
-tags = []
+tags = ["initialization", "scheduling", "static"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2897,7 +2897,7 @@ anchors = [
 ]
 summary = "An explicit structure member-name key overrides values that would otherwise be selected for that member by a type key or default key."
 related_clauses = []
-tags = []
+tags = ["assignment-pattern", "default-value", "struct", "type-matching"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2921,7 +2921,7 @@ anchors = [
 ]
 summary = "In assignment context, the structure target determines the interpretation of assignment-pattern braces."
 related_clauses = []
-tags = []
+tags = ["assignment-pattern", "context", "struct"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2945,7 +2945,7 @@ anchors = [
 ]
 summary = "Every structure member shall be covered by a member key, type key, default key, positional item, replication, or applicable recursive matching rule."
 related_clauses = []
-tags = []
+tags = ["assignment-pattern", "struct"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2970,7 +2970,7 @@ anchors = [
 ]
 summary = "A structure assignment pattern may use `default:value` to set structure members without naming or counting them individually."
 related_clauses = []
-tags = []
+tags = ["assignment-pattern", "default-value", "struct"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2996,7 +2996,7 @@ anchors = [
 ]
 summary = "A structure-pattern `default:value` applies to members unmatched by name or type keys; directly applicable values are context-evaluated and shall be castable or cause an error, while unmatched nested structures and arrays recursively apply their respective type/default matching rules."
 related_clauses = []
-tags = []
+tags = ["assignment-pattern", "diagnostic", "struct", "type-compatibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3021,7 +3021,7 @@ anchors = [
 ]
 summary = "Each structure assignment-pattern member expression is evaluated in the assignment context of its corresponding structure member type."
 related_clauses = []
-tags = []
+tags = ["assignment-pattern", "context", "struct"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3048,7 +3048,7 @@ anchors = [
 ]
 summary = "A structure-pattern `member:value` key sets only the named top-level member, not same-named nested members; its value is evaluated in that member's assignment context and shall be castable to its type, otherwise it is an error."
 related_clauses = []
-tags = []
+tags = ["assignment-pattern", "diagnostic", "struct", "type-compatibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3073,7 +3073,7 @@ anchors = [
 ]
 summary = "A structure assignment pattern may construct or deconstruct a structure using positional member expressions in declaration order or expressions keyed by member name."
 related_clauses = []
-tags = []
+tags = ["assignment-pattern", "struct"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3097,7 +3097,7 @@ anchors = [
 ]
 summary = "Replication operators in a structure assignment pattern shall provide exactly the number of structure members."
 related_clauses = []
-tags = []
+tags = ["assignment-pattern", "replication", "struct"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3126,7 +3126,7 @@ summary = "A structure-pattern `type:value` key sets every not-yet-member-keyed 
 related_clauses = [
     "6.22.1",
 ]
-tags = []
+tags = ["assignment-pattern", "context", "struct", "type-matching"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3151,7 +3151,7 @@ anchors = [
 ]
 summary = "A structure-pattern type key supplies values to members of the matching type and overrides the default key for those members."
 related_clauses = []
-tags = []
+tags = ["assignment-pattern", "struct", "type-matching"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3177,7 +3177,7 @@ summary = "Passing a value to a subroutine input, output, or inout argument is a
 related_clauses = [
     "13",
 ]
-tags = []
+tags = ["argument-direction", "context", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3201,7 +3201,7 @@ anchors = [
 ]
 summary = "A tagged union expression is an assignment-like context for its selected member value."
 related_clauses = []
-tags = []
+tags = ["context", "tagged-union"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3227,7 +3227,7 @@ anchors = [
 ]
 summary = "For a parameter with an explicit type, its value assignment and its overrides in module, interface, program, or class contexts—including class instantiation and class-scope resolution—are assignment-like contexts governed by the declared parameter type."
 related_clauses = []
-tags = []
+tags = ["context", "parameter"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3252,7 +3252,7 @@ anchors = [
 ]
 summary = "Each member of a typed assignment-pattern target shall have a bit-stream type assignment-compatible with and exactly as wide as the corresponding element of the pattern-expression type; a self-determined right-hand expression shall likewise be assignment-compatible with and exactly as wide as the whole pattern-expression type."
 related_clauses = []
-tags = []
+tags = ["assignment-pattern", "bit-stream", "type-compatibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3277,7 +3277,7 @@ anchors = [
 ]
 summary = "A typed assignment-pattern expression used as a left-hand expression shall use positional notation."
 related_clauses = []
-tags = []
+tags = ["assignment-pattern", "grammar"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3302,7 +3302,7 @@ anchors = [
 ]
 summary = "On the right-hand side, a typed assignment-pattern expression yields the value that a variable of its stated type would hold after initialization by that pattern."
 related_clauses = []
-tags = []
+tags = ["assignment-pattern", "type-reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3327,7 +3327,7 @@ anchors = [
 ]
 summary = "Prefixing an assignment pattern with a data type forms an assignment-pattern expression with a self-determined type for structure or array construction/deconstruction; unlike an untyped pattern, the resulting expression is not restricted to a side of an assignment-like context."
 related_clauses = []
-tags = []
+tags = ["assignment-pattern", "self-determined", "type-reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3351,7 +3351,7 @@ anchors = [
 ]
 summary = "A continuous assignment to a user-defined-nettype net or array of such nets permits only one delay, which applies to any value change."
 related_clauses = []
-tags = []
+tags = ["continuous-assignment", "nettype", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3377,7 +3377,7 @@ anchors = [
 ]
 summary = "A self-determined unpacked-array item—including a typed assignment-pattern expression—whose slowest-varying element type is assignment-compatible with the target element type contributes all its elements in the item's left-to-right order."
 related_clauses = []
-tags = []
+tags = ["array-assignment", "flattening", "type-compatibility", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3401,7 +3401,7 @@ anchors = [
 ]
 summary = "When an unpacked concatenation exceeds a bounded queue's maximum size, elements beyond the target upper bound are ignored and a warning shall be issued."
 related_clauses = []
-tags = []
+tags = ["array-assignment", "bounds", "diagnostic", "queue"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3425,7 +3425,7 @@ anchors = [
 ]
 summary = "An unpacked array concatenation may appear only as the source expression of an assignment-like context."
 related_clauses = []
-tags = []
+tags = ["array-assignment", "concatenation", "context", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3449,7 +3449,7 @@ anchors = [
 ]
 summary = "It is an error when an unpacked array concatenation's result element count differs from the element count of a fixed-size target."
 related_clauses = []
-tags = []
+tags = ["array-assignment", "diagnostic", "fixed-array", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3473,7 +3473,7 @@ anchors = [
 ]
 summary = "An unpacked array concatenation is a brace-enclosed comma-separated list of zero or more items; an empty list denotes an array value with no elements, and each nonempty item contributes one or more result elements."
 related_clauses = []
-tags = []
+tags = ["array-assignment", "concatenation", "grammar", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3500,7 +3500,7 @@ summary = "An unpacked array concatenation may appear as a nondefault item of an
 related_clauses = [
     "10.9",
 ]
-tags = []
+tags = ["array-assignment", "assignment-pattern", "concatenation", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3524,7 +3524,7 @@ anchors = [
 ]
 summary = "An unpacked-concatenation item not covered by compatible self-determined element or array forms is illegal; as the sole exception, literal null is legal for target elements of event, class, interface class, chandle, or virtual-interface type."
 related_clauses = []
-tags = []
+tags = ["array-assignment", "diagnostic", "type-compatibility", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -3549,7 +3549,7 @@ anchors = [
 ]
 summary = "Because every unpacked-concatenation item must have a self-determined type and a complete unpacked array concatenation has none, one unpacked array concatenation shall not directly appear as an item of another."
 related_clauses = []
-tags = []
+tags = ["array-assignment", "concatenation", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3574,7 +3574,7 @@ anchors = [
 ]
 summary = "Unpacked array concatenation syntax does not permit replication, default keys, or explicit typing, although it permits an arbitrary compatible mix of scalar elements and unpacked arrays."
 related_clauses = []
-tags = []
+tags = ["array-assignment", "concatenation", "grammar", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3598,7 +3598,7 @@ anchors = [
 ]
 summary = "Unlike vector and string concatenations, an unpacked array concatenation has no self-determined type and derives its interpretation from its unpacked-array assignment-like target."
 related_clauses = []
-tags = []
+tags = ["array-assignment", "context", "self-determined", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3622,7 +3622,7 @@ anchors = [
 ]
 summary = "Elements contributed by unpacked-concatenation items are arranged left-to-right to form the resulting array."
 related_clauses = []
-tags = []
+tags = ["array-assignment", "array-ordering", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3646,7 +3646,7 @@ anchors = [
 ]
 summary = "A self-determined unpacked-concatenation item assignment-compatible with the target element type contributes one result element."
 related_clauses = []
-tags = []
+tags = ["array-assignment", "concatenation", "type-compatibility", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3670,7 +3670,7 @@ anchors = [
 ]
 summary = "The target for an unpacked array concatenation shall be an array whose slowest-varying dimension is unpacked fixed-size, queue, or dynamic; any other target, including an associative array, is illegal."
 related_clauses = []
-tags = []
+tags = ["array-assignment", "array-dimension", "diagnostic", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3697,7 +3697,7 @@ anchors = [
 ]
 summary = "A self-determined vector or string concatenation may appear as one item of an unpacked array concatenation and contributes according to compatibility with the target element type."
 related_clauses = []
-tags = []
+tags = ["array-assignment", "concatenation", "type-compatibility", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3722,7 +3722,7 @@ anchors = [
 ]
 summary = "An `= expression` in a variable declaration is a one-time variable initialization, not an implicit continuous assignment; variables cannot acquire an implicit continuous assignment through declaration syntax."
 related_clauses = []
-tags = []
+tags = ["continuous-assignment", "declaration", "initialization", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3748,7 +3748,7 @@ summary = "A variable declaration assignment places an initial value in the vari
 related_clauses = [
     "6.8",
 ]
-tags = []
+tags = ["initialization", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3775,7 +3775,7 @@ anchors = [
 ]
 summary = "For a vector-net continuous assignment with up to three delays, a nonzero-to-zero result uses the falling delay, a transition to z uses the turn-off delay, and every other transition uses the rising delay."
 related_clauses = []
-tags = []
+tags = ["continuous-assignment", "four-state", "simulation-time", "vector"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3799,7 +3799,7 @@ anchors = [
 ]
 summary = "Use of `vectored` or `scalared` in a net declaration requires at least one packed dimension."
 related_clauses = []
-tags = []
+tags = ["layout", "net", "packed-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"

@@ -11,7 +11,7 @@ anchors = [
 ]
 summary = "An abstract class may extend another abstract or nonabstract class and may add new pure virtual methods or override inherited methods as pure virtual, without implementing all inherited pure methods until a nonabstract descendant is declared."
 related_clauses = []
-tags = []
+tags = ["abstract-class", "class-inheritance", "pure-virtual"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -35,7 +35,7 @@ anchors = [
 ]
 summary = "Although an abstract class cannot be directly instantiated, its type may be used to declare handle variables that hold assignment-compatible subclass objects."
 related_clauses = []
-tags = []
+tags = ["abstract-class", "class-handle"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -59,7 +59,7 @@ anchors = [
 ]
 summary = "An abstract class object shall not be constructed directly; its constructor may run only indirectly in the constructor chain initiated by constructing a nonabstract derived object."
 related_clauses = []
-tags = []
+tags = ["abstract-class", "constructor", "diagnostic"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -83,7 +83,7 @@ anchors = [
 ]
 summary = "For every method required by an implemented interface, a virtual class shall define or inherit either a pure virtual prototype or a virtual implementation; a locally declared method shall use virtual."
 related_clauses = []
-tags = []
+tags = ["abstract-class", "interface-class", "method-override", "pure-virtual"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -108,7 +108,7 @@ anchors = [
 ]
 summary = "SystemVerilog dynamically allocates storage for objects, strings, and dynamic and associative arrays and manages that dynamic storage automatically rather than exposing manual allocation and deallocation."
 related_clauses = []
-tags = []
+tags = ["dynamic-allocation", "garbage-collection"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -133,7 +133,7 @@ anchors = [
 ]
 summary = "$cast on class handles succeeds when the source expression is assignment compatible with the destination type, meaning the destination is the same type as or a superclass of the source expression."
 related_clauses = []
-tags = []
+tags = ["cast", "class-handle", "conversion", "type-compatibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -157,7 +157,7 @@ anchors = [
 ]
 summary = "A class-handle $cast shall fail in every case outside the enumerated success conditions; incompatible source and destination types fail even when the typed source expression evaluates to null."
 related_clauses = []
-tags = []
+tags = ["cast", "class-handle", "conversion", "type-compatibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -184,7 +184,7 @@ summary = "A source expression typed as an interface class is cast compatible wi
 related_clauses = [
     "8.26",
 ]
-tags = []
+tags = ["cast", "class-handle", "interface-class", "type-compatibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -209,7 +209,7 @@ anchors = [
 ]
 summary = "For a class-handle destination, $cast with the literal constant null as its source succeeds."
 related_clauses = []
-tags = []
+tags = ["cast", "class-handle", "literal"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -235,7 +235,7 @@ summary = "When $cast succeeds it assigns the converted source to the destinatio
 related_clauses = [
     "6.24.2",
 ]
-tags = []
+tags = ["cast", "class-handle", "function", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -259,7 +259,7 @@ anchors = [
 ]
 summary = "Instance member qualification may be chained through successive object-handle properties to access a member of a nested or linked object."
 related_clauses = []
-tags = []
+tags = ["class-handle", "name-resolution"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -283,7 +283,7 @@ anchors = [
 ]
 summary = "A class declaration inherently creates a type and does not require a separate typedef to establish that class type."
 related_clauses = []
-tags = []
+tags = ["class-syntax", "class-type"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -307,7 +307,7 @@ anchors = [
 ]
 summary = "Struct values are static objects created in static storage or an automatic-task stack, while class objects are exclusively dynamic: declaring a class handle creates no object and new performs object creation."
 related_clauses = []
-tags = []
+tags = ["class-handle", "class-type", "dynamic-allocation", "struct"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -331,7 +331,7 @@ anchors = [
 ]
 summary = "A class enum name may be accessed either through class scope resolution or by qualification with an instance name."
 related_clauses = []
-tags = []
+tags = ["class-handle", "class-scope", "enum"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -358,7 +358,7 @@ anchors = [
 ]
 summary = "For class-handle casting, $cast accepts a destination variable and source expression and may be called as an int-returning function or as a task."
 related_clauses = []
-tags = []
+tags = ["cast", "class-handle", "function", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -384,7 +384,7 @@ summary = "A non-interface class may implement one or more interface classes and
 related_clauses = [
     "8.20",
 ]
-tags = []
+tags = ["class-inheritance", "interface-class", "method-override"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -409,7 +409,7 @@ anchors = [
 ]
 summary = "Within a class-item parameter declaration, parameter is synonymous with localparam."
 related_clauses = []
-tags = []
+tags = ["class-syntax", "parameter"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -434,7 +434,7 @@ anchors = [
 ]
 summary = "A method declared as part of a class type has automatic lifetime, and explicitly declaring such a method with static lifetime is illegal."
 related_clauses = []
-tags = []
+tags = ["class-method", "diagnostic", "lifetime"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -458,7 +458,7 @@ anchors = [
 ]
 summary = "A class new expression shall be either an optionally class-scoped new with an optional argument list or the shallow-copy form new expression."
 related_clauses = []
-tags = []
+tags = ["class-syntax", "constructor", "shallow-copy"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -482,7 +482,7 @@ anchors = [
 ]
 summary = "A class value parameter or local value parameter may be accessed through an instance-qualified name, but the resulting expression is not a constant expression."
 related_clauses = []
-tags = []
+tags = ["class-handle", "constant-expression", "parameter"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -508,7 +508,7 @@ summary = "A parameterized class specialization may use positional or named para
 related_clauses = [
     "23.10",
 ]
-tags = []
+tags = ["parameter", "parameterized-class"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -532,7 +532,7 @@ anchors = [
 ]
 summary = "Class parameters and class local parameters are public."
 related_clauses = []
-tags = []
+tags = ["parameter", "visibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -556,7 +556,7 @@ anchors = [
 ]
 summary = "A class property may be declared with any SystemVerilog data type."
 related_clauses = []
-tags = []
+tags = ["class-property", "class-type"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -580,7 +580,7 @@ anchors = [
 ]
 summary = "A class property, including an object-handle property initialized by new, may be initialized directly in its class declaration."
 related_clauses = []
-tags = []
+tags = ["class-property", "initialization"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -604,7 +604,7 @@ anchors = [
 ]
 summary = "An object's class property is accessed by qualifying the property name with the object instance name."
 related_clauses = []
-tags = []
+tags = ["class-handle", "class-property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -629,7 +629,7 @@ anchors = [
 ]
 summary = "In one declaration, protected and local are mutually exclusive, rand and randc are mutually exclusive, and static and virtual may each appear no more than once."
 related_clauses = []
-tags = []
+tags = ["class-syntax", "diagnostic"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -657,7 +657,7 @@ anchors = [
 ]
 summary = "Class scope resolution disambiguates class identifiers; permits external access to static public members, constraints, type declarations, enumeration constants, class parameters, and local parameters; and permits derived-class access to public or protected superclass members."
 related_clauses = []
-tags = []
+tags = ["class-scope", "name-resolution", "visibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -682,7 +682,7 @@ anchors = [
 ]
 summary = "The class scope resolution form consists of a class type followed by ::, optionally repeated for nested class types, and an identifier defined in the selected class scope."
 related_clauses = []
-tags = []
+tags = ["class-scope", "class-syntax", "name-resolution"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -706,7 +706,7 @@ anchors = [
 ]
 summary = "Class scope resolution applies to static properties, static methods, typedefs, enumerations, parameters, local parameters, constraints, structures, unions, and nested classes; resolved expressions may be read, written, called, or used as event expressions as appropriate, and class scope may prefix a type or method call."
 related_clauses = []
-tags = []
+tags = ["class-scope", "static-member"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -730,7 +730,7 @@ anchors = [
 ]
 summary = "An expression referring to a class parameter or local parameter through class scope resolution is a constant expression."
 related_clauses = []
-tags = []
+tags = ["class-scope", "constant-expression", "parameter"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -754,7 +754,7 @@ anchors = [
 ]
 summary = "Class declarations, class items, properties, methods, constructors, constraints, qualifiers, and method prototypes shall conform to the alternatives and ordering prescribed by the class syntax grammar."
 related_clauses = []
-tags = []
+tags = ["class-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -779,7 +779,7 @@ anchors = [
 ]
 summary = "A class data type or type parameter shall not be accessed through a class handle."
 related_clauses = []
-tags = []
+tags = ["class-handle", "class-type", "diagnostic"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -803,7 +803,7 @@ anchors = [
 ]
 summary = "A class type parameter may be specialized with any type, including built-in types and user-defined class or struct types."
 related_clauses = []
-tags = []
+tags = ["class-type", "parameter", "parameterized-class"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -828,7 +828,7 @@ anchors = [
 ]
 summary = "Declaring a class variable creates only a handle variable, initially null; no class object exists for it until an instance is created and its handle assigned."
 related_clauses = []
-tags = []
+tags = ["class-handle", "dynamic-allocation"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -852,7 +852,7 @@ anchors = [
 ]
 summary = "A nonabstract class derived from an abstract class shall provide inherited or overridden implementations for every pure virtual method before its objects may be constructed."
 related_clauses = []
-tags = []
+tags = ["abstract-class", "class-inheritance", "pure-virtual"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -876,7 +876,7 @@ anchors = [
 ]
 summary = "A const class property is read-only and may take either the global-constant or instance-constant form defined for class properties."
 related_clauses = []
-tags = []
+tags = ["class-property", "const-property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -904,7 +904,7 @@ related_clauses = [
     "8.13",
     "8.15",
 ]
-tags = []
+tags = ["class-inheritance", "class-property", "constructor", "initialization"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -930,7 +930,7 @@ summary = "A constructor may be declared local or protected, with access governe
 related_clauses = [
     "8.18",
 ]
-tags = []
+tags = ["constructor", "visibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -954,7 +954,7 @@ anchors = [
 ]
 summary = "Constructor arguments follow the same calling conventions as other procedural subroutines, including support for default argument values."
 related_clauses = []
-tags = []
+tags = ["argument-direction", "constructor", "default-argument", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -978,7 +978,7 @@ anchors = [
 ]
 summary = "A constructor may declare and receive arguments that customize the newly created object at run time."
 related_clauses = []
-tags = []
+tags = ["constructor", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1003,7 +1003,7 @@ anchors = [
 ]
 summary = "The default keyword may occur at most once in a class constructor argument list."
 related_clauses = []
-tags = []
+tags = ["class-syntax", "constructor", "default-argument", "diagnostic"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -1027,7 +1027,7 @@ anchors = [
 ]
 summary = "In a subclass constructor argument list, default expands in place to every superclass-constructor argument, preserving declaration order, direction, type, name, and default values."
 related_clauses = []
-tags = []
+tags = ["class-inheritance", "constructor", "default-argument"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -1051,7 +1051,7 @@ anchors = [
 ]
 summary = "When a constructor argument list contains default superclass-argument expansion, no explicitly declared argument in that list may have the same name as any superclass-constructor argument."
 related_clauses = []
-tags = []
+tags = ["default-argument", "diagnostic", "name-resolution"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -1077,7 +1077,7 @@ summary = "Using default superclass-argument expansion is an error if any superc
 related_clauses = [
     "8.18",
 ]
-tags = []
+tags = ["default-argument", "diagnostic", "name-resolution", "visibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -1101,7 +1101,7 @@ anchors = [
 ]
 summary = "The default superclass-argument expansion keyword in a constructor argument list is legal only when the containing class extends another class."
 related_clauses = []
-tags = []
+tags = ["class-inheritance", "constructor", "default-argument", "diagnostic"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -1127,7 +1127,7 @@ anchors = [
 ]
 summary = "Creating a class object with new invokes that class's new function as its constructor, and constructor statements initialize the newly created instance."
 related_clauses = []
-tags = []
+tags = ["constructor", "dynamic-allocation", "function", "initialization"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1151,7 +1151,7 @@ anchors = [
 ]
 summary = "A class new operation is a function with no declared return type and shall execute nonblockingly like any other function."
 related_clauses = []
-tags = []
+tags = ["constructor", "function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1178,7 +1178,7 @@ related_clauses = [
     "8.10",
     "8.20",
 ]
-tags = []
+tags = ["constructor", "diagnostic", "static", "virtual"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1202,7 +1202,7 @@ anchors = [
 ]
 summary = "Although new declares no return type, the assignment left-hand side determines the object-handle return type."
 related_clauses = []
-tags = []
+tags = ["class-handle", "constructor", "context"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1226,7 +1226,7 @@ anchors = [
 ]
 summary = "C#() denotes parameterized class C's default specialization; except as a :: prefix, unadorned C denotes that default specialization."
 related_clauses = []
-tags = []
+tags = ["class-type", "parameterized-class"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1250,7 +1250,7 @@ anchors = [
 ]
 summary = "A class property or method without a local or protected access qualifier is public and may be accessed by any context that has access to the object's name."
 related_clauses = []
-tags = []
+tags = ["class-method", "class-property", "visibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1277,7 +1277,7 @@ related_clauses = [
     "6.18",
     "6.23",
 ]
-tags = []
+tags = ["class-scope", "forward-type", "type-operator", "type-parameter"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -1306,7 +1306,7 @@ related_clauses = [
     "8.13",
     "8.15",
 ]
-tags = []
+tags = ["class-inheritance", "constructor", "initialization"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1330,7 +1330,7 @@ anchors = [
 ]
 summary = "A derived class may override a method inherited from its base class with a changed definition, subject to the method-override rules."
 related_clauses = []
-tags = []
+tags = ["class-inheritance", "class-method", "method-override"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1355,7 +1355,7 @@ anchors = [
 ]
 summary = "An object of a subclass is a legal representative of each base class in its inheritance chain and may be used where a corresponding base-class object handle is expected."
 related_clauses = []
-tags = []
+tags = ["class-handle", "class-inheritance", "type-compatibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1379,7 +1379,7 @@ anchors = [
 ]
 summary = "Direct assignment from a superclass-typed variable to a subclass-typed variable is illegal."
 related_clauses = []
-tags = []
+tags = ["class-handle", "diagnostic", "type-compatibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1403,7 +1403,7 @@ anchors = [
 ]
 summary = "Dynamic override specifiers are legal only on method declarations inside a non-interface class scope."
 related_clauses = []
-tags = []
+tags = ["class-method", "class-syntax", "diagnostic", "dynamic-dispatch"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -1427,7 +1427,7 @@ anchors = [
 ]
 summary = "When constructor arguments are specified in the extends specifier, a subclass constructor shall not contain super.new; the compiler inserts the base-constructor call automatically."
 related_clauses = []
-tags = []
+tags = ["class-inheritance", "constructor", "diagnostic"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1452,7 +1452,7 @@ anchors = [
 ]
 summary = "A class extends specifier may contain a fixed argument list, which is passed to the base class's new method during derived construction."
 related_clauses = []
-tags = []
+tags = ["class-inheritance", "constructor"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1476,7 +1476,7 @@ anchors = [
 ]
 summary = "If default is the sole extends-specifier argument and the subclass has no user-defined new, its implicit new shall have the complete superclass constructor argument list as though default appeared in that constructor list."
 related_clauses = []
-tags = []
+tags = ["class-inheritance", "constructor", "default-argument"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -1500,7 +1500,7 @@ anchors = [
 ]
 summary = "If default is the sole extends-specifier argument and the subclass supplies a user-defined new, that constructor's argument list shall also contain default."
 related_clauses = []
-tags = []
+tags = ["class-inheritance", "constructor", "default-argument"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -1524,7 +1524,7 @@ anchors = [
 ]
 summary = "An out-of-block method is declared in the class as a complete extern prototype including method kind, qualifiers, override specifiers, and arguments, then defined outside without those qualifiers/specifiers and with its name qualified by the class scope."
 related_clauses = []
-tags = []
+tags = ["class-method", "class-scope", "prototype"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -1551,7 +1551,7 @@ anchors = [
 ]
 summary = "A class declared with the :final specifier shall not be extended, and an attempt to derive a class from it shall produce an error."
 related_clauses = []
-tags = []
+tags = ["class-inheritance", "diagnostic", "final"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -1575,7 +1575,7 @@ anchors = [
 ]
 summary = "A method marked :final cannot be overridden by any further subclass; an attempted override is an error regardless of whether either declaration is virtual, and final alone does not make the method virtual."
 related_clauses = []
-tags = []
+tags = ["class-method", "diagnostic", "final", "method-override"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -1600,7 +1600,7 @@ anchors = [
 ]
 summary = "A final specifier is illegal on a pure virtual method or pure constraint."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "final", "pure-virtual"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -1626,7 +1626,7 @@ summary = "The complete class definition resolving a forward class typedef shall
 related_clauses = [
     "6.18",
 ]
-tags = []
+tags = ["forward-declaration", "generate", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1652,7 +1652,7 @@ anchors = [
 ]
 summary = "Either `typedef class Name;` or the equivalent `typedef Name;` provides a forward class declaration so handles of that class type may be declared before the complete declaration, including mutually referential class handles."
 related_clauses = []
-tags = []
+tags = ["class-handle", "class-type", "forward-declaration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1676,7 +1676,7 @@ anchors = [
 ]
 summary = "A forward class typedef may refer to a class whose later complete declaration has a parameter port list."
 related_clauses = []
-tags = []
+tags = ["forward-declaration", "parameterized-class"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1700,7 +1700,7 @@ anchors = [
 ]
 summary = "A generic class declaration is not itself a type; only a concrete specialization, including one formed from defaults, denotes a class type."
 related_clauses = []
-tags = []
+tags = ["class-type", "parameterized-class"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1724,7 +1724,7 @@ anchors = [
 ]
 summary = "A global constant class property shall have an initializer in its declaration and cannot be assigned anywhere else."
 related_clauses = []
-tags = []
+tags = ["class-property", "const-property", "diagnostic", "initialization"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1749,7 +1749,7 @@ anchors = [
 ]
 summary = "Assigning one object handle to another compatible handle variable copies the handle, not the object, so both variables refer to the same single object."
 related_clauses = []
-tags = []
+tags = ["assignment", "class-handle"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1773,7 +1773,7 @@ anchors = [
 ]
 summary = "Providing methods matching all interface pure virtual methods does not by itself implement the interface; the class or a superclass shall name it with implements."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "interface-class", "method-override"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1798,7 +1798,7 @@ anchors = [
 ]
 summary = "implements imposes interface-method implementation obligations but inherits no interface member types, parameters, or other members, unlike extends, which inherits all class members."
 related_clauses = []
-tags = []
+tags = ["class-inheritance", "interface-class"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1822,7 +1822,7 @@ anchors = [
 ]
 summary = "If a class has no explicit user-defined new method, the language automatically provides an implicit new method."
 related_clauses = []
-tags = []
+tags = ["constructor"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1846,7 +1846,7 @@ anchors = [
 ]
 summary = "A subclass implicitly implements every interface class implemented by any superclass and gains the same interface requirements and capabilities."
 related_clauses = []
-tags = []
+tags = ["class-inheritance", "interface-class"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1870,7 +1870,7 @@ anchors = [
 ]
 summary = "If a derived constructor does not explicitly call super.new, the compiler shall automatically insert the base-constructor call before current-class initialization."
 related_clauses = []
-tags = []
+tags = ["class-inheritance", "constructor", "initialization"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1896,7 +1896,7 @@ summary = "If a subclass constructor declares default argument expansion but omi
 related_clauses = [
     "8.15",
 ]
-tags = []
+tags = ["class-inheritance", "constructor", "default-argument"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -1921,7 +1921,7 @@ anchors = [
 ]
 summary = "An inherited nonvirtual method does not satisfy an implemented interface's method requirement; a derived class may declare a compatible virtual method that both hides the inherited nonvirtual method and fulfills the interface."
 related_clauses = []
-tags = []
+tags = ["dynamic-dispatch", "interface-class", "method-override"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1945,7 +1945,7 @@ anchors = [
 ]
 summary = "An instance constant cannot be declared static because static const storage cannot receive the required per-instance constructor assignment."
 related_clauses = []
-tags = []
+tags = ["class-property", "const-property", "diagnostic", "static-member"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1969,7 +1969,7 @@ anchors = [
 ]
 summary = "An instance constant class property has no declaration initializer and may be assigned exactly once at run time, only in the corresponding class constructor."
 related_clauses = []
-tags = []
+tags = ["class-property", "const-property", "constructor", "initialization"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1994,7 +1994,7 @@ anchors = [
 ]
 summary = "An instance method is invoked through its object rather than by passing that object as an implicit standalone argument, and unqualified class-property accesses in the method refer to the invoking instance's properties."
 related_clauses = []
-tags = []
+tags = ["class-handle", "class-method", "name-resolution"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2025,7 +2025,7 @@ related_clauses = [
     "8.23",
     "8.25",
 ]
-tags = []
+tags = ["class-syntax", "constraint", "interface-class", "pure-virtual"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2051,7 +2051,7 @@ summary = "An interface class may extend one or more interface classes and inher
 related_clauses = [
     "8.26.6",
 ]
-tags = []
+tags = ["class-inheritance", "interface-class", "interface-conflict"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2075,7 +2075,7 @@ anchors = [
 ]
 summary = "An object whose type is an interface class shall not be constructed directly."
 related_clauses = []
-tags = []
+tags = ["constructor", "diagnostic", "interface-class"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2099,7 +2099,7 @@ anchors = [
 ]
 summary = "Interface class declarations and items shall follow the interface-class grammar, including optional parameters and multiple extends bases, permitted item alternatives, and pure virtual method prototypes."
 related_clauses = []
-tags = []
+tags = ["class-syntax", "interface-class", "pure-virtual"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2124,7 +2124,7 @@ anchors = [
 ]
 summary = "When the same interface is reached multiple ways through an implementation or inheritance diamond, only one copy of each symbol originating in that interface is merged and the duplicate paths do not create a name conflict."
 related_clauses = []
-tags = []
+tags = ["class-inheritance", "interface-class", "interface-conflict"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2151,7 +2151,7 @@ summary = "A variable of interface-class type may reference any object whose cla
 related_clauses = [
     "8.22",
 ]
-tags = []
+tags = ["assignment", "class-handle", "interface-class", "type-compatibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2175,7 +2175,7 @@ anchors = [
 ]
 summary = "A dynamic cast between interface-class handle types succeeds when the actual referenced class object is valid for assignment to the destination interface type."
 related_clauses = []
-tags = []
+tags = ["cast", "class-handle", "interface-class", "type-compatibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2199,7 +2199,7 @@ anchors = [
 ]
 summary = "randomize() and inline constraints are legal through an interface-class handle, although an interface class contains no data and inline constraints can therefore constrain only accessible state variables."
 related_clauses = []
-tags = []
+tags = ["inline-constraint", "interface-class", "randomization"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2227,7 +2227,7 @@ summary = "A same-name interface method conflict shall be resolved by one method
 related_clauses = [
     "8.20",
 ]
-tags = []
+tags = ["diagnostic", "interface-class", "interface-conflict", "method-override"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2253,7 +2253,7 @@ summary = "An interface-class method may declare default arguments; each default
 related_clauses = [
     "13.5.3",
 ]
-tags = []
+tags = ["constant-expression", "default-argument", "interface-class", "method-override"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2280,7 +2280,7 @@ anchors = [
 ]
 summary = "A nonabstract implementing class shall have a virtual method implementation for every interface pure virtual method; an inherited virtual implementation may satisfy the obligation."
 related_clauses = []
-tags = []
+tags = ["abstract-class", "interface-class", "method-override", "pure-virtual"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2304,7 +2304,7 @@ anchors = [
 ]
 summary = "A class shall not implement, and an interface class shall not extend, a forward typedef of an interface class; the complete interface-class declaration shall precede the implementing or extending declaration."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "forward-declaration", "interface-class"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2328,7 +2328,7 @@ anchors = [
 ]
 summary = "Multiple implemented or extended interface classes merge their identifiers into one visible namespace, and simultaneously visible equal names create conflicts that shall be resolved under the interface conflict rules."
 related_clauses = []
-tags = []
+tags = ["interface-class", "interface-conflict", "name-resolution", "namespace"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2352,7 +2352,7 @@ anchors = [
 ]
 summary = "rand_mode and constraint_mode are not legal through interface classes because interface classes have no data members or constraint names resolvable for those operations."
 related_clauses = []
-tags = []
+tags = ["constraint-mode", "diagnostic", "interface-class", "randomization"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2378,7 +2378,7 @@ summary = "Casting a null source interface-class handle follows the same success
 related_clauses = [
     "8.16",
 ]
-tags = []
+tags = ["cast", "class-handle", "interface-class", "type-compatibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2403,7 +2403,7 @@ anchors = [
 ]
 summary = "If multiple extended interfaces contribute the same parameter or type name, the derived interface shall declare a parameter or type that overrides every collision, even when inherited declarations match or the name is otherwise unused."
 related_clauses = []
-tags = []
+tags = ["interface-class", "interface-conflict", "parameter"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2427,7 +2427,7 @@ anchors = [
 ]
 summary = "Every interface class contains built-in empty virtual pre_randomize and post_randomize methods, called automatically before and after randomization and available for override; these methods do not create method-name conflicts."
 related_clauses = []
-tags = []
+tags = ["class-method", "interface-class", "method-override", "randomization"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2462,7 +2462,7 @@ anchors = [
 ]
 summary = "An interface class may extend zero or more interface classes but may neither implement any type nor extend a class; a class or virtual class may extend at most one class and implement zero or more interface classes, may do both simultaneously, and may neither extend an interface nor implement a class."
 related_clauses = []
-tags = []
+tags = ["class-inheritance", "interface-class"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2487,7 +2487,7 @@ anchors = [
 ]
 summary = "Each distinct parameterized-interface specialization is a unique interface type, so different specializations inherited or implemented through multiple paths do not form a diamond and their duplicate member names remain conflicts requiring resolution."
 related_clauses = []
-tags = []
+tags = ["interface-class", "interface-conflict", "parameterized-class"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2514,7 +2514,7 @@ related_clauses = [
     "8.5",
     "8.23",
 ]
-tags = []
+tags = ["class-scope", "interface-class", "parameter", "static-member"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -2539,7 +2539,7 @@ anchors = [
 ]
 summary = "An interface class extending another interface inherits its parameters and typedefs, while a class implementing an interface inherits neither."
 related_clauses = []
-tags = []
+tags = ["class-inheritance", "interface-class", "parameter"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2563,7 +2563,7 @@ anchors = [
 ]
 summary = "A local class member is visible only to methods of the declaring class and is not visible directly in subclasses, although inherited nonlocal methods that reference it continue to operate on subclass objects."
 related_clauses = []
-tags = []
+tags = ["class-inheritance", "visibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2587,7 +2587,7 @@ anchors = [
 ]
 summary = "Permitted class-member modifiers have no predefined textual ordering."
 related_clauses = []
-tags = []
+tags = ["class-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2611,7 +2611,7 @@ anchors = [
 ]
 summary = "The :extends method specifier asserts that the method overrides a virtual base method and implies virtual; using it without such a base method is an error, and the virtual keyword may be omitted."
 related_clauses = []
-tags = []
+tags = ["class-method", "diagnostic", "dynamic-dispatch", "method-override"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -2636,7 +2636,7 @@ anchors = [
 ]
 summary = "The :initial method specifier asserts that the declaration does not override a virtual base method; such an override, including one of a pure virtual method, is an error, and initial by itself does not make the method virtual."
 related_clauses = []
-tags = []
+tags = ["class-method", "diagnostic", "method-override"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -2660,7 +2660,7 @@ anchors = [
 ]
 summary = "Method override specifiers :initial and :extends are mutually exclusive and combining them is an error; :final may be combined with either one."
 related_clauses = []
-tags = []
+tags = ["class-method", "class-syntax", "final", "method-override"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -2684,7 +2684,7 @@ anchors = [
 ]
 summary = "A nested class has no implicit handle or this reference to an enclosing-class instance and cannot access outer non-static members unless it uses an explicitly passed or otherwise accessible outer-object handle."
 related_clauses = []
-tags = []
+tags = ["class-handle", "diagnostic", "nested-class"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2708,7 +2708,7 @@ anchors = [
 ]
 summary = "A nested class has method-equivalent access rights to local and protected members of its containing class and lexically scoped unqualified access to the containing class's static properties, static methods, parameters, and local parameters."
 related_clauses = []
-tags = []
+tags = ["class-scope", "nested-class", "static-member", "visibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2732,7 +2732,7 @@ anchors = [
 ]
 summary = "Classes are nestable scopes, and type declarations nested in a class are public and may be accessed from outside through the enclosing class scope."
 related_clauses = []
-tags = []
+tags = ["class-scope", "class-type", "nested-class", "visibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2756,7 +2756,7 @@ anchors = [
 ]
 summary = "A class shall not implement a type parameter and an interface class shall not extend a type parameter, even when that parameter resolves to an interface class."
 related_clauses = []
-tags = []
+tags = ["class-inheritance", "diagnostic", "interface-class", "parameterized-class"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2782,7 +2782,7 @@ summary = "Using a typed constructor call for a shallow copy is illegal."
 related_clauses = [
     "8.8",
 ]
-tags = []
+tags = ["diagnostic", "shallow-copy"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2809,7 +2809,7 @@ summary = "Through a base-class handle, nonvirtual member lookup uses the base h
 related_clauses = [
     "8.20",
 ]
-tags = []
+tags = ["class-handle", "class-inheritance", "dynamic-dispatch", "method-override"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2837,7 +2837,7 @@ related_clauses = [
     "8.9",
     "8.20",
 ]
-tags = []
+tags = ["class-handle", "diagnostic"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2861,7 +2861,7 @@ anchors = [
 ]
 summary = "For an object argument declared input, output, inout, or ref, argument transfer operates on the object handle rather than copying the object's contents."
 related_clauses = []
-tags = []
+tags = ["argument-direction", "class-handle", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2886,7 +2886,7 @@ anchors = [
 ]
 summary = "A variable of class type holds an object handle, and invoking new creates an object of that class whose handle can be assigned to the variable."
 related_clauses = []
-tags = []
+tags = ["class-handle", "constructor", "dynamic-allocation"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2911,7 +2911,7 @@ anchors = [
 ]
 summary = "An object handle target may be assigned null or a class object whose class data type is assignment compatible with the target type."
 related_clauses = []
-tags = []
+tags = ["assignment", "class-handle", "type-compatibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2936,7 +2936,7 @@ anchors = [
 ]
 summary = "Object handles support === and !== against null or another class object with the same semantics and compatibility constraints as == and !=."
 related_clauses = []
-tags = []
+tags = ["class-handle", "comparison", "equality"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2962,7 +2962,7 @@ summary = "Object handles are permitted as result operands of the conditional op
 related_clauses = [
     "11.4.11",
 ]
-tags = []
+tags = ["class-handle", "conditional"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2989,7 +2989,7 @@ anchors = [
 ]
 summary = "$cast may assign a superclass handle to a subclass variable only when the referenced object's dynamic type is assignment compatible with the subclass target."
 related_clauses = []
-tags = []
+tags = ["cast", "class-handle", "conversion", "type-compatibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3014,7 +3014,7 @@ anchors = [
 ]
 summary = "Object handles support == and != only against null or another class object, and for two objects one operand's type shall be assignment compatible with the other's."
 related_clauses = []
-tags = []
+tags = ["class-handle", "comparison", "equality"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3039,7 +3039,7 @@ anchors = [
 ]
 summary = "Arithmetic operations on an object handle, including pointer-like increment, are not allowed."
 related_clauses = []
-tags = []
+tags = ["arithmetic", "class-handle", "diagnostic"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3067,7 +3067,7 @@ anchors = [
 ]
 summary = "An object handle is for class objects, does not point to arbitrary data types or accept assignment of a data object's address, and supports only the limited casts defined for object handles."
 related_clauses = []
-tags = []
+tags = ["cast", "class-handle", "class-type", "diagnostic"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3091,7 +3091,7 @@ anchors = [
 ]
 summary = "An object's method may be accessed by qualifying the method name with the object instance, using the same member-access syntax as a property."
 related_clauses = []
-tags = []
+tags = ["class-handle", "class-method"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3119,7 +3119,7 @@ summary = "An object is strongly reachable when an active-scope class handle ref
 related_clauses = [
     "8.30",
 ]
-tags = []
+tags = ["class-handle", "garbage-collection", "weak-reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -3143,7 +3143,7 @@ anchors = [
 ]
 summary = "An object handle may be dynamically cast to an interface-class handle when the actual object implements that interface type; the reverse checked cast is likewise governed by actual object compatibility."
 related_clauses = []
-tags = []
+tags = ["cast", "class-handle", "interface-class", "type-compatibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3168,7 +3168,7 @@ anchors = [
 ]
 summary = "A prototype's default argument may be omitted from its out-of-block definition; if the definition repeats a default, the prototype shall contain a syntactically identical default expression."
 related_clauses = []
-tags = []
+tags = ["class-method", "default-argument", "prototype"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3192,7 +3192,7 @@ anchors = [
 ]
 summary = "An out-of-block method definition shall follow its class declaration in the same enclosing scope, and providing more than one definition for one extern method is an error."
 related_clauses = []
-tags = []
+tags = ["class-method", "diagnostic", "source-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3219,7 +3219,7 @@ anchors = [
 ]
 summary = "An out-of-block method definition shall exactly match its in-class prototype except that the external method name is class-scope-qualified and a return type may require added class scope qualification."
 related_clauses = []
-tags = []
+tags = ["class-method", "class-scope", "prototype"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3244,7 +3244,7 @@ anchors = [
 ]
 summary = "An out-of-block method definition can access all declarations in its class, while its earlier in-class prototype sees class types only if declared before it; each identifier in both headers shall resolve to the same declaration or an error shall be reported."
 related_clauses = []
-tags = []
+tags = ["class-method", "diagnostic", "name-resolution", "source-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3268,7 +3268,7 @@ anchors = [
 ]
 summary = "A type parameter or typedef used as a base class shall resolve after elaboration to a class type."
 related_clauses = []
-tags = []
+tags = ["class-inheritance", "class-type", "parameterized-class"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3293,7 +3293,7 @@ anchors = [
 ]
 summary = "A class may declare a parameter port list after its name and use those parameters in its member declarations to define specialized class types."
 related_clauses = []
-tags = []
+tags = ["class-syntax", "parameter", "parameterized-class"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3318,7 +3318,7 @@ anchors = [
 ]
 summary = "A parameterized class may extend a parameterized base using the base defaults, explicit actual parameters, parameters of the derived class, or a base class supplied by a type parameter."
 related_clauses = []
-tags = []
+tags = ["class-inheritance", "parameterized-class"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3342,7 +3342,7 @@ anchors = [
 ]
 summary = "Within an out-of-block method declaration for a parameterized class, C:: references names as though inside the generic class and implies no specialization."
 related_clauses = []
-tags = []
+tags = ["class-method", "class-scope", "parameterized-class"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3366,7 +3366,7 @@ anchors = [
 ]
 summary = "Outside a parameterized class and its out-of-block declarations, :: access shall use an explicit specific or default specialization; unadorned generic class scope is illegal, and explicit scope may access value or type parameters, including local parameters."
 related_clauses = []
-tags = []
+tags = ["class-scope", "diagnostic", "name-resolution", "parameterized-class"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3390,7 +3390,7 @@ anchors = [
 ]
 summary = "Unadorned parameterized-class name C may prefix :: only inside C's scope or its out-of-block declarations, where it denotes the generic class member context rather than the default specialization; C#():: is required to select the default specialization."
 related_clauses = []
-tags = []
+tags = ["class-scope", "diagnostic", "name-resolution", "parameterized-class"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3416,7 +3416,7 @@ summary = "When a typed constructor selects a parameterized class, its class-sco
 related_clauses = [
     "8.25",
 ]
-tags = []
+tags = ["class-scope", "constructor", "parameterized-class"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3442,7 +3442,7 @@ summary = "A constructor argument declared immediately after the default expansi
 related_clauses = [
     "13.4",
 ]
-tags = []
+tags = ["argument-direction", "default-argument"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -3466,7 +3466,7 @@ anchors = [
 ]
 summary = "A class property has an undefined value before its prescribed construction-time initialization."
 related_clauses = []
-tags = []
+tags = ["class-property", "constructor", "initialization"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3491,7 +3491,7 @@ anchors = [
 ]
 summary = "Code within a class may access a local method or property of any instance of that same class, not only the current instance."
 related_clauses = []
-tags = []
+tags = ["class-handle", "class-method", "class-property", "visibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3515,7 +3515,7 @@ anchors = [
 ]
 summary = "A protected class property or method has local-member access restrictions except that it is inherited and visible to subclasses."
 related_clauses = []
-tags = []
+tags = ["class-inheritance", "class-method", "class-property", "visibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3539,7 +3539,7 @@ anchors = [
 ]
 summary = "In an abstract class, a pure virtual method is declared with pure virtual as a prototype without a method body; a derived class may implement it by a matching virtual override with a body."
 related_clauses = []
-tags = []
+tags = ["abstract-class", "class-method", "prototype", "pure-virtual"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3563,7 +3563,7 @@ anchors = [
 ]
 summary = "If a parameterized class has parameters without defaults, it has no complete default specialization and every concrete specialization shall override at least all parameters lacking defaults."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "parameter", "parameterized-class"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3593,7 +3593,7 @@ related_clauses = [
     "19.6",
     "26.2",
 ]
-tags = []
+tags = ["class-scope", "name-resolution", "type-reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3618,7 +3618,7 @@ anchors = [
 ]
 summary = "The shallow-copy form new source creates a distinct new object and copies every class property value from the source; object-valued properties copy only their handles, so referenced nested objects remain shared."
 related_clauses = []
-tags = []
+tags = ["class-handle", "dynamic-allocation", "shallow-copy"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3642,7 +3642,7 @@ anchors = [
 ]
 summary = "Shallow-copying through a base-class handle duplicates the referenced object's actual extended-class instance, not merely an object of the handle variable's base type, and assigns the duplicate through the compatible target handle."
 related_clauses = []
-tags = []
+tags = ["class-handle", "class-inheritance", "shallow-copy"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3668,7 +3668,7 @@ summary = "As an exception to handle copying, shallow copy sets the new object's
 related_clauses = [
     "19.4",
 ]
-tags = []
+tags = ["covergroup", "literal", "shallow-copy"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3695,7 +3695,7 @@ related_clauses = [
     "18",
     "19",
 ]
-tags = []
+tags = ["coverage", "cyclic-randomization", "randomization", "shallow-copy"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3719,7 +3719,7 @@ anchors = [
 ]
 summary = "After shallow-copy allocation and property copying, the handle of the newly created object is assigned to the left-hand-side variable."
 related_clauses = []
-tags = []
+tags = ["assignment", "class-handle", "shallow-copy"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3743,7 +3743,7 @@ anchors = [
 ]
 summary = "Shallow copy allocates an object of the copied class without calling its constructor and without executing any variable-declaration initialization assignments."
 related_clauses = []
-tags = []
+tags = ["constructor", "initialization", "shallow-copy"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3767,7 +3767,7 @@ anchors = [
 ]
 summary = "In the shallow-copy form new expression, the expression shall evaluate to an object handle."
 related_clauses = []
-tags = []
+tags = ["class-handle", "shallow-copy"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3794,7 +3794,7 @@ anchors = [
 ]
 summary = "A class may derive from one base class; the derived class inherits the base class's properties and methods as members and may add its own members."
 related_clauses = []
-tags = []
+tags = ["class-inheritance", "class-method", "class-property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3820,7 +3820,7 @@ anchors = [
 ]
 summary = "Two parameter sets of the same generic class denote the same specialization only when every corresponding parameter is the same: type parameters have matching actual types, and value parameters have matching value types and equal values."
 related_clauses = []
-tags = []
+tags = ["class-type", "parameterized-class", "type-equivalence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3845,7 +3845,7 @@ anchors = [
 ]
 summary = "Each distinct parameterized-class specialization owns a separate set of static members, and a specialization's methods access that specialization's static storage; shared static storage across specializations requires a nonparameterized base class."
 related_clauses = []
-tags = []
+tags = ["parameterized-class", "static-member"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3869,7 +3869,7 @@ anchors = [
 ]
 summary = "Matching specializations of one generic class declaration are the same type; a package declaration defines one system-wide set, while each instance of another containing scope creates a unique generic class and specialization set."
 related_clauses = []
-tags = []
+tags = ["class-type", "parameterized-class", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3893,7 +3893,7 @@ anchors = [
 ]
 summary = "Within a static method, direct access is allowed to static properties and static methods of the same class, while access to any non-static member or the special this handle is illegal and shall produce a compile-time error."
 related_clauses = []
-tags = []
+tags = ["class-method", "diagnostic", "static-member"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3917,7 +3917,7 @@ anchors = [
 ]
 summary = "A static class method obeys class scope and access rules but may be called as a regular subroutine outside the class without any class instance."
 related_clauses = []
-tags = []
+tags = ["class-method", "static-member"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3941,7 +3941,7 @@ anchors = [
 ]
 summary = "A static method cannot be virtual."
 related_clauses = []
-tags = []
+tags = ["class-method", "diagnostic", "static-member", "virtual"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3965,7 +3965,7 @@ anchors = [
 ]
 summary = "A static class property may be used without creating an object of the class."
 related_clauses = []
-tags = []
+tags = ["class-property", "static-member"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3990,7 +3990,7 @@ anchors = [
 ]
 summary = "A static class property has one shared storage instance for all objects of the class and is created and initialized exactly once."
 related_clauses = []
-tags = []
+tags = ["class-property", "initialization", "static-member"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4014,7 +4014,7 @@ anchors = [
 ]
 summary = "Within a derived class, super selects an immediate-base member, class value parameter, or local value parameter, including one hidden by a derived declaration."
 related_clauses = []
-tags = []
+tags = ["class-inheritance", "name-resolution"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4038,7 +4038,7 @@ anchors = [
 ]
 summary = "When a base constructor requires arguments, a derived class may supply them either in an explicit super.new call in its constructor or in the class extends specifier."
 related_clauses = []
-tags = []
+tags = ["class-inheritance", "constructor"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4062,7 +4062,7 @@ anchors = [
 ]
 summary = "Inside a constructor whose argument list uses default expansion, super.new(default) may use default as its sole argument to forward all arguments produced by that expansion to the superclass constructor."
 related_clauses = []
-tags = []
+tags = ["class-inheritance", "constructor", "default-argument"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -4086,7 +4086,7 @@ anchors = [
 ]
 summary = "Using super.new(default) is an error unless default also appears in the containing constructor's argument list."
 related_clauses = []
-tags = []
+tags = ["constructor", "default-argument", "diagnostic"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -4110,7 +4110,7 @@ anchors = [
 ]
 summary = "super reaches only the immediate base-class level, including members inherited into that level; chaining super.super to reach a higher ancestor is illegal."
 related_clauses = []
-tags = []
+tags = ["class-inheritance", "diagnostic", "name-resolution"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4134,7 +4134,7 @@ anchors = [
 ]
 summary = "An expression that uses super to access a class value parameter or local value parameter is not a constant expression."
 related_clauses = []
-tags = []
+tags = ["class-inheritance", "constant-expression", "parameter"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4158,7 +4158,7 @@ anchors = [
 ]
 summary = "Within a permitted class context, this is a predefined object handle to the current instance and may qualify that instance's properties, value parameters, local value parameters, or methods."
 related_clauses = []
-tags = []
+tags = ["class-handle", "class-method"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4185,7 +4185,7 @@ related_clauses = [
     "6.23",
     "19.4",
 ]
-tags = []
+tags = ["class-handle", "class-method", "class-syntax", "diagnostic"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -4210,7 +4210,7 @@ anchors = [
 ]
 summary = "A typed constructor call class_scope::new constructs the class-scope type independently of the assignment target, and that type shall be assignment compatible with the target."
 related_clauses = []
-tags = []
+tags = ["class-handle", "class-scope", "constructor", "type-compatibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4236,7 +4236,7 @@ summary = "A typed constructor call creates and initializes a new object of its 
 related_clauses = [
     "8.7",
 ]
-tags = []
+tags = ["class-type", "constructor", "initialization"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4262,7 +4262,7 @@ anchors = [
 ]
 summary = "An uninitialized object handle has the default value null and may be tested by comparison with null."
 related_clauses = []
-tags = []
+tags = ["class-handle", "literal"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4286,7 +4286,7 @@ anchors = [
 ]
 summary = "An unqualified name in a class method resolves from the innermost scope outward, so a same-named subroutine argument hides an instance property; this qualification selects the hidden current-instance property."
 related_clauses = []
-tags = []
+tags = ["class-method", "name-resolution", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4310,7 +4310,7 @@ anchors = [
 ]
 summary = "Garbage collection may transition an object from strongly reachable through weakly reachable to unreachable, and its associated memory becomes eligible for reclamation only when it is unreachable."
 related_clauses = []
-tags = []
+tags = ["garbage-collection", "weak-reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -4336,7 +4336,7 @@ anchors = [
 ]
 summary = "A class object that is no longer in use and has become unreachable is handled by SystemVerilog's automatic garbage collection rather than manual deallocation."
 related_clauses = []
-tags = []
+tags = ["class-handle", "garbage-collection"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4362,7 +4362,7 @@ summary = "For an ordinary unscoped `new` constructor invocation, the type of th
 related_clauses = [
     "8.7",
 ]
-tags = []
+tags = ["class-handle", "constructor", "context"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4386,7 +4386,7 @@ anchors = [
 ]
 summary = "An expression of subclass type may always be assigned directly to a handle variable of any superclass or ancestor type."
 related_clauses = []
-tags = []
+tags = ["assignment", "class-handle", "class-inheritance", "type-compatibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4410,7 +4410,7 @@ anchors = [
 ]
 summary = "Prefixing a class declaration with virtual declares the class abstract."
 related_clauses = []
-tags = []
+tags = ["abstract-class", "class-syntax", "virtual"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4436,7 +4436,7 @@ anchors = [
 ]
 summary = "A virtual method declaration establishes dynamic overriding across its entire class hierarchy so calls select the latest derived override, whereas a nonvirtual redeclaration affects only that class and its descendants under static lookup."
 related_clauses = []
-tags = []
+tags = ["class-method", "dynamic-dispatch", "method-override"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4461,7 +4461,7 @@ anchors = [
 ]
 summary = "A subclass override of a virtual method shall match the prototype's argument types, names, qualifiers, and directions; repeating the virtual qualifier on the derived declaration is optional."
 related_clauses = []
-tags = []
+tags = ["class-method", "method-override", "type-matching"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4490,7 +4490,7 @@ summary = "A virtual function override's return type shall either match the supe
 related_clauses = [
     "6.22.1",
 ]
-tags = []
+tags = ["class-method", "class-type", "method-override", "type-compatibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4514,7 +4514,7 @@ anchors = [
 ]
 summary = "For corresponding virtual-method arguments, the presence or absence of a default value shall match between prototype and override, but their default expressions need not match."
 related_clauses = []
-tags = []
+tags = ["class-method", "default-argument", "method-override"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4540,7 +4540,7 @@ anchors = [
 ]
 summary = "For every method prototype in an implemented interface, a virtual implementing class shall either provide a compatible virtual method implementation or redeclare a compatible pure virtual method prototype; omitting both is illegal."
 related_clauses = []
-tags = []
+tags = ["abstract-class", "interface-class", "method-override", "pure-virtual"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4564,7 +4564,7 @@ anchors = [
 ]
 summary = "A virtual method may initially override a nonvirtual base method, but after a method becomes virtual every subclass override remains virtual whether or not it repeats the virtual keyword."
 related_clauses = []
-tags = []
+tags = ["class-method", "dynamic-dispatch", "method-override"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4591,7 +4591,7 @@ related_clauses = [
     "7.8",
     "8.29",
 ]
-tags = []
+tags = ["associative-array", "class-handle", "garbage-collection", "weak-reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -4625,7 +4625,7 @@ anchors = [
 ]
 summary = "The built-in weak_reference class provides new() to create a weak reference, get() to query its referent, clear() to clear it, and static get_id() to query an object's identification value."
 related_clauses = []
-tags = []
+tags = ["class-method", "garbage-collection", "parameterized-class", "weak-reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -4649,7 +4649,7 @@ anchors = [
 ]
 summary = "When a referent becomes only weakly reachable, the memory manager shall atomically clear every weak reference to it, allowing the referent to be garbage collected."
 related_clauses = []
-tags = []
+tags = ["garbage-collection", "weak-reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -4675,7 +4675,7 @@ anchors = [
 ]
 summary = "weak_reference#(T)::new has prototype function new(T referent) and creates a weak reference whose referent is the supplied class handle."
 related_clauses = []
-tags = []
+tags = ["class-handle", "constructor", "parameterized-class", "weak-reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -4702,7 +4702,7 @@ related_clauses = [
     "8.30.4",
     "9.4.2",
 ]
-tags = []
+tags = ["timing-control", "weak-reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -4728,7 +4728,7 @@ anchors = [
 ]
 summary = "weak_reference#(T) provides static function longint get_id(T obj), which returns an identification value for the supplied referent object."
 related_clauses = []
-tags = []
+tags = ["class-method", "parameterized-class", "weak-reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -4754,7 +4754,7 @@ summary = "get_id(null) shall return 0; for a nonnull object it shall return a n
 related_clauses = [
     "8.16",
 ]
-tags = []
+tags = ["class-handle", "weak-reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -4778,7 +4778,7 @@ anchors = [
 ]
 summary = "A nonzero get_id value shall be unique among all live object instances regardless of type for that object's lifetime; after collection, the value may be reused for a new object."
 related_clauses = []
-tags = []
+tags = ["class-handle", "garbage-collection", "weak-reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -4803,7 +4803,7 @@ anchors = [
 ]
 summary = "get() returns the original referent handle while the weak reference remains uncleared and returns null after explicit or automatic clearing."
 related_clauses = []
-tags = []
+tags = ["class-handle", "weak-reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -4827,7 +4827,7 @@ anchors = [
 ]
 summary = "A weak_reference wrapper is an ordinary garbage-collected class object and becomes eligible for collection when no longer strongly reachable, independently of whether its referent has been collected."
 related_clauses = []
-tags = []
+tags = ["class-handle", "garbage-collection", "weak-reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -4851,7 +4851,7 @@ anchors = [
 ]
 summary = "Constructing a weak reference with a null referent is legal and issues no warning."
 related_clauses = []
-tags = []
+tags = ["constructor", "literal", "weak-reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -4877,7 +4877,7 @@ summary = "The built-in weak_reference class is declared in package std, so user
 related_clauses = [
     "26.7",
 ]
-tags = []
+tags = ["namespace", "package", "weak-reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -4901,7 +4901,7 @@ anchors = [
 ]
 summary = "weak_reference#(T) is a built-in parameterized class whose references permit object access without preventing garbage collection; T shall be a class type and any other actual type shall cause a compiler error."
 related_clauses = []
-tags = []
+tags = ["class-type", "diagnostic", "parameterized-class", "weak-reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -4925,7 +4925,7 @@ anchors = [
 ]
 summary = "Every weak_reference instance has its own object identity, so distinct wrappers for one referent compare as different wrapper objects while get() may return the same referent handle."
 related_clauses = []
-tags = []
+tags = ["class-handle", "comparison", "weak-reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"

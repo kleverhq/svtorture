@@ -11,7 +11,7 @@ anchors = [
 ]
 summary = "A value parameter may have unpacked array, unpacked structure, or other aggregate type, but assignment and override shall replace the aggregate as a whole; individual members cannot be separately assigned or overridden, though they may be read in expressions."
 related_clauses = []
-tags = []
+tags = ["aggregate", "parameter"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -35,7 +35,7 @@ anchors = [
 ]
 summary = "An anonymous enum, struct, or union type matches only itself among all data objects declared in the same declaration statement and matches no separately declared type."
 related_clauses = []
-tags = []
+tags = ["enum", "struct", "type-matching", "union"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -60,7 +60,7 @@ anchors = [
 ]
 summary = "An anonymous enum, unpacked struct, or unpacked union is equivalent only to itself among objects in the same declaration statement and to no separately declared type."
 related_clauses = []
-tags = []
+tags = ["enum", "struct", "type-equivalence", "union"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -84,7 +84,7 @@ anchors = [
 ]
 summary = "Two arrays match only when both are packed or both unpacked, have the same fixed/dynamic/associative/queue kind, matching associative index types and matching element types, and, for fixed-size arrays, identical left and right bounds recursively across dimensions."
 related_clauses = []
-tags = []
+tags = ["array", "type-matching"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -111,7 +111,7 @@ summary = "Equivalent types and nonequivalent types connected by an implicit cas
 related_clauses = [
     "6.24",
 ]
-tags = []
+tags = ["conversion", "type-compatibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -135,7 +135,7 @@ anchors = [
 ]
 summary = "An automatic const may be initialized from any expression that would be legal for the same automatic variable without const."
 related_clauses = []
-tags = []
+tags = ["const", "lifetime"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -159,7 +159,7 @@ anchors = [
 ]
 summary = "References to automatic variables and to elements or members of dynamically sized variables are permitted only within procedural blocks."
 related_clauses = []
-tags = []
+tags = ["dynamic-array", "lifetime", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -183,7 +183,7 @@ anchors = [
 ]
 summary = "Automatic conversion to a narrower integral width discards the source's most-significant bits."
 related_clauses = []
-tags = []
+tags = ["conversion", "integral", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -209,7 +209,7 @@ summary = "Variables in an automatic task, function, or block are local and auto
 related_clauses = [
     "6.8",
 ]
-tags = []
+tags = ["lifetime", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -233,7 +233,7 @@ anchors = [
 ]
 summary = "Automatic variables and elements of dynamically sized arrays shall not be written by nonblocking assignment, continuous assignment, or procedural continuous assignment."
 related_clauses = []
-tags = []
+tags = ["dynamic-array", "lifetime", "nba", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -257,7 +257,7 @@ anchors = [
 ]
 summary = "Automatic conversion to a wider integral width zero-extends an unsigned value and sign-extends a signed value."
 related_clauses = []
-tags = []
+tags = ["conversion", "integral", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -281,7 +281,7 @@ anchors = [
 ]
 summary = "Conversion to bit loses x state information, whereas conversion to a corresponding logic representation preserves x values."
 related_clauses = []
-tags = []
+tags = ["conversion", "four-state", "two-state"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -305,7 +305,7 @@ anchors = [
 ]
 summary = "When an associative array is converted to packed representation, its items are packed in index-sorted order with the first indexed item in the most-significant bits."
 related_clauses = []
-tags = []
+tags = ["associative-array", "bit-stream", "index-order", "layout"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -332,7 +332,7 @@ related_clauses = [
     "8.11",
     "8.18",
 ]
-tags = []
+tags = ["bit-stream", "class-handle", "diagnostic"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -356,7 +356,7 @@ anchors = [
 ]
 summary = "An associative array type or class type is illegal as the destination type of a bit-stream cast."
 related_clauses = []
-tags = []
+tags = ["associative-array", "bit-stream", "class-type", "diagnostic"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -380,7 +380,7 @@ anchors = [
 ]
 summary = "A bit-stream cast between differently sized fixed source/destination types is a compile-time error when either type is unpacked; when either contains dynamically sized data, a size mismatch is reported at compile or run time as soon as determinable."
 related_clauses = []
-tags = []
+tags = ["bit-stream", "diagnostic", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -406,7 +406,7 @@ anchors = [
 ]
 summary = "A bit-stream cast first packs source_t into an equal-bit-count generic packed value that is 4-state if any source data is 4-state and otherwise 2-state, then converts that packed value to dest_t, applying 4-state-to-2-state conversion to destination portions designated 2-state."
 related_clauses = []
-tags = []
+tags = ["bit-stream", "conversion", "four-state", "two-state"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -431,7 +431,7 @@ anchors = [
 ]
 summary = "For a bit-stream cast destination, extraction proceeds left-to-right; after fixed items consume their sizes, the first unbounded dynamic item takes all remaining bits and later dynamic items remain empty, including when the first dynamic item occurs mid-structure."
 related_clauses = []
-tags = []
+tags = ["array", "bit-stream", "dynamic-array", "layout"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -455,7 +455,7 @@ anchors = [
 ]
 summary = "When a bit-stream cast source contains one or more dynamically sized values in any position, every realized dynamically sized source value is included in the bit stream."
 related_clauses = []
-tags = []
+tags = ["array", "bit-stream", "dynamic-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -479,7 +479,7 @@ anchors = [
 ]
 summary = "When a dynamic array, queue, or string is converted to packed representation, its item at index 0 occupies the most-significant bits and subsequent items follow in index order."
 related_clauses = []
-tags = []
+tags = ["array", "bit-stream", "layout", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -503,7 +503,7 @@ anchors = [
 ]
 summary = "For bit-stream casting, string is treated as a dynamic array of bytes."
 related_clauses = []
-tags = []
+tags = ["array", "bit-stream", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -531,7 +531,7 @@ anchors = [
 ]
 summary = "Bit-stream types recursively include integral, packed, and string types; unpacked arrays, structures, and classes composed of bit-stream types; and dynamic, associative, or queue arrays of such types."
 related_clauses = []
-tags = []
+tags = ["aggregate", "array", "bit-stream", "class"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -555,7 +555,7 @@ anchors = [
 ]
 summary = "bit is a 2-state unsigned integral type whose vector width is user-defined."
 related_clauses = []
-tags = []
+tags = ["integral", "two-state", "vector"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -584,7 +584,7 @@ summary = "A built-in net's data type shall be a 4-state integral type, includin
 related_clauses = [
     "6.11.1",
 ]
-tags = []
+tags = ["aggregate", "four-state", "net"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -614,7 +614,7 @@ related_clauses = [
     "A.2.1.3",
     "10",
 ]
-tags = []
+tags = ["lexical", "net"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -642,7 +642,7 @@ anchors = [
 ]
 summary = "The built-in net-type names are wire, tri, tri0, supply0, wand, triand, tri1, supply1, wor, trior, trireg, and uwire."
 related_clauses = []
-tags = []
+tags = ["net"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -667,7 +667,7 @@ anchors = [
 ]
 summary = "Every occurrence of a given built-in data type matches every other occurrence of that same built-in type in every scope; types not satisfying a matching rule are nonmatching."
 related_clauses = []
-tags = []
+tags = ["type-matching"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -691,7 +691,7 @@ anchors = [
 ]
 summary = "byte is a 2-state, 8-bit signed integer data type and may represent an ASCII character."
 related_clauses = []
-tags = []
+tags = ["integral", "signedness", "sizing", "two-state"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -717,7 +717,7 @@ summary = "Within a capacitive network, charge strength propagates from a larger
 related_clauses = [
     "28",
 ]
-tags = []
+tags = ["net", "resolution", "strength", "trireg"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -743,7 +743,7 @@ summary = "Every assignment-compatible pair and every nonequivalent pair with a 
 related_clauses = [
     "6.24",
 ]
-tags = []
+tags = ["cast", "conversion", "type-compatibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -772,7 +772,7 @@ related_clauses = [
     "A.8.4",
     "A.2.2.1",
 ]
-tags = []
+tags = ["cast", "constant-expression", "lexical"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -796,7 +796,7 @@ anchors = [
 ]
 summary = "A cast to a predefined type uses that predefined type keyword as its prefix; a cast to a user-defined type uses its type identifier."
 related_clauses = []
-tags = []
+tags = ["cast", "lexical", "type-reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -822,7 +822,7 @@ anchors = [
 ]
 summary = "A chandle may be assigned only from another chandle or from null."
 related_clauses = []
-tags = []
+tags = ["chandle"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -848,7 +848,7 @@ summary = "Chandle values may be inserted into associative arrays, but the relat
 related_clauses = [
     "7.8",
 ]
-tags = []
+tags = ["associative-array", "chandle", "index-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -872,7 +872,7 @@ anchors = [
 ]
 summary = "In a Boolean context, a null chandle evaluates to 0 and every nonnull chandle evaluates to 1."
 related_clauses = []
-tags = []
+tags = ["chandle", "conditional"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -898,7 +898,7 @@ summary = "A chandle may be declared and used as a class member."
 related_clauses = [
     "8",
 ]
-tags = []
+tags = ["chandle", "class-property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -922,7 +922,7 @@ anchors = [
 ]
 summary = "A chandle variable is declared with the chandle data-type keyword followed by a valid variable identifier and semicolon."
 related_clauses = []
-tags = []
+tags = ["chandle", "lexical"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -948,7 +948,7 @@ anchors = [
 ]
 summary = "The only equality-family operations permitted on chandles are ==, !=, ===, and !== against another chandle or null; case equality and inequality have the same semantics as == and != for chandles."
 related_clauses = []
-tags = []
+tags = ["chandle", "comparison", "equality"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -973,7 +973,7 @@ anchors = [
 ]
 summary = "A chandle may not appear in an expression except for the equality, case-equality, and Boolean uses expressly permitted by Clause 6.14."
 related_clauses = []
-tags = []
+tags = ["chandle"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -997,7 +997,7 @@ anchors = [
 ]
 summary = "A function may have chandle return type and return a chandle value."
 related_clauses = []
-tags = []
+tags = ["chandle", "function", "return-value"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1024,7 +1024,7 @@ summary = "A chandle is always initially null, and SystemVerilog null correspond
 related_clauses = [
     "35",
 ]
-tags = []
+tags = ["chandle", "dpi", "initialization"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1050,7 +1050,7 @@ summary = "chandle stores pointers exchanged through DPI and its platform-depend
 related_clauses = [
     "35",
 ]
-tags = []
+tags = ["chandle", "dpi", "pointer"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1074,7 +1074,7 @@ anchors = [
 ]
 summary = "A chandle may be passed as an argument to a subroutine."
 related_clauses = []
-tags = []
+tags = ["chandle", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1101,7 +1101,7 @@ anchors = [
 ]
 summary = "A trireg charge-strength specification shall use one of the capacitance-size keywords small, medium, or large."
 related_clauses = []
-tags = []
+tags = ["lexical", "strength", "trireg"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1127,7 +1127,7 @@ anchors = [
 ]
 summary = "A charge strength specification is legal only when declaring a net of type trireg."
 related_clauses = []
-tags = []
+tags = ["net", "strength", "trireg"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1153,7 +1153,7 @@ summary = "Expressions and variables referring to class objects have singular cl
 related_clauses = [
     "8",
 ]
-tags = []
+tags = ["class-handle"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1179,7 +1179,7 @@ summary = "Class methods are automatic by default regardless of the lifetime att
 related_clauses = [
     "8",
 ]
-tags = []
+tags = ["class-method", "function", "lifetime"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1205,7 +1205,7 @@ summary = "A variable declared with a class type stores a handle referring to a 
 related_clauses = [
     "8",
 ]
-tags = []
+tags = ["class-handle"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1232,7 +1232,7 @@ summary = "const'(expression) preserves the expression's type and value while tr
 related_clauses = [
     "6.20.6",
 ]
-tags = []
+tags = ["cast", "const", "conversion"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1259,7 +1259,7 @@ summary = "A const class object handle cannot be reassigned after initialization
 related_clauses = [
     "8",
 ]
-tags = []
+tags = ["class-handle", "const"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -1284,7 +1284,7 @@ anchors = [
 ]
 summary = "Unlike localparam, which is fixed during elaboration, a const may receive its one-time initialization during simulation, including upon entry to an automatic task."
 related_clauses = []
-tags = []
+tags = ["const", "initialization", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1308,7 +1308,7 @@ anchors = [
 ]
 summary = "A continuous assignment to a variable applies automatic type conversion and discards drive-strength information, including when the source can produce strengths other than St0, St1, StX, or HiZ."
 related_clauses = []
-tags = []
+tags = ["continuous-assignment", "conversion", "strength", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1337,7 +1337,7 @@ related_clauses = [
     "10",
     "28",
 ]
-tags = []
+tags = ["continuous-assignment", "drive-strength", "net"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1363,7 +1363,7 @@ summary = "A data object shall be declared before it is used, except where the u
 related_clauses = [
     "6.10",
 ]
-tags = []
+tags = ["lexical", "source-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1389,7 +1389,7 @@ summary = "An uninitialized enumeration variable receives the default initial va
 related_clauses = [
     "6.19",
 ]
-tags = []
+tags = ["enum", "initialization"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1417,7 +1417,7 @@ related_clauses = [
     "6.17",
     "15.5",
 ]
-tags = []
+tags = ["event", "initialization"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1444,7 +1444,7 @@ anchors = [
 ]
 summary = "A variable of 4-state integral type with no initializer has all bits initialized to x."
 related_clauses = []
-tags = []
+tags = ["four-state", "initialization"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1468,7 +1468,7 @@ anchors = [
 ]
 summary = "An uninitialized class-handle variable has null value."
 related_clauses = []
-tags = []
+tags = ["class", "initialization"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1492,7 +1492,7 @@ anchors = [
 ]
 summary = "A module, interface, package, or program may use automatic or static as a lifetime qualifier controlling the default lifetime of variables in tasks, functions, and blocks defined within it; absent a qualifier, the default is static."
 related_clauses = []
-tags = []
+tags = ["lifetime", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1516,7 +1516,7 @@ anchors = [
 ]
 summary = "An uninitialized real or shortreal variable has default value 0.0."
 related_clauses = []
-tags = []
+tags = ["initialization", "real"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1543,7 +1543,7 @@ summary = "byte, shortint, int, integer, and longint are signed by default, and 
 related_clauses = [
     "11.4.3.1",
 ]
-tags = []
+tags = ["integral", "signedness"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1568,7 +1568,7 @@ anchors = [
 ]
 summary = "A string variable declared without an initializer starts as the empty string, whose length is zero."
 related_clauses = []
-tags = []
+tags = ["initialization", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1594,7 +1594,7 @@ summary = "A trireg net declared without an explicit charge strength has medium 
 related_clauses = [
     "28.16",
 ]
-tags = []
+tags = ["net", "strength"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1621,7 +1621,7 @@ anchors = [
 ]
 summary = "A variable of 2-state integral type with no initializer has all bits initialized to 0."
 related_clauses = []
-tags = []
+tags = ["initialization", "two-state"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1647,7 +1647,7 @@ summary = "time, bit, reg, logic, and arrays of these types are unsigned by defa
 related_clauses = [
     "11",
 ]
-tags = []
+tags = ["integral", "signedness", "vector"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1672,7 +1672,7 @@ anchors = [
 ]
 summary = "The $ special constant has context-specific meaning and may be used only in the contexts explicitly enumerated by Clause 6.20.7."
 related_clauses = []
-tags = []
+tags = ["context", "literal"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -1700,7 +1700,7 @@ related_clauses = [
     "19.5.2",
     "19.6.1",
 ]
-tags = []
+tags = ["context", "coverage", "covergroup", "range"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -1726,7 +1726,7 @@ summary = "In an integer_covergroup_expression within a cross-coverage bin selec
 related_clauses = [
     "19.6.1.2",
 ]
-tags = []
+tags = ["context", "coverage", "coverage-cross"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -1754,7 +1754,7 @@ related_clauses = [
     "12.5.4",
     "18.5.3",
 ]
-tags = []
+tags = ["context", "range"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -1780,7 +1780,7 @@ summary = "In an unpacked array declaration, dimension [$] declares a queue."
 related_clauses = [
     "7.10",
 ]
-tags = []
+tags = ["array-dimension", "queue"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -1806,7 +1806,7 @@ summary = "In a queue select, $ denotes the index of the queue's last element."
 related_clauses = [
     "7.10",
 ]
-tags = []
+tags = ["array-indexing", "queue"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -1832,7 +1832,7 @@ summary = "Except inside a queue select, $ shall be the entire self-contained ex
 related_clauses = [
     "7.10",
 ]
-tags = []
+tags = ["context", "queue"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -1857,7 +1857,7 @@ anchors = [
 ]
 summary = "$ is permitted as a sequence_actual_arg or property_actual_arg supplied in a sequence, property, or checker instance, including use by the formal as a cycle-delay upper bound."
 related_clauses = []
-tags = []
+tags = ["context", "property", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -1884,7 +1884,7 @@ summary = "$ is a symbolic, context-dependent value and does not represent a num
 related_clauses = [
     "11.3.5",
 ]
-tags = []
+tags = ["context", "parameter"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -1909,7 +1909,7 @@ anchors = [
 ]
 summary = "As the upper endpoint of [constant_expression:$] in a sequence or property cycle-delay range, $ denotes a finite but unbounded maximum."
 related_clauses = []
-tags = []
+tags = ["cycle-delay", "sequence", "timing-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -1936,7 +1936,7 @@ summary = "$ may initialize a value parameter of simple bit-vector type, and tha
 related_clauses = [
     "6.11.1",
 ]
-tags = []
+tags = ["context", "parameter"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -1963,7 +1963,7 @@ anchors = [
 ]
 summary = "Dynamic arrays, associative arrays, and queues are equivalent only when they have the same array kind and equivalent element types, plus equivalent associative index types where applicable."
 related_clauses = []
-tags = []
+tags = ["associative-array", "dynamic-array", "queue", "type-equivalence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1987,7 +1987,7 @@ anchors = [
 ]
 summary = "Function-form $cast returns 1 and assigns on success; on invalid assignment it returns 0, leaves the destination unchanged, and issues neither compile-time nor run-time error."
 related_clauses = []
-tags = []
+tags = ["cast", "conversion", "diagnostic", "function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -2013,7 +2013,7 @@ anchors = [
 ]
 summary = "Task-form $cast performs a valid assignment; the compiler performs no type checking for the call, and an invalid assignment instead causes a run-time error while leaving the destination unchanged."
 related_clauses = []
-tags = []
+tags = ["cast", "conversion", "diagnostic", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2044,7 +2044,7 @@ anchors = [
 ]
 summary = "$cast may be called as function int or task, each taking destination variable and source expression arguments; it attempts assignment of the source value to the destination despite potentially differing data types."
 related_clauses = []
-tags = []
+tags = ["cast", "function", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2072,7 +2072,7 @@ related_clauses = [
     "6.22.3",
     "6.22.4",
 ]
-tags = []
+tags = ["cast", "conversion", "type-compatibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2103,7 +2103,7 @@ summary = "If a string replication has at least one string-typed operand or a no
 related_clauses = [
     "11.4.12.2",
 ]
-tags = []
+tags = ["replication", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -2131,7 +2131,7 @@ related_clauses = [
     "6.16.2",
     "6.16.3",
 ]
-tags = []
+tags = ["diagnostic", "invalid-index", "string-index"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2160,7 +2160,7 @@ summary = "An enum member or variable used in an expression automatically conver
 related_clauses = [
     "11",
 ]
-tags = []
+tags = ["conversion", "enum", "integral"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2187,7 +2187,7 @@ anchors = [
 ]
 summary = "The enum form name[N] requires positive integral N and generates N named constants name0 through nameN-1, with consecutive enum values."
 related_clauses = []
-tags = []
+tags = ["enum", "range"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2216,7 +2216,7 @@ anchors = [
 ]
 summary = "The enum form name[N]=C requires positive integral N, creates name0 through nameN-1, assigns C to the first generated name, and assigns consecutive values to the remainder."
 related_clauses = []
-tags = []
+tags = ["enum", "range"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2244,7 +2244,7 @@ summary = "An enum type has an optional integral base type, one or more comma-se
 related_clauses = [
     "A.2.2.1",
 ]
-tags = []
+tags = ["enum", "lexical"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2268,7 +2268,7 @@ anchors = [
 ]
 summary = "An enum with no explicit base data type uses int; every nondefault base type shall be explicitly declared."
 related_clauses = []
-tags = []
+tags = ["enum", "integral"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2292,7 +2292,7 @@ anchors = [
 ]
 summary = "Each enum encoding expression is evaluated as cast to the enum base type and shall be representable without loss: discarded bits must be zero for unsigned bases or equal the result sign bit for signed bases. The cast result is used for uniqueness and subsequent implicit increment."
 related_clauses = []
-tags = []
+tags = ["cast", "enum", "range", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2320,7 +2320,7 @@ anchors = [
 ]
 summary = "The enum form name[N:M] requires nonnegative integral N and M and creates names from nameN through nameM inclusively, incrementing or decrementing the generated numeric suffix by one toward M while assigning consecutive enum values."
 related_clauses = []
-tags = []
+tags = ["enum", "range"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2347,7 +2347,7 @@ anchors = [
 ]
 summary = "The enum form name[N:M]=C requires nonnegative integral endpoints, generates names inclusively from suffix N toward M, assigns C to the first generated name, and assigns consecutive enum values to subsequent names."
 related_clauses = []
-tags = []
+tags = ["enum", "range"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2372,7 +2372,7 @@ anchors = [
 ]
 summary = "enum.first() takes no arguments, returns the enum type, and yields the first member declared in the enumeration."
 related_clauses = []
-tags = []
+tags = ["enum", "function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2398,7 +2398,7 @@ anchors = [
 ]
 summary = "The first enum member defaults to 0 when unassigned; each later unassigned member receives the previous value plus one, explicit values override and restart that sequence, and implicit increment past the base type maximum is an error."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "enum"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2424,7 +2424,7 @@ summary = "An explicit enum member value shall be an elaboration-time constant e
 related_clauses = [
     "6.20",
 ]
-tags = []
+tags = ["constant-expression", "elaboration", "enum"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2449,7 +2449,7 @@ anchors = [
 ]
 summary = "enum.last() takes no arguments, returns the enum type, and yields the last member declared in the enumeration."
 related_clauses = []
-tags = []
+tags = ["enum", "function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2473,7 +2473,7 @@ anchors = [
 ]
 summary = "Enum member identifiers are not overloaded literals; two enum declarations in the same scope may not introduce the same enumerator names."
 related_clauses = []
-tags = []
+tags = ["enum", "namespace", "redeclaration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2497,7 +2497,7 @@ anchors = [
 ]
 summary = "Every enumerator name in an enum declaration shall be unique; assigning two values to the same name is an error."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "enum"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2521,7 +2521,7 @@ anchors = [
 ]
 summary = "Every enumerator value in one enum declaration shall be unique; two names resolving to the same value are an error whether values are explicit or automatically incremented."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "enum"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2546,7 +2546,7 @@ anchors = [
 ]
 summary = "enum.name() takes no arguments, returns string, and for a receiver whose value is a declared enum member yields that member's declared identifier."
 related_clauses = []
-tags = []
+tags = ["enum", "function", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2570,7 +2570,7 @@ anchors = [
 ]
 summary = "enum.name() returns the empty string when the receiver's value is not a member of its enumeration."
 related_clauses = []
-tags = []
+tags = ["enum", "function", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2594,7 +2594,7 @@ anchors = [
 ]
 summary = "An enumerated type defines a strongly typed set of integral named constants whose names may be used and displayed in place of their underlying values."
 related_clauses = []
-tags = []
+tags = ["enum", "integral"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2621,7 +2621,7 @@ summary = "For a receiver that is an enum member, enum.next(int unsigned N=1) re
 related_clauses = [
     "6.8",
 ]
-tags = []
+tags = ["enum", "function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2647,7 +2647,7 @@ summary = "enum.next() returns the enumeration's default initial value when the 
 related_clauses = [
     "6.8",
 ]
-tags = []
+tags = ["enum", "function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2671,7 +2671,7 @@ anchors = [
 ]
 summary = "An enum member without an explicit value is a syntax error when the preceding member's assigned value contains x or z, because that value cannot be automatically incremented."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "enum", "four-state"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2696,7 +2696,7 @@ anchors = [
 ]
 summary = "enum.num() takes no arguments, returns int, and yields the number of declared members in the enumeration, including members produced by ranges."
 related_clauses = []
-tags = []
+tags = ["enum", "function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2723,7 +2723,7 @@ summary = "For a receiver that is an enum member, enum.prev(int unsigned N=1) re
 related_clauses = [
     "6.8",
 ]
-tags = []
+tags = ["enum", "function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2749,7 +2749,7 @@ summary = "enum.prev() returns the enumeration's default initial value when the 
 related_clauses = [
     "6.8",
 ]
-tags = []
+tags = ["enum", "function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2776,7 +2776,7 @@ anchors = [
 ]
 summary = "In enumeration element syntax, bare name receives the next consecutive enum value, while name=C assigns constant C to that name."
 related_clauses = []
-tags = []
+tags = ["enum", "range"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2800,7 +2800,7 @@ anchors = [
 ]
 summary = "A sized literal used as an enum member value shall have exactly the enum base type's bit width, even when its numeric value would otherwise be representable."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "enum", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2831,7 +2831,7 @@ related_clauses = [
     "6.24.1",
     "6.24.2",
 ]
-tags = []
+tags = ["conversion", "diagnostic", "enum", "type-compatibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2855,7 +2855,7 @@ anchors = [
 ]
 summary = "A type identifier is legal as an enum base only when it denotes an integer atom type or integer vector type; an alias of an integer atom type may not be followed by an additional packed dimension."
 related_clauses = []
-tags = []
+tags = ["enum", "integral", "typedef"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2881,7 +2881,7 @@ summary = "Assigning one event variable to another makes both variables refer to
 related_clauses = [
     "15.5",
 ]
-tags = []
+tags = ["event"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2907,7 +2907,7 @@ summary = "An event variable may be compared with another event variable."
 related_clauses = [
     "15.5",
 ]
-tags = []
+tags = ["comparison", "event"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2933,7 +2933,7 @@ summary = "Assigning null to an event variable breaks that variable's associatio
 related_clauses = [
     "15.5",
 ]
-tags = []
+tags = ["event"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2960,7 +2960,7 @@ related_clauses = [
     "9.4.2",
     "15.5",
 ]
-tags = []
+tags = ["event", "timing-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2987,7 +2987,7 @@ related_clauses = [
     "9.4.2",
     "15.5",
 ]
-tags = []
+tags = ["event", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3013,7 +3013,7 @@ summary = "A variable declared by a for-loop initializer is automatic by default
 related_clauses = [
     "12.7.1",
 ]
-tags = []
+tags = ["lifetime", "loop", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3039,7 +3039,7 @@ summary = "A fork-join block remains alive throughout every process it spawns, a
 related_clauses = [
     "9.3.2",
 ]
-tags = []
+tags = ["forkjoin", "lifetime", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3063,7 +3063,7 @@ anchors = [
 ]
 summary = "When a forward typedef specifies enum, struct, union, class, or interface class, the final definition shall conform to that specified basic type category."
 related_clauses = []
-tags = []
+tags = ["forward-type", "lexical", "typedef"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3094,7 +3094,7 @@ summary = "A forward typedef may declare an eventual enum, struct, union, class,
 related_clauses = [
     "A.2.1.3",
 ]
-tags = []
+tags = ["forward-type", "lexical", "typedef"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3118,7 +3118,7 @@ anchors = [
 ]
 summary = "A forward typedef's final data type shall resolve in the same local scope or generate block; failure to resolve its identifier to a data type is an error."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "forward-type", "scope", "typedef"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3142,7 +3142,7 @@ anchors = [
 ]
 summary = "In one scope, a forward type declaration may occur before or after the final definition, and multiple forward declarations of the same type identifier are legal."
 related_clauses = []
-tags = []
+tags = ["forward-type", "redeclaration", "typedef"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3166,7 +3166,7 @@ anchors = [
 ]
 summary = "An enum with an explicit 4-state base type may assign x- or z-containing values to its named members."
 related_clauses = []
-tags = []
+tags = ["enum", "four-state"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3194,7 +3194,7 @@ anchors = [
 ]
 summary = "The SystemVerilog logic value set comprises 0, 1, x, and z: 0 and 1 denote false/true logic values, x denotes unknown, and z denotes high impedance."
 related_clauses = []
-tags = []
+tags = ["four-state", "literal"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3218,7 +3218,7 @@ anchors = [
 ]
 summary = "Automatic conversion from a 4-state value to a 2-state value converts every x and z bit to 0."
 related_clauses = []
-tags = []
+tags = ["conversion", "four-state", "two-state"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3242,7 +3242,7 @@ anchors = [
 ]
 summary = "Any static variable may be referenced hierarchically, including one inside an automatic task or function, except a static variable declared in an unnamed block."
 related_clauses = []
-tags = []
+tags = ["hierarchy", "lifetime", "static"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3271,7 +3271,7 @@ related_clauses = [
     "23.9",
     "22.8",
 ]
-tags = []
+tags = ["continuous-assignment", "implicit-net", "net"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3300,7 +3300,7 @@ related_clauses = [
     "23.9",
     "22.8",
 ]
-tags = []
+tags = ["implicit-net", "net", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3328,7 +3328,7 @@ related_clauses = [
     "23.2.2.1",
     "22.8",
 ]
-tags = []
+tags = ["implicit-net", "ports", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3354,7 +3354,7 @@ summary = "An implicit net belongs only to the scope containing the reference th
 related_clauses = [
     "27",
 ]
-tags = []
+tags = ["implicit-net", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3379,7 +3379,7 @@ anchors = [
 ]
 summary = "A data declaration may omit an explicit data type before its variable declarators only when var is present; with var and no type, or only signing and/or packed ranges, the implicit type is logic with those characteristics."
 related_clauses = []
-tags = []
+tags = ["lexical", "type-inference", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3407,7 +3407,7 @@ related_clauses = [
     "6.23",
     "6.20.3",
 ]
-tags = []
+tags = ["class-scope", "forward-type", "type-reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3432,7 +3432,7 @@ anchors = [
 ]
 summary = "Where a local variable in a static task/function/block could legally be automatic, a declaration initializer requires explicit static to state one-time initialization intent; static is optional where automatic would be illegal."
 related_clauses = []
-tags = []
+tags = ["initialization", "lifetime", "scope", "static"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3458,7 +3458,7 @@ summary = "A variable declaration initializer may be a run-time expression rathe
 related_clauses = [
     "15.4.1",
 ]
-tags = []
+tags = ["initialization", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3484,7 +3484,7 @@ summary = "Connecting a variable to an input port declaration implies a continuo
 related_clauses = [
     "23.3.3",
 ]
-tags = []
+tags = ["continuous-assignment", "ports", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3508,7 +3508,7 @@ anchors = [
 ]
 summary = "A user-defined type declared inside an instantiated design scope is unique per instance. Matching or equivalence across instances for class, enum, unpacked struct, or unpacked union requires a package-imported or higher compilation-unit declaration; matching packed structs/unions likewise requires shared higher declaration."
 related_clauses = []
-tags = []
+tags = ["aggregate", "class", "enum", "type-equivalence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3534,7 +3534,7 @@ summary = "Connecting a variable to an instance output port implies a continuous
 related_clauses = [
     "23.3.3",
 ]
-tags = []
+tags = ["continuous-assignment", "ports", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3560,7 +3560,7 @@ anchors = [
 ]
 summary = "int is a 2-state, 32-bit signed integer data type."
 related_clauses = []
-tags = []
+tags = ["integral", "signedness", "two-state"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3584,7 +3584,7 @@ anchors = [
 ]
 summary = "integer is a 4-state, 32-bit signed integer data type."
 related_clauses = []
-tags = []
+tags = ["four-state", "integral", "signedness"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3608,7 +3608,7 @@ anchors = [
 ]
 summary = "An integral size cast whose specified size is zero or negative is an error."
 related_clauses = []
-tags = []
+tags = ["cast", "diagnostic", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3634,7 +3634,7 @@ summary = "Bit-selects and part-selects are permitted on parameters of integral 
 related_clauses = [
     "6.11.1",
 ]
-tags = []
+tags = ["array-indexing", "parameter", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3662,7 +3662,7 @@ summary = "signed'(expr) or unsigned'(expr) requires an integral expression, pre
 related_clauses = [
     "11.7",
 ]
-tags = []
+tags = ["cast", "conversion", "integral", "signedness"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3688,7 +3688,7 @@ anchors = [
 ]
 summary = "A positive integral constant cast type n resizes an integral expression as assignment to packed [n-1:0], padding or truncating as needed; result signedness remains the expression's self-determined signedness, and element state type is bit for 2-state input or logic otherwise."
 related_clauses = []
-tags = []
+tags = ["cast", "conversion", "integral", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3712,7 +3712,7 @@ anchors = [
 ]
 summary = "Assignment of a non-real expression to a real performs implicit conversion, treating every x or z source bit as zero when forming the real value."
 related_clauses = []
-tags = []
+tags = ["conversion", "four-state", "real"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3741,7 +3741,7 @@ summary = "Casting an integral value to string dynamically sizes the string, lef
 related_clauses = [
     "6.24",
 ]
-tags = []
+tags = ["cast", "conversion", "sizing", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3767,7 +3767,7 @@ summary = "An integral value may be assigned to a string variable only through a
 related_clauses = [
     "6.24",
 ]
-tags = []
+tags = ["cast", "conversion", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3791,7 +3791,7 @@ anchors = [
 ]
 summary = "Integral types are the basic integer types, packed arrays, packed structures, packed unions, and enumerations, each representing one integral value."
 related_clauses = []
-tags = []
+tags = ["integral"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3816,7 +3816,7 @@ anchors = [
 ]
 summary = "An interconnect declaration may specify no more than one delay value."
 related_clauses = []
-tags = []
+tags = ["interconnect", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3843,7 +3843,7 @@ related_clauses = [
     "23.3.3.7.1",
     "23.3.3.7.2",
 ]
-tags = []
+tags = ["connectivity", "interconnect", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3871,7 +3871,7 @@ summary = "An interconnect declaration consists of interconnect, an optional imp
 related_clauses = [
     "A.2.1.3",
 ]
-tags = []
+tags = ["interconnect", "lexical"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3895,7 +3895,7 @@ anchors = [
 ]
 summary = "An interconnect may appear in an expression only as a net_lvalue whose every constituent net or port is also interconnect."
 related_clauses = []
-tags = []
+tags = ["connectivity", "interconnect"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3922,7 +3922,7 @@ related_clauses = [
     "23.3.3.7.1",
     "23.3.3.7.2",
 ]
-tags = []
+tags = ["array", "interconnect"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3946,7 +3946,7 @@ anchors = [
 ]
 summary = "A net_alias statement may use an interconnect net_lvalue."
 related_clauses = []
-tags = []
+tags = ["interconnect", "net-alias"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3971,7 +3971,7 @@ anchors = [
 ]
 summary = "An interconnect declaration shall not contain an assignment expression."
 related_clauses = []
-tags = []
+tags = ["interconnect", "lexical"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3996,7 +3996,7 @@ anchors = [
 ]
 summary = "An interconnect declaration shall not specify drive strength or charge strength."
 related_clauses = []
-tags = []
+tags = ["interconnect", "strength"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4021,7 +4021,7 @@ anchors = [
 ]
 summary = "An interconnect declaration shall not specify a data type, although it may specify packed and unpacked dimensions."
 related_clauses = []
-tags = []
+tags = ["interconnect", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4049,7 +4049,7 @@ summary = "An interface-based typedef may select a type through an interface por
 related_clauses = [
     "A.2.1.3",
 ]
-tags = []
+tags = ["interface", "lexical", "type-reference", "typedef"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4073,7 +4073,7 @@ anchors = [
 ]
 summary = "A type reached through an interface port is not a prohibited hierarchical type reference when it is locally redefined with an interface-based typedef before use."
 related_clauses = []
-tags = []
+tags = ["interface", "type-reference", "typedef"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4099,7 +4099,7 @@ summary = "An uninitialized interface-class handle variable has null value."
 related_clauses = [
     "8",
 ]
-tags = []
+tags = ["class-handle", "initialization", "interface-class"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -4127,7 +4127,7 @@ summary = "$isunbounded accepts a parameter identifier or hierarchical parameter
 related_clauses = [
     "20.6.3",
 ]
-tags = []
+tags = ["function", "parameter", "type-query"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -4157,7 +4157,7 @@ related_clauses = [
     "23.10.2",
     "11.2.1",
 ]
-tags = []
+tags = ["elaboration", "parameter"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4185,7 +4185,7 @@ related_clauses = [
     "23.10.2",
     "11.2.1",
 ]
-tags = []
+tags = ["diagnostic", "parameter"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4211,7 +4211,7 @@ summary = "Within a module parameter_port_list, localparam makes that declaratio
 related_clauses = [
     "23.10",
 ]
-tags = []
+tags = ["parameter", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4235,7 +4235,7 @@ anchors = [
 ]
 summary = "The logic keyword may be used to declare variables or net data types and may be used as a component of constructed data types."
 related_clauses = []
-tags = []
+tags = ["lexical", "net", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4259,7 +4259,7 @@ anchors = [
 ]
 summary = "logic and reg are two keywords denoting the same data type; their naming does not imply different storage or hardware semantics."
 related_clauses = []
-tags = []
+tags = ["four-state", "integral", "type-equivalence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4283,7 +4283,7 @@ anchors = [
 ]
 summary = "logic is a 4-state unsigned integral type whose vector width is user-defined."
 related_clauses = []
-tags = []
+tags = ["four-state", "integral", "vector"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4309,7 +4309,7 @@ anchors = [
 ]
 summary = "longint is a 2-state, 64-bit signed integer data type."
 related_clauses = []
-tags = []
+tags = ["integral", "signedness", "two-state"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4335,7 +4335,7 @@ summary = "If two data types match, they are equivalent."
 related_clauses = [
     "6.22.1",
 ]
-tags = []
+tags = ["type-equivalence", "type-matching"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4359,7 +4359,7 @@ anchors = [
 ]
 summary = "An implementation may limit vector length, but shall support at least 65,536 bits."
 related_clauses = []
-tags = []
+tags = ["sizing", "vector"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -4385,7 +4385,7 @@ summary = "Within one namespace, a name already introduced by a net, variable, o
 related_clauses = [
     "3.13",
 ]
-tags = []
+tags = ["namespace", "redeclaration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4409,7 +4409,7 @@ anchors = [
 ]
 summary = "A typedef-defined enum, struct, union, or class matches itself and every object declared using that type within the type identifier's scope; a separately defined structurally identical named type does not match."
 related_clauses = []
-tags = []
+tags = ["aggregate", "class", "enum", "type-matching"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4435,7 +4435,7 @@ summary = "When net bits combine, both the resulting logic value and strength ar
 related_clauses = [
     "28.12",
 ]
-tags = []
+tags = ["net", "net-resolution", "strength"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4461,7 +4461,7 @@ summary = "Every bit of a built-in net is 4-state and carries strength informati
 related_clauses = [
     "28.12",
 ]
-tags = []
+tags = ["four-state", "net", "strength"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4487,7 +4487,7 @@ summary = "A delay3 specification accepts one, two, or three parenthesized minty
 related_clauses = [
     "A.2.2.3",
 ]
-tags = []
+tags = ["lexical", "mintypmax", "net", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4513,7 +4513,7 @@ summary = "A drive-strength pair shall use complementary strength0/strength1 for
 related_clauses = [
     "A.2.2.2",
 ]
-tags = []
+tags = ["drive-strength", "lexical", "net"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4537,7 +4537,7 @@ anchors = [
 ]
 summary = "When a net has multiple drivers, the net type's resolution function determines the resultant value."
 related_clauses = []
-tags = []
+tags = ["net", "net-resolution"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4561,7 +4561,7 @@ anchors = [
 ]
 summary = "A force statement overrides a net's value, and releasing that force restores the value produced by normal net resolution."
 related_clauses = []
-tags = []
+tags = ["force-release", "net", "net-resolution"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4585,7 +4585,7 @@ anchors = [
 ]
 summary = "When a net declaration omits a data type, or specifies only signing and/or a packed range, its implicit data type is logic with the stated signing and dimensions."
 related_clauses = []
-tags = []
+tags = ["integral", "net", "type-inference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4609,7 +4609,7 @@ anchors = [
 ]
 summary = "A procedural assignment may not target a net."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "net", "procedural-assignment"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4633,7 +4633,7 @@ anchors = [
 ]
 summary = "A net may be driven by continuous assignments, primitive outputs, or module ports."
 related_clauses = []
-tags = []
+tags = ["connectivity", "net", "ports", "primitive"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4659,7 +4659,7 @@ summary = "Strength information associated with net bits is metadata in addition
 related_clauses = [
     "28",
 ]
-tags = []
+tags = ["net", "strength"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4684,7 +4684,7 @@ anchors = [
 ]
 summary = "In a net or port declaration, a net-type keyword may not be lexically followed immediately by reg; reg is permitted only when another lexical element intervenes."
 related_clauses = []
-tags = []
+tags = ["lexical", "net"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4711,7 +4711,7 @@ related_clauses = [
     "10",
     "28",
 ]
-tags = []
+tags = ["net", "net-resolution"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4735,7 +4735,7 @@ anchors = [
 ]
 summary = "A simple nettype declaration that renames a user-defined nettype matches its target nettype within the alias identifier's scope."
 related_clauses = []
-tags = []
+tags = ["nettype", "type-matching"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4763,7 +4763,7 @@ anchors = [
 ]
 summary = "A user-defined nettype's data type shall be a 4-state integral type, wholly 2-state integral type, real or shortreal, or a fixed-size unpacked array, structure, or union whose elements each have an otherwise valid nettype data type."
 related_clauses = []
-tags = []
+tags = ["aggregate", "nettype"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4788,7 +4788,7 @@ anchors = [
 ]
 summary = "A net declared using a user-defined nettype has that nettype's data type and, when present, its associated resolution function."
 related_clauses = []
-tags = []
+tags = ["nettype", "resolution"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4817,7 +4817,7 @@ summary = "A nettype declaration either names an explicit data type with an opti
 related_clauses = [
     "A.2.1.3",
 ]
-tags = []
+tags = ["lexical", "nettype"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4843,7 +4843,7 @@ summary = "When multiple user-nettype drivers change in one scheduling region, a
 related_clauses = [
     "4",
 ]
-tags = []
+tags = ["nettype", "resolution", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4867,7 +4867,7 @@ anchors = [
 ]
 summary = "The defining declaration of a user-defined nettype requires an explicit data type."
 related_clauses = []
-tags = []
+tags = ["lexical", "nettype"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4893,7 +4893,7 @@ summary = "A user-nettype driver value change schedules a net update in the Acti
 related_clauses = [
     "4",
 ]
-tags = []
+tags = ["nettype", "resolution", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4917,7 +4917,7 @@ anchors = [
 ]
 summary = "A user-defined nettype matches itself and the nettype of every net declared using it within the nettype identifier's scope."
 related_clauses = []
-tags = []
+tags = ["nettype", "type-matching"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4941,7 +4941,7 @@ anchors = [
 ]
 summary = "A chandle shall not be used in a continuous assignment."
 related_clauses = []
-tags = []
+tags = ["chandle", "continuous-assignment", "diagnostic"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4965,7 +4965,7 @@ anchors = [
 ]
 summary = "A chandle shall not be used in a sensitivity list or event expression."
 related_clauses = []
-tags = []
+tags = ["chandle", "diagnostic", "timing-control", "timing-event"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4991,7 +4991,7 @@ summary = "A chandle shall not be used within a packed type."
 related_clauses = [
     "7.2",
 ]
-tags = []
+tags = ["chandle", "diagnostic", "packed"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5017,7 +5017,7 @@ anchors = [
 ]
 summary = "A module, interface, program, or checker port shall not have chandle data type or otherwise use a chandle as a port."
 related_clauses = []
-tags = []
+tags = ["chandle", "diagnostic", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5041,7 +5041,7 @@ anchors = [
 ]
 summary = "A chandle value shall not be assigned to a variable of any non-chandle type."
 related_clauses = []
-tags = []
+tags = ["chandle", "conversion", "diagnostic"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5067,7 +5067,7 @@ summary = "A chandle shall not be a member of an untagged union."
 related_clauses = [
     "7.3",
 ]
-tags = []
+tags = ["chandle", "diagnostic", "union"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5093,7 +5093,7 @@ summary = "A defparam statement shall not override a type parameter."
 related_clauses = [
     "23.10.1",
 ]
-tags = []
+tags = ["diagnostic", "parameter", "type-parameter"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5119,7 +5119,7 @@ summary = "A type identifier may not be referenced through ordinary instance-hie
 related_clauses = [
     "6.18",
 ]
-tags = []
+tags = ["diagnostic", "hierarchy", "interface", "type-reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5146,7 +5146,7 @@ summary = "A real variable may not be referenced with a bit-select or part-selec
 related_clauses = [
     "11.5.1",
 ]
-tags = []
+tags = ["array-indexing", "diagnostic", "real"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5173,7 +5173,7 @@ summary = "posedge, negedge, and edge event controls may not be applied to a rea
 related_clauses = [
     "9.4.2",
 ]
-tags = []
+tags = ["diagnostic", "edge-control", "real"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5200,7 +5200,7 @@ summary = "A real-valued expression may not be used as the index of a vector bit
 related_clauses = [
     "11.5.1",
 ]
-tags = []
+tags = ["array-indexing", "diagnostic", "real", "vector"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5226,7 +5226,7 @@ summary = "A variable may not be connected to either side of an inout port."
 related_clauses = [
     "23.3.3",
 ]
-tags = []
+tags = ["argument-direction", "diagnostic", "ports", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5252,7 +5252,7 @@ summary = "If a class parameter has no default, every specialization of that cla
 related_clauses = [
     "8.25",
 ]
-tags = []
+tags = ["parameter", "parameterized-class", "type-parameter"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5281,7 +5281,7 @@ related_clauses = [
     "23.4",
     "24.3",
 ]
-tags = []
+tags = ["elaboration", "instantiation", "parameter"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5305,7 +5305,7 @@ anchors = [
 ]
 summary = "A data declaration outside a procedural context may not specify the automatic lifetime keyword."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "lifetime", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5331,7 +5331,7 @@ summary = "A non-static class property shall not be written by continuous or pro
 related_clauses = [
     "8",
 ]
-tags = []
+tags = ["class-property", "continuous-assignment", "procedural-continuous-assignment", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5361,7 +5361,7 @@ summary = "When a nonzero constant multiplier replicates only string-literal ope
 related_clauses = [
     "11.4.12",
 ]
-tags = []
+tags = ["replication", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -5386,7 +5386,7 @@ anchors = [
 ]
 summary = "A package typedef of an enum, struct, union, or class always matches itself regardless of the importing scope."
 related_clauses = []
-tags = []
+tags = ["package", "type-matching", "typedef"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5410,7 +5410,7 @@ anchors = [
 ]
 summary = "A struct or union declaration that has a packed dimension shall also include the packed keyword."
 related_clauses = []
-tags = []
+tags = ["lexical", "packed", "struct", "union"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5435,7 +5435,7 @@ anchors = [
 ]
 summary = "Packed arrays, packed structures, packed unions, and built-in integral types are equivalent when total bit count, 2-state versus 4-state domain, and signedness agree, regardless of packed organization."
 related_clauses = []
-tags = []
+tags = ["integral", "packed", "type-equivalence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5459,7 +5459,7 @@ anchors = [
 ]
 summary = "Packed types implicitly cast as integral values, so an explicit cast between packed types is not required; an explicit cast may nevertheless be written to request stronger type checking."
 related_clauses = []
-tags = []
+tags = ["conversion", "integral", "packed"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5483,7 +5483,7 @@ anchors = [
 ]
 summary = "A parameter, localparam, or specparam constant may be initialized from a literal."
 related_clauses = []
-tags = []
+tags = ["literal", "parameter"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5511,7 +5511,7 @@ related_clauses = [
     "23.2",
     "6.20.4",
 ]
-tags = []
+tags = ["elaboration", "parameter", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5535,7 +5535,7 @@ anchors = [
 ]
 summary = "Within a parameter list, a later value or type parameter declaration may depend on earlier parameters, including declaring a later value parameter using an earlier type parameter."
 related_clauses = []
-tags = []
+tags = ["parameter", "type-parameter"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5559,7 +5559,7 @@ anchors = [
 ]
 summary = "A parameter lacking an explicit range and having either a signed type or no type has implied range [final_value_size-1:0]."
 related_clauses = []
-tags = []
+tags = ["parameter", "signedness", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5590,7 +5590,7 @@ related_clauses = [
     "23.10.2.2",
     "23.10.1",
 ]
-tags = []
+tags = ["defparam", "elaboration", "instantiation", "parameter"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5618,7 +5618,7 @@ summary = "A parameter port list uses #(...), may be empty, and may contain valu
 related_clauses = [
     "A.1.3",
 ]
-tags = []
+tags = ["lexical", "parameter", "type-parameter"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -5643,7 +5643,7 @@ anchors = [
 ]
 summary = "A value parameter initializer or type-parameter assigned type may be omitted only within a parameter port list, and neither may be omitted from a localparam declaration even there."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "parameter", "type-parameter"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5669,7 +5669,7 @@ summary = "Assignments and overrides of parameters apply the standard real-to-in
 related_clauses = [
     "6.12.1",
 ]
-tags = []
+tags = ["conversion", "parameter", "real"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5696,7 +5696,7 @@ related_clauses = [
     "8.25",
     "8.23",
 ]
-tags = []
+tags = ["parameter", "parameterized-class", "type-parameter", "typedef"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5720,7 +5720,7 @@ anchors = [
 ]
 summary = "A variable-width simple bit-vector type matches a predefined-width simple vector type only when state domain, signedness, width, and canonical [width-1:0] range all agree."
 related_clauses = []
-tags = []
+tags = ["integral", "sizing", "type-matching", "vector"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5744,7 +5744,7 @@ anchors = [
 ]
 summary = "A variable declaration shall precede every simple reference to it and all variable declarations in a procedural block shall precede that block's statements."
 related_clauses = []
-tags = []
+tags = ["block", "scope", "source-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5768,7 +5768,7 @@ anchors = [
 ]
 summary = "A parameter declared with a range but no type is unsigned and retains its declared range and sign regardless of value overrides."
 related_clauses = []
-tags = []
+tags = ["parameter", "signedness", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5792,7 +5792,7 @@ anchors = [
 ]
 summary = "real has C double semantics, shortreal has C float semantics, and realtime is synonymous and interchangeable with real; objects of all three are real variables."
 related_clauses = []
-tags = []
+tags = ["real"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5816,7 +5816,7 @@ anchors = [
 ]
 summary = "Implicit assignment conversion from real to integer rounds to the nearest integer rather than truncating; an exact half is rounded away from zero."
 related_clauses = []
-tags = []
+tags = ["conversion", "real"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5840,7 +5840,7 @@ anchors = [
 ]
 summary = "Explicit signed or unsigned on a type still matches the unqualified type when the modifier merely restates that type's default signedness."
 related_clauses = []
-tags = []
+tags = ["signedness", "type-matching"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5866,7 +5866,7 @@ summary = "A variable may be shared across a port by using a ref port."
 related_clauses = [
     "23.3.3",
 ]
-tags = []
+tags = ["ports", "reference-argument", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5890,7 +5890,7 @@ anchors = [
 ]
 summary = "reg is a 4-state unsigned integral type whose vector width is user-defined."
 related_clauses = []
-tags = []
+tags = ["four-state", "integral", "vector"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5916,7 +5916,7 @@ summary = "A class method used as a nettype resolution function shall be static 
 related_clauses = [
     "13.8",
 ]
-tags = []
+tags = ["class-method", "nettype", "resolution", "static-member"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5940,7 +5940,7 @@ anchors = [
 ]
 summary = "A resolution function shall be automatic or preserve no state, have no side effects, and neither resize nor write any part of its dynamic-array input."
 related_clauses = []
-tags = []
+tags = ["function", "nettype", "pure", "resolution"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5965,7 +5965,7 @@ anchors = [
 ]
 summary = "For nettype data type T, its resolution function shall return T and have exactly one input argument: a dynamic array of T elements, enabling an arbitrary number of drivers."
 related_clauses = []
-tags = []
+tags = ["dynamic-array", "function", "nettype", "resolution"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5991,7 +5991,7 @@ summary = "A reg, logic, bit, matching user-defined type, or implicit logic obje
 related_clauses = [
     "7.4",
 ]
-tags = []
+tags = ["integral", "sizing", "vector"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6017,7 +6017,7 @@ summary = "The bit size of scalar logic is 1."
 related_clauses = [
     "20.6.2",
 ]
-tags = []
+tags = ["sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6041,7 +6041,7 @@ anchors = [
 ]
 summary = "A scalared vector net permits bit-selects and part-selects."
 related_clauses = []
-tags = []
+tags = ["array-indexing", "net", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6067,7 +6067,7 @@ anchors = [
 ]
 summary = "shortint is a 2-state, 16-bit signed integer data type."
 related_clauses = []
-tags = []
+tags = ["integral", "signedness", "two-state"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6094,7 +6094,7 @@ related_clauses = [
     "6.12",
     "20.5",
 ]
-tags = []
+tags = ["conversion", "function", "real", "vector"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6118,7 +6118,7 @@ anchors = [
 ]
 summary = "A parameter with both a signed type and an explicit range is signed with that declared range, unaffected by value overrides."
 related_clauses = []
-tags = []
+tags = ["parameter", "signedness", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6144,7 +6144,7 @@ summary = "Although any net or variable may receive a negative value's bit patte
 related_clauses = [
     "11.4.3.1",
 ]
-tags = []
+tags = ["net", "signedness", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6173,7 +6173,7 @@ related_clauses = [
     "7.2.2",
     "7.4",
 ]
-tags = []
+tags = ["integral", "packed-array", "vector"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6198,7 +6198,7 @@ anchors = [
 ]
 summary = "Within its type identifier scope, a simple typedef or type-parameter override that merely renames a built-in or user-defined type matches its target type."
 related_clauses = []
-tags = []
+tags = ["type-matching", "type-parameter", "typedef"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6225,7 +6225,7 @@ related_clauses = [
     "7.4",
     "6.11.1",
 ]
-tags = []
+tags = ["aggregate", "unpacked-array", "unpacked-struct", "unpacked-union"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6253,7 +6253,7 @@ anchors = [
 ]
 summary = "A specparam may be assigned any constant expression, including parameters and earlier specparams; ordinary parameter and localparam expressions shall not reference specparams because the two constant categories are not interchangeable."
 related_clauses = []
-tags = []
+tags = ["constant-expression", "parameter", "specparam"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6285,7 +6285,7 @@ summary = "specparam declares a specify parameter for timing/delay, only within 
 related_clauses = [
     "30",
 ]
-tags = []
+tags = ["parameter", "specparam", "timing-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6309,7 +6309,7 @@ anchors = [
 ]
 summary = "A specparam declared in a module body outside a specify block shall be declared before any reference to it."
 related_clauses = []
-tags = []
+tags = ["source-order", "specparam"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6336,7 +6336,7 @@ summary = "A specparam declaration consists of specparam, an optional packed dim
 related_clauses = [
     "A.2.1.1",
 ]
-tags = []
+tags = ["lexical", "specparam"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6364,7 +6364,7 @@ summary = "An unranged specparam derives its range from its final value after SD
 related_clauses = [
     "32",
 ]
-tags = []
+tags = ["sizing", "specparam"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6395,7 +6395,7 @@ related_clauses = [
     "32",
     "23.10",
 ]
-tags = []
+tags = ["parameter", "specparam"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6423,7 +6423,7 @@ related_clauses = [
     "6.19.4",
     "6.24.3",
 ]
-tags = []
+tags = ["cast", "conversion"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6447,7 +6447,7 @@ anchors = [
 ]
 summary = "A static const initializer may use literals, parameters, localparams, genvars, enum names, constant functions thereof, other constants, and hierarchical names, because evaluation occurs after elaboration."
 related_clauses = []
-tags = []
+tags = ["const", "elaboration", "initialization"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6474,7 +6474,7 @@ related_clauses = [
     "6.21",
     "10.5",
 ]
-tags = []
+tags = ["initialization", "scheduling", "static", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6501,7 +6501,7 @@ summary = "A static cast to enum converts to the enum base type and always succe
 related_clauses = [
     "6.24.2",
 ]
-tags = []
+tags = ["cast", "conversion", "diagnostic", "enum"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6525,7 +6525,7 @@ anchors = [
 ]
 summary = "Variables at compilation-unit scope are compilation-unit local and static for the whole simulation; variables inside a module, interface, program, or checker but outside tasks, processes, and functions are local to that design scope and also static."
 related_clauses = []
-tags = []
+tags = ["lifetime", "scope", "static", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6551,7 +6551,7 @@ summary = "Variables in a static task, function, or block are local and static b
 related_clauses = [
     "6.8",
 ]
-tags = []
+tags = ["lifetime", "static", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6577,7 +6577,7 @@ anchors = [
 ]
 summary = "string.atobin() takes no arguments, returns integer, and interprets leading binary digits and underscores; it stops at the first other character and returns zero if no digit occurs, without parsing full literal syntax."
 related_clauses = []
-tags = []
+tags = ["function", "integral", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6603,7 +6603,7 @@ anchors = [
 ]
 summary = "string.atohex() takes no arguments, returns integer, and interprets leading hexadecimal digits and underscores; it stops at the first other character and returns zero if no digit occurs, without parsing full literal syntax."
 related_clauses = []
-tags = []
+tags = ["function", "integral", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6629,7 +6629,7 @@ anchors = [
 ]
 summary = "string.atoi() takes no arguments, returns integer, and converts leading decimal digits while ignoring underscores; scanning stops at the first other character, returns zero if no digit occurs, and does not parse sign, size, apostrophe, or base syntax."
 related_clauses = []
-tags = []
+tags = ["function", "integral", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6655,7 +6655,7 @@ anchors = [
 ]
 summary = "string.atooct() takes no arguments, returns integer, and interprets leading octal digits and underscores; it stops at the first other character and returns zero if no digit occurs, without parsing full literal syntax."
 related_clauses = []
-tags = []
+tags = ["function", "integral", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6681,7 +6681,7 @@ anchors = [
 ]
 summary = "string.atoreal() takes no arguments, returns real, and parses the leading real-constant syntax from the string, stopping at the first nonconforming character and returning zero if no digit was encountered."
 related_clauses = []
-tags = []
+tags = ["function", "real", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6708,7 +6708,7 @@ summary = "string.bintoa(integer i) returns void and replaces the receiver with 
 related_clauses = [
     "6.16.9",
 ]
-tags = []
+tags = ["function", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6732,7 +6732,7 @@ anchors = [
 ]
 summary = "Indexing a string selects one byte-typed character and supports both reading and writing that character."
 related_clauses = []
-tags = []
+tags = ["array-indexing", "string", "string-index"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6757,7 +6757,7 @@ anchors = [
 ]
 summary = "string.compare(string s) returns int and compares the receiver and argument using ANSI C strcmp lexical ordering and return-value semantics."
 related_clauses = []
-tags = []
+tags = ["comparison", "function", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6793,7 +6793,7 @@ related_clauses = [
     "11.4.12",
     "11.4.12.2",
 ]
-tags = []
+tags = ["concatenation", "conversion", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6819,7 +6819,7 @@ anchors = [
 ]
 summary = "A string declaration uses string followed by a valid variable identifier and may include an initializer that is a string literal, empty string, or string-typed expression."
 related_clauses = []
-tags = []
+tags = ["initialization", "lexical", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6843,7 +6843,7 @@ anchors = [
 ]
 summary = "A string is an ordered, dynamically sized collection whose length equals its number of characters and may change during simulation."
 related_clauses = []
-tags = []
+tags = ["dynamic-array", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6874,7 +6874,7 @@ anchors = [
 ]
 summary = "For string operands, == returns 1 when the character sequences are equal and 0 otherwise; either operand may be a string literal implicitly converted to string, but when both operands are literals integral equality semantics apply."
 related_clauses = []
-tags = []
+tags = ["equality", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6901,7 +6901,7 @@ anchors = [
 ]
 summary = "string.getc(int i) returns byte and yields the ASCII code of character i; for i below zero or at least the string length it returns 0, and its value is equivalent to indexed string reading."
 related_clauses = []
-tags = []
+tags = ["function", "string", "string-index"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6928,7 +6928,7 @@ summary = "string.hextoa(integer i) returns void and replaces the receiver with 
 related_clauses = [
     "6.16.9",
 ]
-tags = []
+tags = ["function", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6953,7 +6953,7 @@ anchors = [
 ]
 summary = "string.icompare(string s) returns int and performs case-insensitive lexical comparison with ANSI C strcmp-style ordering and return-value semantics."
 related_clauses = []
-tags = []
+tags = ["function", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6977,7 +6977,7 @@ anchors = [
 ]
 summary = "For a string of length N, valid indices are 0 through N-1; index 0 selects the first leftmost character and N-1 the last rightmost character."
 related_clauses = []
-tags = []
+tags = ["index-order", "string", "string-index"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7005,7 +7005,7 @@ summary = "Reading Str[index] returns the selected character's ASCII code as a b
 related_clauses = [
     "6.16.3",
 ]
-tags = []
+tags = ["invalid-index", "string-index"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7031,7 +7031,7 @@ anchors = [
 ]
 summary = "For string operands, != is the logical negation of string equality."
 related_clauses = []
-tags = []
+tags = ["equality", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7058,7 +7058,7 @@ summary = "string.itoa(integer i) returns void and replaces the receiver with i'
 related_clauses = [
     "6.16.9",
 ]
-tags = []
+tags = ["function", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7084,7 +7084,7 @@ anchors = [
 ]
 summary = "string.len() takes no arguments, returns int, and yields the number of characters in the string, including 0 for the empty string."
 related_clauses = []
-tags = []
+tags = ["function", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7111,7 +7111,7 @@ anchors = [
 ]
 summary = "Conversion of a string literal to string removes every NUL character; if none remain the result is empty string, otherwise the remaining characters in order become the string value."
 related_clauses = []
-tags = []
+tags = ["conversion", "literal", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7138,7 +7138,7 @@ summary = "A string literal assigned to an integral variable is right-justified;
 related_clauses = [
     "5.9",
 ]
-tags = []
+tags = ["layout", "sizing", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7165,7 +7165,7 @@ summary = "A string literal or string-typed expression may be assigned directly 
 related_clauses = [
     "5.9",
 ]
-tags = []
+tags = ["conversion", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7191,7 +7191,7 @@ summary = "The dot operator invokes a named built-in method on a string value us
 related_clauses = [
     "6.16.1",
 ]
-tags = []
+tags = ["function", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7215,7 +7215,7 @@ anchors = [
 ]
 summary = "A string cannot contain the NUL character; assigning byte value 0 to a selected string character is ignored and leaves the string unchanged."
 related_clauses = []
-tags = []
+tags = ["string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7242,7 +7242,7 @@ summary = "string.octtoa(integer i) returns void and replaces the receiver with 
 related_clauses = [
     "6.16.9",
 ]
-tags = []
+tags = ["function", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7270,7 +7270,7 @@ anchors = [
 ]
 summary = "string.putc(int i, byte c) returns void and replaces character i with c, equivalently to str[i]=c; it never changes string length and leaves the string unchanged when i is out of range or c is zero."
 related_clauses = []
-tags = []
+tags = ["function", "string", "string-index"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7297,7 +7297,7 @@ summary = "string.realtoa(real r) returns void and replaces the receiver with r'
 related_clauses = [
     "6.16.10",
 ]
-tags = []
+tags = ["function", "real", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7329,7 +7329,7 @@ anchors = [
 ]
 summary = "String <, <=, >, and >= return 1 exactly when their relation is true under lexicographic compare-method ordering; a mixed string/literal comparison implicitly converts the literal to string, while two literals use integral relational semantics."
 related_clauses = []
-tags = []
+tags = ["comparison", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7358,7 +7358,7 @@ summary = "String replication shall contain at least one inner operand, each ope
 related_clauses = [
     "11.4.12.2",
 ]
-tags = []
+tags = ["replication", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -7385,7 +7385,7 @@ anchors = [
 ]
 summary = "string.substr(int i, int j) returns a new string containing inclusive positions i through j; it returns empty string if i is negative, j is less than i, or j is outside the source length."
 related_clauses = []
-tags = []
+tags = ["function", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7411,7 +7411,7 @@ anchors = [
 ]
 summary = "string.tolower() takes no arguments, returns a new string with source characters converted to lowercase, and leaves the source string unchanged."
 related_clauses = []
-tags = []
+tags = ["function", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7437,7 +7437,7 @@ anchors = [
 ]
 summary = "string.toupper() takes no arguments, returns a new string with the source characters converted to uppercase, and leaves the source string unchanged."
 related_clauses = []
-tags = []
+tags = ["function", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7463,7 +7463,7 @@ summary = "Nets of type supply0 and supply1 have supply strength."
 related_clauses = [
     "28",
 ]
-tags = []
+tags = ["net", "strength"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7487,7 +7487,7 @@ anchors = [
 ]
 summary = "time is a 4-state, 64-bit unsigned integer data type."
 related_clauses = []
-tags = []
+tags = ["four-state", "integral", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7520,7 +7520,7 @@ summary = "A tri0 has an implicit pull-strength 0 driver. Two strong explicit dr
 related_clauses = [
     "28.11",
 ]
-tags = []
+tags = ["net", "net-resolution", "pull-source", "strength"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7546,7 +7546,7 @@ summary = "For tri0 or tri1 with strong-strength explicit drivers, the resolved 
 related_clauses = [
     "28.11",
 ]
-tags = []
+tags = ["net", "net-resolution", "pull-source", "strength"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7579,7 +7579,7 @@ summary = "A tri1 has an implicit pull-strength 1 driver. Two strong explicit dr
 related_clauses = [
     "28.11",
 ]
-tags = []
+tags = ["net", "net-resolution", "pull-source", "strength"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7605,7 +7605,7 @@ summary = "In the capacitive state, a trireg's stored value has small, medium, o
 related_clauses = [
     "6.3.2.1",
 ]
-tags = []
+tags = ["net", "strength", "trireg"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7632,7 +7632,7 @@ summary = "A trireg may retain charge indefinitely or decay over time; when deca
 related_clauses = [
     "28.16.2",
 ]
-tags = []
+tags = ["net", "simulation-time", "trireg"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7658,7 +7658,7 @@ summary = "Before being driven, a trireg defaults to x with the small, medium, o
 related_clauses = [
     "6.3.2.1",
 ]
-tags = []
+tags = ["four-state", "net", "strength", "trireg"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7684,7 +7684,7 @@ summary = "A trireg is driven while any driver supplies 0, 1, or x and stores th
 related_clauses = [
     "28",
 ]
-tags = []
+tags = ["four-state", "net", "net-resolution", "trireg"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7710,7 +7710,7 @@ summary = "In the driven state, a trireg's value strength is supply, strong, pul
 related_clauses = [
     "28",
 ]
-tags = []
+tags = ["net", "strength", "trireg"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7736,7 +7736,7 @@ summary = "Each bit of a 4-state vector independently stores 0, 1, x, or z, wher
 related_clauses = [
     "6.12",
 ]
-tags = []
+tags = ["four-state", "two-state"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7760,7 +7760,7 @@ anchors = [
 ]
 summary = "It is a syntax error for an enumerator of a default-base enum or explicitly 2-state enum to be assigned a value containing x or z."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "enum", "four-state", "two-state"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7785,7 +7785,7 @@ anchors = [
 ]
 summary = "logic, reg, integer, and time are 4-state types capable of x and z; other integer types such as bit and int are 2-state and cannot represent x or z, so int and integer differ specifically in 2-state versus 4-state storage."
 related_clauses = []
-tags = []
+tags = ["four-state", "integral", "two-state"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7809,7 +7809,7 @@ anchors = [
 ]
 summary = "Nonequivalent type pairs with neither implicit nor explicit casting rules are type-incompatible; class handles, interface-class handles, and chandles are incompatible with all other type categories."
 related_clauses = []
-tags = []
+tags = ["chandle", "class-handle", "interface-class", "type-compatibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7833,7 +7833,7 @@ anchors = [
 ]
 summary = "A parameter declared with a type but no range has that type; when the parameter is signed, its range is derived from the final assigned value after overrides."
 related_clauses = []
-tags = []
+tags = ["parameter", "signedness", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7857,7 +7857,7 @@ anchors = [
 ]
 summary = "type(expression) denotes the expression's self-determined result type without evaluating the expression; that expression shall contain neither hierarchical references nor references to elements of dynamic objects."
 related_clauses = []
-tags = []
+tags = ["type-operator", "type-reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7882,7 +7882,7 @@ anchors = [
 ]
 summary = "type(expression) or type(data_type) produces a type reference usable as a type name or local type parameter in casts, declarations, and type-parameter assignments/overrides."
 related_clauses = []
-tags = []
+tags = ["type-operator", "type-reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7910,7 +7910,7 @@ summary = "A type parameter may constrain overrides to enum, struct, union, clas
 related_clauses = [
     "6.18",
 ]
-tags = []
+tags = ["diagnostic", "type-parameter"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -7938,7 +7938,7 @@ related_clauses = [
     "6.18",
     "6.23",
 ]
-tags = []
+tags = ["class-scope", "type-parameter", "type-reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -7963,7 +7963,7 @@ anchors = [
 ]
 summary = "A module, interface, or program type parameter may determine the types of ports and data objects independently for each instance."
 related_clauses = []
-tags = []
+tags = ["ports", "type-parameter"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7987,7 +7987,7 @@ anchors = [
 ]
 summary = "A parameter type may be assigned only a data type; package-qualified type references are allowed, but hierarchical type names are not."
 related_clauses = []
-tags = []
+tags = ["package", "type-parameter", "type-reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8014,7 +8014,7 @@ summary = "A parameter or localparam may declare type parameters using type, an 
 related_clauses = [
     "A.2.1.1",
 ]
-tags = []
+tags = ["lexical", "parameter", "type-parameter"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -8042,7 +8042,7 @@ summary = "A type parameter may declare a type identifier usable as a type withi
 related_clauses = [
     "6.20.3",
 ]
-tags = []
+tags = ["scope", "type-parameter", "type-reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8070,7 +8070,7 @@ related_clauses = [
     "11.2.1",
     "6.22.1",
 ]
-tags = []
+tags = ["comparison", "type-equivalence", "type-reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8097,7 +8097,7 @@ summary = "A type reference used in a net declaration shall be preceded by a net
 related_clauses = [
     "6.23",
 ]
-tags = []
+tags = ["lexical", "net", "type-reference", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8123,7 +8123,7 @@ summary = "Within a class, type(this) denotes the actual enclosing class type, i
 related_clauses = [
     "8.11",
 ]
-tags = []
+tags = ["class-type", "type-operator", "type-reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -8149,7 +8149,7 @@ summary = "Every declaration assignment or override of an explicitly typed value
 related_clauses = [
     "6.22.3",
 ]
-tags = []
+tags = ["conversion", "parameter", "type-compatibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8178,7 +8178,7 @@ summary = "typedef may assign a type identifier, with optional variable dimensio
 related_clauses = [
     "A.2.1.3",
 ]
-tags = []
+tags = ["lexical", "type-reference", "typedef"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8202,7 +8202,7 @@ anchors = [
 ]
 summary = "A user-defined data type declaration shall precede every reference to its type identifier."
 related_clauses = []
-tags = []
+tags = ["source-order", "typedef"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8228,7 +8228,7 @@ summary = "Because cast syntax accepts a simple type name, a complex data type s
 related_clauses = [
     "6.24",
 ]
-tags = []
+tags = ["cast", "type-reference", "typedef"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8254,7 +8254,7 @@ summary = "An unpacked array type used as a type-parameter value shall be suppli
 related_clauses = [
     "6.20.3",
 ]
-tags = []
+tags = ["type-parameter", "typedef", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8280,7 +8280,7 @@ summary = "Two data types that are not made equivalent by any rule in the induct
 related_clauses = [
     "6.22.1",
 ]
-tags = []
+tags = ["type-equivalence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8307,7 +8307,7 @@ summary = "A net with no connected driver has value z, except an undriven trireg
 related_clauses = [
     "28",
 ]
-tags = []
+tags = ["net", "net-resolution", "trireg"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8333,7 +8333,7 @@ summary = "The bit size of a union equals the bit size of its largest member."
 related_clauses = [
     "20.6.2",
 ]
-tags = []
+tags = ["layout", "sizing", "union"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8357,7 +8357,7 @@ anchors = [
 ]
 summary = "Variables may be declared in unnamed blocks and are visible within that block and nested blocks, but cannot be accessed by hierarchical name."
 related_clauses = []
-tags = []
+tags = ["block", "scope", "visibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8383,7 +8383,7 @@ summary = "A structure or unpacked array whose elements are valid for packed rep
 related_clauses = [
     "6.24.3",
 ]
-tags = []
+tags = ["bit-stream", "layout", "unpacked-array", "unpacked-struct"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8409,7 +8409,7 @@ summary = "A structure or unpacked array containing an element that is invalid f
 related_clauses = [
     "6.24.3",
 ]
-tags = []
+tags = ["bit-stream", "diagnostic", "unpacked-array", "unpacked-struct"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8434,7 +8434,7 @@ anchors = [
 ]
 summary = "Two unpacked fixed-size arrays are equivalent when their element types are equivalent and their element counts are equal; actual left/right bounds and directions may differ, applied recursively for multidimensional arrays."
 related_clauses = []
-tags = []
+tags = ["fixed-array", "type-equivalence", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8458,7 +8458,7 @@ anchors = [
 ]
 summary = "A net whose user-defined nettype has no resolution function may not have multiple drivers; doing so is an error."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "net", "nettype", "resolution"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8482,7 +8482,7 @@ anchors = [
 ]
 summary = "For a signed or untyped parameter with no range and an unsized final value, the implied range starts at bit 0 and has an implementation-dependent MSB of at least 31."
 related_clauses = []
-tags = []
+tags = ["parameter", "signedness", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8507,7 +8507,7 @@ anchors = [
 ]
 summary = "A parameter with neither type nor range derives both from its final value after overrides: a real expression yields real, while an integral expression yields a same-sized logic vector with range [size-1:0]."
 related_clauses = []
-tags = []
+tags = ["parameter", "sizing", "type-inference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8531,7 +8531,7 @@ anchors = [
 ]
 summary = "A net declared with a user-defined nettype is atomic: its entire singular or aggregate value is resolved and updated as one connection point; scalar logic nets are also atomic, whereas each element of a logic vector net resolves and updates independently."
 related_clauses = []
-tags = []
+tags = ["aggregate", "nettype", "resolution"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8557,7 +8557,7 @@ summary = "The default initial value of a user-nettype net is the default value 
 related_clauses = [
     "6.8",
 ]
-tags = []
+tags = ["initialization", "nettype"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8581,7 +8581,7 @@ anchors = [
 ]
 summary = "Force overrides the value of a user-defined-nettype net, and release restores its value computed by normal resolution."
 related_clauses = []
-tags = []
+tags = ["force-release", "nettype", "resolution"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8605,7 +8605,7 @@ anchors = [
 ]
 summary = "A user-nettype net receives its initial value before any initial or always procedure starts and before its guaranteed time-zero resolution-function activation."
 related_clauses = []
-tags = []
+tags = ["initialization", "nettype", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8634,7 +8634,7 @@ related_clauses = [
     "A.2.1.3",
     "10",
 ]
-tags = []
+tags = ["lexical", "nettype"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8660,7 +8660,7 @@ summary = "A user-defined nettype names a data type and optional resolution func
 related_clauses = [
     "6.18",
 ]
-tags = []
+tags = ["diagnostic", "nettype"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8684,7 +8684,7 @@ anchors = [
 ]
 summary = "When a user-nettype net has a struct data type, member initialization expressions in that struct are applied to the net's initial value."
 related_clauses = []
-tags = []
+tags = ["initialization", "nettype", "struct"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8710,7 +8710,7 @@ summary = "Every resolved user-nettype net invokes its resolution function at le
 related_clauses = [
     "4",
 ]
-tags = []
+tags = ["nettype", "resolution", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8736,7 +8736,7 @@ summary = "Across hierarchy, port connection processing shall either enforce the
 related_clauses = [
     "23.3.3.6",
 ]
-tags = []
+tags = ["diagnostic", "hierarchy", "net"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8760,7 +8760,7 @@ anchors = [
 ]
 summary = "Connecting a uwire net to a bidirectional terminal of a bidirectional pass switch is an error."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "net"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8784,7 +8784,7 @@ anchors = [
 ]
 summary = "Each bit of a uwire net may be connected to no more than one driver; multiple drivers on any bit are an error."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "net"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8808,7 +8808,7 @@ anchors = [
 ]
 summary = "A value parameter, localparam, or specparam may be set only from literals, value parameters/localparams, genvars, enum names, package references, or constant functions of these; hierarchical names are prohibited, while specparam expressions may additionally reference specparams."
 related_clauses = []
-tags = []
+tags = ["constant-expression", "parameter", "specparam"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8836,7 +8836,7 @@ related_clauses = [
     "A.2.1.1",
     "A.2.4",
 ]
-tags = []
+tags = ["lexical", "parameter"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8866,7 +8866,7 @@ related_clauses = [
     "A.2.1.3",
     "A.2.4",
 ]
-tags = []
+tags = ["class", "dynamic-array", "lexical", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8892,7 +8892,7 @@ summary = "For a variable, force overrides a procedural assign, which overrides 
 related_clauses = [
     "10.6.1",
 ]
-tags = []
+tags = ["force-release", "procedural-assignment", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8921,7 +8921,7 @@ summary = "Driver restrictions are checked independently for structure members, 
 related_clauses = [
     "11.5.3",
 ]
-tags = []
+tags = ["connectivity", "continuous-assignment", "procedural-assignment", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8948,7 +8948,7 @@ summary = "A variable declaration assignment is initialization rather than an im
 related_clauses = [
     "10.6.1",
 ]
-tags = []
+tags = ["initialization", "procedural-assignment", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8972,7 +8972,7 @@ anchors = [
 ]
 summary = "When a net on one side of a port is driven by a variable on the other side, the port connection implies a continuous assignment to the net."
 related_clauses = []
-tags = []
+tags = ["continuous-assignment", "net", "ports", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8996,7 +8996,7 @@ anchors = [
 ]
 summary = "A variable may be written by one or more procedural statements, including procedural continuous assignments, and its value is determined by the last write."
 related_clauses = []
-tags = []
+tags = ["procedural-assignment", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -9020,7 +9020,7 @@ anchors = [
 ]
 summary = "A variable stores its assigned value until a subsequent assignment changes it; executing a procedural assignment updates that stored value."
 related_clauses = []
-tags = []
+tags = ["variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -9044,7 +9044,7 @@ anchors = [
 ]
 summary = "A variable may be written by at most one continuous assignment or one port connection."
 related_clauses = []
-tags = []
+tags = ["continuous-assignment", "ports", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -9068,7 +9068,7 @@ anchors = [
 ]
 summary = "Arithmetic stored in an n-bit vector follows modulo 2^n behavior."
 related_clauses = []
-tags = []
+tags = ["arithmetic", "integral", "sizing", "vector"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -9095,7 +9095,7 @@ related_clauses = [
     "23.2.2.1",
     "23.3.3.8",
 ]
-tags = []
+tags = ["signedness", "vector"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -9119,7 +9119,7 @@ anchors = [
 ]
 summary = "Vector bounds may be positive, negative, or zero, and the right bound may be less than, equal to, or greater than the left bound."
 related_clauses = []
-tags = []
+tags = ["range", "vector"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -9143,7 +9143,7 @@ anchors = [
 ]
 summary = "A vector range [msb:lsb] assigns the left range value to the most-significant bit and the right range value to the least-significant bit, with its values addressing individual bits."
 related_clauses = []
-tags = []
+tags = ["layout", "range", "vector"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -9169,7 +9169,7 @@ summary = "Both vector range bounds shall be constant integer expressions contai
 related_clauses = [
     "11.2.1",
 ]
-tags = []
+tags = ["constant-expression", "range", "vector"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -9193,7 +9193,7 @@ anchors = [
 ]
 summary = "A built-in net declaration using vectored or scalared shall include at least one packed dimension."
 related_clauses = []
-tags = []
+tags = ["lexical", "net", "packed"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -9220,7 +9220,7 @@ related_clauses = [
     "8.25",
     "8.23",
 ]
-tags = []
+tags = ["parameterized-class", "typedef", "virtual"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -9244,7 +9244,7 @@ anchors = [
 ]
 summary = "An uninitialized virtual-interface handle variable has null value."
 related_clauses = []
-tags = []
+tags = ["initialization", "virtual-interface"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -9268,7 +9268,7 @@ anchors = [
 ]
 summary = "void may be used as a function return type to declare that the function returns no value."
 related_clauses = []
-tags = []
+tags = ["function", "return-value"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -9294,7 +9294,7 @@ summary = "void may be used as the data type of a tagged-union member to represe
 related_clauses = [
     "7.3.2",
 ]
-tags = []
+tags = ["tagged-union"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -9318,7 +9318,7 @@ anchors = [
 ]
 summary = "wand and triand are identical in syntax and functionality."
 related_clauses = []
-tags = []
+tags = ["net", "net-resolution", "wired-logic"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -9351,7 +9351,7 @@ summary = "Two equal-strength drivers on wire or tri resolve by the four-state t
 related_clauses = [
     "28.11",
 ]
-tags = []
+tags = ["four-state", "net", "net-resolution"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -9375,7 +9375,7 @@ anchors = [
 ]
 summary = "wire and tri net types have identical syntax and behavior; their distinct names convey modeling intent only and do not impose single- versus multiple-driver restrictions."
 related_clauses = []
-tags = []
+tags = ["net"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -9407,7 +9407,7 @@ summary = "Equal-strength drivers on wand or triand resolve by four-state wired-
 related_clauses = [
     "28.11",
 ]
-tags = []
+tags = ["four-state", "net-resolution", "wired-logic"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -9439,7 +9439,7 @@ summary = "Equal-strength drivers on wor or trior resolve by four-state wired-OR
 related_clauses = [
     "28.11",
 ]
-tags = []
+tags = ["four-state", "net-resolution", "wired-logic"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -9463,7 +9463,7 @@ anchors = [
 ]
 summary = "wor and trior are identical in syntax and functionality."
 related_clauses = []
-tags = []
+tags = ["net", "net-resolution", "wired-logic"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -9489,7 +9489,7 @@ summary = "Logical negation treats the basic values 0 and 1 as complements of on
 related_clauses = [
     "11.4.7",
 ]
-tags = []
+tags = ["four-state", "literal", "logical"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -9514,7 +9514,7 @@ anchors = [
 ]
 summary = "A string replication with multiplier zero has string type and yields the empty string."
 related_clauses = []
-tags = []
+tags = ["replication", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"

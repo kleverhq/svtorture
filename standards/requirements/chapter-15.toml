@@ -13,7 +13,7 @@ summary = "Executing -> on a named event unblocks every process currently waitin
 related_clauses = [
     "15.5.2",
 ]
-tags = []
+tags = ["event", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -37,7 +37,7 @@ anchors = [
 ]
 summary = "Changing the index used to select a named-event array element in an event-control expression does not cause an event occurrence."
 related_clauses = []
-tags = []
+tags = ["array-indexing", "event", "timing-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -61,7 +61,7 @@ anchors = [
 ]
 summary = "When an event variable is tested as a Boolean value, it shall yield zero if null and one otherwise."
 related_clauses = []
-tags = []
+tags = ["event"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -89,7 +89,7 @@ anchors = [
 ]
 summary = "Event variables may be compared only with another event or null using ==, !=, ===, or !==; for events, case equality has the same semantics as equality and case inequality the same semantics as inequality."
 related_clauses = []
-tags = []
+tags = ["comparison", "equality", "event"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -121,7 +121,7 @@ summary = "An @ named-event control blocks its process until that event is trigg
 related_clauses = [
     "15.5.1",
 ]
-tags = []
+tags = ["event", "scheduling", "timing-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -147,7 +147,7 @@ anchors = [
 ]
 summary = "Assigning one named event to another merges their handles onto the source event's synchronization queue, so subsequent waits through either handle are affected by triggering either handle."
 related_clauses = []
-tags = []
+tags = ["event"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -172,7 +172,7 @@ anchors = [
 ]
 summary = "Event assignment affects only subsequent waits; a process already waiting on the destination's former synchronization object remains there and shall not be unblocked by triggers on the newly assigned source."
 related_clauses = []
-tags = []
+tags = ["event", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -197,7 +197,7 @@ anchors = [
 ]
 summary = "Assigning null to an event variable breaks its association with the synchronization queue, and triggering that null event shall have no effect."
 related_clauses = []
-tags = []
+tags = ["event"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -223,7 +223,7 @@ anchors = [
 ]
 summary = "An event trigger statement is either -> followed by a hierarchical event identifier, optional nonrange selects, and semicolon, or ->> with an optional delay/event control before that event identifier and semicolon."
 related_clauses = []
-tags = []
+tags = ["event", "lexical", "nba", "timing-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -251,7 +251,7 @@ anchors = [
 ]
 summary = "A named event's zero-argument triggered() bit function returns 1 if that event was triggered in the current time step and 0 otherwise; its triggered state persists until simulation time advances, and a null event returns 0."
 related_clauses = []
-tags = []
+tags = ["event", "function", "scheduling", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -282,7 +282,7 @@ summary = "A process waiting on a named event's triggered state unblocks for a t
 related_clauses = [
     "15.5.2",
 ]
-tags = []
+tags = ["event", "scheduling", "simulation-time", "timing-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -308,7 +308,7 @@ summary = "The built-in mailbox type is a class and may be used as the base clas
 related_clauses = [
     "8.13",
 ]
-tags = []
+tags = ["class", "class-inheritance", "mailbox"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -336,7 +336,7 @@ summary = "mailbox::new takes an optional int bound defaulting to zero and retur
 related_clauses = [
     "15.4.3",
 ]
-tags = []
+tags = ["class", "constructor", "default-argument", "mailbox"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -361,7 +361,7 @@ anchors = [
 ]
 summary = "When a mailbox contains a message, mailbox::get retrieves and removes one message from the queue."
 related_clauses = []
-tags = []
+tags = ["mailbox", "queue"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -386,7 +386,7 @@ anchors = [
 ]
 summary = "mailbox::get is a task whose ref message argument may have any singular type but shall be a valid left-hand expression."
 related_clauses = []
-tags = []
+tags = ["lvalue", "mailbox", "reference-argument", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -410,7 +410,7 @@ anchors = [
 ]
 summary = "Calling mailbox::get on an empty mailbox blocks the calling process until a message is put into the mailbox."
 related_clauses = []
-tags = []
+tags = ["mailbox", "scheduling", "timing-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -437,7 +437,7 @@ summary = "For a nonparameterized mailbox, get() performs run-time checking agai
 related_clauses = [
     "15.4.9",
 ]
-tags = []
+tags = ["diagnostic", "mailbox", "type-equivalence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -461,7 +461,7 @@ anchors = [
 ]
 summary = "Constructing a mailbox with a negative bound is illegal."
 related_clauses = []
-tags = []
+tags = ["bounds", "diagnostic", "mailbox"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -487,7 +487,7 @@ anchors = [
 ]
 summary = "mailbox::num is a zero-argument int function that returns the number of messages currently in the mailbox."
 related_clauses = []
-tags = []
+tags = ["function", "mailbox"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -512,7 +512,7 @@ anchors = [
 ]
 summary = "When a mailbox contains a message, mailbox::peek copies the front message without removing it from the queue."
 related_clauses = []
-tags = []
+tags = ["mailbox", "queue", "value-copy"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -537,7 +537,7 @@ anchors = [
 ]
 summary = "mailbox::peek is a task whose ref message argument may have any singular type but shall be a valid left-hand expression."
 related_clauses = []
-tags = []
+tags = ["lvalue", "mailbox", "reference-argument", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -561,7 +561,7 @@ anchors = [
 ]
 summary = "Calling mailbox::peek on an empty mailbox blocks the calling process until a message is put into the mailbox."
 related_clauses = []
-tags = []
+tags = ["mailbox", "scheduling", "timing-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -585,7 +585,7 @@ anchors = [
 ]
 summary = "mailbox::peek generates a run-time error when the destination variable's type is not equivalent to the queued message's type."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "mailbox", "type-equivalence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -609,7 +609,7 @@ anchors = [
 ]
 summary = "While a message remains queued, every process blocked in peek() or get() shall become unblocked, allowing one nonremoving peek to unblock multiple waiters."
 related_clauses = []
-tags = []
+tags = ["mailbox", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -636,7 +636,7 @@ summary = "When a bounded mailbox lacks queue room, mailbox::put suspends the ca
 related_clauses = [
     "15.4.1",
 ]
-tags = []
+tags = ["mailbox", "scheduling", "timing-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -661,7 +661,7 @@ anchors = [
 ]
 summary = "mailbox::put stores messages in strict FIFO order."
 related_clauses = []
-tags = []
+tags = ["mailbox", "queue"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -686,7 +686,7 @@ anchors = [
 ]
 summary = "mailbox::put is a task accepting a message that may be any singular expression, including an object handle."
 related_clauses = []
-tags = []
+tags = ["mailbox", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -712,7 +712,7 @@ summary = "The built-in mailbox class resides in package std, so user code may d
 related_clauses = [
     "26.7",
 ]
-tags = []
+tags = ["mailbox", "namespace", "package", "std"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -738,7 +738,7 @@ anchors = [
 ]
 summary = "mailbox::try_get is a nonblocking int function whose ref message argument shall be a singular valid left-hand expression."
 related_clauses = []
-tags = []
+tags = ["function", "lvalue", "mailbox", "reference-argument"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -762,7 +762,7 @@ anchors = [
 ]
 summary = "mailbox::try_get returns 0 immediately when the mailbox is empty."
 related_clauses = []
-tags = []
+tags = ["function", "mailbox"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -786,7 +786,7 @@ anchors = [
 ]
 summary = "When an equivalent-typed message is available, mailbox::try_get retrieves and removes one message and returns a positive integer."
 related_clauses = []
-tags = []
+tags = ["function", "mailbox", "queue", "type-equivalence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -812,7 +812,7 @@ summary = "mailbox::try_get returns a negative integer when the queued message t
 related_clauses = [
     "15.4.9",
 ]
-tags = []
+tags = ["function", "mailbox", "type-equivalence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -838,7 +838,7 @@ anchors = [
 ]
 summary = "mailbox::try_peek is a nonblocking int function whose ref message argument shall be a singular valid left-hand expression."
 related_clauses = []
-tags = []
+tags = ["function", "lvalue", "mailbox", "reference-argument"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -862,7 +862,7 @@ anchors = [
 ]
 summary = "mailbox::try_peek returns 0 immediately when the mailbox is empty."
 related_clauses = []
-tags = []
+tags = ["function", "mailbox"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -886,7 +886,7 @@ anchors = [
 ]
 summary = "When an equivalent-typed message is available, mailbox::try_peek copies the front message without removing it and returns a positive integer."
 related_clauses = []
-tags = []
+tags = ["function", "mailbox", "queue", "type-equivalence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -912,7 +912,7 @@ summary = "mailbox::try_peek returns a negative integer when the queued message 
 related_clauses = [
     "15.4.9",
 ]
-tags = []
+tags = ["function", "mailbox", "type-equivalence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -938,7 +938,7 @@ anchors = [
 ]
 summary = "mailbox::try_put is an int function accepting a message that may be any singular expression, including an object handle."
 related_clauses = []
-tags = []
+tags = ["function", "mailbox"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -964,7 +964,7 @@ summary = "When a bounded mailbox is full, mailbox::try_put returns 0 immediatel
 related_clauses = [
     "15.4.1",
 ]
-tags = []
+tags = ["function", "mailbox"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -988,7 +988,7 @@ anchors = [
 ]
 summary = "When a mailbox is not full, mailbox::try_put inserts the specified message in strict FIFO order and returns a positive integer."
 related_clauses = []
-tags = []
+tags = ["function", "mailbox", "queue"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1017,7 +1017,7 @@ summary = "mailbox accepts a class-style type parameter; its default dynamic_typ
 related_clauses = [
     "8.25",
 ]
-tags = []
+tags = ["mailbox", "parameter", "parameterized-class", "type-parameter"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1041,7 +1041,7 @@ anchors = [
 ]
 summary = "A mailbox preserves the arrival order of processes in its waiting queue (FIFO), without defining the order in which concurrent processes arrive at that queue."
 related_clauses = []
-tags = []
+tags = ["mailbox", "queue", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1065,7 +1065,7 @@ anchors = [
 ]
 summary = "The ->> event trigger does not block its executing process and schedules an update at expiration of its delay/event control that triggers the referenced event in the nonblocking-assignment region."
 related_clauses = []
-tags = []
+tags = ["event", "nba", "scheduling", "timing-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1091,7 +1091,7 @@ summary = "The built-in semaphore type is a class and may be used as the base cl
 related_clauses = [
     "8.13",
 ]
-tags = []
+tags = ["class", "class-inheritance", "semaphore"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1117,7 +1117,7 @@ anchors = [
 ]
 summary = "Calling semaphore::new with an int keyCount creates and returns a semaphore handle with keyCount initially available keys; omitting keyCount uses zero."
 related_clauses = []
-tags = []
+tags = ["class", "constructor", "default-argument", "semaphore"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1143,7 +1143,7 @@ anchors = [
 ]
 summary = "semaphore::get is a task whose optional int keyCount specifies the requested number of keys and defaults to one."
 related_clauses = []
-tags = []
+tags = ["default-argument", "semaphore", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1169,7 +1169,7 @@ summary = "When fewer than the requested keyCount keys are available, semaphore:
 related_clauses = [
     "15.3.2",
 ]
-tags = []
+tags = ["scheduling", "semaphore", "timing-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1193,7 +1193,7 @@ anchors = [
 ]
 summary = "Passing a negative keyCount to semaphore::get shall result in an error."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "semaphore"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -1218,7 +1218,7 @@ anchors = [
 ]
 summary = "When the requested keyCount is less than or equal to the available key count, semaphore::get reduces the available count by keyCount and returns so execution continues."
 related_clauses = []
-tags = []
+tags = ["semaphore"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1244,7 +1244,7 @@ summary = "Putting more keys into a semaphore than have been removed may increas
 related_clauses = [
     "15.3.2",
 ]
-tags = []
+tags = ["semaphore"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1268,7 +1268,7 @@ anchors = [
 ]
 summary = "A semaphore may be constructed with a negative initial key count."
 related_clauses = []
-tags = []
+tags = ["semaphore"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -1294,7 +1294,7 @@ anchors = [
 ]
 summary = "Calling semaphore::put increases the semaphore's available key count by the specified keyCount."
 related_clauses = []
-tags = []
+tags = ["semaphore"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1318,7 +1318,7 @@ anchors = [
 ]
 summary = "Passing a negative keyCount to semaphore::put shall result in an error."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "semaphore"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -1342,7 +1342,7 @@ anchors = [
 ]
 summary = "When put() returns enough keys to satisfy a process suspended on that semaphore, the waiting process shall resume execution."
 related_clauses = []
-tags = []
+tags = ["scheduling", "semaphore"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1368,7 +1368,7 @@ anchors = [
 ]
 summary = "semaphore::put is a void function whose optional int keyCount specifies the number of keys to return and defaults to one."
 related_clauses = []
-tags = []
+tags = ["default-argument", "function", "semaphore"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1394,7 +1394,7 @@ summary = "The built-in semaphore class resides in package std, so user code may
 related_clauses = [
     "26.7",
 ]
-tags = []
+tags = ["namespace", "package", "semaphore", "std"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1418,7 +1418,7 @@ anchors = [
 ]
 summary = "When fewer than the requested keyCount keys are available, semaphore::try_get returns 0 without blocking or removing keys."
 related_clauses = []
-tags = []
+tags = ["function", "semaphore"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1442,7 +1442,7 @@ anchors = [
 ]
 summary = "If semaphore::try_get receives a negative keyCount, it returns zero and shall result in an error."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "function", "semaphore"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -1468,7 +1468,7 @@ anchors = [
 ]
 summary = "semaphore::try_get is a nonblocking int function whose optional int keyCount specifies the requested key count and defaults to one."
 related_clauses = []
-tags = []
+tags = ["default-argument", "function", "semaphore"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1493,7 +1493,7 @@ anchors = [
 ]
 summary = "When the requested keyCount is less than or equal to the available key count, semaphore::try_get removes keyCount keys and returns a positive integer."
 related_clauses = []
-tags = []
+tags = ["function", "semaphore"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1517,7 +1517,7 @@ anchors = [
 ]
 summary = "A semaphore preserves the arrival order of processes in its waiting queue (FIFO), without defining the order in which concurrent processes arrive at that queue."
 related_clauses = []
-tags = []
+tags = ["queue", "scheduling", "semaphore"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1541,7 +1541,7 @@ anchors = [
 ]
 summary = "An event expression or wait condition is reevaluated only when an expression operand changes; triggered() reverting from true to false at the end of a time step does not itself cause reevaluation of a control waiting on it."
 related_clauses = []
-tags = []
+tags = ["event", "scheduling", "simulation-time", "timing-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -1565,7 +1565,7 @@ anchors = [
 ]
 summary = "For a parameterized mailbox, the compiler shall require arguments to put, try_put, peek, try_peek, get, and try_get to have types equivalent to the mailbox type, catching mismatches before run time."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "mailbox", "parameterized-class", "type-equivalence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1589,7 +1589,7 @@ anchors = [
 ]
 summary = "A parameterized mailbox provides the same new, num, put, try_put, get, try_get, peek, and try_peek methods as a dynamic mailbox."
 related_clauses = []
-tags = []
+tags = ["function", "mailbox", "parameterized-class", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1615,7 +1615,7 @@ summary = "When wait_order fails, it executes the else statement if supplied; wi
 related_clauses = [
     "20.10",
 ]
-tags = []
+tags = ["action-block", "diagnostic", "event", "timing-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -1643,7 +1643,7 @@ summary = "Only the first event listed in wait_order can be satisfied from its p
 related_clauses = [
     "15.5.3",
 ]
-tags = []
+tags = ["event", "scheduling", "simulation-time", "timing-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1667,7 +1667,7 @@ anchors = [
 ]
 summary = "After an event has occurred in its prescribed wait_order position, that preceding event may trigger again without causing the sequence to fail."
 related_clauses = []
-tags = []
+tags = ["event", "scheduling", "timing-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1692,7 +1692,7 @@ anchors = [
 ]
 summary = "wait_order accepts one or more named-event identifiers followed by an action block; it suspends until they trigger left-to-right and then executes the success statement, but fails if an as-yet-untriggered later event triggers out of order."
 related_clauses = []
-tags = []
+tags = ["event", "lexical", "scheduling", "timing-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"

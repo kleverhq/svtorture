@@ -17,7 +17,7 @@ related_clauses = [
     "11.5.3",
     "6.5",
 ]
-tags = []
+tags = ["combinational", "diagnostic", "process-independence", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -42,7 +42,7 @@ anchors = [
 ]
 summary = "An always_comb or always_latch procedure shall not contain a statement that blocks execution."
 related_clauses = []
-tags = []
+tags = ["combinational", "diagnostic", "timing-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -67,7 +67,7 @@ anchors = [
 ]
 summary = "An always_comb or always_latch procedure shall not contain blocking timing controls or blocking event controls."
 related_clauses = []
-tags = []
+tags = ["combinational", "diagnostic", "timing-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -92,7 +92,7 @@ anchors = [
 ]
 summary = "An always_comb or always_latch procedure shall not contain a fork-join statement."
 related_clauses = []
-tags = []
+tags = ["combinational", "diagnostic", "forkjoin"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -120,7 +120,7 @@ summary = "Expressions in immediate assertions in an always_comb or always_latch
 related_clauses = [
     "16.3",
 ]
-tags = []
+tags = ["combinational", "event", "immediate-assertion", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -145,7 +145,7 @@ anchors = [
 ]
 summary = "Always_comb and always_latch sensitivity excludes expansions of variables declared within the block or within a function called by the block."
 related_clauses = []
-tags = []
+tags = ["combinational", "event", "scheduling", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -172,7 +172,7 @@ summary = "For always_comb and always_latch, hierarchical, package, and class-sc
 related_clauses = [
     "8.23",
 ]
-tags = []
+tags = ["class", "combinational", "event", "function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -201,7 +201,7 @@ summary = "Subject to the specified exclusions, always_comb and always_latch sen
 related_clauses = [
     "11.5.3",
 ]
-tags = []
+tags = ["combinational", "event", "scheduling", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -228,7 +228,7 @@ anchors = [
 ]
 summary = "For a task called from an always_comb or always_latch procedure, task argument expressions contribute to implicit sensitivity, but expressions read only inside the task body do not."
 related_clauses = []
-tags = []
+tags = ["combinational", "event", "scheduling", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -253,7 +253,7 @@ anchors = [
 ]
 summary = "An identifier appearing only in a wait, event, or delay timing-control expression does not enter an always_comb or always_latch implicit sensitivity list."
 related_clauses = []
-tags = []
+tags = ["combinational", "event", "timing-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -280,7 +280,7 @@ anchors = [
 ]
 summary = "Always_comb and always_latch sensitivity excludes an expression that is also written within the block or within a function called by the block."
 related_clauses = []
-tags = []
+tags = ["combinational", "event", "scheduling", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -307,7 +307,7 @@ summary = "An always_comb or always_latch procedure may call a task, subject to 
 related_clauses = [
     "9.2.2.2.2",
 ]
-tags = []
+tags = ["combinational", "subroutine", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -333,7 +333,7 @@ anchors = [
 ]
 summary = "An always_comb or always_latch procedure is automatically triggered once at time zero after all initial and always procedures have started."
 related_clauses = []
-tags = []
+tags = ["combinational", "event", "scheduling", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -358,7 +358,7 @@ anchors = [
 ]
 summary = "An always construct consists of an always-family keyword followed by a statement; the allowed keywords are always, always_comb, always_latch, and always_ff."
 related_clauses = []
-tags = []
+tags = ["lexical", "procedure"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -382,7 +382,7 @@ anchors = [
 ]
 summary = "An always_ff procedure shall contain no blocking timing controls."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "sequential", "timing-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -406,7 +406,7 @@ anchors = [
 ]
 summary = "An always_ff procedure shall contain exactly one event control."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "event", "sequential", "timing-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -431,7 +431,7 @@ anchors = [
 ]
 summary = "Each always, always_comb, always_latch, or always_ff procedure repeatedly executes its statement and remains active until simulation terminates."
 related_clauses = []
-tags = []
+tags = ["scheduling", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -455,7 +455,7 @@ anchors = [
 ]
 summary = "Simulation automatically terminates when no activity of any kind remains."
 related_clauses = []
-tags = []
+tags = ["scheduling", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -479,7 +479,7 @@ anchors = [
 ]
 summary = "An optional name after end, join, join_any, or join_none shall match the name following the corresponding begin or fork; a differing closing name is an error."
 related_clauses = []
-tags = []
+tags = ["block", "diagnostic", "name-resolution"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -505,7 +505,7 @@ anchors = [
 ]
 summary = "Execution shall not continue to the statement following a sequential or parallel block until the block's defined finish time: after the sequential block's last statement, or at the completion point selected by the parallel block's join form."
 related_clauses = []
-tags = []
+tags = ["block", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -529,7 +529,7 @@ anchors = [
 ]
 summary = "It is illegal to specify both a statement label before begin or fork and a block name after that begin or fork."
 related_clauses = []
-tags = []
+tags = ["block", "diagnostic", "lexical"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -553,7 +553,7 @@ anchors = [
 ]
 summary = "A label before a begin-end or fork-join block is equivalent to a block name after begin or fork and permits a matching name after the corresponding closing keyword."
 related_clauses = []
-tags = []
+tags = ["block", "name-resolution"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -579,7 +579,7 @@ summary = "A block variable with static lifetime has one storage location, and l
 related_clauses = [
     "6.21",
 ]
-tags = []
+tags = ["block", "lifetime", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -603,7 +603,7 @@ anchors = [
 ]
 summary = "The intra-assignment timing form of a blocking assignment consists of a variable lvalue, =, a required delay_or_event_control, and an expression."
 related_clauses = []
-tags = []
+tags = ["blocking-assignment", "lexical", "timing-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -629,7 +629,7 @@ summary = "When an event-control expression denotes a clocking block input or in
 related_clauses = [
     "14.13",
 ]
-tags = []
+tags = ["clocking-block", "clocking-event", "sampled-value"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -653,7 +653,7 @@ anchors = [
 ]
 summary = "A clocking event is @ followed by a package-scope identifier, a hierarchical identifier, or a parenthesized event expression."
 related_clauses = []
-tags = []
+tags = ["clocking-event", "lexical"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -679,7 +679,7 @@ anchors = [
 ]
 summary = "When an event expression containing comma-separated event expressions is passed as a positional actual argument, the event expression shall be parenthesized."
 related_clauses = []
-tags = []
+tags = ["event", "lexical"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -705,7 +705,7 @@ summary = "A label may be placed before a concurrent assertion."
 related_clauses = [
     "16.5",
 ]
-tags = []
+tags = ["concurrent-assertion", "lexical"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -732,7 +732,7 @@ summary = "An @ event control may have an iff qualifier, and the source event tr
 related_clauses = [
     "12.4",
 ]
-tags = []
+tags = ["conditional", "event", "timing-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -756,7 +756,7 @@ anchors = [
 ]
 summary = "A delay control is # followed by a delay value, or # followed by a parenthesized mintypmax expression."
 related_clauses = []
-tags = []
+tags = ["lexical", "mintypmax", "timing-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -780,7 +780,7 @@ anchors = [
 ]
 summary = "A delay_or_event_control is a delay control, an event control, or repeat(expression) followed by an event control."
 related_clauses = []
-tags = []
+tags = ["event", "lexical", "timing-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -806,7 +806,7 @@ anchors = [
 ]
 summary = "If a task has multiple active invocations, disabling that task disables all of its activations."
 related_clauses = []
-tags = []
+tags = ["disable", "scheduling", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -830,7 +830,7 @@ anchors = [
 ]
 summary = "A disable statement inside a block or task may disable that containing block or task."
 related_clauses = []
-tags = []
+tags = ["block", "disable", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -856,7 +856,7 @@ anchors = [
 ]
 summary = "disable fork terminates every descendant subprocess of the calling process, including non-immediate descendants and descendants of subprocesses that have already terminated."
 related_clauses = []
-tags = []
+tags = ["disable", "forkjoin", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -881,7 +881,7 @@ anchors = [
 ]
 summary = "Inside a function, disable may target a named block but shall not target a function."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "disable", "function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -905,7 +905,7 @@ anchors = [
 ]
 summary = "Disabling a named block that is not currently executing has no effect."
 related_clauses = []
-tags = []
+tags = ["block", "disable", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -932,7 +932,7 @@ related_clauses = [
     "16.4",
     "16.14.6",
 ]
-tags = []
+tags = ["deferred-assertion", "disable", "procedural-assertion", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -958,7 +958,7 @@ summary = "A labeled statement may be targeted by disable, with the same behavio
 related_clauses = [
     "9.6.2",
 ]
-tags = []
+tags = ["block", "disable", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -984,7 +984,7 @@ summary = "When the disabled named block is a loop body, control proceeds like a
 related_clauses = [
     "12.8",
 ]
-tags = []
+tags = ["block", "disable", "loop", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1010,7 +1010,7 @@ anchors = [
 ]
 summary = "Disabling a named block or task stops all activity within that scope without regard to parent-child relationship, allowing a child or unrelated process to disable it."
 related_clauses = []
-tags = []
+tags = ["block", "disable", "scheduling", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1035,7 +1035,7 @@ anchors = [
 ]
 summary = "A disable statement is disable followed by a hierarchical task identifier, hierarchical block identifier, or fork, and then a semicolon."
 related_clauses = []
-tags = []
+tags = ["disable", "lexical"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1060,7 +1060,7 @@ anchors = [
 ]
 summary = "Disabling a task or named block terminates its activity, then execution resumes after the disabled block or after the task-enabling statement, respectively."
 related_clauses = []
-tags = []
+tags = ["block", "disable", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1084,7 +1084,7 @@ anchors = [
 ]
 summary = "When task enables are nested, disabling a task in the enable chain disables every task below it in that chain."
 related_clauses = []
-tags = []
+tags = ["disable", "scheduling", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1108,7 +1108,7 @@ anchors = [
 ]
 summary = "Disabling a named block or task also terminates every activity enabled within that block or task."
 related_clauses = []
-tags = []
+tags = ["disable", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1132,7 +1132,7 @@ anchors = [
 ]
 summary = "Dynamic override specifiers on task or function declarations are legal only for method declarations inside a non-interface class scope."
 related_clauses = []
-tags = []
+tags = ["class", "diagnostic", "method-override", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -1156,7 +1156,7 @@ anchors = [
 ]
 summary = "An edge event is detected whenever either a posedge or a negedge is detected."
 related_clauses = []
-tags = []
+tags = ["edge-sensitivity", "event", "four-state"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1180,7 +1180,7 @@ anchors = [
 ]
 summary = "For a multibit expression, edge-event detection uses only the expression's least significant bit."
 related_clauses = []
-tags = []
+tags = ["edge-sensitivity", "event", "layout"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1204,7 +1204,7 @@ anchors = [
 ]
 summary = "The edge identifiers admitted by event-expression grammar are posedge, negedge, and edge."
 related_clauses = []
-tags = []
+tags = ["edge-control", "lexical"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1228,7 +1228,7 @@ anchors = [
 ]
 summary = "An event-control expression may call a non-virtual object method, aggregate built-in method, or aggregate system function only when the call is a function rather than a task and returns a singular value."
 related_clauses = []
-tags = []
+tags = ["aggregate", "class-method", "event", "function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1256,7 +1256,7 @@ related_clauses = [
     "14.10",
     "9.4.2.4",
 ]
-tags = []
+tags = ["event", "scheduling", "sequence", "timing-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1280,7 +1280,7 @@ anchors = [
 ]
 summary = "An event control is a clocking event or one of the wildcard forms @* and @(*)."
 related_clauses = []
-tags = []
+tags = ["event", "lexical", "timing-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1304,7 +1304,7 @@ anchors = [
 ]
 summary = "An event expression shall produce a singular value; it may access aggregate elements or object members of any type only when the complete expression reduces to a singular value."
 related_clauses = []
-tags = []
+tags = ["aggregate", "event"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1328,7 +1328,7 @@ anchors = [
 ]
 summary = "An event expression is an optionally edge-qualified expression with optional iff condition, a sequence instance with optional iff condition, two event expressions joined by or or comma, or a parenthesized event expression."
 related_clauses = []
-tags = []
+tags = ["event", "lexical"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1352,7 +1352,7 @@ anchors = [
 ]
 summary = "An event expression containing a method or function shall be reevaluated when a referenced object member or aggregate element changes or when a referenced dynamically sized array changes size."
 related_clauses = []
-tags = []
+tags = ["aggregate", "event", "function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1376,7 +1376,7 @@ anchors = [
 ]
 summary = "Event expressions joined by or, comma, or a mixture of both trigger the following statement when any constituent event occurs; comma-separated and or-separated sensitivity lists are synonymous."
 related_clauses = []
-tags = []
+tags = ["event", "operator", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1400,7 +1400,7 @@ anchors = [
 ]
 summary = "A change in an operand of an event expression does not produce an event when the resulting expression value does not change."
 related_clauses = []
-tags = []
+tags = ["event", "value-change"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1424,7 +1424,7 @@ anchors = [
 ]
 summary = "Final procedures shall execute before PLI callbacks that indicate the end of simulation."
 related_clauses = []
-tags = []
+tags = ["final", "pli", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1448,7 +1448,7 @@ anchors = [
 ]
 summary = "A final construct consists of the keyword final followed by a function_statement."
 related_clauses = []
-tags = []
+tags = ["final", "function", "lexical"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1473,7 +1473,7 @@ anchors = [
 ]
 summary = "Final procedures are enabled at the end of simulation time."
 related_clauses = []
-tags = []
+tags = ["final", "scheduling", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1498,7 +1498,7 @@ anchors = [
 ]
 summary = "Each final procedure executes exactly once."
 related_clauses = []
-tags = []
+tags = ["final", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1523,7 +1523,7 @@ anchors = [
 ]
 summary = "A final procedure may contain only statements permitted in a function and executes those statements in zero simulation time within a single simulation cycle."
 related_clauses = []
-tags = []
+tags = ["final", "function", "scheduling", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1548,7 +1548,7 @@ anchors = [
 ]
 summary = "Final procedures do not run as separate processes; they execute sequentially from one process in an implementation-chosen arbitrary but deterministic order."
 related_clauses = []
-tags = []
+tags = ["final", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1572,7 +1572,7 @@ anchors = [
 ]
 summary = "Executing $finish, tf_dofinish(), or vpi_control(vpiFinish, ...) within a final procedure ends simulation immediately."
 related_clauses = []
-tags = []
+tags = ["final", "pli", "scheduling", "simulation-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1596,7 +1596,7 @@ anchors = [
 ]
 summary = "A begin-end block used as one statement of a fork creates one child process whose enclosed statements execute sequentially."
 related_clauses = []
-tags = []
+tags = ["block", "forkjoin", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1621,7 +1621,7 @@ anchors = [
 ]
 summary = "Each variable declared as a fork-join block item is initialized from its initialization expression whenever execution enters that block scope, before any child process is spawned."
 related_clauses = []
-tags = []
+tags = ["block", "forkjoin", "initialization", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1645,7 +1645,7 @@ anchors = [
 ]
 summary = "A process spawned by any fork-join form shall not begin executing until its parent process blocks or terminates."
 related_clauses = []
-tags = []
+tags = ["block", "forkjoin", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1671,7 +1671,7 @@ anchors = [
 ]
 summary = "With join_any, the parent process blocks until any one process spawned by the fork terminates."
 related_clauses = []
-tags = []
+tags = ["block", "forkjoin", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1698,7 +1698,7 @@ anchors = [
 ]
 summary = "With join_none, the parent continues executing concurrently with every process spawned by the fork."
 related_clauses = []
-tags = []
+tags = ["block", "forkjoin", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1726,7 +1726,7 @@ anchors = [
 ]
 summary = "With join, the parent process blocks until every process spawned by the fork terminates."
 related_clauses = []
-tags = []
+tags = ["block", "forkjoin", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1750,7 +1750,7 @@ anchors = [
 ]
 summary = "It is an error for a function to call suspend() on its current process."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "function", "process-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -1777,7 +1777,7 @@ summary = "A label may be placed before a generate begin-end block."
 related_clauses = [
     "27.3",
 ]
-tags = []
+tags = ["block", "generate", "lexical"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1803,7 +1803,7 @@ summary = "A generate begin-end block may have an optional name after end, and w
 related_clauses = [
     "27.3",
 ]
-tags = []
+tags = ["block", "generate", "name-resolution"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1827,7 +1827,7 @@ anchors = [
 ]
 summary = "For an event expression that is a simple object-handle or chandle variable reference, an event occurs when a write changes the handle to a value unequal to its previous value."
 related_clauses = []
-tags = []
+tags = ["chandle", "event", "object-handle"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1851,7 +1851,7 @@ anchors = [
 ]
 summary = "An iff-qualified event expression is evaluated when its source event expression changes; a change only to the iff condition does not itself trigger the event."
 related_clauses = []
-tags = []
+tags = ["conditional", "event"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1875,7 +1875,7 @@ anchors = [
 ]
 summary = "Within an event expression, iff binds more tightly than the event or operator."
 related_clauses = []
-tags = []
+tags = ["conditional", "event", "operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1899,7 +1899,7 @@ anchors = [
 ]
 summary = "An identifier appearing only as a hierarchical variable identifier in an assignment's left-hand-side variable lvalue is excluded from an @* implicit event expression."
 related_clauses = []
-tags = []
+tags = ["event", "hierarchy", "lvalue", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1923,7 +1923,7 @@ anchors = [
 ]
 summary = "The @* implicit event expression includes nets and variables used on assignment right-hand sides, in subroutine calls, in case and conditional expressions, as assignment-lvalue index variables, and in case-item expressions."
 related_clauses = []
-tags = []
+tags = ["conditional", "event", "subroutine", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1948,7 +1948,7 @@ anchors = [
 ]
 summary = "The @* implicit event expression automatically includes every net and variable identifier read by its following statement or statement group, subject to the specified exclusions."
 related_clauses = []
-tags = []
+tags = ["event", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1972,7 +1972,7 @@ anchors = [
 ]
 summary = "An identifier appearing only in a wait, event, or delay timing-control expression within an @*-controlled statement is excluded from the implicit event expression."
 related_clauses = []
-tags = []
+tags = ["event", "timing-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -1998,7 +1998,7 @@ anchors = [
 ]
 summary = "Initial and always procedures are enabled at the beginning of simulation."
 related_clauses = []
-tags = []
+tags = ["scheduling", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2022,7 +2022,7 @@ anchors = [
 ]
 summary = "An initial construct consists of the keyword initial followed by a statement or null statement."
 related_clauses = []
-tags = []
+tags = ["lexical", "procedure"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2047,7 +2047,7 @@ anchors = [
 ]
 summary = "An initial procedure executes once and ceases activity when its statement finishes."
 related_clauses = []
-tags = []
+tags = ["scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2073,7 +2073,7 @@ anchors = [
 ]
 summary = "For an intra-assignment delay or event control, the right-hand expression is evaluated when the assignment is encountered, before the timing control, while assignment of that captured value to the left-hand side is delayed until the control completes."
 related_clauses = []
-tags = []
+tags = ["evaluation-order", "timing-control", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2097,7 +2097,7 @@ anchors = [
 ]
 summary = "Within fork-join_any or fork-join_none, a by-reference formal argument may be referenced only in initialization expressions of fork block-item variables, unless the formal is declared ref static."
 related_clauses = []
-tags = []
+tags = ["forkjoin", "reference-argument", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -2123,7 +2123,7 @@ anchors = [
 ]
 summary = "A label on a foreach loop or on a for loop that declares variables in its initialization names the implicit block created by that loop."
 related_clauses = []
-tags = []
+tags = ["block", "loop", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2147,7 +2147,7 @@ anchors = [
 ]
 summary = "Local variables, parameters, and named events in a named block may be referenced hierarchically through the block name."
 related_clauses = []
-tags = []
+tags = ["block", "hierarchy", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2171,7 +2171,7 @@ anchors = [
 ]
 summary = "Adding a block name after begin or fork names either a sequential or parallel block and creates a new hierarchy scope."
 related_clauses = []
-tags = []
+tags = ["block", "hierarchy", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2197,7 +2197,7 @@ summary = "A named block may be referenced by statements that take a block targe
 related_clauses = [
     "9.6.2",
 ]
-tags = []
+tags = ["block", "name-resolution", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2221,7 +2221,7 @@ anchors = [
 ]
 summary = "A negative procedural delay value is interpreted as a two's-complement unsigned integer having the same size as a time variable."
 related_clauses = []
-tags = []
+tags = ["conversion", "negative-timing", "simulation-time", "timing-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2248,7 +2248,7 @@ anchors = [
 ]
 summary = "A negedge is detected for transitions from 1 to X, Z, or 0 and from X or Z to 0."
 related_clauses = []
-tags = []
+tags = ["edge-sensitivity", "event", "four-state"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2272,7 +2272,7 @@ anchors = [
 ]
 summary = "After all final procedures finish, no remaining scheduled event shall execute."
 related_clauses = []
-tags = []
+tags = ["final", "scheduling", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2296,7 +2296,7 @@ anchors = [
 ]
 summary = "A statement label cannot appear before end, join, join_any, or join_none because those closing keywords do not form statements."
 related_clauses = []
-tags = []
+tags = ["block", "diagnostic", "lexical"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2320,7 +2320,7 @@ anchors = [
 ]
 summary = "A nonblocking assignment consists of a variable lvalue, <=, an optional delay_or_event_control, and an expression."
 related_clauses = []
-tags = []
+tags = ["lexical", "nba"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2344,7 +2344,7 @@ anchors = [
 ]
 summary = "A non-edge implicit event is detected on any change in the value of its complete expression."
 related_clauses = []
-tags = []
+tags = ["event", "value-change"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2368,7 +2368,7 @@ anchors = [
 ]
 summary = "For a labeled statement other than the specified foreach or declaration-bearing for loops, the label creates a named begin-end block around the statement and a new hierarchy scope."
 related_clauses = []
-tags = []
+tags = ["block", "hierarchy", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2396,7 +2396,7 @@ anchors = [
 ]
 summary = "Procedural statements in a parallel block execute concurrently."
 related_clauses = []
-tags = []
+tags = ["block", "forkjoin", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2420,7 +2420,7 @@ anchors = [
 ]
 summary = "A parallel-block item declaration is an optionally attributed data declaration, local parameter declaration, parameter declaration, or let declaration, with semicolons as prescribed by each grammar alternative."
 related_clauses = []
-tags = []
+tags = ["block", "lexical", "parameter"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -2446,7 +2446,7 @@ anchors = [
 ]
 summary = "A parallel block begins with fork and ends with join, join_any, or join_none."
 related_clauses = []
-tags = []
+tags = ["block", "forkjoin", "lexical"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2470,7 +2470,7 @@ anchors = [
 ]
 summary = "Within a parallel block, zero or more block item declarations precede zero or more statements or null statements."
 related_clauses = []
-tags = []
+tags = ["block", "lexical", "source-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2494,7 +2494,7 @@ anchors = [
 ]
 summary = "A parallel block may have an identifier after fork and may have an identifier after its join keyword."
 related_clauses = []
-tags = []
+tags = ["block", "lexical"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2518,7 +2518,7 @@ anchors = [
 ]
 summary = "Each statement delay in a parallel block is measured relative to the simulation time at which the block is entered."
 related_clauses = []
-tags = []
+tags = ["block", "simulation-time", "timing-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2545,7 +2545,7 @@ anchors = [
 ]
 summary = "A posedge is detected for transitions from 0 to X, Z, or 1 and from X or Z to 1."
 related_clauses = []
-tags = []
+tags = ["edge-sensitivity", "event", "four-state"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2569,7 +2569,7 @@ anchors = [
 ]
 summary = "A statement following a delay control executes the specified delay after the preceding procedural statement."
 related_clauses = []
-tags = []
+tags = ["simulation-time", "timing-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2593,7 +2593,7 @@ anchors = [
 ]
 summary = "Any procedural non-declaration statement allowed in a begin-end block may be labeled by placing an identifier and colon before the statement; the label identifies that single statement."
 related_clauses = []
-tags = []
+tags = ["block", "lexical"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2617,7 +2617,7 @@ anchors = [
 ]
 summary = "A procedural timing control is a delay control, event control, or cycle delay."
 related_clauses = []
-tags = []
+tags = ["cycle-delay", "lexical", "timing-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2641,7 +2641,7 @@ anchors = [
 ]
 summary = "A procedural timing control statement consists of a procedural timing control followed by a statement or null statement."
 related_clauses = []
-tags = []
+tags = ["lexical", "timing-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2665,7 +2665,7 @@ anchors = [
 ]
 summary = "Calling await() on the current process is an error."
 related_clauses = []
-tags = []
+tags = ["class", "diagnostic", "process-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2689,7 +2689,7 @@ anchors = [
 ]
 summary = "process::await() blocks the caller until the target process terminates either normally or forcefully."
 related_clauses = []
-tags = []
+tags = ["class", "process-control", "timing-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2714,7 +2714,7 @@ anchors = [
 ]
 summary = "process is a built-in final class whose declared interface provides self, status, kill, await, suspend, resume, srandom, get_randstate, and set_randstate with the specified static/function/task forms and return and argument types."
 related_clauses = []
-tags = []
+tags = ["class", "function", "process-control", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2738,7 +2738,7 @@ anchors = [
 ]
 summary = "The process class cannot be extended; an attempted derived class shall cause a compilation error."
 related_clauses = []
-tags = []
+tags = ["class", "class-inheritance", "diagnostic"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2762,7 +2762,7 @@ anchors = [
 ]
 summary = "kill(), await(), suspend(), and resume() are restricted to process objects created by an initial procedure, an always procedure, or a fork block descended from one of those procedures."
 related_clauses = []
-tags = []
+tags = ["class", "hierarchy", "process-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2788,7 +2788,7 @@ summary = "Every process affected by kill() shall terminate before kill() return
 related_clauses = [
     "4.7",
 ]
-tags = []
+tags = ["class", "process-control", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -2814,7 +2814,7 @@ anchors = [
 ]
 summary = "Calling kill() on a FINISHED or KILLED process still forcibly terminates any descendant not already FINISHED or KILLED."
 related_clauses = []
-tags = []
+tags = ["class", "process-control", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -2840,7 +2840,7 @@ anchors = [
 ]
 summary = "process::kill() forcibly terminates its target process and every descendant subprocess spawned by that process or its descendants."
 related_clauses = []
-tags = []
+tags = ["class", "process-control", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -2866,7 +2866,7 @@ anchors = [
 ]
 summary = "Process objects are created internally when processes are spawned; a user call to process::new shall not create a process and shall produce an error."
 related_clauses = []
-tags = []
+tags = ["class", "diagnostic", "process-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2890,7 +2890,7 @@ anchors = [
 ]
 summary = "Calling resume() on a process not in SUSPENDED state has no effect."
 related_clauses = []
-tags = []
+tags = ["class", "process-control", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -2916,7 +2916,7 @@ anchors = [
 ]
 summary = "Resuming a process suspended from RUNNING schedules it into the Active or Reactive region to continue in the current time step."
 related_clauses = []
-tags = []
+tags = ["class", "process-control", "scheduling", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -2942,7 +2942,7 @@ anchors = [
 ]
 summary = "If a resumed WAITING process's wait condition is already true or original delay has elapsed, it is scheduled into the Active or Reactive region to continue in the current time step."
 related_clauses = []
-tags = []
+tags = ["class", "process-control", "scheduling", "timing-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2966,7 +2966,7 @@ anchors = [
 ]
 summary = "Resuming a process suspended from WAITING resensitizes it to its event expression, wait condition, or remaining delay."
 related_clauses = []
-tags = []
+tags = ["class", "event", "process-control", "timing-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2990,7 +2990,7 @@ anchors = [
 ]
 summary = "process::self() returns a handle to the process making the call."
 related_clauses = []
-tags = []
+tags = ["class", "class-handle", "process-control", "reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3014,7 +3014,7 @@ anchors = [
 ]
 summary = "The process class defines state enumeration values FINISHED, RUNNING, WAITING, SUSPENDED, and KILLED."
 related_clauses = []
-tags = []
+tags = ["class", "enum"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3038,7 +3038,7 @@ anchors = [
 ]
 summary = "status() reports FINISHED for a process that terminated normally."
 related_clauses = []
-tags = []
+tags = ["class", "process-control", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3064,7 +3064,7 @@ summary = "status() reports KILLED for a process forcibly terminated by kill() o
 related_clauses = [
     "9.6.2",
 ]
-tags = []
+tags = ["class", "process-control", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3088,7 +3088,7 @@ anchors = [
 ]
 summary = "A process handle's status() function returns a value of the process::state enumeration representing its current status."
 related_clauses = []
-tags = []
+tags = ["class", "enum", "function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3112,7 +3112,7 @@ anchors = [
 ]
 summary = "status() reports RUNNING for a process currently running and not in a blocking statement."
 related_clauses = []
-tags = []
+tags = ["class", "process-control", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3136,7 +3136,7 @@ anchors = [
 ]
 summary = "status() reports SUSPENDED for a process stopped awaiting resume."
 related_clauses = []
-tags = []
+tags = ["class", "process-control", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3160,7 +3160,7 @@ anchors = [
 ]
 summary = "status() reports WAITING for a process waiting in a blocking statement."
 related_clauses = []
-tags = []
+tags = ["class", "process-control", "scheduling", "timing-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3186,7 +3186,7 @@ summary = "suspend() may target the caller or another process, and the target sh
 related_clauses = [
     "4.7",
 ]
-tags = []
+tags = ["class", "process-control", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -3212,7 +3212,7 @@ anchors = [
 ]
 summary = "Calling suspend() on a process in SUSPENDED, FINISHED, or KILLED state has no effect."
 related_clauses = []
-tags = []
+tags = ["class", "process-control", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -3238,7 +3238,7 @@ anchors = [
 ]
 summary = "Suspending a WAITING process desensitizes it from the event expression, wait condition, or delay expiration on which it was blocked."
 related_clauses = []
-tags = []
+tags = ["class", "event", "process-control", "timing-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3264,7 +3264,7 @@ summary = "Simulation automatically terminates when all program blocks finish th
 related_clauses = [
     "24.7",
 ]
-tags = []
+tags = ["program", "scheduling", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3288,7 +3288,7 @@ anchors = [
 ]
 summary = "A repeat event control delays an intra-assignment update until the specified number of occurrences of its event."
 related_clauses = []
-tags = []
+tags = ["event", "repetition", "timing-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3312,7 +3312,7 @@ anchors = [
 ]
 summary = "The repeat count expression for an intra-assignment event control is evaluated once before scheduling; later changes to any part of that expression do not alter the scheduled count."
 related_clauses = []
-tags = []
+tags = ["evaluation-order", "event", "repetition", "timing-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3336,7 +3336,7 @@ anchors = [
 ]
 summary = "If an intra-assignment repeat count evaluates to zero, a negative value, X, or Z, the assignment proceeds as though the repeat construct were absent."
 related_clauses = []
-tags = []
+tags = ["event", "four-state", "repetition", "timing-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3360,7 +3360,7 @@ anchors = [
 ]
 summary = "When multiple constituent events of a repeat event control occur at the same simulation time, each occurrence is detected and counted separately toward the repeat count."
 related_clauses = []
-tags = []
+tags = ["event", "repetition", "scheduling", "timing-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3386,7 +3386,7 @@ summary = "A return statement in a task terminates execution of the process in w
 related_clauses = [
     "12.8",
 ]
-tags = []
+tags = ["scheduling", "subroutine", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3410,7 +3410,7 @@ anchors = [
 ]
 summary = "A return statement in the context of a fork-join block is illegal and shall cause a compile-time error."
 related_clauses = []
-tags = []
+tags = ["block", "diagnostic", "forkjoin", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3434,7 +3434,7 @@ anchors = [
 ]
 summary = "When SDF annotation overrides a specify parameter used in a delay expression, that delay expression is reevaluated using the override."
 related_clauses = []
-tags = []
+tags = ["specparam", "timing-annotation"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3458,7 +3458,7 @@ anchors = [
 ]
 summary = "A sequence used in an event control is instantiated as if by an assert property statement, and synchronization is to its endpoint regardless of its start time."
 related_clauses = []
-tags = []
+tags = ["concurrent-assertion", "event", "scheduling", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3482,7 +3482,7 @@ anchors = [
 ]
 summary = "A process executing an event control on a sequence instance blocks until that sequence reaches its endpoint."
 related_clauses = []
-tags = []
+tags = ["event", "scheduling", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3506,7 +3506,7 @@ anchors = [
 ]
 summary = "A process released by a sequence endpoint resumes after the Observed region in which that endpoint is detected."
 related_clauses = []
-tags = []
+tags = ["event", "scheduling", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3530,7 +3530,7 @@ anchors = [
 ]
 summary = "Arguments passed to a sequence used in an event control shall be static; using an automatic variable as such an argument is an error."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "event", "lifetime", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3556,7 +3556,7 @@ summary = "A sequence instance may appear directly in an event expression and tr
 related_clauses = [
     "16.7",
 ]
-tags = []
+tags = ["event", "sequence", "timing-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3580,7 +3580,7 @@ anchors = [
 ]
 summary = "Once set, a sequence's triggered status remains true for the rest of the current time step and clears when simulation time advances."
 related_clauses = []
-tags = []
+tags = ["scheduling", "sequence", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3604,7 +3604,7 @@ anchors = [
 ]
 summary = "A sequence's triggered status is set during the Observed region in which its endpoint is reached."
 related_clauses = []
-tags = []
+tags = ["scheduling", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3633,7 +3633,7 @@ related_clauses = [
     "16.9.11",
     "16.13.6",
 ]
-tags = []
+tags = ["conditional", "scheduling", "sequence", "sequence-method"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3657,7 +3657,7 @@ anchors = [
 ]
 summary = "A sequential-block item declaration is an optionally attributed data declaration, local parameter declaration, parameter declaration, or let declaration, with semicolons as prescribed by each grammar alternative."
 related_clauses = []
-tags = []
+tags = ["block", "lexical", "parameter"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -3683,7 +3683,7 @@ anchors = [
 ]
 summary = "A sequential block is delimited by begin and end."
 related_clauses = []
-tags = []
+tags = ["block", "lexical"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3707,7 +3707,7 @@ anchors = [
 ]
 summary = "Within a sequential block, zero or more block item declarations precede zero or more statements or null statements."
 related_clauses = []
-tags = []
+tags = ["block", "lexical", "source-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3731,7 +3731,7 @@ anchors = [
 ]
 summary = "A sequential block may have an identifier after begin and may have an identifier after end."
 related_clauses = []
-tags = []
+tags = ["block", "lexical"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3757,7 +3757,7 @@ anchors = [
 ]
 summary = "Statements in a sequential block execute one after another in their given source order."
 related_clauses = []
-tags = []
+tags = ["block", "scheduling", "source-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3781,7 +3781,7 @@ anchors = [
 ]
 summary = "Each statement delay in a sequential block is measured relative to the simulation time at which the previous statement executes."
 related_clauses = []
-tags = []
+tags = ["block", "simulation-time", "timing-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3805,7 +3805,7 @@ anchors = [
 ]
 summary = "A specify parameter is permitted in a procedural delay expression."
 related_clauses = []
-tags = []
+tags = ["parameter", "specparam", "timing-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3829,7 +3829,7 @@ anchors = [
 ]
 summary = "SystemVerilog creates a thread for each always, always_comb, always_latch, and always_ff procedure."
 related_clauses = []
-tags = []
+tags = ["scheduling", "thread"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3853,7 +3853,7 @@ anchors = [
 ]
 summary = "SystemVerilog creates a thread for each dynamic process."
 related_clauses = []
-tags = []
+tags = ["scheduling", "thread"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3877,7 +3877,7 @@ anchors = [
 ]
 summary = "SystemVerilog creates a thread of execution for each initial procedure."
 related_clauses = []
-tags = []
+tags = ["scheduling", "thread"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3901,7 +3901,7 @@ anchors = [
 ]
 summary = "SystemVerilog creates a thread for each parallel statement in a fork block using join, join_any, or join_none."
 related_clauses = []
-tags = []
+tags = ["block", "forkjoin", "scheduling", "thread"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3925,7 +3925,7 @@ anchors = [
 ]
 summary = "A module may contain any number of initial and always procedures; the language imposes no fixed count limit."
 related_clauses = []
-tags = []
+tags = ["module", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3949,7 +3949,7 @@ anchors = [
 ]
 summary = "A procedural delay expression evaluating to X or Z is interpreted as zero delay."
 related_clauses = []
-tags = []
+tags = ["four-state", "simulation-time", "timing-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3973,7 +3973,7 @@ anchors = [
 ]
 summary = "An unnamed block creates a new unnamed hierarchy scope only when it directly contains a block item declaration."
 related_clauses = []
-tags = []
+tags = ["block", "hierarchy", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3999,7 +3999,7 @@ summary = "Items declared in an unnamed block scope cannot be referenced hierarc
 related_clauses = [
     "6.21",
 ]
-tags = []
+tags = ["block", "hierarchy", "scope", "visibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4024,7 +4024,7 @@ anchors = [
 ]
 summary = "wait fork blocks the current process until all of its immediate child subprocesses have terminated, excluding descendants of those children."
 related_clauses = []
-tags = []
+tags = ["block", "forkjoin", "scheduling", "timing-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -4051,7 +4051,7 @@ summary = "A wait(expression) evaluates its condition and, while the condition i
 related_clauses = [
     "12.4",
 ]
-tags = []
+tags = ["conditional", "scheduling", "timing-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4078,7 +4078,7 @@ anchors = [
 ]
 summary = "A wait statement is wait(expression) followed by a statement or null statement, wait fork followed by a semicolon, or wait_order with one or more comma-separated hierarchical identifiers followed by an action block."
 related_clauses = []
-tags = []
+tags = ["lexical", "timing-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"

@@ -12,7 +12,7 @@ anchors = [
 ]
 summary = "A conforming coverage implementation shall support assertion coverage through the SystemVerilog coverage API."
 related_clauses = []
-tags = []
+tags = ["assertion", "coverage"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -36,7 +36,7 @@ anchors = [
 ]
 summary = "Assertion coverage reports, for each assertion, whether that assertion has had at least one success."
 related_clauses = []
-tags = []
+tags = ["assertion", "coverage", "coverage-metric"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -60,7 +60,7 @@ anchors = [
 ]
 summary = "For an instance or block, the coverage number is the sum of the coverage primitives contained in that instance or block."
 related_clauses = []
-tags = []
+tags = ["coverage", "coverage-metric", "hierarchy"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -84,7 +84,7 @@ anchors = [
 ]
 summary = "Adding a coverage type to the coverage API shall not break usage of existing coverage types."
 related_clauses = []
-tags = []
+tags = ["compatibility", "coverage"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -108,7 +108,7 @@ anchors = [
 ]
 summary = "At the beginning of simulation, coverage collection starts automatically for every hierarchy portion enabled for coverage."
 related_clauses = []
-tags = []
+tags = ["coverage", "coverage-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -133,7 +133,7 @@ anchors = [
 ]
 summary = "A coverage check operation returns `SV_COV_OK` for full coverage availability, `SV_COV_ERROR` for bad arguments, `SV_COV_NOCOV` for no availability, or `SV_COV_PARTIAL` for partial availability."
 related_clauses = []
-tags = []
+tags = ["coverage", "coverage-control", "coverage-status"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -157,7 +157,7 @@ anchors = [
 ]
 summary = "`$coverage_control` accepts a control constant, coverage type, scope definition, and module-or-instance designation to control or query coverage in that hierarchy."
 related_clauses = []
-tags = []
+tags = ["coverage", "coverage-control", "coverage-scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -181,7 +181,7 @@ anchors = [
 ]
 summary = "`SV_COV_CHECK` reports whether coverage information is obtainable from the selected hierarchy independently of whether collection is currently active."
 related_clauses = []
-tags = []
+tags = ["coverage", "coverage-control", "coverage-query"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -206,7 +206,7 @@ anchors = [
 ]
 summary = "`$coverage_control` returns `SV_COV_ERROR` when the requested operation fails without effect, including invalid-argument failures."
 related_clauses = []
-tags = []
+tags = ["coverage", "coverage-control", "coverage-status", "diagnostic"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -230,7 +230,7 @@ anchors = [
 ]
 summary = "The predefined coverage-control macros shall expand as follows: `SV_COV_START` to 0, `SV_COV_STOP` to 1, `SV_COV_RESET` to 2, and `SV_COV_CHECK` to 3."
 related_clauses = []
-tags = []
+tags = ["coverage", "coverage-control", "macro"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -255,7 +255,7 @@ anchors = [
 ]
 summary = "For check or start, `$coverage_control` returns `SV_COV_NOCOV` when coverage is unavailable everywhere in the selected hierarchy."
 related_clauses = []
-tags = []
+tags = ["coverage", "coverage-control", "coverage-status"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -280,7 +280,7 @@ anchors = [
 ]
 summary = "`$coverage_control` returns `SV_COV_OK` when a check finds coverage fully available or another requested operation completes successfully and completely."
 related_clauses = []
-tags = []
+tags = ["coverage", "coverage-control", "coverage-status"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -305,7 +305,7 @@ anchors = [
 ]
 summary = "For check or start, `$coverage_control` returns `SV_COV_PARTIAL` when coverage is available for only part of the selected hierarchy."
 related_clauses = []
-tags = []
+tags = ["coverage", "coverage-control", "coverage-status"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -329,7 +329,7 @@ anchors = [
 ]
 summary = "`SV_COV_RESET` resets all available coverage information in the selected hierarchy and has no effect where coverage is unavailable."
 related_clauses = []
-tags = []
+tags = ["coverage", "coverage-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -353,7 +353,7 @@ anchors = [
 ]
 summary = "`SV_COV_START` starts coverage collection in the selected hierarchy when possible."
 related_clauses = []
-tags = []
+tags = ["coverage", "coverage-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -377,7 +377,7 @@ anchors = [
 ]
 summary = "`SV_COV_STOP` stops coverage collection in the selected hierarchy."
 related_clauses = []
-tags = []
+tags = ["coverage", "coverage-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -402,7 +402,7 @@ anchors = [
 ]
 summary = "`$coverage_get(coverage_type, scope_def, modules_or_instance)` obtains the current coverage value for the selected coverage type and hierarchy portion."
 related_clauses = []
-tags = []
+tags = ["coverage", "coverage-metric", "coverage-query"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -427,7 +427,7 @@ anchors = [
 ]
 summary = "`$coverage_get` returns -1 (`SV_COV_ERROR`) when an error occurs, including incorrect arguments."
 related_clauses = []
-tags = []
+tags = ["coverage", "coverage-query", "coverage-status", "diagnostic"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -452,7 +452,7 @@ anchors = [
 ]
 summary = "`$coverage_get_max` returns -1 (`SV_COV_ERROR`) when an error occurs, including incorrect arguments."
 related_clauses = []
-tags = []
+tags = ["coverage", "coverage-query", "coverage-status", "diagnostic"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -477,7 +477,7 @@ anchors = [
 ]
 summary = "`$coverage_get_max` returns 0 (`SV_COV_NOCOV`) when the selected coverage type is unavailable in the selected hierarchy."
 related_clauses = []
-tags = []
+tags = ["coverage", "coverage-query", "coverage-status"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -502,7 +502,7 @@ anchors = [
 ]
 summary = "`$coverage_get_max` returns -2 (`SV_COV_OVERFLOW`) when the maximum coverage value cannot be represented as an integer."
 related_clauses = []
-tags = []
+tags = ["coverage", "coverage-query", "coverage-status"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -527,7 +527,7 @@ anchors = [
 ]
 summary = "When representable and available, `$coverage_get_max` returns a positive integer equal to the sum of all coverable items of the selected type over the selected hierarchy."
 related_clauses = []
-tags = []
+tags = ["coverage", "coverage-metric", "coverage-query"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -553,7 +553,7 @@ summary = "The scope arguments of `$coverage_get_max` select module definitions,
 related_clauses = [
     "40.3.2.1",
 ]
-tags = []
+tags = ["coverage", "coverage-query", "coverage-scope", "hierarchy"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -578,7 +578,7 @@ anchors = [
 ]
 summary = "`$coverage_get_max(coverage_type, scope_def, modules_or_instance)` returns the value representing 100% coverage for the selected type and hierarchy portion, and that value shall remain constant throughout the simulation."
 related_clauses = []
-tags = []
+tags = ["coverage", "coverage-metric", "coverage-query"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -603,7 +603,7 @@ anchors = [
 ]
 summary = "`$coverage_get` returns 0 (`SV_COV_NOCOV`) when the selected coverage type is unavailable in the selected hierarchy."
 related_clauses = []
-tags = []
+tags = ["coverage", "coverage-query", "coverage-status"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -628,7 +628,7 @@ anchors = [
 ]
 summary = "`$coverage_get` returns -2 (`SV_COV_OVERFLOW`) when the current coverage value cannot be represented as an integer."
 related_clauses = []
-tags = []
+tags = ["coverage", "coverage-query", "coverage-status"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -653,7 +653,7 @@ anchors = [
 ]
 summary = "A positive `$coverage_get` result is the number of covered coverable items of the selected type in the selected hierarchy."
 related_clauses = []
-tags = []
+tags = ["coverage", "coverage-metric", "coverage-query"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -679,7 +679,7 @@ summary = "The scope arguments of `$coverage_get` use the same module-definition
 related_clauses = [
     "40.3.2.1",
 ]
-tags = []
+tags = ["coverage", "coverage-query", "coverage-scope", "hierarchy"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -705,7 +705,7 @@ anchors = [
 ]
 summary = "`$coverage_merge` returns `SV_COV_ERROR` when data are not found, belong to another design, or another merge error occurs."
 related_clauses = []
-tags = []
+tags = ["coverage", "coverage-database", "coverage-status", "diagnostic"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -730,7 +730,7 @@ anchors = [
 ]
 summary = "`$coverage_merge(coverage_type, \"name\")` loads and merges the named saved coverage data for the specified type; storage location and filename mapping are implementation-specific."
 related_clauses = []
-tags = []
+tags = ["coverage", "coverage-database"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -755,7 +755,7 @@ anchors = [
 ]
 summary = "`$coverage_merge` returns `SV_COV_NOCOV` when named data are found but contain no data for the requested coverage type."
 related_clauses = []
-tags = []
+tags = ["coverage", "coverage-database", "coverage-status"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -780,7 +780,7 @@ anchors = [
 ]
 summary = "`$coverage_merge` returns `SV_COV_OK` when the named coverage data are found and merged."
 related_clauses = []
-tags = []
+tags = ["coverage", "coverage-database", "coverage-status"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -805,7 +805,7 @@ anchors = [
 ]
 summary = "Coverage percentage is `$coverage_get()` divided by `$coverage_get_max()`, multiplied by 100."
 related_clauses = []
-tags = []
+tags = ["coverage", "coverage-metric", "coverage-query"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -829,7 +829,7 @@ anchors = [
 ]
 summary = "A repeated call to reset coverage has no effect on the repeated call."
 related_clauses = []
-tags = []
+tags = ["coverage", "coverage-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -854,7 +854,7 @@ anchors = [
 ]
 summary = "A coverage reset operation returns `SV_COV_OK` on success or `SV_COV_ERROR` for bad arguments; no-coverage and partial-coverage statuses do not apply."
 related_clauses = []
-tags = []
+tags = ["coverage", "coverage-control", "coverage-status"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -878,7 +878,7 @@ anchors = [
 ]
 summary = "If `$coverage_save` fails, the tool shall automatically remove the database entry associated with the supplied name."
 related_clauses = []
-tags = []
+tags = ["coverage", "coverage-database", "diagnostic"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -902,7 +902,7 @@ anchors = [
 ]
 summary = "`$coverage_save` returns `SV_COV_ERROR` when an error occurs during the save."
 related_clauses = []
-tags = []
+tags = ["coverage", "coverage-database", "coverage-status", "diagnostic"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -926,7 +926,7 @@ anchors = [
 ]
 summary = "Saving coverage shall not alter the live coverage state of the current simulation."
 related_clauses = []
-tags = []
+tags = ["coverage", "coverage-database"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -951,7 +951,7 @@ anchors = [
 ]
 summary = "`$coverage_save` returns `SV_COV_NOCOV` and saves nothing when the requested coverage type is unavailable in the design."
 related_clauses = []
-tags = []
+tags = ["coverage", "coverage-database", "coverage-status"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -976,7 +976,7 @@ anchors = [
 ]
 summary = "`$coverage_save` returns `SV_COV_OK` when coverage data are successfully saved."
 related_clauses = []
-tags = []
+tags = ["coverage", "coverage-database", "coverage-status"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1000,7 +1000,7 @@ anchors = [
 ]
 summary = "Saving coverage under a name that already exists is permitted and shall not itself be treated as an error."
 related_clauses = []
-tags = []
+tags = ["coverage", "coverage-database"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1025,7 +1025,7 @@ anchors = [
 ]
 summary = "`$coverage_save(coverage_type, \"name\")` saves current coverage under the supplied name, and `$coverage_merge` with the same name shall later retrieve that saved data despite implementation-specific storage mapping."
 related_clauses = []
-tags = []
+tags = ["coverage", "coverage-database"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1049,7 +1049,7 @@ anchors = [
 ]
 summary = "With hierarchical scope and a module-name string, coverage selection includes all instances of that module and all hierarchy below them."
 related_clauses = []
-tags = []
+tags = ["coverage", "coverage-scope", "hierarchy", "module"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1073,7 +1073,7 @@ anchors = [
 ]
 summary = "The predefined coverage-scope macros shall expand as follows: `SV_COV_MODULE` to 10 and `SV_COV_HIER` to 11."
 related_clauses = []
-tags = []
+tags = ["coverage", "coverage-scope", "macro"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1097,7 +1097,7 @@ anchors = [
 ]
 summary = "With module scope and a unique module-definition-name string, coverage selection includes all instances of that module definition but excludes their child instances."
 related_clauses = []
-tags = []
+tags = ["coverage", "coverage-scope", "hierarchy", "module"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1121,7 +1121,7 @@ anchors = [
 ]
 summary = "With module scope and a SystemVerilog hierarchical instance path, coverage selection applies to the one named instance."
 related_clauses = []
-tags = []
+tags = ["coverage", "coverage-scope", "hierarchy", "name-resolution"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1145,7 +1145,7 @@ anchors = [
 ]
 summary = "With hierarchical scope and a SystemVerilog hierarchical instance path, coverage selection includes the named instance and all hierarchy below it."
 related_clauses = []
-tags = []
+tags = ["coverage", "coverage-scope", "hierarchy", "name-resolution"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1170,7 +1170,7 @@ anchors = [
 ]
 summary = "Starting coverage collection for a hierarchy where it is already active has no effect."
 related_clauses = []
-tags = []
+tags = ["coverage", "coverage-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1195,7 +1195,7 @@ anchors = [
 ]
 summary = "A coverage start operation returns `SV_COV_OK` on success, `SV_COV_ERROR` for bad arguments, `SV_COV_NOCOV` when no coverage is available, or `SV_COV_PARTIAL` when coverage is only partially available."
 related_clauses = []
-tags = []
+tags = ["coverage", "coverage-control", "coverage-status"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1219,7 +1219,7 @@ anchors = [
 ]
 summary = "The predefined coverage-status macros shall expand as follows: `SV_COV_OVERFLOW` to -2, `SV_COV_ERROR` to -1, `SV_COV_NOCOV` to 0, `SV_COV_OK` to 1, and `SV_COV_PARTIAL` to 2."
 related_clauses = []
-tags = []
+tags = ["coverage", "coverage-status", "macro"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1244,7 +1244,7 @@ anchors = [
 ]
 summary = "Stopping coverage collection for a hierarchy where it is not active has no effect."
 related_clauses = []
-tags = []
+tags = ["coverage", "coverage-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1269,7 +1269,7 @@ anchors = [
 ]
 summary = "A coverage stop operation returns `SV_COV_OK` on success or `SV_COV_ERROR` for bad arguments; no-coverage and partial-coverage statuses do not apply."
 related_clauses = []
-tags = []
+tags = ["coverage", "coverage-control", "coverage-status"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1293,7 +1293,7 @@ anchors = [
 ]
 summary = "The predefined coverage-type macros shall expand as follows: `SV_COV_ASSERTION` to 20, `SV_COV_FSM_STATE` to 21, `SV_COV_STATEMENT` to 22, and `SV_COV_TOGGLE` to 23."
 related_clauses = []
-tags = []
+tags = ["coverage", "macro"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1318,7 +1318,7 @@ anchors = [
 ]
 summary = "A concatenation of whole signals may be identified as current FSM state by `/* tool state_vector {signal_name, signal_name, ...} FSM_name enum enumeration_name */`, including both an FSM name and enumeration name."
 related_clauses = []
-tags = []
+tags = ["coverage", "fsm-coverage", "fsm-pragma", "pragma-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1342,7 +1342,7 @@ anchors = [
 ]
 summary = "Every concatenation member in a concatenated current-state pragma shall be a whole named signal; bit-selects and part-selects are not permitted."
 related_clauses = []
-tags = []
+tags = ["fsm-coverage", "fsm-pragma"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1366,7 +1366,7 @@ anchors = [
 ]
 summary = "Any standard FSM-description addition prescribed by clause 40.4 shall override the coverage tool's default FSM extraction mechanism."
 related_clauses = []
-tags = []
+tags = ["coverage", "fsm-coverage", "fsm-pragma"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1393,7 +1393,7 @@ anchors = [
 ]
 summary = "Explicit FSM identification specifies the current-state register or expression and the legal states, and may optionally specify a next-state register."
 related_clauses = []
-tags = []
+tags = ["fsm-coverage", "fsm-pragma"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1417,7 +1417,7 @@ anchors = [
 ]
 summary = "When one enum pragma applies to a multiple-signal declaration, the first signal following the pragma is treated as current state and the second as next state."
 related_clauses = []
-tags = []
+tags = ["enum", "fsm-coverage", "fsm-pragma"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1443,7 +1443,7 @@ anchors = [
 ]
 summary = "An FSM having a separate next-state signal shall associate that signal with the FSM enumeration using `/* tool enum enumeration_name */` after its bit range; this pragma may be omitted if and only if no next-state signal exists."
 related_clauses = []
-tags = []
+tags = ["enum", "fsm-coverage", "fsm-pragma", "pragma-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1469,7 +1469,7 @@ anchors = [
 ]
 summary = "When a vector part-select holds current FSM state, `/* tool state_vector signal_name [n:n] FSM_name enum enumeration_name */` identifies the part-select and supplies an FSM reporting name distinct from the enumeration name."
 related_clauses = []
-tags = []
+tags = ["fsm-coverage", "fsm-pragma", "layout", "pragma-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1496,7 +1496,7 @@ anchors = [
 ]
 summary = "FSM state parameters may be associated with an enumeration by `/* tool enum enumeration_name */` immediately after `parameter`, or immediately after the parameter bit width when one is present."
 related_clauses = []
-tags = []
+tags = ["enum", "fsm-coverage", "fsm-pragma", "parameter"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1521,7 +1521,7 @@ anchors = [
 ]
 summary = "The standard FSM pragmas are recognized in both `/* ... */` block comments and after `//` in one-line comments."
 related_clauses = []
-tags = []
+tags = ["comment", "fsm-pragma", "lexical", "pragma-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1545,7 +1545,7 @@ anchors = [
 ]
 summary = "FSM state coverage is the number of states in the FSM reached by the simulation; automatic FSM extraction is not required."
 related_clauses = []
-tags = []
+tags = ["coverage", "coverage-metric", "fsm-coverage"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1571,7 +1571,7 @@ anchors = [
 ]
 summary = "A conforming coverage implementation shall support coverage of recognized finite-state-machine states through the SystemVerilog coverage API."
 related_clauses = []
-tags = []
+tags = ["coverage", "fsm-coverage"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1598,7 +1598,7 @@ anchors = [
 ]
 summary = "The required FSM enumeration association may be included in the state-vector pragma as `/* tool state_vector signal_name enum enumeration_name */`, with `enum` as a required keyword."
 related_clauses = []
-tags = []
+tags = ["enum", "fsm-coverage", "fsm-pragma", "pragma-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1623,7 +1623,7 @@ anchors = [
 ]
 summary = "A current-state vector is identified inside the module that declares the signal by `/* tool state_vector signal_name */`, where `tool` and `state_vector` are required keywords."
 related_clauses = []
-tags = []
+tags = ["fsm-coverage", "fsm-pragma", "pragma-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1650,7 +1650,7 @@ anchors = [
 ]
 summary = "Alternatively, the required FSM enumeration association may use a separate `/* tool enum enumeration_name */` pragma placed immediately after the signal's bit range; `tool` and `enum` are required keywords."
 related_clauses = []
-tags = []
+tags = ["enum", "fsm-coverage", "fsm-pragma", "pragma-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1676,7 +1676,7 @@ anchors = [
 ]
 summary = "A conforming coverage implementation shall support coverage of recognized finite-state-machine transitions through the SystemVerilog coverage API."
 related_clauses = []
-tags = []
+tags = ["coverage", "coverage-transition", "fsm-coverage"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1701,7 +1701,7 @@ anchors = [
 ]
 summary = "A conforming coverage implementation shall support statement coverage through the SystemVerilog coverage API."
 related_clauses = []
-tags = []
+tags = ["coverage", "statement-coverage"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1725,7 +1725,7 @@ anchors = [
 ]
 summary = "A language construct defined as a statement is covered by statement coverage once it has executed at least once."
 related_clauses = []
-tags = []
+tags = ["coverage", "coverage-metric", "statement-coverage"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1749,7 +1749,7 @@ anchors = [
 ]
 summary = "The coverage API shall permit obtaining coverage for a selected design subhierarchy without enumerating every instance contained in that subhierarchy."
 related_clauses = []
-tags = []
+tags = ["coverage", "coverage-query", "coverage-scope", "hierarchy"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1774,7 +1774,7 @@ anchors = [
 ]
 summary = "A conforming coverage implementation shall support toggle coverage through the SystemVerilog coverage API."
 related_clauses = []
-tags = []
+tags = ["coverage", "toggle-coverage"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1798,7 +1798,7 @@ anchors = [
 ]
 summary = "Each bit of every signal has full toggle coverage only when that bit has held both 0 and 1 values."
 related_clauses = []
-tags = []
+tags = ["coverage", "coverage-metric", "toggle-coverage"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1823,7 +1823,7 @@ anchors = [
 ]
 summary = "`vpi_get(vpiAssertAttemptCovered, assertion_handle)` returns the number of assertion attempts."
 related_clauses = []
-tags = []
+tags = ["assertion", "coverage-metric", "pli", "vpi-assertion"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -1847,7 +1847,7 @@ anchors = [
 ]
 summary = "The VPI assertion-specific coverage-status enumeration includes `vpiAssertAttemptCovered`, `vpiAssertSuccessCovered`, `vpiAssertFailureCovered`, `vpiAssertVacuousSuccessCovered`, `vpiAssertDisableCovered`, and `vpiAssertKillCovered`."
 related_clauses = []
-tags = []
+tags = ["assertion", "coverage-status", "pli", "vpi-assertion"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -1871,7 +1871,7 @@ anchors = [
 ]
 summary = "`vpiCovered` is true for an assertion only when it has been attempted, has succeeded at least once, and has never failed."
 related_clauses = []
-tags = []
+tags = ["assertion", "coverage-status", "pli", "vpi-assertion"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -1898,7 +1898,7 @@ summary = "`vpi_get(vpiAssertDisableCovered, assertion_handle)` returns the numb
 related_clauses = [
     "16.12",
 ]
-tags = []
+tags = ["assertion", "coverage-metric", "pli", "vpi-assertion"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -1923,7 +1923,7 @@ anchors = [
 ]
 summary = "`vpi_get(vpiAssertFailureCovered, assertion_handle)` returns the number of assertion failures."
 related_clauses = []
-tags = []
+tags = ["assertion", "coverage-metric", "pli", "vpi-assertion"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -1949,7 +1949,7 @@ anchors = [
 ]
 summary = "`vpi_get(vpiCovered, assertion_handle)` reports whether the assertion referenced by the handle has been covered."
 related_clauses = []
-tags = []
+tags = ["assertion", "coverage-status", "pli", "vpi-assertion"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -1974,7 +1974,7 @@ anchors = [
 ]
 summary = "For an assertion, the number of attempts still in progress equals attempts minus the sum of nonvacuous successes, vacuous successes, disabled evaluations, killed attempts, and failures."
 related_clauses = []
-tags = []
+tags = ["assertion", "coverage-metric", "pli", "vpi-assertion"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2001,7 +2001,7 @@ summary = "`vpi_get(vpiAssertKillCovered, assertion_handle)` returns the number 
 related_clauses = [
     "39.5.2",
 ]
-tags = []
+tags = ["assertion", "coverage-metric", "pli", "vpi-assertion"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2029,7 +2029,7 @@ related_clauses = [
     "16.12.7",
     "16.14.8",
 ]
-tags = []
+tags = ["assertion", "coverage-metric", "pli", "vpi-assertion"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2054,7 +2054,7 @@ anchors = [
 ]
 summary = "`vpi_get(vpiAssertVacuousSuccessCovered, assertion_handle)` returns the number of vacuous assertion successes."
 related_clauses = []
-tags = []
+tags = ["assertion", "coverage-metric", "pli", "vpi-assertion"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2083,7 +2083,7 @@ related_clauses = [
     "40.3.2.1",
     "40.5.1",
 ]
-tags = []
+tags = ["coverage", "coverage-control", "pli", "vpi-coverage"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2107,7 +2107,7 @@ anchors = [
 ]
 summary = "The VPI coverage-control enumeration includes `vpiCoverageStart`, `vpiCoverageStop`, `vpiCoverageReset`, `vpiCoverageCheck`, `vpiCoverageMerge`, and `vpiCoverageSave`."
 related_clauses = []
-tags = []
+tags = ["coverage", "coverage-control", "pli", "vpi-coverage"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2136,7 +2136,7 @@ related_clauses = [
     "40.3.2.4",
     "40.5.1",
 ]
-tags = []
+tags = ["coverage", "coverage-database", "pli", "vpi-coverage"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2165,7 +2165,7 @@ related_clauses = [
     "40.3.2.5",
     "40.5.1",
 ]
-tags = []
+tags = ["coverage", "coverage-database", "pli", "vpi-coverage"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2189,7 +2189,7 @@ anchors = [
 ]
 summary = "The VPI coverage-status property enumeration includes `vpiCovered`, `vpiCoveredMax`, and `vpiCoveredCount`."
 related_clauses = []
-tags = []
+tags = ["coverage", "coverage-status", "pli", "vpi-coverage"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2213,7 +2213,7 @@ anchors = [
 ]
 summary = "The VPI coverage-type property enumeration includes `vpiAssertCoverage`, `vpiFsmStateCoverage`, `vpiStatementCoverage`, and `vpiToggleCoverage`."
 related_clauses = []
-tags = []
+tags = ["coverage", "pli", "vpi-coverage"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2239,7 +2239,7 @@ anchors = [
 ]
 summary = "`vpi_get(vpiCoveredCount, handle)` returns coverage occurrence counts for the handle's coverable entities; for a handle containing multiple entities, the result is the sum of their individual coverage counts."
 related_clauses = []
-tags = []
+tags = ["coverage", "coverage-metric", "pli", "vpi-coverage"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2264,7 +2264,7 @@ anchors = [
 ]
 summary = "`vpi_get(vpiCoveredMax, handle)` returns the number of coverable entities represented by an assertion, statement, signal, FSM, or FSM-state handle."
 related_clauses = []
-tags = []
+tags = ["coverage", "coverage-metric", "pli", "vpi-coverage"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2288,7 +2288,7 @@ anchors = [
 ]
 summary = "`vpi_get(vpiCoveredMax, handle)` shall return 1 for an assertion handle or FSM-state handle."
 related_clauses = []
-tags = []
+tags = ["coverage", "coverage-metric", "pli", "vpi-coverage"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2314,7 +2314,7 @@ anchors = [
 ]
 summary = "For an FSM handle, `vpiCovered` counts covered FSM-state entities."
 related_clauses = []
-tags = []
+tags = ["coverage", "coverage-metric", "pli", "vpi-fsm"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2338,7 +2338,7 @@ anchors = [
 ]
 summary = "The VPI coverage extensions provide the FSM handle types `vpiFsm` and `vpiFsmHandle`."
 related_clauses = []
-tags = []
+tags = ["pli", "vpi-fsm"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2362,7 +2362,7 @@ anchors = [
 ]
 summary = "The VPI FSM-specific method enumeration includes `vpiFsmStates` and `vpiFsmStateExpression`."
 related_clauses = []
-tags = []
+tags = ["pli", "vpi-fsm"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2387,7 +2387,7 @@ anchors = [
 ]
 summary = "`vpi_handle(vpiFsmStateExpression, fsm_handle)` returns the handle of the signal or expression encoding the FSM state."
 related_clauses = []
-tags = []
+tags = ["pli", "vpi-fsm"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2412,7 +2412,7 @@ anchors = [
 ]
 summary = "For an FSM-state handle, vpi_get(vpiCovered, fsm_state_handle) returns whether the referenced FSM state has been covered."
 related_clauses = []
-tags = []
+tags = ["coverage-status", "pli", "vpi-fsm"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2437,7 +2437,7 @@ anchors = [
 ]
 summary = "`vpi_get_value(fsm_state_handle, state_handle)` returns the value represented by an FSM state."
 related_clauses = []
-tags = []
+tags = ["pli", "vpi-fsm"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2463,7 +2463,7 @@ anchors = [
 ]
 summary = "`vpi_get(<coverageType>, instance_handle)` returns the number of covered items of the selected standardized coverage type in the referenced instance."
 related_clauses = []
-tags = []
+tags = ["coverage", "coverage-metric", "pli", "vpi-coverage"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2488,7 +2488,7 @@ anchors = [
 ]
 summary = "`vpi_iterate(vpiFsmStates, fsm_handle)` returns an iterator over all states of the FSM."
 related_clauses = []
-tags = []
+tags = ["pli", "vpi-fsm", "vpi-iteration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2513,7 +2513,7 @@ anchors = [
 ]
 summary = "`vpi_iterate(vpiFsm, instance_handle)` returns an iterator over all FSMs in the instance."
 related_clauses = []
-tags = []
+tags = ["pli", "vpi-fsm", "vpi-iteration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2537,7 +2537,7 @@ anchors = [
 ]
 summary = "Statement, toggle, and FSM coverage may be controlled only at instance level, not through individual statement, signal, or FSM handles."
 related_clauses = []
-tags = []
+tags = ["coverage", "coverage-control", "pli", "vpi-coverage"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2563,7 +2563,7 @@ anchors = [
 ]
 summary = "`vpi_get(vpiCovered, signal_handle)` returns how many individual bit entities represented by the signal handle have been covered."
 related_clauses = []
-tags = []
+tags = ["coverage", "coverage-metric", "pli", "vpi-coverage"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2589,7 +2589,7 @@ anchors = [
 ]
 summary = "`vpi_get(vpiCovered, statement_handle)` returns how many statement entities represented by the handle have been covered."
 related_clauses = []
-tags = []
+tags = ["coverage", "coverage-metric", "pli", "vpi-coverage"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"

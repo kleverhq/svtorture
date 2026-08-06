@@ -11,7 +11,7 @@ anchors = [
 ]
 summary = "When a protected envelope omits a particular pragma keyword, the tool shall use that keyword's specified default value."
 related_clauses = []
-tags = []
+tags = ["default-value"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -35,7 +35,7 @@ anchors = [
 ]
 summary = "An author expression inside an encryption envelope shall be emitted in a pragma directive inside the resulting protected envelope but outside its encrypted data_block; an author expression outside an envelope is copied unchanged."
 related_clauses = []
-tags = []
+tags = ["metadata", "output-placement"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -60,7 +60,7 @@ anchors = [
 ]
 summary = "The author protect pragma expression has the form author = <string>, whose string identifies the IP author."
 related_clauses = []
-tags = []
+tags = ["metadata", "pragma-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -85,7 +85,7 @@ anchors = [
 ]
 summary = "The author_info protect pragma expression has the form author_info = <string>, whose string carries additional information supplied by the IP author."
 related_clauses = []
-tags = []
+tags = ["metadata", "pragma-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -109,7 +109,7 @@ anchors = [
 ]
 summary = "An author_info expression inside an encryption envelope shall be emitted inside the protected envelope but outside data_block; otherwise it shall be copied unchanged."
 related_clauses = []
-tags = []
+tags = ["metadata", "output-placement"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -133,7 +133,7 @@ anchors = [
 ]
 summary = "Every implementation shall support enctype base64 using the encoding specified by IETF RFC 2045."
 related_clauses = []
-tags = []
+tags = ["encoding"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -157,7 +157,7 @@ anchors = [
 ]
 summary = "Encryption shall replace begin with begin_protected and emit all required output pragma expressions before end_protected; key_block and data_block shall occur inside that envelope."
 related_clauses = []
-tags = []
+tags = ["envelope-boundary", "output-placement", "protected-block"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -182,7 +182,7 @@ anchors = [
 ]
 summary = "The bare begin_protected expression starts an encrypted region, and a decrypting tool shall accumulate every pragma expression in that block for use in decrypting it."
 related_clauses = []
-tags = []
+tags = ["envelope-boundary", "protected-block"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -206,7 +206,7 @@ anchors = [
 ]
 summary = "For a CBC data_method requiring an IV, decryption shall remove the first decoded data_block cipher block for use as the IV and internally decrypt only the remainder."
 related_clauses = []
-tags = []
+tags = ["cipher-mode", "encryption-method", "initialization-vector"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -230,7 +230,7 @@ anchors = [
 ]
 summary = "For CBC digest encryption requiring an IV, the consumer shall remove the first decoded digest_block cipher block as IV and decrypt only the remainder."
 related_clauses = []
-tags = []
+tags = ["cipher-mode", "encryption-method", "initialization-vector", "message-digest"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -254,7 +254,7 @@ anchors = [
 ]
 summary = "For a CBC data_method requiring an initialization vector, the IV cipher block shall be prepended to ciphertext before data_block encoding."
 related_clauses = []
-tags = []
+tags = ["cipher-mode", "encryption-method", "initialization-vector"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -278,7 +278,7 @@ anchors = [
 ]
 summary = "When the effective digest encryption method is CBC and requires an IV, its IV cipher block shall be prepended to the encrypted digest before encoding."
 related_clauses = []
-tags = []
+tags = ["cipher-mode", "encryption-method", "initialization-vector", "message-digest"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -302,7 +302,7 @@ anchors = [
 ]
 summary = "When key_method is CBC and requires an IV, its IV cipher block shall be prepended to encrypted key data before key_block encoding."
 related_clauses = []
-tags = []
+tags = ["cipher-mode", "encryption-method", "initialization-vector", "key-block"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -326,7 +326,7 @@ anchors = [
 ]
 summary = "For a CBC key_method requiring an IV, decryption shall remove the first decoded key_block cipher block for use as the IV and internally decrypt only the remainder."
 related_clauses = []
-tags = []
+tags = ["cipher-mode", "encryption-method", "initialization-vector", "key-block"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -352,7 +352,7 @@ anchors = [
 ]
 summary = "comment = <string> may occur anywhere; when inside begin/end, the complete pragma and value shall be emitted in cleartext immediately before that envelope's data_block."
 related_clauses = []
-tags = []
+tags = ["cleartext", "comment", "output-placement"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -376,7 +376,7 @@ anchors = [
 ]
 summary = "Decryption shall reverse data_block encoding before internally decrypting the decoded block."
 related_clauses = []
-tags = []
+tags = ["encoding", "encryption-method"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -401,7 +401,7 @@ anchors = [
 ]
 summary = "A bare data_block on encryption input shall be an error unless it occurs within a previously generated begin_protected/end_protected block, where it shall be ignored."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "protected-block"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -425,7 +425,7 @@ anchors = [
 ]
 summary = "In encryption output, data_block means block text starts on the next line; each begin/end body shall first be encrypted by data_method, then encoded by encoding, and the resulting text emitted."
 related_clauses = []
-tags = []
+tags = ["encoding", "encryption-method"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -450,7 +450,7 @@ anchors = [
 ]
 summary = "A bare data_decrypt_key expression makes the next line the encoded key value that decrypts data_block."
 related_clauses = []
-tags = []
+tags = ["encoding", "key-management"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -474,7 +474,7 @@ anchors = [
 ]
 summary = "data_decrypt_key shall be encoded with the current encoding and emitted as encrypted key_block content."
 related_clauses = []
-tags = []
+tags = ["encoding", "key-block", "key-management"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -498,7 +498,7 @@ anchors = [
 ]
 summary = "For data_block decryption using data_public_key, the tool shall combine data_keyowner with that public key to determine the corresponding private decryption key."
 related_clauses = []
-tags = []
+tags = ["key-management", "name-resolution", "public-key"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -522,7 +522,7 @@ anchors = [
 ]
 summary = "During decryption, data_keyname combined with data_keyowner shall select the single key used to decrypt the protected envelope's data_block."
 related_clauses = []
-tags = []
+tags = ["key-management", "name-resolution"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -547,7 +547,7 @@ anchors = [
 ]
 summary = "data_keyname = <string> names a key or asymmetric key pair; specifying a name not in the keys known for the selected data_keyowner shall be an error."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "key-management", "name-resolution"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -571,7 +571,7 @@ anchors = [
 ]
 summary = "An input data_keyname selects the data encryption key and shall be emitted as cleartext, except that a digital-envelope mechanism shall encrypt it using key_method and key_keyname or key_public_key and encode it in key_block."
 related_clauses = []
-tags = []
+tags = ["cleartext", "key-block", "key-management", "output-placement"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -595,7 +595,7 @@ anchors = [
 ]
 summary = "Encryption output shall preserve data_keyowner unchanged, except that when a digital signature is used it shall be encrypted with key_method and placed in a key_block."
 related_clauses = []
-tags = []
+tags = ["key-block", "key-management", "output-placement"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -620,7 +620,7 @@ anchors = [
 ]
 summary = "data_keyowner = <string> identifies the key provider, including a permitted third party, and its value selects the key used to encrypt data_block."
 related_clauses = []
-tags = []
+tags = ["key-management"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -644,7 +644,7 @@ anchors = [
 ]
 summary = "For a given data_keyowner, the values of data_keyname, data_decrypt_key, and data_public_key shall each be unique."
 related_clauses = []
-tags = []
+tags = ["key-management"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -669,7 +669,7 @@ anchors = [
 ]
 summary = "data_method = <string> selects the encryption algorithm that shall encrypt subsequent begin/end blocks."
 related_clauses = []
-tags = []
+tags = ["encryption-method"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -693,7 +693,7 @@ anchors = [
 ]
 summary = "An implementation may define additional data_method identifier values and their corresponding ciphers beyond the standardized table mappings."
 related_clauses = []
-tags = []
+tags = ["encryption-method", "extension"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -717,7 +717,7 @@ anchors = [
 ]
 summary = "Encryption output shall preserve data_method unchanged, except that with a digital signature it shall encrypt data_method using key_method and place it in key_block."
 related_clauses = []
-tags = []
+tags = ["encryption-method", "key-block", "output-placement"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -742,7 +742,7 @@ anchors = [
 ]
 summary = "A bare data_public_key expression makes the next source line the public key encoded with the current encoding for data encryption; if data_keyname is also present, both shall identify the same key."
 related_clauses = []
-tags = []
+tags = ["encoding", "key-management", "public-key"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -766,7 +766,7 @@ anchors = [
 ]
 summary = "Every protected block using data_public_key shall output that expression followed by the encoded public-key value."
 related_clauses = []
-tags = []
+tags = ["encoding", "output-placement", "protected-block", "public-key"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -790,7 +790,7 @@ anchors = [
 ]
 summary = "A tool that processes SystemVerilog source shall decrypt every decryption envelope in the source for which the user supplies the proper key."
 related_clauses = []
-tags = []
+tags = ["protected-block", "source-transformation"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -814,7 +814,7 @@ anchors = [
 ]
 summary = "Before processing decrypted text, the application shall load decrypt_license.library, call entry with feature, compare its return to match, and treat equality as licensed and inequality as unlicensed."
 related_clauses = []
-tags = []
+tags = ["library", "licensing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -838,7 +838,7 @@ anchors = [
 ]
 summary = "On failed decrypt licensing, no decryption shall occur and an error message shall include the entry function's return value."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "licensing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -862,7 +862,7 @@ anchors = [
 ]
 summary = "If decrypt_license specifies exit, the application shall call it before the decrypting application exits."
 related_clauses = []
-tags = []
+tags = ["foreign-callback", "licensing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -886,7 +886,7 @@ anchors = [
 ]
 summary = "decrypt_license shall be preserved as cleartext content semantics while being encrypted and encoded like other text within its begin/end envelope."
 related_clauses = []
-tags = []
+tags = ["cleartext", "encoding", "licensing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -910,7 +910,7 @@ anchors = [
 ]
 summary = "decrypt_license requires library, entry, and feature strings and permits optional exit string and match number subkeywords."
 related_clauses = []
-tags = []
+tags = ["licensing", "pragma-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -936,7 +936,7 @@ anchors = [
 ]
 summary = "A decryption envelope starts at begin_protected and ends at end_protected; each end_protected closes the most recent begin_protected not already closed."
 related_clauses = []
-tags = []
+tags = ["envelope-boundary", "protected-block"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -960,7 +960,7 @@ anchors = [
 ]
 summary = "A tool supporting decrypting compilation shall replace each decryption envelope with source text obtained by decrypting its data_block according to its protect pragma expressions."
 related_clauses = []
-tags = []
+tags = ["protected-block", "source-transformation"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -984,7 +984,7 @@ anchors = [
 ]
 summary = "During decryption, the tool shall use the encoding directive to determine both the decoding algorithm and the actual data size."
 related_clauses = []
-tags = []
+tags = ["encoding"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1008,7 +1008,7 @@ anchors = [
 ]
 summary = "Every implementation shall support data_method \"des-cbc\" as DES encryption in CBC mode as defined by FIPS 46-3."
 related_clauses = []
-tags = []
+tags = ["cipher-mode", "encryption-method"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1032,7 +1032,7 @@ anchors = [
 ]
 summary = "To authenticate a key_block or data_block, the consumer decrypts the data, computes its declared digest, decrypts the immediately following digest_block, and compares the values; inequality indicates alteration."
 related_clauses = []
-tags = []
+tags = ["integrity", "key-block", "message-digest"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1056,7 +1056,7 @@ anchors = [
 ]
 summary = "Each generated key_block and data_block shall have a digest_block immediately following it, with the current-encoding digest text beginning on the line after digest_block."
 related_clauses = []
-tags = []
+tags = ["encoding", "key-block", "message-digest", "output-placement"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1081,7 +1081,7 @@ anchors = [
 ]
 summary = "A bare digest_block on encryption input outside begin_protected/end_protected shall request generation of an output message digest."
 related_clauses = []
-tags = []
+tags = ["message-digest"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1105,7 +1105,7 @@ anchors = [
 ]
 summary = "If digest_decrypt_key is omitted, its default value shall be the current data_decrypt_key value."
 related_clauses = []
-tags = []
+tags = ["default-value", "key-management", "message-digest"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1130,7 +1130,7 @@ anchors = [
 ]
 summary = "A bare digest_decrypt_key expression makes the next line its encoded digest decryption key."
 related_clauses = []
-tags = []
+tags = ["encoding", "key-management", "message-digest"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1154,7 +1154,7 @@ anchors = [
 ]
 summary = "digest_decrypt_key shall be encoded by the current encoding and emitted as encrypted key_block content."
 related_clauses = []
-tags = []
+tags = ["encoding", "key-block", "key-management", "message-digest"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1178,7 +1178,7 @@ anchors = [
 ]
 summary = "The encrypting tool shall generate the digest using digest_method and encrypt it using digest_key_method and its selected digest key; absent digest_key_method, it shall use the current data_method encryption key."
 related_clauses = []
-tags = []
+tags = ["encryption-method", "message-digest"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1202,7 +1202,7 @@ anchors = [
 ]
 summary = "During digest_block decryption using digest_public_key, the tool shall combine digest_keyowner with that public key to determine the corresponding private key."
 related_clauses = []
-tags = []
+tags = ["key-management", "message-digest", "name-resolution", "public-key"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1227,7 +1227,7 @@ anchors = [
 ]
 summary = "digest_key_method = <string>, using the data_method identifier mappings, selects the algorithm that shall encrypt subsequent digest_block contents."
 related_clauses = []
-tags = []
+tags = ["encryption-method", "message-digest"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1251,7 +1251,7 @@ anchors = [
 ]
 summary = "During decryption, digest_key_method shall select the algorithm used to decrypt digest_block."
 related_clauses = []
-tags = []
+tags = ["encryption-method", "message-digest"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1275,7 +1275,7 @@ anchors = [
 ]
 summary = "If digest_key_method is omitted, its default value shall be the current data_method value."
 related_clauses = []
-tags = []
+tags = ["default-value", "encryption-method", "message-digest"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1299,7 +1299,7 @@ anchors = [
 ]
 summary = "Encryption output shall preserve digest_key_method unchanged, except with a digital signature it shall encrypt it using key_method and the key represented by key_block."
 related_clauses = []
-tags = []
+tags = ["encryption-method", "key-block", "message-digest", "output-placement"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1323,7 +1323,7 @@ anchors = [
 ]
 summary = "During decryption, digest_keyname combined with digest_keyowner shall select the single key used to decrypt digest_block."
 related_clauses = []
-tags = []
+tags = ["key-management", "message-digest", "name-resolution"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1347,7 +1347,7 @@ anchors = [
 ]
 summary = "If digest_keyname is omitted, its default value shall be the current data_keyname value."
 related_clauses = []
-tags = []
+tags = ["default-value", "key-management", "message-digest"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1372,7 +1372,7 @@ anchors = [
 ]
 summary = "digest_keyname = <string> names the key or asymmetric key pair for digest_block decryption; a name not known for the selected digest_keyowner shall be an error."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "key-management", "message-digest", "name-resolution"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1396,7 +1396,7 @@ anchors = [
 ]
 summary = "digest_keyname with digest_keyowner selects the digest encryption key and shall remain cleartext, except a digital envelope shall encrypt it with key_method and key_keyname or key_public_key into key_block."
 related_clauses = []
-tags = []
+tags = ["cleartext", "key-block", "message-digest", "output-placement"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1420,7 +1420,7 @@ anchors = [
 ]
 summary = "If digest_keyowner is omitted, its default value shall be the current data_keyowner value."
 related_clauses = []
-tags = []
+tags = ["default-value", "key-management", "message-digest"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1444,7 +1444,7 @@ anchors = [
 ]
 summary = "digest_keyowner identifies the key provider, including a permitted third party, and selects the key used to encrypt digest_block."
 related_clauses = []
-tags = []
+tags = ["key-management", "message-digest"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1468,7 +1468,7 @@ anchors = [
 ]
 summary = "The digest_keyowner protect pragma expression has the form digest_keyowner = <string>."
 related_clauses = []
-tags = []
+tags = ["key-management", "message-digest", "pragma-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1492,7 +1492,7 @@ anchors = [
 ]
 summary = "For a given digest_keyowner, digest_keyname, digest_decrypt_key, and digest_public_key values shall each be unique."
 related_clauses = []
-tags = []
+tags = ["key-management", "message-digest"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1516,7 +1516,7 @@ anchors = [
 ]
 summary = "digest_method shall select the message-digest algorithm used to generate digests for subsequent data_block and key_block output."
 related_clauses = []
-tags = []
+tags = ["message-digest"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1540,7 +1540,7 @@ anchors = [
 ]
 summary = "An implementation may define additional digest_method identifier values beyond the standardized Table 34-4 identifiers."
 related_clauses = []
-tags = []
+tags = ["extension", "message-digest"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1564,7 +1564,7 @@ anchors = [
 ]
 summary = "Encryption output shall preserve digest_method unchanged, except with a digital signature it shall encrypt it using key_method and place it in key_block."
 related_clauses = []
-tags = []
+tags = ["encryption-method", "key-block", "message-digest", "output-placement"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1588,7 +1588,7 @@ anchors = [
 ]
 summary = "The digest_method protect pragma expression has the form digest_method = <string>."
 related_clauses = []
-tags = []
+tags = ["message-digest", "pragma-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1612,7 +1612,7 @@ anchors = [
 ]
 summary = "During decryption, digest_method shall select the algorithm used to generate the comparison digest from data_block."
 related_clauses = []
-tags = []
+tags = ["integrity", "message-digest"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1636,7 +1636,7 @@ anchors = [
 ]
 summary = "If digest_public_key is omitted, its default value shall be the current data_public_key value."
 related_clauses = []
-tags = []
+tags = ["default-value", "key-management", "message-digest", "public-key"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1661,7 +1661,7 @@ anchors = [
 ]
 summary = "A bare digest_public_key expression makes the next line its public-key value encoded by the current encoding; if digest_keyname is also present, both shall identify the same key."
 related_clauses = []
-tags = []
+tags = ["encoding", "key-management", "message-digest", "public-key"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1685,7 +1685,7 @@ anchors = [
 ]
 summary = "Each protected block using digest_public_key shall emit that expression followed by its encoded value."
 related_clauses = []
-tags = []
+tags = ["encoding", "message-digest", "output-placement", "public-key"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1709,7 +1709,7 @@ anchors = [
 ]
 summary = "The current encoding applies to data_block, data_public_key, data_decrypt_key, digest_block, key_block, and key_public_key; preceding individual fields with new encoding expressions may select separate encodings."
 related_clauses = []
-tags = []
+tags = ["encoding"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1733,7 +1733,7 @@ anchors = [
 ]
 summary = "The numeric bytes subkeyword denotes the original block byte count before encoding or insertion of line breaks."
 related_clauses = []
-tags = []
+tags = ["encoding"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1757,7 +1757,7 @@ anchors = [
 ]
 summary = "Every generated begin_protected/end_protected block shall contain an encoding directive identifying the encoding actually used; a tool choosing an encoding absent from input shall emit its corresponding expression."
 related_clauses = []
-tags = []
+tags = ["encoding", "output-placement", "protected-block"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1781,7 +1781,7 @@ anchors = [
 ]
 summary = "When an encoding expression is present in encryption input, it shall control the textual encoding of output data_block, digest_block, and key_block binary content."
 related_clauses = []
-tags = []
+tags = ["encoding", "output-placement"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1805,7 +1805,7 @@ anchors = [
 ]
 summary = "An encoding protect pragma expression has the form encoding = (enctype = <string> [, line_length = <number>] [, bytes = <number>])."
 related_clauses = []
-tags = []
+tags = ["encoding", "pragma-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -1830,7 +1830,7 @@ anchors = [
 ]
 summary = "An implementation may define additional encoding identifier values and their corresponding encoding algorithms beyond the standardized table mappings."
 related_clauses = []
-tags = []
+tags = ["encoding", "extension"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1855,7 +1855,7 @@ anchors = [
 ]
 summary = "A bytes subkeyword supplied in encryption input shall be ignored."
 related_clauses = []
-tags = []
+tags = ["encoding"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1881,7 +1881,7 @@ anchors = [
 ]
 summary = "The numeric line_length encoding subkeyword specifies the maximum number of post-encoding characters on any single data_block line; line breaks may be inserted after encryption and encoding to meet that limit."
 related_clauses = []
-tags = []
+tags = ["encoding", "line-length"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1905,7 +1905,7 @@ anchors = [
 ]
 summary = "If an encrypting tool provides encrypt_agent_info, it shall place the string expression inside the protected envelope but outside data_block."
 related_clauses = []
-tags = []
+tags = ["metadata", "output-placement"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1929,7 +1929,7 @@ anchors = [
 ]
 summary = "The encrypt_agent_info protect pragma expression has the form encrypt_agent_info = <string>."
 related_clauses = []
-tags = []
+tags = ["metadata", "pragma-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1954,7 +1954,7 @@ anchors = [
 ]
 summary = "An encrypting tool shall generate encrypt_agent = <string> identifying itself and place it inside the protected envelope but outside data_block."
 related_clauses = []
-tags = []
+tags = ["metadata", "output-placement"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1978,7 +1978,7 @@ anchors = [
 ]
 summary = "Unless otherwise specified, all text between matched begin and end expressions, including comments and other protect pragmas, shall be encrypted into the output data_block."
 related_clauses = []
-tags = []
+tags = ["encryption-method"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2006,7 +2006,7 @@ anchors = [
 ]
 summary = "An encryption envelope starts at a begin protect expression and ends at an end expression, with each end associated with the most recent begin."
 related_clauses = []
-tags = []
+tags = ["envelope-boundary"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2030,7 +2030,7 @@ anchors = [
 ]
 summary = "A begin/end encryption envelope shall not be nested within another begin/end encryption envelope; such nesting is an error."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "envelope-boundary", "nested-envelope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2055,7 +2055,7 @@ anchors = [
 ]
 summary = "During envelope encryption, the processor shall interpret only protect pragma directives and shall leave source text outside encryption envelopes unmodified unless another rule explicitly specifies otherwise."
 related_clauses = []
-tags = []
+tags = ["source-transformation"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2079,7 +2079,7 @@ anchors = [
 ]
 summary = "An encrypting tool may prepend and append an arbitrary amount of comment text to input before encryption to mitigate known-text attacks."
 related_clauses = []
-tags = []
+tags = ["comment"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2104,7 +2104,7 @@ anchors = [
 ]
 summary = "A tool providing encryption shall replace each encryption envelope with a decryption envelope whose pragma expressions correspond to the encryption specifications and whose data_block is the envelope body encrypted with the specified exchange key."
 related_clauses = []
-tags = []
+tags = ["envelope-boundary", "protected-block", "source-transformation"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2130,7 +2130,7 @@ anchors = [
 ]
 summary = "The bare end pragma expression terminates the cleartext region to encrypt and shall be replaced by end_protected in the encryption output stream."
 related_clauses = []
-tags = []
+tags = ["envelope-boundary", "output-placement"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2156,7 +2156,7 @@ anchors = [
 ]
 summary = "The bare end_protected expression closes the preceding begin_protected block; its accumulated pragmas form the set for decrypting that block, and later pragma values accumulate for the next envelope."
 related_clauses = []
-tags = []
+tags = ["envelope-boundary", "protected-block"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2180,7 +2180,7 @@ anchors = [
 ]
 summary = "Protect expressions before begin or begin_protected are envelope keywords, while expressions after that opener and before its associated closer are content keywords processed within the protected region."
 related_clauses = []
-tags = []
+tags = ["envelope-boundary", "pragma-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2204,7 +2204,7 @@ anchors = [
 ]
 summary = "A consumer shall reverse key_block encoding, internally decrypt the decoded block, and parse the resulting text to determine keys required for data_block decryption."
 related_clauses = []
-tags = []
+tags = ["encoding", "key-block", "key-management"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2229,7 +2229,7 @@ anchors = [
 ]
 summary = "A bare key_block on encryption input shall be an error unless inside a previously generated protected block, where it shall be ignored."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "key-block", "protected-block"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2253,7 +2253,7 @@ anchors = [
 ]
 summary = "For requested digital signatures, key_block content begins on the next line and shall be formed by buffering applicable data-key metadata, encrypting it with key_public_key, then applying current encoding."
 related_clauses = []
-tags = []
+tags = ["digital-signature", "encoding", "key-block", "public-key"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2277,7 +2277,7 @@ anchors = [
 ]
 summary = "Encryption output shall emit key_keyname as cleartext."
 related_clauses = []
-tags = []
+tags = ["cleartext", "key-management", "output-placement"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2302,7 +2302,7 @@ anchors = [
 ]
 summary = "key_keyname = <string> names the key or asymmetric key pair used to decrypt key_block; a name not known for key_keyowner shall be an error."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "key-management", "name-resolution"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2326,7 +2326,7 @@ anchors = [
 ]
 summary = "On encryption input, key_keyname combined with key_keyowner shall select the key used to encrypt data-encryption keys."
 related_clauses = []
-tags = []
+tags = ["key-management", "name-resolution"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2352,7 +2352,7 @@ summary = "key_keyowner identifies the provider of keys protecting key informati
 related_clauses = [
     "34.5.10",
 ]
-tags = []
+tags = ["key-management"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2376,7 +2376,7 @@ anchors = [
 ]
 summary = "Encryption output shall preserve key_keyowner unchanged."
 related_clauses = []
-tags = []
+tags = ["key-management", "output-placement"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2400,7 +2400,7 @@ anchors = [
 ]
 summary = "The key_keyowner protect pragma expression has the form key_keyowner = <string>."
 related_clauses = []
-tags = []
+tags = ["key-management", "pragma-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2424,7 +2424,7 @@ anchors = [
 ]
 summary = "During decryption, key_method shall select the algorithm used to decrypt key_block."
 related_clauses = []
-tags = []
+tags = ["encryption-method", "key-block"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2448,7 +2448,7 @@ anchors = [
 ]
 summary = "Encryption output shall preserve key_method unchanged."
 related_clauses = []
-tags = []
+tags = ["encryption-method", "output-placement"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2473,7 +2473,7 @@ anchors = [
 ]
 summary = "key_method = <string> selects, using the data_method identifier mappings, the algorithm that shall encrypt keys used for data_block encryption."
 related_clauses = []
-tags = []
+tags = ["encryption-method", "key-management"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2498,7 +2498,7 @@ anchors = [
 ]
 summary = "A bare key_public_key makes the next line the current-encoding public key used to encrypt key data; if key_keyname is also present both shall identify the same key."
 related_clauses = []
-tags = []
+tags = ["encoding", "key-management", "public-key"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2522,7 +2522,7 @@ anchors = [
 ]
 summary = "Each protected block using key_public_key shall emit that expression followed by its encoded value."
 related_clauses = []
-tags = []
+tags = ["encoding", "output-placement", "protected-block", "public-key"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2548,7 +2548,7 @@ summary = "Text macros contained in decrypted substituted text shall be expanded
 related_clauses = [
     "22.5",
 ]
-tags = []
+tags = ["macro", "source-transformation"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2572,7 +2572,7 @@ anchors = [
 ]
 summary = "Multiple key_block expressions in one encryption envelope shall encode the same data-decryption-key data; changing data-decryption pragma values between them shall be an error."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "key-block", "key-management"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2596,7 +2596,7 @@ anchors = [
 ]
 summary = "Decryption envelopes may contain other envelopes, and an implementation shall support a nesting depth of at least eight decryption envelopes."
 related_clauses = []
-tags = []
+tags = ["envelope-boundary", "nested-envelope", "protected-block"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2620,7 +2620,7 @@ anchors = [
 ]
 summary = "A decryption envelope revealed in substituted cleartext shall be decrypted and substituted only after replacement of its enclosing decryption envelope."
 related_clauses = []
-tags = []
+tags = ["envelope-boundary", "protected-block", "source-transformation"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2644,7 +2644,7 @@ anchors = [
 ]
 summary = "If supported, data_method identifier aes128-cbc shall select FIPS 197 AES with a 128-bit key in CBC mode."
 related_clauses = []
-tags = []
+tags = ["cipher-mode", "encryption-method", "optional-support"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2668,7 +2668,7 @@ anchors = [
 ]
 summary = "If supported, data_method identifier aes192-cbc shall select AES with a 192-bit key."
 related_clauses = []
-tags = []
+tags = ["cipher-mode", "encryption-method", "optional-support"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2692,7 +2692,7 @@ anchors = [
 ]
 summary = "If supported, data_method identifier aes256-cbc shall select AES in CBC mode with a 256-bit key."
 related_clauses = []
-tags = []
+tags = ["cipher-mode", "encryption-method", "optional-support"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2716,7 +2716,7 @@ anchors = [
 ]
 summary = "If supported, data_method identifier rsa shall select RSA encryption as specified by IETF RFC 2437."
 related_clauses = []
-tags = []
+tags = ["encryption-method", "optional-support"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2740,7 +2740,7 @@ anchors = [
 ]
 summary = "If supported, data_method identifier blowfish-cbc shall select Blowfish in CBC mode."
 related_clauses = []
-tags = []
+tags = ["cipher-mode", "encryption-method", "optional-support"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2764,7 +2764,7 @@ anchors = [
 ]
 summary = "If supported, data_method identifier cast128-cbc shall select CAST-128 in CBC mode as specified by IETF RFC 2144."
 related_clauses = []
-tags = []
+tags = ["cipher-mode", "encryption-method", "optional-support"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2788,7 +2788,7 @@ anchors = [
 ]
 summary = "If supported, data_method identifier 3des-cbc shall select Triple DES in CBC mode as specified by FIPS 46-3 and ANSI X9.52-1998."
 related_clauses = []
-tags = []
+tags = ["cipher-mode", "encryption-method", "optional-support"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2812,7 +2812,7 @@ anchors = [
 ]
 summary = "If supported, data_method identifier twofish192-cbc shall select Twofish with a 192-bit key."
 related_clauses = []
-tags = []
+tags = ["cipher-mode", "encryption-method", "optional-support"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2836,7 +2836,7 @@ anchors = [
 ]
 summary = "If supported, digest_method md2 shall denote Message Digest Algorithm 2 as specified by IETF RFC 1319."
 related_clauses = []
-tags = []
+tags = ["message-digest", "optional-support"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2860,7 +2860,7 @@ anchors = [
 ]
 summary = "If supported, data_method identifier elgamal shall select the ElGamal encryption algorithm."
 related_clauses = []
-tags = []
+tags = ["encryption-method", "optional-support"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2884,7 +2884,7 @@ anchors = [
 ]
 summary = "If supported, enctype quoted-printable shall denote quoted-printable encoding as specified by IETF RFC 2045."
 related_clauses = []
-tags = []
+tags = ["encoding", "optional-support"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2908,7 +2908,7 @@ anchors = [
 ]
 summary = "If supported, data_method identifier pgp-rsa shall select OpenPGP RSA encryption as specified by IETF RFC 2440."
 related_clauses = []
-tags = []
+tags = ["encryption-method", "optional-support"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2933,7 +2933,7 @@ anchors = [
 ]
 summary = "If supported, enctype raw shall perform no encoding transformation and may contain nonprintable data characters."
 related_clauses = []
-tags = []
+tags = ["encoding", "optional-support"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2957,7 +2957,7 @@ anchors = [
 ]
 summary = "If supported, digest_method ripemd-160 shall denote RIPEMD-160 as specified by ISO/IEC 10118-3:2004."
 related_clauses = []
-tags = []
+tags = ["message-digest", "optional-support"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2981,7 +2981,7 @@ anchors = [
 ]
 summary = "If supported, data_method identifier serpent128-cbc shall select Serpent with a 128-bit key."
 related_clauses = []
-tags = []
+tags = ["cipher-mode", "encryption-method", "optional-support"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3005,7 +3005,7 @@ anchors = [
 ]
 summary = "If supported, data_method identifier serpent192-cbc shall select Serpent with a 192-bit key."
 related_clauses = []
-tags = []
+tags = ["cipher-mode", "encryption-method", "optional-support"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3029,7 +3029,7 @@ anchors = [
 ]
 summary = "If supported, data_method identifier serpent256-cbc shall select Serpent in CBC mode with a 256-bit key."
 related_clauses = []
-tags = []
+tags = ["cipher-mode", "encryption-method", "optional-support"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3053,7 +3053,7 @@ anchors = [
 ]
 summary = "If supported, data_method identifier twofish128-cbc shall select Twofish with a 128-bit key."
 related_clauses = []
-tags = []
+tags = ["cipher-mode", "encryption-method", "optional-support"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3077,7 +3077,7 @@ anchors = [
 ]
 summary = "If supported, data_method identifier twofish256-cbc shall select Twofish in CBC mode with a 256-bit key."
 related_clauses = []
-tags = []
+tags = ["cipher-mode", "encryption-method", "optional-support"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3102,7 +3102,7 @@ anchors = [
 ]
 summary = "For every block it encrypts, the encrypting tool shall generate an encoding descriptor whose bytes value equals that block's original unencoded byte count."
 related_clauses = []
-tags = []
+tags = ["encoding", "output-placement"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3126,7 +3126,7 @@ anchors = [
 ]
 summary = "A begin/end encryption envelope may contain begin_protected/end_protected content, which shall be treated as an uninterpreted byte stream and encrypted like text."
 related_clauses = []
-tags = []
+tags = ["encryption-method", "protected-block"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3152,7 +3152,7 @@ summary = "Interpretation of a sequence of protect pragma expressions shall be i
 related_clauses = [
     "22.11",
 ]
-tags = []
+tags = ["pragma-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3178,7 +3178,7 @@ summary = "Pragma expressions associated with a protect pragma are evaluated in 
 related_clauses = [
     "22.11",
 ]
-tags = []
+tags = ["evaluation-order", "pragma-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3202,7 +3202,7 @@ anchors = [
 ]
 summary = "Protect pragma scope is lexical rather than tied to a declaration or declarative region, and may continue across source-file and included-file boundaries."
 related_clauses = []
-tags = []
+tags = ["include", "pragma-syntax", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3228,7 +3228,7 @@ summary = "A region designated as a protected envelope shall be transformed as s
 related_clauses = [
     "22.11",
 ]
-tags = []
+tags = ["protected-block", "source-transformation"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3252,7 +3252,7 @@ anchors = [
 ]
 summary = "When reencrypting a protected block, its matching end_protected expression shall be encrypted into the current data_block with the current method and keys."
 related_clauses = []
-tags = []
+tags = ["encryption-method", "protected-block"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3276,7 +3276,7 @@ anchors = [
 ]
 summary = "When a protected block is encountered during encryption, protect pragmas inside it shall not be interpreted or override pragma values governing the current encryption."
 related_clauses = []
-tags = []
+tags = ["protected-block", "source-transformation"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3301,7 +3301,7 @@ anchors = [
 ]
 summary = "During encryption, an encountered begin_protected expression and the enclosed protected-block content up to its matching end_protected shall be treated as cleartext and encrypted into the current data_block using the current method and keys."
 related_clauses = []
-tags = []
+tags = ["cleartext", "encryption-method", "protected-block"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3325,7 +3325,7 @@ anchors = [
 ]
 summary = "Every implementation shall support digest_method sha1 as Secure Hash Algorithm 1 specified by FIPS 180-2."
 related_clauses = []
-tags = []
+tags = ["message-digest"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3349,7 +3349,7 @@ anchors = [
 ]
 summary = "Every implementation shall support digest_method md5 as Message Digest Algorithm 5 specified by IETF RFC 1321."
 related_clauses = []
-tags = []
+tags = ["message-digest"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3376,7 +3376,7 @@ summary = "The bare reset protect expression is synonymous with a reset directiv
 related_clauses = [
     "22.11",
 ]
-tags = []
+tags = ["default-value", "pragma-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3400,7 +3400,7 @@ anchors = [
 ]
 summary = "Before executing the model, the application shall load runtime_license.library, call entry with feature, compare its return to match, and treat equality as licensed and inequality as unlicensed."
 related_clauses = []
-tags = []
+tags = ["library", "licensing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3424,7 +3424,7 @@ anchors = [
 ]
 summary = "On failed runtime licensing, execution shall not begin and an error message shall include the entry function's return value."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "licensing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3448,7 +3448,7 @@ anchors = [
 ]
 summary = "If runtime_license specifies exit, the application shall call it before the executing application exits."
 related_clauses = []
-tags = []
+tags = ["foreign-callback", "licensing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3472,7 +3472,7 @@ anchors = [
 ]
 summary = "runtime_license shall retain its cleartext content unchanged while being encrypted and encoded like other text in its begin/end envelope."
 related_clauses = []
-tags = []
+tags = ["cleartext", "encoding", "licensing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3496,7 +3496,7 @@ anchors = [
 ]
 summary = "runtime_license requires library, entry, and feature strings and permits optional exit string and match number."
 related_clauses = []
-tags = []
+tags = ["licensing", "pragma-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3520,7 +3520,7 @@ anchors = [
 ]
 summary = "When an encryption service uses a session key, it shall put the exchange-key-encrypted session key in a key_block and put the session-key-encrypted envelope body in the decryption envelope's data_block."
 related_clauses = []
-tags = []
+tags = ["encryption-method", "key-block", "key-management"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3544,7 +3544,7 @@ anchors = [
 ]
 summary = "For a digitally signed protected region, the decrypting tool shall decrypt key_block to obtain digest_decrypt_key and digest_key_method."
 related_clauses = []
-tags = []
+tags = ["digital-signature", "key-block", "key-management", "message-digest"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3568,7 +3568,7 @@ anchors = [
 ]
 summary = "When a protected region uses a digital signature, the decrypting tool shall decrypt key_block to obtain data_decrypt_key and data_method."
 related_clauses = []
-tags = []
+tags = ["digital-signature", "key-block", "key-management"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3592,7 +3592,7 @@ anchors = [
 ]
 summary = "In the described digital-signature form, data_method and data_decrypt_key are encrypted with key_method into key_block, while the already encrypted data_block is not encrypted again."
 related_clauses = []
-tags = []
+tags = ["digital-signature", "encryption-method", "key-block"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3616,7 +3616,7 @@ anchors = [
 ]
 summary = "In the digital-signature form, digest_key_method and digest_decrypt_key are encrypted with key_method into key_block, while the already encrypted digest_block is not encrypted again."
 related_clauses = []
-tags = []
+tags = ["digital-signature", "encryption-method", "key-block", "message-digest"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3640,7 +3640,7 @@ anchors = [
 ]
 summary = "Every implementation shall support enctype uuencode using the IEEE 1003.1 historical uuencode algorithm."
 related_clauses = []
-tags = []
+tags = ["encoding"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3664,7 +3664,7 @@ anchors = [
 ]
 summary = "The object named by a viewport expression shall be contained within the current protected envelope."
 related_clauses = []
-tags = []
+tags = ["envelope-boundary", "protected-block", "viewport"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3688,7 +3688,7 @@ anchors = [
 ]
 summary = "The viewport protect pragma expression has the form viewport = (object = <string>, access = <string>)."
 related_clauses = []
-tags = []
+tags = ["envelope-boundary", "pragma-syntax", "protected-block", "viewport"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"

@@ -11,7 +11,7 @@ anchors = [
 ]
 summary = "An anonymous program package item uses `program ; ... endprogram` and its body contains only the anonymous_program_item declaration forms enumerated by the grammar."
 related_clauses = []
-tags = []
+tags = ["grammar", "package", "program"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -36,7 +36,7 @@ anchors = [
 ]
 summary = "A package import in an ANSI module, interface, or program header shall be followed by a parameter-port list, a list of port declarations, or both."
 related_clauses = []
-tags = []
+tags = ["grammar", "import", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -60,7 +60,7 @@ anchors = [
 ]
 summary = "Multiple export declarations may export the same actual declaration."
 related_clauses = []
-tags = []
+tags = ["export", "package"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -84,7 +84,7 @@ anchors = [
 ]
 summary = "`export P::X` is legal only if X is an import candidate and is actually imported into the exporting package from P; exporting an unreferenced wildcard candidate counts as a reference and imports it under direct-import rules."
 related_clauses = []
-tags = []
+tags = ["export", "import", "package"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -108,7 +108,7 @@ anchors = [
 ]
 summary = "An explicit import of an identifier is illegal when that identifier is declared in the importing scope or explicitly imported there from another package."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "import", "namespace", "redeclaration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -132,7 +132,7 @@ anchors = [
 ]
 summary = "An explicitly imported package identifier is directly visible in the current scope without a package-name qualifier."
 related_clauses = []
-tags = []
+tags = ["import", "package", "visibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -157,7 +157,7 @@ anchors = [
 ]
 summary = "An explicit import imports only its specifically named identifier; importing a type does not also import identifiers such as enumeration literals declared as part of that type."
 related_clauses = []
-tags = []
+tags = ["import", "package", "visibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -181,7 +181,7 @@ anchors = [
 ]
 summary = "A package export declaration may precede its corresponding package import."
 related_clauses = []
-tags = []
+tags = ["export", "import", "package", "source-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -205,7 +205,7 @@ anchors = [
 ]
 summary = "Importing through an export is equivalent to importing the original declaration, so multiple exported paths to that same declaration do not conflict."
 related_clauses = []
-tags = []
+tags = ["export", "import", "name-resolution", "package"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -229,7 +229,7 @@ anchors = [
 ]
 summary = "A package item imported in a module, interface, or program header is visible throughout that design unit, including its parameter and port declarations."
 related_clauses = []
-tags = []
+tags = ["import", "ports", "visibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -254,7 +254,7 @@ anchors = [
 ]
 summary = "A module, interface, or program header may contain package import declarations after the design-unit identifier and before its parameter and port lists."
 related_clauses = []
-tags = []
+tags = ["grammar", "import", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -278,7 +278,7 @@ anchors = [
 ]
 summary = "Importing an identifier makes the original declaration directly visible without copying it, and that imported visibility cannot be accessed from outside the importing scope by hierarchical or interface-port reference into the scope."
 related_clauses = []
-tags = []
+tags = ["hierarchy", "import", "visibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -302,7 +302,7 @@ anchors = [
 ]
 summary = "A declaration imported into a package is not made visible by later imports of that package unless a package export declaration exports it."
 related_clauses = []
-tags = []
+tags = ["export", "import", "package", "visibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -327,7 +327,7 @@ anchors = [
 ]
 summary = "After a wildcard-imported symbol has become locally visible in a scope, a later local declaration or explicit import with the same name in that scope is illegal."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "import", "redeclaration", "wildcard-import"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -351,7 +351,7 @@ anchors = [
 ]
 summary = "Name resolution first searches locally visible identifiers and binds a found match; ordinary references search identifiers visible at the reference point, while task and function calls search through the end of the current scope."
 related_clauses = []
-tags = []
+tags = ["name-resolution", "scope", "subroutine", "visibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -378,7 +378,7 @@ anchors = [
 ]
 summary = "At a point in a scope, an identifier is locally visible if it denotes a nested scope, was declared earlier in the current scope, or was made visible there by an earlier explicit import."
 related_clauses = []
-tags = []
+tags = ["name-resolution", "scope", "source-order", "visibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -402,7 +402,7 @@ anchors = [
 ]
 summary = "A package shall not contain a net declaration with an implicit continuous assignment."
 related_clauses = []
-tags = []
+tags = ["continuous-assignment", "diagnostic", "net", "package"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -427,7 +427,7 @@ anchors = [
 ]
 summary = "An import statement shall not appear directly within class scope."
 related_clauses = []
-tags = []
+tags = ["class-scope", "diagnostic", "import"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -452,7 +452,7 @@ anchors = [
 ]
 summary = "If no current-scope match exists, resolution repeats through each outer lexical scope through compilation-unit scope, searching local names before prior potentially visible wildcard names; a wildcard match becomes locally visible in the outer scope where found."
 related_clauses = []
-tags = []
+tags = ["compilation-unit", "import", "name-resolution", "wildcard-import"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -476,7 +476,7 @@ anchors = [
 ]
 summary = "A package shall be compiled before any scope that imports it."
 related_clauses = []
-tags = []
+tags = ["compilation-order", "import", "package"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -502,7 +502,7 @@ summary = "A package declaration consists of optional attributes, `package`, an 
 related_clauses = [
     "3.13",
 ]
-tags = []
+tags = ["grammar", "package"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -526,7 +526,7 @@ anchors = [
 ]
 summary = "A package export declaration is either `export *::*;` or `export` followed by one or more comma-separated package import items and a semicolon."
 related_clauses = []
-tags = []
+tags = ["export", "grammar", "package"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -550,7 +550,7 @@ anchors = [
 ]
 summary = "An item within a package shall not hierarchically reference an identifier unless that identifier is declared in the package or made visible by importing another package."
 related_clauses = []
-tags = []
+tags = ["hierarchy", "name-resolution", "package", "visibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -574,7 +574,7 @@ anchors = [
 ]
 summary = "A package import declaration consists of `import`, one or more comma-separated package import items, and a semicolon; each item selects either one identifier or all identifiers from a named package using `::`."
 related_clauses = []
-tags = []
+tags = ["grammar", "import", "package"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -598,7 +598,7 @@ anchors = [
 ]
 summary = "A package body may contain only the `package_item` forms admitted by the grammar: the enumerated net, data, subroutine, checker, DPI, constraint, class, parameter, covergroup, and assertion declaration forms (or an empty `;`), an anonymous program, a package export, or a permitted time-units declaration."
 related_clauses = []
-tags = []
+tags = ["grammar", "package"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -626,7 +626,7 @@ summary = "A package shall not refer to an item declared in compilation-unit sco
 related_clauses = [
     "3.12.1",
 ]
-tags = []
+tags = ["compilation-unit", "name-resolution", "package", "visibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -650,7 +650,7 @@ anchors = [
 ]
 summary = "A process in a package is legal only when it is contained within a checker declared in that package."
 related_clauses = []
-tags = []
+tags = ["checker", "package", "procedure"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -674,7 +674,7 @@ anchors = [
 ]
 summary = "A declaration in a package can be referenced using the package scope-resolution operator, with the package name qualifying the declaration name."
 related_clauses = []
-tags = []
+tags = ["name-resolution", "package", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -698,7 +698,7 @@ anchors = [
 ]
 summary = "Variable declaration assignments in a package occur before any initial or always procedure starts."
 related_clauses = []
-tags = []
+tags = ["initialization", "package", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -722,7 +722,7 @@ anchors = [
 ]
 summary = "`export P::*` exports every declaration actually imported from P, directly or through wildcard activation, but not unactivated import candidates; `export *::*` does so for all source packages."
 related_clauses = []
-tags = []
+tags = ["export", "import", "package", "wildcard-import"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -746,7 +746,7 @@ anchors = [
 ]
 summary = "An identifier declared in a package is potentially locally visible at a point when a wildcard import of that package precedes the point in the current scope and the package declares that identifier."
 related_clauses = []
-tags = []
+tags = ["import", "source-order", "visibility", "wildcard-import"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -770,7 +770,7 @@ anchors = [
 ]
 summary = "The same identifier may be explicitly imported from the same package multiple times in one scope."
 related_clauses = []
-tags = []
+tags = ["import", "package"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -796,7 +796,7 @@ summary = "A timeunits declaration used as a package item is legal only when it 
 related_clauses = [
     "3.14",
 ]
-tags = []
+tags = ["package", "redeclaration", "source-order", "time-unit"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -822,7 +822,7 @@ summary = "The std package is implicitly wildcard imported into every compilatio
 related_clauses = [
     "3.12.1",
 ]
-tags = []
+tags = ["compilation-unit", "import", "std", "wildcard-import"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -848,7 +848,7 @@ anchors = [
 ]
 summary = "A built-in data type or function call may optionally be qualified with `std::`; explicit `std::` qualification unambiguously selects the declaration in the built-in package."
 related_clauses = []
-tags = []
+tags = ["name-resolution", "package", "std"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -872,7 +872,7 @@ anchors = [
 ]
 summary = "A task or function in the std built-in package need not have a `$` prefix and participates in ordinary identifier collision and qualification rules."
 related_clauses = []
-tags = []
+tags = ["function", "name-resolution", "std", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -898,7 +898,7 @@ summary = "When lexical resolution finds no matching task or function call targe
 related_clauses = [
     "23.8.1",
 ]
-tags = []
+tags = ["hierarchy", "name-resolution", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -922,7 +922,7 @@ anchors = [
 ]
 summary = "A non-task/function-call identifier reference is illegal if lexical resolution through compilation-unit scope finds no match."
 related_clauses = []
-tags = []
+tags = ["compilation-unit", "diagnostic", "name-resolution"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -946,7 +946,7 @@ anchors = [
 ]
 summary = "User code cannot add declarations to the standard built-in package."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "package", "std"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -970,7 +970,7 @@ anchors = [
 ]
 summary = "It is illegal for resolution of a referenced identifier to match the same potentially locally visible name supplied by wildcard imports from more than one package in the same scope."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "import", "name-resolution", "wildcard-import"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -994,7 +994,7 @@ anchors = [
 ]
 summary = "A wildcard import makes identifiers declared in the package available for import only when an identifier is not otherwise defined in the importing scope."
 related_clauses = []
-tags = []
+tags = ["import", "name-resolution", "visibility", "wildcard-import"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1020,7 +1020,7 @@ anchors = [
 ]
 summary = "When no locally visible identifier matches, resolution searches prior potentially visible wildcard-imported identifiers; a match is imported into the current scope, becomes locally visible, and receives the binding."
 related_clauses = []
-tags = []
+tags = ["import", "name-resolution", "visibility", "wildcard-import"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"

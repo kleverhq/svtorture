@@ -11,7 +11,7 @@ anchors = [
 ]
 summary = "A function may return a structure or union; inside it, a hierarchical name beginning with the bare function name denotes a member of that return value."
 related_clauses = []
-tags = []
+tags = ["aggregate", "function", "name-resolution", "return-value"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -37,7 +37,7 @@ anchors = [
 ]
 summary = "A function uses automatic storage when explicitly declared automatic or when declared in an automatic module, interface, program, or package."
 related_clauses = []
-tags = []
+tags = ["function", "lifetime"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -61,7 +61,7 @@ anchors = [
 ]
 summary = "An automatic function may be invoked using its hierarchical name."
 related_clauses = []
-tags = []
+tags = ["function", "name-resolution"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -85,7 +85,7 @@ anchors = [
 ]
 summary = "An item declared in an automatic function cannot be accessed by hierarchical reference."
 related_clauses = []
-tags = []
+tags = ["function", "name-resolution"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -109,7 +109,7 @@ anchors = [
 ]
 summary = "An automatic function is reentrant and dynamically allocates all function declarations separately for each concurrent call."
 related_clauses = []
-tags = []
+tags = ["allocation", "function", "lifetime"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -135,7 +135,7 @@ anchors = [
 ]
 summary = "A task uses automatic storage when its declaration explicitly includes automatic or when it is declared in an automatic module, interface, program, or package."
 related_clauses = []
-tags = []
+tags = ["lifetime", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -159,7 +159,7 @@ anchors = [
 ]
 summary = "On each entry to an automatic task scope, declared variables and output formals receive default initialization values, while input and inout formals receive the values supplied by their corresponding task-call expressions."
 related_clauses = []
-tags = []
+tags = ["argument-direction", "initialization", "lifetime", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -183,7 +183,7 @@ anchors = [
 ]
 summary = "An automatic task may be invoked using its hierarchical name."
 related_clauses = []
-tags = []
+tags = ["name-resolution", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -207,7 +207,7 @@ anchors = [
 ]
 summary = "An item declared in an automatic task cannot be accessed through a hierarchical reference."
 related_clauses = []
-tags = []
+tags = ["name-resolution", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -232,7 +232,7 @@ anchors = [
 ]
 summary = "Every item declared in an automatic task is dynamically allocated separately for each invocation, with formal arguments and local variables stored on the stack."
 related_clauses = []
-tags = []
+tags = ["allocation", "lifetime", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -257,7 +257,7 @@ anchors = [
 ]
 summary = "A variable declared in an automatic task shall not be referenced by a procedural continuous assign or force statement."
 related_clauses = []
-tags = []
+tags = ["lifetime", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -282,7 +282,7 @@ anchors = [
 ]
 summary = "A variable declared in an automatic task shall not be assigned by a nonblocking assignment or a procedural continuous assignment."
 related_clauses = []
-tags = []
+tags = ["lifetime", "nba", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -307,7 +307,7 @@ anchors = [
 ]
 summary = "A variable declared in an automatic task shall not be referenced in an intra-assignment event control of a nonblocking assignment."
 related_clauses = []
-tags = []
+tags = ["lifetime", "nba", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -331,7 +331,7 @@ anchors = [
 ]
 summary = "A variable declared in an automatic task shall not be traced by system tasks such as $monitor or $dumpvars."
 related_clauses = []
-tags = []
+tags = ["lifetime", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -357,7 +357,7 @@ summary = "A function defined within a class always has automatic lifetime."
 related_clauses = [
     "8.6",
 ]
-tags = []
+tags = ["class-method", "function", "lifetime"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -383,7 +383,7 @@ summary = "A task defined within a class always has automatic lifetime."
 related_clauses = [
     "8.6",
 ]
-tags = []
+tags = ["class-method", "lifetime", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -408,7 +408,7 @@ anchors = [
 ]
 summary = "A const ref formal is read-only within the subroutine; an attempt by the subroutine to alter it shall produce a compile-time error."
 related_clauses = []
-tags = []
+tags = ["argument-direction", "const", "diagnostic", "reference-argument"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -435,7 +435,7 @@ related_clauses = [
     "8.10",
     "13.8",
 ]
-tags = []
+tags = ["class-method", "constant-expression", "elaboration", "function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -465,7 +465,7 @@ related_clauses = [
     "11.2.1",
     "13.4.1",
 ]
-tags = []
+tags = ["constant-expression", "function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -493,7 +493,7 @@ summary = "A constant function may have default argument values, but every such 
 related_clauses = [
     "13.5.3",
 ]
-tags = []
+tags = ["constant-expression", "default-argument", "function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -517,7 +517,7 @@ anchors = [
 ]
 summary = "A constant function may reference only parameter names, function names, and identifiers declared locally within that function."
 related_clauses = []
-tags = []
+tags = ["constant-expression", "function", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -542,7 +542,7 @@ anchors = [
 ]
 summary = "A constant function shall have no output, inout, or ref formal arguments."
 related_clauses = []
-tags = []
+tags = ["argument-direction", "constant-expression", "function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -566,7 +566,7 @@ anchors = [
 ]
 summary = "Within its body, a constant function shall not call a constant function in a context that itself requires a constant expression."
 related_clauses = []
-tags = []
+tags = ["constant-expression", "context", "function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -591,7 +591,7 @@ anchors = [
 ]
 summary = "A constant function shall contain no fork construct."
 related_clauses = []
-tags = []
+tags = ["constant-expression", "forkjoin", "function", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -616,7 +616,7 @@ anchors = [
 ]
 summary = "A constant function shall contain no hierarchical reference."
 related_clauses = []
-tags = []
+tags = ["constant-expression", "function", "name-resolution"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -641,7 +641,7 @@ anchors = [
 ]
 summary = "A constant function shall contain no statement that directly schedules an event to execute after the function returns."
 related_clauses = []
-tags = []
+tags = ["constant-expression", "event", "function", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -665,7 +665,7 @@ anchors = [
 ]
 summary = "Evaluating a constant function call does not alter variable initial values used at simulation or across elaboration-time invocations; each evaluation initializes variables as normal simulation would."
 related_clauses = []
-tags = []
+tags = ["constant-expression", "function", "initialization"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -692,7 +692,7 @@ summary = "A DPI-imported function shall not qualify as a constant function."
 related_clauses = [
     "35.2.1",
 ]
-tags = []
+tags = ["constant-expression", "dpi", "function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -718,7 +718,7 @@ summary = "A constant function shall not be declared inside a generate block."
 related_clauses = [
     "27",
 ]
-tags = []
+tags = ["constant-expression", "function", "generate"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -742,7 +742,7 @@ anchors = [
 ]
 summary = "Every value or type parameter used while evaluating a constant function call shall be defined before the original call site; parameters in packages or $unit may be referenced."
 related_clauses = []
-tags = []
+tags = ["constant-expression", "parameter", "source-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -771,7 +771,7 @@ summary = "A constant function may call only system functions permitted in a con
 related_clauses = [
     "11.2.1",
 ]
-tags = []
+tags = ["constant-expression", "function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -797,7 +797,7 @@ summary = "During constant-function evaluation, all system task calls are ignore
 related_clauses = [
     "20.10.1",
 ]
-tags = []
+tags = ["constant-expression", "elaboration", "function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -823,7 +823,7 @@ anchors = [
 ]
 summary = "At subroutine-call execution, input actual-expression values copy into formals; at return, output and inout formal values copy into their corresponding caller variables."
 related_clauses = []
-tags = []
+tags = ["argument-direction", "copy-in", "copy-out", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -847,7 +847,7 @@ anchors = [
 ]
 summary = "Default formal argument values are allowed only in ANSI-style subroutine declarations."
 related_clauses = []
-tags = []
+tags = ["default-argument", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -871,7 +871,7 @@ anchors = [
 ]
 summary = "A default argument expression is evaluated in the scope containing the subroutine declaration each time a call uses that default, and is not evaluated when the call supplies the argument."
 related_clauses = []
-tags = []
+tags = ["default-argument", "scope", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -895,7 +895,7 @@ anchors = [
 ]
 summary = "A call may omit a formal having a default, including by an empty positional placeholder, and the compiler substitutes that formal's default value."
 related_clauses = []
-tags = []
+tags = ["default-argument", "formal-argument", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -919,7 +919,7 @@ anchors = [
 ]
 summary = "Calling a nonvoid function as a statement is legal but shall issue a warning; explicitly casting the call to void discards the return value without that warning."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "function", "return-value"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -945,7 +945,7 @@ summary = "Dynamic override specifiers on a function declaration are legal only 
 related_clauses = [
     "8.3",
 ]
-tags = []
+tags = ["class-method", "function", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -971,7 +971,7 @@ summary = "Dynamic override specifiers on a task declaration are legal only for 
 related_clauses = [
     "8.3",
 ]
-tags = []
+tags = ["class-method", "scope", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -995,7 +995,7 @@ anchors = [
 ]
 summary = "A function body may contain no statements; such a function returns the current value of its implicit same-named return variable."
 related_clauses = []
-tags = []
+tags = ["function", "return-value"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1019,7 +1019,7 @@ anchors = [
 ]
 summary = "A task declaration with no body statements is legal."
 related_clauses = []
-tags = []
+tags = ["task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1043,7 +1043,7 @@ anchors = [
 ]
 summary = "A function formal argument may have an array type."
 related_clauses = []
-tags = []
+tags = ["array-argument", "function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1067,7 +1067,7 @@ anchors = [
 ]
 summary = "Statements in a function body execute sequentially as though enclosed in a begin-end group."
 related_clauses = []
-tags = []
+tags = ["block", "function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1098,7 +1098,7 @@ related_clauses = [
     "21",
     "35.5",
 ]
-tags = []
+tags = ["function", "return-value"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -1122,7 +1122,7 @@ anchors = [
 ]
 summary = "A function call used as an implicit variable shall include parentheses even when it supplies no arguments, distinguishing the call from a hierarchical reference into function scope."
 related_clauses = []
-tags = []
+tags = ["function", "return-value"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -1151,7 +1151,7 @@ summary = "Except for 13.4.4, a function shall not enable a task, whether or not
 related_clauses = [
     "13.4.4",
 ]
-tags = []
+tags = ["function", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1176,7 +1176,7 @@ anchors = [
 ]
 summary = "A function declaration shall match a function_declaration grammar form, with formals in either a parenthesized port list or body declarations and directions."
 related_clauses = []
-tags = []
+tags = ["function", "grammar"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1200,7 +1200,7 @@ anchors = [
 ]
 summary = "Inside a function, the body of a fork-join_none may contain any statement that would be legal in a task."
 related_clauses = []
-tags = []
+tags = ["forkjoin", "function", "scheduling", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1224,7 +1224,7 @@ anchors = [
 ]
 summary = "A function formal with no specified or inherited direction defaults to input; after an explicit direction, subsequent undirected formals inherit it, including const and static ref qualifiers."
 related_clauses = []
-tags = []
+tags = ["argument-direction", "formal-argument", "function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -1253,7 +1253,7 @@ summary = "Function formals permit the same directions as task formals: input co
 related_clauses = [
     "13.5.2",
 ]
-tags = []
+tags = ["argument-direction", "copy-in", "copy-out", "function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1277,7 +1277,7 @@ anchors = [
 ]
 summary = "Every function formal has an explicit or inherited type; an omitted type defaults to logic for the first formal or one with an explicit direction, and otherwise inherits the preceding formal's type."
 related_clauses = []
-tags = []
+tags = ["function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1301,7 +1301,7 @@ anchors = [
 ]
 summary = "A function executes without delay, so its caller returns from the call immediately."
 related_clauses = []
-tags = []
+tags = ["function", "timing-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1325,7 +1325,7 @@ anchors = [
 ]
 summary = "A nonvoid function implicitly declares an internal variable with the function's name and return type; its return value may be set either by assigning that variable or by a return statement."
 related_clauses = []
-tags = []
+tags = ["function", "return-value"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1349,7 +1349,7 @@ anchors = [
 ]
 summary = "A local variable may be declared automatic in a static function or static in an automatic function."
 related_clauses = []
-tags = []
+tags = ["function", "lifetime", "static"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1373,7 +1373,7 @@ anchors = [
 ]
 summary = "A function name used outside that function denotes the scope of the whole function; a function-name component in a hierarchical name likewise denotes that scope, except for the same-clause rule that a bare leading function name inside a structure- or union-returning function denotes a return-value member."
 related_clauses = []
-tags = []
+tags = ["function", "name-resolution", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1397,7 +1397,7 @@ anchors = [
 ]
 summary = "No other object may have the function's name either in the scope where the function is declared or explicitly imported, or inside the function's own scope."
 related_clauses = []
-tags = []
+tags = ["function", "namespace", "redeclaration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1421,7 +1421,7 @@ anchors = [
 ]
 summary = "A function may contain statements that do not block, specifically nonblocking assignments, event triggers, clocking drives, and fork-join_none constructs."
 related_clauses = []
-tags = []
+tags = ["forkjoin", "function", "nba", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1445,7 +1445,7 @@ anchors = [
 ]
 summary = "A function that schedules an event activating after return is legal only when its calling thread originates from an initial or always procedure, or their fork block, and the call occurs where side effects are allowed; otherwise an implementation shall report an error at compile time or run time."
 related_clauses = []
-tags = []
+tags = ["context", "diagnostic", "function", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1471,7 +1471,7 @@ summary = "A function may call fine-grain process-control methods to kill, suspe
 related_clauses = [
     "9.7",
 ]
-tags = []
+tags = ["function", "process-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -1499,7 +1499,7 @@ summary = "A function return type may be explicit or implicit; implicit packed r
 related_clauses = [
     "13.4.1",
 ]
-tags = []
+tags = ["function", "return-value"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1525,7 +1525,7 @@ summary = "A function with output, inout, or ref arguments shall not be called i
 related_clauses = [
     "13.5.2",
 ]
-tags = []
+tags = ["argument-direction", "context", "function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1554,7 +1554,7 @@ summary = "Except for 13.4.4, a function shall contain no time-controlling state
 related_clauses = [
     "13.4.4",
 ]
-tags = []
+tags = ["function", "timing-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1578,7 +1578,7 @@ anchors = [
 ]
 summary = "The actual corresponding to an input formal may be any expression."
 related_clauses = []
-tags = []
+tags = ["argument-direction", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1602,7 +1602,7 @@ anchors = [
 ]
 summary = "An omitted or empty call argument corresponding to a formal without a default shall produce a compile-time error."
 related_clauses = []
-tags = []
+tags = ["default-argument", "diagnostic", "formal-argument", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1626,7 +1626,7 @@ anchors = [
 ]
 summary = "Task and function actuals may bind by formal name rather than position, allowing defaulted formals to be omitted without positional placeholders and named bindings to appear in any order."
 related_clauses = []
-tags = []
+tags = ["default-argument", "named-argument", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1650,7 +1650,7 @@ anchors = [
 ]
 summary = "In a call using named argument omission, every formal without a default shall still be supplied; otherwise the compiler shall issue an error."
 related_clauses = []
-tags = []
+tags = ["default-argument", "diagnostic", "named-argument", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1676,7 +1676,7 @@ anchors = [
 ]
 summary = "A nonvoid function call may be used as an expression operand, whose operand value is the function's returned value."
 related_clauses = []
-tags = []
+tags = ["function", "return-value"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1700,7 +1700,7 @@ anchors = [
 ]
 summary = "A nonvoid function shall return exactly one value."
 related_clauses = []
-tags = []
+tags = ["function", "return-value"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1724,7 +1724,7 @@ anchors = [
 ]
 summary = "A return statement used in a nonvoid function shall specify a return expression."
 related_clauses = []
-tags = []
+tags = ["function", "return-value"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1748,7 +1748,7 @@ anchors = [
 ]
 summary = "For an object handle, inout uses copy-in/copy-out while ref aliases the handle immediately; ref therefore permits rebinding the caller's handle as well as modifying the referenced object's contents."
 related_clauses = []
-tags = []
+tags = ["argument-direction", "class-handle", "copy-out", "reference-argument"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1772,7 +1772,7 @@ anchors = [
 ]
 summary = "Call parentheses may be omitted for a no-argument void function or class function method, and for a task, void function, or class method whose every argument has a default."
 related_clauses = []
-tags = []
+tags = ["class-method", "default-argument", "function", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1796,7 +1796,7 @@ anchors = [
 ]
 summary = "When an element of a dynamic array, queue, or associative array passed by reference is removed, or its containing variable-size array is resized or updated so the reference becomes outdated, the referenced element continues to exist within the called subroutine until completion; changes made through the outdated reference after the original element is removed are not visible outside the subroutine."
 related_clauses = []
-tags = []
+tags = ["associative-array", "dynamic-array", "queue", "reference-argument"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1825,7 +1825,7 @@ anchors = [
 ]
 summary = "An existing variable-size-array element reference becomes outdated when its dynamic array is resized or deleted, its referenced associative element is deleted, its containing queue or dynamic array is assigned, or its referenced queue element is deleted by a queue method."
 related_clauses = []
-tags = []
+tags = ["associative-array", "dynamic-array", "queue", "reference-argument"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1851,7 +1851,7 @@ summary = "An actual corresponding to an output or inout formal shall be an expr
 related_clauses = [
     "10.4",
 ]
-tags = []
+tags = ["argument-direction", "lvalue", "output", "procedural-assignment"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1877,7 +1877,7 @@ summary = "In a function declaration's data type, when a packed dimension is use
 related_clauses = [
     "6.8",
 ]
-tags = []
+tags = ["function", "grammar", "packed-struct", "packed-union"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1905,7 +1905,7 @@ related_clauses = [
     "8.10",
     "8.25",
 ]
-tags = []
+tags = ["class-method", "parameter", "parameterized-class", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1931,7 +1931,7 @@ summary = "A class used to contain parameterized static subroutines may be decla
 related_clauses = [
     "8.21",
 ]
-tags = []
+tags = ["class-method", "subroutine", "virtual"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1955,7 +1955,7 @@ anchors = [
 ]
 summary = "Pass by value is the default. For an input formal, the actual value is copied into subroutine-local argument storage; an automatic subroutine keeps that copy on its stack, and changes to the input formal are not visible to the caller. Output and inout transfer follow their separate copy-out rules."
 related_clauses = []
-tags = []
+tags = ["argument-direction", "copy-in", "copy-out", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1979,7 +1979,7 @@ anchors = [
 ]
 summary = "When a call mixes positional and named arguments, every positional argument shall precede every named argument."
 related_clauses = []
-tags = []
+tags = ["named-argument", "source-order", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2004,7 +2004,7 @@ anchors = [
 ]
 summary = "A directly recursive, hierarchically unqualified call to a nonvoid class function method shall include parentheses."
 related_clauses = []
-tags = []
+tags = ["class-method", "function", "recursion", "return-value"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2029,7 +2029,7 @@ anchors = [
 ]
 summary = "A ref formal and its actual share one representation, so changes by either caller or subroutine are immediately visible to the other before the subroutine returns."
 related_clauses = []
-tags = []
+tags = ["argument-direction", "reference-argument"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2055,7 +2055,7 @@ summary = "A ref actual and formal shall have equivalent data types; casting to 
 related_clauses = [
     "6.22.2",
 ]
-tags = []
+tags = ["reference-argument", "type-equivalence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2081,7 +2081,7 @@ summary = "A ref argument shall not be used in any context forbidden for automat
 related_clauses = [
     "13.3.2",
 ]
-tags = []
+tags = ["lifetime", "reference-argument", "static"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -2107,7 +2107,7 @@ anchors = [
 ]
 summary = "The ref keyword appears on the formal declaration only; neither references within the callee nor the corresponding actual at the call site require special reference syntax."
 related_clauses = []
-tags = []
+tags = ["reference-argument"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2131,7 +2131,7 @@ anchors = [
 ]
 summary = "ref is a distinct argument-passing qualifier and shall not be combined with input, output, or inout."
 related_clauses = []
-tags = []
+tags = ["argument-direction", "reference-argument"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2159,7 +2159,7 @@ anchors = [
 ]
 summary = "Only a variable, class property, unpacked-structure member, or unpacked-array element may be passed by reference."
 related_clauses = []
-tags = []
+tags = ["class-property", "reference-argument", "unpacked-array", "unpacked-struct"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2183,7 +2183,7 @@ anchors = [
 ]
 summary = "A net or select of a net shall not be passed by reference."
 related_clauses = []
-tags = []
+tags = ["net", "reference-argument"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2207,7 +2207,7 @@ anchors = [
 ]
 summary = "Passing an argument by reference is illegal for a subroutine with static lifetime."
 related_clauses = []
-tags = []
+tags = ["lifetime", "reference-argument", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2231,7 +2231,7 @@ anchors = [
 ]
 summary = "A ref static formal accepts only a static-lifetime variable, property, member or element, or another ref static argument; it rejects automatic variables, dynamically sized array elements, non-static class properties, and unqualified ref arguments."
 related_clauses = []
-tags = []
+tags = ["lifetime", "reference-argument", "static"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -2255,7 +2255,7 @@ anchors = [
 ]
 summary = "A function return statement's expression determines the returned value and overrides any value previously assigned to the same-named implicit return variable."
 related_clauses = []
-tags = []
+tags = ["function", "return-value"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2280,7 +2280,7 @@ anchors = [
 ]
 summary = "A subroutine declaration may specify a default expression for each singular formal argument using argument = default_expression syntax."
 related_clauses = []
-tags = []
+tags = ["default-argument", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2304,7 +2304,7 @@ anchors = [
 ]
 summary = "A function in a module, interface, program, or package defaults to static lifetime, and all its declared items are statically allocated and shared by concurrent uses."
 related_clauses = []
-tags = []
+tags = ["function", "lifetime", "static"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2329,7 +2329,7 @@ anchors = [
 ]
 summary = "A task declared in a module, interface, program, or package defaults to static lifetime. Concurrent executions within one module instance share each statically allocated declared item, while corresponding static-task storage in different module instances is separate."
 related_clauses = []
-tags = []
+tags = ["lifetime", "static", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2355,7 +2355,7 @@ summary = "Variables declared in a static task, including input, output, and ino
 related_clauses = [
     "6.8",
 ]
-tags = []
+tags = ["initialization", "lifetime", "static", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2381,7 +2381,7 @@ summary = "Variables declared in a static task, including input, output, and ino
 related_clauses = [
     "13.5",
 ]
-tags = []
+tags = ["copy-in", "copy-out", "lifetime", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2407,7 +2407,7 @@ summary = "A task call is a statement within a procedural block."
 related_clauses = [
     "9.2",
 ]
-tags = []
+tags = ["context", "statement-syntax", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2431,7 +2431,7 @@ anchors = [
 ]
 summary = "A subroutine call statement shall match the grammar as either a subroutine_call followed by semicolon or a void cast of a function_subroutine_call followed by semicolon; calls and argument lists follow the stated positional and named forms."
 related_clauses = []
-tags = []
+tags = ["grammar", "statement-syntax", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2457,7 +2457,7 @@ summary = "A task or function name, even when simple, uses modified upward hiera
 related_clauses = [
     "23.8.1",
 ]
-tags = []
+tags = ["name-resolution", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2481,7 +2481,7 @@ anchors = [
 ]
 summary = "A task formal argument may have an array type, including packed and unpacked dimensions admitted by the formal-port grammar."
 related_clauses = []
-tags = []
+tags = ["array-argument", "packed-array", "task", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2505,7 +2505,7 @@ anchors = [
 ]
 summary = "Statements between task and endtask execute sequentially as though enclosed in a begin-end group."
 related_clauses = []
-tags = []
+tags = ["block", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2529,7 +2529,7 @@ anchors = [
 ]
 summary = "A task may have multiple concurrent invocations."
 related_clauses = []
-tags = []
+tags = ["scheduling", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2553,7 +2553,7 @@ anchors = [
 ]
 summary = "Control returns to a task's enabling process only after that task and every task it transitively enabled have completed."
 related_clauses = []
-tags = []
+tags = ["scheduling", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2578,7 +2578,7 @@ anchors = [
 ]
 summary = "A task declaration shall match one of the task_declaration grammar forms, with formal arguments declared either in the parenthesized port list or as body declarations and directions."
 related_clauses = []
-tags = []
+tags = ["grammar", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2602,7 +2602,7 @@ anchors = [
 ]
 summary = "A task is enabled by a statement that supplies the argument values passed into the task and identifies variables that receive its results."
 related_clauses = []
-tags = []
+tags = ["argument-direction", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2626,7 +2626,7 @@ anchors = [
 ]
 summary = "A task exits upon reaching endtask, and a return statement may exit it earlier without executing subsequent task-body statements."
 related_clauses = []
-tags = []
+tags = ["task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2650,7 +2650,7 @@ anchors = [
 ]
 summary = "Every task formal has an explicit or inherited data type; an omitted type defaults to logic for the first formal or a formal with an explicit direction, and otherwise inherits the preceding formal's type."
 related_clauses = []
-tags = []
+tags = ["formal-argument", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2678,7 +2678,7 @@ summary = "Task formal directions define transfer semantics: input copies in at 
 related_clauses = [
     "13.5.2",
 ]
-tags = []
+tags = ["argument-direction", "copy-in", "copy-out", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2702,7 +2702,7 @@ anchors = [
 ]
 summary = "A local variable may be declared automatic within a static task or static within an automatic task."
 related_clauses = []
-tags = []
+tags = ["lifetime", "static", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2726,7 +2726,7 @@ anchors = [
 ]
 summary = "A task is permitted to contain time-controlling statements."
 related_clauses = []
-tags = []
+tags = ["task", "timing-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2750,7 +2750,7 @@ anchors = [
 ]
 summary = "A tf_call may omit parentheses only when the called subroutine is a task, void function, or class method."
 related_clauses = []
-tags = []
+tags = ["class-method", "function", "grammar", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2774,7 +2774,7 @@ anchors = [
 ]
 summary = "A formal argument with no explicit or inherited direction defaults to input."
 related_clauses = []
-tags = []
+tags = ["argument-direction", "formal-argument"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2798,7 +2798,7 @@ anchors = [
 ]
 summary = "After a formal argument direction is specified, subsequent formals with omitted directions inherit that direction, including any const and static qualifiers on a ref direction."
 related_clauses = []
-tags = []
+tags = ["argument-direction", "formal-argument"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -2824,7 +2824,7 @@ anchors = [
 ]
 summary = "A tf_port_item shall include an explicit port identifier except when the item occurs in a function_prototype or task_prototype."
 related_clauses = []
-tags = []
+tags = ["grammar", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2850,7 +2850,7 @@ summary = "A type_reference in a net declaration shall be preceded by a net type
 related_clauses = [
     "6.8",
 ]
-tags = []
+tags = ["grammar", "net", "type-reference", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2875,7 +2875,7 @@ anchors = [
 ]
 summary = "A void function has no return value, and its call is a statement within a procedural block."
 related_clauses = []
-tags = []
+tags = ["function", "return-value", "statement-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2899,7 +2899,7 @@ anchors = [
 ]
 summary = "Neither a task nor a void function shall return a value."
 related_clauses = []
-tags = []
+tags = ["function", "return-value", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"

@@ -12,7 +12,7 @@ anchors = [
 ]
 summary = "`$acos(x)` returns real arc-cosine equivalent to C `acos(x)`."
 related_clauses = []
-tags = []
+tags = ["function", "math-function", "real"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -37,7 +37,7 @@ anchors = [
 ]
 summary = "`$acosh(x)` returns real inverse hyperbolic cosine equivalent to C `acosh(x)`."
 related_clauses = []
-tags = []
+tags = ["function", "math-function", "real"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -61,7 +61,7 @@ anchors = [
 ]
 summary = "Array dimensions are numbered from 1 beginning with the slowest-varying packed or unpacked dimension and increasing toward faster-varying dimensions, after expanding intermediate typedefs."
 related_clauses = []
-tags = []
+tags = ["array-dimension", "array-query", "index-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -90,7 +90,7 @@ summary = "`$dimensions` returns the total packed and unpacked dimension count, 
 related_clauses = [
     "6.11.1",
 ]
-tags = []
+tags = ["array-dimension", "array-query", "packed-array", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -114,7 +114,7 @@ anchors = [
 ]
 summary = "For a non-associative dimension, `$high` returns `$right` when `$increment` is -1, otherwise it returns `$left`."
 related_clauses = []
-tags = []
+tags = ["array-query", "bounds"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -138,7 +138,7 @@ anchors = [
 ]
 summary = "For a fixed-size non-associative dimension, `$increment` returns 1 when `$left >= $right` and -1 when `$left < $right`; for queue and dynamic-array dimensions it returns -1."
 related_clauses = []
-tags = []
+tags = ["array-query", "bounds", "dynamic-array", "queue"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -162,7 +162,7 @@ anchors = [
 ]
 summary = "For a non-associative dimension, `$left` returns its left bound (the most-significant index for a packed dimension); for a queue or dynamic-array dimension it returns 0."
 related_clauses = []
-tags = []
+tags = ["array-query", "bounds", "dynamic-array", "queue"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -186,7 +186,7 @@ anchors = [
 ]
 summary = "For a non-associative dimension, `$low` returns `$left` when `$increment` is -1, otherwise it returns `$right`."
 related_clauses = []
-tags = []
+tags = ["array-query", "bounds"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -212,7 +212,7 @@ summary = "An array query call is legal in a constant expression when the call i
 related_clauses = [
     "6.23",
 ]
-tags = []
+tags = ["array-query", "constant-expression", "type-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -237,7 +237,7 @@ anchors = [
 ]
 summary = "Array query functions return integer results; an omitted optional dimension expression selects dimension 1, and an explicit dimension may select any fixed packed/unpacked or dynamic/associative/queue dimension. Queries of dynamic arrays and queues reflect their current state."
 related_clauses = []
-tags = []
+tags = ["array-query", "associative-array", "dynamic-array", "queue"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -261,7 +261,7 @@ anchors = [
 ]
 summary = "It is an error to apply an array query function directly to a dynamically sized type identifier."
 related_clauses = []
-tags = []
+tags = ["array-query", "diagnostic", "dynamic-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -285,7 +285,7 @@ anchors = [
 ]
 summary = "An array dimension query returns all unknown (`'x`) if its first argument has `$dimensions` equal to 0 or its requested dimension number is out of range."
 related_clauses = []
-tags = []
+tags = ["array-query", "four-state", "invalid-index"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -309,7 +309,7 @@ anchors = [
 ]
 summary = "For a dimension-specific query `(v,n)` on an array variable with `n > 1`, it is an error if dimension `n` is variable-sized; this restriction does not apply to `$dimensions` or `$unpacked_dimensions`, which take no dimension argument."
 related_clauses = []
-tags = []
+tags = ["array-query", "diagnostic", "dynamic-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -333,7 +333,7 @@ anchors = [
 ]
 summary = "For array queries, each predefined-width integer type (`byte`, `shortint`, `int`, `longint`, `integer`, and `time`) is treated as one packed `[n-1:0]` dimension where `n` is its width."
 related_clauses = []
-tags = []
+tags = ["array-query", "integral", "packed-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -363,7 +363,7 @@ related_clauses = [
     "7",
     "6.11.1",
 ]
-tags = []
+tags = ["array-query", "function", "statement-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -388,7 +388,7 @@ anchors = [
 ]
 summary = "For a non-associative dimension, `$right` returns its right bound (the least-significant index for a packed dimension); for an empty queue or dynamic-array dimension it returns -1."
 related_clauses = []
-tags = []
+tags = ["array-query", "bounds", "dynamic-array", "queue"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -412,7 +412,7 @@ anchors = [
 ]
 summary = "For a non-associative dimension, `$size` returns its number of elements, equal to `$high - $low + 1`."
 related_clauses = []
-tags = []
+tags = ["array-query", "bounds"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -438,7 +438,7 @@ anchors = [
 ]
 summary = "`$unpacked_dimensions` returns the total number of static or dynamic unpacked dimensions for an array and returns 0 for every other type."
 related_clauses = []
-tags = []
+tags = ["array-dimension", "array-query", "dynamic-array", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -463,7 +463,7 @@ anchors = [
 ]
 summary = "`$asin(x)` returns real arc-sine equivalent to C `asin(x)`."
 related_clauses = []
-tags = []
+tags = ["function", "math-function", "real"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -488,7 +488,7 @@ anchors = [
 ]
 summary = "`$asinh(x)` returns real inverse hyperbolic sine equivalent to C `asinh(x)`."
 related_clauses = []
-tags = []
+tags = ["function", "math-function", "real"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -512,7 +512,7 @@ anchors = [
 ]
 summary = "Assertion action controls and `$assertcontrol` modes 6 through 11 do not affect assertion statistics counters."
 related_clauses = []
-tags = []
+tags = ["assertion", "assertion-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -536,7 +536,7 @@ anchors = [
 ]
 summary = "Assertion control statements use `$asserton`, `$assertoff`, `$assertkill`, action-control task names, or `$assertcontrol` with the grammar-defined optional levels, selector, directive, and scope/assertion arguments; scope/assertion entries are hierarchical identifiers."
 related_clauses = []
-tags = []
+tags = ["assertion-control", "hierarchy", "statement-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -573,7 +573,7 @@ related_clauses = [
     "36.9.2",
     "39.4",
 ]
-tags = []
+tags = ["assertion-control", "callback", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -605,7 +605,7 @@ anchors = [
 ]
 summary = "`assertion_type` is an integer OR-combinable mask: 1 Concurrent, 2 Simple Immediate, 4 Observed Deferred Immediate, 8 Final Deferred Immediate, 16 Expect, 32 Unique, 64 Unique0, and 128 Priority; omission defaults to 255, selecting all assertion, expect, and violation-report kinds."
 related_clauses = []
-tags = []
+tags = ["assertion-control", "assertion-type", "bitwise"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -641,7 +641,7 @@ anchors = [
 ]
 summary = "`$assertcontrol` requires an integer `control_type`: 1 Lock, 2 Unlock, 3 On, 4 Off, 5 Kill, 6 PassOn, 7 PassOff, 8 FailOn, 9 FailOff, 10 NonvacuousOn, or 11 VacuousOff."
 related_clauses = []
-tags = []
+tags = ["assertion-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -668,7 +668,7 @@ anchors = [
 ]
 summary = "`directive_type` is an integer OR-combinable mask, checked only for assertions: 1 selects Assert, 2 Cover, and 4 Assume directives; omission defaults to 7, selecting all three."
 related_clauses = []
-tags = []
+tags = ["assertion-control", "bitwise"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -692,7 +692,7 @@ anchors = [
 ]
 summary = "FailOff (9) disables explicit and default `$error` fail actions until FailOn; existing execution and violation reports are unaffected, and fail actions default enabled."
 related_clauses = []
-tags = []
+tags = ["action-block", "assertion-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -716,7 +716,7 @@ anchors = [
 ]
 summary = "FailOn (8) enables explicit and default `$error` fail actions for selected assertions and expects without affecting existing execution or violation reports."
 related_clauses = []
-tags = []
+tags = ["action-block", "assertion-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -740,7 +740,7 @@ anchors = [
 ]
 summary = "Kill (5) aborts selected active assertion attempts and violation reporting, flushes unmatured queued reports, and prevents new checks/reports until On; expect statements are unaffected."
 related_clauses = []
-tags = []
+tags = ["assertion", "assertion-control", "assertion-queue", "evaluation-attempt"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -766,7 +766,7 @@ summary = "The assertion-control `levels` argument is an integer hierarchy-depth
 related_clauses = [
     "21.7.1.2",
 ]
-tags = []
+tags = ["assertion-control", "hierarchy"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -790,7 +790,7 @@ anchors = [
 ]
 summary = "Lock (1) prevents status changes to selected assertions, expect statements, and violation reports until Unlock (2); no assertion control affects a locked target."
 related_clauses = []
-tags = []
+tags = ["assertion", "assertion-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -816,7 +816,7 @@ summary = "NonvacuousOn (10) enables pass actions for nonvacuous successes of se
 related_clauses = [
     "16.14.8",
 ]
-tags = []
+tags = ["action-block", "assertion-control", "nonvacuity"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -841,7 +841,7 @@ anchors = [
 ]
 summary = "Off (4) prevents new selected assertion attempts and violation reports until On, but does not affect active attempts/actions or flush queued deferred, procedural, or violation reports; expect statements are unaffected."
 related_clauses = []
-tags = []
+tags = ["assertion", "assertion-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -865,7 +865,7 @@ anchors = [
 ]
 summary = "On (3) re-enables selected assertions and violation reporting but does not affect expect statements."
 related_clauses = []
-tags = []
+tags = ["assertion", "assertion-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -889,7 +889,7 @@ anchors = [
 ]
 summary = "PassOff (7) disables vacuous and nonvacuous pass actions until PassOn; NonvacuousOn restores only nonvacuous actions. Existing execution and violation reports are unaffected, and pass actions default enabled."
 related_clauses = []
-tags = []
+tags = ["action-block", "assertion-control", "nonvacuity", "vacuity"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -913,7 +913,7 @@ anchors = [
 ]
 summary = "PassOn (6) enables vacuous and nonvacuous pass actions for selected assertions and expects without affecting existing execution or violation reports."
 related_clauses = []
-tags = []
+tags = ["action-block", "assertion-control", "nonvacuity", "vacuity"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -937,7 +937,7 @@ anchors = [
 ]
 summary = "The assertion-control scope/assertion list may select model scopes or individual assertions to control."
 related_clauses = []
-tags = []
+tags = ["assertion-control", "hierarchy", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -961,7 +961,7 @@ anchors = [
 ]
 summary = "Unlock (2) removes locked status from selected assertions, expect statements, and violation reports."
 related_clauses = []
-tags = []
+tags = ["assertion", "assertion-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -987,7 +987,7 @@ summary = "VacuousOff (11) disables pass actions on vacuous success for selected
 related_clauses = [
     "16.14.8",
 ]
-tags = []
+tags = ["action-block", "assertion-control", "vacuity"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -1043,7 +1043,7 @@ related_clauses = [
     "39.4.1",
     "39.4.2",
 ]
-tags = []
+tags = ["assertion-control", "callback", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -1067,7 +1067,7 @@ anchors = [
 ]
 summary = "`$assertfailoff(levels,list)` is equivalent to `$assertcontrol(9,31,7,levels,list)`, with the same optional argument forms."
 related_clauses = []
-tags = []
+tags = ["action-block", "assertion", "assertion-control", "statement-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -1091,7 +1091,7 @@ anchors = [
 ]
 summary = "`$assertfailon(levels,list)` is equivalent to `$assertcontrol(8,31,7,levels,list)`, with the same optional argument forms."
 related_clauses = []
-tags = []
+tags = ["action-block", "assertion", "assertion-control", "statement-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -1115,7 +1115,7 @@ anchors = [
 ]
 summary = "`$assertkill(levels,list)` is equivalent to `$assertcontrol(5,15,7,levels,list)`, with the same optional argument forms."
 related_clauses = []
-tags = []
+tags = ["assertion", "assertion-control", "evaluation-attempt", "statement-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -1139,7 +1139,7 @@ anchors = [
 ]
 summary = "`$assertnonvacuouson(levels,list)` is equivalent to `$assertcontrol(10,31,7,levels,list)`, with the same optional argument forms."
 related_clauses = []
-tags = []
+tags = ["action-block", "assertion-control", "nonvacuity", "statement-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -1163,7 +1163,7 @@ anchors = [
 ]
 summary = "`$assertoff(levels,list)` is equivalent to `$assertcontrol(4,15,7,levels,list)`, with the same optional argument forms."
 related_clauses = []
-tags = []
+tags = ["assertion", "assertion-control", "statement-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -1187,7 +1187,7 @@ anchors = [
 ]
 summary = "`$asserton(levels,list)` is equivalent to `$assertcontrol(3,15,7,levels,list)`, with the same optional argument forms."
 related_clauses = []
-tags = []
+tags = ["assertion", "assertion-control", "statement-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -1211,7 +1211,7 @@ anchors = [
 ]
 summary = "`$assertpassoff(levels,list)` is equivalent to `$assertcontrol(7,31,7,levels,list)`, with the same optional argument forms."
 related_clauses = []
-tags = []
+tags = ["action-block", "assertion", "assertion-control", "statement-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -1235,7 +1235,7 @@ anchors = [
 ]
 summary = "`$assertpasson(levels,list)` is equivalent to `$assertcontrol(6,31,7,levels,list)`, with the same optional argument forms."
 related_clauses = []
-tags = []
+tags = ["action-block", "assertion", "assertion-control", "statement-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -1259,7 +1259,7 @@ anchors = [
 ]
 summary = "`$assertvacuousoff(levels,list)` is equivalent to `$assertcontrol(11,31,7,levels,list)`, with the same optional argument forms."
 related_clauses = []
-tags = []
+tags = ["action-block", "assertion-control", "statement-syntax", "vacuity"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -1289,7 +1289,7 @@ anchors = [
 ]
 summary = "Dimension-specific array queries are permitted on associative arrays only for integral index types; `$left` returns 0, `$right` the highest possible index, `$low`/`$high` the least/greatest allocated index or `'x` when empty, `$increment` -1, and `$size` the current allocated-element count."
 related_clauses = []
-tags = []
+tags = ["array-query", "associative-array", "bounds", "index-type"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1314,7 +1314,7 @@ anchors = [
 ]
 summary = "`$atan(x)` returns real arc-tangent equivalent to C `atan(x)`."
 related_clauses = []
-tags = []
+tags = ["function", "math-function", "real"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1339,7 +1339,7 @@ anchors = [
 ]
 summary = "`$atan2(y,x)` returns real arc-tangent of y/x equivalent to C `atan2(y,x)`."
 related_clauses = []
-tags = []
+tags = ["function", "math-function", "real"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1364,7 +1364,7 @@ anchors = [
 ]
 summary = "`$atanh(x)` returns real inverse hyperbolic tangent equivalent to C `atanh(x)`."
 related_clauses = []
-tags = []
+tags = ["function", "math-function", "real"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1390,7 +1390,7 @@ summary = "`$countbits`, `$countones`, `$onehot`, `$onehot0`, and `$isunknown` m
 related_clauses = [
     "11.2.1",
 ]
-tags = []
+tags = ["bit-stream", "constant-expression", "function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1415,7 +1415,7 @@ anchors = [
 ]
 summary = "`$countbits` takes an expression followed by one or more control bits; `$countones`, `$onehot`, `$onehot0`, and `$isunknown` each take exactly one expression."
 related_clauses = []
-tags = []
+tags = ["bit-stream", "function", "statement-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1439,7 +1439,7 @@ anchors = [
 ]
 summary = "`$countones`, `$onehot`, `$onehot0`, and `$isunknown` accept the same bit-stream expression domain and flattening as `$countbits`; `$countones` returns `int`, while the other three return `bit`, and each may be used wherever its result type is legal."
 related_clauses = []
-tags = []
+tags = ["bit-stream", "function", "integral", "type-inference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1463,7 +1463,7 @@ anchors = [
 ]
 summary = "A `$bits` result is valid at elaboration only when its expression contains fixed-size data types."
 related_clauses = []
-tags = []
+tags = ["constant-expression", "dynamic-array", "elaboration", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1487,7 +1487,7 @@ anchors = [
 ]
 summary = "At runtime, `$bits` returns 0 when its dynamically sized expression argument is currently empty."
 related_clauses = []
-tags = []
+tags = ["dynamic-array", "function", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1511,7 +1511,7 @@ anchors = [
 ]
 summary = "It is an error for `$bits` to enclose a function that returns a dynamically sized data type."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "dynamic-array", "function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1535,7 +1535,7 @@ anchors = [
 ]
 summary = "It is an error to apply `$bits` directly to a dynamically sized data type identifier."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "dynamic-array", "function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1560,7 +1560,7 @@ anchors = [
 ]
 summary = "`$bits` of a fixed-size data type or expression is a valid elaboration-time constant and may size declarations of types, variables, or nets."
 related_clauses = []
-tags = []
+tags = ["constant-expression", "elaboration", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1586,7 +1586,7 @@ summary = "It is an error to apply `$bits` to an object of interface class type.
 related_clauses = [
     "8.26",
 ]
-tags = []
+tags = ["diagnostic", "function", "interface-class", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1610,7 +1610,7 @@ anchors = [
 ]
 summary = "`$bits(expression)` determines its result without evaluating the enclosed expression."
 related_clauses = []
-tags = []
+tags = ["function", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1640,7 +1640,7 @@ summary = "`$bits` returns an integer equal to the number of bit-stream bits req
 related_clauses = [
     "6.24.3",
 ]
-tags = []
+tags = ["bit-stream", "four-state", "function", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1664,7 +1664,7 @@ anchors = [
 ]
 summary = "`$bits` requires exactly one parenthesized argument that is either an expression or a data type."
 related_clauses = []
-tags = []
+tags = ["function", "sizing", "statement-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1688,7 +1688,7 @@ anchors = [
 ]
 summary = "`$bitstoreal` converts a bit pattern produced by `$realtobits` back to a real value."
 related_clauses = []
-tags = []
+tags = ["conversion", "function", "real", "vector"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1712,7 +1712,7 @@ anchors = [
 ]
 summary = "`$bitstoshortreal` converts a bit pattern produced by `$shortrealtobits` back to a shortreal value."
 related_clauses = []
-tags = []
+tags = ["conversion", "function", "real", "vector"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1737,7 +1737,7 @@ anchors = [
 ]
 summary = "`$ceil(x)` returns real ceiling equivalent to C `ceil(x)`."
 related_clauses = []
-tags = []
+tags = ["function", "math-function", "real"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1761,7 +1761,7 @@ anchors = [
 ]
 summary = "`$clog2` accepts an integer or arbitrarily sized vector, treats it as unsigned, and returns the integer ceiling of its base-2 logarithm; argument value 0 returns 0."
 related_clauses = []
-tags = []
+tags = ["constant-expression", "function", "integral", "math-function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1787,7 +1787,7 @@ summary = "The real-number conversion system functions listed in 20.5 may be use
 related_clauses = [
     "11.2.1",
 ]
-tags = []
+tags = ["constant-expression", "conversion", "function", "real"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1812,7 +1812,7 @@ anchors = [
 ]
 summary = "`$cos(x)` returns real cosine equivalent to C `cos(x)`."
 related_clauses = []
-tags = []
+tags = ["function", "math-function", "real"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1837,7 +1837,7 @@ anchors = [
 ]
 summary = "`$cosh(x)` returns real hyperbolic cosine equivalent to C `cosh(x)`."
 related_clauses = []
-tags = []
+tags = ["function", "math-function", "real"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1863,7 +1863,7 @@ summary = "The `$countbits` expression shall have bit-stream type and is counted
 related_clauses = [
     "11.4.14",
 ]
-tags = []
+tags = ["bit-stream", "function", "streaming"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1887,7 +1887,7 @@ anchors = [
 ]
 summary = "Each `$countbits` control is interpreted as 1-bit logic; if wider, only its least-significant bit is used, and duplicate control values do not multiply the count."
 related_clauses = []
-tags = []
+tags = ["bit-stream", "four-state", "function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1915,7 +1915,7 @@ anchors = [
 ]
 summary = "`$countbits` returns an `int` equal to the number of positions in its expression whose 4-state value matches any supplied control bit, allowing counts of 0, 1, x, and z values."
 related_clauses = []
-tags = []
+tags = ["bit-stream", "four-state", "function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1939,7 +1939,7 @@ anchors = [
 ]
 summary = "The control-bit arguments to `$countbits` may be variables."
 related_clauses = []
-tags = []
+tags = ["bit-stream", "function", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1963,7 +1963,7 @@ anchors = [
 ]
 summary = "`$countones(expression)` has the same result as `$countbits(expression,'1)`."
 related_clauses = []
-tags = []
+tags = ["bit-stream", "four-state", "function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1989,7 +1989,7 @@ summary = "For assertion and expect statements, `$assertcontrol` control type 9 
 related_clauses = [
     "20.11",
 ]
-tags = []
+tags = ["action-block", "assertion-control", "diagnostic"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2017,7 +2017,7 @@ related_clauses = [
     "16.17",
     "15.5.4",
 ]
-tags = []
+tags = ["action-block", "diagnostic", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -2043,7 +2043,7 @@ anchors = [
 ]
 summary = "Chi-square and t distributions use an integer degrees-of-freedom input to shape density; larger values spread returned values over a wider range."
 related_clauses = []
-tags = []
+tags = ["distribution", "randomization"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2067,7 +2067,7 @@ anchors = [
 ]
 summary = "`$dist_normal` uses an integer standard-deviation input to shape density; larger values spread returned values over a wider range."
 related_clauses = []
-tags = []
+tags = ["distribution", "randomization"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2091,7 +2091,7 @@ anchors = [
 ]
 summary = "`$dist_uniform` takes integer `start` and `end` inputs that bound the values returned."
 related_clauses = []
-tags = []
+tags = ["bounds", "distribution", "randomization"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2115,7 +2115,7 @@ anchors = [
 ]
 summary = "All distribution-function arguments are integer values; exponential/poisson means and chi-square/t degrees of freedom and erlang k-stage/mean shall be greater than zero."
 related_clauses = []
-tags = []
+tags = ["distribution", "integral"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2139,7 +2139,7 @@ anchors = [
 ]
 summary = "Distribution calls use the declared argument lists: uniform `(seed,start,end)`, normal `(seed,mean,standard_deviation)`, exponential and poisson `(seed,mean)`, chi-square and t `(seed,degree_of_freedom)`, and erlang `(seed,k_stage,mean)`."
 related_clauses = []
-tags = []
+tags = ["distribution", "function", "statement-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2163,7 +2163,7 @@ anchors = [
 ]
 summary = "The integer mean input to normal, exponential, poisson, and erlang distributions causes their long-run average result to approach the specified value."
 related_clauses = []
-tags = []
+tags = ["distribution", "randomization"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2187,7 +2187,7 @@ anchors = [
 ]
 summary = "Each distribution function returns pseudo-random integers with the named statistical distribution; `$dist_uniform` is uniform over its start/end interval."
 related_clauses = []
-tags = []
+tags = ["distribution", "randomization"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2211,7 +2211,7 @@ anchors = [
 ]
 summary = "A distribution seed is inout state: each call consumes and updates it, and the same input seed always produces the same return value."
 related_clauses = []
-tags = []
+tags = ["distribution", "random-seeding", "randomization"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2235,7 +2235,7 @@ anchors = [
 ]
 summary = "When elaboration `$error` executes, it issues its message and elaboration continues, but simulation shall not start."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "elaboration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2259,7 +2259,7 @@ anchors = [
 ]
 summary = "When elaboration `$fatal` executes, it outputs its message and simulation shall not start; elaboration may abort immediately so later elaboration severity calls need not execute, and `finish_number` handling is implementation-specific."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "elaboration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2283,7 +2283,7 @@ anchors = [
 ]
 summary = "An elaboration severity task's argument list may contain only a formatting string and constant expressions, including constant function calls."
 related_clauses = []
-tags = []
+tags = ["constant-expression", "diagnostic", "elaboration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2307,7 +2307,7 @@ anchors = [
 ]
 summary = "A severity-task call outside procedural code is an elaboration severity task and may be controlled by conditional generate; the same call inside a procedure is instead a run-time severity task."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "elaboration", "generate", "procedure"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2335,7 +2335,7 @@ summary = "Every elaboration severity task shall print a tool-specific message i
 related_clauses = [
     "22.13",
 ]
-tags = []
+tags = ["diagnostic", "elaboration", "hierarchy", "source-location"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2359,7 +2359,7 @@ anchors = [
 ]
 summary = "Every elaboration severity call remaining after generate expansion is executed, and multiple remaining calls may execute in any order."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "elaboration", "evaluation-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2383,7 +2383,7 @@ anchors = [
 ]
 summary = "An elaboration severity task's tool-specific output shall include its user-defined message when one is supplied."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "elaboration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2407,7 +2407,7 @@ anchors = [
 ]
 summary = "Elaboration `$warning` and `$info` output their text messages without otherwise affecting elaboration or simulation."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "elaboration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2431,7 +2431,7 @@ anchors = [
 ]
 summary = "Executing `$error` generates a run-time error."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2457,7 +2457,7 @@ summary = "Executing `$exit` waits until all program blocks complete and then be
 related_clauses = [
     "24.7",
 ]
-tags = []
+tags = ["program", "scheduling", "simulation-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2482,7 +2482,7 @@ anchors = [
 ]
 summary = "`$exp(x)` returns the real exponential equivalent to C `exp(x)`."
 related_clauses = []
-tags = []
+tags = ["function", "math-function", "real"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2508,7 +2508,7 @@ summary = "Executing `$fatal` generates a run-time fatal error, terminates simul
 related_clauses = [
     "20.2",
 ]
-tags = []
+tags = ["diagnostic", "simulation-control", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2532,7 +2532,7 @@ anchors = [
 ]
 summary = "Executing `$finish` terminates the simulator and returns control to the host operating system."
 related_clauses = []
-tags = []
+tags = ["simulation-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2557,7 +2557,7 @@ anchors = [
 ]
 summary = "`$floor(x)` returns real floor equivalent to C `floor(x)`."
 related_clauses = []
-tags = []
+tags = ["function", "math-function", "real"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2582,7 +2582,7 @@ anchors = [
 ]
 summary = "`$hypot(x,y)` returns real `sqrt(x*x+y*y)` equivalent to C `hypot(x,y)`."
 related_clauses = []
-tags = []
+tags = ["function", "math-function", "real"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2606,7 +2606,7 @@ anchors = [
 ]
 summary = "Executing `$info` generates a run-time message with no specific severity."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2633,7 +2633,7 @@ anchors = [
 ]
 summary = "`$isunbounded` accepts a package-scoped or hierarchical parameter identifier and returns `1'b1` exactly when that parameter's value is `$`; otherwise it returns `1'b0`. Its argument shall be a parameter name."
 related_clauses = []
-tags = []
+tags = ["function", "parameter", "type-query"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -2658,7 +2658,7 @@ anchors = [
 ]
 summary = "`$isunknown(expression)` returns `1'b1` when any expression bit is x or z, and otherwise returns `1'b0`."
 related_clauses = []
-tags = []
+tags = ["bit-stream", "four-state", "function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2682,7 +2682,7 @@ anchors = [
 ]
 summary = "`$itor` converts an integer value to the corresponding real value."
 related_clauses = []
-tags = []
+tags = ["conversion", "function", "real"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2707,7 +2707,7 @@ anchors = [
 ]
 summary = "`$ln(x)` returns the real natural logarithm equivalent to C `log(x)`."
 related_clauses = []
-tags = []
+tags = ["function", "math-function", "real"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2732,7 +2732,7 @@ anchors = [
 ]
 summary = "`$log10(x)` returns the real decimal logarithm equivalent to C `log10(x)`."
 related_clauses = []
-tags = []
+tags = ["function", "math-function", "real"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2758,7 +2758,7 @@ summary = "Integer and real math system functions may be used in constant expres
 related_clauses = [
     "11.2.1",
 ]
-tags = []
+tags = ["constant-expression", "function", "math-function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2782,7 +2782,7 @@ anchors = [
 ]
 summary = "`$onehot(expression)` returns `1'b1` exactly when the expression contains one bit equal to 1; otherwise it returns `1'b0`."
 related_clauses = []
-tags = []
+tags = ["bit-stream", "four-state", "function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2806,7 +2806,7 @@ anchors = [
 ]
 summary = "`$onehot0(expression)` returns `1'b1` exactly when the expression contains at most one bit equal to 1; otherwise it returns `1'b0`."
 related_clauses = []
-tags = []
+tags = ["bit-stream", "four-state", "function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2830,7 +2830,7 @@ anchors = [
 ]
 summary = "In the PLA array-call personality format, memory bit 1 includes the corresponding input value and bit 0 excludes it."
 related_clauses = []
-tags = []
+tags = ["layout", "pla"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2854,7 +2854,7 @@ anchors = [
 ]
 summary = "PLA input terms, output terms, and personality memory shall be specified in ascending order."
 related_clauses = []
-tags = []
+tags = ["index-order", "layout", "pla"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2878,7 +2878,7 @@ anchors = [
 ]
 summary = "An asynchronous PLA task automatically reevaluates whenever any input term changes or any personality-memory word changes."
 related_clauses = []
-tags = []
+tags = ["pla", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2902,7 +2902,7 @@ anchors = [
 ]
 summary = "Changing personality memory at any simulation time changes the PLA personality, and outputs shall reflect the new personality at the next evaluation."
 related_clauses = []
-tags = []
+tags = ["pla", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2928,7 +2928,7 @@ summary = "PLA personality memory may be loaded from text with `$readmemb`/`$rea
 related_clauses = [
     "21.4",
 ]
-tags = []
+tags = ["array", "memory-loading", "pla", "procedural-assignment"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2952,7 +2952,7 @@ anchors = [
 ]
 summary = "A PLA personality shall be an array of variables whose width equals the number of input terms and whose depth equals the number of output terms."
 related_clauses = []
-tags = []
+tags = ["array", "layout", "pla"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2981,7 +2981,7 @@ anchors = [
 ]
 summary = "The PLA plane-call personality follows Berkeley Espresso encoding: 0 selects complemented input, 1 true input, x the input's worst case, and z or ? marks input as don't-care."
 related_clauses = []
-tags = []
+tags = ["four-state", "layout", "pla"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -3005,7 +3005,7 @@ anchors = [
 ]
 summary = "A synchronous PLA task evaluates the logic array and updates its outputs at the controlled time when the task executes, rather than automatically on input or personality-memory changes."
 related_clauses = []
-tags = []
+tags = ["pla", "scheduling", "timing-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -3029,7 +3029,7 @@ anchors = [
 ]
 summary = "A PLA task name combines `sync` or `async`, logic `and`/`or`/`nand`/`nor`, and format `array` or `plane`, and takes `(memory_identifier,input_expression,output_variable_lvalue)` followed by a semicolon."
 related_clauses = []
-tags = []
+tags = ["pla", "statement-syntax", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -3053,7 +3053,7 @@ anchors = [
 ]
 summary = "PLA input terms may be nets or variables, but output terms shall be variables only."
 related_clauses = []
-tags = []
+tags = ["net", "pla", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -3077,7 +3077,7 @@ anchors = [
 ]
 summary = "Both synchronous and asynchronous PLA forms update output terms without delay."
 related_clauses = []
-tags = []
+tags = ["pla", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -3102,7 +3102,7 @@ anchors = [
 ]
 summary = "`$pow(x,y)` returns real x raised to y, equivalent to C `pow(x,y)`."
 related_clauses = []
-tags = []
+tags = ["function", "math-function", "real"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3130,7 +3130,7 @@ summary = "With an argument, `$printtimescale` displays the named design element
 related_clauses = [
     "3.14.3",
 ]
-tags = []
+tags = ["hierarchy", "task", "time-precision", "time-unit"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -3157,7 +3157,7 @@ anchors = [
 ]
 summary = "Executing `$printtimescale` without an argument displays the time unit and time precision of the design element in the current scope."
 related_clauses = []
-tags = []
+tags = ["scope", "task", "time-precision", "time-unit"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -3185,7 +3185,7 @@ anchors = [
 ]
 summary = "`$printtimescale` output shall have the form `Time scale of (<design_element_name>) is <unit> / <precision>`; for `$unit` and `$root` arguments, the displayed design-element name shall be `$unit` and `$root`, respectively."
 related_clauses = []
-tags = []
+tags = ["display-format", "task", "time-precision", "time-unit"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -3212,7 +3212,7 @@ anchors = [
 ]
 summary = "A `$printtimescale` task statement is either `$printtimescale;` or `$printtimescale(hierarchical_identifier);`."
 related_clauses = []
-tags = []
+tags = ["hierarchy", "statement-syntax", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -3238,7 +3238,7 @@ summary = "The standard-defined Annex N value-generation algorithm shall make th
 related_clauses = [
     "N",
 ]
-tags = []
+tags = ["distribution", "random-seeding", "randomization"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -3265,7 +3265,7 @@ summary = "`$q_add` adds an entry to integer-selected queue `q_id`, storing inte
 related_clauses = [
     "20.15.6",
 ]
-tags = []
+tags = ["stochastic-queue", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -3298,7 +3298,7 @@ summary = "`$q_exam` returns the selected queue statistic in `q_stat_value` and 
 related_clauses = [
     "20.15.6",
 ]
-tags = []
+tags = ["stochastic-queue", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -3324,7 +3324,7 @@ summary = "`$q_full` returns 0 when its queue has room for another entry and 1 w
 related_clauses = [
     "20.15.6",
 ]
-tags = []
+tags = ["stochastic-queue", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -3350,7 +3350,7 @@ summary = "`$q_initialize` takes integer `max_length` as the maximum entry count
 related_clauses = [
     "20.15.6",
 ]
-tags = []
+tags = ["stochastic-queue", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -3376,7 +3376,7 @@ anchors = [
 ]
 summary = "`$q_initialize` creates a queue whose integer `q_id` shall uniquely identify it; integer `q_type` value 1 creates FIFO behavior and value 2 creates LIFO behavior."
 related_clauses = []
-tags = []
+tags = ["stochastic-queue", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -3402,7 +3402,7 @@ summary = "`$q_remove` removes an entry from integer-selected queue `q_id`, outp
 related_clauses = [
     "20.15.6",
 ]
-tags = []
+tags = ["stochastic-queue", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -3434,7 +3434,7 @@ anchors = [
 ]
 summary = "Every queue operation outputs status: 0 OK; 1 full/cannot add; 2 undefined `q_id`; 3 empty/cannot remove; 4 unsupported queue type; 5 nonpositive length; 6 duplicate `q_id`; and 7 insufficient memory, with statuses 4–7 preventing queue creation."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "stochastic-queue"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -3460,7 +3460,7 @@ summary = "Each `$random` call returns a new signed 32-bit random integer, which
 related_clauses = [
     "20.14.2",
 ]
-tags = []
+tags = ["function", "random-variable", "randomization"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -3484,7 +3484,7 @@ anchors = [
 ]
 summary = "The optional `$random` seed argument shall be an integral variable whose initialized value selects the generated random stream; different seeds generate different streams."
 related_clauses = []
-tags = []
+tags = ["function", "random-seeding", "random-stream", "randomization"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -3508,7 +3508,7 @@ anchors = [
 ]
 summary = "`$random` may be called without arguments or with one parenthesized seed argument."
 related_clauses = []
-tags = []
+tags = ["function", "statement-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -3532,7 +3532,7 @@ anchors = [
 ]
 summary = "The real conversion functions have the declared result kinds: `$rtoi` integer, `$itor` real, `$realtobits` 64-bit vector, `$bitstoreal` real, `$shortrealtobits` 32-bit vector, and `$bitstoshortreal` shortreal, each from its corresponding single argument."
 related_clauses = []
-tags = []
+tags = ["conversion", "function", "real", "vector"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3556,7 +3556,7 @@ anchors = [
 ]
 summary = "`$realtime` returns current simulation time as a real number scaled to the time unit of the invoking module."
 related_clauses = []
-tags = []
+tags = ["function", "real", "simulation-time", "time-unit"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3580,7 +3580,7 @@ anchors = [
 ]
 summary = "`$realtobits` returns the 64-bit vector representation of its real argument."
 related_clauses = []
-tags = []
+tags = ["conversion", "function", "real", "vector"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3604,7 +3604,7 @@ anchors = [
 ]
 summary = "`$rtoi` converts a real value to integer by truncation toward zero, unlike real-to-integral casts or assignments, which round."
 related_clauses = []
-tags = []
+tags = ["conversion", "function", "real"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3631,7 +3631,7 @@ related_clauses = [
     "16.9.3",
     "16.9.4",
 ]
-tags = []
+tags = ["clocking-event", "global-clock", "sampled-value-function", "statement-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -3660,7 +3660,7 @@ summary = "Every severity task shall print a tool-specific message identifying s
 related_clauses = [
     "22.13",
 ]
-tags = []
+tags = ["diagnostic", "hierarchy", "simulation-time", "source-location"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3684,7 +3684,7 @@ anchors = [
 ]
 summary = "`$fatal` optionally takes finish number 0, 1, or 2 followed by optional message arguments; `$error`, `$warning`, and `$info` optionally take a list of message arguments; each forms a semicolon-terminated task statement."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "statement-syntax", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3711,7 +3711,7 @@ summary = "Each severity task may take any number of user-message arguments usin
 related_clauses = [
     "21.2.1",
 ]
-tags = []
+tags = ["diagnostic", "display-format", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3735,7 +3735,7 @@ anchors = [
 ]
 summary = "`$shortrealtobits` returns the 32-bit vector representation of its shortreal argument."
 related_clauses = []
-tags = []
+tags = ["conversion", "function", "real", "vector"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3760,7 +3760,7 @@ anchors = [
 ]
 summary = "`$signed` and `$unsigned` evaluate their input and return the same-sized, same-valued expression with signed or unsigned type respectively, changing signedness but not the underlying type."
 related_clauses = []
-tags = []
+tags = ["conversion", "function", "signedness"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3784,7 +3784,7 @@ anchors = [
 ]
 summary = "A simulation control task statement shall use `$stop` or `$finish` with an optional parenthesized expression, or `$exit` with optional empty parentheses, followed by a semicolon."
 related_clauses = []
-tags = []
+tags = ["simulation-control", "statement-syntax", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3809,7 +3809,7 @@ anchors = [
 ]
 summary = "`$sin(x)` returns real sine equivalent to C `sin(x)`."
 related_clauses = []
-tags = []
+tags = ["function", "math-function", "real"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3834,7 +3834,7 @@ anchors = [
 ]
 summary = "`$sinh(x)` returns real hyperbolic sine equivalent to C `sinh(x)`."
 related_clauses = []
-tags = []
+tags = ["function", "math-function", "real"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3859,7 +3859,7 @@ anchors = [
 ]
 summary = "`$sqrt(x)` returns the real square root equivalent to C `sqrt(x)`."
 related_clauses = []
-tags = []
+tags = ["function", "math-function", "real"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3884,7 +3884,7 @@ anchors = [
 ]
 summary = "`$stacktrace` obtains the call stack from its calling context through the top-level process; task form displays it and function form returns it as a string, with stack content implementation-dependent."
 related_clauses = []
-tags = []
+tags = ["function", "stacktrace", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -3908,7 +3908,7 @@ anchors = [
 ]
 summary = "A `$stacktrace` call is the argumentless token `$stacktrace`."
 related_clauses = []
-tags = []
+tags = ["function", "stacktrace", "statement-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -3932,7 +3932,7 @@ anchors = [
 ]
 summary = "`$stime` returns the current simulation time scaled to the invoking module's time unit as a 32-bit unsigned integer; if it does not fit, only the low-order 32 bits are returned."
 related_clauses = []
-tags = []
+tags = ["function", "simulation-time", "sizing", "time-unit"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3956,7 +3956,7 @@ anchors = [
 ]
 summary = "Stochastic queue operations use the listed signatures: `$q_initialize(q_id,q_type,max_length,status)`, `$q_add(q_id,job_id,inform_id,status)`, `$q_remove(q_id,job_id,inform_id,status)`, `$q_full(q_id,status)`, and `$q_exam(q_id,q_stat_code,q_stat_value,status)`."
 related_clauses = []
-tags = []
+tags = ["statement-syntax", "stochastic-queue", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -3985,7 +3985,7 @@ anchors = [
 ]
 summary = "The optional `$stop` or `$finish` argument selects diagnostic output: omission defaults to 1; value 0 prints nothing; value 1 prints simulation time and location; value 2 additionally prints simulation memory and CPU-time statistics."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "simulation-control", "source-location"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4009,7 +4009,7 @@ anchors = [
 ]
 summary = "Executing `$stop` suspends the simulation."
 related_clauses = []
-tags = []
+tags = ["simulation-control", "timing-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4033,7 +4033,7 @@ anchors = [
 ]
 summary = "`$system` invokes C `system()` so its string executes as from a terminal; it may be called as task or function, the function form returns the C result as `int`, and omission of the string passes a NULL string."
 related_clauses = []
-tags = []
+tags = ["function", "system-call", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -4057,7 +4057,7 @@ anchors = [
 ]
 summary = "`$system` uses parentheses containing either no argument or one terminal-command-line string literal."
 related_clauses = []
-tags = []
+tags = ["literal", "statement-syntax", "system-call"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -4082,7 +4082,7 @@ anchors = [
 ]
 summary = "`$tan(x)` returns real tangent equivalent to C `tan(x)`."
 related_clauses = []
-tags = []
+tags = ["function", "math-function", "real"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4107,7 +4107,7 @@ anchors = [
 ]
 summary = "`$tanh(x)` returns real hyperbolic tangent equivalent to C `tanh(x)`."
 related_clauses = []
-tags = []
+tags = ["function", "math-function", "real"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4131,7 +4131,7 @@ anchors = [
 ]
 summary = "A time system function reference is one of `$time`, `$stime`, or `$realtime`."
 related_clauses = []
-tags = []
+tags = ["function", "simulation-time", "statement-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4156,7 +4156,7 @@ anchors = [
 ]
 summary = "`$time` first scales current simulation time to the invoking module's time unit and rounds the resulting real value to an integer; the module's time precision does not perform this result rounding."
 related_clauses = []
-tags = []
+tags = ["conversion", "function", "simulation-time", "time-unit"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4180,7 +4180,7 @@ anchors = [
 ]
 summary = "`$time` returns a 64-bit integer time value scaled to the time unit of the invoking module."
 related_clauses = []
-tags = []
+tags = ["function", "simulation-time", "time-unit"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4209,7 +4209,7 @@ anchors = [
 ]
 summary = "The default `$timeformat` settings are: `units_number` equal to the smallest time precision among all source ``timescale`` directives, `precision_number` 0, a null suffix string, and minimum field width 20."
 related_clauses = []
-tags = []
+tags = ["simulation-time", "time-format", "time-precision", "time-unit"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -4236,7 +4236,7 @@ related_clauses = [
     "21.2",
     "21.3",
 ]
-tags = []
+tags = ["simulation-time", "time-format", "time-precision", "time-unit"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -4264,7 +4264,7 @@ summary = "The `$timeformat` unit and precision arguments shall each be an integ
 related_clauses = [
     "20.4.1",
 ]
-tags = []
+tags = ["bounds", "time-format", "time-precision", "time-unit"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -4290,7 +4290,7 @@ anchors = [
 ]
 summary = "A `$timeformat` task statement is either argumentless or supplies, in order, all four arguments `units_number`, `precision_number`, `suffix_string`, and `minimum_field_width`."
 related_clauses = []
-tags = []
+tags = ["statement-syntax", "time-format", "time-precision", "time-unit"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -4323,7 +4323,7 @@ anchors = [
 ]
 summary = "The `$timeunit` and `$timeprecision` result encodes the selected unit or precision as an integer: 2,1,0 denote 100 s,10 s,1 s; -1 through -3 denote 100 ms,10 ms,1 ms; -4 through -6 denote 100 us,10 us,1 us; -7 through -9 denote 100 ns,10 ns,1 ns; -10 through -12 denote 100 ps,10 ps,1 ps; and -13 through -15 denote 100 fs,10 fs,1 fs."
 related_clauses = []
-tags = []
+tags = ["encoding", "function", "time-precision", "time-unit"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -4348,7 +4348,7 @@ anchors = [
 ]
 summary = "`$timeunit` and `$timeprecision` are invoked either bare or with exactly one hierarchical identifier in parentheses."
 related_clauses = []
-tags = []
+tags = ["hierarchy", "statement-syntax", "time-precision", "time-unit"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -4378,7 +4378,7 @@ summary = "`$timeunit` returns the time unit and `$timeprecision` returns the ti
 related_clauses = [
     "3.14.3",
 ]
-tags = []
+tags = ["function", "hierarchy", "time-precision", "time-unit"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -4403,7 +4403,7 @@ anchors = [
 ]
 summary = "`$typename` creates system-generated names for anonymous struct, union, and enum types."
 related_clauses = []
-tags = []
+tags = ["enum", "struct", "type-query", "union"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4428,7 +4428,7 @@ anchors = [
 ]
 summary = "`$typename` uses `$` as the name placeholder for an anonymous unpacked array type."
 related_clauses = []
-tags = []
+tags = ["array", "type-query", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4453,7 +4453,7 @@ anchors = [
 ]
 summary = "`$typename` represents array range bounds as unsized decimal numbers."
 related_clauses = []
-tags = []
+tags = ["array", "bounds", "sizing", "type-query"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4477,7 +4477,7 @@ anchors = [
 ]
 summary = "When `$typename(expression)` is used as an elaboration-time constant, its expression shall contain neither hierarchical references nor references to dynamic-object elements."
 related_clauses = []
-tags = []
+tags = ["constant-expression", "elaboration", "name-resolution", "type-query"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4502,7 +4502,7 @@ anchors = [
 ]
 summary = "A `$typename` result omits a type's default signing even when that signing was written explicitly in source."
 related_clauses = []
-tags = []
+tags = ["signedness", "type-query"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4527,7 +4527,7 @@ anchors = [
 ]
 summary = "A `$typename` enum representation appends each enumeration named constant's actual encoded value."
 related_clauses = []
-tags = []
+tags = ["encoding", "enum", "type-query"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4551,7 +4551,7 @@ anchors = [
 ]
 summary = "For an expression argument, `$typename` returns the expression's self-determined result type, determined during elaboration without evaluating the expression."
 related_clauses = []
-tags = []
+tags = ["type-inference", "type-query"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4578,7 +4578,7 @@ summary = "`$typename` distinguishes simple bit-vector types with predefined wid
 related_clauses = [
     "6.22.1",
 ]
-tags = []
+tags = ["sizing", "type-query"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4605,7 +4605,7 @@ summary = "`$typename` returns a string representing the resolved type of its ex
 related_clauses = [
     "6.22.1",
 ]
-tags = []
+tags = ["string", "type-query", "type-reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4630,7 +4630,7 @@ anchors = [
 ]
 summary = "`$typename` prefixes a user-defined type name with its defining package or scope namespace."
 related_clauses = []
-tags = []
+tags = ["name-resolution", "namespace", "scope", "type-query"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4654,7 +4654,7 @@ anchors = [
 ]
 summary = "`$typename` requires one parenthesized argument that is either an expression or a data type."
 related_clauses = []
-tags = []
+tags = ["statement-syntax", "type-query"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4679,7 +4679,7 @@ anchors = [
 ]
 summary = "In a `$typename` result, a typedef that creates an equivalent type resolves back to its underlying built-in or user-defined type."
 related_clauses = []
-tags = []
+tags = ["type-equivalence", "type-query", "typedef"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4704,7 +4704,7 @@ anchors = [
 ]
 summary = "`$typename` removes source whitespace and inserts one space only where needed to separate adjacent identifiers or keywords."
 related_clauses = []
-tags = []
+tags = ["lexical", "string", "type-query"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4728,7 +4728,7 @@ anchors = [
 ]
 summary = "Executing `$warning` generates a run-time warning."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"

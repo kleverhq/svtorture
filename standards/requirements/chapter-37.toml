@@ -11,7 +11,7 @@ anchors = [
 ]
 summary = "The active-time-format object is associated with task/function calls that establish the active `$timeformat` settings."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli", "subroutine", "time-format"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -35,7 +35,7 @@ anchors = [
 ]
 summary = "The actual delays used by the tool for a net, primitive, module path, timing check, or continuous assignment are accessible by applying vpi_get_delays() to that object."
 related_clauses = []
-tags = []
+tags = ["path-delay", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -59,7 +59,7 @@ anchors = [
 ]
 summary = "For objects diagrammed with vpiDelayType, vpiNetType, vpiOpType, vpiPrimType, vpiResolvedNetType, or vpiTchkType, vpi_get() returns the standardized integer type constant and vpi_get_str() returns its name."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli", "type-query"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -83,7 +83,7 @@ anchors = [
 ]
 summary = "Array nets, unpacked struct nets, unpacked union nets, and interconnect arrays have no value property."
 related_clauses = []
-tags = []
+tags = ["aggregate", "interconnect", "net", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -109,7 +109,7 @@ anchors = [
 ]
 summary = "For vpiStructTypespec and vpiUnionTypespec, vpiTypespecMember iteration returns the aggregate members and each member's typespec relationship identifies its declared type."
 related_clauses = []
-tags = []
+tags = ["aggregate", "pli", "type-reference", "vpi-iteration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -136,7 +136,7 @@ anchors = [
 ]
 summary = "Driver and load iteration for a struct, union, or class variable includes drivers and loads of the whole variable, every bit-select or part-select, and every nested member."
 related_clauses = []
-tags = []
+tags = ["aggregate", "connectivity", "pli", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -160,7 +160,7 @@ anchors = [
 ]
 summary = "An alias-statement object belongs to an instance and exposes its LHS and RHS expression relationships."
 related_clauses = []
-tags = []
+tags = ["net-alias", "pli", "statement-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -185,7 +185,7 @@ anchors = [
 ]
 summary = "A type alias typespec has the same vpiType as its aliased type while vpiTypedefAlias identifies that underlying typespec."
 related_clauses = []
-tags = []
+tags = ["pli", "type-equivalence", "type-reference", "typedef"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -210,7 +210,7 @@ anchors = [
 ]
 summary = "A typedef of an array of virtual modport interfaces yields an array typespec whose vpiElemTypespec returns the parameterized modport interface-typespec."
 related_clauses = []
-tags = []
+tags = ["array", "pli", "type-reference", "virtual-interface"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -234,7 +234,7 @@ anchors = [
 ]
 summary = "vpiArrayNet and vpiNetArray are equal defined constants, and vpi_get_str(vpiType, array_net_handle) may return either standardized name."
 related_clauses = []
-tags = []
+tags = ["net", "pli", "type-equivalence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -258,7 +258,7 @@ anchors = [
 ]
 summary = "Any variable declared with one or more unpacked array ranges is represented as an array variable."
 related_clauses = []
-tags = []
+tags = ["array", "pli", "unpacked-array", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -284,7 +284,7 @@ summary = "When vpiArrayMember is TRUE, vpiIndex iteration returns the indexing 
 related_clauses = [
     "37.18",
 ]
-tags = []
+tags = ["array", "array-indexing", "pli", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -308,7 +308,7 @@ anchors = [
 ]
 summary = "Assertion objects encompass diagrammed concurrent/immediate assert, assume, cover, restrict, sequence/property instances, clocking-block/instance relationships and source-location/name properties."
 related_clauses = []
-tags = []
+tags = ["assertion", "object-handle", "pli", "vpi-assertion"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -332,7 +332,7 @@ anchors = [
 ]
 summary = "The statement relationship of a delay control associated with an assignment always returns NULL."
 related_clauses = []
-tags = []
+tags = ["assignment", "pli", "statement-syntax", "timing-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -356,7 +356,7 @@ anchors = [
 ]
 summary = "The statement relationship of an event control associated with an assignment always returns NULL."
 related_clauses = []
-tags = []
+tags = ["assignment", "event", "pli", "timing-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -380,7 +380,7 @@ anchors = [
 ]
 summary = "Assignment objects expose diagrammed LHS/RHS/interface-expression, delay/event/repeat-control relationships and operation-type/blocking properties."
 related_clauses = []
-tags = []
+tags = ["assignment", "object-handle", "pli", "procedural-assignment"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -408,7 +408,7 @@ summary = "vpiOpType is vpiAssignmentOp for ordinary blocking and nonblocking as
 related_clauses = [
     "11.4.1",
 ]
-tags = []
+tags = ["assignment", "operator", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -432,7 +432,7 @@ anchors = [
 ]
 summary = "vpiOperand iteration on vpiAssignmentPatternOp returns expressions in the equivalent positional-pattern order and preserves nested assignment-pattern structure."
 related_clauses = []
-tags = []
+tags = ["assignment-pattern", "expression", "operator", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -458,7 +458,7 @@ summary = "vpiIndexTypespec exists only for associative-array typespecs and retu
 related_clauses = [
     "7.8.1",
 ]
-tags = []
+tags = ["associative-array", "pli", "type-reference", "wildcard-index"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -482,7 +482,7 @@ anchors = [
 ]
 summary = "Atomic statement objects encompass every diagrammed procedural statement kind and expose the statement-label vpiName property."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli", "statement-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -506,7 +506,7 @@ anchors = [
 ]
 summary = "Attribute objects attach to every diagrammed declaration/instance/statement/expression/assertion/class/constraint kind and expose parent, name, definition-attribute, value, and definition-location properties."
 related_clauses = []
-tags = []
+tags = ["attribute", "object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -530,7 +530,7 @@ anchors = [
 ]
 summary = "Applying vpi_put_value() with a delay to an automatic variable is illegal."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "pli", "timing-control", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -554,7 +554,7 @@ anchors = [
 ]
 summary = "Registering a value-change callback on an automatic variable is illegal."
 related_clauses = []
-tags = []
+tags = ["callback", "diagnostic", "pli", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -580,7 +580,7 @@ anchors = [
 ]
 summary = "For a constant bit-select, every index in the bit-select and its parent chain retains its initial in-bounds or out-of-bounds status throughout simulation."
 related_clauses = []
-tags = []
+tags = ["array-indexing", "expression", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -607,7 +607,7 @@ anchors = [
 ]
 summary = "vpiConstantSelect is TRUE for a bit-select exactly when every index expression is elaboration-time constant and the parent's vpiConstantSelect is TRUE; otherwise it is FALSE."
 related_clauses = []
-tags = []
+tags = ["array-indexing", "expression", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -631,7 +631,7 @@ anchors = [
 ]
 summary = "vpiUse on a bit-select returns direct uses of that bit, uses of its parent vector, and uses of every part-select containing the bit."
 related_clauses = []
-tags = []
+tags = ["array-indexing", "expression", "pli", "vpi-iteration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -655,7 +655,7 @@ anchors = [
 ]
 summary = "vpiClassDefn returns NULL for a built-in class typespec."
 related_clauses = []
-tags = []
+tags = ["class", "pli", "type-reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -679,7 +679,7 @@ anchors = [
 ]
 summary = "vpiFunction returns NULL for a built-in method-function call and vpiTask returns NULL for a built-in method-task call."
 related_clauses = []
-tags = []
+tags = ["function", "pli", "subroutine", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -706,7 +706,7 @@ related_clauses = [
     "7.12.1",
     "18.7",
 ]
-tags = []
+tags = ["array-locator", "pli", "randomization", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -730,7 +730,7 @@ anchors = [
 ]
 summary = "vpi_get_cb_info() retrieves the callback-data information associated with a callback object."
 related_clauses = []
-tags = []
+tags = ["callback", "object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -754,7 +754,7 @@ anchors = [
 ]
 summary = "Callback objects relate to applicable primitive-terminal, expression, time-queue, or statement objects and expose callback registration information through vpi_get_cb_info()."
 related_clauses = []
-tags = []
+tags = ["callback", "object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -778,7 +778,7 @@ anchors = [
 ]
 summary = "A case-item object groups all case conditions that branch to the same statement."
 related_clauses = []
-tags = []
+tags = ["case-selection", "pli", "statement-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -802,7 +802,7 @@ anchors = [
 ]
 summary = "Case, case-item, and any/tagged/struct pattern objects expose diagrammed condition/expression/statement/typespec/nested-pattern relationships and case-type/qualifier/name properties."
 related_clauses = []
-tags = []
+tags = ["case-selection", "object-handle", "pattern-matching", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -826,7 +826,7 @@ anchors = [
 ]
 summary = "A case-property-item object groups all case conditions that branch to the same property statement."
 related_clauses = []
-tags = []
+tags = ["case-selection", "pli", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -850,7 +850,7 @@ anchors = [
 ]
 summary = "A cast expression has vpiOpType vpiCastOp, exactly one operand equal to the expression being cast, and a typespec equal to the target cast type."
 related_clauses = []
-tags = []
+tags = ["cast", "expression", "pli", "type-reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -876,7 +876,7 @@ summary = "vpiLocalParam returns TRUE for a parameter declared as an item within
 related_clauses = [
     "37.28",
 ]
-tags = []
+tags = ["class", "parameter", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -901,7 +901,7 @@ anchors = [
 ]
 summary = "vpiConstraint iteration returns directly declared constraints in syntactic declaration order, placing an extern constraint according to its prototype position."
 related_clauses = []
-tags = []
+tags = ["constraint", "external-constraint", "pli", "source-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -925,7 +925,7 @@ anchors = [
 ]
 summary = "Constraint iteration on a class definition returns normal declared constraints and excludes inline constraints."
 related_clauses = []
-tags = []
+tags = ["constraint", "inline-constraint", "pli", "vpi-iteration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -949,7 +949,7 @@ anchors = [
 ]
 summary = "A non-static class data member has no vpiFullName, while a static class data member accessed through either a class variable or class definition has a full name containing its hierarchical path through the class definition."
 related_clauses = []
-tags = []
+tags = ["class", "name-resolution", "pli", "static-member"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -973,7 +973,7 @@ anchors = [
 ]
 summary = "A class-definition object exposes every diagrammed instance/scope/typespec, base/derived class, member/method/constraint, argument/parameter/event/typedef/internal-scope relationship and its name, virtual, and declared-lifetime properties."
 related_clauses = []
-tags = []
+tags = ["class", "object-handle", "pli", "type-reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -997,7 +997,7 @@ anchors = [
 ]
 summary = "vpi_get_value() and vpi_put_value() are not allowed on variable or event handles obtained from a class-definition handle."
 related_clauses = []
-tags = []
+tags = ["class", "diagnostic", "object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -1021,7 +1021,7 @@ anchors = [
 ]
 summary = "vpiVariables, vpiMethods, vpiNamedEvent, and vpiNamedEventArray iteration on a class definition returns both static and automatic declarations."
 related_clauses = []
-tags = []
+tags = ["class", "lifetime", "pli", "vpi-iteration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -1045,7 +1045,7 @@ anchors = [
 ]
 summary = "vpiMethods iteration on a class definition excludes built-in methods that have no explicit declaration."
 related_clauses = []
-tags = []
+tags = ["class", "class-method", "pli", "vpi-iteration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -1071,7 +1071,7 @@ summary = "A vpiExtends object exists whenever a class derives from another clas
 related_clauses = [
     "8.13",
 ]
-tags = []
+tags = ["class", "class-inheritance", "pli", "type-reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -1097,7 +1097,7 @@ summary = "vpiArgument iteration on a vpiExtends object returns the arguments us
 related_clauses = [
     "8.17",
 ]
-tags = []
+tags = ["class", "constructor", "pli", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -1121,7 +1121,7 @@ anchors = [
 ]
 summary = "A class variable is returned as vpiParent of a class data-member handle only when the design explicitly uses that class variable to reference the member; a member handle obtained through vpiClassObj or vpiClassDefn iteration has NULL parent."
 related_clauses = []
-tags = []
+tags = ["class", "class-property", "pli", "reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1147,7 +1147,7 @@ summary = "vpiLocalParam returns TRUE for a class-object parameter declared with
 related_clauses = [
     "37.28",
 ]
-tags = []
+tags = ["class", "parameter", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -1171,7 +1171,7 @@ anchors = [
 ]
 summary = "vpiClassTypespec on a class-object handle returns the class typespec with which that dynamic object was created."
 related_clauses = []
-tags = []
+tags = ["class", "object-handle", "pli", "type-reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -1198,7 +1198,7 @@ related_clauses = [
     "8.29",
     "37.32",
 ]
-tags = []
+tags = ["class", "dynamic-allocation", "lifetime", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1222,7 +1222,7 @@ anchors = [
 ]
 summary = "From a class-object handle, vpiVariables, vpiMethods, vpiNamedEvent, and vpiNamedEventArray iteration returns both static and automatic declarations."
 related_clauses = []
-tags = []
+tags = ["class", "lifetime", "pli", "vpi-iteration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -1246,7 +1246,7 @@ anchors = [
 ]
 summary = "vpiMethods iteration from a class object excludes built-in methods without explicit declarations."
 related_clauses = []
-tags = []
+tags = ["class", "class-method", "pli", "vpi-iteration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -1270,7 +1270,7 @@ anchors = [
 ]
 summary = "vpiParameter iteration from a class object returns parameters declared in both the class parameter-port list and class body."
 related_clauses = []
-tags = []
+tags = ["class", "parameter", "pli", "vpi-iteration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -1294,7 +1294,7 @@ anchors = [
 ]
 summary = "A parameter value obtained from a class object equals the value of the corresponding parameter obtained from that object's class typespec."
 related_clauses = []
-tags = []
+tags = ["class", "parameter", "pli", "type-equivalence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -1318,7 +1318,7 @@ anchors = [
 ]
 summary = "vpiParameter iteration on a class definition returns parameters declared both in its parameter-port list and as class-body items."
 related_clauses = []
-tags = []
+tags = ["class", "parameter", "pli", "vpi-iteration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -1342,7 +1342,7 @@ anchors = [
 ]
 summary = "On a class-specialization typespec, vpiVariables, vpiMethods, vpiNamedEvent, and vpiNamedEventArray iteration returns both static and automatic declarations."
 related_clauses = []
-tags = []
+tags = ["class", "lifetime", "pli", "vpi-iteration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -1366,7 +1366,7 @@ anchors = [
 ]
 summary = "vpiMethods iteration on a class-specialization typespec excludes built-in methods lacking explicit declarations."
 related_clauses = []
-tags = []
+tags = ["class", "class-method", "pli", "vpi-iteration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -1390,7 +1390,7 @@ anchors = [
 ]
 summary = "A class-specialization typespec has a valid name, but the spelling of that name is tool-dependent."
 related_clauses = []
-tags = []
+tags = ["class", "name-resolution", "pli", "type-reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -1416,7 +1416,7 @@ summary = "vpiLocalParam returns TRUE for a parameter declared as a class-body i
 related_clauses = [
     "37.28",
 ]
-tags = []
+tags = ["class", "parameter", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -1440,7 +1440,7 @@ anchors = [
 ]
 summary = "vpiConstraint iteration on a class typespec follows syntactic declaration order, positioning extern constraints by prototype location."
 related_clauses = []
-tags = []
+tags = ["constraint", "external-constraint", "pli", "source-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -1464,7 +1464,7 @@ anchors = [
 ]
 summary = "Constraint iteration on a class typespec returns normal constraints and excludes inline constraints."
 related_clauses = []
-tags = []
+tags = ["constraint", "inline-constraint", "pli", "vpi-iteration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -1488,7 +1488,7 @@ anchors = [
 ]
 summary = "vpiExtends returns a derived class typespec's base typespec when present, and the base of a class specialization is itself represented as a specialization."
 related_clauses = []
-tags = []
+tags = ["class", "class-inheritance", "pli", "type-reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -1512,7 +1512,7 @@ anchors = [
 ]
 summary = "Inherited constraints are obtained by traversing vpiExtends to the base class typespec rather than from the derived typespec's direct constraint iteration."
 related_clauses = []
-tags = []
+tags = ["class", "class-inheritance", "constraint", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -1536,7 +1536,7 @@ anchors = [
 ]
 summary = "vpi_get_value() and vpi_put_value() are not allowed on non-static variable or event handles obtained from class-typespec handles."
 related_clauses = []
-tags = []
+tags = ["class", "object-handle", "pli", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -1560,7 +1560,7 @@ anchors = [
 ]
 summary = "A class-typespec object exposes every diagrammed parameter-assignment, class-definition/extends, variable/method/constraint/parameter/interface/event/scope relationship and its name, class-type, and declared-lifetime properties."
 related_clauses = []
-tags = []
+tags = ["class", "object-handle", "pli", "type-reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -1584,7 +1584,7 @@ anchors = [
 ]
 summary = "vpiParameter iteration on a class typespec returns parameters declared in both the class parameter-port list and the class body."
 related_clauses = []
-tags = []
+tags = ["class", "parameter", "pli", "vpi-iteration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -1608,7 +1608,7 @@ anchors = [
 ]
 summary = "vpiClassTypespec on a class-variable handle returns the class typespec used in that variable's source declaration, independent of its current dynamic object."
 related_clauses = []
-tags = []
+tags = ["class", "pli", "type-reference", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -1632,7 +1632,7 @@ anchors = [
 ]
 summary = "vpiObjId on a class variable equals the identifier of its referenced object, or 0 when it references no object."
 related_clauses = []
-tags = []
+tags = ["class", "class-handle", "object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -1656,7 +1656,7 @@ anchors = [
 ]
 summary = "Class-variable and class-object handles expose diagrammed class typespec/object, variable/member/method/constraint/parameter/interface/event/scope, waiting-process/message, and object-identity relationships and properties."
 related_clauses = []
-tags = []
+tags = ["class", "class-handle", "object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -1680,7 +1680,7 @@ anchors = [
 ]
 summary = "Clocking-block and clocking-I/O-declaration objects expose every diagrammed skew/event/instance/declaration/prefix/actual/expression/net/variable/reference relationship and name, direction, input-edge, and output-edge property."
 related_clauses = []
-tags = []
+tags = ["clocking-block", "clocking-event", "object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -1704,7 +1704,7 @@ anchors = [
 ]
 summary = "vpiActual returns NULL when a clocking block's virtual-interface prefix has no value at the current simulation time."
 related_clauses = []
-tags = []
+tags = ["clocking-block", "pli", "virtual-interface"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -1728,7 +1728,7 @@ anchors = [
 ]
 summary = "vpiPrefix is non-NULL when a clocking-block expression in source is immediately prefixed by a virtual interface."
 related_clauses = []
-tags = []
+tags = ["clocking-block", "pli", "virtual-interface"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -1752,7 +1752,7 @@ anchors = [
 ]
 summary = "vpiInputSkew/vpiOutputSkew and vpiInputEdge/vpiOutputEdge on a clocking-block handle describe its default constructs, while the same methods/properties on a clocking-I/O declaration describe that declaration's own settings."
 related_clauses = []
-tags = []
+tags = ["clocking-block", "clocking-skew", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -1776,7 +1776,7 @@ anchors = [
 ]
 summary = "vpiExpr on a clocking-I/O declaration returns the referenced expression or reference object represented by that declaration."
 related_clauses = []
-tags = []
+tags = ["clocking-block", "expression", "pli", "reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -1802,7 +1802,7 @@ summary = "When an implementation collapses nets across hierarchy, vpiSimNet ret
 related_clauses = [
     "23.3.3.7",
 ]
-tags = []
+tags = ["net", "net-resolution", "object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1828,7 +1828,7 @@ anchors = [
 ]
 summary = "A complex non-concatenation expression connected to an input port makes that port a load of each participating net, and vpi_handle(vpiHighConn, port_handle) returns the complex expression from the iterated load port."
 related_clauses = []
-tags = []
+tags = ["connectivity", "expression", "net", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -1852,7 +1852,7 @@ anchors = [
 ]
 summary = "vpiClockingEvent on a concurrent assertion returns the actual clocking event used to evaluate it, whether explicitly specified or implicitly inferred."
 related_clauses = []
-tags = []
+tags = ["assertion", "clocking-event", "concurrent-assertion", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -1876,7 +1876,7 @@ anchors = [
 ]
 summary = "Concurrent assertion statement/property-spec objects expose diagrammed actual clocking event, property, disable condition, else statement, distribution, name/full-name, cover-sequence, and inferred-clock relationships and properties."
 related_clauses = []
-tags = []
+tags = ["assertion", "concurrent-assertion", "object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -1900,7 +1900,7 @@ anchors = [
 ]
 summary = "A tool shall support multiple concurrently executing VPI programs acquiring handles, and any shared handle resources shall not alter any program's effects or prevent it from functioning independently."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli", "process-independence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1926,7 +1926,7 @@ anchors = [
 ]
 summary = "For a constant select, each index expression's in-bounds or out-of-bounds status at simulation start remains unchanged at every later simulation time."
 related_clauses = []
-tags = []
+tags = ["array-indexing", "net", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1953,7 +1953,7 @@ summary = "vpiAccessType on a constraint returns vpiExternAcc when declared outs
 related_clauses = [
     "18.5.1",
 ]
-tags = []
+tags = ["constraint", "external-constraint", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -1980,7 +1980,7 @@ summary = "For a constraint, vpiAutomatic reflects the declaration keyword rathe
 related_clauses = [
     "18.5.10",
 ]
-tags = []
+tags = ["constraint", "lifetime", "pli", "static"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2004,7 +2004,7 @@ anchors = [
 ]
 summary = "Constraint, ordering, expression, distribution, and distribution-item objects expose every diagrammed parent/item, solve-before/after, value-range/weight relationship and virtual, lifetime/allocation, access, name, enabled, and distribution-type property."
 related_clauses = []
-tags = []
+tags = ["constraint", "distribution", "object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -2029,7 +2029,7 @@ anchors = [
 ]
 summary = "Constraint-expression objects expose diagrammed implication/condition, if/else, foreach, distribution, loop-variable, operation, soft-disable, nested-expression relationships and the vpiSoft property."
 related_clauses = []
-tags = []
+tags = ["constraint", "expression", "object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2053,7 +2053,7 @@ anchors = [
 ]
 summary = "Each vpiConstraintExpr iteration returns expressions in source occurrence order within its containing implication, if, if-else, or foreach constraint."
 related_clauses = []
-tags = []
+tags = ["constraint", "expression", "pli", "source-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2077,7 +2077,7 @@ anchors = [
 ]
 summary = "vpiVariables on a vpiConstrForeach returns the array variable being indexed by that foreach constraint."
 related_clauses = []
-tags = []
+tags = ["array", "constraint", "foreach", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2101,7 +2101,7 @@ anchors = [
 ]
 summary = "vpiLoopVars iteration returns foreach-constraint index variables from left to right and represents each skipped index position by a vpiOperation whose vpiOpType is vpiNullOp."
 related_clauses = []
-tags = []
+tags = ["constraint", "foreach", "pli", "vpi-iteration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2125,7 +2125,7 @@ anchors = [
 ]
 summary = "vpiConstraintItem iteration returns constraint items in their syntactic occurrence order within the constraint."
 related_clauses = []
-tags = []
+tags = ["constraint", "pli", "source-order", "vpi-iteration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2149,7 +2149,7 @@ anchors = [
 ]
 summary = "A continuous-assignment-bit object is always scalar-sized."
 related_clauses = []
-tags = []
+tags = ["continuous-assignment", "pli", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2173,7 +2173,7 @@ anchors = [
 ]
 summary = "vpiOffset returns 0 for the least-significant continuous-assignment bit."
 related_clauses = []
-tags = []
+tags = ["continuous-assignment", "layout", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2197,7 +2197,7 @@ anchors = [
 ]
 summary = "Value-change callbacks are supported on both whole continuous-assignment objects and continuous-assignment-bit objects."
 related_clauses = []
-tags = []
+tags = ["callback", "continuous-assignment", "pli", "value-change"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2221,7 +2221,7 @@ anchors = [
 ]
 summary = "The vpiModule relationship returns the containing module when an object is inside a module instance and returns NULL otherwise."
 related_clauses = []
-tags = []
+tags = ["hierarchy", "module", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2245,7 +2245,7 @@ anchors = [
 ]
 summary = "Continuous-assignment and continuous-assignment-bit objects expose diagrammed delay/RHS/LHS/module/parent/bit relationships and offset, delay, declaration-assignment, strength, and value properties."
 related_clauses = []
-tags = []
+tags = ["continuous-assignment", "object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2269,7 +2269,7 @@ anchors = [
 ]
 summary = "The stmt relationship of the currently active frame returns the statement currently executing in that frame."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli", "statement-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2293,7 +2293,7 @@ anchors = [
 ]
 summary = "vpi_handle(vpiFrame, NULL) returns the currently active frame."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2317,7 +2317,7 @@ anchors = [
 ]
 summary = "Within an invoked VPI application, vpi_handle(vpiSysTfCall, NULL) returns the system task/function call that invoked it."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2341,7 +2341,7 @@ anchors = [
 ]
 summary = "The current simulation-time queue is included in time-queue iteration only while it contains events scheduled before the read-only synchronization point."
 related_clauses = []
-tags = []
+tags = ["pli", "read-only", "scheduling", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2365,7 +2365,7 @@ anchors = [
 ]
 summary = "VPI routines shall provide access to the SystemVerilog design objects represented in the VPI data model diagrams, including each diagrammed relationship and property; group relationships and properties apply to every object in that group."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli", "vpi-iteration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2389,7 +2389,7 @@ anchors = [
 ]
 summary = "Expression iteration on a default case item returns NULL because default has no case expression."
 related_clauses = []
-tags = []
+tags = ["case-selection", "expression", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2413,7 +2413,7 @@ anchors = [
 ]
 summary = "Expression iteration on a default case-property item returns NULL because default has no case expression."
 related_clauses = []
-tags = []
+tags = ["case-selection", "expression", "pli", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2439,7 +2439,7 @@ summary = "Instance definition-location properties vpiDefLineNo and vpiDefFile r
 related_clauses = [
     "22.12",
 ]
-tags = []
+tags = ["pli", "preprocessor", "source-location"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2463,7 +2463,7 @@ anchors = [
 ]
 summary = "A delay-control object exposes its controlled statement and delay expression and supports effective delay access with vpi_get_delays()."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli", "statement-syntax", "timing-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2487,7 +2487,7 @@ anchors = [
 ]
 summary = "VPI delay properties are read and written by vpi_get_delays() and vpi_put_delays() using structure pointers whose referenced structures carry the delay information."
 related_clauses = []
-tags = []
+tags = ["c-type", "path-delay", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2511,7 +2511,7 @@ anchors = [
 ]
 summary = "Input/output delay-terminal and delay-device objects expose diagrammed module/device, driver/load/net, delay-type, and value relationships and properties."
 related_clauses = []
-tags = []
+tags = ["connectivity", "object-handle", "path-delay", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2535,7 +2535,7 @@ anchors = [
 ]
 summary = "vpiDerivedClasses iteration returns all class definitions derived from the queried class definition."
 related_clauses = []
-tags = []
+tags = ["class", "class-inheritance", "pli", "vpi-iteration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2566,7 +2566,7 @@ anchors = [
 ]
 summary = "Property entries in VPI data-model diagrams determine the applicable access family and data type: integer and Boolean properties use vpi_get() as PLI_INT32, string properties use vpi_get_str() as PLI_BYTE8 *, and complex time or logic-value properties use the routines indicated by the diagram."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli", "type-query"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2596,7 +2596,7 @@ anchors = [
 ]
 summary = "A single-arrow data-model relationship is traversed with vpi_handle(), a double-arrow relationship with vpi_iterate() and vpi_scan(); a shown tag replaces the target object type selector, and a relationship originating at a circle uses NULL as the reference handle."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli", "vpi-iteration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2620,7 +2620,7 @@ anchors = [
 ]
 summary = "vpiClassTypespec iteration from a class definition returns specializations derived directly from that definition, excluding classes related only by inheritance."
 related_clauses = []
-tags = []
+tags = ["class", "parameterized-class", "pli", "vpi-iteration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2644,7 +2644,7 @@ anchors = [
 ]
 summary = "Disable and disable-fork objects expose diagrammed target expression relationships to tasks, functions, named begins, and named forks."
 related_clauses = []
-tags = []
+tags = ["disable", "pli", "process-control", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2668,7 +2668,7 @@ anchors = [
 ]
 summary = "Do-while and foreach statement objects expose diagrammed condition/body, indexed variable, loop-variable, and skipped-index operation relationships."
 related_clauses = []
-tags = []
+tags = ["foreach", "loop", "pli", "statement-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2692,7 +2692,7 @@ anchors = [
 ]
 summary = "vpiAccessType returns vpiDPIExportAcc for DPI/DPI-C exported tasks/functions and vpiDPIImportAcc for DPI/DPI-C imported tasks/functions."
 related_clauses = []
-tags = []
+tags = ["dpi", "pli", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2716,7 +2716,7 @@ anchors = [
 ]
 summary = "vpiDPICIdentifier returns the C linkage-name string for a DPI or DPI-C task/function."
 related_clauses = []
-tags = []
+tags = ["c-linkage", "dpi", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2740,7 +2740,7 @@ anchors = [
 ]
 summary = "vpiDPIContext returns TRUE for context DPI or DPI-C imported tasks and functions."
 related_clauses = []
-tags = []
+tags = ["context", "dpi", "pli", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2764,7 +2764,7 @@ anchors = [
 ]
 summary = "vpiDPICStr returns vpiDPI for a `DPI` task/function and vpiDPIC for a `DPI-C` task/function."
 related_clauses = []
-tags = []
+tags = ["dpi", "pli", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2788,7 +2788,7 @@ anchors = [
 ]
 summary = "vpiDPIPure returns TRUE for a pure DPI or DPI-C imported function."
 related_clauses = []
-tags = []
+tags = ["dpi", "function", "pli", "pure"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2813,7 +2813,7 @@ anchors = [
 ]
 summary = "Ranges obtained from a dynamic array object reflect its current runtime size, while its associative dimensions remain empty; ranges obtained from its typespec remain empty regardless of runtime allocation."
 related_clauses = []
-tags = []
+tags = ["array", "dynamic-array", "pli", "range"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2837,7 +2837,7 @@ anchors = [
 ]
 summary = "vpiObjId uniquely identifies a live class object among all live dynamic objects supporting the property; its value may be reused only after the object is garbage-collected."
 related_clauses = []
-tags = []
+tags = ["class-handle", "garbage-collection", "object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2861,7 +2861,7 @@ anchors = [
 ]
 summary = "An object with a non-NULL class-variable or virtual-interface-variable vpiPrefix has the same memory-allocation-scheme value as that prefix."
 related_clauses = []
-tags = []
+tags = ["dynamic-allocation", "pli", "variable", "virtual-interface"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2893,7 +2893,7 @@ anchors = [
 ]
 summary = "vpiHasActual is TRUE when the prefix has a current actual, for statically declared elaborated objects, and for frame-obtained automatic variables; it is FALSE when the prefix lacks a current actual and for lexical objects, class-typespec-relative nonstatic properties, or declaration-obtained automatic variables."
 related_clauses = []
-tags = []
+tags = ["dynamic-allocation", "pli", "variable", "virtual-interface"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2917,7 +2917,7 @@ anchors = [
 ]
 summary = "Dynamically prefixed expressions, selects, class/virtual-interface variables, events, clocking blocks, and task/function calls expose a vpiPrefix relationship and vpiHasActual property."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli", "variable", "virtual-interface"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2941,7 +2941,7 @@ anchors = [
 ]
 summary = "vpiPrefix is non-NULL for an expression/task call immediately prefixed by a virtual interface or clocking block and for all or part of a non-static class property prefixed by a class variable."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli", "variable", "virtual-interface"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2966,7 +2966,7 @@ anchors = [
 ]
 summary = "vpiElemTypespec removes the leftmost unpacked or packed array dimension one level per call while preserving typedef-level name information, and returns NULL on struct, union, enum, or unranged bit/logic typespecs after no array dimensions remain."
 related_clauses = []
-tags = []
+tags = ["array", "pli", "type-reference", "typedef"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2990,7 +2990,7 @@ anchors = [
 ]
 summary = "For an empty range, vpiSize returns 0 and both vpiLeftRange and vpiRightRange return NULL."
 related_clauses = []
-tags = []
+tags = ["array", "pli", "range"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3019,7 +3019,7 @@ summary = "An empty zero-element range represents every associative-array dimens
 related_clauses = [
     "37.17",
 ]
-tags = []
+tags = ["array", "pli", "range"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3043,7 +3043,7 @@ anchors = [
 ]
 summary = "When a task or function contains zero statements, its vpiStmt relationship shall return NULL."
 related_clauses = []
-tags = []
+tags = ["pli", "statement-syntax", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3067,7 +3067,7 @@ anchors = [
 ]
 summary = "vpi_iterate() returns NULL when no simulation time-queue objects remain."
 related_clauses = []
-tags = []
+tags = ["pli", "simulation-time", "vpi-iteration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -3091,7 +3091,7 @@ anchors = [
 ]
 summary = "An event-control object exposes diagrammed condition/expression/sequence-instance/named-event and controlled-statement relationships."
 related_clauses = []
-tags = []
+tags = ["event", "object-handle", "pli", "timing-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -3115,7 +3115,7 @@ anchors = [
 ]
 summary = "An event-statement object relates to its named event and exposes the Boolean vpiBlocking property distinguishing blocking and nonblocking event trigger forms."
 related_clauses = []
-tags = []
+tags = ["event", "pli", "statement-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -3139,7 +3139,7 @@ anchors = [
 ]
 summary = "An expect-statement object exposes its property specification, pass statement, and else/fail statement relationships."
 related_clauses = []
-tags = []
+tags = ["assertion", "expect", "pli", "statement-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -3163,7 +3163,7 @@ anchors = [
 ]
 summary = "Calling vpi_release_handle() releases the specified handle."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3187,7 +3187,7 @@ anchors = [
 ]
 summary = "vpiDecompile returns a functionally equivalent expression string, adding parentheses only for precedence, placing one space between each operand and operator, and adding no whitespace solely around parentheses."
 related_clauses = []
-tags = []
+tags = ["expression", "pli", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -3213,7 +3213,7 @@ summary = "VPI applications can access arbitrarily complex source expressions bo
 related_clauses = [
     "36.4",
 ]
-tags = []
+tags = ["expression", "object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3237,7 +3237,7 @@ anchors = [
 ]
 summary = "Expression, part-select, operation, constant, range, pattern, call, sequence/property instance, and let-expression objects expose every diagrammed typespec/base/width/range/parent/operand relationship and constant-select, indexed-select-type, op/constant-type, decompile, size, and value property."
 related_clauses = []
-tags = []
+tags = ["expression", "object-handle", "pli", "type-reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -3261,7 +3261,7 @@ anchors = [
 ]
 summary = "The typespec relationship is always available for casts, simple expressions, and type-prefixed assignment-pattern or multiple-assignment-pattern expressions; for other expressions its availability is implementation-dependent."
 related_clauses = []
-tags = []
+tags = ["expression", "pli", "type-reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -3285,7 +3285,7 @@ anchors = [
 ]
 summary = "A for-statement object exposes initialization-statement, condition-expression, increment-statement, body-statement relationships and vpiLocalVarDecls property."
 related_clauses = []
-tags = []
+tags = ["loop", "pli", "statement-syntax", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -3309,7 +3309,7 @@ anchors = [
 ]
 summary = "A for statement is represented as a VPI scope if and only if vpiLocalVarDecls is TRUE, and each loop-control variable then belongs to that for-statement scope."
 related_clauses = []
-tags = []
+tags = ["loop", "pli", "scope", "statement-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3333,7 +3333,7 @@ anchors = [
 ]
 summary = "Each loop-control variable of a foreach statement belongs to the foreach-statement scope."
 related_clauses = []
-tags = []
+tags = ["foreach", "pli", "scope", "statement-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3357,7 +3357,7 @@ anchors = [
 ]
 summary = "vpiVariables on a foreach statement returns the packed array, unpacked array, or string variable being indexed."
 related_clauses = []
-tags = []
+tags = ["array", "foreach", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -3381,7 +3381,7 @@ anchors = [
 ]
 summary = "vpiLoopVars iteration returns foreach index variables left to right and represents every skipped index position as vpiOperation with vpiOpType vpiNullOp."
 related_clauses = []
-tags = []
+tags = ["array", "foreach", "pli", "vpi-iteration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -3405,7 +3405,7 @@ anchors = [
 ]
 summary = "A forever-statement object exposes its repeated body statement relationship."
 related_clauses = []
-tags = []
+tags = ["loop", "pli", "statement-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -3429,7 +3429,7 @@ anchors = [
 ]
 summary = "For a fork-join block, vpiJoinType identifies its terminating join form and returns exactly vpiJoin, vpiJoinNone, or vpiJoinAny."
 related_clauses = []
-tags = []
+tags = ["forkjoin", "pli", "scope", "statement-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3455,7 +3455,7 @@ summary = "An automatic variable owned by a frame exists for the frame lifetime,
 related_clauses = [
     "37.43",
 ]
-tags = []
+tags = ["lifetime", "pli", "subroutine", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3479,7 +3479,7 @@ anchors = [
 ]
 summary = "Frame objects expose diagrammed dynamic scope/call, origin/parent/thread/statement, automatic net/variable/event declarations, and active-state relationships and properties."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli", "scope", "thread"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -3505,7 +3505,7 @@ anchors = [
 ]
 summary = "vpiOrigin identifies the elaboration-hierarchy point that activated a frame; for a user-nettype resolution invocation it may be the net or net array and the frame represents the currently active resolution function."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli", "scope", "thread"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -3531,7 +3531,7 @@ anchors = [
 ]
 summary = "vpiParent on a child frame returns the frame that activated it, and the parent frame's stmt relationship identifies the atomic statement or scope whose execution caused that activation."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli", "scope", "thread"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -3557,7 +3557,7 @@ anchors = [
 ]
 summary = "A frame represents each dynamically activated procedural scope together with its locally declared automatic variables, events, and event arrays."
 related_clauses = []
-tags = []
+tags = ["pli", "scope", "thread"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -3584,7 +3584,7 @@ anchors = [
 ]
 summary = "When a simulator frees objects belonging to a frame or thread, it shall release handles to those objects, their subelements, and callbacks placed on those objects."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli", "thread"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3608,7 +3608,7 @@ anchors = [
 ]
 summary = "vpiFullName begins with `$unit::` for compilation-unit objects and with `package-name::` for objects in a package; `::` separates a package from its immediately following component, while `.` is used in all cases except package and class-definition boundaries."
 related_clauses = []
-tags = []
+tags = ["compilation-unit", "name-resolution", "pli", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3634,7 +3634,7 @@ summary = "When the return variable's vpiSize is defined and can be determined w
 related_clauses = [
     "37.17",
 ]
-tags = []
+tags = ["function", "pli", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -3658,7 +3658,7 @@ anchors = [
 ]
 summary = "Every SystemVerilog function contains an implicit object matching the function's name, size, and type that captures its return value."
 related_clauses = []
-tags = []
+tags = ["function", "pli", "return-value", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -3682,7 +3682,7 @@ anchors = [
 ]
 summary = "vpiReturn always returns a variable object, including for simple built-in return types."
 related_clauses = []
-tags = []
+tags = ["function", "object-handle", "pli", "return-value"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -3706,7 +3706,7 @@ anchors = [
 ]
 summary = "vpiSize on a generate-scope array returns its number of elements."
 related_clauses = []
-tags = []
+tags = ["array", "generate", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -3730,7 +3730,7 @@ anchors = [
 ]
 summary = "Every parameter declared within a generate scope is represented as a local parameter."
 related_clauses = []
-tags = []
+tags = ["generate", "parameter", "pli", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -3754,7 +3754,7 @@ anchors = [
 ]
 summary = "Generate variables, scopes, and scope arrays expose every diagrammed instance/scope/design-item/declaration relationship, indexed access, and name/full-name, size, array-member, protection, and implicit-declaration property."
 related_clauses = []
-tags = []
+tags = ["generate", "hierarchy", "object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -3779,7 +3779,7 @@ anchors = [
 ]
 summary = "Generic interconnect nets and arrays expose the diagrammed typespec, ranges/bounds, packed property, element/member, and contained-net relationships."
 related_clauses = []
-tags = []
+tags = ["interconnect", "net", "object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -3803,7 +3803,7 @@ anchors = [
 ]
 summary = "A reference to a genvar within its generate scope is represented as a local parameter."
 related_clauses = []
-tags = []
+tags = ["generate", "genvar", "pli", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -3827,7 +3827,7 @@ anchors = [
 ]
 summary = "vpi_get() derives integer and Boolean object properties as PLI_INT32 values, with Boolean TRUE represented by 1 and FALSE by 0."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3851,7 +3851,7 @@ anchors = [
 ]
 summary = "vpi_get_str() accesses string object properties, which are defined with type PLI_BYTE8 *."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3877,7 +3877,7 @@ summary = "Applying vpi_get_value() to an expression with side effects shall ful
 related_clauses = [
     "38.15",
 ]
-tags = []
+tags = ["evaluation-order", "expression", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3901,7 +3901,7 @@ anchors = [
 ]
 summary = "vpi_get64() returns 64-bit integer object properties as PLI_INT64."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3925,7 +3925,7 @@ anchors = [
 ]
 summary = "Calling vpi_get() with a NULL handle and either vpiTimePrecision or vpiTimeUnit shall return the smallest time precision among all modules in the instantiated design."
 related_clauses = []
-tags = []
+tags = ["pli", "time-precision", "time-unit"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3950,7 +3950,7 @@ anchors = [
 ]
 summary = "vpi_handle_by_index() uses an index to return a handle to an object in an ordered one-to-many relationship."
 related_clauses = []
-tags = []
+tags = ["array", "array-indexing", "object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3975,7 +3975,7 @@ anchors = [
 ]
 summary = "vpi_handle_by_multi_index() uses an array of indices to return a handle to an indexed subobject of a multidimensional parent object."
 related_clauses = []
-tags = []
+tags = ["array", "array-indexing", "object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4000,7 +4000,7 @@ anchors = [
 ]
 summary = "vpi_handle_by_name() returns a handle to the object identified by the specified name."
 related_clauses = []
-tags = []
+tags = ["name-resolution", "object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4026,7 +4026,7 @@ summary = "A tool can create a handle referring to an object only while that obj
 related_clauses = [
     "37.3.7",
 ]
-tags = []
+tags = ["lifetime", "object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4051,7 +4051,7 @@ anchors = [
 ]
 summary = "vpi_handle_multi() returns a handle to the object selected through a many-to-one relationship."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4077,7 +4077,7 @@ summary = "vpi_compare_objects() returns 1 when its handles refer to the same ob
 related_clauses = [
     "38.3",
 ]
-tags = []
+tags = ["object-handle", "pli", "type-equivalence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4104,7 +4104,7 @@ anchors = [
 ]
 summary = "vpi_handle() returns a handle to the object selected through a one-to-one relationship."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4129,7 +4129,7 @@ anchors = [
 ]
 summary = "A handle is valid from creation until its release, the end of its referenced object's lifetime, or tool termination, whichever occurs first, and is invalid at all other times."
 related_clauses = []
-tags = []
+tags = ["lifetime", "object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4153,7 +4153,7 @@ anchors = [
 ]
 summary = "If and if-else statement objects expose condition, then/else statement relationships and vpiQualifier property."
 related_clauses = []
-tags = []
+tags = ["conditional", "pli", "statement-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -4177,7 +4177,7 @@ anchors = [
 ]
 summary = "Immediate assert, assume, and cover statement objects expose diagrammed expression/statement/else relationships and deferred/final properties."
 related_clauses = []
-tags = []
+tags = ["assertion", "immediate-assertion", "pli", "statement-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -4201,7 +4201,7 @@ anchors = [
 ]
 summary = "The vpiInstance relationship always returns the immediate package, module, interface, or program instance in which the object is instantiated."
 related_clauses = []
-tags = []
+tags = ["hierarchy", "instantiation", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4225,7 +4225,7 @@ anchors = [
 ]
 summary = "For an implicit net, vpiLineNo returns 0 and vpiFile returns the file in which that net is first referenced."
 related_clauses = []
-tags = []
+tags = ["implicit-net", "net", "pli", "source-location"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4251,7 +4251,7 @@ summary = "vpiImport iteration returns objects imported into the current scope b
 related_clauses = [
     "26.3",
 ]
-tags = []
+tags = ["import", "pli", "scope", "vpi-iteration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4275,7 +4275,7 @@ anchors = [
 ]
 summary = "Inherited constraints are obtained by traversing the extends relationship to the base-class typespec rather than being included as direct constraints of the derived class definition."
 related_clauses = []
-tags = []
+tags = ["class", "class-inheritance", "constraint", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -4299,7 +4299,7 @@ anchors = [
 ]
 summary = "A typespec denoting an inline-defined typedef field rather than a typedef declaration may have an empty typedef name."
 related_clauses = []
-tags = []
+tags = ["pli", "type-reference", "typedef"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -4323,7 +4323,7 @@ anchors = [
 ]
 summary = "An input delay terminal's value changes before the delay associated with its delay device elapses."
 related_clauses = []
-tags = []
+tags = ["path-delay", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -4347,7 +4347,7 @@ anchors = [
 ]
 summary = "Applying vpiLeftRange or vpiRightRange to a multidimensional instance-array object returns the corresponding bound of its leftmost dimension."
 related_clauses = []
-tags = []
+tags = ["array", "hierarchy", "pli", "range"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4371,7 +4371,7 @@ anchors = [
 ]
 summary = "Traversing an instance array to its expr relationship shall return a simple vpiOperation expression whose vpiOpType is vpiListOp and whose operands expose the actual source-code connection list."
 related_clauses = []
-tags = []
+tags = ["array", "expression", "pli", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4395,7 +4395,7 @@ anchors = [
 ]
 summary = "A VPI instance-array object exposes the diagrammed range, bound-expression, element, parameter-assignment, source-connection, delay, name/full-name, size, and indexed-access relationships and properties for module, interface, program, primitive, gate, switch, and UDP arrays."
 related_clauses = []
-tags = []
+tags = ["array", "hierarchy", "object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4419,7 +4419,7 @@ anchors = [
 ]
 summary = "vpi_iterate(vpiRange, instance_array_handle) shall return every declared instance-array range in dimension order from the leftmost range through the rightmost."
 related_clauses = []
-tags = []
+tags = ["array", "pli", "range", "vpi-iteration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4444,7 +4444,7 @@ anchors = [
 ]
 summary = "vpiTypedef iteration on an instance shall return the user-defined typespecs whose typedefs are explicitly declared in that instance."
 related_clauses = []
-tags = []
+tags = ["hierarchy", "pli", "typedef", "vpi-iteration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4469,7 +4469,7 @@ anchors = [
 ]
 summary = "vpiNetTypedef iteration on an instance shall return handles to the user-defined nettypes explicitly declared in that instance."
 related_clauses = []
-tags = []
+tags = ["hierarchy", "nettype", "pli", "vpi-iteration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -4493,7 +4493,7 @@ anchors = [
 ]
 summary = "A VPI instance object exposes all relationships and typed properties shown by the instance data-model diagram, including contained design items and declarations, definition/configuration metadata, array/member and protection flags, time unit/precision, default lifetime/net/delay settings, names, top/cell status, and related type, class, nettype, assertion, event, parameter, and specification objects."
 related_clauses = []
-tags = []
+tags = ["hierarchy", "object-handle", "pli", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -4519,7 +4519,7 @@ anchors = [
 ]
 summary = "When an interconnect's typespec is a packed or unpacked array, vpiElement returns corresponding interconnect elements; when it is a packed or unpacked struct, vpiMember returns corresponding interconnect members."
 related_clauses = []
-tags = []
+tags = ["aggregate", "interconnect", "pli", "vpi-iteration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -4543,7 +4543,7 @@ anchors = [
 ]
 summary = "vpiElement iterates interconnect arrays one dimension at a time, returning interconnect-array objects at intermediate multidimensional levels and interconnect nets at leaves."
 related_clauses = []
-tags = []
+tags = ["array", "interconnect", "pli", "vpi-iteration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -4567,7 +4567,7 @@ anchors = [
 ]
 summary = "vpiTypespec returns NULL for an interconnect array."
 related_clauses = []
-tags = []
+tags = ["array", "interconnect", "pli", "type-reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -4591,7 +4591,7 @@ anchors = [
 ]
 summary = "vpiNetType returns vpiInterconnect for an interconnect net or interconnect array."
 related_clauses = []
-tags = []
+tags = ["interconnect", "nettype", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -4617,7 +4617,7 @@ summary = "For an interconnect net that is a simulated net, vpiResolvedNetType r
 related_clauses = [
     "23.3.3.7",
 ]
-tags = []
+tags = ["interconnect", "net-resolution", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -4641,7 +4641,7 @@ anchors = [
 ]
 summary = "An interconnect net's typespec is the typespec of the net or nets to which it is connected."
 related_clauses = []
-tags = []
+tags = ["connectivity", "interconnect", "pli", "type-reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -4665,7 +4665,7 @@ anchors = [
 ]
 summary = "For an interface that is an element of an instance array, the vpiIndex transition accesses its array index; for an interface not in an instance array, that transition shall return NULL."
 related_clauses = []
-tags = []
+tags = ["array", "interface", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4689,7 +4689,7 @@ anchors = [
 ]
 summary = "A VPI interface object exposes the diagrammed relationships to expressions, clocking/default constructs, interface task/function declarations, modports, distributions, module paths, instance/interface arrays, continuous assignments, processes, and its containing instance."
 related_clauses = []
-tags = []
+tags = ["interface", "object-handle", "pli", "vpi-iteration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4713,7 +4713,7 @@ anchors = [
 ]
 summary = "The vpiLowConn relationship of a vpiInterfacePort always returns a vpiRefObj."
 related_clauses = []
-tags = []
+tags = ["interface", "object-handle", "pli", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4737,7 +4737,7 @@ anchors = [
 ]
 summary = "vpi_get_delays() and vpi_put_delays() are not applicable to a vpiInterfacePort."
 related_clauses = []
-tags = []
+tags = ["interface", "path-delay", "pli", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4761,7 +4761,7 @@ anchors = [
 ]
 summary = "For a specify block in an interface, the backward-compatible vpiModule relationship returns NULL."
 related_clauses = []
-tags = []
+tags = ["interface", "module-path", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -4785,7 +4785,7 @@ anchors = [
 ]
 summary = "The vpiAccessType property of an interface task-or-function declaration returns either vpiForkJoinAcc or vpiExternAcc."
 related_clauses = []
-tags = []
+tags = ["interface", "pli", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4809,7 +4809,7 @@ anchors = [
 ]
 summary = "An interface task-or-function declaration object relates to its task or function declaration and exposes the integer vpiAccessType property."
 related_clauses = []
-tags = []
+tags = ["interface", "object-handle", "pli", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4834,7 +4834,7 @@ anchors = [
 ]
 summary = "vpiTypedef iteration on a scope returns typedefs for both direct virtual-interface types and array types whose elements are virtual-interface types."
 related_clauses = []
-tags = []
+tags = ["pli", "typedef", "virtual-interface", "vpi-iteration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -4858,7 +4858,7 @@ anchors = [
 ]
 summary = "vpiDefName on a modport interface-typespec returns the modport identifier, while on an interface interface-typespec it returns the interface declaration identifier."
 related_clauses = []
-tags = []
+tags = ["interface", "modport", "pli", "type-reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -4882,7 +4882,7 @@ anchors = [
 ]
 summary = "An interface typespec exposes diagrammed parent and parameter-assignment relationships and its name, definition-name, and modport-status properties."
 related_clauses = []
-tags = []
+tags = ["interface", "object-handle", "pli", "type-reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -4906,7 +4906,7 @@ anchors = [
 ]
 summary = "vpiParent on a modport interface-typespec returns the corresponding interface's typespec, while vpiParent on an interface interface-typespec returns NULL."
 related_clauses = []
-tags = []
+tags = ["interface", "modport", "pli", "type-reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -4930,7 +4930,7 @@ anchors = [
 ]
 summary = "vpi_handle_multi(vpiInterModPath, port1, port2) accesses the intermodule path associated with the specified pair of port handles."
 related_clauses = []
-tags = []
+tags = ["module-path", "object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -4954,7 +4954,7 @@ anchors = [
 ]
 summary = "An intermodule-path object relates its two ports and supports delay access and update through vpi_get_delays() and vpi_put_delays()."
 related_clauses = []
-tags = []
+tags = ["module-path", "object-handle", "path-delay", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -4978,7 +4978,7 @@ anchors = [
 ]
 summary = "A VPI program shall neither refer to an object through an invalid handle nor attempt to release an invalid handle."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5002,7 +5002,7 @@ anchors = [
 ]
 summary = "The vpiExpr relationship of an I/O declaration returns a reference-object handle when passed by reference or when declaring an interface or modport, but returns a vpiVirtualInterfaceVar for a virtual-interface declaration."
 related_clauses = []
-tags = []
+tags = ["pli", "ports", "reference", "virtual-interface"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5028,7 +5028,7 @@ summary = "The vpiRange, vpiLeftRange, and vpiRightRange relationships of an I/O
 related_clauses = [
     "37.25",
 ]
-tags = []
+tags = ["pli", "ports", "range", "type-reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5052,7 +5052,7 @@ anchors = [
 ]
 summary = "A VPI I/O declaration object exposes the diagrammed containing-object, expression/reference, net/variable, range/bound, and typespec relationships and its direction, name, scalar, signed, size, and vector properties."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli", "ports", "type-reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5077,7 +5077,7 @@ anchors = [
 ]
 summary = "vpi_iterate() returns a handle to an iterator object that scans a one-to-many relationship."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli", "vpi-iteration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5101,7 +5101,7 @@ anchors = [
 ]
 summary = "Iterator objects expose vpiIteratorType and vpiUse relationships across every diagrammed iterable object category, including designs, declarations, expressions, statements, frames, and time queues."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli", "vpi-iteration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -5126,7 +5126,7 @@ anchors = [
 ]
 summary = "vpi_handle(vpiUse, iterator_handle) returns the reference handle used to create the iterator, including NULL when the iterator was created with a NULL reference."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli", "vpi-iteration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -5150,7 +5150,7 @@ anchors = [
 ]
 summary = "vpiArgument iteration returns let-expression arguments in formal declaration order, substituting a formal's default when its actual is omitted."
 related_clauses = []
-tags = []
+tags = ["default-argument", "formal-argument", "let", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -5174,7 +5174,7 @@ anchors = [
 ]
 summary = "Let declaration/expression objects expose diagrammed formal, argument, and expression relationships and name property."
 related_clauses = []
-tags = []
+tags = ["let", "object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -5200,7 +5200,7 @@ summary = "For a lexical class typespec, each param-assignment vpiRhs is the exp
 related_clauses = [
     "37.28",
 ]
-tags = []
+tags = ["class", "parameter", "pli", "type-reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -5228,7 +5228,7 @@ anchors = [
 ]
 summary = "A class typespec represents a lexical source construct when obtained from a class definition through typedef iteration, as a variable or method declaration type, or from that class definition's extends object."
 related_clauses = []
-tags = []
+tags = ["class", "class-scope", "pli", "type-reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -5252,7 +5252,7 @@ anchors = [
 ]
 summary = "A class typespec representing only a lexical construct does not support vpiVariables, vpiMethods, vpiConstraint, vpiNamedEvent, vpiNamedEventArray, vpiTypedef, or vpiInternalScope iteration."
 related_clauses = []
-tags = []
+tags = ["class", "class-scope", "pli", "vpi-iteration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -5278,7 +5278,7 @@ summary = "vpiLocalLoad and vpiLocalDriver results are invariant across conformi
 related_clauses = [
     "23.3.3.7",
 ]
-tags = []
+tags = ["connectivity", "net", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5302,7 +5302,7 @@ anchors = [
 ]
 summary = "vpiLocalLoad and vpiLocalDriver return only objects contained by the module instance containing the net, including connected output/inout ports as loads and input/inout ports as drivers."
 related_clauses = []
-tags = []
+tags = ["connectivity", "net", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5326,7 +5326,7 @@ anchors = [
 ]
 summary = "Individual bits of logic nets and bit nets shall be accessible regardless of whether the vector is expanded."
 related_clauses = []
-tags = []
+tags = ["net", "object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5350,7 +5350,7 @@ anchors = [
 ]
 summary = "vpiLogicNet and vpiNet are equal defined constants, and vpi_get_str(vpiType, logic_net_handle) may return either standardized name."
 related_clauses = []
-tags = []
+tags = ["net", "pli", "type-equivalence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5374,7 +5374,7 @@ anchors = [
 ]
 summary = "VPI simulation values are read and written by vpi_get_value() and vpi_put_value() using their associated value structures."
 related_clauses = []
-tags = []
+tags = ["c-type", "four-state", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5398,7 +5398,7 @@ anchors = [
 ]
 summary = "vpiMessages iteration on a mailbox returns all messages currently contained in it."
 related_clauses = []
-tags = []
+tags = ["mailbox", "pli", "vpi-iteration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -5424,7 +5424,7 @@ summary = "For backward compatibility, vpiMemory and vpiMemoryWord operate as me
 related_clauses = [
     "37.17",
 ]
-tags = []
+tags = ["array", "pli", "unpacked-array", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5448,7 +5448,7 @@ anchors = [
 ]
 summary = "The VPI memory compatibility model exposes diagrammed scope/module parent, range bounds, indexed access, memory-word/index relationships, and vpiIsMemory property through generalized variable-array and variable objects."
 related_clauses = []
-tags = []
+tags = ["array", "object-handle", "pli", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5474,7 +5474,7 @@ anchors = [
 ]
 summary = "For method function/task calls, vpiPrefix returns the object to which the method is applied."
 related_clauses = []
-tags = []
+tags = ["class-method", "pli", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -5498,7 +5498,7 @@ anchors = [
 ]
 summary = "A VPI modport object has the diagrammed relationship to its interface and I/O declarations and exposes its name through the string vpiName property."
 related_clauses = []
-tags = []
+tags = ["interface", "modport", "object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5522,7 +5522,7 @@ anchors = [
 ]
 summary = "For a module that is an element of a module array, the vpiIndex transition accesses its array index; for a module not in a module array, that transition shall return NULL."
 related_clauses = []
-tags = []
+tags = ["array", "hierarchy", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5546,7 +5546,7 @@ anchors = [
 ]
 summary = "A VPI module object exposes the diagrammed relationships to its scopes, instance/module arrays, ports, expressions, processes, continuous assignments, primitives, paths, timing checks, declarations, aliases, clocking/default constructs, and the diagrammed vpiTopModule and vpiDefDecayTime properties."
 related_clauses = []
-tags = []
+tags = ["hierarchy", "module", "object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5570,7 +5570,7 @@ anchors = [
 ]
 summary = "Module-path and path-terminal objects expose every diagrammed condition/data-path/input/output, instance/module/interface, delay, direction, edge, path/polarity/data-polarity, and ifnone relationship and property."
 related_clauses = []
-tags = []
+tags = ["module-path", "object-handle", "path-delay", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -5594,7 +5594,7 @@ anchors = [
 ]
 summary = "For vpiMultiAssignmentPatternOp, the first operand is the repetition multiplier and all remaining operands are the repeated assignment-pattern expressions in order."
 related_clauses = []
-tags = []
+tags = ["assignment-pattern", "expression", "pli", "replication"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -5618,7 +5618,7 @@ anchors = [
 ]
 summary = "A multiclock sequence expression exposes its component clocked sequences, each component's sequence expression, and associated clocking-event expression."
 related_clauses = []
-tags = []
+tags = ["clocking-event", "multiclock", "pli", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -5642,7 +5642,7 @@ anchors = [
 ]
 summary = "For vpiMultiConcatOp, the first operand is the repetition multiplier expression and all remaining operands are the concatenated expressions in order."
 related_clauses = []
-tags = []
+tags = ["concatenation", "expression", "pli", "replication"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -5666,7 +5666,7 @@ anchors = [
 ]
 summary = "When a task or function contains more than one statement, its vpiStmt relationship shall return an unnamed begin object containing those statements."
 related_clauses = []
-tags = []
+tags = ["pli", "statement-syntax", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5692,7 +5692,7 @@ anchors = [
 ]
 summary = "vpi_handle_by_name() shall not provide access to imported items or objects that exist within a compilation unit."
 related_clauses = []
-tags = []
+tags = ["compilation-unit", "name-resolution", "pli", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5716,7 +5716,7 @@ anchors = [
 ]
 summary = "Every named begin or named fork is represented as a VPI scope regardless of whether it contains a block-item declaration."
 related_clauses = []
-tags = []
+tags = ["block", "pli", "scope", "statement-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5740,7 +5740,7 @@ anchors = [
 ]
 summary = "vpiIndex iteration on an array-member named event returns indices from that event outward; it returns NULL when the event is not an array member."
 related_clauses = []
-tags = []
+tags = ["array", "event", "pli", "vpi-iteration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -5764,7 +5764,7 @@ anchors = [
 ]
 summary = "Named-event and named-event-array objects expose the diagrammed scope/instance/module, typespec, waiting-process, parent/index/range, indexed-access, name/full-name, array-member, lifetime/allocation, and value-trigger relationships and properties."
 related_clauses = []
-tags = []
+tags = ["array", "event", "object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -5788,7 +5788,7 @@ anchors = [
 ]
 summary = "vpiRange iteration on a named-event array returns its unpacked range declarations from leftmost through rightmost."
 related_clauses = []
-tags = []
+tags = ["array", "event", "pli", "range"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -5812,7 +5812,7 @@ anchors = [
 ]
 summary = "vpiWaitingProcesses iteration on a named event returns every static and dynamic process currently waiting for that event, represented by thread handles."
 related_clauses = []
-tags = []
+tags = ["event", "pli", "thread", "vpi-iteration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -5836,7 +5836,7 @@ anchors = [
 ]
 summary = "A net with any unpacked range is an array net; a packed struct, packed union, or enum net with one or more explicit packed ranges is a packed-array net."
 related_clauses = []
-tags = []
+tags = ["array", "net", "packed-array", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5860,7 +5860,7 @@ anchors = [
 ]
 summary = "vpiIndex iteration on an unpacked or packed array-net element returns indices from that element outward in right-to-left textual order, and returns NULL for a non-array-member net."
 related_clauses = []
-tags = []
+tags = ["array", "array-indexing", "net", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5884,7 +5884,7 @@ anchors = [
 ]
 summary = "vpiArrayMember is TRUE exactly for a net that is an element of an array net and FALSE otherwise."
 related_clauses = []
-tags = []
+tags = ["array", "net", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5908,7 +5908,7 @@ anchors = [
 ]
 summary = "vpi_handle(vpiIndex, net_bit_handle) returns the net-bit index; vpi_iterate(vpiIndex, net_bit_handle) on a multidimensional net-array bit-select returns indices starting at the net-bit index and proceeding outward through array dimensions."
 related_clauses = []
-tags = []
+tags = ["array", "array-indexing", "net", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5937,7 +5937,7 @@ summary = "vpiConstantSelect is TRUE for a net or net bit with no parent, or whe
 related_clauses = [
     "A.8.4",
 ]
-tags = []
+tags = ["array", "array-indexing", "net", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5962,7 +5962,7 @@ anchors = [
 ]
 summary = "Among force objects, vpiDriver returns only active forces."
 related_clauses = []
-tags = []
+tags = ["force-release", "net", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5986,7 +5986,7 @@ anchors = [
 ]
 summary = "Net driver/load iteration exposes diagrammed ports, delay terminals, forces, assigns, continuous assignments/bits, and primitive terminals on the driving or loading side."
 related_clauses = []
-tags = []
+tags = ["connectivity", "net", "object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -6010,7 +6010,7 @@ anchors = [
 ]
 summary = "vpiDriver includes ports driven by objects other than nets and net bits."
 related_clauses = []
-tags = []
+tags = ["connectivity", "net", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6034,7 +6034,7 @@ anchors = [
 ]
 summary = "vpiLoad returns only currently active forces and assign statements."
 related_clauses = []
-tags = []
+tags = ["connectivity", "net", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6058,7 +6058,7 @@ anchors = [
 ]
 summary = "For struct/union member nets, vpiDecompile and vpiFullName include every needed aggregate-parent prefix while vpiName omits those prefixes; all three include indices for indexed elements or slices."
 related_clauses = []
-tags = []
+tags = ["aggregate", "name-resolution", "net", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -6082,7 +6082,7 @@ anchors = [
 ]
 summary = "vpi_handle_by_name() resolves an aggregate member net using its vpiDecompile name in a non-top-level scope context and its vpiFullName at top level."
 related_clauses = []
-tags = []
+tags = ["name-resolution", "net", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -6106,7 +6106,7 @@ anchors = [
 ]
 summary = "A VPI net object and its specialized scalar, array, packed, struct, union, enum, interconnect, user-defined, integral, time, and real forms expose every relationship, indexed access, typed property, delay, and value operation shown in the normative net data-model diagram."
 related_clauses = []
-tags = []
+tags = ["net", "object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -6141,7 +6141,7 @@ summary = "vpiParent is supported on every net object and returns the first righ
 related_clauses = [
     "11.5.3",
 ]
-tags = []
+tags = ["net", "object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6165,7 +6165,7 @@ anchors = [
 ]
 summary = "vpiRange iteration returns unpacked array-net ranges or packed bit/logic/packed-array-net ranges from leftmost through rightmost; vpiLeftRange and vpiRightRange on packed forms return the leftmost packed dimension's bounds."
 related_clauses = []
-tags = []
+tags = ["array", "net", "pli", "range"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6189,7 +6189,7 @@ anchors = [
 ]
 summary = "vpiScalar/vpiVector are TRUE/FALSE for undimensioned bit or logic nets and net bits, follow the enum base typespec for enum nets, are FALSE/TRUE for other integral nets, inherit from an array-net element for array nets, and are both FALSE for all other net objects."
 related_clauses = []
-tags = []
+tags = ["net", "pli", "type-query"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -6214,7 +6214,7 @@ anchors = [
 ]
 summary = "vpiSize returns element count for interconnect and net arrays, connected-net size for a scalar interconnect, bit width for an integral net, 1 for a net bit, and member count for an unpacked struct or union."
 related_clauses = []
-tags = []
+tags = ["net", "pli", "type-query"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -6240,7 +6240,7 @@ anchors = [
 ]
 summary = "For a net or array-net object, vpiStructUnionMember is TRUE exactly when its direct vpiParent is a struct or union net and FALSE when its parent is another kind."
 related_clauses = []
-tags = []
+tags = ["aggregate", "net", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -6267,7 +6267,7 @@ anchors = [
 ]
 summary = "Continuous assignments and primitive terminals are accessible across hierarchical boundaries, but only from scalar nets or net bit-selects."
 related_clauses = []
-tags = []
+tags = ["continuous-assignment", "net", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6291,7 +6291,7 @@ anchors = [
 ]
 summary = "vpiPorts traversal from a net bit returns port bits, while traversal from a whole net or array net returns a handle to the whole port."
 related_clauses = []
-tags = []
+tags = ["connectivity", "net", "pli", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6315,7 +6315,7 @@ anchors = [
 ]
 summary = "A port is excluded from vpiPortInst iteration when the reference appears in its high-connection expression but is not connected to any port bit, including due to a size mismatch."
 related_clauses = []
-tags = []
+tags = ["connectivity", "net", "pli", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6339,7 +6339,7 @@ anchors = [
 ]
 summary = "vpiPortInst traversal from a bit or scalar returns matching port bits or scalar ports, except that an indeterminate bit index in a complex high connection returns the whole port; traversal from a whole net or array net also returns the whole port."
 related_clauses = []
-tags = []
+tags = ["connectivity", "net", "pli", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6363,7 +6363,7 @@ anchors = [
 ]
 summary = "vpiExpanded on a vpiNetBit returns the vpiExpanded value of its parent net."
 related_clauses = []
-tags = []
+tags = ["net", "object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6387,7 +6387,7 @@ anchors = [
 ]
 summary = "For a nettype declaration that aliases another nettype declaration, vpiNetTypedefAlias returns a non-NULL handle to the aliased declaration."
 related_clauses = []
-tags = []
+tags = ["nettype", "pli", "type-equivalence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -6411,7 +6411,7 @@ anchors = [
 ]
 summary = "A nettype-declaration object exposes the diagrammed alias-nettype, typespec, resolution-function, and name relationships and property."
 related_clauses = []
-tags = []
+tags = ["nettype", "object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -6435,7 +6435,7 @@ anchors = [
 ]
 summary = "vpiNetType is vpiNettypeNet for a net declared with a nettype and vpiNettypeNetSelect for every selected part of such a net."
 related_clauses = []
-tags = []
+tags = ["net", "nettype", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -6459,7 +6459,7 @@ anchors = [
 ]
 summary = "vpiWith returns NULL when a nettype declaration has no associated resolution function."
 related_clauses = []
-tags = []
+tags = ["nettype", "pli", "resolution"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -6483,7 +6483,7 @@ anchors = [
 ]
 summary = "vpiDriver and vpiLocalDriver iteration are not supported for a net whose vpiNetType is vpiNettypeNetSelect."
 related_clauses = []
-tags = []
+tags = ["net", "nettype", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -6507,7 +6507,7 @@ anchors = [
 ]
 summary = "Before `$timeformat()` has ever been called, vpi_handle(vpiActiveFormat, NULL) returns NULL."
 related_clauses = []
-tags = []
+tags = ["pli", "subroutine", "time-format"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -6531,7 +6531,7 @@ anchors = [
 ]
 summary = "vpi_handle_by_name() accepts the full hierarchical name of a non-static class data member even though that member has no vpiFullName property."
 related_clauses = []
-tags = []
+tags = ["class", "name-resolution", "pli", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -6555,7 +6555,7 @@ anchors = [
 ]
 summary = "vpiClassObj on a class variable whose value is NULL returns a null handle."
 related_clauses = []
-tags = []
+tags = ["class", "class-handle", "object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -6579,7 +6579,7 @@ anchors = [
 ]
 summary = "vpiLowConn shall return NULL for a null module, interface, or program port."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6603,7 +6603,7 @@ anchors = [
 ]
 summary = "vpiSize returns 0 for a null port."
 related_clauses = []
-tags = []
+tags = ["pli", "ports", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6629,7 +6629,7 @@ anchors = [
 ]
 summary = "An explicit special `null` system task/function argument is represented as vpiConstant with vpiConstType vpiNullConst."
 related_clauses = []
-tags = []
+tags = ["expression", "literal", "pli", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -6653,7 +6653,7 @@ anchors = [
 ]
 summary = "VPI represents and manipulates every information-model object through the C data type vpiHandle, with object handles obtainable through object relationships or hierarchical names."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6681,7 +6681,7 @@ summary = "An omitted system task/function argument is represented as vpiOperati
 related_clauses = [
     "21.2.1",
 ]
-tags = []
+tags = ["expression", "pli", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -6705,7 +6705,7 @@ anchors = [
 ]
 summary = "A one-to-many relationship is traversed by creating a vpiIterator object with vpi_iterate() and passing that iterator to vpi_scan() to obtain the related objects."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli", "vpi-iteration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6729,7 +6729,7 @@ anchors = [
 ]
 summary = "An output delay terminal's value remains unchanged until after the associated delay has occurred."
 related_clauses = []
-tags = []
+tags = ["path-delay", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -6753,7 +6753,7 @@ anchors = [
 ]
 summary = "vpiFullName for a task or function declared in a package or class definition is the container's full name, followed by `::`, followed immediately by the declaration name."
 related_clauses = []
-tags = []
+tags = ["class", "namespace", "pli", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -6778,7 +6778,7 @@ anchors = [
 ]
 summary = "vpiElement iterates a packed-array net one packed dimension at a time; each returned element has the original type with its leftmost packed range removed, so multidimensional results remain packed-array nets until leaf struct, union, or enum nets are reached."
 related_clauses = []
-tags = []
+tags = ["array", "net", "packed-array", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -6803,7 +6803,7 @@ anchors = [
 ]
 summary = "vpiStructUnionMember is TRUE only for a packed-array variable directly parented by a struct or union variable and is FALSE for all subelements returned by vpiElement from that packed-array variable."
 related_clauses = []
-tags = []
+tags = ["aggregate", "packed-array", "pli", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6828,7 +6828,7 @@ anchors = [
 ]
 summary = "vpiElement iterates one packed dimension at a time, returning elements with the original type minus its leftmost packed range; multidimensional elements remain vpiPackedArrayVar until struct, union, or enum leaves are reached."
 related_clauses = []
-tags = []
+tags = ["array", "packed-array", "pli", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6852,7 +6852,7 @@ anchors = [
 ]
 summary = "vpiIndex iteration on a packed-array-variable subelement returns indices relative to its parent from the subelement outward in right-to-left textual order."
 related_clauses = []
-tags = []
+tags = ["array", "packed-array", "pli", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6876,7 +6876,7 @@ anchors = [
 ]
 summary = "vpiPackedArrayMember is TRUE for a struct, union, enum, or packed-array variable whose immediate vpiParent is a packed-array variable."
 related_clauses = []
-tags = []
+tags = ["array", "packed-array", "pli", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6900,7 +6900,7 @@ anchors = [
 ]
 summary = "A packed-array variable exposes the diagrammed parent, index, element, and aggregate-leaf relationships and its packed, packed-array-member, and constant-selection properties."
 related_clauses = []
-tags = []
+tags = ["object-handle", "packed-array", "pli", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6926,7 +6926,7 @@ summary = "vpiPackedArrayVar represents packed arrays of packed struct, union, o
 related_clauses = [
     "37.17",
 ]
-tags = []
+tags = ["packed-array", "pli", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6950,7 +6950,7 @@ anchors = [
 ]
 summary = "vpiSize on vpiPackedArrayVar returns total packed bit count, not aggregate-element count; element count is the product of vpiSize over its packed ranges."
 related_clauses = []
-tags = []
+tags = ["packed-array", "pli", "sizing", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6974,7 +6974,7 @@ anchors = [
 ]
 summary = "vpiPackedArrayMember is TRUE for a packed struct, packed union, enum, or packed-array net that is an element of a packed-array net."
 related_clauses = []
-tags = []
+tags = ["array", "net", "packed-array", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -6999,7 +6999,7 @@ anchors = [
 ]
 summary = "Range iteration on a packed-array net returns only its explicit packed ranges, excluding implicit struct/union element ranges and both explicit and implicit ranges of an enum element's base type."
 related_clauses = []
-tags = []
+tags = ["net", "packed-array", "pli", "range"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -7024,7 +7024,7 @@ anchors = [
 ]
 summary = "For a packed variable select, vpiSize returns the number of bits in the selection."
 related_clauses = []
-tags = []
+tags = ["packed-array", "pli", "sizing", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7048,7 +7048,7 @@ anchors = [
 ]
 summary = "vpiLhs on a parameter-assignment object returns the overridden value-parameter or type-parameter handle."
 related_clauses = []
-tags = []
+tags = ["object-handle", "parameter", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -7072,7 +7072,7 @@ anchors = [
 ]
 summary = "Value/type parameters, specparams, defparams, and parameter assignments expose every diagrammed scope/module, expression/typespec, LHS/RHS, range, name, local, constant-type, signed, size, value, and connection-by-name relationship and property."
 related_clauses = []
-tags = []
+tags = ["elaboration", "object-handle", "parameter", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -7097,7 +7097,7 @@ anchors = [
 ]
 summary = "A typedef of a parameterized virtual interface yields an interface typespec whose vpiName is the typedef name, whose vpiDefName is the interface declaration name, and whose assigned parameter values are returned by vpiParamAssign iteration."
 related_clauses = []
-tags = []
+tags = ["parameter", "pli", "type-reference", "virtual-interface"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -7121,7 +7121,7 @@ anchors = [
 ]
 summary = "For a constant part-select or indexed part-select, every index of the select and its parent chain retains its initial in-bounds or out-of-bounds status throughout simulation."
 related_clauses = []
-tags = []
+tags = ["array-indexing", "expression", "pli", "range"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -7149,7 +7149,7 @@ anchors = [
 ]
 summary = "vpiConstantSelect is TRUE for a part-select or indexed part-select exactly when its parent is constant-selected, that parent is a static-bound packed or unpacked array, and every select-range expression is elaboration-time constant; otherwise it is FALSE."
 related_clauses = []
-tags = []
+tags = ["array-indexing", "expression", "pli", "range"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -7173,7 +7173,7 @@ anchors = [
 ]
 summary = "vpiParent of a part-select or indexed part-select is the expression obtained by removing that select's range while preserving all prefix indexing/member selections."
 related_clauses = []
-tags = []
+tags = ["array-indexing", "expression", "pli", "range"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -7198,7 +7198,7 @@ anchors = [
 ]
 summary = "vpiHighConn identifies the port connection hierarchically closer to the top module, while vpiLowConn identifies the connection farther from the top module."
 related_clauses = []
-tags = []
+tags = ["hierarchy", "object-handle", "pli", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7222,7 +7222,7 @@ anchors = [
 ]
 summary = "vpiPortIndex identifies declaration order using zero for the first port and increasing indices for subsequent ports."
 related_clauses = []
-tags = []
+tags = ["index-order", "pli", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7246,7 +7246,7 @@ anchors = [
 ]
 summary = "A port name query returns its explicit name when present, otherwise another available name, and otherwise NULL."
 related_clauses = []
-tags = []
+tags = ["name-resolution", "pli", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7270,7 +7270,7 @@ anchors = [
 ]
 summary = "A VPI port object exposes the diagrammed high/low connection, parent, bit, typespec, indexed-access, and delay relationships and its connection-name, explicit-name, index, name, port-type, scalar/vector, direction, and size properties."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7294,7 +7294,7 @@ anchors = [
 ]
 summary = "vpiScalar and vpiVector describe only whether the formal port width is one bit or greater than one bit and do not describe the width or kind of its connection."
 related_clauses = []
-tags = []
+tags = ["pli", "ports", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7318,7 +7318,7 @@ anchors = [
 ]
 summary = "vpiPortType is determined by the formal port and returns exactly vpiPort, vpiInterfacePort, or vpiModportPort, irrespective of the connected actual."
 related_clauses = []
-tags = []
+tags = ["interface", "modport", "pli", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7342,7 +7342,7 @@ anchors = [
 ]
 summary = "vpiIndex on a primitive-array element accesses its array index and returns NULL for a primitive that is not in a primitive array."
 related_clauses = []
-tags = []
+tags = ["array", "pli", "primitive"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -7366,7 +7366,7 @@ anchors = [
 ]
 summary = "vpiSize on a primitive returns its number of input terminals."
 related_clauses = []
-tags = []
+tags = ["pli", "primitive", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -7390,7 +7390,7 @@ anchors = [
 ]
 summary = "Primitive and primitive-terminal objects expose every diagrammed module/array/expression/terminal/UDP/gate/switch, delay/value/index, direction, array-member, definition/name, primitive-type, input-count, and strength relationship and property."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli", "primitive"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -7414,7 +7414,7 @@ anchors = [
 ]
 summary = "vpi_put_value() may be used on primitive objects only for sequential UDP primitives."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "pli", "primitive"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -7438,7 +7438,7 @@ anchors = [
 ]
 summary = "vpiTermIndex reports primitive terminal order using zero for the first terminal and increasing indices thereafter."
 related_clauses = []
-tags = []
+tags = ["index-order", "pli", "primitive"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -7462,7 +7462,7 @@ anchors = [
 ]
 summary = "Procedural assign/deassign and force/release statement objects expose their applicable LHS and RHS expression relationships."
 related_clauses = []
-tags = []
+tags = ["force-release", "object-handle", "pli", "procedural-assignment"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -7486,7 +7486,7 @@ anchors = [
 ]
 summary = "vpiAlwaysType reports vpiAlways, vpiAlwaysComb, vpiAlwaysFF, or vpiAlwaysLatch according to the process declaration."
 related_clauses = []
-tags = []
+tags = ["pli", "procedure", "statement-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -7510,7 +7510,7 @@ anchors = [
 ]
 summary = "Process objects encompass initial, final, and always procedures, expose containing module/scope and statement relationships, and report vpiAlwaysType for always forms."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli", "procedure", "statement-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -7534,7 +7534,7 @@ anchors = [
 ]
 summary = "For a program that is an element of an instance array, vpiIndex accesses its array index; for a program not in an instance array, vpiIndex shall return NULL."
 related_clauses = []
-tags = []
+tags = ["array", "pli", "program"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7558,7 +7558,7 @@ anchors = [
 ]
 summary = "A VPI program object exposes the diagrammed relationships to its index expression, default clocking and disable-iff expressions, continuous assignments, distributions, clocking blocks, instance/program arrays, containing instance, interfaces/interface arrays, and processes."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli", "program"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7582,7 +7582,7 @@ anchors = [
 ]
 summary = "Property declaration/instance and formal-declaration objects expose diagrammed variable/spec/disable-condition/argument/expression/event/typespec relationships and name/full-name/direction properties."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -7606,7 +7606,7 @@ anchors = [
 ]
 summary = "vpiOpType for a property expression is one of the standardized property operators enumerated by 37.52, covering accept/reject, temporal, Boolean/compositional, implication/followed-by, conditional, and until forms."
 related_clauses = []
-tags = []
+tags = ["operator", "pli", "property", "temporal-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -7630,7 +7630,7 @@ anchors = [
 ]
 summary = "vpiPropFormalDecl iteration returns property formals in declaration order."
 related_clauses = []
-tags = []
+tags = ["pli", "property", "source-order", "vpi-iteration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -7654,7 +7654,7 @@ anchors = [
 ]
 summary = "vpiDirection returns vpiInput for a local-variable property formal and vpiNoDirection for any other formal argument."
 related_clauses = []
-tags = []
+tags = ["formal-argument", "pli", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -7678,7 +7678,7 @@ anchors = [
 ]
 summary = "vpiExpr on a property formal with an initialization expression returns that expression."
 related_clauses = []
-tags = []
+tags = ["expression", "formal-argument", "pli", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -7702,7 +7702,7 @@ anchors = [
 ]
 summary = "vpiArgument iteration returns property-instance arguments in formal declaration order, substituting each formal's default value when the instantiation omits that actual."
 related_clauses = []
-tags = []
+tags = ["default-argument", "formal-argument", "pli", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -7728,7 +7728,7 @@ anchors = [
 ]
 summary = "Property-operation operands follow BNF order except that nexttime returns property then an optional nondefault constant, and always/eventually return property, left range, then right range."
 related_clauses = []
-tags = []
+tags = ["operator", "pli", "property", "temporal-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -7752,7 +7752,7 @@ anchors = [
 ]
 summary = "vpiOpStrong is valid only for nexttime, always, eventually, until, until_with, and sequence expressions, and returns TRUE for the strong version of the operator."
 related_clauses = []
-tags = []
+tags = ["pli", "property", "property-strength", "temporal-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -7776,7 +7776,7 @@ anchors = [
 ]
 summary = "Property-specification/expression objects expose diagrammed expression/clock/disable/distribution/operand/sequence/property/case relationships and operation-type/strength properties."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli", "property", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -7800,7 +7800,7 @@ anchors = [
 ]
 summary = "Variables exposed from a property specification are declarations of property variables and their runtime values cannot be accessed."
 related_clauses = []
-tags = []
+tags = ["pli", "property", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -7824,7 +7824,7 @@ anchors = [
 ]
 summary = "The vpiSize property remains accessible on a protected expression."
 related_clauses = []
-tags = []
+tags = ["expression", "pli", "protected-block"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -7848,7 +7848,7 @@ anchors = [
 ]
 summary = "Unless an exception is specified, accessing a protected object's relationships or properties shall be an error, with complex-property restrictions additionally controlled by the corresponding VPI function specification."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "object-handle", "pli", "protected-block"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7872,7 +7872,7 @@ anchors = [
 ]
 summary = "Access to vpiType and vpiIsProtected shall remain permitted for every protected object despite the default restriction on protected-object properties."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli", "protected-block"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7896,7 +7896,7 @@ anchors = [
 ]
 summary = "A protected system task/function call still permits vpiArgument iteration."
 related_clauses = []
-tags = []
+tags = ["pli", "protected-block", "subroutine", "vpi-iteration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -7920,7 +7920,7 @@ anchors = [
 ]
 summary = "vpi_get(vpiIsProtected, object_handle) returns TRUE exactly when the object represents code contained in a decryption envelope and protected, and FALSE otherwise."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli", "protected-block"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7945,7 +7945,7 @@ anchors = [
 ]
 summary = "vpi_put_value() returns a handle to the scheduled event object when it schedules a value update."
 related_clauses = []
-tags = []
+tags = ["event", "object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7972,7 +7972,7 @@ summary = "Applying vpi_put_value() to an object shall be an error if any index 
 related_clauses = [
     "38.34",
 ]
-tags = []
+tags = ["array-indexing", "diagnostic", "expression", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7996,7 +7996,7 @@ anchors = [
 ]
 summary = "A VPI range object exposes vpiLeftRange and vpiRightRange expression relationships and the integer vpiSize property."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli", "range"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8021,7 +8021,7 @@ anchors = [
 ]
 summary = "When a simulator reclaims a class object's memory, it shall release handles to the class object, its automatic data members and their subelements, and callbacks placed on those objects."
 related_clauses = []
-tags = []
+tags = ["class", "class-handle", "object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8045,7 +8045,7 @@ anchors = [
 ]
 summary = "vpiDirection returns vpiRef for a port or argument passed by reference."
 related_clauses = []
-tags = []
+tags = ["argument-direction", "pli", "ports", "reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8069,7 +8069,7 @@ anchors = [
 ]
 summary = "When a ref object is bound at query time, vpiActual returns the actual instantiated object despite the ref object's potentially different declaration-level name."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli", "reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8093,7 +8093,7 @@ anchors = [
 ]
 summary = "For a ref object whose actual is an interface or modport, vpiDefName returns the interface definition name or modport name, respectively."
 related_clauses = []
-tags = []
+tags = ["interface", "pli", "reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8117,7 +8117,7 @@ anchors = [
 ]
 summary = "vpiGeneric returns TRUE for a ref object referencing a generic interface, FALSE for one referencing a non-generic interface, and vpiUndefined for every other ref-object kind."
 related_clauses = []
-tags = []
+tags = ["generic-interface", "pli", "reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8141,7 +8141,7 @@ anchors = [
 ]
 summary = "A ref object can be obtained by traversing low or high port connections, an expression that uses the ref object, or the I/O declaration of an instance, task, or function."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli", "reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8169,7 +8169,7 @@ anchors = [
 ]
 summary = "A ref object represents a declared object or subelement referencing an instantiated actual and is provided for ref-direction ports and task/function formals, interface or modport ports and their local declarations, and referenced variables, events, event arrays, or subelement expressions."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli", "reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8193,7 +8193,7 @@ anchors = [
 ]
 summary = "A VPI reference object exposes the diagrammed port/connection, containing instance/parent/task-function, typespec, actual-object, and referenced interface/modport/net/variable/event/part-select relationships and its name, full-name, generic, and definition-name properties."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli", "reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8217,7 +8217,7 @@ anchors = [
 ]
 summary = "For a ref object representing a subelement of another ref object, vpiParent returns the containing ref object, while vpiActual on each reference returns its corresponding actual whole object or subelement."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli", "reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8241,7 +8241,7 @@ anchors = [
 ]
 summary = "vpiTypespec returns NULL for a ref object whose vpiActual is neither a net, variable, nor part-select."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli", "reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8266,7 +8266,7 @@ anchors = [
 ]
 summary = "vpi_register_cb() returns a handle to the callback object it registers."
 related_clauses = []
-tags = []
+tags = ["callback", "object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8291,7 +8291,7 @@ anchors = [
 ]
 summary = "vpi_register_systf() returns a handle to the callback object for the registered user-defined system task or function."
 related_clauses = []
-tags = []
+tags = ["callback", "object-handle", "pli", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8315,7 +8315,7 @@ anchors = [
 ]
 summary = "Unless a diagram shows a special tag, a relationship's VPI access type is formed by prefixing `vpi` to the enclosure wording with each word initially capitalized."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli", "vpi-iteration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8339,7 +8339,7 @@ anchors = [
 ]
 summary = "When one VPI program releases a handle backed by shared resources, other VPI programs shall remain able to use every handle they have not released."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli", "process-independence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8364,7 +8364,7 @@ anchors = [
 ]
 summary = "vpi_remove_callback() releases the handle associated with the removed callback."
 related_clauses = []
-tags = []
+tags = ["callback", "object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8388,7 +8388,7 @@ anchors = [
 ]
 summary = "A repeat-control object exposes its repetition-count expression and associated event-control relationship."
 related_clauses = []
-tags = []
+tags = ["loop", "pli", "statement-syntax", "timing-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -8414,7 +8414,7 @@ anchors = [
 ]
 summary = "A fully resolved class typespec represents a specialization when obtained by vpiClassTypespec iteration from a class definition or as a variable/method type outside class-definition scope; a typedef-written use resolves to its class instantiation rather than the typedef's lexical typespec."
 related_clauses = []
-tags = []
+tags = ["class", "parameterized-class", "pli", "type-reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -8438,7 +8438,7 @@ anchors = [
 ]
 summary = "vpiWaitingProcesses on a mailbox or semaphore returns every static or dynamic process suspended waiting for a mailbox message or semaphore key, represented by thread handles."
 related_clauses = []
-tags = []
+tags = ["mailbox", "pli", "semaphore", "vpi-iteration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -8463,7 +8463,7 @@ anchors = [
 ]
 summary = "A simulation restart shall release every handle except cbStartOfRestart and cbEndOfRestart callback handles."
 related_clauses = []
-tags = []
+tags = ["callback", "pli", "simulation-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8487,7 +8487,7 @@ anchors = [
 ]
 summary = "A restrict property statement has no pass or fail action statement and is not simulated, so it produces no runtime assertion information."
 related_clauses = []
-tags = []
+tags = ["assertion", "concurrent-assertion", "pli", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -8511,7 +8511,7 @@ anchors = [
 ]
 summary = "A return-statement object exposes its returned expression through the diagrammed vpiCondition relationship."
 related_clauses = []
-tags = []
+tags = ["pli", "return-value", "statement-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -8535,7 +8535,7 @@ anchors = [
 ]
 summary = "Repeated handle creation for the same object may return the same or distinct handles, but distinct handles referring to that object are equivalent references."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli", "type-equivalence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8560,7 +8560,7 @@ anchors = [
 ]
 summary = "vpi_scan() releases its iterator handle after scanning the iterator's last object."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli", "vpi-iteration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8585,7 +8585,7 @@ anchors = [
 ]
 summary = "Each successful vpi_scan() step uses an iterator object to return a handle to an object in its one-to-many relationship."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli", "vpi-iteration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8609,7 +8609,7 @@ anchors = [
 ]
 summary = "A VPI scope object exposes the diagrammed declarations, statements, nested scopes, assertions, events, variables, parameters, types, classes, imports, instance items, clocking constructs, join type, and name/full-name relationships and properties."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli", "scope", "vpi-iteration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8633,7 +8633,7 @@ anchors = [
 ]
 summary = "Sequence declaration/instance and formal objects expose diagrammed variables, expression/event/multiclock/typespec relationships and name/full-name/direction properties."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -8657,7 +8657,7 @@ anchors = [
 ]
 summary = "Sequence-expression objects expose diagrammed operation/operand, instance/declaration/argument/event, distribution, match-item assignment/expression/call relationships and operation-type property."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -8682,7 +8682,7 @@ anchors = [
 ]
 summary = "vpiOpType for a sequence expression is one of the standardized compositional, intersect, first-match, throughout, within, cycle-delay, or repetition operators enumerated by 37.54."
 related_clauses = []
-tags = []
+tags = ["operator", "pli", "sequence", "sequence-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -8706,7 +8706,7 @@ anchors = [
 ]
 summary = "vpiSeqFormalDecl iteration returns sequence formals in declaration order."
 related_clauses = []
-tags = []
+tags = ["pli", "sequence", "source-order", "vpi-iteration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -8730,7 +8730,7 @@ anchors = [
 ]
 summary = "vpiDirection returns vpiNoDirection for a sequence formal that is not a local-variable argument; for a local-variable argument it returns vpiInput, vpiOutput, or vpiInout according to declaration."
 related_clauses = []
-tags = []
+tags = ["formal-argument", "pli", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -8754,7 +8754,7 @@ anchors = [
 ]
 summary = "vpiExpr on a sequence formal with an initialization expression returns that expression."
 related_clauses = []
-tags = []
+tags = ["expression", "formal-argument", "pli", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -8778,7 +8778,7 @@ anchors = [
 ]
 summary = "vpiArgument iteration returns sequence-instance arguments in formal declaration order, substituting each formal's default when its actual is omitted."
 related_clauses = []
-tags = []
+tags = ["default-argument", "formal-argument", "pli", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -8805,7 +8805,7 @@ anchors = [
 ]
 summary = "Sequence-operation operands follow BNF order except unary delay returns sequence then bounds, binary delay returns left/right sequences then bounds, and repeats return repeated sequence then bounds; each right bound is omitted when equal to its left bound."
 related_clauses = []
-tags = []
+tags = ["pli", "sequence", "sequence-operator", "temporal-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -8831,7 +8831,7 @@ anchors = [
 ]
 summary = "Requesting a property or relationship of an expression shall be an error when the implementation cannot determine the result without evaluating a side-effecting expression; an implementation may also report the error when it cannot establish that evaluation is avoidable."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "evaluation-order", "expression", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8859,7 +8859,7 @@ anchors = [
 ]
 summary = "Side-effecting VPI expression objects include assignments, increment/decrement operations, calls that change simulation state beyond their return value, and any expression containing a side-effecting operand, argument, or index expression."
 related_clauses = []
-tags = []
+tags = ["evaluation-order", "expression", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8883,7 +8883,7 @@ anchors = [
 ]
 summary = "Simple-expression and bit-select objects expose diagrammed use/parent/index relationships to terminals, nets, variables, parameters, statements, assignments, selects, ports, and delay/timing objects plus name/full-name and constant-select properties."
 related_clauses = []
-tags = []
+tags = ["expression", "object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -8907,7 +8907,7 @@ anchors = [
 ]
 summary = "cbSizeChange applies only to dynamic arrays, associative arrays, queues, and string variables."
 related_clauses = []
-tags = []
+tags = ["array", "callback", "pli", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8931,7 +8931,7 @@ anchors = [
 ]
 summary = "When size and value both change, cbSizeChange is invoked after the size change but before value-change callbacks or value changes, and its callback value is the new array size."
 related_clauses = []
-tags = []
+tags = ["array", "callback", "pli", "value-change"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8955,7 +8955,7 @@ anchors = [
 ]
 summary = "A source-code VPI object exists from analysis until tool termination independently of simulation, while a static-hierarchy object exists from its creation during elaboration through the entire simulation."
 related_clauses = []
-tags = []
+tags = ["hierarchy", "lifetime", "pli", "static"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8979,7 +8979,7 @@ anchors = [
 ]
 summary = "A source-specified delay accessed through vpiDelay is a constant-valued expression when one delay is specified, or an operation with vpiOpType equal to vpiListOp when multiple delays are specified."
 related_clauses = []
-tags = []
+tags = ["expression", "path-delay", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -9008,7 +9008,7 @@ summary = "Except for specified object-type exclusions, every VPI object corresp
 related_clauses = [
     "22.12",
 ]
-tags = []
+tags = ["pli", "source-location"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -9032,7 +9032,7 @@ anchors = [
 ]
 summary = "For a class-specialization typespec, each param-assignment vpiRhs may be any object with the correct effective value for a value parameter or correct effective type for a type parameter."
 related_clauses = []
-tags = []
+tags = ["class", "parameter", "pli", "type-reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -9056,7 +9056,7 @@ anchors = [
 ]
 summary = "vpiName on an atomic statement returns its source label when present and NULL otherwise."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli", "statement-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -9080,7 +9080,7 @@ anchors = [
 ]
 summary = "Struct and union variable/net objects expose diagrammed parent and member relationships and tagged, soft, and packed properties."
 related_clauses = []
-tags = []
+tags = ["aggregate", "object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -9104,7 +9104,7 @@ anchors = [
 ]
 summary = "vpi_get_value() on a system-function call returns that function's current value."
 related_clauses = []
-tags = []
+tags = ["function", "pli", "return-value"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -9132,7 +9132,7 @@ related_clauses = [
     "38.15",
     "38.36.1",
 ]
-tags = []
+tags = ["evaluation-order", "expression", "pli", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -9158,7 +9158,7 @@ summary = "vpiDecompile on a system task/function call returns a functionally eq
 related_clauses = [
     "37.59",
 ]
-tags = []
+tags = ["expression", "pli", "string", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -9186,7 +9186,7 @@ anchors = [
 ]
 summary = "A data-model relationship uses its shown tag to select an unnamed object class or to distinguish object classes whose names would otherwise be ambiguous from the reference handle."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli", "vpi-iteration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -9210,7 +9210,7 @@ anchors = [
 ]
 summary = "Task/function, method, system task/function, and user system-call objects expose every diagrammed argument/scope/prefix/with/constraint/declaration, value, function-type, user-defined, system-info, decompile, and name relationship and property."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -9234,7 +9234,7 @@ anchors = [
 ]
 summary = "Task/function declarations and calls expose every diagrammed I/O, return variable, local variable, class/parent/reference/call relationship and signed, size, function-type, method/access/visibility/virtual/lifetime, and DPI property."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -9258,7 +9258,7 @@ anchors = [
 ]
 summary = "vpiVisibility reports local/protected/default visibility for class methods and returns vpiPublicVis for a nonlocal/nonprotected method or any task/function that is not a class member."
 related_clauses = []
-tags = []
+tags = ["class", "pli", "subroutine", "visibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -9284,7 +9284,7 @@ summary = "A given thread has at most one active frame at any time."
 related_clauses = [
     "37.44",
 ]
-tags = []
+tags = ["pli", "subroutine", "thread"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -9308,7 +9308,7 @@ anchors = [
 ]
 summary = "A thread represents a SystemVerilog process such as an always procedure or fork branch, and activates a new frame whenever it enters another task or function along its call chain."
 related_clauses = []
-tags = []
+tags = ["pli", "subroutine", "thread"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -9332,7 +9332,7 @@ anchors = [
 ]
 summary = "Thread objects expose diagrammed parent/origin/frame/statement/thread relationships and active-state property."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli", "thread"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -9356,7 +9356,7 @@ anchors = [
 ]
 summary = "A time-queue object exposes its scheduled time through vpi_get_time()."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -9380,7 +9380,7 @@ anchors = [
 ]
 summary = "Time-queue iteration returns queue objects in increasing simulation-time order."
 related_clauses = []
-tags = []
+tags = ["pli", "simulation-time", "vpi-iteration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -9404,7 +9404,7 @@ anchors = [
 ]
 summary = "vpiExpr iteration from a timing check returns vpiTchkTerm handles for reference, controlled-reference, and data events, while every other argument retains its expression-matching object type."
 related_clauses = []
-tags = []
+tags = ["expression", "pli", "timing-check"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -9428,7 +9428,7 @@ anchors = [
 ]
 summary = "Timing-check and timing-check-terminal objects expose diagrammed module, expression, reference/data/notifier/condition, delay-limit, timing-check-type, and edge relationships and properties."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli", "timing-check", "timing-event"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -9454,7 +9454,7 @@ summary = "For timing checks, vpiTchkRefTerm identifies the reference_event or c
 related_clauses = [
     "31.2",
 ]
-tags = []
+tags = ["expression", "pli", "timing-check"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -9478,7 +9478,7 @@ anchors = [
 ]
 summary = "Top-level module objects shall be accessed by calling vpi_iterate() with a NULL reference object."
 related_clauses = []
-tags = []
+tags = ["module", "pli", "top-level", "vpi-iteration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -9503,7 +9503,7 @@ anchors = [
 ]
 summary = "As applicable to the transient object type, its lifetime can be tracked using cbCreateObj, cbReclaimObj, cbStartofFrame, cbEndOfFrame, cbStartOfThread, cbEndOfThread, or cbEndOfObject as defined by the object diagram or vpi_register_cb() specification."
 related_clauses = []
-tags = []
+tags = ["callback", "lifetime", "object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -9534,7 +9534,7 @@ summary = "Threads, outdated or out-of-scope references made within a thread, vp
 related_clauses = [
     "37.44",
 ]
-tags = []
+tags = ["lifetime", "object-handle", "pli", "thread"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -9558,7 +9558,7 @@ anchors = [
 ]
 summary = "The vpiExpr relationship of a type parameter returns its default typespec."
 related_clauses = []
-tags = []
+tags = ["parameter", "pli", "type-parameter", "type-reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -9582,7 +9582,7 @@ anchors = [
 ]
 summary = "vpiTypespec on a type parameter returns its final post-elaboration typespec while preserving, rather than resolving through, typedef aliases."
 related_clauses = []
-tags = []
+tags = ["parameter", "pli", "type-parameter", "type-reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -9608,7 +9608,7 @@ summary = "vpiLeftRange and vpiRightRange on multidimensional logic, bit, or pac
 related_clauses = [
     "37.22",
 ]
-tags = []
+tags = ["array", "pli", "range", "type-reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -9634,7 +9634,7 @@ summary = "For a member of an unpacked struct type with an explicit default valu
 related_clauses = [
     "7.2",
 ]
-tags = []
+tags = ["expression", "pli", "type-reference", "unpacked-struct"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -9658,7 +9658,7 @@ anchors = [
 ]
 summary = "vpiName on a typespec-member object returns that member's name rather than the name of its associated typespec."
 related_clauses = []
-tags = []
+tags = ["name-resolution", "pli", "type-reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -9684,7 +9684,7 @@ summary = "vpiName returns a user-defined typedef's name; except for separately 
 related_clauses = [
     "37.32",
 ]
-tags = []
+tags = ["name-resolution", "pli", "type-reference", "typedef"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -9708,7 +9708,7 @@ anchors = [
 ]
 summary = "VPI typespec objects for built-in, class, enum, aggregate, array, parameter, interface, sequence, property, event, and void types expose every diagrammed alias/base/element/index/member/range relationship, value access, and name, packed/vector/tagged/soft/randomization/array-type property."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli", "type-reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -9734,7 +9734,7 @@ summary = "vpiRange iteration returns array-typespec unpacked ranges or logic/bi
 related_clauses = [
     "37.22",
 ]
-tags = []
+tags = ["array", "pli", "range", "vpi-iteration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -9758,7 +9758,7 @@ anchors = [
 ]
 summary = "When one typedef aliases another, vpiTypedefAlias on the alias typespec returns a non-NULL handle to the aliased typedef's typespec."
 related_clauses = []
-tags = []
+tags = ["pli", "type-equivalence", "type-reference", "typedef"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -9782,7 +9782,7 @@ anchors = [
 ]
 summary = "UDP instance/definition, I/O declaration, table-entry, and initial objects expose diagrammed definition name, input/symbol count, protection, primitive type, and value relationships and properties."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli", "primitive", "udp"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -9806,7 +9806,7 @@ anchors = [
 ]
 summary = "vpiPrimType returns vpiSeqPrim for a sequential UDP and vpiCombPrim for a combinational UDP."
 related_clauses = []
-tags = []
+tags = ["pli", "primitive", "type-query", "udp"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -9830,7 +9830,7 @@ anchors = [
 ]
 summary = "vpi_get_value() on a UDP table-entry object supports only string decompilation and vector ASCII-value formats."
 related_clauses = []
-tags = []
+tags = ["pli", "string", "udp"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -9854,7 +9854,7 @@ anchors = [
 ]
 summary = "The `$` bound used in assertion ranges is represented as a constant with vpiConstType vpiUnboundedConst."
 related_clauses = []
-tags = []
+tags = ["assertion", "expression", "literal", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -9878,7 +9878,7 @@ anchors = [
 ]
 summary = "vpiHighConn shall return NULL when a module, interface, or program instance has no connection to the port."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -9904,7 +9904,7 @@ anchors = [
 ]
 summary = "Every VPI object has the Boolean vpiIsProtected property, although that universal property is omitted from data-model diagrams."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli", "protected-block"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -9930,7 +9930,7 @@ anchors = [
 ]
 summary = "Every VPI information-model object has a vpiType property even though that universal property is omitted from the data-model diagrams."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli", "type-query"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -9954,7 +9954,7 @@ anchors = [
 ]
 summary = "An unnamed begin or fork is represented as a VPI scope if and only if it directly contains a block-item declaration such as a variable or type declaration."
 related_clauses = []
-tags = []
+tags = ["block", "pli", "scope", "statement-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -9978,7 +9978,7 @@ anchors = [
 ]
 summary = "An unnamed generate construct creates an implicit scope whose vpiImplicitDecl property is TRUE."
 related_clauses = []
-tags = []
+tags = ["generate", "pli", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -10002,7 +10002,7 @@ anchors = [
 ]
 summary = "vpi_get_value() and vpi_put_value() cannot access an entire unpacked struct or union value."
 related_clauses = []
-tags = []
+tags = ["aggregate", "pli", "unpacked-struct", "unpacked-union"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -10026,7 +10026,7 @@ anchors = [
 ]
 summary = "vpiLeftRange and vpiRightRange return NULL for a value parameter without an explicitly declared range."
 related_clauses = []
-tags = []
+tags = ["parameter", "pli", "range"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -10050,7 +10050,7 @@ anchors = [
 ]
 summary = "To iterate callback objects not related to a specific diagrammed object, vpi_iterate() is called with NULL as its reference argument."
 related_clauses = []
-tags = []
+tags = ["callback", "pli", "vpi-iteration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -10074,7 +10074,7 @@ anchors = [
 ]
 summary = "In a lexical context where a type parameter has not been resolved, such as a class definition, the type-parameter object itself acts as the typespec."
 related_clauses = []
-tags = []
+tags = ["pli", "type-parameter", "type-reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -10098,7 +10098,7 @@ anchors = [
 ]
 summary = "vpiTypespec returns NULL for an untyped property formal."
 related_clauses = []
-tags = []
+tags = ["formal-argument", "pli", "property", "type-reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -10122,7 +10122,7 @@ anchors = [
 ]
 summary = "vpiTypespec returns NULL for an untyped sequence formal."
 related_clauses = []
-tags = []
+tags = ["formal-argument", "pli", "sequence", "type-reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -10146,7 +10146,7 @@ anchors = [
 ]
 summary = "When vpiUserDefn is TRUE on a system task/function call, vpi_get_systf_info() provides the corresponding registered system-task/function object's properties."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -10170,7 +10170,7 @@ anchors = [
 ]
 summary = "vpi_iterate(vpiUserSystf, NULL) returns all user-defined system tasks and functions."
 related_clauses = []
-tags = []
+tags = ["pli", "subroutine", "vpi-iteration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -10194,7 +10194,7 @@ anchors = [
 ]
 summary = "For a function returning a user-defined type, vpiReturn returns the implicit return-variable handle through which that type's details are accessible."
 related_clauses = []
-tags = []
+tags = ["function", "pli", "return-value", "type-reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -10218,7 +10218,7 @@ anchors = [
 ]
 summary = "The vpiExpr relationship of a value parameter returns its default expression."
 related_clauses = []
-tags = []
+tags = ["expression", "parameter", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -10242,7 +10242,7 @@ anchors = [
 ]
 summary = "vpi_get_value() on a value parameter returns its final value after elaboration, including applicable overrides."
 related_clauses = []
-tags = []
+tags = ["elaboration", "parameter", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -10269,7 +10269,7 @@ anchors = [
 ]
 summary = "For a constant variable select, each index of the select and its parent chain retains its initial in-bounds or out-of-bounds status at all later simulation times."
 related_clauses = []
-tags = []
+tags = ["array-indexing", "pli", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -10296,7 +10296,7 @@ anchors = [
 ]
 summary = "vpiConstantSelect is TRUE for a variable select exactly when every associated index is elaboration-time constant, its parent is a static-bound unpacked array, and the parent's vpiConstantSelect is TRUE; otherwise it is FALSE."
 related_clauses = []
-tags = []
+tags = ["array-indexing", "pli", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -10321,7 +10321,7 @@ anchors = [
 ]
 summary = "A var select is an element selected from an array variable; vpiIndex returns its index for a one-dimensional array, while vpiIndex iteration returns multidimensional indices from the selected element outward."
 related_clauses = []
-tags = []
+tags = ["array", "array-indexing", "pli", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -10347,7 +10347,7 @@ summary = "vpiLeftRange and vpiRightRange return the leftmost packed bounds for 
 related_clauses = [
     "37.22",
 ]
-tags = []
+tags = ["array", "pli", "range", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -10371,7 +10371,7 @@ anchors = [
 ]
 summary = "vpiArrayMember is TRUE exactly when the referenced variable is a member of an array variable and FALSE otherwise."
 related_clauses = []
-tags = []
+tags = ["array", "pli", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -10395,7 +10395,7 @@ anchors = [
 ]
 summary = "vpiArrayType for an array variable returns one of vpiStaticArray, vpiDynamicArray, vpiAssocArray, or vpiQueueArray according to its array kind."
 related_clauses = []
-tags = []
+tags = ["array", "pli", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -10419,7 +10419,7 @@ anchors = [
 ]
 summary = "vpiIndex on a variable-bit handle returns its bit index, and vpiIndex iteration on a multidimensional variable bit-select returns indices from the bit outward."
 related_clauses = []
-tags = []
+tags = ["array", "array-indexing", "pli", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -10443,7 +10443,7 @@ anchors = [
 ]
 summary = "vpiBit iteration applies only to logic, bit, packed struct, packed union, and packed-array variables."
 related_clauses = []
-tags = []
+tags = ["array", "pli", "variable", "vpi-iteration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -10467,7 +10467,7 @@ anchors = [
 ]
 summary = "Load or driver iteration for a variable bit-select uses the bit selected at the beginning of the iteration."
 related_clauses = []
-tags = []
+tags = ["connectivity", "pli", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -10493,7 +10493,7 @@ anchors = [
 ]
 summary = "For backward compatibility, logic-variable/reg-variable, variable-bit/reg-bit, and array-variable/reg-array type constants are corresponding aliases; a vpiVarBit may belong to either a two-state vpiBitVar or four-state vpiLogicVar."
 related_clauses = []
-tags = []
+tags = ["four-state", "pli", "type-equivalence", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -10517,7 +10517,7 @@ anchors = [
 ]
 summary = "vpi_get_str(vpiType) may return either vpiLogicVar or vpiReg for a logic variable, either vpiVarBit or vpiRegBit for a variable bit, and either vpiArrayVar or vpiRegArray for an array variable."
 related_clauses = []
-tags = []
+tags = ["pli", "type-equivalence", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -10543,7 +10543,7 @@ anchors = [
 ]
 summary = "For a variable constant select, every index expression's in-bounds or out-of-bounds status at simulation start remains unchanged at all later simulation times."
 related_clauses = []
-tags = []
+tags = ["array-indexing", "pli", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -10572,7 +10572,7 @@ summary = "vpiConstantSelect is TRUE for a static-lifetime variable with no pare
 related_clauses = [
     "A.8.4",
 ]
-tags = []
+tags = ["array-indexing", "pli", "static", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -10596,7 +10596,7 @@ anchors = [
 ]
 summary = "vpiDriver and vpiLoad on variables expose the diagrammed ports, assignments, forces, continuous assignments and their bit forms as variable drivers and loads."
 related_clauses = []
-tags = []
+tags = ["connectivity", "pli", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -10620,7 +10620,7 @@ anchors = [
 ]
 summary = "When a variable has an initialization expression, vpi_handle(vpiExpr, var_handle) returns that expression."
 related_clauses = []
-tags = []
+tags = ["expression", "pli", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -10644,7 +10644,7 @@ anchors = [
 ]
 summary = "For struct, union, or class-variable member objects, vpiDecompile and vpiFullName include every needed parent-name prefix while vpiName omits those prefixes; all three include indices for indexed elements or slices."
 related_clauses = []
-tags = []
+tags = ["name-resolution", "pli", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -10668,7 +10668,7 @@ anchors = [
 ]
 summary = "vpi_handle_by_name() resolves a struct, union, or class-variable member using its vpiDecompile form in a non-top-level scope and its vpiFullName form from top level."
 related_clauses = []
-tags = []
+tags = ["name-resolution", "object-handle", "pli", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -10692,7 +10692,7 @@ anchors = [
 ]
 summary = "VPI variable objects and their scalar, array, packed, aggregate, enum, string, chandle, class, and virtual-interface forms expose every relationship, indexed access, value operation, lifetime/allocation attribute, randomization attribute, visibility, and typed property shown in the normative variable diagram."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -10724,7 +10724,7 @@ summary = "vpiParent is supported on every variable object and returns the first
 related_clauses = [
     "11.5.3",
 ]
-tags = []
+tags = ["object-handle", "pli", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -10748,7 +10748,7 @@ anchors = [
 ]
 summary = "vpiIsRandomized indicates whether a random variable is currently active for randomization."
 related_clauses = []
-tags = []
+tags = ["pli", "random-variable", "randomization", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -10773,7 +10773,7 @@ anchors = [
 ]
 summary = "vpiRandType reports the variable's current randomization type as vpiRand, vpiRandC, or vpiNotRand."
 related_clauses = []
-tags = []
+tags = ["pli", "random-variable", "randomization", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -10799,7 +10799,7 @@ summary = "vpiRange iteration returns unpacked or packed variable dimensions fro
 related_clauses = [
     "37.22",
 ]
-tags = []
+tags = ["array", "pli", "range", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -10823,7 +10823,7 @@ anchors = [
 ]
 summary = "vpiScalar/vpiVector classify undimensioned bit/logic variables and variable bits as scalar, packed-dimension and packed aggregate variables plus integral variables as vector, enum variables by their base typespec, array variables by an element, and all other variable objects as neither."
 related_clauses = []
-tags = []
+tags = ["array", "pli", "type-query", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -10847,7 +10847,7 @@ anchors = [
 ]
 summary = "A variable-select object exposes diagrammed index, parent-array, typespec, name/full-name, size, constant-selection, and value read/write relationships and properties."
 related_clauses = []
-tags = []
+tags = ["array", "object-handle", "pli", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -10871,7 +10871,7 @@ anchors = [
 ]
 summary = "vpiSize returns array element count for variable arrays, bit width for integer/enum/packed aggregate variables, current character count for strings, field count for unpacked aggregates, and 1 for a variable bit."
 related_clauses = []
-tags = []
+tags = ["array", "pli", "sizing", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -10898,7 +10898,7 @@ related_clauses = [
     "37.18",
     "37.26",
 ]
-tags = []
+tags = ["aggregate", "pli", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -10922,7 +10922,7 @@ anchors = [
 ]
 summary = "vpiVisibility reports local, protected, or default class-member visibility and returns vpiPublicVis for a class member with neither local nor protected visibility and for every variable that is not a class member."
 related_clauses = []
-tags = []
+tags = ["class", "pli", "variable", "visibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -10946,7 +10946,7 @@ anchors = [
 ]
 summary = "For a vector net, load and driver iterators return each loading or driving object exactly once at its actual object granularity, such as a part-select; bit-by-bit connectivity is obtained by iterating from a vpiNetBit."
 related_clauses = []
-tags = []
+tags = ["connectivity", "net", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -10970,7 +10970,7 @@ anchors = [
 ]
 summary = "vpiUse on a vector returns every use of the whole vector and every use of any of its part-selects or bit-selects."
 related_clauses = []
-tags = []
+tags = ["expression", "pli", "vpi-iteration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -10995,7 +10995,7 @@ anchors = [
 ]
 summary = "vpiActual on a virtual-interface variable or expression returns its currently associated interface instance after assignment, returns NULL while an uninitialized virtual interface has not yet been assigned, and on an assignment RHS identifies the interface passed into that expression."
 related_clauses = []
-tags = []
+tags = ["interface", "object-handle", "pli", "virtual-interface"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -11022,7 +11022,7 @@ anchors = [
 ]
 summary = "In elaborated scopes, class specializations, and class objects, vpiVirtualInterfaceVar iteration returns virtual-interface declarations and flattens arrays into element handles, while vpiVariables returns each array declaration once as vpiArrayVar."
 related_clauses = []
-tags = []
+tags = ["array", "pli", "virtual-interface", "vpi-iteration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -11046,7 +11046,7 @@ anchors = [
 ]
 summary = "vpiExpr on a virtual-interface variable returns the interface instance assigned in its declaration, or NULL when the declaration has no assigned instance."
 related_clauses = []
-tags = []
+tags = ["interface", "pli", "virtual-interface"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -11070,7 +11070,7 @@ anchors = [
 ]
 summary = "A reference object can be an interface expression only when it is a local interface or modport declaration passed through a port, and a constant can be one only when its vpiConstType is vpiNullConst."
 related_clauses = []
-tags = []
+tags = ["interface", "pli", "reference", "virtual-interface"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -11096,7 +11096,7 @@ summary = "vpiVirtualInterfaceVar iteration is supported in elaborated scopes bu
 related_clauses = [
     "37.31",
 ]
-tags = []
+tags = ["class", "pli", "virtual-interface", "vpi-iteration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -11120,7 +11120,7 @@ anchors = [
 ]
 summary = "Virtual-interface variables and expressions expose the diagrammed interface typespec, expression, actual interface/modport/reference/constant, name/full-name, and vpiIsModPort relationships and properties."
 related_clauses = []
-tags = []
+tags = ["interface", "object-handle", "pli", "virtual-interface"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -11144,7 +11144,7 @@ anchors = [
 ]
 summary = "vpiSize returns 0 for a void function."
 related_clauses = []
-tags = []
+tags = ["function", "pli", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -11168,7 +11168,7 @@ anchors = [
 ]
 summary = "VPI routine names use a `vpi` prefix and underscore word delimiters; callback-related defined values instead use `cb`, while macro-defined types and properties use `vpi` with capitalization as word delimiters."
 related_clauses = []
-tags = []
+tags = ["identifier", "lexical", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -11193,7 +11193,7 @@ anchors = [
 ]
 summary = "vpiAllocScheme returns vpiAutomaticScheme for an object allocated as part of and sharing the lifetime of a frame or thread, vpiDynamicScheme for dynamically allocated objects such as class objects or their parts, and vpiOtherScheme for every other object."
 related_clauses = []
-tags = []
+tags = ["dynamic-allocation", "lifetime", "object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -11217,7 +11217,7 @@ anchors = [
 ]
 summary = "The Boolean vpiAutomatic property is false for a static object and true for a non-static automatic or dynamic object; on module, program, interface, package, class-definition, and class-typespec objects it reports the default lifetime for variables of declared tasks and functions, subject to diagrammed exceptions."
 related_clauses = []
-tags = []
+tags = ["lifetime", "pli", "static", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -11241,7 +11241,7 @@ anchors = [
 ]
 summary = "The vpiMemory relationship returns array-variable objects rather than objects of type vpiMemory."
 related_clauses = []
-tags = []
+tags = ["array", "pli", "variable", "vpi-iteration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -11265,7 +11265,7 @@ anchors = [
 ]
 summary = "vpi_get(vpiType, object_handle) returns the integer constant representing the referenced object's type."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli", "type-query"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -11291,7 +11291,7 @@ summary = "vpi_get_str(vpiType, object_handle) returns the name of the object's 
 related_clauses = [
     "37.3",
 ]
-tags = []
+tags = ["object-handle", "pli", "string", "type-query"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -11315,7 +11315,7 @@ anchors = [
 ]
 summary = "Wait, ordered-wait, wait-fork, and related wait-statement objects expose diagrammed condition/sequence/expression, statement, and else-statement relationships."
 related_clauses = []
-tags = []
+tags = ["pli", "statement-syntax", "timing-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -11339,7 +11339,7 @@ anchors = [
 ]
 summary = "While and repeat statement objects expose their condition/count expression and body statement relationships."
 related_clauses = []
-tags = []
+tags = ["loop", "pli", "statement-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"

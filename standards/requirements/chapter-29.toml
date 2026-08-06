@@ -11,7 +11,7 @@ anchors = [
 ]
 summary = "A UDP table row that specifies x for every input shall specify x as its output state."
 related_clauses = []
-tags = []
+tags = ["four-state", "state-table", "udp"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -35,7 +35,7 @@ anchors = [
 ]
 summary = "The UDP input symbol * is equivalent to (??) and denotes any input value change."
 related_clauses = []
-tags = []
+tags = ["edge-sensitivity", "state-table", "udp"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -61,7 +61,7 @@ anchors = [
 ]
 summary = "The UDP table symbol b iterates over 0 and 1, is permitted in input and sequential current-state fields, and is prohibited in output fields."
 related_clauses = []
-tags = []
+tags = ["state-table", "udp"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -89,7 +89,7 @@ anchors = [
 ]
 summary = "In UDP tables, 0 and 1 denote their logic values, and x denotes unknown and is permitted in all input and output fields and sequential current-state fields."
 related_clauses = []
-tags = []
+tags = ["four-state", "state-table", "udp"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -113,7 +113,7 @@ anchors = [
 ]
 summary = "A combinational UDP row has one field per input followed by a colon and one output field defining the output for that input combination."
 related_clauses = []
-tags = []
+tags = ["combinational", "state-table", "udp"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -137,7 +137,7 @@ anchors = [
 ]
 summary = "A combinational UDP cannot contain a reg declaration."
 related_clauses = []
-tags = []
+tags = ["combinational", "diagnostic", "udp"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -162,7 +162,7 @@ anchors = [
 ]
 summary = "Whenever a combinational UDP input changes, it is evaluated and its output is set from the state-table row matching all current inputs; output depends only on current inputs."
 related_clauses = []
-tags = []
+tags = ["combinational", "state-table", "udp"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -187,7 +187,7 @@ anchors = [
 ]
 summary = "It is illegal for the same UDP input combination, including edge conditions, to specify different output values."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "state-table", "udp"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -212,7 +212,7 @@ anchors = [
 ]
 summary = "If a UDP is edge-sensitive, its table shall specify the desired output for every edge of every input."
 related_clauses = []
-tags = []
+tags = ["edge-sensitivity", "state-table", "udp"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -236,7 +236,7 @@ anchors = [
 ]
 summary = "An edge-sensitive sequential UDP changes output in response to specified input transitions, with current state and input conditions determining transition-table behavior."
 related_clauses = []
-tags = []
+tags = ["edge-sensitivity", "sequential", "state-table", "udp"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -261,7 +261,7 @@ anchors = [
 ]
 summary = "Every UDP has exactly one output."
 related_clauses = []
-tags = []
+tags = ["primitive", "udp"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -285,7 +285,7 @@ anchors = [
 ]
 summary = "The UDP input symbol f is equivalent to (10) and denotes a falling edge."
 related_clauses = []
-tags = []
+tags = ["edge-sensitivity", "state-table", "udp"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -310,7 +310,7 @@ anchors = [
 ]
 summary = "A z value passed to a UDP input is treated identically to an x value."
 related_clauses = []
-tags = []
+tags = ["four-state", "udp"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -335,7 +335,7 @@ anchors = [
 ]
 summary = "Each table row of a level-sensitive sequential UDP adds a colon-delimited current-state field between its input and output fields, and the output field denotes next state."
 related_clauses = []
-tags = []
+tags = ["sequential", "state-table", "udp"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -359,7 +359,7 @@ anchors = [
 ]
 summary = "An implementation may limit combinational UDP inputs but shall allow at least 10."
 related_clauses = []
-tags = []
+tags = ["combinational", "udp"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -383,7 +383,7 @@ anchors = [
 ]
 summary = "An implementation may limit sequential UDP inputs but shall allow at least 9."
 related_clauses = []
-tags = []
+tags = ["sequential", "udp"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -407,7 +407,7 @@ anchors = [
 ]
 summary = "An implementation may impose a model-wide UDP-definition limit, but shall support at least 256 UDP definitions."
 related_clauses = []
-tags = []
+tags = ["udp"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -432,7 +432,7 @@ anchors = [
 ]
 summary = "A UDP table may mix level- and edge-sensitive rows; edge cases are processed first and level cases afterward, so a conflicting matching level-sensitive case determines final output."
 related_clauses = []
-tags = []
+tags = ["edge-sensitivity", "sequential", "state-table", "udp"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -457,7 +457,7 @@ anchors = [
 ]
 summary = "The UDP table symbol - means no state change and is permitted only in a sequential UDP output field."
 related_clauses = []
-tags = []
+tags = ["sequential", "state-table", "udp"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -482,7 +482,7 @@ anchors = [
 ]
 summary = "A sequential UDP may optionally specify its output's initial value with an initial statement containing a procedural assignment."
 related_clauses = []
-tags = []
+tags = ["initialization", "sequential", "udp"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -507,7 +507,7 @@ anchors = [
 ]
 summary = "A UDP output can have only 0, 1, or x; the high-impedance value z is not supported as a UDP output value."
 related_clauses = []
-tags = []
+tags = ["four-state", "udp"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -532,7 +532,7 @@ anchors = [
 ]
 summary = "A parenthesized (vw) UDP symbol denotes a value change from v to w, where each may be 0, 1, x, ?, or b, and is permitted only in an input field."
 related_clauses = []
-tags = []
+tags = ["edge-sensitivity", "four-state", "state-table", "udp"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -557,7 +557,7 @@ anchors = [
 ]
 summary = "The UDP input symbol n iterates over (10), (1x), and (x0), denoting a potential negative edge."
 related_clauses = []
-tags = []
+tags = ["edge-sensitivity", "state-table", "udp"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -581,7 +581,7 @@ anchors = [
 ]
 summary = "The UDP input symbol p iterates over (01), (0x), and (x1), denoting a potential positive edge."
 related_clauses = []
-tags = []
+tags = ["edge-sensitivity", "state-table", "udp"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -608,7 +608,7 @@ summary = "Rules stated for primitive terminals, including the primitive instanc
 related_clauses = [
     "28.3.6",
 ]
-tags = []
+tags = ["connectivity", "instantiation", "primitive", "udp"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -632,7 +632,7 @@ anchors = [
 ]
 summary = "The UDP table symbol ? iterates over 0, 1, and x and is not permitted in an output field."
 related_clauses = []
-tags = []
+tags = ["four-state", "state-table", "udp"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -656,7 +656,7 @@ anchors = [
 ]
 summary = "The UDP input symbol r is equivalent to (01) and denotes a rising edge."
 related_clauses = []
-tags = []
+tags = ["edge-sensitivity", "state-table", "udp"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -681,7 +681,7 @@ anchors = [
 ]
 summary = "A sequential UDP table row may specify a parenthesized or symbolic transition on at most one input; a row specifying transitions on multiple inputs is illegal."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "edge-sensitivity", "state-table", "udp"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -706,7 +706,7 @@ anchors = [
 ]
 summary = "For a sequential UDP, the output value is always identical to the UDP's internal state value."
 related_clauses = []
-tags = []
+tags = ["sequential", "udp"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -730,7 +730,7 @@ anchors = [
 ]
 summary = "A sequential UDP row has input fields followed by a colon-delimited current-state field and a colon-delimited next-state output field."
 related_clauses = []
-tags = []
+tags = ["sequential", "state-table", "udp"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -754,7 +754,7 @@ anchors = [
 ]
 summary = "A sequential UDP determines its output from its input values together with its current output value."
 related_clauses = []
-tags = []
+tags = ["sequential", "udp"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -779,7 +779,7 @@ anchors = [
 ]
 summary = "A sequential UDP shall declare its output as reg, separately in non-ANSI form or within the ANSI output declaration."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "sequential", "udp"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -803,7 +803,7 @@ anchors = [
 ]
 summary = "A UDP state table is delimited by table and endtable, and every table row ends with a semicolon."
 related_clauses = []
-tags = []
+tags = ["grammar", "state-table", "udp"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -827,7 +827,7 @@ anchors = [
 ]
 summary = "Input fields in every UDP state-table row correspond in the order of inputs in the definition header port list, irrespective of declaration order."
 related_clauses = []
-tags = []
+tags = ["ports", "source-order", "state-table", "udp"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -852,7 +852,7 @@ anchors = [
 ]
 summary = "An ANSI UDP definition consists of primitive and its UDP identifier, a parenthesized comma-separated declaration-port list and semicolon, a state-table body, and endprimitive optionally followed by a colon and UDP identifier."
 related_clauses = []
-tags = []
+tags = ["grammar", "ports", "primitive", "udp"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -876,7 +876,7 @@ anchors = [
 ]
 summary = "A UDP body is either a combinational table containing one or more level-input/output rows or a sequential body with optional output initialization and one or more input/current-state/next-state rows."
 related_clauses = []
-tags = []
+tags = ["combinational", "grammar", "sequential", "udp"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -900,7 +900,7 @@ anchors = [
 ]
 summary = "A top-level UDP definition may appear either before or after an instantiation of that UDP inside a module."
 related_clauses = []
-tags = []
+tags = ["compilation-order", "instantiation", "module", "udp"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -927,7 +927,7 @@ anchors = [
 ]
 summary = "A UDP initial assignment value shall be 0 or 1, or one of the one-bit binary literals 1'b0, 1'b1, or 1'bx, with the grammar-permitted case variants of B and X."
 related_clauses = []
-tags = []
+tags = ["four-state", "initialization", "literal", "udp"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -951,7 +951,7 @@ anchors = [
 ]
 summary = "A delay is not permitted in a UDP initial statement."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "initialization", "simulation-time", "udp"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -978,7 +978,7 @@ anchors = [
 ]
 summary = "A UDP initial statement is limited to one procedural assignment and cannot be another statement type or a multi-statement block."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "initialization", "udp"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1005,7 +1005,7 @@ anchors = [
 ]
 summary = "The UDP initial procedural assignment shall target the reg whose identifier matches the UDP output-port identifier."
 related_clauses = []
-tags = []
+tags = ["initialization", "name-resolution", "ports", "udp"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1030,7 +1030,7 @@ anchors = [
 ]
 summary = "At simulation start a sequential UDP initial assignment immediately establishes the output and current table state; an instance delay does not delay this initialization."
 related_clauses = []
-tags = []
+tags = ["initialization", "scheduling", "simulation-time", "udp"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1054,7 +1054,7 @@ anchors = [
 ]
 summary = "A UDP instance may have an optional range forming an array of instances, subject to primitive terminal connection rules."
 related_clauses = []
-tags = []
+tags = ["array", "array-dimension", "instantiation", "udp"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1078,7 +1078,7 @@ anchors = [
 ]
 summary = "UDP instances are specified inside modules in the same manner as gate instances."
 related_clauses = []
-tags = []
+tags = ["instantiation", "module", "primitive", "udp"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1102,7 +1102,7 @@ anchors = [
 ]
 summary = "A UDP instance name is optional."
 related_clauses = []
-tags = []
+tags = ["grammar", "instantiation", "udp"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1127,7 +1127,7 @@ anchors = [
 ]
 summary = "A UDP instantiation names a UDP, may specify drive strength and delay2, and has one or more instances whose optional names and unpacked dimensions precede an output terminal followed by one or more input terminals."
 related_clauses = []
-tags = []
+tags = ["grammar", "instantiation", "primitive", "udp"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1151,7 +1151,7 @@ anchors = [
 ]
 summary = "A UDP instance may specify no more than two delay values because UDPs do not support z."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "four-state", "simulation-time", "udp"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1175,7 +1175,7 @@ anchors = [
 ]
 summary = "A bidirectional inout port is not permitted on a UDP."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "ports", "primitive", "udp"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1200,7 +1200,7 @@ anchors = [
 ]
 summary = "A non-ANSI UDP definition consists of primitive and its UDP identifier, a parenthesized comma-separated port-name list and semicolon, subsequent port declarations and state-table body, and endprimitive optionally followed by a colon and UDP identifier."
 related_clauses = []
-tags = []
+tags = ["grammar", "ports", "primitive", "udp"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1224,7 +1224,7 @@ anchors = [
 ]
 summary = "The UDP output port shall be first in its port list."
 related_clauses = []
-tags = []
+tags = ["grammar", "ports", "primitive", "udp"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1249,7 +1249,7 @@ anchors = [
 ]
 summary = "A UDP shall declare its output and input ports: output followed by one output name, and input followed by one or more input names."
 related_clauses = []
-tags = []
+tags = ["grammar", "ports", "primitive", "udp"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1273,7 +1273,7 @@ anchors = [
 ]
 summary = "Every UDP port shall be scalar; vector UDP ports are prohibited."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "ports", "primitive", "udp"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1297,7 +1297,7 @@ anchors = [
 ]
 summary = "The z value is unsupported and illegal in a UDP table entry."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "four-state", "state-table", "udp"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1321,7 +1321,7 @@ anchors = [
 ]
 summary = "UDP table fields accept only the grammar-defined level, edge, output, current-state, and next-state symbols, with '-' permitted as a sequential next-state no-change symbol."
 related_clauses = []
-tags = []
+tags = ["grammar", "state-table", "udp"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1345,7 +1345,7 @@ anchors = [
 ]
 summary = "UDP instance terminal connections are positional in the terminal order specified by the UDP definition."
 related_clauses = []
-tags = []
+tags = ["connectivity", "instantiation", "primitive", "udp"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1369,7 +1369,7 @@ anchors = [
 ]
 summary = "A UDP definition is a top-level source element and shall not occur within a module, program, interface, or package declaration."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "grammar", "top-level", "udp"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1394,7 +1394,7 @@ anchors = [
 ]
 summary = "A UDP combination of input values, together with current state for a sequential UDP, that is not covered by a state-table row produces the default output state x."
 related_clauses = []
-tags = []
+tags = ["four-state", "state-table", "udp"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1418,7 +1418,7 @@ anchors = [
 ]
 summary = "A sequential UDP transition that does not affect output must be explicitly specified as retaining state; every unspecified transition instead sets output to x."
 related_clauses = []
-tags = []
+tags = ["four-state", "sequential", "state-table", "udp"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"

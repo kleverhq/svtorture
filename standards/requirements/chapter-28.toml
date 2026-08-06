@@ -15,7 +15,7 @@ anchors = [
 ]
 summary = "An ambiguous-strength signal is either a known value spanning multiple levels, x spanning both strength0 and strength1 portions, L spanning high impedance and strength0 levels, or H spanning high impedance and strength1 levels."
 related_clauses = []
-tags = []
+tags = ["four-state", "strength"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -41,7 +41,7 @@ anchors = [
 ]
 summary = "Combining ambiguous-strength signals produces an ambiguous range spanning both component ranges and every intervening strength level; if that range includes both 0 and 1 portions, the resolved value is x, with its highest strength0 and strength1 levels retained as the result bounds."
 related_clauses = []
-tags = []
+tags = ["four-state", "net-resolution", "strength"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -68,7 +68,7 @@ anchors = [
 ]
 summary = "When an ambiguous-strength signal combines with a known unambiguous-strength signal, ambiguous levels stronger than the unambiguous level remain, weaker or equal ambiguous levels disappear, and if opposite values would leave a gap between retained levels, every level in that gap is included in the result."
 related_clauses = []
-tags = []
+tags = ["four-state", "net-resolution", "strength"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -98,7 +98,7 @@ anchors = [
 ]
 summary = "For each output, buf maps input 0, 1, x, z to 0, 1, x, x respectively, while not maps them to 1, 0, x, x respectively."
 related_clauses = []
-tags = []
+tags = ["four-state", "primitive"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -127,7 +127,7 @@ related_clauses = [
     "28.12.3",
     "28.12.4",
 ]
-tags = []
+tags = ["net", "net-resolution", "strength"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -151,7 +151,7 @@ anchors = [
 ]
 summary = "cmos behaves as a parallel pmos and nmos sharing data input and output but using separate p- and n-channel controls; rcmos analogously behaves as parallel rpmos and rnmos."
 related_clauses = []
-tags = []
+tags = ["switch-primitive"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -176,7 +176,7 @@ anchors = [
 ]
 summary = "A CMOS switch permits zero through three delay values: three specify rise, fall, and transition-to-z with their minimum for x; two specify rise and fall with their minimum for x and z; one applies to all output transitions; omission gives zero propagation delay; H and L transitions use the x delay."
 related_clauses = []
-tags = []
+tags = ["four-state", "simulation-time", "switch-primitive"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -215,7 +215,7 @@ related_clauses = [
     "28.13",
     "28.14",
 ]
-tags = []
+tags = ["strength", "switch-primitive"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -239,7 +239,7 @@ anchors = [
 ]
 summary = "A cmos or rcmos instance shall contain exactly four terminals ordered as data output, data input, n-channel control, and p-channel control."
 related_clauses = []
-tags = []
+tags = ["connectivity", "switch-primitive"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -264,7 +264,7 @@ anchors = [
 ]
 summary = "A comma-separated gate or switch declaration may contain multiple instances of one primitive type, and every instance in that declaration uses the single drive-strength and delay specification placed before the instance list."
 related_clauses = []
-tags = []
+tags = ["drive-strength", "grammar", "primitive", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -288,7 +288,7 @@ anchors = [
 ]
 summary = "The control input of tranif0, tranif1, rtranif0, or rtranif1 shall be a 4-state net, a 4-state variable, or a 2-state variable."
 related_clauses = []
-tags = []
+tags = ["four-state", "switch-primitive", "two-state"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -312,7 +312,7 @@ anchors = [
 ]
 summary = "A controlled bidirectional pass switch permits zero, one, or two control delays: two specify turn-on then turn-off, with their minimum used for x or z controls on built-in nets; one applies to both; omission gives zero turn-on and turn-off delay."
 related_clauses = []
-tags = []
+tags = ["four-state", "simulation-time", "switch-primitive"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -337,7 +337,7 @@ anchors = [
 ]
 summary = "A tranif0, tranif1, rtranif0, or rtranif1 instance shall contain exactly three terminals ordered as two bidirectional terminals followed by the control input."
 related_clauses = []
-tags = []
+tags = ["connectivity", "switch-primitive"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -361,7 +361,7 @@ anchors = [
 ]
 summary = "A gate instance with no explicit drive-strength specification has default strengths strong1 for logic 1 and strong0 for logic 0."
 related_clauses = []
-tags = []
+tags = ["drive-strength", "primitive"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -385,7 +385,7 @@ anchors = [
 ]
 summary = "Propagation delay from a gate input to its output shall not vary with the input signal's strength."
 related_clauses = []
-tags = []
+tags = ["primitive", "simulation-time", "strength"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -409,7 +409,7 @@ anchors = [
 ]
 summary = "On an eligible gate instance, an explicit drive-strength specification shall determine the strengths of logic values placed on its output terminals."
 related_clauses = []
-tags = []
+tags = ["drive-strength", "primitive"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -437,7 +437,7 @@ anchors = [
 ]
 summary = "A drive-strength specification is permitted only on and, nand, or, nor, xor, xnor, buf, not, bufif0, bufif1, notif0, notif1, pulldown, and pullup instances; other primitive types shall not carry one."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "drive-strength", "primitive"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -461,7 +461,7 @@ anchors = [
 ]
 summary = "Except for pullup and pulldown, an explicit gate drive strength shall be a parenthesized, comma-separated strength0/strength1 pair after the gate keyword and before any delay; either member order is legal."
 related_clauses = []
-tags = []
+tags = ["drive-strength", "grammar", "primitive"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -485,7 +485,7 @@ anchors = [
 ]
 summary = "In an ordinary gate drive-strength pair, strength1 determines the strength of output value 1 and strength0 determines the strength of output value 0, regardless of which member appears first."
 related_clauses = []
-tags = []
+tags = ["drive-strength", "strength"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -511,7 +511,7 @@ anchors = [
 ]
 summary = "The driving-strength classes are supply, strong, pull, and weak, and a signal's driving strength propagates from gate outputs and continuous-assignment outputs into net resolution."
 related_clauses = []
-tags = []
+tags = ["net", "net-resolution", "strength"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -538,7 +538,7 @@ summary = "A drive-strength pair containing both highz0 and highz1 is illegal in
 related_clauses = [
     "28.11",
 ]
-tags = []
+tags = ["diagnostic", "drive-strength"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -562,7 +562,7 @@ anchors = [
 ]
 summary = "When equal-strength 0 and 1 signals combine without wired-logic override, the resolved value shall be x with an ambiguous strength spanning both participating levels and every lower strength level."
 related_clauses = []
-tags = []
+tags = ["four-state", "net", "net-resolution", "strength"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -586,7 +586,7 @@ anchors = [
 ]
 summary = "An applicable gate output delay specification may contain at most three values representing rise, fall, and turn-off delays."
 related_clauses = []
-tags = []
+tags = ["primitive", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -610,7 +610,7 @@ anchors = [
 ]
 summary = "A gate delay postpones output propagation after an input changes."
 related_clauses = []
-tags = []
+tags = ["primitive", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -642,7 +642,7 @@ anchors = [
 ]
 summary = "For gates and nets, omitted delay is zero; one delay applies to all transitions; with two delays d1 applies to transitions to 1, d2 to transitions to 0, and min(d1,d2) applies to transitions to z or x."
 related_clauses = []
-tags = []
+tags = ["four-state", "net", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -673,7 +673,7 @@ anchors = [
 ]
 summary = "A gate or switch instance declaration shall supply the primitive keyword and terminal connection list required for its grammar alternative; drive strength, propagation delay, instance name, and instance-array dimensions are permitted only in the positions and primitive forms allowed by the gate-instantiation grammar."
 related_clauses = []
-tags = []
+tags = ["array", "grammar", "instantiation", "primitive"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -697,7 +697,7 @@ anchors = [
 ]
 summary = "When a gate's logic result is unknown and its explicit 0-output strength is highz0, the gate's ambiguous output includes high impedance on the 0 side and is H rather than unrestricted x; a non-high-impedance 0 strength yields x for the same unknown logic result."
 related_clauses = []
-tags = []
+tags = ["four-state", "primitive", "strength"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -721,7 +721,7 @@ anchors = [
 ]
 summary = "A highz1 strength causes a would-be logic 1 output to become z, and highz0 causes a would-be logic 0 output to become z."
 related_clauses = []
-tags = []
+tags = ["drive-strength", "four-state", "strength"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -745,7 +745,7 @@ anchors = [
 ]
 summary = "For a partitioned instance-array terminal connection, the expression shall contain exactly enough bits to supply every individual instance terminal; either excess or insufficient bits is an error."
 related_clauses = []
-tags = []
+tags = ["array", "connectivity", "diagnostic", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -769,7 +769,7 @@ anchors = [
 ]
 summary = "An individual primitive instance within an instance array is referenced by indexing the array name in the same manner as an element of an array of logic types."
 related_clauses = []
-tags = []
+tags = ["array", "array-indexing", "primitive"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -795,7 +795,7 @@ anchors = [
 ]
 summary = "For each primitive instance-array terminal, its expression width is compared with the corresponding single-instance terminal width; when equal, that same expression is connected to the corresponding terminal of every individual instance."
 related_clauses = []
-tags = []
+tags = ["array", "connectivity", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -819,7 +819,7 @@ anchors = [
 ]
 summary = "The replicated members of a primitive instance array differ only by the index of the vector elements connected to each member."
 related_clauses = []
-tags = []
+tags = ["array", "array-indexing", "primitive"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -843,7 +843,7 @@ anchors = [
 ]
 summary = "When an instance-array terminal expression is wider than one corresponding instance terminal, each instance receives a terminal-width part-select, with the expression's least-significant part connected to the instance at the array range's right-hand index and successive parts mapped toward the left-hand index."
 related_clauses = []
-tags = []
+tags = ["array", "array-slice", "connectivity", "layout"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -867,7 +867,7 @@ anchors = [
 ]
 summary = "A primitive instance array is declared by `[lhi:rhi]` with two constant bounds following its name and elaborates abs(lhi-rhi)+1 instances; either direction and nonzero bounds are allowed, and equal bounds elaborate one array element."
 related_clauses = []
-tags = []
+tags = ["array", "array-dimension", "elaboration", "instantiation"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -891,7 +891,7 @@ anchors = [
 ]
 summary = "A primitive instance array shall use a continuous range, and one instance identifier may be associated with only one range in that array declaration."
 related_clauses = []
-tags = []
+tags = ["array", "array-dimension", "diagnostic"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -915,7 +915,7 @@ anchors = [
 ]
 summary = "The primitive instance range is optional; when omitted, the declaration creates one scalar instance rather than an instance array."
 related_clauses = []
-tags = []
+tags = ["instantiation", "primitive"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -939,7 +939,7 @@ anchors = [
 ]
 summary = "When a primitive instance-array port expression is an interconnect port or interconnect net expression, its bit length shall equal the number of instances in the array."
 related_clauses = []
-tags = []
+tags = ["array", "connectivity", "interconnect", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -965,7 +965,7 @@ summary = "Each rise, fall, or turn-off delay on a gate primitive or UDP, net, o
 related_clauses = [
     "29",
 ]
-tags = []
+tags = ["mintypmax", "primitive", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -989,7 +989,7 @@ anchors = [
 ]
 summary = "A unidirectional MOS switch permits zero through three delay values: three map to rise, fall, and transition-to-z, with their minimum for x; two map to rise and fall, with their minimum for x and z; one applies to all transitions; omission gives zero propagation delay."
 related_clauses = []
-tags = []
+tags = ["four-state", "simulation-time", "switch-primitive"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1021,7 +1021,7 @@ anchors = [
 ]
 summary = "pmos and rpmos conduct for control 0 while nmos and rnmos conduct for control 1; a conducting switch passes its data subject to strength reduction, a disabled switch outputs z, x or z controls yield the table's H, L, or x result, and z data yields z."
 related_clauses = []
-tags = []
+tags = ["four-state", "switch-primitive"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1045,7 +1045,7 @@ anchors = [
 ]
 summary = "A MOS switch transition to H or L shall use the same delay as a transition to x."
 related_clauses = []
-tags = []
+tags = ["four-state", "simulation-time", "switch-primitive"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1069,7 +1069,7 @@ anchors = [
 ]
 summary = "In MOS switch logic tables, L denotes an indeterminate result restricted to 0 or z, and H denotes an indeterminate result restricted to 1 or z."
 related_clauses = []
-tags = []
+tags = ["four-state", "switch-primitive"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1094,7 +1094,7 @@ anchors = [
 ]
 summary = "A built-in MOS switch declaration shall begin with cmos, nmos, pmos, rcmos, rnmos, or rpmos."
 related_clauses = []
-tags = []
+tags = ["keyword-set", "switch-primitive"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1133,7 +1133,7 @@ related_clauses = [
     "28.13",
     "28.14",
 ]
-tags = []
+tags = ["strength", "switch-primitive"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1157,7 +1157,7 @@ anchors = [
 ]
 summary = "Each nmos, pmos, rnmos, or rpmos instance shall have exactly three terminals ordered as output, data input, and control input."
 related_clauses = []
-tags = []
+tags = ["connectivity", "switch-primitive"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1181,7 +1181,7 @@ anchors = [
 ]
 summary = "nmos, pmos, rnmos, and rpmos are unidirectional data channels: when conducting they propagate from the declared input terminal toward the declared output terminal, not in the reverse direction."
 related_clauses = []
-tags = []
+tags = ["connectivity", "switch-primitive"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1205,7 +1205,7 @@ anchors = [
 ]
 summary = "A net delay postpones the net-value update and onward propagation after any driver changes."
 related_clauses = []
-tags = []
+tags = ["net", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1229,7 +1229,7 @@ anchors = [
 ]
 summary = "A net delay specification may contain at most three delay values."
 related_clauses = []
-tags = []
+tags = ["net", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1257,7 +1257,7 @@ anchors = [
 ]
 summary = "A full logic strength consists of a strength0 component selected from supply0, strong0, pull0, weak0, or highz0 and a strength1 component selected from supply1, strong1, pull1, weak1, or highz1; each component applies to the corresponding portion of the net's four-state value."
 related_clauses = []
-tags = []
+tags = ["drive-strength", "four-state", "net", "strength"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1281,7 +1281,7 @@ anchors = [
 ]
 summary = "Changing the number of inputs on an and, nand, nor, or, xor, or xnor instance shall not alter its specified propagation delays."
 related_clauses = []
-tags = []
+tags = ["primitive", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1305,7 +1305,7 @@ anchors = [
 ]
 summary = "A multiple-input logic gate permits zero, one, or two delay values: two values specify rise then fall and use their minimum for transitions to x; one value applies to both rise and fall; omission gives zero propagation delay."
 related_clauses = []
-tags = []
+tags = ["four-state", "primitive", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1339,7 +1339,7 @@ anchors = [
 ]
 summary = "The and, nand, nor, or, xor, and xnor primitives shall produce the four-state truth-table result: z inputs are treated as unknown for logic evaluation; controlling 0 determines and/nand and controlling 1 determines or/nor despite other unknowns; xor/xnor produce x when either input is x or z."
 related_clauses = []
-tags = []
+tags = ["four-state", "primitive"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1364,7 +1364,7 @@ anchors = [
 ]
 summary = "A multiple-input built-in logic-gate declaration shall begin with exactly one of the primitive keywords and, nand, nor, or, xor, or xnor."
 related_clauses = []
-tags = []
+tags = ["keyword-set", "primitive"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1388,7 +1388,7 @@ anchors = [
 ]
 summary = "For more than two inputs, each and, nand, nor, or, xor, or xnor primitive shall apply its logic operation as the natural extension over all inputs."
 related_clauses = []
-tags = []
+tags = ["four-state", "primitive"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1412,7 +1412,7 @@ anchors = [
 ]
 summary = "Each and, nand, nor, or, xor, or xnor instance shall have exactly one output terminal first, followed by one or more input terminals."
 related_clauses = []
-tags = []
+tags = ["connectivity", "primitive"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1436,7 +1436,7 @@ anchors = [
 ]
 summary = "A buf or not gate permits zero, one, or two delay values: two values specify rise then fall and use their minimum for transitions to x; one value applies to both rise and fall; omission gives zero propagation delay."
 related_clauses = []
-tags = []
+tags = ["four-state", "primitive", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1461,7 +1461,7 @@ anchors = [
 ]
 summary = "A multiple-output built-in logic-gate declaration shall begin with either the buf or not primitive keyword."
 related_clauses = []
-tags = []
+tags = ["keyword-set", "primitive"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1485,7 +1485,7 @@ anchors = [
 ]
 summary = "Each buf or not instance shall have one or more output terminals followed by exactly one input terminal, which is the last terminal in the list."
 related_clauses = []
-tags = []
+tags = ["connectivity", "primitive"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1509,7 +1509,7 @@ anchors = [
 ]
 summary = "tran and rtran always conduct bidirectionally; tranif0, tranif1, rtranif0, and rtranif1 pass signals when enabled by their respective control polarity and block signals when disabled."
 related_clauses = []
-tags = []
+tags = ["four-state", "switch-primitive"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1534,7 +1534,7 @@ anchors = [
 ]
 summary = "A built-in bidirectional pass-switch declaration shall begin with tran, tranif0, tranif1, rtran, rtranif0, or rtranif1."
 related_clauses = []
-tags = []
+tags = ["keyword-set", "switch-primitive"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1558,7 +1558,7 @@ anchors = [
 ]
 summary = "The bidirectional terminals of rtran, rtranif0, and rtranif1 shall connect only to scalar built-in nets or bit-selects of built-in vector nets."
 related_clauses = []
-tags = []
+tags = ["connectivity", "net", "switch-primitive"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1582,7 +1582,7 @@ anchors = [
 ]
 summary = "A bidirectional switch shall not connect nets of two different user-defined net types or connect a user-defined net type to a built-in net type."
 related_clauses = []
-tags = []
+tags = ["connectivity", "nettype", "switch-primitive"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -1606,7 +1606,7 @@ anchors = [
 ]
 summary = "tran, tranif0, and tranif1 may connect bidirectional terminals belonging to the same user-defined net type."
 related_clauses = []
-tags = []
+tags = ["connectivity", "nettype", "switch-primitive"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -1645,7 +1645,7 @@ related_clauses = [
     "28.13",
     "28.14",
 ]
-tags = []
+tags = ["strength", "switch-primitive"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1669,7 +1669,7 @@ anchors = [
 ]
 summary = "Bidirectional pass switches shall introduce no propagation delay between their two bidirectional terminals."
 related_clauses = []
-tags = []
+tags = ["simulation-time", "switch-primitive"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1693,7 +1693,7 @@ anchors = [
 ]
 summary = "A scalar gate or switch instance may be unnamed, but an array of primitive instances shall have an instance identifier."
 related_clauses = []
-tags = []
+tags = ["array", "diagnostic", "instantiation", "primitive"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1717,7 +1717,7 @@ anchors = [
 ]
 summary = "Each gate or switch instance declaration shall begin with the keyword naming the built-in primitive type instantiated by every instance that follows in that declaration."
 related_clauses = []
-tags = []
+tags = ["keyword-set", "primitive"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1741,7 +1741,7 @@ anchors = [
 ]
 summary = "A primitive connection list shall be parenthesized with comma-separated terminals, placing every output or bidirectional terminal before all input terminals, subject to the terminal forms and counts of the primitive type."
 related_clauses = []
-tags = []
+tags = ["connectivity", "grammar", "primitive"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1767,7 +1767,7 @@ summary = "A procedural delay control may specify minimum, typical, and maximum 
 related_clauses = [
     "9.4",
 ]
-tags = []
+tags = ["mintypmax", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1791,7 +1791,7 @@ anchors = [
 ]
 summary = "A pullup may omit strength, specify only strength1, or specify both strength1 and strength0; a pulldown may omit strength, specify only strength0, or specify both strengths, and the opposite single-strength form is not permitted."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "drive-strength", "pull-source", "strength"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1815,7 +1815,7 @@ anchors = [
 ]
 summary = "An explicit strength1 determines a pullup's driven strength, and an explicit strength0 determines a pulldown's driven strength."
 related_clauses = []
-tags = []
+tags = ["drive-strength", "pull-source"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1840,7 +1840,7 @@ anchors = [
 ]
 summary = "A built-in pull-source declaration shall begin with pullup or pulldown."
 related_clauses = []
-tags = []
+tags = ["keyword-set", "pull-source"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1864,7 +1864,7 @@ anchors = [
 ]
 summary = "A pullup continuously drives logic 1 on every net in its terminal list, while a pulldown continuously drives logic 0."
 related_clauses = []
-tags = []
+tags = ["pull-source"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1889,7 +1889,7 @@ anchors = [
 ]
 summary = "A pullup or pulldown source declaration shall not contain a delay specification."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "pull-source", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1913,7 +1913,7 @@ anchors = [
 ]
 summary = "A pullup shall ignore its strength0 member, and a pulldown shall ignore its strength1 member."
 related_clauses = []
-tags = []
+tags = ["pull-source", "strength"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1937,7 +1937,7 @@ anchors = [
 ]
 summary = "Without an explicit strength specification, pullup and pulldown signals shall have pull strength."
 related_clauses = []
-tags = []
+tags = ["pull-source", "strength"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1971,7 +1971,7 @@ anchors = [
 ]
 summary = "A resistive switch maps supply and strong drive to pull, pull drive to weak, large charge and weak drive to medium charge, medium charge to small charge, and preserves small charge and high impedance."
 related_clauses = []
-tags = []
+tags = ["strength", "switch-primitive"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2012,7 +2012,7 @@ anchors = [
 ]
 summary = "For both the 0 and 1 portions, scalar net strength levels are highz=0, small=1, medium=2, weak=3, large=4, pull=5, strong=6, and supply=7."
 related_clauses = []
-tags = []
+tags = ["net", "strength"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2039,7 +2039,7 @@ anchors = [
 ]
 summary = "A non-high-impedance strength1 member shall be supply1, strong1, pull1, or weak1, and a non-high-impedance strength0 member shall be supply0, strong0, pull0, or weak0; a keyword for one logic value is not valid in the opposite member role."
 related_clauses = []
-tags = []
+tags = ["drive-strength", "grammar", "strength"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2063,7 +2063,7 @@ anchors = [
 ]
 summary = "A known net value has all strength levels solely in its matching strength0 or strength1 part; an x value has levels in both parts; a z value has strength only at a level-0 subdivision."
 related_clauses = []
-tags = []
+tags = ["four-state", "net", "strength"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2087,7 +2087,7 @@ anchors = [
 ]
 summary = "supply0 and supply1 nets drive their respective logic values with supply strength."
 related_clauses = []
-tags = []
+tags = ["net", "strength"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2135,7 +2135,7 @@ anchors = [
 ]
 summary = "In a three-delay gate or net specification, d1 applies to transitions to 1, d2 to transitions to 0, d3 to transitions to z, and min(d1,d2,d3) to transitions to x, for every four-state source value."
 related_clauses = []
-tags = []
+tags = ["four-state", "net", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2159,7 +2159,7 @@ anchors = [
 ]
 summary = "With no stronger overriding source, tri0 resolves to logic 0 at pull strength and tri1 resolves to logic 1 at pull strength."
 related_clauses = []
-tags = []
+tags = ["net", "net-resolution", "pull-source", "strength"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2185,7 +2185,7 @@ anchors = [
 ]
 summary = "Trireg charge decay begins when all drivers turn off and charge storage starts; it ends either when decay time elapses and stored 0 or 1 becomes x, or earlier when a driver resumes and propagates 0, 1, or x."
 related_clauses = []
-tags = []
+tags = ["four-state", "net", "simulation-time", "trireg"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2211,7 +2211,7 @@ anchors = [
 ]
 summary = "The charge-storage strength classes are large, medium, and small, and signals with those strengths originate in trireg nets rather than ordinary driving outputs."
 related_clauses = []
-tags = []
+tags = ["net", "strength", "trireg"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2235,7 +2235,7 @@ anchors = [
 ]
 summary = "When all trireg drivers turn off from 1, 0, or x, the trireg retains that previous value rather than transitioning to z."
 related_clauses = []
-tags = []
+tags = ["four-state", "net", "trireg"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2261,7 +2261,7 @@ summary = "After a trireg's active driver becomes high impedance, its stored val
 related_clauses = [
     "6.7",
 ]
-tags = []
+tags = ["net", "strength", "trireg"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2288,7 +2288,7 @@ anchors = [
 ]
 summary = "A trireg declaration permits `#(d1,d2,d3)`, where d1 and d2 are required rise and fall delays and d3 is charge-decay time from drivers turning off until stored charge becomes indeterminate; decay time cannot be specified without preceding rise and fall values."
 related_clauses = []
-tags = []
+tags = ["net", "simulation-time", "trireg"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2314,7 +2314,7 @@ summary = "A driver's z value does not propagate into a trireg; a trireg can hol
 related_clauses = [
     "10.6.2",
 ]
-tags = []
+tags = ["four-state", "net", "trireg"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2338,7 +2338,7 @@ anchors = [
 ]
 summary = "A three-state gate permits zero through three delay values: three map to rise, fall, and transition-to-z, with their minimum for x; two map to rise and fall, with their minimum for x and z; one applies to every transition; omission gives zero propagation delay."
 related_clauses = []
-tags = []
+tags = ["four-state", "simulation-time", "three-state"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2376,7 +2376,7 @@ anchors = [
 ]
 summary = "bufif0 and notif0 are enabled by control 0, while bufif1 and notif1 are enabled by control 1; enabled bufif passes data and enabled notif passes its inversion, disabled gates output z, and x or z controls produce the Table 28-5 H, L, or x result for the data value."
 related_clauses = []
-tags = []
+tags = ["four-state", "primitive", "three-state"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2401,7 +2401,7 @@ anchors = [
 ]
 summary = "A built-in three-state logic-gate declaration shall begin with bufif0, bufif1, notif0, or notif1."
 related_clauses = []
-tags = []
+tags = ["keyword-set", "primitive", "three-state"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2425,7 +2425,7 @@ anchors = [
 ]
 summary = "Each bufif0, bufif1, notif0, or notif1 instance shall have exactly three terminals ordered as output, data input, and control input."
 related_clauses = []
-tags = []
+tags = ["connectivity", "primitive", "three-state"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2449,7 +2449,7 @@ anchors = [
 ]
 summary = "A three-state gate transition to H or L shall receive the same delay treatment as a transition to x."
 related_clauses = []
-tags = []
+tags = ["four-state", "simulation-time", "three-state"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2473,7 +2473,7 @@ anchors = [
 ]
 summary = "In three-state gate logic tables, L denotes an indeterminate result restricted to 0 or z, and H denotes an indeterminate result restricted to 1 or z."
 related_clauses = []
-tags = []
+tags = ["four-state", "three-state"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2500,7 +2500,7 @@ summary = "A net of user-defined nettype has no strength levels; its drivers com
 related_clauses = [
     "6.6.7",
 ]
-tags = []
+tags = ["nettype", "resolution", "strength"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2524,7 +2524,7 @@ anchors = [
 ]
 summary = "A bidirectional switch connecting user-defined net types shall perform no strength reduction."
 related_clauses = []
-tags = []
+tags = ["nettype", "strength", "switch-primitive"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -2548,7 +2548,7 @@ anchors = [
 ]
 summary = "A controlled bidirectional switch connecting user-defined net types shall be treated as off when its control is x or z, unlike the partial-unknown behavior used with built-in net types."
 related_clauses = []
-tags = []
+tags = ["four-state", "nettype", "switch-primitive"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -2572,7 +2572,7 @@ anchors = [
 ]
 summary = "When known single-strength signals combine on a wired net, the strongest unequal-strength driver determines the result; same-value drivers produce that value at the greatest participating strength; identical value-and-strength drivers leave the signal unchanged."
 related_clauses = []
-tags = []
+tags = ["net", "net-resolution", "strength", "wired-logic"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2596,7 +2596,7 @@ anchors = [
 ]
 summary = "tran and rtran declarations shall not contain a delay specification."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "simulation-time", "switch-primitive"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2620,7 +2620,7 @@ anchors = [
 ]
 summary = "A tran or rtran instance shall contain exactly two bidirectional terminals that unconditionally conduct signals through the device in either direction."
 related_clauses = []
-tags = []
+tags = ["connectivity", "switch-primitive"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2644,7 +2644,7 @@ anchors = [
 ]
 summary = "When ambiguous-strength signals combine on a wired-logic net, resolution shall evaluate every pair formed by one possible strength/value component from each signal under the wired AND or OR rule, then combine those pairwise results into the resulting ambiguous signal."
 related_clauses = []
-tags = []
+tags = ["four-state", "net-resolution", "strength", "wired-logic"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2669,7 +2669,7 @@ anchors = [
 ]
 summary = "For equal-strength combined drivers, triand and wand resolve values with four-state logic AND and trior and wor with four-state logic OR; the resolved strength remains the common driver strength rather than becoming an ordinary conflicting-driver x."
 related_clauses = []
-tags = []
+tags = ["four-state", "net-resolution", "strength", "wired-logic"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"

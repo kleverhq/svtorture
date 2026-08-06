@@ -11,7 +11,7 @@ anchors = [
 ]
 summary = "When SDF annotation changes a specparam, every expression containing that specparam shall be reevaluated using the annotated value."
 related_clauses = []
-tags = []
+tags = ["specparam", "timing-annotation"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -35,7 +35,7 @@ anchors = [
 ]
 summary = "An SDF COND-wrapped IOPATH construct annotates delays or pulse limits of the matching conditional SystemVerilog specify path."
 related_clauses = []
-tags = []
+tags = ["conditional", "module-path", "path-delay", "pulse-filtering"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -59,7 +59,7 @@ anchors = [
 ]
 summary = "A COND-wrapped SDF IOPATH with RETAIN maps to matching conditional specify-path delays or pulse limits, and the annotator may ignore RETAIN."
 related_clauses = []
-tags = []
+tags = ["conditional", "module-path", "path-delay", "pulse-filtering"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -83,7 +83,7 @@ anchors = [
 ]
 summary = "An SDF CONDELSE-wrapped IOPATH construct annotates the matching SystemVerilog ifnone specify path."
 related_clauses = []
-tags = []
+tags = ["module-path", "state-dependent-path"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -107,7 +107,7 @@ anchors = [
 ]
 summary = "A CONDELSE-wrapped SDF IOPATH with RETAIN maps to the matching ifnone path, and the annotator may ignore RETAIN."
 related_clauses = []
-tags = []
+tags = ["module-path", "pulse-filtering", "state-dependent-path"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -131,7 +131,7 @@ anchors = [
 ]
 summary = "A conditional SDF IOPATH delay shall annotate only SystemVerilog specify paths having the same source port, destination port, and condition."
 related_clauses = []
-tags = []
+tags = ["conditional", "module-path", "path-delay"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -155,7 +155,7 @@ anchors = [
 ]
 summary = "When delay annotation omits explicit pulse limits, reject and error limits shall be calculated as their configured percentages of the annotated delay; each percentage defaults to 100% and may be changed by invocation options."
 related_clauses = []
-tags = []
+tags = ["path-delay", "pulse-filtering", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -180,7 +180,7 @@ anchors = [
 ]
 summary = "An SDF DEVICE construct without a port instance annotates all specify paths to module outputs; if none exist, it annotates all primitives driving module outputs."
 related_clauses = []
-tags = []
+tags = ["module", "module-path", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -208,7 +208,7 @@ anchors = [
 ]
 summary = "When an SDF DEVICE port_instance names a module output, it annotates all specify paths to that output; if no such path exists, it annotates all primitives driving that output."
 related_clauses = []
-tags = []
+tags = ["module", "module-path", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -233,7 +233,7 @@ anchors = [
 ]
 summary = "When an SDF DEVICE port_instance names a module instance, it annotates all specify paths to that module's outputs; if no such paths exist, it annotates all primitives driving those outputs."
 related_clauses = []
-tags = []
+tags = ["hierarchy", "module-path", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -257,7 +257,7 @@ anchors = [
 ]
 summary = "When an interconnect source is hierarchically above its load, the load delay shall be interpreted as originating from every port at or above the source and every net connection hierarchically above it."
 related_clauses = []
-tags = []
+tags = ["hierarchy", "interconnect", "path-delay"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -281,7 +281,7 @@ anchors = [
 ]
 summary = "Empty parentheses in a later SDF annotation's pulse-limit field preserves that pulse limit's current value rather than overwriting it."
 related_clauses = []
-tags = []
+tags = ["pulse-filtering", "source-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -305,7 +305,7 @@ anchors = [
 ]
 summary = "An interconnect annotation to a hierarchical port shall affect every connected port at higher or lower hierarchical levels in the direction of annotation."
 related_clauses = []
-tags = []
+tags = ["connectivity", "hierarchy", "interconnect"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -330,7 +330,7 @@ anchors = [
 ]
 summary = "Hierarchically overlapping interconnect annotations are permitted, and the annotator shall resolve their interactions according to each annotation's hierarchical port subset, including on multisource or multiload nets."
 related_clauses = []
-tags = []
+tags = ["connectivity", "hierarchy", "interconnect"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -354,7 +354,7 @@ anchors = [
 ]
 summary = "An SDF annotator shall ignore SDF constructs unrelated to SystemVerilog timing rather than applying them to the simulation."
 related_clauses = []
-tags = []
+tags = ["timing-annotation"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -378,7 +378,7 @@ anchors = [
 ]
 summary = "Interconnect delays shall use the specify-path rules for filling omitted delays and pulse limits."
 related_clauses = []
-tags = []
+tags = ["interconnect", "path-delay", "pulse-filtering"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -402,7 +402,7 @@ anchors = [
 ]
 summary = "SDF interconnect delays may be annotated only between module ports and never directly between primitive pins."
 related_clauses = []
-tags = []
+tags = ["connectivity", "interconnect", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -426,7 +426,7 @@ anchors = [
 ]
 summary = "An INTERCONNECT source port shall be an output or inout module port, and its load port shall be an input or inout module port."
 related_clauses = []
-tags = []
+tags = ["connectivity", "interconnect", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -450,7 +450,7 @@ anchors = [
 ]
 summary = "If an INTERCONNECT source port is not found or is not on the load port's net, the delay shall still annotate to the load; on a multisource load net it shall be treated as a delay from all source ports."
 related_clauses = []
-tags = []
+tags = ["connectivity", "interconnect", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -474,7 +474,7 @@ anchors = [
 ]
 summary = "If an INTERCONNECT source port is not found or is not on the same net as the load port, the annotator shall issue a warning."
 related_clauses = []
-tags = []
+tags = ["connectivity", "diagnostic", "interconnect"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -498,7 +498,7 @@ anchors = [
 ]
 summary = "When an INTERCONNECT construct names an existing source port and load port on the same net, it shall annotate an interconnect delay specifically between that source/load pair."
 related_clauses = []
-tags = []
+tags = ["connectivity", "interconnect", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -522,7 +522,7 @@ anchors = [
 ]
 summary = "References at an annotated load or hierarchically after it, including expressions and display system tasks, shall yield the delayed value; references at the source or hierarchically before the load shall yield the undelayed value."
 related_clauses = []
-tags = []
+tags = ["hierarchy", "interconnect", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -546,7 +546,7 @@ anchors = [
 ]
 summary = "A PORT annotation applied after an INTERCONNECT annotation to the same load shall overwrite the source-specific annotation and set the load delay from all sources."
 related_clauses = []
-tags = []
+tags = ["interconnect", "path-delay", "source-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -572,7 +572,7 @@ summary = "An interconnect delay has 12 transition-delay components, each with i
 related_clauses = [
     "30.5.1",
 ]
-tags = []
+tags = ["interconnect", "path-delay", "pulse-filtering"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -596,7 +596,7 @@ anchors = [
 ]
 summary = "Interconnect delay processing shall permit an unlimited number of future scheduled output events."
 related_clauses = []
-tags = []
+tags = ["interconnect", "scheduling", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -620,7 +620,7 @@ anchors = [
 ]
 summary = "An SDF IOPATH construct annotates the delays or pulse limits of a matching conditional or nonconditional SystemVerilog specify path."
 related_clauses = []
-tags = []
+tags = ["conditional", "module-path", "path-delay", "pulse-filtering"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -645,7 +645,7 @@ anchors = [
 ]
 summary = "When annotating an SDF IOPATH containing RETAIN, the annotator may ignore the RETAIN data while still mapping the IOPATH to matching conditional or nonconditional specify-path delays or pulse limits."
 related_clauses = []
-tags = []
+tags = ["module-path", "path-delay", "pulse-filtering"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -669,7 +669,7 @@ anchors = [
 ]
 summary = "For a non-interconnect SDF DELAY construct, annotation targets a specify path whose names and conditions match the SDF construct."
 related_clauses = []
-tags = []
+tags = ["conditional", "module-path", "path-delay"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -693,7 +693,7 @@ anchors = [
 ]
 summary = "An SDF TIMINGCHECK construct targets a SystemVerilog timing check only when its check type, names, and conditions match."
 related_clauses = []
-tags = []
+tags = ["timing-check", "timing-condition"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -717,7 +717,7 @@ anchors = [
 ]
 summary = "Each $sdf_annotate call applies one SDF file to the design, with its INCREMENT values modifying and its ABSOLUTE values overwriting values established by earlier SDF files."
 related_clauses = []
-tags = []
+tags = ["source-order", "timing-annotation"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -741,7 +741,7 @@ anchors = [
 ]
 summary = "If INCREMENT annotation would produce a negative pulse limit, the resulting limit shall be adjusted to zero."
 related_clauses = []
-tags = []
+tags = ["pulse-filtering", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -765,7 +765,7 @@ anchors = [
 ]
 summary = "A NETDELAY construct may be annotated only to an input or inout module port or to a net."
 related_clauses = []
-tags = []
+tags = ["connectivity", "interconnect", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -789,7 +789,7 @@ anchors = [
 ]
 summary = "When a NETDELAY target port or net has multiple sources, each annotated load delay shall represent propagation from all of those sources."
 related_clauses = []
-tags = []
+tags = ["connectivity", "interconnect"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -813,7 +813,7 @@ anchors = [
 ]
 summary = "When a NETDELAY construct targets a net, it shall annotate an interconnect delay to every load port connected to that net."
 related_clauses = []
-tags = []
+tags = ["connectivity", "interconnect", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -837,7 +837,7 @@ anchors = [
 ]
 summary = "When a NETDELAY construct targets an input or inout module port, it shall annotate an interconnect delay to that port."
 related_clauses = []
-tags = []
+tags = ["interconnect", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -861,7 +861,7 @@ anchors = [
 ]
 summary = "An SDF annotator shall issue no warning for SDF constructs that are unrelated to SystemVerilog timing."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "timing-annotation"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -885,7 +885,7 @@ anchors = [
 ]
 summary = "A nonconditional SDF IOPATH delay shall annotate every SystemVerilog specify path between the same source and destination ports, including conditional paths."
 related_clauses = []
-tags = []
+tags = ["conditional", "module-path", "path-delay", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -909,7 +909,7 @@ anchors = [
 ]
 summary = "PATHPULSE and PATHPULSEPERCENT annotations modify only pulse limits and shall not change the path delay."
 related_clauses = []
-tags = []
+tags = ["pulse-filtering"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -933,7 +933,7 @@ anchors = [
 ]
 summary = "A PATHPULSE limit greater than the path delay shall produce the same pulse-handling behavior as a pulse limit equal to that delay."
 related_clauses = []
-tags = []
+tags = ["path-delay", "pulse-filtering", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -957,7 +957,7 @@ anchors = [
 ]
 summary = "An SDF PATHPULSE construct annotates conditional or nonconditional SystemVerilog specify-path pulse limits."
 related_clauses = []
-tags = []
+tags = ["module-path", "pulse-filtering"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -981,7 +981,7 @@ anchors = [
 ]
 summary = "An SDF PATHPULSEPERCENT construct annotates conditional or nonconditional SystemVerilog specify-path pulse limits."
 related_clauses = []
-tags = []
+tags = ["module-path", "pulse-filtering"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1006,7 +1006,7 @@ anchors = [
 ]
 summary = "If the named port exists, an SDF PORT construct shall annotate an interconnect delay to that port representing propagation from every source on its net, for either a single-source or multisource net."
 related_clauses = []
-tags = []
+tags = ["connectivity", "interconnect", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1030,7 +1030,7 @@ anchors = [
 ]
 summary = "After PORT annotates a load delay from all sources, a later INTERCONNECT to that load shall replace only the delay from its named source and preserve the PORT delay for all other sources."
 related_clauses = []
-tags = []
+tags = ["interconnect", "path-delay", "source-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1054,7 +1054,7 @@ anchors = [
 ]
 summary = "When an SDF timing-check signal has a condition or edge qualifier, annotation shall occur only for an otherwise corresponding SystemVerilog timing check whose qualifier matches."
 related_clauses = []
-tags = []
+tags = ["timing-check", "timing-condition"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1078,7 +1078,7 @@ anchors = [
 ]
 summary = "The $sdf_annotate module_instance argument may select an instance using array indices."
 related_clauses = []
-tags = []
+tags = ["array-indexing", "hierarchy", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1102,7 +1102,7 @@ anchors = [
 ]
 summary = "When the optional log_file character-string argument is supplied, every individual timing-data annotation from the SDF file shall produce an entry in that log file."
 related_clauses = []
-tags = []
+tags = ["file-io", "file-output", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1127,7 +1127,7 @@ anchors = [
 ]
 summary = "When module_instance is supplied as the second $sdf_annotate argument, the annotator shall apply the SDF timing information within the hierarchy scope of that specified instance."
 related_clauses = []
-tags = []
+tags = ["hierarchy", "scope", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1151,7 +1151,7 @@ anchors = [
 ]
 summary = "When module_instance is omitted from $sdf_annotate, the annotation scope shall default to the module containing the task call."
 related_clauses = []
-tags = []
+tags = ["module", "scope", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1175,7 +1175,7 @@ anchors = [
 ]
 summary = "A $sdf_annotate system-task call shall contain sdf_file followed by up to six ordered optional arguments—module_instance, config_file, log_file, mtm_spec, scale_factors, and scale_type—with omitted positions represented by empty comma-separated slots."
 related_clauses = []
-tags = []
+tags = ["grammar", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1199,7 +1199,7 @@ anchors = [
 ]
 summary = "SDF BIDIRECTSKEW values v1 and v2 annotate the corresponding two limits of a matching $fullskew timing check."
 related_clauses = []
-tags = []
+tags = ["skew-check", "timing-check"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1223,7 +1223,7 @@ anchors = [
 ]
 summary = "SDF constructs shall be applied in occurrence order, so a later INCREMENT modifies the current annotated value and a later ABSOLUTE replaces it even when the constructs differ in type."
 related_clauses = []
-tags = []
+tags = ["source-order", "timing-annotation"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1247,7 +1247,7 @@ anchors = [
 ]
 summary = "For a 0-to-1 transition, SDF delay value v1 is used whether the construct supplies 1, 2, 3, 6, or 12 values."
 related_clauses = []
-tags = []
+tags = ["four-state", "path-delay"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1271,7 +1271,7 @@ anchors = [
 ]
 summary = "For a 0-to-x transition, one-value SDF delay uses v1, two-value uses v1, 3- or 6-value uses min(v1,v3), and 12-value uses v7."
 related_clauses = []
-tags = []
+tags = ["four-state", "path-delay"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1295,7 +1295,7 @@ anchors = [
 ]
 summary = "For a 0-to-z transition, 1- or 2-value SDF delay forms use v1, while 3-, 6-, or 12-value forms use v3."
 related_clauses = []
-tags = []
+tags = ["four-state", "path-delay"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1319,7 +1319,7 @@ anchors = [
 ]
 summary = "For a 1-to-0 transition, a one-value SDF delay uses v1, while 2-, 3-, 6-, or 12-value delays use v2."
 related_clauses = []
-tags = []
+tags = ["four-state", "path-delay"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1343,7 +1343,7 @@ anchors = [
 ]
 summary = "For 1-to-x, one-value SDF delay uses v1, two-value uses v2, three-value uses min(v2,v3), six-value uses min(v2,v5), and 12-value uses v9."
 related_clauses = []
-tags = []
+tags = ["four-state", "path-delay"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1367,7 +1367,7 @@ anchors = [
 ]
 summary = "For a 1-to-z transition, one-value SDF delay uses v1, two-value uses v2, three-value uses v3, and 6- or 12-value uses v5."
 related_clauses = []
-tags = []
+tags = ["four-state", "path-delay"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1391,7 +1391,7 @@ anchors = [
 ]
 summary = "For x-to-0, one-value SDF delay uses v1, 2- or 3-value uses v2, 6-value uses max(v2,v6), and 12-value uses v10."
 related_clauses = []
-tags = []
+tags = ["four-state", "path-delay"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1415,7 +1415,7 @@ anchors = [
 ]
 summary = "For x-to-1, 1-, 2-, or 3-value SDF delay uses v1, 6-value uses max(v1,v4), and 12-value uses v8."
 related_clauses = []
-tags = []
+tags = ["four-state", "path-delay"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1439,7 +1439,7 @@ anchors = [
 ]
 summary = "For x-to-z, one-value SDF delay uses v1, two-value uses max(v1,v2), three-value uses v3, six-value uses max(v3,v5), and 12-value uses v11."
 related_clauses = []
-tags = []
+tags = ["four-state", "path-delay"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1463,7 +1463,7 @@ anchors = [
 ]
 summary = "For a z-to-0 transition, one-value SDF delay uses v1, 2- or 3-value uses v2, and 6- or 12-value uses v6."
 related_clauses = []
-tags = []
+tags = ["four-state", "path-delay"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1487,7 +1487,7 @@ anchors = [
 ]
 summary = "For a z-to-1 transition, 1-, 2-, or 3-value SDF delay forms use v1, while 6- or 12-value forms use v4."
 related_clauses = []
-tags = []
+tags = ["four-state", "path-delay"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1511,7 +1511,7 @@ anchors = [
 ]
 summary = "For z-to-x, one-value SDF delay uses v1, 2- or 3-value uses min(v1,v2), 6-value uses min(v4,v6), and 12-value uses v12."
 related_clauses = []
-tags = []
+tags = ["four-state", "path-delay"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1535,7 +1535,7 @@ anchors = [
 ]
 summary = "The sdf_file argument to $sdf_annotate shall be a string literal or an expression of string or integral type whose character-string value names the SDF file to open."
 related_clauses = []
-tags = []
+tags = ["conversion", "literal", "string", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1559,7 +1559,7 @@ anchors = [
 ]
 summary = "SDF HOLD value v1 annotates a matching $hold limit or the hold component of a matching $setuphold, leaving its setup component unannotated."
 related_clauses = []
-tags = []
+tags = ["stability-check", "timing-check"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1583,7 +1583,7 @@ anchors = [
 ]
 summary = "An SDF INTERCONNECT construct annotates an interconnect delay between its named source and load module ports."
 related_clauses = []
-tags = []
+tags = ["connectivity", "interconnect", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1607,7 +1607,7 @@ anchors = [
 ]
 summary = "An SDF LABEL construct annotates its value to the corresponding SystemVerilog specparam."
 related_clauses = []
-tags = []
+tags = ["specparam", "timing-annotation"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1631,7 +1631,7 @@ anchors = [
 ]
 summary = "When an explicit mtm_spec argument is supplied to $sdf_annotate, its selection shall override any MTM_SPEC keyword in the configuration file."
 related_clauses = []
-tags = []
+tags = ["configuration", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1659,7 +1659,7 @@ anchors = [
 ]
 summary = "The optional mtm_spec string selects a min/typ/max member: MAXIMUM selects maximum, MINIMUM selects minimum, TYPICAL selects typical, and TOOL_CONTROL lets the simulator select and is the default."
 related_clauses = []
-tags = []
+tags = ["configuration", "mintypmax", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1684,7 +1684,7 @@ anchors = [
 ]
 summary = "In OVI SDF 1.0, 2.0, or 2.1 and IEEE SDF 4.0, a NETDELAY construct maps to an interconnect delay."
 related_clauses = []
-tags = []
+tags = ["interconnect"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1708,7 +1708,7 @@ anchors = [
 ]
 summary = "SDF NOCHANGE values v1 and v2 annotate the corresponding two limits of a matching $nochange timing check."
 related_clauses = []
-tags = []
+tags = ["nochange-check", "timing-check"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1732,7 +1732,7 @@ anchors = [
 ]
 summary = "SDF PERIOD value v1 annotates the limit of a matching $period timing check."
 related_clauses = []
-tags = []
+tags = ["period-check", "timing-check"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1756,7 +1756,7 @@ anchors = [
 ]
 summary = "An SDF PORT delay construct annotates an interconnect delay to its load module port."
 related_clauses = []
-tags = []
+tags = ["interconnect", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1780,7 +1780,7 @@ anchors = [
 ]
 summary = "SDF RECOVERY value v1 annotates a matching $recovery limit or the recovery component of a matching $recrem, leaving removal unannotated."
 related_clauses = []
-tags = []
+tags = ["stability-check", "timing-check"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1804,7 +1804,7 @@ anchors = [
 ]
 summary = "SDF RECREM values v1 and v2 annotate matching $recovery and $removal limits respectively, or both components of a matching $recrem."
 related_clauses = []
-tags = []
+tags = ["stability-check", "timing-check"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1828,7 +1828,7 @@ anchors = [
 ]
 summary = "SDF REMOVAL value v1 annotates a matching $removal limit or the removal component of a matching $recrem, leaving recovery unannotated."
 related_clauses = []
-tags = []
+tags = ["stability-check", "timing-check"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1852,7 +1852,7 @@ anchors = [
 ]
 summary = "The optional scale_factors string supplies minimum, typical, and maximum multipliers in that order; when omitted, the multipliers default to 1.0:1.0:1.0."
 related_clauses = []
-tags = []
+tags = ["configuration", "mintypmax", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1876,7 +1876,7 @@ anchors = [
 ]
 summary = "When an explicit scale_factors argument is supplied to $sdf_annotate, it shall override any SCALE_FACTORS keyword in the configuration file."
 related_clauses = []
-tags = []
+tags = ["configuration", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1900,7 +1900,7 @@ anchors = [
 ]
 summary = "When an explicit scale_type argument is supplied to $sdf_annotate, it shall override any SCALE_TYPE keyword in the configuration file."
 related_clauses = []
-tags = []
+tags = ["configuration", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1927,7 +1927,7 @@ anchors = [
 ]
 summary = "scale_type FROM_MAXIMUM applies all scale factors to the maximum member, FROM_MINIMUM to the minimum member, FROM_TYPICAL to the typical member, and FROM_MTM applies the corresponding factors to min/typ/max members and is the default."
 related_clauses = []
-tags = []
+tags = ["configuration", "mintypmax", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1952,7 +1952,7 @@ anchors = [
 ]
 summary = "SDF SETUP value v1 annotates a matching $setup limit or the setup component of a matching $setuphold, leaving its hold component unannotated."
 related_clauses = []
-tags = []
+tags = ["stability-check", "timing-check"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1976,7 +1976,7 @@ anchors = [
 ]
 summary = "SDF SETUPHOLD values v1 and v2 annotate matching $setup and $hold limits respectively, or both components of a matching $setuphold."
 related_clauses = []
-tags = []
+tags = ["stability-check", "timing-check"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2000,7 +2000,7 @@ anchors = [
 ]
 summary = "SDF SKEW value v1 annotates a matching $skew or $timeskew timing check."
 related_clauses = []
-tags = []
+tags = ["skew-check", "timing-check"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2024,7 +2024,7 @@ anchors = [
 ]
 summary = "An SDF annotator shall issue a warning for SDF data that it cannot annotate into the SystemVerilog simulation."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "timing-annotation"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2048,7 +2048,7 @@ anchors = [
 ]
 summary = "SDF WIDTH value v1 annotates the first limit of a matching $width timing check and does not annotate its second limit."
 related_clauses = []
-tags = []
+tags = ["pulse-width-check", "timing-check"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2072,7 +2072,7 @@ anchors = [
 ]
 summary = "An interconnect annotation from a source port shall be interpreted as originating from every source hierarchically higher or lower than that source port in the annotation direction."
 related_clauses = []
-tags = []
+tags = ["hierarchy", "interconnect"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2096,7 +2096,7 @@ anchors = [
 ]
 summary = "When annotating a construct that supports at most three transition delays, any SDF delay values beyond the first three shall be ignored."
 related_clauses = []
-tags = []
+tags = ["path-delay"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2120,7 +2120,7 @@ anchors = [
 ]
 summary = "For a construct supporting at most three transition delays, its delay to X shall be derived as the minimum of the other three delays."
 related_clauses = []
-tags = []
+tags = ["four-state", "path-delay"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2144,7 +2144,7 @@ anchors = [
 ]
 summary = "An SDF timing check with no condition or edge on any signal shall annotate every otherwise corresponding SystemVerilog timing check regardless of its signal conditions or edges."
 related_clauses = []
-tags = []
+tags = ["timing-check", "timing-condition"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2168,7 +2168,7 @@ anchors = [
 ]
 summary = "Backannotation shall leave every SystemVerilog timing value omitted from the SDF file unchanged at its prebackannotation value."
 related_clauses = []
-tags = []
+tags = ["timing-annotation"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2192,7 +2192,7 @@ anchors = [
 ]
 summary = "When an interconnect load is hierarchically above its source, every port or net connection hierarchically above the load shall have the same delay as that load."
 related_clauses = []
-tags = []
+tags = ["hierarchy", "interconnect", "path-delay"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"

@@ -11,7 +11,7 @@ anchors = [
 ]
 summary = "`at_least` is permitted at covergroup, coverpoint, and cross levels, with the group-level value defaulting points and crosses."
 related_clauses = []
-tags = []
+tags = ["coverage-cross", "coverage-option", "covergroup", "coverpoint"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -39,7 +39,7 @@ summary = "For an M-bit coverpoint with automatic bins, item coverage is covered
 related_clauses = [
     "19.7",
 ]
-tags = []
+tags = ["coverage-bin", "coverage-metric", "coverpoint"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -63,7 +63,7 @@ anchors = [
 ]
 summary = "An automatic bin is named `auto[value]`, where value is a single value or `low:high` range; for enum points, value is the associated enumerated constant name."
 related_clauses = []
-tags = []
+tags = ["coverage-bin"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -87,7 +87,7 @@ anchors = [
 ]
 summary = "When fewer automatic bins than 2^M possible values are created, values are assigned uniformly in ascending order and any indivisible remainder is included in the last bin."
 related_clauses = []
-tags = []
+tags = ["coverage-bin"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -111,7 +111,7 @@ anchors = [
 ]
 summary = "Automatically created bins contain only 2-state values; samples containing any X or Z bits are excluded from those bins."
 related_clauses = []
-tags = []
+tags = ["coverage-bin", "four-state", "two-state"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -139,7 +139,7 @@ related_clauses = [
     "19.5.5",
     "19.5.6",
 ]
-tags = []
+tags = ["coverage-bin", "coverage-real", "coverpoint"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -165,7 +165,7 @@ anchors = [
 ]
 summary = "A base cross continues contributing when one of its base coverpoints is overridden, unless the derived covergroup also defines a cross with the same name."
 related_clauses = []
-tags = []
+tags = ["coverage-cross", "coverage-inheritance", "coverpoint"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -190,7 +190,7 @@ anchors = [
 ]
 summary = "An implementation shall issue a warning when an unsigned-effective-type coverpoint compares against a signed bin expression having a negative value."
 related_clauses = []
-tags = []
+tags = ["conversion", "coverage-bin", "diagnostic"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -214,7 +214,7 @@ anchors = [
 ]
 summary = "An implementation shall warn when assigning a bin expression to the coverpoint's effective type would produce a value unequal to the original under normal `==` comparison."
 related_clauses = []
-tags = []
+tags = ["conversion", "coverage-bin", "diagnostic"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -238,7 +238,7 @@ anchors = [
 ]
 summary = "Before bin comparison, each bin expression is statically cast to the coverpoint expression's effective type; enum values are first treated as expressions of their enum base type."
 related_clauses = []
-tags = []
+tags = ["conversion", "coverage-bin", "coverage-expression", "coverpoint"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -262,7 +262,7 @@ anchors = [
 ]
 summary = "A bin-level trailing `iff` is evaluated at sampling, and when false prevents that bin's count from incrementing even if its value or transition otherwise matches."
 related_clauses = []
-tags = []
+tags = ["conditional", "coverage-bin", "coverage-sampling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -286,7 +286,7 @@ anchors = [
 ]
 summary = "A state-bin count increments each time a sampled coverpoint value matches one of the values in that bin's set."
 related_clauses = []
-tags = []
+tags = ["coverage-bin", "coverpoint"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -310,7 +310,7 @@ anchors = [
 ]
 summary = "A bin `with` expression behaves as if evaluated for every candidate range-list value when the covergroup instance is constructed."
 related_clauses = []
-tags = []
+tags = ["coverage-bin", "coverage-expression", "instantiation"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -334,7 +334,7 @@ anchors = [
 ]
 summary = "In place of a bin range list, the containing coverpoint's name may denote all its values for `with` filtering; no other coverpoint name is permitted there."
 related_clauses = []
-tags = []
+tags = ["coverage-bin", "coverage-expression", "coverpoint"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -360,7 +360,7 @@ summary = "By default `with` filtering occurs before values are distributed amon
 related_clauses = [
     "19.7.1",
 ]
-tags = []
+tags = ["coverage-bin", "coverage-expression", "coverage-option"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -386,7 +386,7 @@ summary = "A bin `with` clause includes only candidate range-list values for whi
 related_clauses = [
     "12.4",
 ]
-tags = []
+tags = ["coverage-bin", "coverage-expression"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -412,7 +412,7 @@ summary = "The expression in a bin `with` clause shall produce a result assignme
 related_clauses = [
     "19.5.1.1",
 ]
-tags = []
+tags = ["conversion", "coverage-bin", "coverage-expression"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -436,7 +436,7 @@ anchors = [
 ]
 summary = "Applying a bin `with` expression shall preserve equivalent duplicate bin items and their order."
 related_clauses = []
-tags = []
+tags = ["coverage-bin", "coverage-expression", "source-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -460,7 +460,7 @@ anchors = [
 ]
 summary = "An implementation shall warn when a non-wildcard bin expression yields any X or Z bits; this warning condition does not apply to wildcard bins because their X/Z digits expand to 0/1."
 related_clauses = []
-tags = []
+tags = ["coverage-bin", "diagnostic", "four-state"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -484,7 +484,7 @@ anchors = [
 ]
 summary = "When a cross select expression applies `binsof` to transition bins, selection uses the last value of each transition."
 related_clauses = []
-tags = []
+tags = ["coverage-bin", "coverage-transition"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -508,7 +508,7 @@ anchors = [
 ]
 summary = "A `begin` block event naming a block, task, function, or class method triggers immediately before its first statement."
 related_clauses = []
-tags = []
+tags = ["block", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -532,7 +532,7 @@ anchors = [
 ]
 summary = "An `end` block event naming a block, task, function, or class method triggers immediately after its last statement."
 related_clauses = []
-tags = []
+tags = ["block", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -556,7 +556,7 @@ anchors = [
 ]
 summary = "A class may contain more than one embedded covergroup."
 related_clauses = []
-tags = []
+tags = ["class", "covergroup"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -582,7 +582,7 @@ summary = "A coverpoint over a clocking-block signal samples the value supplied 
 related_clauses = [
     "4",
 ]
-tags = []
+tags = ["clocking-block", "coverage-sampling", "coverpoint", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -608,7 +608,7 @@ summary = "A covergroup clocking event may reference the covergroup's arguments.
 related_clauses = [
     "19.7.1",
 ]
-tags = []
+tags = ["clocking-event", "coverage-sampling", "covergroup"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -632,7 +632,7 @@ anchors = [
 ]
 summary = "With strobe disabled, each covergroup clocking event samples immediately, including multiple samples for multiple event occurrences in one time step."
 related_clauses = []
-tags = []
+tags = ["clocking-event", "coverage-sampling", "scheduling", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -656,7 +656,7 @@ anchors = [
 ]
 summary = "Predefined covergroup coverage methods may be invoked procedurally at any time."
 related_clauses = []
-tags = []
+tags = ["coverage-method", "covergroup"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -680,7 +680,7 @@ anchors = [
 ]
 summary = "Both coverage query methods optionally accept two ref ints receiving covered-bin and total-bin counts; instance point/cross counts are the unscaled numerator/denominator, while group and cumulative queries aggregate the applicable constituent items and instances."
 related_clauses = []
-tags = []
+tags = ["coverage-metric", "coverage-query", "output"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -704,7 +704,7 @@ anchors = [
 ]
 summary = "Actual arguments to a covergroup constructor are evaluated when the `new` operator executes."
 related_clauses = []
-tags = []
+tags = ["constructor", "covergroup", "instantiation"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -728,7 +728,7 @@ anchors = [
 ]
 summary = "An instance constant used by a covergroup expression shall be initialized before the covergroup constructor call in the enclosing class constructor."
 related_clauses = []
-tags = []
+tags = ["covergroup", "initialization", "source-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -754,7 +754,7 @@ summary = "Initialization of a referenced instance constant and the covergroup c
 related_clauses = [
     "12.7",
 ]
-tags = []
+tags = ["covergroup", "forkjoin", "loop", "source-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -781,7 +781,7 @@ related_clauses = [
     "19.8",
     "19.8.1",
 ]
-tags = []
+tags = ["clocking-event", "coverage-sampling", "covergroup"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -805,7 +805,7 @@ anchors = [
 ]
 summary = "A covergroup declaration shall conform to the covergroup grammar, including its optional formal list and coverage event, coverage specifications/options, and optional matching end label."
 related_clauses = []
-tags = []
+tags = ["covergroup", "grammar"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -832,7 +832,7 @@ summary = "If a covergroup specifies no coverage event, it uses a default `sampl
 related_clauses = [
     "19.8",
 ]
-tags = []
+tags = ["coverage-method", "coverage-sampling", "covergroup"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -856,7 +856,7 @@ anchors = [
 ]
 summary = "A covergroup type may be defined in a package, module, program, interface, checker, or class."
 related_clauses = []
-tags = []
+tags = ["covergroup", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -880,7 +880,7 @@ anchors = [
 ]
 summary = "Global and instance constants referenced by an embedded-covergroup expression shall be members of its enclosing class."
 related_clauses = []
-tags = []
+tags = ["constant", "coverage-expression", "covergroup"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -905,7 +905,7 @@ anchors = [
 ]
 summary = "A function called from a covergroup expression shall have no output, inout, or ref arguments; const-ref arguments are permitted."
 related_clauses = []
-tags = []
+tags = ["argument-direction", "coverage-expression", "covergroup", "function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -931,7 +931,7 @@ anchors = [
 ]
 summary = "A function called from a covergroup expression shall not reference nonconstant variables outside its local scope."
 related_clauses = []
-tags = []
+tags = ["coverage-expression", "covergroup", "free-variable", "function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -956,7 +956,7 @@ anchors = [
 ]
 summary = "A function called from a covergroup expression shall be automatic, or preserve no state, and shall have no side effects."
 related_clauses = []
-tags = []
+tags = ["coverage-expression", "covergroup", "function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -983,7 +983,7 @@ summary = "System-function calls in a covergroup expression are limited to const
 related_clauses = [
     "11.2.1",
 ]
-tags = []
+tags = ["constant-expression", "coverage-expression", "covergroup", "function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1011,7 +1011,7 @@ related_clauses = [
     "19.4",
     "8.19",
 ]
-tags = []
+tags = ["coverage-expression", "covergroup", "name-resolution"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1035,7 +1035,7 @@ anchors = [
 ]
 summary = "The identifier in an embedded `covergroup extends` declaration shall name a covergroup previously defined in a base class of the enclosing class."
 related_clauses = []
-tags = []
+tags = ["coverage-inheritance", "covergroup", "name-resolution"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -1060,7 +1060,7 @@ anchors = [
 ]
 summary = "The `covergroup extends` declaration form is legal only within a class."
 related_clauses = []
-tags = []
+tags = ["class", "coverage-inheritance", "covergroup"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -1084,7 +1084,7 @@ anchors = [
 ]
 summary = "A covergroup formal argument cannot be accessed by hierarchical name outside the covergroup declaration."
 related_clauses = []
-tags = []
+tags = ["covergroup", "hierarchy", "name-resolution"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1108,7 +1108,7 @@ anchors = [
 ]
 summary = "An input formal of a covergroup retains the value passed when its constructor is called rather than tracking later changes to the actual."
 related_clauses = []
-tags = []
+tags = ["argument-direction", "copy-in", "covergroup", "instantiation"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1134,7 +1134,7 @@ summary = "A derived embedded covergroup may itself be used as the base covergro
 related_clauses = [
     "19.4",
 ]
-tags = []
+tags = ["coverage-inheritance", "covergroup"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -1160,7 +1160,7 @@ summary = "Construction of a covergroup instance shall supply an actual argument
 related_clauses = [
     "13.5",
 ]
-tags = []
+tags = ["constructor", "covergroup", "default-argument", "instantiation"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1184,7 +1184,7 @@ anchors = [
 ]
 summary = "A covergroup formal argument declared with output or inout direction is illegal."
 related_clauses = []
-tags = []
+tags = ["argument-direction", "covergroup", "diagnostic", "output"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1208,7 +1208,7 @@ anchors = [
 ]
 summary = "The `$` primary is legal as an unbounded endpoint in a covergroup value range."
 related_clauses = []
-tags = []
+tags = ["coverage-bin", "covergroup", "grammar", "range"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1232,7 +1232,7 @@ anchors = [
 ]
 summary = "A covergroup cannot modify a ref formal; it is treated as a read-only const ref argument."
 related_clauses = []
-tags = []
+tags = ["argument-direction", "const", "covergroup", "reference-argument"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1256,7 +1256,7 @@ anchors = [
 ]
 summary = "A ref formal of a covergroup tracks subsequent changes to its actual argument."
 related_clauses = []
-tags = []
+tags = ["argument-direction", "covergroup", "reference-argument"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1280,7 +1280,7 @@ anchors = [
 ]
 summary = "Calling a customized covergroup `sample()` method triggers sampling and shall supply actuals for every nondefaulted sample formal."
 related_clauses = []
-tags = []
+tags = ["coverage-sampling", "covergroup", "default-argument", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1305,7 +1305,7 @@ anchors = [
 ]
 summary = "A covergroup declaration defines a user-defined coverage-model type, and any number of instances of that type may be created with `new`."
 related_clauses = []
-tags = []
+tags = ["constructor", "covergroup", "instantiation"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1331,7 +1331,7 @@ anchors = [
 ]
 summary = "Covergroup coverage is the sum over its points and crosses of each item weight times item coverage, divided by the sum of those item weights."
 related_clauses = []
-tags = []
+tags = ["coverage-metric", "covergroup"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1358,7 +1358,7 @@ anchors = [
 ]
 summary = "A covergroup coverage denominator is zero when every item is excluded, every item weight is zero, or the group contains no points or crosses."
 related_clauses = []
-tags = []
+tags = ["coverage-metric", "covergroup"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1382,7 +1382,7 @@ anchors = [
 ]
 summary = "An explicitly or implicitly specified coverpoint data type shall be integral or real, and specifying a data type requires specifying a coverpoint identifier."
 related_clauses = []
-tags = []
+tags = ["coverage-real", "coverpoint"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -1408,7 +1408,7 @@ anchors = [
 ]
 summary = "For bin comparison, a coverpoint expression's effective type is its explicit coverpoint type when present, otherwise its self-determined type."
 related_clauses = []
-tags = []
+tags = ["conversion", "coverpoint", "type-inference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1432,7 +1432,7 @@ anchors = [
 ]
 summary = "A coverpoint expression shall have an integral or real type; real-expression coverage is limited to sampled-value bins and crosses of those bins."
 related_clauses = []
-tags = []
+tags = ["coverage-expression", "coverage-real", "coverpoint"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -1458,7 +1458,7 @@ anchors = [
 ]
 summary = "Coverage points and their bins, options, ranges, transitions, `with`, and `iff` clauses shall conform to the coverage-point grammar."
 related_clauses = []
-tags = []
+tags = ["coverage-bin", "coverage-expression", "coverpoint", "grammar"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -1484,7 +1484,7 @@ anchors = [
 ]
 summary = "At a sampling event, a coverpoint whose `iff` expression evaluates false is ignored and records no coverage for that sample."
 related_clauses = []
-tags = []
+tags = ["conditional", "coverage-sampling", "coverpoint"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1508,7 +1508,7 @@ anchors = [
 ]
 summary = "When no coverpoint data type is specified, its type is the self-determined type of its expression."
 related_clauses = []
-tags = []
+tags = ["coverpoint", "type-inference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1536,7 +1536,7 @@ summary = "A coverpoint name may be referenced only in a cross's coverpoint list
 related_clauses = [
     "19.6",
 ]
-tags = []
+tags = ["coverpoint", "name-resolution", "visibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1560,7 +1560,7 @@ anchors = [
 ]
 summary = "A coverpoint creates a hierarchical scope; an explicit label names it, while an unlabeled coverpoint over one variable takes that variable's name."
 related_clauses = []
-tags = []
+tags = ["coverpoint", "hierarchy", "name-resolution", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1586,7 +1586,7 @@ summary = "A coverpoint expression is evaluated in procedural context and may ac
 related_clauses = [
     "25.9",
 ]
-tags = []
+tags = ["context", "coverpoint", "virtual-interface"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1610,7 +1610,7 @@ anchors = [
 ]
 summary = "The coverpoint expression and its optional `iff` enabling expression are evaluated when the covergroup is sampled."
 related_clauses = []
-tags = []
+tags = ["coverage-sampling", "coverpoint"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1634,7 +1634,7 @@ anchors = [
 ]
 summary = "For a typed coverpoint, its expression shall be assignment-compatible with the declared type and sampled values are converted as if assigned to a variable of that type."
 related_clauses = []
-tags = []
+tags = ["conversion", "coverpoint"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1658,7 +1658,7 @@ anchors = [
 ]
 summary = "Each cross automatically defines `CrossValType` for value tuples and `CrossQueueType` for queues of tuples; both names are scoped to and accessible only within that cross."
 related_clauses = []
-tags = []
+tags = ["coverage-cross", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1682,7 +1682,7 @@ anchors = [
 ]
 summary = "A named cross bin groups a set of cross products and increments whenever one grouped product matches, meaning every crossed point matches its corresponding component bin."
 related_clauses = []
-tags = []
+tags = ["coverage-bin", "coverage-cross"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1706,7 +1706,7 @@ anchors = [
 ]
 summary = "When the trailing `iff` on a cross-bin definition is false, that cross bin is ignored for the sample."
 related_clauses = []
-tags = []
+tags = ["conditional", "coverage-bin", "coverage-cross"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1733,7 +1733,7 @@ anchors = [
 ]
 summary = "A `binsof` selection with `intersect` retains bins whose associated values intersect any value in the comma-separated covergroup value-range list; negation selects bins whose values do not intersect that set."
 related_clauses = []
-tags = []
+tags = ["coverage-bin", "coverage-cross"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -1757,7 +1757,7 @@ anchors = [
 ]
 summary = "`binsof` yields the bins of an explicit or implicit coverage point, or a specifically named bin of such a point."
 related_clauses = []
-tags = []
+tags = ["coverage-bin", "coverage-cross"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -1781,7 +1781,7 @@ anchors = [
 ]
 summary = "Cross coverage over N points consists of the Cartesian product of all bins associated with those N points."
 related_clauses = []
-tags = []
+tags = ["coverage-cross"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1810,7 +1810,7 @@ anchors = [
 ]
 summary = "Cross coverage is covered-bin count divided by automatic cross-bin count plus significant user-bin count; automatic count is the product of crossed-point bin counts minus products consumed by user bins, and significant user bins exclude ignore and illegal bins."
 related_clauses = []
-tags = []
+tags = ["coverage-cross", "coverage-metric"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1835,7 +1835,7 @@ anchors = [
 ]
 summary = "No cross-product bins shall be created for any coverpoint bin declared as default, ignored, or illegal."
 related_clauses = []
-tags = []
+tags = ["coverage-bin", "coverage-cross"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1861,7 +1861,7 @@ summary = "Identifiers and function calls used within a cross are subject to the
 related_clauses = [
     "19.5",
 ]
-tags = []
+tags = ["coverage-cross", "coverage-expression", "function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1885,7 +1885,7 @@ anchors = [
 ]
 summary = "Cross declarations, bodies, options, local functions, bin selections, set expressions, matches clauses, and guards shall conform to the cross-coverage grammar."
 related_clauses = []
-tags = []
+tags = ["coverage-cross", "grammar"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -1911,7 +1911,7 @@ anchors = [
 ]
 summary = "Using the enclosing cross identifier as a select expression selects every possible bin tuple, enabling a with expression to define the full cross bin; any other cross identifier is illegal."
 related_clauses = []
-tags = []
+tags = ["coverage-cross", "coverage-expression", "name-resolution"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1935,7 +1935,7 @@ anchors = [
 ]
 summary = "When a cross-level `iff` expression is false at a sampling point, the entire cross is ignored for that sample."
 related_clauses = []
-tags = []
+tags = ["conditional", "coverage-cross", "coverage-sampling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1959,7 +1959,7 @@ anchors = [
 ]
 summary = "A cross may define `ignore_bins` using a select expression to designate a group of cross products for exclusion."
 related_clauses = []
-tags = []
+tags = ["coverage-bin", "coverage-cross"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1983,7 +1983,7 @@ anchors = [
 ]
 summary = "Every cross product satisfying an ignore-bin select expression is excluded from coverage even if another bin in the same cross also includes that product."
 related_clauses = []
-tags = []
+tags = ["coverage-bin", "coverage-cross"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2007,7 +2007,7 @@ anchors = [
 ]
 summary = "A cross may define `illegal_bins` using a select expression to designate a group of illegal cross products."
 related_clauses = []
-tags = []
+tags = ["coverage-bin", "coverage-cross"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2031,7 +2031,7 @@ anchors = [
 ]
 summary = "A selected illegal cross product is excluded and causes a run-time error, taking precedence even when the same product is explicitly ignored or included in another cross bin."
 related_clauses = []
-tags = []
+tags = ["coverage-bin", "coverage-cross", "diagnostic"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2055,7 +2055,7 @@ anchors = [
 ]
 summary = "An arbitrary expression cannot be used directly as a cross item; it must first be declared as a coverpoint."
 related_clauses = []
-tags = []
+tags = ["coverage-cross", "coverage-expression", "coverpoint"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2079,7 +2079,7 @@ anchors = [
 ]
 summary = "A cross may have an optional label that names the cross and creates a hierarchical scope for bins declared within it."
 related_clauses = []
-tags = []
+tags = ["coverage-cross", "hierarchy", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2103,7 +2103,7 @@ anchors = [
 ]
 summary = "A function declared inside a cross is not visible outside that cross scope."
 related_clauses = []
-tags = []
+tags = ["coverage-cross", "function", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2127,7 +2127,7 @@ anchors = [
 ]
 summary = "Within a cross select expression, `matches` has higher precedence than `&&` and `||`."
 related_clauses = []
-tags = []
+tags = ["conditional", "coverage-cross", "coverage-expression", "precedence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2151,7 +2151,7 @@ anchors = [
 ]
 summary = "A cross `matches` expression shall be a positive integer minimum satisfying-tuple count or `$` requiring all value tuples; when omitted, the minimum defaults to one."
 related_clauses = []
-tags = []
+tags = ["conditional", "coverage-cross", "coverage-expression"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2177,7 +2177,7 @@ anchors = [
 ]
 summary = "A cross name may be referenced only beneath a covergroup-variable hierarchical prefix or after scope resolution from a covergroup type."
 related_clauses = []
-tags = []
+tags = ["coverage-cross", "name-resolution", "visibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2203,7 +2203,7 @@ anchors = [
 ]
 summary = "The numeric `cross_num_print_missing` option defaults to 0 and specifies how many uncovered cross-product bins are saved and reported; it is allowed at covergroup and cross scope, not coverpoint scope, and a group value defaults its crosses."
 related_clauses = []
-tags = []
+tags = ["coverage-cross", "coverage-option"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2227,7 +2227,7 @@ anchors = [
 ]
 summary = "Every coverage point in a cross shall be defined within the same covergroup that contains the cross; attempting to cross an item from another covergroup is a compile-time error."
 related_clauses = []
-tags = []
+tags = ["coverage-cross", "covergroup", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2251,7 +2251,7 @@ anchors = [
 ]
 summary = "A real variable shall not appear directly in a cross, but a coverpoint of a real expression may be crossed."
 related_clauses = []
-tags = []
+tags = ["coverage-cross", "coverage-real", "coverpoint"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -2279,7 +2279,7 @@ anchors = [
 ]
 summary = "The boolean `cross_retain_auto_bins` option defaults true: true retains automatic bins for products not intersecting user bins, while false removes all automatic bins whenever an explicit cross bin exists; it is allowed at covergroup and cross scope, not coverpoint scope, and a group value defaults its crosses."
 related_clauses = []
-tags = []
+tags = ["coverage-bin", "coverage-cross", "coverage-option"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -2304,7 +2304,7 @@ anchors = [
 ]
 summary = "Cross-bin selections may be combined with logical `&&` and `||` to select the intersection or union of their cross-product sets."
 related_clauses = []
-tags = []
+tags = ["coverage-cross", "coverage-expression", "logical"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2328,7 +2328,7 @@ anchors = [
 ]
 summary = "A cross-bin context supplies `CrossQueueType` to an array literal; any expression is permitted if it evaluates to that type, and an assignment-incompatible expression requires an explicit cast."
 related_clauses = []
-tags = []
+tags = ["conversion", "coverage-cross", "coverage-expression", "coverage-set"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2352,7 +2352,7 @@ anchors = [
 ]
 summary = "A cross set expression defining a cross bin shall yield that cross's `CrossQueueType`, containing `CrossValType` tuple elements."
 related_clauses = []
-tags = []
+tags = ["coverage-cross", "coverage-expression", "coverage-set"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2378,7 +2378,7 @@ summary = "For cross-set bin selection, `matches` specifies a positive minimum n
 related_clauses = [
     "19.6.1.2",
 ]
-tags = []
+tags = ["conditional", "coverage-cross", "coverage-expression", "coverage-set"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2403,7 +2403,7 @@ anchors = [
 ]
 summary = "A covergroup may define cross coverage over any combination of two or more variables or previously declared coverage points."
 related_clauses = []
-tags = []
+tags = ["coverage-cross", "coverpoint"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2427,7 +2427,7 @@ anchors = [
 ]
 summary = "The cross automatic types behave as implicit typedefs in the cross body even though explicit typedef declarations are not syntactically allowed there."
 related_clauses = []
-tags = []
+tags = ["coverage-cross", "scope", "typedef"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2452,7 +2452,7 @@ anchors = [
 ]
 summary = "User-defined and automatic bins may coexist in a cross; by default, automatic bins are retained only for cross products that do not intersect any user-defined cross bin, subject to `cross_retain_auto_bins`."
 related_clauses = []
-tags = []
+tags = ["coverage-bin", "coverage-cross"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -2481,7 +2481,7 @@ summary = "For a variable named directly in a cross, SystemVerilog implicitly de
 related_clauses = [
     "19.6",
 ]
-tags = []
+tags = ["coverage-cross", "coverpoint"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2505,7 +2505,7 @@ anchors = [
 ]
 summary = "Cross-bin with expressions behave as if evaluated for every selected value tuple when the covergroup instance is constructed, although implementations need not schedule all such evaluation events."
 related_clauses = []
-tags = []
+tags = ["coverage-cross", "coverage-expression", "instantiation"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2531,7 +2531,7 @@ summary = "A cross-selection `with` expression shall yield a result assignment-c
 related_clauses = [
     "19.5.1.1",
 ]
-tags = []
+tags = ["conversion", "coverage-cross", "coverage-expression"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2555,7 +2555,7 @@ anchors = [
 ]
 summary = "Within a cross with expression, each cross-item identifier denotes the corresponding value in each candidate value tuple."
 related_clauses = []
-tags = []
+tags = ["coverage-cross", "coverage-expression"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2581,7 +2581,7 @@ summary = "A cross select-expression `with` clause selects a candidate bin tuple
 related_clauses = [
     "12.4",
 ]
-tags = []
+tags = ["coverage-cross", "coverage-expression"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2608,7 +2608,7 @@ summary = "A cross with a zero coverage denominator does not contribute to its p
 related_clauses = [
     "19.11",
 ]
-tags = []
+tags = ["coverage-cross", "coverage-metric"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2635,7 +2635,7 @@ summary = "When either coverage query overload with two ref arguments is called 
 related_clauses = [
     "19.8",
 ]
-tags = []
+tags = ["coverage-cross", "coverage-metric", "coverage-query", "output"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2663,7 +2663,7 @@ summary = "For a cross with a zero coverage denominator, get_coverage() and get_
 related_clauses = [
     "19.8",
 ]
-tags = []
+tags = ["coverage-cross", "coverage-metric", "coverage-query"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2687,7 +2687,7 @@ anchors = [
 ]
 summary = "`CrossQueueType` is an unbounded queue whose element type is that cross's `CrossValType`."
 related_clauses = []
-tags = []
+tags = ["coverage-cross", "queue"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2711,7 +2711,7 @@ anchors = [
 ]
 summary = "If a coverpoint type's range bounds are not evident, its CrossValType field bounds are `[$bits(coverpoint_expression)-1:0]`."
 related_clauses = []
-tags = []
+tags = ["bounds", "coverage-cross"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2735,7 +2735,7 @@ anchors = [
 ]
 summary = "`CrossValType` is a struct with one member per crossed coverpoint, each field taking that coverpoint's name and type."
 related_clauses = []
-tags = []
+tags = ["coverage-cross", "layout", "struct"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2759,7 +2759,7 @@ anchors = [
 ]
 summary = "For cumulative point-bin coverage across instances, a bin is covered only when its accumulated hit count reaches the maximum `at_least` value among all accumulated instances."
 related_clauses = []
-tags = []
+tags = ["coverage-bin", "coverage-metric"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2785,7 +2785,7 @@ summary = "A default bin cannot be explicitly ignored."
 related_clauses = [
     "19.5.5",
 ]
-tags = []
+tags = ["coverage-bin"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2811,7 +2811,7 @@ summary = "Hits in default bins shall not contribute to the coverpoint coverage 
 related_clauses = [
     "19.6",
 ]
-tags = []
+tags = ["coverage-bin", "coverage-metric"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2835,7 +2835,7 @@ anchors = [
 ]
 summary = "A `default` bin captures sampled values not in any defined state bin, and `default sequence` captures transitions not in any defined transition bin."
 related_clauses = []
-tags = []
+tags = ["coverage-bin", "coverage-transition"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2859,7 +2859,7 @@ anchors = [
 ]
 summary = "A `default sequence` bin increments only when no other nondefault transition bin increments and no previously started transition-bin match remains pending."
 related_clauses = []
-tags = []
+tags = ["coverage-bin", "coverage-transition"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2883,7 +2883,7 @@ anchors = [
 ]
 summary = "A `default sequence` transition bin shall not use the multiple-bin `[]` form."
 related_clauses = []
-tags = []
+tags = ["coverage-bin", "coverage-transition", "grammar"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2907,7 +2907,7 @@ anchors = [
 ]
 summary = "`per_instance` and `get_inst_coverage` may be set only in a covergroup definition; `auto_bin_max`, `detect_overlap`, and `cross_retain_auto_bins` may be set only in their permitted definition scopes, not procedurally after instantiation."
 related_clauses = []
-tags = []
+tags = ["coverage-option"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -2933,7 +2933,7 @@ anchors = [
 ]
 summary = "For `get_coverage()`, base and derived covergroups are separate types and coverage is not aggregated across their instances."
 related_clauses = []
-tags = []
+tags = ["coverage-inheritance", "coverage-metric"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -2957,7 +2957,7 @@ anchors = [
 ]
 summary = "A derived covergroup implicitly has the same formal argument list as its base covergroup."
 related_clauses = []
-tags = []
+tags = ["coverage-inheritance", "covergroup"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -2981,7 +2981,7 @@ anchors = [
 ]
 summary = "A derived covergroup may refer to base-covergroup components and inherits every base component that it does not override."
 related_clauses = []
-tags = []
+tags = ["coverage-inheritance", "covergroup"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -3005,7 +3005,7 @@ anchors = [
 ]
 summary = "If a base covergroup specifies a coverage event, its derived covergroup shall use that event."
 related_clauses = []
-tags = []
+tags = ["coverage-inheritance", "coverage-sampling", "covergroup"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -3029,7 +3029,7 @@ anchors = [
 ]
 summary = "A derived covergroup instance replaces the base covergroup instance, so references to that covergroup identifier in the class and all base classes resolve to the derived instance."
 related_clauses = []
-tags = []
+tags = ["coverage-inheritance", "covergroup", "name-resolution"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -3055,7 +3055,7 @@ summary = "A derived covergroup may inherit coverage of base-class local propert
 related_clauses = [
     "19.4.1",
 ]
-tags = []
+tags = ["coverage-inheritance", "covergroup"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -3079,7 +3079,7 @@ anchors = [
 ]
 summary = "A derived covergroup option overrides the same option from its base; unoverridden base options remain applicable to the derived covergroup."
 related_clauses = []
-tags = []
+tags = ["coverage-inheritance", "coverage-option", "covergroup"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -3103,7 +3103,7 @@ anchors = [
 ]
 summary = "A derived coverpoint whose name is absent from the base covergroup is an additional sampled coverage point."
 related_clauses = []
-tags = []
+tags = ["coverage-inheritance", "coverpoint"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -3129,7 +3129,7 @@ summary = "A derived coverpoint with the same name as a base coverpoint replaces
 related_clauses = [
     "19.11",
 ]
-tags = []
+tags = ["coverage-inheritance", "coverage-metric", "coverpoint"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -3155,7 +3155,7 @@ anchors = [
 ]
 summary = "The boolean `detect_overlap` option defaults false; when true, it requires a warning for overlap between two bins' value-range or transition lists. It is allowed at covergroup and coverpoint scope, not cross scope, and a group value defaults its coverpoints."
 related_clauses = []
-tags = []
+tags = ["coverage-bin", "coverage-option", "diagnostic"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3179,7 +3179,7 @@ anchors = [
 ]
 summary = "An end-of-execution block event shall not trigger when the named execution is disabled."
 related_clauses = []
-tags = []
+tags = ["block", "disable", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3203,7 +3203,7 @@ anchors = [
 ]
 summary = "Assigning the same coverage option more than once within one covergroup definition is an error."
 related_clauses = []
-tags = []
+tags = ["coverage-option", "diagnostic", "redeclaration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3227,7 +3227,7 @@ anchors = [
 ]
 summary = "A covergroup declaration within a class declares both an anonymous covergroup type and an instance variable whose name is the covergroup identifier."
 related_clauses = []
-tags = []
+tags = ["class", "covergroup", "namespace"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3251,7 +3251,7 @@ anchors = [
 ]
 summary = "An embedded covergroup variable shall not be assigned outside the `new()` method of its parent class."
 related_clauses = []
-tags = []
+tags = ["covergroup", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3275,7 +3275,7 @@ anchors = [
 ]
 summary = "An embedded covergroup may use protected and local properties of its containing class in coverpoint expressions, guards, and option initialization without changing their access protection."
 related_clauses = []
-tags = []
+tags = ["covergroup", "visibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3299,7 +3299,7 @@ anchors = [
 ]
 summary = "An embedded covergroup is created by assigning `new()` to its variable in the parent class constructor; without that assignment no covergroup exists and no data is sampled."
 related_clauses = []
-tags = []
+tags = ["constructor", "covergroup", "instantiation"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3323,7 +3323,7 @@ anchors = [
 ]
 summary = "An embedded covergroup may use the single-inheritance `covergroup extends identifier; ... endgroup` declaration form."
 related_clauses = []
-tags = []
+tags = ["coverage-inheritance", "covergroup", "grammar"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -3352,7 +3352,7 @@ related_clauses = [
     "19.5.5",
     "19.5.6",
 ]
-tags = []
+tags = ["coverage-bin", "coverage-metric", "coverpoint"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3376,7 +3376,7 @@ anchors = [
 ]
 summary = "Automatic bin creation for an enum coverpoint creates one bin per value in the enumeration's cardinality."
 related_clauses = []
-tags = []
+tags = ["coverage-bin", "coverpoint", "enum"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3400,7 +3400,7 @@ anchors = [
 ]
 summary = "When an item's computation rules exclude it, both its weighted numerator contribution and its weight in the covergroup denominator are omitted."
 related_clauses = []
-tags = []
+tags = ["coverage-metric", "covergroup"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3424,7 +3424,7 @@ anchors = [
 ]
 summary = "When fewer fixed bins than listed values are requested, values are assigned in source order with floor(total values/bin count), at least one per bin, and all remainder in the last bin; duplicate listed values are retained and may occur in multiple bins."
 related_clauses = []
-tags = []
+tags = ["coverage-bin", "source-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3448,7 +3448,7 @@ anchors = [
 ]
 summary = "When a fixed-bin count exceeds the number of listed values, each value is assigned to one bin in order and the remaining bins are empty."
 related_clauses = []
-tags = []
+tags = ["coverage-bin"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3472,7 +3472,7 @@ anchors = [
 ]
 summary = "An unlabeled coverpoint over anything other than a single variable may receive an implementation-generated reporting name, but that generated name cannot be referenced within SystemVerilog source."
 related_clauses = []
-tags = []
+tags = ["coverpoint", "name-resolution"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3498,7 +3498,7 @@ anchors = [
 ]
 summary = "`get_coverage()` is callable on groups, points, and crosses and returns 0..100 cumulative type coverage across all instances; as a static method it may be invoked through either type scope `::` or an instance `.`."
 related_clauses = []
-tags = []
+tags = ["coverage-method", "coverage-metric", "coverage-query"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3524,7 +3524,7 @@ anchors = [
 ]
 summary = "`get_inst_coverage()` is callable on group, point, and cross instances via `.` only and returns that specific instance's 0..100 coverage."
 related_clauses = []
-tags = []
+tags = ["coverage-method", "coverage-metric", "coverage-query"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3553,7 +3553,7 @@ anchors = [
 ]
 summary = "The boolean covergroup-only `get_inst_coverage` option defaults false and applies when `merge_instances` is set; true enables per-instance tracking for `get_inst_coverage`, while false requires it to equal `get_coverage`. It is not allowed at coverpoint or cross scope."
 related_clauses = []
-tags = []
+tags = ["coverage-option", "coverage-query", "covergroup"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3577,7 +3577,7 @@ anchors = [
 ]
 summary = "Global `$get_coverage` returns 100.0 when the design has no covergroup instances or every covergroup has weight zero."
 related_clauses = []
-tags = []
+tags = ["coverage-metric", "coverage-query"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3601,7 +3601,7 @@ anchors = [
 ]
 summary = "The system function `$get_coverage()` returns a real from 0 through 100 representing overall coverage of all covergroup types."
 related_clauses = []
-tags = []
+tags = ["coverage-metric", "coverage-query"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3626,7 +3626,7 @@ anchors = [
 ]
 summary = "All instance options are allowed at covergroup level; except weight, goal, comment, and per_instance, group-level values default corresponding point and cross options and may be overridden by individual items."
 related_clauses = []
-tags = []
+tags = ["coverage-option"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3650,7 +3650,7 @@ anchors = [
 ]
 summary = "Values or transition sequences listed in `ignore_bins` are explicitly excluded from coverage for that coverpoint."
 related_clauses = []
-tags = []
+tags = ["coverage-bin", "coverpoint"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3674,7 +3674,7 @@ anchors = [
 ]
 summary = "Each ignore-bin state value is removed from every ordinary state bin after values have been distributed to specified bins."
 related_clauses = []
-tags = []
+tags = ["coverage-bin"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3698,7 +3698,7 @@ anchors = [
 ]
 summary = "An ignored transition bin shall not specify an unbounded or simulation-dependent-length sequence."
 related_clauses = []
-tags = []
+tags = ["coverage-bin", "coverage-transition"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3722,7 +3722,7 @@ anchors = [
 ]
 summary = "A covered transition sequence is removed when it cannot match without also matching an ignored transition sequence."
 related_clauses = []
-tags = []
+tags = ["coverage-bin", "coverage-transition"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3746,7 +3746,7 @@ anchors = [
 ]
 summary = "A value listed in a state ignore bin does not suppress a transition merely because that transition includes the value."
 related_clauses = []
-tags = []
+tags = ["coverage-bin", "coverage-transition"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3770,7 +3770,7 @@ anchors = [
 ]
 summary = "Illegal state values are removed from ordinary state bins after distribution, and a covered transition is removed when it cannot match without also matching an illegal transition sequence."
 related_clauses = []
-tags = []
+tags = ["coverage-bin", "coverage-transition"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3794,7 +3794,7 @@ anchors = [
 ]
 summary = "Sampling an illegal value or transition issues a run-time error, even when the same match is also included in another bin."
 related_clauses = []
-tags = []
+tags = ["coverage-bin", "coverage-transition", "diagnostic"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3818,7 +3818,7 @@ anchors = [
 ]
 summary = "Coverage-point values and transition sequences may be designated illegal using `illegal_bins`."
 related_clauses = []
-tags = []
+tags = ["coverage-bin", "coverpoint"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3842,7 +3842,7 @@ anchors = [
 ]
 summary = "An illegal transition bin shall not specify an unbounded or simulation-dependent-length sequence."
 related_clauses = []
-tags = []
+tags = ["coverage-bin", "coverage-transition", "diagnostic"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3866,7 +3866,7 @@ anchors = [
 ]
 summary = "A value listed in an illegal state bin does not by itself affect a transition sequence containing that value."
 related_clauses = []
-tags = []
+tags = ["coverage-bin", "coverage-transition"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3891,7 +3891,7 @@ anchors = [
 ]
 summary = "The numeric `at_least` option defaults to 1 and sets the minimum hit count for each bin; a bin with fewer hits is not covered."
 related_clauses = []
-tags = []
+tags = ["coverage-bin", "coverage-option", "covergroup"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3917,7 +3917,7 @@ anchors = [
 ]
 summary = "The numeric `auto_bin_max` option defaults to 64 and limits automatic bins when a coverpoint has no explicit bins; it is allowed at covergroup and coverpoint scope, not cross scope, and a group value defaults its coverpoints."
 related_clauses = []
-tags = []
+tags = ["coverage-bin", "coverage-option", "covergroup"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3945,7 +3945,7 @@ anchors = [
 ]
 summary = "The string `comment` option defaults to empty; a set comment accompanies a covergroup instance, coverpoint, or cross and is saved in the coverage database and included in its report."
 related_clauses = []
-tags = []
+tags = ["coverage-database", "coverage-option", "covergroup"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3971,7 +3971,7 @@ anchors = [
 ]
 summary = "The numeric instance-specific `goal` option defaults to 100 and specifies the target goal for a covergroup instance, or for one of its coverpoints or crosses."
 related_clauses = []
-tags = []
+tags = ["coverage-option", "covergroup"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3997,7 +3997,7 @@ anchors = [
 ]
 summary = "The string instance option `name` specifies a covergroup instance name; when omitted, the tool automatically generates a unique name for each instance."
 related_clauses = []
-tags = []
+tags = ["coverage-option", "covergroup", "name-resolution"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4022,7 +4022,7 @@ anchors = [
 ]
 summary = "An instance-specific coverage option may be set in a covergroup definition using `option.member_name = expression;`."
 related_clauses = []
-tags = []
+tags = ["coverage-option", "grammar"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4046,7 +4046,7 @@ anchors = [
 ]
 summary = "Each covergroup instance may initialize an instance-specific option differently, and that value affects only that instance."
 related_clauses = []
-tags = []
+tags = ["coverage-option"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4076,7 +4076,7 @@ summary = "At covergroup scope, option.weight controls that instance's contribut
 related_clauses = [
     "19.11",
 ]
-tags = []
+tags = ["coverage-metric", "coverage-option", "covergroup"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4100,7 +4100,7 @@ anchors = [
 ]
 summary = "The instance-specific `option.weight` value defaults to 1."
 related_clauses = []
-tags = []
+tags = ["coverage-metric", "coverage-option", "covergroup"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4125,7 +4125,7 @@ anchors = [
 ]
 summary = "The value assigned to the instance-specific option.weight shall be a nonnegative integral value."
 related_clauses = []
-tags = []
+tags = ["coverage-metric", "coverage-option", "covergroup"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4149,7 +4149,7 @@ anchors = [
 ]
 summary = "An integral range denotes every discrete integral value between inclusive endpoints, while a real range denotes every real value between inclusive endpoints."
 related_clauses = []
-tags = []
+tags = ["coverage-bin", "coverage-real"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -4175,7 +4175,7 @@ anchors = [
 ]
 summary = "For a non-enum M-bit integral coverpoint, the automatic-bin count is the smaller of 2^M and `auto_bin_max`."
 related_clauses = []
-tags = []
+tags = ["coverage-bin", "coverage-option", "coverpoint"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4199,7 +4199,7 @@ anchors = [
 ]
 summary = "Integral open-array state bins are named `binname[value]`; fixed arrays of N state bins are named `binname[0]` through `binname[N-1]`."
 related_clauses = []
-tags = []
+tags = ["coverage-bin", "grammar"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4223,7 +4223,7 @@ anchors = [
 ]
 summary = "`$load_coverage_db(filename)` loads cumulative coverage information for all covergroup types from the specified file."
 related_clauses = []
-tags = []
+tags = ["coverage-database"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4248,7 +4248,7 @@ anchors = [
 ]
 summary = "Merged bins overlap across instances exactly by equal generated names: scalar bins share `binname`; open state bins use value, fixed bins use index, automatic bins use original value/range unaffected by ignore/illegal removal except emptying, open transitions use bounded transition, and automatic cross bins use the complete component-bin-name tuple."
 related_clauses = []
-tags = []
+tags = ["coverage-bin", "name-resolution"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4275,7 +4275,7 @@ related_clauses = [
     "19.11.1",
     "19.11.2",
 ]
-tags = []
+tags = ["coverage-bin", "coverage-metric"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4299,7 +4299,7 @@ anchors = [
 ]
 summary = "The instance `name` option is permitted at covergroup syntactic level and is not permitted at coverpoint or cross level."
 related_clauses = []
-tags = []
+tags = ["coverage-option", "name-resolution", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4323,7 +4323,7 @@ anchors = [
 ]
 summary = "When merge_instances is false, the two ref-int outputs of `get_coverage` shall be consistent with the weighted-sum type coverage computation."
 related_clauses = []
-tags = []
+tags = ["coverage-metric", "coverage-query"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4347,7 +4347,7 @@ anchors = [
 ]
 summary = "A non-wildcard integral value or transition bin may contain four-state values, and X or Z in the bin matches only X or Z in the same sampled bit positions using case-equality semantics."
 related_clauses = []
-tags = []
+tags = ["coverage-bin", "four-state"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4371,7 +4371,7 @@ anchors = [
 ]
 summary = "Coverage-option assignment statements within a covergroup definition are evaluated when that covergroup is instantiated."
 related_clauses = []
-tags = []
+tags = ["coverage-option", "instantiation"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4397,7 +4397,7 @@ summary = "`option` is a built-in member of every covergroup, coverpoint, and cr
 related_clauses = [
     "19.10",
 ]
-tags = []
+tags = ["coverage-cross", "coverage-option", "covergroup", "coverpoint"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4422,7 +4422,7 @@ anchors = [
 ]
 summary = "Covergroup, coverpoint, and cross `option` and `type_option` members are implicitly declared structures containing exactly the members and declared types shown for each applicable scope."
 related_clauses = []
-tags = []
+tags = ["coverage-cross", "coverage-option", "covergroup", "coverpoint"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -4448,7 +4448,7 @@ anchors = [
 ]
 summary = "Instance-specific options other than the definition-only options may be assigned procedurally after covergroup instantiation."
 related_clauses = []
-tags = []
+tags = ["coverage-option"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4472,7 +4472,7 @@ anchors = [
 ]
 summary = "A covergroup may override `sample()` with a triggering function accepting arguments, allowing sampling values passed from automatic routines, process instances, and concurrent assertion sequences or properties."
 related_clauses = []
-tags = []
+tags = ["coverage-sampling", "covergroup", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4497,7 +4497,7 @@ anchors = [
 ]
 summary = "If at least one value in a warned bin range is valid, the effective range is the intersection of the specified range and values representable by the coverpoint's effective type."
 related_clauses = []
-tags = []
+tags = ["conversion", "coverage-bin"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4526,7 +4526,7 @@ anchors = [
 ]
 summary = "The boolean covergroup-only `per_instance` option defaults false; every instance contributes to type coverage, and when true its instance-specific coverage shall be saved and reported, while false does not require preserving instance details. It is not allowed at coverpoint or cross scope."
 related_clauses = []
-tags = []
+tags = ["coverage-option", "covergroup"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4553,7 +4553,7 @@ summary = "A coverpoint for which no bin has an associated value or transition h
 related_clauses = [
     "19.11",
 ]
-tags = []
+tags = ["coverage-metric", "coverpoint"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4580,7 +4580,7 @@ summary = "When either coverage query overload with two ref arguments is called 
 related_clauses = [
     "19.8",
 ]
-tags = []
+tags = ["coverage-metric", "coverage-query", "coverpoint", "output"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4608,7 +4608,7 @@ summary = "For an all-empty-bin coverpoint, get_coverage() and get_inst_coverage
 related_clauses = [
     "19.8",
 ]
-tags = []
+tags = ["coverage-metric", "coverage-query", "coverpoint"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4635,7 +4635,7 @@ summary = "A real bin value using `+/- tolerance` denotes the inclusive absolute
 related_clauses = [
     "11.4.13",
 ]
-tags = []
+tags = ["coverage-bin", "coverage-real"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -4659,7 +4659,7 @@ anchors = [
 ]
 summary = "A `with` expression is not allowed for bins of a real coverpoint type."
 related_clauses = []
-tags = []
+tags = ["coverage-bin", "coverage-expression", "coverage-real", "diagnostic"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -4683,7 +4683,7 @@ anchors = [
 ]
 summary = "Bins shall not be automatically created for a real-expression coverpoint, so it shall contain at least one explicit `bins` construct."
 related_clauses = []
-tags = []
+tags = ["coverage-bin", "coverage-real", "coverpoint"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -4707,7 +4707,7 @@ anchors = [
 ]
 summary = "A default bin for a real expression shall be a single bin; open-array `[]` and fixed-array `[N]` forms are illegal."
 related_clauses = []
-tags = []
+tags = ["coverage-bin", "coverage-real"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -4731,7 +4731,7 @@ anchors = [
 ]
 summary = "Real fixed bins are indexed 0 through N-1; range intervals and individual values are distributed in source order using floor(item count/N), at least one item per bin, with remainder in the last bin and duplicate items retained."
 related_clauses = []
-tags = []
+tags = ["coverage-bin", "coverage-real", "source-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -4755,7 +4755,7 @@ anchors = [
 ]
 summary = "When a real fixed-bin count exceeds the number of range-interval and individual-value items, the excess bins are empty."
 related_clauses = []
-tags = []
+tags = ["coverage-bin", "coverage-real"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -4779,7 +4779,7 @@ anchors = [
 ]
 summary = "When multiple ranges in one real open bin array produce identical intervals, those identical intervals are merged into one bin."
 related_clauses = []
-tags = []
+tags = ["coverage-bin", "coverage-real"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -4803,7 +4803,7 @@ anchors = [
 ]
 summary = "For an open real bin array, intervals consecutively span each range from its minimum to maximum, each bin covers values in its interval, and a range no wider than the interval size produces one bin."
 related_clauses = []
-tags = []
+tags = ["coverage-bin", "coverage-real"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -4827,7 +4827,7 @@ anchors = [
 ]
 summary = "A real open-array interval bin name encodes its low and high endpoints with brackets for inclusive endpoints and `)` for an exclusive high endpoint; an individual-value bin is named `binname[value]`."
 related_clauses = []
-tags = []
+tags = ["coverage-bin", "coverage-real"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -4853,7 +4853,7 @@ summary = "A real range wider than `type_option.real_interval` is partitioned by
 related_clauses = [
     "19.7.1",
 ]
-tags = []
+tags = ["coverage-bin", "coverage-option", "coverage-real"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -4880,7 +4880,7 @@ summary = "A real bin value using `+%- tolerance` denotes an inclusive relative 
 related_clauses = [
     "11.4.13",
 ]
-tags = []
+tags = ["coverage-bin", "coverage-real"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -4904,7 +4904,7 @@ anchors = [
 ]
 summary = "The `$` primary is legal in a real covergroup value range, but a real range containing `$` is one indivisible bin item and is not partitioned into intervals."
 related_clauses = []
-tags = []
+tags = ["coverage-bin", "coverage-real"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -4931,7 +4931,7 @@ summary = "For real coverpoint ranges, a bin name without brackets creates one b
 related_clauses = [
     "11.4.13",
 ]
-tags = []
+tags = ["coverage-bin", "coverage-real", "grammar"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -4955,7 +4955,7 @@ anchors = [
 ]
 summary = "A wildcard bin specification is illegal for a real-type coverpoint."
 related_clauses = []
-tags = []
+tags = ["coverage-bin", "coverage-real", "coverpoint", "diagnostic"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -4979,7 +4979,7 @@ anchors = [
 ]
 summary = "Covergroup constructor formals and overridden-sample formals share one lexical scope, so the same argument name in both lists is an error."
 related_clauses = []
-tags = []
+tags = ["coverage-sampling", "covergroup", "name-resolution", "redeclaration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5003,7 +5003,7 @@ anchors = [
 ]
 summary = "Overridden-sample formals are resolved before names in the enclosing scope and may be used only to designate coverpoint or conditional-guard expressions; any other use is an error."
 related_clauses = []
-tags = []
+tags = ["coverage-sampling", "formal-argument", "name-resolution"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5027,7 +5027,7 @@ anchors = [
 ]
 summary = "A formal argument of an overridden sample method shall not have output direction."
 related_clauses = []
-tags = []
+tags = ["argument-direction", "coverage-sampling", "output"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5052,7 +5052,7 @@ anchors = [
 ]
 summary = "The predefined `void sample()` method is callable on a covergroup, not on a coverpoint or cross, and triggers sampling of that covergroup."
 related_clauses = []
-tags = []
+tags = ["coverage-method", "coverage-sampling", "covergroup", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5076,7 +5076,7 @@ anchors = [
 ]
 summary = "A set covergroup expression defining a bin shall yield a non-associative array whose element type is assignment-compatible with the coverpoint type."
 related_clauses = []
-tags = []
+tags = ["array", "conversion", "coverage-bin", "coverage-set"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5100,7 +5100,7 @@ anchors = [
 ]
 summary = "A set covergroup expression is evaluated when its covergroup instance is constructed."
 related_clauses = []
-tags = []
+tags = ["coverage-bin", "coverage-set", "instantiation"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5124,7 +5124,7 @@ anchors = [
 ]
 summary = "Coverpoint and bin identifiers declared within the covergroup are not visible in a set covergroup expression."
 related_clauses = []
-tags = []
+tags = ["coverage-bin", "coverage-set", "visibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5148,7 +5148,7 @@ anchors = [
 ]
 summary = "`$set_coverage_db_name(filename)` sets the coverage database filename to which coverage information is saved at simulation end."
 related_clauses = []
-tags = []
+tags = ["coverage-database"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5173,7 +5173,7 @@ anchors = [
 ]
 summary = "`void set_inst_name(string)` is callable on a covergroup, not a point or cross, and sets its instance name to the supplied string."
 related_clauses = []
-tags = []
+tags = ["coverage-method", "covergroup", "name-resolution"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5198,7 +5198,7 @@ anchors = [
 ]
 summary = "`void start()` is callable on covergroups, coverpoints, and crosses and starts their coverage collection."
 related_clauses = []
-tags = []
+tags = ["coverage-control", "coverage-method"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5223,7 +5223,7 @@ anchors = [
 ]
 summary = "`void stop()` is callable on covergroups, coverpoints, and crosses and stops their coverage collection."
 related_clauses = []
-tags = []
+tags = ["coverage-control", "coverage-method"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5249,7 +5249,7 @@ summary = "With strobe enabled, clocking-event samples occur in the Postponed re
 related_clauses = [
     "19.7.1",
 ]
-tags = []
+tags = ["clocking-event", "coverage-sampling", "scheduling", "strobe"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5273,7 +5273,7 @@ anchors = [
 ]
 summary = "The strobe option shall not affect sampling caused by a block event expression or procedural `sample()` call."
 related_clauses = []
-tags = []
+tags = ["coverage-option", "coverage-sampling", "strobe"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5297,7 +5297,7 @@ anchors = [
 ]
 summary = "A transition-bin sequence may contain an arbitrary number of ordered values, each matched by the next successive coverpoint sample."
 related_clauses = []
-tags = []
+tags = ["coverage-transition"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5322,7 +5322,7 @@ anchors = [
 ]
 summary = "A transition bin's count increments when the sampled transition sequence completely matches any one ordered sequence in its transition list."
 related_clauses = []
-tags = []
+tags = ["coverage-bin", "coverage-transition"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5349,7 +5349,7 @@ summary = "Transition-bin declarations shall conform to the transition-bin gramm
 related_clauses = [
     "16.9",
 ]
-tags = []
+tags = ["coverage-bin", "coverage-transition", "grammar"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5374,7 +5374,7 @@ anchors = [
 ]
 summary = "A particular transition bin increments at most once on any one coverpoint sample, even if multiple matches complete on that sample."
 related_clauses = []
-tags = []
+tags = ["coverage-bin", "coverage-sampling", "coverage-transition"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5398,7 +5398,7 @@ anchors = [
 ]
 summary = "A transition list denotes ordered integral-value transitions; transition bins over real values are illegal."
 related_clauses = []
-tags = []
+tags = ["coverage-real", "coverage-transition", "diagnostic"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5424,7 +5424,7 @@ anchors = [
 ]
 summary = "In a transition bin, `trans_item [* repeat_range]` requires the transition item to match on the specified number, or range of numbers, of consecutive samples."
 related_clauses = []
-tags = []
+tags = ["coverage-transition"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5451,7 +5451,7 @@ summary = "For `trans_item [-> repeat_range]`, the item must occur the required 
 related_clauses = [
     "16.9.2",
 ]
-tags = []
+tags = ["coverage-transition"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5477,7 +5477,7 @@ summary = "For `trans_item [= repeat_range]`, occurrence counting is like goto r
 related_clauses = [
     "16.9.2",
 ]
-tags = []
+tags = ["coverage-transition"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5501,7 +5501,7 @@ anchors = [
 ]
 summary = "For a transition open-bin array declared `binname[]`, each bounded transition receives a bin named `binname[transition]`."
 related_clauses = []
-tags = []
+tags = ["coverage-bin", "coverage-transition"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5525,7 +5525,7 @@ anchors = [
 ]
 summary = "A transition bin increments for every complete sequence match, including matches that overlap in sampled-value history."
 related_clauses = []
-tags = []
+tags = ["coverage-bin", "coverage-transition"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5549,7 +5549,7 @@ anchors = [
 ]
 summary = "A transition from one range list to another expands to every ordered transition pairing each value in the first list with each value in the second."
 related_clauses = []
-tags = []
+tags = ["coverage-transition"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5573,7 +5573,7 @@ anchors = [
 ]
 summary = "For `value1 => value2`, value1 must occur at one coverpoint sample and value2 at the immediately following sample."
 related_clauses = []
-tags = []
+tags = ["coverage-sampling", "coverage-transition"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5600,7 +5600,7 @@ anchors = [
 ]
 summary = "The string-literal type `comment` option defaults to empty; it accompanies a covergroup type, point, or cross and is saved in the coverage database and report."
 related_clauses = []
-tags = []
+tags = ["coverage-database", "coverage-option"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5626,7 +5626,7 @@ anchors = [
 ]
 summary = "The boolean covergroup-only type option `distribute_first` defaults false; when true, values are distributed among bins before applying the with expression. It is not allowed at coverpoint or cross scope."
 related_clauses = []
-tags = []
+tags = ["coverage-expression", "coverage-option"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5652,7 +5652,7 @@ anchors = [
 ]
 summary = "The constant numeric type `goal` option defaults to 100 and specifies the target goal for a covergroup type or one of its coverpoints or crosses."
 related_clauses = []
-tags = []
+tags = ["coverage-option"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5678,7 +5678,7 @@ anchors = [
 ]
 summary = "With merge disabled, covergroup type coverage is the sum of each instance's `option.weight` times its instance coverage divided by the sum of instance weights, independent of direct point/cross type weighting."
 related_clauses = []
-tags = []
+tags = ["coverage-metric", "coverage-option"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5702,7 +5702,7 @@ anchors = [
 ]
 summary = "With merge disabled, point or cross type coverage is the weighted average of that item across instances using each instance item's `option.weight`."
 related_clauses = []
-tags = []
+tags = ["coverage-metric", "coverage-option"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5733,7 +5733,7 @@ summary = "The boolean covergroup-only type option `merge_instances` defaults fa
 related_clauses = [
     "19.11.3",
 ]
-tags = []
+tags = ["coverage-metric", "coverage-option"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5758,7 +5758,7 @@ anchors = [
 ]
 summary = "A covergroup type option is set in the covergroup definition using `type_option.member_name = constant_expression;`."
 related_clauses = []
-tags = []
+tags = ["coverage-option", "grammar"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5782,7 +5782,7 @@ anchors = [
 ]
 summary = "`strobe` and `real_interval` type options may be set only in the covergroup definition; other type options may be assigned procedurally at any time during simulation."
 related_clauses = []
-tags = []
+tags = ["coverage-option", "coverage-real", "scheduling", "strobe"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -5810,7 +5810,7 @@ summary = "`type_option` is a built-in static member of every covergroup, coverp
 related_clauses = [
     "19.10",
 ]
-tags = []
+tags = ["coverage-cross", "coverage-option", "covergroup", "coverpoint"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5836,7 +5836,7 @@ summary = "Different instances of one covergroup type cannot have different type
 related_clauses = [
     "11.2.1",
 ]
-tags = []
+tags = ["coverage-option", "covergroup"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5860,7 +5860,7 @@ anchors = [
 ]
 summary = "Covergroup type options describe the covergroup type as a whole and behave analogously to static class data shared by its instances."
 related_clauses = []
-tags = []
+tags = ["coverage-option", "covergroup", "static"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5884,7 +5884,7 @@ anchors = [
 ]
 summary = "Group-level type options do not default lower point/cross type options, except `real_interval`, which does default lower applicable scopes."
 related_clauses = []
-tags = []
+tags = ["coverage-option", "coverage-real"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -5911,7 +5911,7 @@ anchors = [
 ]
 summary = "The real-valued type `real_interval` option defaults to 1.0 and specifies the width of real range intervals distributed among multiple bins."
 related_clauses = []
-tags = []
+tags = ["coverage-option", "coverage-real"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -5935,7 +5935,7 @@ anchors = [
 ]
 summary = "The `real_interval` type option is permitted at covergroup and coverpoint levels but not at cross level."
 related_clauses = []
-tags = []
+tags = ["coverage-option", "coverage-real"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -5963,7 +5963,7 @@ summary = "The boolean covergroup-only type option `strobe` defaults false; when
 related_clauses = [
     "19.3",
 ]
-tags = []
+tags = ["clocking-event", "coverage-option", "coverage-sampling", "strobe"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5993,7 +5993,7 @@ summary = "At covergroup scope, type_option.weight controls that covergroup type
 related_clauses = [
     "19.11",
 ]
-tags = []
+tags = ["coverage-metric", "coverage-option"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6017,7 +6017,7 @@ anchors = [
 ]
 summary = "The type-specific `type_option.weight` value defaults to 1."
 related_clauses = []
-tags = []
+tags = ["coverage-metric", "coverage-option"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6042,7 +6042,7 @@ anchors = [
 ]
 summary = "The constant value assigned to type_option.weight shall be a nonnegative integral value."
 related_clauses = []
-tags = []
+tags = ["coverage-metric", "coverage-option", "integral"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6066,7 +6066,7 @@ anchors = [
 ]
 summary = "A transition sequence of unbounded or simulation-dependent length shall not be declared using the multiple-bin `[]` form; doing so is an error."
 related_clauses = []
-tags = []
+tags = ["coverage-transition", "grammar"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6092,7 +6092,7 @@ anchors = [
 ]
 summary = "For a coverpoint with user-defined bins, item coverage is the cardinality of covered defined bins divided by the cardinality of all defined bins."
 related_clauses = []
-tags = []
+tags = ["coverage-bin", "coverage-metric", "coverpoint"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6119,7 +6119,7 @@ summary = "For an integral coverpoint range list, a bin name without brackets cr
 related_clauses = [
     "11.4.13",
 ]
-tags = []
+tags = ["coverage-bin", "grammar"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6144,7 +6144,7 @@ anchors = [
 ]
 summary = "A bin range shall not participate if either endpoint contains X/Z or every value in the range would trigger a value-resolution warning."
 related_clauses = []
-tags = []
+tags = ["coverage-bin", "diagnostic"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6169,7 +6169,7 @@ anchors = [
 ]
 summary = "When a singleton value in a bin range list or set expression triggers a value-resolution warning, that singleton shall not participate in the bin's values."
 related_clauses = []
-tags = []
+tags = ["coverage-bin", "diagnostic"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6193,7 +6193,7 @@ anchors = [
 ]
 summary = "For value resolution in wildcard bins, X and Z digits in a bin expression are expanded to all corresponding 0/1 values before type-resolution rules are applied."
 related_clauses = []
-tags = []
+tags = ["conversion", "coverage-bin", "four-state"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6217,7 +6217,7 @@ anchors = [
 ]
 summary = "In a wildcard bin definition, each X, Z, or `?` digit is a wildcard matching either 0 or 1."
 related_clauses = []
-tags = []
+tags = ["coverage-bin", "four-state"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6241,7 +6241,7 @@ anchors = [
 ]
 summary = "Wildcard bins expand wildcard digits only over 2-state values; sampled values containing X or Z are excluded from wildcard-bin matches."
 related_clauses = []
-tags = []
+tags = ["coverage-bin", "four-state", "two-state"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6268,7 +6268,7 @@ summary = "A covergroup whose coverage calculation has a zero denominator does n
 related_clauses = [
     "19.11.3",
 ]
-tags = []
+tags = ["coverage-metric", "covergroup"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6295,7 +6295,7 @@ summary = "When get_coverage() or get_inst_coverage() is called with its two ref
 related_clauses = [
     "19.8",
 ]
-tags = []
+tags = ["coverage-metric", "coverage-query", "covergroup", "output"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6323,7 +6323,7 @@ summary = "For a covergroup with a zero coverage denominator, get_coverage() and
 related_clauses = [
     "19.8",
 ]
-tags = []
+tags = ["coverage-metric", "coverage-query", "covergroup"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6347,7 +6347,7 @@ anchors = [
 ]
 summary = "A length-zero transition-bin specification is illegal, including a trans_set containing only one value range or one value range repeated exactly once."
 related_clauses = []
-tags = []
+tags = ["coverage-transition", "diagnostic", "grammar"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"

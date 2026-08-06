@@ -15,7 +15,7 @@ anchors = [
 ]
 summary = "`accept_on(b) P` is nonvacuous only when `P` is nonvacuous and either `b` never causes acceptance or a prefix before acceptance has a definitive false- or true-placeholder continuation satisfying the formal condition for `P`."
 related_clauses = []
-tags = []
+tags = ["abort", "nonvacuity", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -41,7 +41,7 @@ anchors = [
 ]
 summary = "`accept_on(b) P` is neutrally satisfied either when `P` is satisfied normally or when `b` occurs and the trace prefix before that occurrence, extended with the true placeholder, satisfies `P`."
 related_clauses = []
-tags = []
+tags = ["abort", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -65,7 +65,7 @@ anchors = [
 ]
 summary = "Unbounded `always p` is semantically `p until 0`."
 related_clauses = []
-tags = []
+tags = ["property", "temporal-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -91,7 +91,7 @@ anchors = [
 ]
 summary = "`always P` is nonvacuous when `P` is nonvacuous at some trace position and is satisfied at every earlier position."
 related_clauses = []
-tags = []
+tags = ["nonvacuity", "property", "temporal-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -115,7 +115,7 @@ anchors = [
 ]
 summary = "A property conjunction is nonvacuous exactly when at least one operand evaluation is nonvacuous."
 related_clauses = []
-tags = []
+tags = ["nonvacuity", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -139,7 +139,7 @@ anchors = [
 ]
 summary = "An assert property statement is satisfied over a set of words predicated on assumptions exactly when it is satisfied on every feasible word."
 related_clauses = []
-tags = []
+tags = ["assumption", "concurrent-assertion", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -163,7 +163,7 @@ anchors = [
 ]
 summary = "A clocked sequence or property transformed for satisfaction semantics requires each event-control condition to be independent of assertion local variables."
 related_clauses = []
-tags = []
+tags = ["clock-flow", "clocking-event", "local-variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -187,7 +187,7 @@ anchors = [
 ]
 summary = "An assertion statement holds globally over a set of words predicated on assumptions exactly when it is satisfied on every feasible word."
 related_clauses = []
-tags = []
+tags = ["assumption", "concurrent-assertion"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -213,7 +213,7 @@ summary = "Neutral satisfaction of assertion statements containing local variabl
 related_clauses = [
     "F.5.3.1",
 ]
-tags = []
+tags = ["concurrent-assertion", "local-variable", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -237,7 +237,7 @@ anchors = [
 ]
 summary = "A word is feasible under a set of assumptions exactly when every assumption in that set is satisfied on the word."
 related_clauses = []
-tags = []
+tags = ["assumption"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -261,7 +261,7 @@ anchors = [
 ]
 summary = "A bare sequence used as a property in a `cover property` or `expect` statement is interpreted as `strong(sequence)`."
 related_clauses = []
-tags = []
+tags = ["property", "property-strength", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -285,7 +285,7 @@ anchors = [
 ]
 summary = "A bare sequence used as a property in an `assert property` or `assume property` statement is interpreted as `weak(sequence)`."
 related_clauses = []
-tags = []
+tags = ["property", "property-strength", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -309,7 +309,7 @@ anchors = [
 ]
 summary = "A Boolean-expression sequence blocks no assertion local variables from flowing out."
 related_clauses = []
-tags = []
+tags = ["local-variable", "local-variable-blocking", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -334,7 +334,7 @@ anchors = [
 ]
 summary = "For `R1 ##1 R2`, blocked locals are the union of locals blocked by `R2` and those blocked by `R1` that do not flow from an empty incoming set through `R2`."
 related_clauses = []
-tags = []
+tags = ["local-variable", "local-variable-blocking", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -358,7 +358,7 @@ anchors = [
 ]
 summary = "`first_match(R)` blocks exactly the local variables blocked by `R`."
 related_clauses = []
-tags = []
+tags = ["local-variable", "local-variable-blocking", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -383,7 +383,7 @@ anchors = [
 ]
 summary = "For `R1 ##0 R2`, blocked locals are the union of locals blocked by `R2` and those blocked by `R1` that do not flow from an empty incoming set through `R2`."
 related_clauses = []
-tags = []
+tags = ["local-variable", "local-variable-blocking", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -407,7 +407,7 @@ anchors = [
 ]
 summary = "The locals blocked by `(t v; R)` are those blocked by `R` except for the locally declared name `v`."
 related_clauses = []
-tags = []
+tags = ["local-variable", "local-variable-blocking", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -431,7 +431,7 @@ anchors = [
 ]
 summary = "A unit sequence match assignment by itself blocks no local variables."
 related_clauses = []
-tags = []
+tags = ["local-variable", "local-variable-blocking", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -455,7 +455,7 @@ anchors = [
 ]
 summary = "Null repetition `R[*0]` blocks no local variables."
 related_clauses = []
-tags = []
+tags = ["local-variable", "local-variable-blocking", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -479,7 +479,7 @@ anchors = [
 ]
 summary = "`R[*1:$]` blocks exactly the local variables blocked by `R`."
 related_clauses = []
-tags = []
+tags = ["local-variable", "local-variable-blocking", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -503,7 +503,7 @@ anchors = [
 ]
 summary = "Parenthesizing a sequence does not change its set of blocked local variables."
 related_clauses = []
-tags = []
+tags = ["local-variable", "local-variable-blocking", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -528,7 +528,7 @@ anchors = [
 ]
 summary = "The locals blocked by `R1 intersect R2` are exactly the union of the locals blocked by either operand and the locals sampled by exactly one of the two operands."
 related_clauses = []
-tags = []
+tags = ["local-variable", "local-variable-blocking", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -553,7 +553,7 @@ anchors = [
 ]
 summary = "The locals blocked by `R1 or R2` are the union of locals blocked by either branch."
 related_clauses = []
-tags = []
+tags = ["local-variable", "local-variable-blocking", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -581,7 +581,7 @@ related_clauses = [
     "F.5.2",
     "F.5.5",
 ]
-tags = []
+tags = ["empty-match", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -606,7 +606,7 @@ anchors = [
 ]
 summary = "A finite word tightly satisfies an unclocked Boolean sequence exactly when the word has length one and its sole letter satisfies the Boolean expression."
 related_clauses = []
-tags = []
+tags = ["sequence", "tight-satisfaction"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -633,7 +633,7 @@ anchors = [
 ]
 summary = "`always[m:n] P` is nonvacuous exactly when some position within the bounded interval evaluates `P` nonvacuously and `P` is satisfied at every earlier position in that interval."
 related_clauses = []
-tags = []
+tags = ["nonvacuity", "property", "temporal-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -657,7 +657,7 @@ anchors = [
 ]
 summary = "For `m < n`, `always[m:n] p` is semantically `always[m:n-1] p and nexttime[n] p`."
 related_clauses = []
-tags = []
+tags = ["property", "temporal-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -682,7 +682,7 @@ anchors = [
 ]
 summary = "For `0 < m < n`, `R1 ##[m:n] R2` is semantically `R1 ##1 1[*m-1:n-1] ##1 R2`."
 related_clauses = []
-tags = []
+tags = ["sequence", "sequence-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -706,7 +706,7 @@ anchors = [
 ]
 summary = "For `m < n`, bounded consecutive repetition `R[*m:n]` is semantically the alternative between `R[*m:n-1]` and exact repetition `R[*n]`."
 related_clauses = []
-tags = []
+tags = ["repetition", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -733,7 +733,7 @@ anchors = [
 ]
 summary = "`eventually[m:n] P` is nonvacuous exactly when some position within the bounded interval evaluates `P` nonvacuously and every earlier position in that interval does not satisfy `P`."
 related_clauses = []
-tags = []
+tags = ["nonvacuity", "property", "temporal-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -757,7 +757,7 @@ anchors = [
 ]
 summary = "For `m < n`, `eventually[m:n] p` is semantically `eventually[m:n-1] p or nexttime[n] p`."
 related_clauses = []
-tags = []
+tags = ["property", "temporal-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -782,7 +782,7 @@ anchors = [
 ]
 summary = "For `m < n`, Boolean goto repetition `b[->m:n]` is semantically `(!b[*0:$] ##1 b)[*m:n]`."
 related_clauses = []
-tags = []
+tags = ["repetition", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -807,7 +807,7 @@ anchors = [
 ]
 summary = "For `m < n`, Boolean nonconsecutive repetition `b[=m:n]` is semantically `b[->m:n] ##1 !b[*0:$]`."
 related_clauses = []
-tags = []
+tags = ["repetition", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -831,7 +831,7 @@ anchors = [
 ]
 summary = "For `m < n`, `s_always[m:n] p` is semantically `not eventually[m:n] not p`."
 related_clauses = []
-tags = []
+tags = ["property", "property-strength", "temporal-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -858,7 +858,7 @@ anchors = [
 ]
 summary = "`s_always[m:n] P` is nonvacuous exactly when some position within the bounded interval evaluates `P` nonvacuously and `P` is satisfied at every earlier position in that interval."
 related_clauses = []
-tags = []
+tags = ["nonvacuity", "property", "temporal-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -882,7 +882,7 @@ anchors = [
 ]
 summary = "For `m < n`, `s_eventually[m:n] p` is semantically `not always[m:n] not p`."
 related_clauses = []
-tags = []
+tags = ["property", "property-strength", "temporal-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -909,7 +909,7 @@ anchors = [
 ]
 summary = "`s_eventually[m:n] P` is nonvacuous exactly when some position within the bounded interval evaluates `P` nonvacuously and every earlier position in that interval does not satisfy `P`."
 related_clauses = []
-tags = []
+tags = ["nonvacuity", "property", "temporal-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -933,7 +933,7 @@ anchors = [
 ]
 summary = "`$changed(e,c)` is true exactly when the previous `c`-clocked sample and current sample of `e` are not case-equal."
 related_clauses = []
-tags = []
+tags = ["clocking-event", "sampled-value-function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -957,7 +957,7 @@ anchors = [
 ]
 summary = "`$changed_gclk(e)` is true exactly when the previous global-clock sample and current sample of `e` are not case-equal."
 related_clauses = []
-tags = []
+tags = ["global-clock", "sampled-value-function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -981,7 +981,7 @@ anchors = [
 ]
 summary = "`$changing_gclk(e)` is true exactly when the current value of `e` is not case-equal to its future global-clock value."
 related_clauses = []
-tags = []
+tags = ["global-clock", "sampled-value-function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1007,7 +1007,7 @@ anchors = [
 ]
 summary = "When flattening a checker instance, each formal input argument is associated with its bound actual argument, or with the formal's declared default when the instance omits that input."
 related_clauses = []
-tags = []
+tags = ["checker", "flattening", "formal-argument"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -1035,7 +1035,7 @@ summary = "For checker input-formal semantics, a checker containing nested check
 related_clauses = [
     "17.2",
 ]
-tags = []
+tags = ["checker", "flattening"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -1060,7 +1060,7 @@ anchors = [
 ]
 summary = "When flattening an event-, sequence-, or property-typed checker input, a formal reference used as a sequence-method-call operand is replaced by `item(actual)`."
 related_clauses = []
-tags = []
+tags = ["checker", "flattening", "formal-argument", "sequence-method"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -1085,7 +1085,7 @@ anchors = [
 ]
 summary = "When flattening an event-, sequence-, or property-typed checker input, a formal reference not used as a sequence-method-call operand is replaced by the parenthesized actual; those parentheses may be omitted when the reference is already parenthesized."
 related_clauses = []
-tags = []
+tags = ["checker", "flattening", "formal-argument"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -1112,7 +1112,7 @@ summary = "When flattening an ordinary typed checker input of casting type `t`, 
 related_clauses = [
     "6.24",
 ]
-tags = []
+tags = ["checker", "conversion", "flattening", "formal-argument"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -1137,7 +1137,7 @@ anchors = [
 ]
 summary = "When flattening an ordinary typed checker input whose type `t` is not a casting type, each formal reference is replaced by the actual cast through `type(t)` and wrapped as an `item`."
 related_clauses = []
-tags = []
+tags = ["checker", "conversion", "flattening", "formal-argument"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -1161,7 +1161,7 @@ anchors = [
 ]
 summary = "A formal checker input reference replaced by ordinary typed-input substitution shall not be used as a variable lvalue anywhere in the checker."
 related_clauses = []
-tags = []
+tags = ["checker", "diagnostic", "flattening", "formal-argument"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -1186,7 +1186,7 @@ anchors = [
 ]
 summary = "When flattening an untyped checker input whose actual is `$` or a variable lvalue, every reference to the formal input is replaced directly by that actual."
 related_clauses = []
-tags = []
+tags = ["checker", "flattening", "formal-argument"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -1211,7 +1211,7 @@ anchors = [
 ]
 summary = "When flattening an untyped checker input whose actual is neither `$` nor a variable lvalue, each reference is replaced by the actual cast to its own type and wrapped as an `item`."
 related_clauses = []
-tags = []
+tags = ["checker", "conversion", "flattening", "formal-argument"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -1235,7 +1235,7 @@ anchors = [
 ]
 summary = "Applying a clock `@(c)` to a sequence does not change whether that sequence admits an empty match."
 related_clauses = []
-tags = []
+tags = ["clock-flow", "empty-match", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -1259,7 +1259,7 @@ anchors = [
 ]
 summary = "Property clock transformation preserves `accept_on(b)` and recursively transforms its body under the same clock."
 related_clauses = []
-tags = []
+tags = ["abort", "clock-flow", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1284,7 +1284,7 @@ anchors = [
 ]
 summary = "Under clock condition `c`, a Boolean sequence `b` rewrites to zero or more nonclock ticks followed by a tick where both `c` and `b` hold."
 related_clauses = []
-tags = []
+tags = ["clock-flow", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1308,7 +1308,7 @@ anchors = [
 ]
 summary = "Property clock transformation preserves `disable iff(b)` and recursively transforms its body under the same clock."
 related_clauses = []
-tags = []
+tags = ["clock-flow", "disable", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1332,7 +1332,7 @@ anchors = [
 ]
 summary = "Clock transformation of `first_match(r)` is `first_match` of `r` transformed under that clock."
 related_clauses = []
-tags = []
+tags = ["clock-flow", "sequence", "sequence-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1357,7 +1357,7 @@ anchors = [
 ]
 summary = "Under clock `c`, a unit sequence match assignment rewrites as the clock transformation of true fused with the assignment at that sampled tick."
 related_clauses = []
-tags = []
+tags = ["clock-flow", "local-variable", "match-item", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1381,7 +1381,7 @@ anchors = [
 ]
 summary = "Clock transformation of `nexttime p` skips nonclock positions to the current clock, then advances through nonclock positions to the next clock before evaluating transformed `p`."
 related_clauses = []
-tags = []
+tags = ["clock-flow", "property", "temporal-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1405,7 +1405,7 @@ anchors = [
 ]
 summary = "Clock transformation distributes into null repetition `r[*0]`, preserving the zero repetition."
 related_clauses = []
-tags = []
+tags = ["clock-flow", "repetition", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1429,7 +1429,7 @@ anchors = [
 ]
 summary = "Clock transformation of `r |-> p` transforms the antecedent as a sequence and the consequent as a property under the same clock, preserving overlapping implication."
 related_clauses = []
-tags = []
+tags = ["clock-flow", "implication", "property", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1453,7 +1453,7 @@ anchors = [
 ]
 summary = "Property clock transformation distributes through conjunction."
 related_clauses = []
-tags = []
+tags = ["clock-flow", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1477,7 +1477,7 @@ anchors = [
 ]
 summary = "Property clock transformation commutes with negation."
 related_clauses = []
-tags = []
+tags = ["clock-flow", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1501,7 +1501,7 @@ anchors = [
 ]
 summary = "Property clock transformation distributes through disjunction."
 related_clauses = []
-tags = []
+tags = ["clock-flow", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1526,7 +1526,7 @@ anchors = [
 ]
 summary = "Clock transformation distributes through unit-delay sequence concatenation: each operand is transformed under the same clock and remains joined by `##1`."
 related_clauses = []
-tags = []
+tags = ["clock-flow", "sequence", "sequence-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1550,7 +1550,7 @@ anchors = [
 ]
 summary = "Clock transformation distributes through fused sequence concatenation, transforming both operands under the same clock and preserving `##0`."
 related_clauses = []
-tags = []
+tags = ["clock-flow", "sequence", "sequence-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1574,7 +1574,7 @@ anchors = [
 ]
 summary = "Clock transformation distributes through sequence intersection, transforming both operands under the same clock."
 related_clauses = []
-tags = []
+tags = ["clock-flow", "sequence", "sequence-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1598,7 +1598,7 @@ anchors = [
 ]
 summary = "Clock transformation distributes through sequence disjunction, transforming both operands under the same clock."
 related_clauses = []
-tags = []
+tags = ["clock-flow", "sequence", "sequence-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1623,7 +1623,7 @@ anchors = [
 ]
 summary = "Clock transformation of `strong(r)` preserves `strong` and applies the sequence clock transformation to `r`."
 related_clauses = []
-tags = []
+tags = ["clock-flow", "property", "property-strength", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1647,7 +1647,7 @@ anchors = [
 ]
 summary = "Clock transformation rewrites `sync_accept_on(b) p` as `accept_on(b && c)` around the transformed body, so acceptance occurs only with clock `c`."
 related_clauses = []
-tags = []
+tags = ["abort", "clock-flow", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1671,7 +1671,7 @@ anchors = [
 ]
 summary = "Clock transformation distributes into one-or-more repetition `r[*1:$]`, preserving its repetition bounds."
 related_clauses = []
-tags = []
+tags = ["clock-flow", "repetition", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1695,7 +1695,7 @@ anchors = [
 ]
 summary = "Clock transformation of `p1 until p2` constrains transformed `p1` only at clock positions until a clock position satisfying transformed `p2`."
 related_clauses = []
-tags = []
+tags = ["clock-flow", "property", "temporal-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1720,7 +1720,7 @@ anchors = [
 ]
 summary = "Clock transformation of `weak(r)` preserves `weak` and applies the sequence clock transformation to `r`."
 related_clauses = []
-tags = []
+tags = ["clock-flow", "property", "property-strength", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1745,7 +1745,7 @@ anchors = [
 ]
 summary = "A clocked top-level `disable iff(b) Q` is disabled exactly when `b` occurs and, at its first occurrence, both true-placeholder and false-placeholder infinite extensions of the preceding trace satisfy `Q`."
 related_clauses = []
-tags = []
+tags = ["disable", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1769,7 +1769,7 @@ anchors = [
 ]
 summary = "Parenthesizing a clocked top-level property does not change whether it is disabled."
 related_clauses = []
-tags = []
+tags = ["disable", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1793,7 +1793,7 @@ anchors = [
 ]
 summary = "Clocked nonoverlapping implication `S |=> Q` is semantically `(S ##1 @(1) 1) |-> Q`, advancing to the next clock tick before the consequent."
 related_clauses = []
-tags = []
+tags = ["clocking-event", "implication", "property", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1817,7 +1817,7 @@ anchors = [
 ]
 summary = "A clocked property's context-free satisfaction is its local-context satisfaction using the empty input context."
 related_clauses = []
-tags = []
+tags = ["context", "local-variable", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1843,7 +1843,7 @@ summary = "A clocked property under an input local context is satisfied by apply
 related_clauses = [
     "F.5.1.2",
 ]
-tags = []
+tags = ["clock-flow", "context", "local-variable", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1869,7 +1869,7 @@ summary = "Neutral satisfaction of a clocked property is the satisfaction of its
 related_clauses = [
     "F.5.1.2",
 ]
-tags = []
+tags = ["clock-flow", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1895,7 +1895,7 @@ summary = "A clocked sequence with locals is nondegenerate exactly when its uncl
 related_clauses = [
     "F.5.1",
 ]
-tags = []
+tags = ["clock-flow", "local-variable", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1921,7 +1921,7 @@ summary = "A clocked sequence is nondegenerate exactly when the unclocked sequen
 related_clauses = [
     "F.5.1",
 ]
-tags = []
+tags = ["clock-flow", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1947,7 +1947,7 @@ summary = "A clocked sequence tightly satisfies with local contexts exactly when
 related_clauses = [
     "F.5.1",
 ]
-tags = []
+tags = ["clock-flow", "local-variable", "sequence", "tight-satisfaction"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1973,7 +1973,7 @@ summary = "A word tightly satisfies a clocked sequence exactly when it tightly s
 related_clauses = [
     "F.5.1",
 ]
-tags = []
+tags = ["clock-flow", "sequence", "tight-satisfaction"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1997,7 +1997,7 @@ anchors = [
 ]
 summary = "In the assertion clock transformation, comma-separated event expressions `e1, e2` rewrite to the disjunction of the transformed event expressions `e1` and `e2`."
 related_clauses = []
-tags = []
+tags = ["clock-flow", "clocking-event"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2023,7 +2023,7 @@ summary = "When a free checker variable assignment is nested under conditional s
 related_clauses = [
     "F.5.3.1",
 ]
-tags = []
+tags = ["assumption", "checker", "conditional"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2047,7 +2047,7 @@ anchors = [
 ]
 summary = "A cover property statement is satisfied over a set of words predicated on assumptions exactly when it is satisfied on at least one feasible word."
 related_clauses = []
-tags = []
+tags = ["assumption", "concurrent-assertion", "coverage", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2075,7 +2075,7 @@ related_clauses = [
     "F.5.2",
     "F.5.5",
 ]
-tags = []
+tags = ["empty-match", "local-variable", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2099,7 +2099,7 @@ anchors = [
 ]
 summary = "A unit-delay concatenation admits an empty match exactly when both operand sequences admit empty matches."
 related_clauses = []
-tags = []
+tags = ["empty-match", "sequence", "sequence-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2124,7 +2124,7 @@ anchors = [
 ]
 summary = "For a derived property operator without an explicit nonvacuity equation, its nonvacuity relation is determined by unrolling the operator's formal derivation into basic operators."
 related_clauses = []
-tags = []
+tags = ["nonvacuity", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2152,7 +2152,7 @@ anchors = [
 ]
 summary = "`disable iff(b) P` is nonvacuous only when `P` is nonvacuous and either `b` never disables the evaluation or a prefix before disabling has a definitive false- or true-placeholder continuation satisfying the formal condition for `P`."
 related_clauses = []
-tags = []
+tags = ["disable", "nonvacuity", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2176,7 +2176,7 @@ anchors = [
 ]
 summary = "In the assertion clock transformation, `edge b` rewrites to the disjunction of the positive-edge and negative-edge transformations of `b`."
 related_clauses = []
-tags = []
+tags = ["clock-flow", "clocking-event", "edge-sensitivity"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2200,7 +2200,7 @@ anchors = [
 ]
 summary = "When a sequence body `r` admits empty, `(t v=e; r)` may be rewritten as an uninitialized declaration whose body alternates the assignment fused before `r` with null repetition, under `r`'s semantic leading clock."
 related_clauses = []
-tags = []
+tags = ["empty-match", "local-variable", "match-item", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2224,7 +2224,7 @@ anchors = [
 ]
 summary = "A consecutive repetition range whose bounds are equal, `R[*m:m]`, is semantically the fixed repetition `R[*m]`."
 related_clauses = []
-tags = []
+tags = ["repetition", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2248,7 +2248,7 @@ anchors = [
 ]
 summary = "`$falling_gclk(e)` is true exactly when the current least-significant bit is not case-equal to 0 and its future global-clock value is case-equal to 0."
 related_clauses = []
-tags = []
+tags = ["edge-sensitivity", "global-clock", "sampled-value-function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2272,7 +2272,7 @@ anchors = [
 ]
 summary = "`$fell(e,c)` is true exactly when the prior `c`-clocked sample of the least-significant bit is not case-equal to 0 and its current sample is case-equal to 0."
 related_clauses = []
-tags = []
+tags = ["clocking-event", "edge-sensitivity", "sampled-value-function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2296,7 +2296,7 @@ anchors = [
 ]
 summary = "`$fell_gclk(e)` is true exactly when the previous global-clock sample of the least-significant bit is not case-equal to 0 and its current sample is case-equal to 0."
 related_clauses = []
-tags = []
+tags = ["edge-sensitivity", "global-clock", "sampled-value-function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2322,7 +2322,7 @@ summary = "Weak and strong finite-word satisfaction for assertions with local va
 related_clauses = [
     "F.5.3.2",
 ]
-tags = []
+tags = ["finite-behavior", "local-variable", "property", "property-strength"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2346,7 +2346,7 @@ anchors = [
 ]
 summary = "A finite word strongly satisfies an assertion exactly when the infinite word formed by appending false-placeholder letters neutrally satisfies the assertion."
 related_clauses = []
-tags = []
+tags = ["finite-behavior", "property", "property-strength"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2370,7 +2370,7 @@ anchors = [
 ]
 summary = "A finite word weakly satisfies an assertion exactly when the infinite word formed by appending true-placeholder letters neutrally satisfies the assertion."
 related_clauses = []
-tags = []
+tags = ["finite-behavior", "property", "property-strength"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2394,7 +2394,7 @@ anchors = [
 ]
 summary = "`first_match(r)` admits an empty match exactly when `r` admits an empty match."
 related_clauses = []
-tags = []
+tags = ["empty-match", "sequence", "sequence-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2418,7 +2418,7 @@ anchors = [
 ]
 summary = "For `m > 1`, `R1 ##m R2` is semantically `R1 ##1 1[*m-1] ##1 R2`."
 related_clauses = []
-tags = []
+tags = ["sequence", "sequence-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2442,7 +2442,7 @@ anchors = [
 ]
 summary = "For positive `m`, consecutive repetition `R[*m]` is semantically the `(m-1)` repetition of `R` followed one tick later by `R`."
 related_clauses = []
-tags = []
+tags = ["repetition", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2466,7 +2466,7 @@ anchors = [
 ]
 summary = "Boolean goto repetition `b[->m]` is semantically `(!b[*0:$] ##1 b)[*m]`."
 related_clauses = []
-tags = []
+tags = ["repetition", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2490,7 +2490,7 @@ anchors = [
 ]
 summary = "Boolean nonconsecutive repetition `b[=m]` is semantically `b[->m] ##1 !b[*0:$]`."
 related_clauses = []
-tags = []
+tags = ["repetition", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2514,7 +2514,7 @@ anchors = [
 ]
 summary = "A Boolean-expression sequence passes its incoming set of flowing local names through unchanged."
 related_clauses = []
-tags = []
+tags = ["local-variable", "local-variable-flow", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2538,7 +2538,7 @@ anchors = [
 ]
 summary = "Local flow through `R1 ##1 R2` first flows through `R1`, then uses that result as the incoming set for `R2`."
 related_clauses = []
-tags = []
+tags = ["local-variable", "local-variable-flow", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2562,7 +2562,7 @@ anchors = [
 ]
 summary = "`first_match(R)` has the same local-variable flow as `R`."
 related_clauses = []
-tags = []
+tags = ["local-variable", "local-variable-flow", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2586,7 +2586,7 @@ anchors = [
 ]
 summary = "Local flow through `R1 ##0 R2` first flows through `R1`, then uses that result as the incoming set for fused `R2`."
 related_clauses = []
-tags = []
+tags = ["local-variable", "local-variable-flow", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2610,7 +2610,7 @@ anchors = [
 ]
 summary = "Flow through `(t v; R)` preserves whether an outer `v` flowed in while preventing the declaration's local `v` from escaping, and otherwise recursively flows names through `R` with `v` removed."
 related_clauses = []
-tags = []
+tags = ["local-variable", "local-variable-flow", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2634,7 +2634,7 @@ anchors = [
 ]
 summary = "Flow through `(1, v=e)` is the incoming local-name set plus assigned local `v`."
 related_clauses = []
-tags = []
+tags = ["local-variable", "local-variable-flow", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2658,7 +2658,7 @@ anchors = [
 ]
 summary = "Null repetition `R[*0]` passes its incoming local-variable flow set through unchanged."
 related_clauses = []
-tags = []
+tags = ["local-variable", "local-variable-flow", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2682,7 +2682,7 @@ anchors = [
 ]
 summary = "`R[*1:$]` has the same local-variable flow result as one application of `R`."
 related_clauses = []
-tags = []
+tags = ["local-variable", "local-variable-flow", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2706,7 +2706,7 @@ anchors = [
 ]
 summary = "Parenthesizing a sequence does not change local-variable flow through it."
 related_clauses = []
-tags = []
+tags = ["local-variable", "local-variable-flow", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2731,7 +2731,7 @@ anchors = [
 ]
 summary = "Local flow out of `R1 intersect R2` is the union of each operand's outgoing flow minus locals blocked by the intersection."
 related_clauses = []
-tags = []
+tags = ["local-variable", "local-variable-flow", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2755,7 +2755,7 @@ anchors = [
 ]
 summary = "Only local names that flow out through both alternatives of `R1 or R2` flow out of the disjunction."
 related_clauses = []
-tags = []
+tags = ["local-variable", "local-variable-flow", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2779,7 +2779,7 @@ anchors = [
 ]
 summary = "A free checker variable nonblocking assignment `always_ff @c u <= e` derives to an always assumption that the future value of `u` equals `e` when `c` holds and otherwise retains `u`."
 related_clauses = []
-tags = []
+tags = ["assumption", "checker", "nba"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2803,7 +2803,7 @@ anchors = [
 ]
 summary = "A fused concatenation `r1 ##0 r2` does not admit an empty match."
 related_clauses = []
-tags = []
+tags = ["empty-match", "sequence", "sequence-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2827,7 +2827,7 @@ anchors = [
 ]
 summary = "`$future_gclk(e)` at a nonfinal word position yields `e` from the next global-clock position; on the final position of a finite word it is undefined."
 related_clauses = []
-tags = []
+tags = ["global-clock", "sampled-value", "sampled-value-function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2855,7 +2855,7 @@ summary = "In the assertion abstract-syntax clock transformation, a `$global_clo
 related_clauses = [
     "14.14",
 ]
-tags = []
+tags = ["clock-flow", "global-clock"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2879,7 +2879,7 @@ anchors = [
 ]
 summary = "In the assertion clock transformation, an event expression `e iff b` rewrites to the transformed event `e` conjoined with Boolean condition `b`."
 related_clauses = []
-tags = []
+tags = ["clock-flow", "clocking-event"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2903,7 +2903,7 @@ anchors = [
 ]
 summary = "A property equivalence is nonvacuous exactly when at least one operand evaluation is nonvacuous."
 related_clauses = []
-tags = []
+tags = ["nonvacuity", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2927,7 +2927,7 @@ anchors = [
 ]
 summary = "If rewriting named sequence and nonrecursive property instances produces an illegal flattened sequence or property, the original hierarchical source is illegal."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "flattening", "property", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2951,7 +2951,7 @@ anchors = [
 ]
 summary = "If checker-instance rewriting produces an illegal flattened checker, the original checker source is illegal."
 related_clauses = []
-tags = []
+tags = ["checker", "diagnostic", "flattening"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -2976,7 +2976,7 @@ anchors = [
 ]
 summary = "An overlapping implication `R |-> P` is nonvacuous exactly when some positive-length prefix tightly satisfies `R` and the suffix beginning at that antecedent endpoint evaluates `P` nonvacuously."
 related_clauses = []
-tags = []
+tags = ["implication", "nonvacuity", "property", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3000,7 +3000,7 @@ anchors = [
 ]
 summary = "A property `P1 implies P2` is nonvacuous exactly when the antecedent is satisfied nonvacuously and the consequent is evaluated nonvacuously under the implication's satisfaction condition."
 related_clauses = []
-tags = []
+tags = ["implication", "nonvacuity", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3024,7 +3024,7 @@ anchors = [
 ]
 summary = "For `m > 0`, `nexttime[m] p` is semantically `nexttime(nexttime[m-1] p)`."
 related_clauses = []
-tags = []
+tags = ["property", "temporal-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3048,7 +3048,7 @@ anchors = [
 ]
 summary = "For `m > 0`, `s_nexttime[m] p` is semantically `not nexttime[m] not p`."
 related_clauses = []
-tags = []
+tags = ["property", "property-strength", "temporal-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3072,7 +3072,7 @@ anchors = [
 ]
 summary = "A sequence intersection admits an empty match exactly when both operands admit empty matches."
 related_clauses = []
-tags = []
+tags = ["empty-match", "sequence", "sequence-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -3098,7 +3098,7 @@ anchors = [
 ]
 summary = "When rewriting an actual argument with a defined type, the auxiliary `item` wrapper preserves operations legal on a same-typed named formal item, including sequence/property operations; a sequence instance used in a clocking event or sequence method call is flattened, sequence-cast, and wrapped this way."
 related_clauses = []
-tags = []
+tags = ["conversion", "flattening", "formal-argument", "sequence-method"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3122,7 +3122,7 @@ anchors = [
 ]
 summary = "Applying the rewriting algorithm's `item` wrapper to an expression of undefined type does not make any additional operations legal."
 related_clauses = []
-tags = []
+tags = ["conversion", "flattening"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3148,7 +3148,7 @@ anchors = [
 ]
 summary = "With locals, `accept_on(b) P` is satisfied either when `P` satisfies normally from the input context without `b`, or when `b` occurs and the preceding true-placeholder extension satisfies `P` under that context."
 related_clauses = []
-tags = []
+tags = ["abort", "context", "local-variable", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3172,7 +3172,7 @@ anchors = [
 ]
 summary = "Disabling a clocked top-level property inside local declaration `(t v; U)` is evaluated by removing `v` from the incoming context and applying the disabling relation to `U`."
 related_clauses = []
-tags = []
+tags = ["context", "disable", "local-variable", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3197,7 +3197,7 @@ anchors = [
 ]
 summary = "With locals, clocked `disable iff(b) Q` is disabled exactly when `b` occurs and both true- and false-placeholder infinite extensions of the trace prefix preceding its first occurrence satisfy `Q` from the input local context."
 related_clauses = []
-tags = []
+tags = ["context", "disable", "local-variable", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3223,7 +3223,7 @@ anchors = [
 ]
 summary = "With locals, clocked `disable iff(b) Q` is neutrally satisfied either when `Q` satisfies from the input context and `b` never occurs, or when the false-placeholder infinite extension of the trace prefix preceding the first `b` satisfies `Q` from that context."
 related_clauses = []
-tags = []
+tags = ["context", "disable", "local-variable", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3247,7 +3247,7 @@ anchors = [
 ]
 summary = "Parenthesizing a clocked top-level property does not change its disabling relation under a local context."
 related_clauses = []
-tags = []
+tags = ["context", "disable", "local-variable", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3273,7 +3273,7 @@ summary = "After named sequence/property flattening and before clock rewriting, 
 related_clauses = [
     "F.4.1",
 ]
-tags = []
+tags = ["local-variable", "match-item", "property", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -3297,7 +3297,7 @@ anchors = [
 ]
 summary = "Each typed local-variable formal of a flattened property becomes an initialized local declaration at the beginning of the copied property body; multiple such declarations may be arranged in any order."
 related_clauses = []
-tags = []
+tags = ["flattening", "formal-argument", "local-variable", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3321,7 +3321,7 @@ anchors = [
 ]
 summary = "With locals, `nexttime P` is satisfied when the word is empty or when `P` satisfies on the next-position suffix under the unchanged input context."
 related_clauses = []
-tags = []
+tags = ["context", "local-variable", "property", "temporal-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3345,7 +3345,7 @@ anchors = [
 ]
 summary = "With locals, `R |-> P` is satisfied exactly when every tight antecedent match passes its output local context to a consequent that satisfies from the antecedent endpoint."
 related_clauses = []
-tags = []
+tags = ["context", "implication", "local-variable", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3369,7 +3369,7 @@ anchors = [
 ]
 summary = "Under an input local context, a top-level property passes when satisfied, is disabled when the disabling relation holds, and otherwise fails; passing and disabled outcomes are mutually exclusive."
 related_clauses = []
-tags = []
+tags = ["context", "disable", "local-variable", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3393,7 +3393,7 @@ anchors = [
 ]
 summary = "A plain clocked top-level property never satisfies the disabling relation under any input local context."
 related_clauses = []
-tags = []
+tags = ["context", "disable", "local-variable", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3417,7 +3417,7 @@ anchors = [
 ]
 summary = "A plain unclocked top-level property never satisfies the disabling relation under any input local context."
 related_clauses = []
-tags = []
+tags = ["context", "disable", "local-variable", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3441,7 +3441,7 @@ anchors = [
 ]
 summary = "A property conjunction under a local context is satisfied exactly when both operands satisfy under that same context."
 related_clauses = []
-tags = []
+tags = ["context", "local-variable", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3465,7 +3465,7 @@ anchors = [
 ]
 summary = "A property disjunction under a local context is satisfied exactly when either operand satisfies under that same context."
 related_clauses = []
-tags = []
+tags = ["context", "local-variable", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3489,7 +3489,7 @@ anchors = [
 ]
 summary = "Parenthesizing a property does not change its satisfaction under an input local context."
 related_clauses = []
-tags = []
+tags = ["context", "local-variable", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3514,7 +3514,7 @@ anchors = [
 ]
 summary = "An uninitialized local declaration around a clocked top-level property evaluates the body with the declared name removed from the incoming local context."
 related_clauses = []
-tags = []
+tags = ["context", "local-variable", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3539,7 +3539,7 @@ anchors = [
 ]
 summary = "Parenthesizing a clocked top-level property does not change its neutral satisfaction under a local context."
 related_clauses = []
-tags = []
+tags = ["context", "local-variable", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3563,7 +3563,7 @@ anchors = [
 ]
 summary = "With an input local context, a plain clocked top-level property has the same neutral satisfaction as its enclosed clocked property."
 related_clauses = []
-tags = []
+tags = ["context", "local-variable", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3587,7 +3587,7 @@ anchors = [
 ]
 summary = "With an input local context, a plain unclocked top-level property has the same neutral satisfaction as its enclosed property."
 related_clauses = []
-tags = []
+tags = ["context", "local-variable", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3612,7 +3612,7 @@ anchors = [
 ]
 summary = "An uninitialized local declaration around an unclocked top-level property evaluates the body with the declared name removed from the incoming local context."
 related_clauses = []
-tags = []
+tags = ["context", "local-variable", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3637,7 +3637,7 @@ anchors = [
 ]
 summary = "Parenthesizing an unclocked top-level property does not change its neutral satisfaction under a local context."
 related_clauses = []
-tags = []
+tags = ["context", "local-variable", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3661,7 +3661,7 @@ anchors = [
 ]
 summary = "Disabling an unclocked top-level property inside local declaration `(t v; T)` is evaluated by removing `v` from the incoming context and applying the disabling relation to `T`."
 related_clauses = []
-tags = []
+tags = ["context", "disable", "local-variable", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3686,7 +3686,7 @@ anchors = [
 ]
 summary = "With locals, unclocked `disable iff(b) P` is disabled exactly when `b` occurs and both true- and false-placeholder infinite extensions of the trace prefix preceding its first occurrence satisfy `P` from the input local context."
 related_clauses = []
-tags = []
+tags = ["context", "disable", "local-variable", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3712,7 +3712,7 @@ anchors = [
 ]
 summary = "With locals, unclocked `disable iff(b) P` is neutrally satisfied either when `P` satisfies from the input context and `b` never occurs, or when the false-placeholder infinite extension of the trace prefix preceding the first `b` satisfies `P` from that context."
 related_clauses = []
-tags = []
+tags = ["context", "disable", "local-variable", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3736,7 +3736,7 @@ anchors = [
 ]
 summary = "Parenthesizing an unclocked top-level property does not change its disabling relation under a local context."
 related_clauses = []
-tags = []
+tags = ["context", "disable", "local-variable", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3760,7 +3760,7 @@ anchors = [
 ]
 summary = "With locals, `P1 until P2` is satisfied when `P2` holds at a suffix and `P1` holds at every earlier suffix under the same context, or when `P1` holds throughout the word."
 related_clauses = []
-tags = []
+tags = ["context", "local-variable", "property", "temporal-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3784,7 +3784,7 @@ anchors = [
 ]
 summary = "For `m > 0`, `always[m:$] p` is semantically `nexttime[m] always p`."
 related_clauses = []
-tags = []
+tags = ["property", "temporal-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3808,7 +3808,7 @@ anchors = [
 ]
 summary = "For `m > 1`, `R[*m:$]` is semantically `R[*m-1] ##1 R[*1:$]`."
 related_clauses = []
-tags = []
+tags = ["repetition", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3832,7 +3832,7 @@ anchors = [
 ]
 summary = "A unit sequence match item `(1, v=e)` does not admit an empty match."
 related_clauses = []
-tags = []
+tags = ["empty-match", "local-variable", "match-item", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -3856,7 +3856,7 @@ anchors = [
 ]
 summary = "For more than one local declaration preceding an assertion expression, the declarations are semantically nested in source order around that expression."
 related_clauses = []
-tags = []
+tags = ["local-variable", "property", "source-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3880,7 +3880,7 @@ anchors = [
 ]
 summary = "For more than one comma-separated sequence match assignment, the first assignment is attached to `R` and each remaining assignment is recursively fused in order as a match item on `1`."
 related_clauses = []
-tags = []
+tags = ["local-variable", "match-item", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3912,7 +3912,7 @@ related_clauses = [
     "F.4.1",
     "F.7",
 ]
-tags = []
+tags = ["concurrent-assertion", "flattening", "property", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3938,7 +3938,7 @@ summary = "In the assertion clock transformation, a named event rewrites to `$fu
 related_clauses = [
     "15.5",
 ]
-tags = []
+tags = ["clock-flow", "clocking-event", "global-clock"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3965,7 +3965,7 @@ anchors = [
 ]
 summary = "When flattening an event-, sequence-, or property-typed formal in a named property or sequence, a reference used as a sequence-method-call operand is replaced by `item(actual)`."
 related_clauses = []
-tags = []
+tags = ["flattening", "formal-argument", "sequence-method"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3992,7 +3992,7 @@ anchors = [
 ]
 summary = "When flattening an event-, sequence-, or property-typed formal in a named property or sequence, a reference not used as a sequence-method-call operand is replaced by the parenthesized actual; added parentheses may be omitted if the reference is already parenthesized."
 related_clauses = []
-tags = []
+tags = ["flattening", "formal-argument"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4020,7 +4020,7 @@ summary = "In the assertion abstract-syntax clock transformation, `negedge b` re
 related_clauses = [
     "F.3.4.4",
 ]
-tags = []
+tags = ["clock-flow", "clocking-event", "edge-sensitivity", "global-clock"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4044,7 +4044,7 @@ anchors = [
 ]
 summary = "For neutral satisfaction, an always assertion whose property carries its clock has the same property semantics in `assume property` and `assert property` forms."
 related_clauses = []
-tags = []
+tags = ["assumption", "property", "temporal-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4068,7 +4068,7 @@ anchors = [
 ]
 summary = "A continuously monitored explicitly clocked assertion is neutrally satisfied exactly when every trace position where both its clock and enabling condition hold starts a clocked-property evaluation that either satisfies or is disabled."
 related_clauses = []
-tags = []
+tags = ["clocking-event", "concurrent-assertion", "disable", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4092,7 +4092,7 @@ anchors = [
 ]
 summary = "For neutral satisfaction, an always assertion with an external clock has the same property semantics in `assume property` and `assert property` forms."
 related_clauses = []
-tags = []
+tags = ["assumption", "clocking-event", "property", "temporal-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4116,7 +4116,7 @@ anchors = [
 ]
 summary = "A continuously monitored externally clocked cover property is satisfied when at least one enabled clock position starts a satisfying clocked-property evaluation."
 related_clauses = []
-tags = []
+tags = ["clocking-event", "concurrent-assertion", "coverage", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4140,7 +4140,7 @@ anchors = [
 ]
 summary = "A continuously monitored assertion whose property carries its clock is neutrally satisfied exactly when every enabled trace position starts a property evaluation that either satisfies or is disabled."
 related_clauses = []
-tags = []
+tags = ["clocking-event", "concurrent-assertion", "disable", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4164,7 +4164,7 @@ anchors = [
 ]
 summary = "A continuously monitored cover whose property carries its clock is satisfied when at least one enabled trace position starts a satisfying property evaluation."
 related_clauses = []
-tags = []
+tags = ["clocking-event", "concurrent-assertion", "coverage", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4188,7 +4188,7 @@ anchors = [
 ]
 summary = "For neutral satisfaction, an initial assertion whose property carries its clock has the same property semantics in `assume property` and `assert property` forms."
 related_clauses = []
-tags = []
+tags = ["assumption", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4212,7 +4212,7 @@ anchors = [
 ]
 summary = "An initial assertion with an external clock evaluates at the first occurrence of that clock and, when enabled there, is neutrally satisfied exactly when its clocked property evaluation from that position either satisfies or is disabled."
 related_clauses = []
-tags = []
+tags = ["clocking-event", "concurrent-assertion", "disable", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4236,7 +4236,7 @@ anchors = [
 ]
 summary = "For neutral satisfaction, an initial assertion with an external clock has the same property semantics in `assume property` and `assert property` forms."
 related_clauses = []
-tags = []
+tags = ["assumption", "clocking-event", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4260,7 +4260,7 @@ anchors = [
 ]
 summary = "An initial externally clocked cover property is satisfied when its first clock occurrence is enabled and starts a satisfying clocked-property evaluation."
 related_clauses = []
-tags = []
+tags = ["clocking-event", "concurrent-assertion", "coverage", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4284,7 +4284,7 @@ anchors = [
 ]
 summary = "An initial cover whose property carries its clock is satisfied exactly when its enabling condition holds initially and the property is satisfied from the start of the trace."
 related_clauses = []
-tags = []
+tags = ["clocking-event", "concurrent-assertion", "coverage", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4308,7 +4308,7 @@ anchors = [
 ]
 summary = "An initial assertion whose property carries its clock evaluates from the start when initially enabled and is neutrally satisfied exactly when that property evaluation either satisfies or is disabled."
 related_clauses = []
-tags = []
+tags = ["concurrent-assertion", "disable", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4333,7 +4333,7 @@ anchors = [
 ]
 summary = "`nexttime P` is nonvacuous exactly when a next position exists and `P` is nonvacuous on the suffix beginning at that next position."
 related_clauses = []
-tags = []
+tags = ["nonvacuity", "property", "temporal-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4357,7 +4357,7 @@ anchors = [
 ]
 summary = "`nexttime P` is neutrally satisfied when the word is empty or when `P` is satisfied by the suffix beginning at the next position."
 related_clauses = []
-tags = []
+tags = ["property", "temporal-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4381,7 +4381,7 @@ anchors = [
 ]
 summary = "When a sequence body `r` does not admit empty, `(t v=e; r)` may be rewritten as an uninitialized declaration with `v=e` fused before `r` under `r`'s semantic leading clock, without an empty-match alternative."
 related_clauses = []
-tags = []
+tags = ["empty-match", "local-variable", "match-item", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -4405,7 +4405,7 @@ anchors = [
 ]
 summary = "Nonoverlapping followed-by `r #=# p` is semantically `not (r |=> not p)`."
 related_clauses = []
-tags = []
+tags = ["implication", "property", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4429,7 +4429,7 @@ anchors = [
 ]
 summary = "Parenthesizing a property does not change whether its evaluation is nonvacuous."
 related_clauses = []
-tags = []
+tags = ["nonvacuity", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4455,7 +4455,7 @@ summary = "Nonvacuity for properties with local variables follows the same rules
 related_clauses = [
     "F.5.3.3",
 ]
-tags = []
+tags = ["context", "local-variable", "nonvacuity", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4479,7 +4479,7 @@ anchors = [
 ]
 summary = "A word satisfies a property nonvacuously exactly when it both satisfies the property and is related to the property by the nonvacuity relation."
 related_clauses = []
-tags = []
+tags = ["nonvacuity", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4504,7 +4504,7 @@ anchors = [
 ]
 summary = "Negating a property does not change whether its evaluation is nonvacuous."
 related_clauses = []
-tags = []
+tags = ["nonvacuity", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4528,7 +4528,7 @@ anchors = [
 ]
 summary = "Null repetition `r[*0]` admits an empty match."
 related_clauses = []
-tags = []
+tags = ["empty-match", "repetition", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -4552,7 +4552,7 @@ anchors = [
 ]
 summary = "One-or-more repetition `r[*1:$]` admits an empty match exactly when `r` admits an empty match."
 related_clauses = []
-tags = []
+tags = ["empty-match", "repetition", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -4576,7 +4576,7 @@ anchors = [
 ]
 summary = "A sequence disjunction admits an empty match exactly when either operand admits an empty match."
 related_clauses = []
-tags = []
+tags = ["empty-match", "sequence", "sequence-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -4600,7 +4600,7 @@ anchors = [
 ]
 summary = "In the assertion clock transformation, `e1 or e2` rewrites to the disjunction of the transformed event expressions `e1` and `e2`."
 related_clauses = []
-tags = []
+tags = ["clock-flow", "clocking-event"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4624,7 +4624,7 @@ anchors = [
 ]
 summary = "A property disjunction is nonvacuous exactly when at least one operand evaluation is nonvacuous."
 related_clauses = []
-tags = []
+tags = ["nonvacuity", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4648,7 +4648,7 @@ anchors = [
 ]
 summary = "Overlapping followed-by `r #-# p` is semantically `not (r |-> not p)`."
 related_clauses = []
-tags = []
+tags = ["implication", "property", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4672,7 +4672,7 @@ anchors = [
 ]
 summary = "`R |-> P` is neutrally satisfied exactly when every finite prefix tightly satisfying `R` has its endpoint-starting suffix satisfy `P`."
 related_clauses = []
-tags = []
+tags = ["implication", "property", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4696,7 +4696,7 @@ anchors = [
 ]
 summary = "Parenthesizing a sequence does not change whether it admits an empty match."
 related_clauses = []
-tags = []
+tags = ["empty-match", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -4720,7 +4720,7 @@ anchors = [
 ]
 summary = "`$past_gclk(e)` returns `e` from the immediately preceding global-clock position; at the first position it evaluates `e` using the comprising variables' initial values."
 related_clauses = []
-tags = []
+tags = ["global-clock", "sampled-value", "sampled-value-function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4746,7 +4746,7 @@ summary = "`$past(e,n,e1,c)` returns `e` at the sampled position selected by the
 related_clauses = [
     "6.8",
 ]
-tags = []
+tags = ["clocking-event", "sampled-value", "sampled-value-function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4770,7 +4770,7 @@ anchors = [
 ]
 summary = "A plain clocked top-level property never satisfies the top-level disabling relation on any word."
 related_clauses = []
-tags = []
+tags = ["disable", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4794,7 +4794,7 @@ anchors = [
 ]
 summary = "A plain unclocked top-level property never satisfies the top-level disabling relation on any word."
 related_clauses = []
-tags = []
+tags = ["disable", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4818,7 +4818,7 @@ anchors = [
 ]
 summary = "The repetition shorthand `R[+]` is semantically `R[*1:$]`."
 related_clauses = []
-tags = []
+tags = ["repetition", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4846,7 +4846,7 @@ summary = "In the assertion abstract-syntax clock transformation, `posedge b` re
 related_clauses = [
     "F.3.4.4",
 ]
-tags = []
+tags = ["clock-flow", "clocking-event", "edge-sensitivity", "global-clock"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4871,7 +4871,7 @@ anchors = [
 ]
 summary = "For `m < n`, prefix delay `##[m:n] R` is semantically `1[*m:n] ##1 R`."
 related_clauses = []
-tags = []
+tags = ["sequence", "sequence-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4895,7 +4895,7 @@ anchors = [
 ]
 summary = "Prefix delay `##m R` is semantically `1[*m] ##1 R`."
 related_clauses = []
-tags = []
+tags = ["sequence", "sequence-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4919,7 +4919,7 @@ anchors = [
 ]
 summary = "Prefix delay shorthand `##[+] R` is semantically `##[1:$] R`."
 related_clauses = []
-tags = []
+tags = ["sequence", "sequence-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4943,7 +4943,7 @@ anchors = [
 ]
 summary = "Prefix delay shorthand `##[*] R` is semantically `##[0:$] R`."
 related_clauses = []
-tags = []
+tags = ["sequence", "sequence-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4967,7 +4967,7 @@ anchors = [
 ]
 summary = "Prefix delay `##[m:$] R` is semantically `1[*m:$] ##1 R`."
 related_clauses = []
-tags = []
+tags = ["sequence", "sequence-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4991,7 +4991,7 @@ anchors = [
 ]
 summary = "A property conjunction is neutrally satisfied exactly when both operands are neutrally satisfied."
 related_clauses = []
-tags = []
+tags = ["property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5015,7 +5015,7 @@ anchors = [
 ]
 summary = "A property `case` containing only a default item is semantically the default property itself."
 related_clauses = []
-tags = []
+tags = ["conditional", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5042,7 +5042,7 @@ summary = "A property `case` with one explicit item and a default derives to an 
 related_clauses = [
     "12.5",
 ]
-tags = []
+tags = ["conditional", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5069,7 +5069,7 @@ summary = "A property `case` with multiple items derives by testing the first it
 related_clauses = [
     "12.5",
 ]
-tags = []
+tags = ["conditional", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5096,7 +5096,7 @@ summary = "A property `case` with multiple explicit items and a default tests th
 related_clauses = [
     "12.5",
 ]
-tags = []
+tags = ["conditional", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5123,7 +5123,7 @@ summary = "A property `case` with one case item derives to a property conditiona
 related_clauses = [
     "12.5",
 ]
-tags = []
+tags = ["conditional", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5148,7 +5148,7 @@ anchors = [
 ]
 summary = "When flattening a named property or sequence instance, each formal argument is associated with its bound actual argument, or with the formal's declared default when the instance omits that argument."
 related_clauses = []
-tags = []
+tags = ["flattening", "formal-argument", "property", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5172,7 +5172,7 @@ anchors = [
 ]
 summary = "A property conditional without `else`, `if (b) P`, is semantically `b |-> P`."
 related_clauses = []
-tags = []
+tags = ["conditional", "implication", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5196,7 +5196,7 @@ anchors = [
 ]
 summary = "`if (b) P1 else P2` is semantically `(b |-> P1) and (weak(b) or P2)`, selecting the then or else property from the Boolean condition."
 related_clauses = []
-tags = []
+tags = ["conditional", "implication", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5220,7 +5220,7 @@ anchors = [
 ]
 summary = "Property equivalence `p1 iff p2` is semantically `(p1 implies p2) and (p2 implies p1)`."
 related_clauses = []
-tags = []
+tags = ["implication", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5244,7 +5244,7 @@ anchors = [
 ]
 summary = "Property implication `p1 implies p2` is semantically `not p1 or p2`."
 related_clauses = []
-tags = []
+tags = ["implication", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5268,7 +5268,7 @@ anchors = [
 ]
 summary = "A property local declaration `(t v; P)` evaluates `P` with declared name `v` removed from the incoming local context."
 related_clauses = []
-tags = []
+tags = ["context", "local-variable", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5292,7 +5292,7 @@ anchors = [
 ]
 summary = "A word and input local context satisfy `not P` exactly when the placeholder-complemented word under the same context does not satisfy `P`."
 related_clauses = []
-tags = []
+tags = ["context", "local-variable", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5316,7 +5316,7 @@ anchors = [
 ]
 summary = "A word neutrally satisfies `not P` exactly when the placeholder-complemented word does not neutrally satisfy `P`."
 related_clauses = []
-tags = []
+tags = ["property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5340,7 +5340,7 @@ anchors = [
 ]
 summary = "A property disjunction is neutrally satisfied exactly when either operand is neutrally satisfied."
 related_clauses = []
-tags = []
+tags = ["property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5364,7 +5364,7 @@ anchors = [
 ]
 summary = "Parenthesizing an unclocked property does not change its neutral satisfaction."
 related_clauses = []
-tags = []
+tags = ["property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5388,7 +5388,7 @@ anchors = [
 ]
 summary = "Pushing pending local assignments through `@(c) p` preserves the clock wrapper and pushes the same assignments into `p`."
 related_clauses = []
-tags = []
+tags = ["local-variable", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -5412,7 +5412,7 @@ anchors = [
 ]
 summary = "Pushing pending local assignments through `disable iff(b) p` preserves the disable wrapper and pushes the same assignment list into `p`."
 related_clauses = []
-tags = []
+tags = ["disable", "local-variable", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -5436,7 +5436,7 @@ anchors = [
 ]
 summary = "Pushing through an initialized property local declaration removes its initializer and appends that assignment to the ordered pending list before recursively processing the body."
 related_clauses = []
-tags = []
+tags = ["local-variable", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -5460,7 +5460,7 @@ anchors = [
 ]
 summary = "Pushing pending local assignments through `not p` preserves negation and pushes the assignments into `p`."
 related_clauses = []
-tags = []
+tags = ["local-variable", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -5484,7 +5484,7 @@ anchors = [
 ]
 summary = "For nonoverlapping implication, an empty pending list is pushed into the consequent; a nonempty list is fused before a nonempty antecedent, while an empty-capable antecedent additionally requires the branch obtained by pushing the assignments directly into the consequent."
 related_clauses = []
-tags = []
+tags = ["implication", "local-variable", "property", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -5508,7 +5508,7 @@ anchors = [
 ]
 summary = "For overlapping implication, an empty pending list is pushed only into the consequent; a nonempty list is fused before the antecedent under its semantic leading clock, while the consequent is processed with an empty list."
 related_clauses = []
-tags = []
+tags = ["implication", "local-variable", "property", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -5532,7 +5532,7 @@ anchors = [
 ]
 summary = "Pushing pending local assignments through a parenthesized property preserves the parentheses and pushes the assignments into the enclosed property."
 related_clauses = []
-tags = []
+tags = ["local-variable", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -5556,7 +5556,7 @@ anchors = [
 ]
 summary = "Pushing pending local assignments through `p and q` pushes the same assignments independently into both operands and preserves conjunction."
 related_clauses = []
-tags = []
+tags = ["local-variable", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -5580,7 +5580,7 @@ anchors = [
 ]
 summary = "For a property conditional, an empty pending list is recursively pushed into each branch; a nonempty list is executed through a true-antecedent match item before the conditional, after which branches receive empty lists."
 related_clauses = []
-tags = []
+tags = ["conditional", "local-variable", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -5604,7 +5604,7 @@ anchors = [
 ]
 summary = "Pushing pending local assignments through `p or q` pushes the same assignments independently into both operands and preserves disjunction."
 related_clauses = []
-tags = []
+tags = ["local-variable", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -5630,7 +5630,7 @@ summary = "For a sequence used as a property, pushing an empty assignment list l
 related_clauses = [
     "16.12.22",
 ]
-tags = []
+tags = ["local-variable", "property", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -5654,7 +5654,7 @@ anchors = [
 ]
 summary = "Pushing pending local assignments through an uninitialized property local declaration preserves the declaration and recursively pushes the assignments into its body."
 related_clauses = []
-tags = []
+tags = ["local-variable", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -5678,7 +5678,7 @@ anchors = [
 ]
 summary = "A free checker declaration `rand t u = e` derives to an initial unit-clock assumption that `u === e`."
 related_clauses = []
-tags = []
+tags = ["assumption", "checker", "randomization"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5707,7 +5707,7 @@ summary = "Each actual argument to a recursive property instance shall either be
 related_clauses = [
     "16.12.17",
 ]
-tags = []
+tags = ["formal-argument", "property", "recursion"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5733,7 +5733,7 @@ summary = "Every cycle in a recursive property dependency digraph shall have a s
 related_clauses = [
     "16.12.17",
 ]
-tags = []
+tags = ["recursion"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5759,7 +5759,7 @@ summary = "The weight of a named-property instance is the minimum guaranteed tim
 related_clauses = [
     "16.12.17",
 ]
-tags = []
+tags = ["recursion"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5784,7 +5784,7 @@ anchors = [
 ]
 summary = "For positive `k`, `p[k]` replaces recursive instances by their `(k-1)`-fold approximations and nonrecursive property instances by their `k`-fold approximations, yielding no recursive instances after finite expansion."
 related_clauses = []
-tags = []
+tags = ["property", "recursion"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5810,7 +5810,7 @@ summary = "A recursive property declaration shall not use `disable iff`."
 related_clauses = [
     "16.12.17",
 ]
-tags = []
+tags = ["disable", "property", "recursion"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5837,7 +5837,7 @@ summary = "An instance of property `q` in property `p` is recursive exactly when
 related_clauses = [
     "16.12.17",
 ]
-tags = []
+tags = ["property", "recursion"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5863,7 +5863,7 @@ summary = "`not` shall not be applied to a property expression that instantiates
 related_clauses = [
     "16.12.17",
 ]
-tags = []
+tags = ["property", "recursion"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5890,7 +5890,7 @@ summary = "A named property is recursive exactly when it belongs to a nontrivial
 related_clauses = [
     "16.12.17",
 ]
-tags = []
+tags = ["property", "recursion"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5916,7 +5916,7 @@ summary = "A property containing named property instances is satisfied under a w
 related_clauses = [
     "F.4.1",
 ]
-tags = []
+tags = ["context", "property", "recursion"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5941,7 +5941,7 @@ anchors = [
 ]
 summary = "The zero-fold approximation `p[0]` of a named property retains its declaration interface but replaces its property body with literal true."
 related_clauses = []
-tags = []
+tags = ["property", "recursion"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5966,7 +5966,7 @@ anchors = [
 ]
 summary = "When transforming under clock `c`, an inner explicit property clock denoting the same clock is removed and the property is recursively transformed under `c`."
 related_clauses = []
-tags = []
+tags = ["clock-flow", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5991,7 +5991,7 @@ anchors = [
 ]
 summary = "When transforming under clock `c`, an inner explicit clock on sequence `r` that denotes the same clock is removed and `r` is recursively transformed under `c`."
 related_clauses = []
-tags = []
+tags = ["clock-flow", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6015,7 +6015,7 @@ anchors = [
 ]
 summary = "`reject_on(b) P` is semantically `not accept_on(b) not P`."
 related_clauses = []
-tags = []
+tags = ["abort", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6043,7 +6043,7 @@ anchors = [
 ]
 summary = "`reject_on(b) P` is nonvacuous only when `P` is nonvacuous and either `b` never causes rejection or a prefix before rejection has a definitive false- or true-placeholder continuation satisfying the formal condition for `P`."
 related_clauses = []
-tags = []
+tags = ["abort", "nonvacuity", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6067,7 +6067,7 @@ anchors = [
 ]
 summary = "For the formal concurrent-assertion semantics, a `restrict property` statement is derived as the corresponding `assume property` statement."
 related_clauses = []
-tags = []
+tags = ["assumption", "concurrent-assertion", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6091,7 +6091,7 @@ anchors = [
 ]
 summary = "`$rising_gclk(e)` is true exactly when the current least-significant bit is not case-equal to 1 and its future global-clock value is case-equal to 1."
 related_clauses = []
-tags = []
+tags = ["edge-sensitivity", "global-clock", "sampled-value-function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6115,7 +6115,7 @@ anchors = [
 ]
 summary = "`$rose(e,c)` is true exactly when the prior `c`-clocked sample of the least-significant bit is not case-equal to 1 and its current sample is case-equal to 1."
 related_clauses = []
-tags = []
+tags = ["clocking-event", "edge-sensitivity", "sampled-value-function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6139,7 +6139,7 @@ anchors = [
 ]
 summary = "`$rose_gclk(e)` is true exactly when the previous global-clock sample of the least-significant bit is not case-equal to 1 and its current sample is case-equal to 1."
 related_clauses = []
-tags = []
+tags = ["edge-sensitivity", "global-clock", "sampled-value-function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6163,7 +6163,7 @@ anchors = [
 ]
 summary = "A Boolean-expression sequence samples no assertion local variables."
 related_clauses = []
-tags = []
+tags = ["local-variable", "local-variable-sampling", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6188,7 +6188,7 @@ anchors = [
 ]
 summary = "The locals sampled by `R1 ##1 R2` are the union of locals sampled by both operands."
 related_clauses = []
-tags = []
+tags = ["local-variable", "local-variable-sampling", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6212,7 +6212,7 @@ anchors = [
 ]
 summary = "`first_match(R)` samples exactly the local variables sampled by `R`."
 related_clauses = []
-tags = []
+tags = ["local-variable", "local-variable-sampling", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6237,7 +6237,7 @@ anchors = [
 ]
 summary = "The locals sampled by `R1 ##0 R2` are the union of locals sampled by both fused operands."
 related_clauses = []
-tags = []
+tags = ["local-variable", "local-variable-sampling", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6261,7 +6261,7 @@ anchors = [
 ]
 summary = "The local variables sampled by `(t v; R)` are those sampled by `R` except for the locally declared name `v`."
 related_clauses = []
-tags = []
+tags = ["local-variable", "local-variable-sampling", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6285,7 +6285,7 @@ anchors = [
 ]
 summary = "A sequence match assignment `(1, v=e)` samples exactly local variable `v`."
 related_clauses = []
-tags = []
+tags = ["local-variable", "local-variable-sampling", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6309,7 +6309,7 @@ anchors = [
 ]
 summary = "Null repetition `R[*0]` samples no local variables."
 related_clauses = []
-tags = []
+tags = ["local-variable", "local-variable-sampling", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6333,7 +6333,7 @@ anchors = [
 ]
 summary = "`R[*1:$]` samples exactly the local variables sampled by `R`."
 related_clauses = []
-tags = []
+tags = ["local-variable", "local-variable-sampling", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6357,7 +6357,7 @@ anchors = [
 ]
 summary = "Parenthesizing a sequence does not change its set of sampled local variables."
 related_clauses = []
-tags = []
+tags = ["local-variable", "local-variable-sampling", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6382,7 +6382,7 @@ anchors = [
 ]
 summary = "The locals sampled by `R1 intersect R2` are the union of locals sampled by both operands."
 related_clauses = []
-tags = []
+tags = ["local-variable", "local-variable-sampling", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6407,7 +6407,7 @@ anchors = [
 ]
 summary = "The locals sampled by `R1 or R2` are the union of locals sampled by both alternatives."
 related_clauses = []
-tags = []
+tags = ["local-variable", "local-variable-sampling", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6431,7 +6431,7 @@ anchors = [
 ]
 summary = "In the sampled assertion context, `$sampled(e)` derives to the sampled expression `e`."
 related_clauses = []
-tags = []
+tags = ["sampled-value", "sampled-value-function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6455,7 +6455,7 @@ anchors = [
 ]
 summary = "Sequence conjunction `R1 and R2` is semantically `((R1 ##1 1[*0:$]) intersect R2) or (R1 intersect (R2 ##1 1[*0:$]))`, allowing either operand to supply the later endpoint."
 related_clauses = []
-tags = []
+tags = ["sequence", "sequence-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6482,7 +6482,7 @@ summary = "A sequence local declaration `(t v=e; r)` is rewritten as an uninitia
 related_clauses = [
     "16.16.1",
 ]
-tags = []
+tags = ["empty-match", "local-variable", "match-item", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -6506,7 +6506,7 @@ anchors = [
 ]
 summary = "When flattening a sequence, each inout local-variable formal is initialized from its actual at the beginning of the body and assigns its final local value back to the actual in a match item attached to the sequence endpoint."
 related_clauses = []
-tags = []
+tags = ["copy-out", "formal-argument", "local-variable", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6530,7 +6530,7 @@ anchors = [
 ]
 summary = "When flattening a sequence, each input local-variable formal `f` of type `t` becomes an initialized local declaration `t f = actual` at the beginning of the sequence body."
 related_clauses = []
-tags = []
+tags = ["formal-argument", "local-variable", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6554,7 +6554,7 @@ anchors = [
 ]
 summary = "A sequence match item `(R, v=e)` is semantically `R ##0 (1, v=e)`, performing the assignment at the endpoint of `R`."
 related_clauses = []
-tags = []
+tags = ["local-variable", "match-item", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6578,7 +6578,7 @@ anchors = [
 ]
 summary = "At clock `c`, `T(V).matched` holds when `T(V).triggered` held at an earlier position and the current position is the first subsequent occurrence of clock `c`."
 related_clauses = []
-tags = []
+tags = ["clocking-event", "sampled-value", "sequence-method"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6602,7 +6602,7 @@ anchors = [
 ]
 summary = "When flattening a sequence, each output local-variable formal becomes an uninitialized local declaration at the beginning of the body and assigns its final local value to the actual in a match item attached to the sequence endpoint."
 related_clauses = []
-tags = []
+tags = ["copy-out", "formal-argument", "local-variable", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6628,7 +6628,7 @@ anchors = [
 ]
 summary = "`T(V).triggered` holds at a position when some sequence instance beginning no later than that position tightly completes there; its output local context combines passed-variable outputs with unaffected incoming locals."
 related_clauses = []
-tags = []
+tags = ["clocking-event", "sampled-value", "sequence-method"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6652,7 +6652,7 @@ anchors = [
 ]
 summary = "`R1 within R2` is semantically `(1[*0:$] ##1 R1 ##1 1[*0:$]) intersect R2`."
 related_clauses = []
-tags = []
+tags = ["sequence", "sequence-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6676,7 +6676,7 @@ anchors = [
 ]
 summary = "For `m > 0`, `always[m:m] p` is semantically `nexttime[m] p`."
 related_clauses = []
-tags = []
+tags = ["property", "temporal-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6700,7 +6700,7 @@ anchors = [
 ]
 summary = "For `m > 0`, `eventually[m:m] p` is semantically `nexttime[m] p`."
 related_clauses = []
-tags = []
+tags = ["property", "temporal-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6724,7 +6724,7 @@ anchors = [
 ]
 summary = "`$stable(e,c)` is true exactly when the previous `c`-clocked sample and current sample of `e` are case-equal."
 related_clauses = []
-tags = []
+tags = ["clocking-event", "sampled-value-function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6748,7 +6748,7 @@ anchors = [
 ]
 summary = "`$stable_gclk(e)` is true exactly when the previous global-clock sample and current sample of `e` are case-equal."
 related_clauses = []
-tags = []
+tags = ["global-clock", "sampled-value-function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6772,7 +6772,7 @@ anchors = [
 ]
 summary = "The repetition shorthand `R[*]` is semantically the alternative `R[*0] or R[*1:$]`."
 related_clauses = []
-tags = []
+tags = ["repetition", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6796,7 +6796,7 @@ anchors = [
 ]
 summary = "`$steady_gclk(e)` is true exactly when the current value of `e` is case-equal to its future global-clock value."
 related_clauses = []
-tags = []
+tags = ["global-clock", "sampled-value-function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6820,7 +6820,7 @@ anchors = [
 ]
 summary = "`s_eventually p` is semantically the negation of `always(not p)`."
 related_clauses = []
-tags = []
+tags = ["property", "property-strength", "temporal-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6847,7 +6847,7 @@ anchors = [
 ]
 summary = "`s_eventually P` is nonvacuous exactly when some position evaluates `P` nonvacuously and every earlier position does not satisfy `P`."
 related_clauses = []
-tags = []
+tags = ["nonvacuity", "property", "property-strength", "temporal-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6871,7 +6871,7 @@ anchors = [
 ]
 summary = "`strong(R)` with locals is satisfied exactly when some nonempty finite prefix tightly satisfies `R` from the input context to some output context."
 related_clauses = []
-tags = []
+tags = ["local-variable", "property", "property-strength", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6895,7 +6895,7 @@ anchors = [
 ]
 summary = "`s_nexttime p` is semantically `not nexttime not p`."
 related_clauses = []
-tags = []
+tags = ["property", "property-strength", "temporal-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6920,7 +6920,7 @@ anchors = [
 ]
 summary = "An evaluation of a property formed as `strong(R)` is nonvacuous."
 related_clauses = []
-tags = []
+tags = ["nonvacuity", "property", "property-strength"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6944,7 +6944,7 @@ anchors = [
 ]
 summary = "`strong(R)` is neutrally satisfied on a word exactly when some nonempty finite prefix of that word tightly satisfies `R`."
 related_clauses = []
-tags = []
+tags = ["property", "property-strength", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6968,7 +6968,7 @@ anchors = [
 ]
 summary = "`p s_until q` is semantically `(p until q) and s_eventually q`, requiring eventual occurrence of `q`."
 related_clauses = []
-tags = []
+tags = ["property", "property-strength", "temporal-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6994,7 +6994,7 @@ anchors = [
 ]
 summary = "`P1 s_until P2` is nonvacuous exactly when at some trace position either operand is evaluated nonvacuously, while every earlier position satisfies `P1` and does not satisfy `P2`."
 related_clauses = []
-tags = []
+tags = ["nonvacuity", "property", "property-strength", "temporal-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7018,7 +7018,7 @@ anchors = [
 ]
 summary = "`p s_until_with q` is semantically `p s_until (p and q)`, requiring eventual `q` and `p` at its terminating tick."
 related_clauses = []
-tags = []
+tags = ["property", "property-strength", "temporal-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7042,7 +7042,7 @@ anchors = [
 ]
 summary = "When the clock context is the constant true clock, `sync_accept_on(b) P` is semantically `accept_on(b) P`."
 related_clauses = []
-tags = []
+tags = ["abort", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7066,7 +7066,7 @@ anchors = [
 ]
 summary = "`sync_reject_on(b) P` is semantically `not sync_accept_on(b) not P`."
 related_clauses = []
-tags = []
+tags = ["abort", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7090,7 +7090,7 @@ anchors = [
 ]
 summary = "`b throughout R` is semantically `b[*0:$] intersect R`, requiring the Boolean repetition to span the sequence match."
 related_clauses = []
-tags = []
+tags = ["repetition", "sequence", "sequence-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7116,7 +7116,7 @@ anchors = [
 ]
 summary = "A word tightly satisfies `first_match(R)` exactly when it tightly satisfies `R` and no proper prefix of that word tightly satisfies `R`."
 related_clauses = []
-tags = []
+tags = ["sequence", "sequence-operator", "tight-satisfaction"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7140,7 +7140,7 @@ anchors = [
 ]
 summary = "A word tightly satisfies `R1 ##0 R2` exactly when it can be split with one shared letter that ends the tight `R1` match and begins the tight `R2` match."
 related_clauses = []
-tags = []
+tags = ["sequence", "sequence-operator", "tight-satisfaction"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7164,7 +7164,7 @@ anchors = [
 ]
 summary = "A Boolean sequence tightly satisfies with locals exactly on a one-letter word satisfying the Boolean after local-value substitution, and leaves the local context unchanged."
 related_clauses = []
-tags = []
+tags = ["local-variable", "sequence", "tight-satisfaction"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7189,7 +7189,7 @@ anchors = [
 ]
 summary = "`R1 ##1 R2` tightly satisfies with locals exactly when the word splits into an `R1` word and `R2` word, with `R1`'s output context passed as `R2`'s input context."
 related_clauses = []
-tags = []
+tags = ["local-variable", "sequence", "sequence-operator", "tight-satisfaction"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7214,7 +7214,7 @@ anchors = [
 ]
 summary = "A sequence local declaration `(t v; R)` tightly satisfies with local contexts by evaluating `R` with `v` removed from the incoming context, then producing an output that combines `R`'s value for `v` with the remaining outer context."
 related_clauses = []
-tags = []
+tags = ["context", "local-variable", "sequence", "tight-satisfaction"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7240,7 +7240,7 @@ anchors = [
 ]
 summary = "`first_match(R)` tightly satisfies with locals exactly when `R` tightly satisfies with the same contexts and no proper prefix tightly satisfies `R` from the same input context."
 related_clauses = []
-tags = []
+tags = ["local-variable", "sequence", "sequence-operator", "tight-satisfaction"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7267,7 +7267,7 @@ anchors = [
 ]
 summary = "`R1 ##0 R2` tightly satisfies with locals exactly when the operands' tightly satisfying words share one boundary letter and `R1`'s output context is passed as `R2`'s input context."
 related_clauses = []
-tags = []
+tags = ["local-variable", "sequence", "sequence-operator", "tight-satisfaction"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7292,7 +7292,7 @@ anchors = [
 ]
 summary = "A match assignment `(1, v=e)` tightly satisfies exactly a one-letter word satisfying true and updates `v` with `e` evaluated first from the input local context and then from that letter; for a true- or false-placeholder letter, any type-correct constant value of `e` is permitted."
 related_clauses = []
-tags = []
+tags = ["local-variable", "match-item", "sequence", "tight-satisfaction"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7316,7 +7316,7 @@ anchors = [
 ]
 summary = "`R[*0]` tightly satisfies with locals exactly on the empty word and leaves the local context unchanged."
 related_clauses = []
-tags = []
+tags = ["local-variable", "repetition", "sequence", "tight-satisfaction"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7340,7 +7340,7 @@ anchors = [
 ]
 summary = "`R[*1:$]` tightly satisfies with locals exactly when the word decomposes into one or more tight `R` matches and each repetition's output context becomes the next repetition's input context."
 related_clauses = []
-tags = []
+tags = ["local-variable", "repetition", "sequence", "tight-satisfaction"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7365,7 +7365,7 @@ anchors = [
 ]
 summary = "Parenthesizing a sequence does not change tight satisfaction or input/output local contexts."
 related_clauses = []
-tags = []
+tags = ["local-variable", "sequence", "tight-satisfaction"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7395,7 +7395,7 @@ anchors = [
 ]
 summary = "`R1 intersect R2` tightly satisfies a word from input context `L0` exactly when both operands tightly satisfy that word from `L0`, yielding contexts `L'` and `L''`; the output is `L'` restricted to `flow(dom(L0),R1) - (block(R1 intersect R2) union sample(R2))`, united with `L''` restricted symmetrically to `flow(dom(L0),R2) - (block(R1 intersect R2) union sample(R1))`."
 related_clauses = []
-tags = []
+tags = ["local-variable", "sequence", "sequence-operator", "tight-satisfaction"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7422,7 +7422,7 @@ anchors = [
 ]
 summary = "`R1 or R2` tightly satisfies a word from input context `L0` exactly when either branch tightly satisfies it to a candidate output context, and the final output is that candidate restricted to `flow(dom(L0), R1 or R2)`."
 related_clauses = []
-tags = []
+tags = ["local-variable", "sequence", "sequence-operator", "tight-satisfaction"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7446,7 +7446,7 @@ anchors = [
 ]
 summary = "A word tightly satisfies `R[*0]` exactly when the word is empty."
 related_clauses = []
-tags = []
+tags = ["repetition", "sequence", "tight-satisfaction"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7470,7 +7470,7 @@ anchors = [
 ]
 summary = "A word tightly satisfies `R[*1:$]` exactly when it is a concatenation of one or more finite words, each tightly satisfying `R`."
 related_clauses = []
-tags = []
+tags = ["repetition", "sequence", "tight-satisfaction"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7494,7 +7494,7 @@ anchors = [
 ]
 summary = "Parenthesizing an unclocked sequence does not change which finite words tightly satisfy it."
 related_clauses = []
-tags = []
+tags = ["sequence", "tight-satisfaction"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7518,7 +7518,7 @@ anchors = [
 ]
 summary = "A word tightly satisfies `R1 intersect R2` exactly when that entire word tightly satisfies both operands."
 related_clauses = []
-tags = []
+tags = ["sequence", "sequence-operator", "tight-satisfaction"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7542,7 +7542,7 @@ anchors = [
 ]
 summary = "A word tightly satisfies `R1 or R2` exactly when it tightly satisfies either operand."
 related_clauses = []
-tags = []
+tags = ["sequence", "sequence-operator", "tight-satisfaction"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7566,7 +7566,7 @@ anchors = [
 ]
 summary = "A word tightly satisfies `R1 ##1 R2` exactly when it can be split into a prefix tightly satisfying `R1` and a suffix tightly satisfying `R2`."
 related_clauses = []
-tags = []
+tags = ["sequence", "sequence-operator", "tight-satisfaction"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7592,7 +7592,7 @@ anchors = [
 ]
 summary = "A clocked top-level `disable iff(b) Q` is neutrally satisfied either when `Q` is satisfied and `b` never occurs, or when the false-placeholder infinite extension of the trace prefix preceding the first occurrence of `b` satisfies `Q`."
 related_clauses = []
-tags = []
+tags = ["disable", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7616,7 +7616,7 @@ anchors = [
 ]
 summary = "Parenthesizing a clocked top-level property does not change its neutral satisfaction."
 related_clauses = []
-tags = []
+tags = ["property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7640,7 +7640,7 @@ anchors = [
 ]
 summary = "A top-level property passes when neutrally satisfied, is disabled when the disabling relation holds, and otherwise fails; passing and disabled outcomes are mutually exclusive."
 related_clauses = []
-tags = []
+tags = ["disable", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7664,7 +7664,7 @@ anchors = [
 ]
 summary = "A plain clocked top-level property has the same neutral satisfaction as its enclosed clocked property expression."
 related_clauses = []
-tags = []
+tags = ["property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7688,7 +7688,7 @@ anchors = [
 ]
 summary = "A plain top-level property has the same neutral satisfaction as its enclosed property expression."
 related_clauses = []
-tags = []
+tags = ["property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7714,7 +7714,7 @@ anchors = [
 ]
 summary = "An unclocked top-level `disable iff(b) P` is neutrally satisfied either when `P` is satisfied and `b` never occurs, or when the false-placeholder infinite extension of the trace prefix preceding the first occurrence of `b` satisfies `P`."
 related_clauses = []
-tags = []
+tags = ["disable", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7738,7 +7738,7 @@ anchors = [
 ]
 summary = "Parenthesizing an unclocked top-level property does not change its neutral satisfaction."
 related_clauses = []
-tags = []
+tags = ["property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7767,7 +7767,7 @@ summary = "When flattening a nonlocal typed sequence or property formal of ordin
 related_clauses = [
     "6.24",
 ]
-tags = []
+tags = ["conversion", "flattening", "formal-argument"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7794,7 +7794,7 @@ anchors = [
 ]
 summary = "When flattening a nonlocal typed sequence or property formal whose ordinary type `t` is not a casting type, each reference is replaced by the actual cast through `type(t)` and wrapped as an `item`."
 related_clauses = []
-tags = []
+tags = ["conversion", "flattening", "formal-argument"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7821,7 +7821,7 @@ summary = "A reference replaced for an ordinary typed sequence or property forma
 related_clauses = [
     "16.8.1",
 ]
-tags = []
+tags = ["diagnostic", "flattening", "formal-argument", "match-item"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7845,7 +7845,7 @@ anchors = [
 ]
 summary = "For `m > 0`, `R1 ##[m:$] R2` is semantically `R1 ##1 1[*m-1:$] ##1 R2`."
 related_clauses = []
-tags = []
+tags = ["sequence", "sequence-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7869,7 +7869,7 @@ anchors = [
 ]
 summary = "Boolean goto repetition `b[->m:$]` is semantically `(!b[*0:$] ##1 b)[*m:$]`."
 related_clauses = []
-tags = []
+tags = ["repetition", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7893,7 +7893,7 @@ anchors = [
 ]
 summary = "Boolean nonconsecutive repetition `b[=m:$]` is semantically `b[->m:$] ##1 !b[*0:$]`."
 related_clauses = []
-tags = []
+tags = ["repetition", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7917,7 +7917,7 @@ anchors = [
 ]
 summary = "For `m > 0`, `s_eventually[m:$] p` is semantically `s_nexttime[m] s_eventually p`."
 related_clauses = []
-tags = []
+tags = ["property", "property-strength", "temporal-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7942,7 +7942,7 @@ anchors = [
 ]
 summary = "An unclocked top-level `disable iff(b) P` is disabled exactly when `b` occurs and, at its first occurrence, both true-placeholder and false-placeholder infinite extensions of the preceding trace satisfy `P`."
 related_clauses = []
-tags = []
+tags = ["disable", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7966,7 +7966,7 @@ anchors = [
 ]
 summary = "Parenthesizing an unclocked top-level property does not change whether it is disabled."
 related_clauses = []
-tags = []
+tags = ["disable", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7990,7 +7990,7 @@ anchors = [
 ]
 summary = "Unclocked nonoverlapping implication `R |=> P` is semantically `(R ##1 1) |-> P`."
 related_clauses = []
-tags = []
+tags = ["implication", "property", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8014,7 +8014,7 @@ anchors = [
 ]
 summary = "An unclocked sequence with locals is nondegenerate exactly when some nonempty finite word and input/output local contexts tightly satisfy it."
 related_clauses = []
-tags = []
+tags = ["local-variable", "sequence", "tight-satisfaction"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8038,7 +8038,7 @@ anchors = [
 ]
 summary = "An unclocked sequence is nondegenerate exactly when at least one nonempty finite word tightly satisfies it."
 related_clauses = []
-tags = []
+tags = ["sequence", "tight-satisfaction"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8064,7 +8064,7 @@ anchors = [
 ]
 summary = "`P1 until P2` is nonvacuous exactly when at some trace position either operand is evaluated nonvacuously, while every earlier position satisfies `P1` and does not satisfy `P2`."
 related_clauses = []
-tags = []
+tags = ["nonvacuity", "property", "temporal-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8088,7 +8088,7 @@ anchors = [
 ]
 summary = "`P1 until P2` is neutrally satisfied exactly when `P2` holds at some suffix and `P1` holds at every earlier suffix, or `P1` holds at every suffix throughout the word."
 related_clauses = []
-tags = []
+tags = ["property", "temporal-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8112,7 +8112,7 @@ anchors = [
 ]
 summary = "`p until_with q` is semantically `p until (p and q)`, requiring `p` also at a terminating `q` tick."
 related_clauses = []
-tags = []
+tags = ["property", "temporal-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8139,7 +8139,7 @@ anchors = [
 ]
 summary = "When flattening an untyped sequence or property formal whose actual is `$` or a variable lvalue, every reference to the formal is replaced directly by that actual."
 related_clauses = []
-tags = []
+tags = ["flattening", "formal-argument"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8166,7 +8166,7 @@ anchors = [
 ]
 summary = "When flattening an untyped sequence or property formal whose actual is neither `$` nor a variable lvalue, each formal reference is replaced by the actual cast to its own type and wrapped as an `item`."
 related_clauses = []
-tags = []
+tags = ["conversion", "flattening", "formal-argument"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8194,7 +8194,7 @@ summary = "In the assertion abstract-syntax clock transformation, a value-change
 related_clauses = [
     "14.14",
 ]
-tags = []
+tags = ["clock-flow", "global-clock", "sampled-value-function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8219,7 +8219,7 @@ anchors = [
 ]
 summary = "`weak(R)` with locals is satisfied exactly when every finite prefix extended with true placeholders satisfies `strong(R)` from the same input context."
 related_clauses = []
-tags = []
+tags = ["local-variable", "property", "property-strength", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8244,7 +8244,7 @@ anchors = [
 ]
 summary = "An evaluation of a property formed as `weak(R)` is nonvacuous."
 related_clauses = []
-tags = []
+tags = ["nonvacuity", "property", "property-strength"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8268,7 +8268,7 @@ anchors = [
 ]
 summary = "`weak(R)` is neutrally satisfied exactly when every finite prefix, extended indefinitely with true-placeholder letters, satisfies `strong(R)`."
 related_clauses = []
-tags = []
+tags = ["property", "property-strength", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8292,7 +8292,7 @@ anchors = [
 ]
 summary = "For `n > 0`, `R1 ##[0:n] R2` is semantically the alternative of `R1 ##0 R2` and `R1 ##[1:n] R2`."
 related_clauses = []
-tags = []
+tags = ["sequence", "sequence-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8316,7 +8316,7 @@ anchors = [
 ]
 summary = "`R1 ##[0:$] R2` is semantically the alternative of `R1 ##0 R2` and `R1 ##[1:$] R2`."
 related_clauses = []
-tags = []
+tags = ["sequence", "sequence-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8340,7 +8340,7 @@ anchors = [
 ]
 summary = "`nexttime[0] p` is semantically `1 |-> p`, evaluating `p` without advancing a tick."
 related_clauses = []
-tags = []
+tags = ["implication", "property", "temporal-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8364,7 +8364,7 @@ anchors = [
 ]
 summary = "`R1 ##[0:0] R2` is semantically the fused concatenation `R1 ##0 R2`."
 related_clauses = []
-tags = []
+tags = ["sequence", "sequence-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8388,7 +8388,7 @@ anchors = [
 ]
 summary = "Consecutive repetition `R[*0:$]` is semantically the alternative between null repetition `R[*0]` and one-or-more repetition `R[*1:$]`."
 related_clauses = []
-tags = []
+tags = ["repetition", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
