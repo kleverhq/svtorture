@@ -141,7 +141,7 @@ export function CorpusCoverage({ kind, metric }: CorpusCoverageProps) {
                     <small>{formatOperands(part.coverage)}</small>
                   </td>
                   {kind === "requirements" && (
-                    <td>{INTEGER_FORMAT.format(part.waived)}</td>
+                    <td>{INTEGER_FORMAT.format(part.waived ?? 0)}</td>
                   )}
                   <td>
                     <strong>{formatDensity(part.density)}</strong>

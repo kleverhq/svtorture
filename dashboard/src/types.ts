@@ -159,7 +159,7 @@ export interface CorpusPartMetric {
   title: string;
   coverage: CorpusRatio;
   density: CorpusRatio;
-  waived: number;
+  waived?: number;
 }
 
 export interface CorpusMetricSummary {

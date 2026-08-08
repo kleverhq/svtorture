@@ -298,9 +298,18 @@ def test_release_history_uses_campaign_time_for_latest_pages(
         fake.repository,
         tmp_path / "backfill",
     )
+    backfill_tag = f"campaign-{backfill_campaign.id}"
+    legacy_summary = json.loads(fake.releases[backfill_tag]["assets"][publication.SUMMARY_ASSET])
+    for metric in legacy_summary["corpus_metrics"].values():
+        for part in metric["breakdown"]:
+            part.pop("waived")
+    fake.releases[backfill_tag]["assets"][publication.SUMMARY_ASSET] = json.dumps(
+        legacy_summary
+    ).encode()
 
     summaries = load_release_summaries(fake.repository, tmp_path / "summaries")
     assert [summary.id for summary in summaries] == [backfill_campaign.id, public_campaign.id]
+    assert all(part.waived == 0 for part in summaries[0].corpus_metrics.requirements.breakdown)
 
     built_site = tmp_path / "built"
     built_site.mkdir()

@@ -15,7 +15,15 @@ afterEach(cleanup);
 
 describe("CorpusCoverage", () => {
   it("shows compact requirement metrics and an expandable part breakdown", () => {
-    const metric = makeTestDataset().corpus_coverage.requirements;
+    const base = makeTestDataset().corpus_coverage.requirements;
+    const metric = {
+      ...base,
+      breakdown: base.breakdown.map((part, index) => {
+        if (index !== 0) return part;
+        const { waived: _waived, ...legacyPart } = part;
+        return legacyPart;
+      }),
+    };
     render(<CorpusCoverage kind="requirements" metric={metric} />);
 
     const region = screen.getByRole("region", {
@@ -57,6 +65,10 @@ describe("CorpusCoverage", () => {
       }),
     ).toBeTruthy();
     expect(within(region).getByRole("columnheader", { name: "Waived" })).toBeTruthy();
+    const legacyChapter = within(region).getByRole("row", {
+      name: /Chapter 5: Lexical conventions/,
+    });
+    expect(within(legacyChapter).getByText("0")).toBeTruthy();
     const annex = within(region).getByRole("row", {
       name: /Annex A: Formal syntax/,
     });

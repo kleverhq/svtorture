@@ -1125,7 +1125,7 @@ class CorpusPartMetric(CorpusMetricValues):
     id: str
     kind: StandardPartKind
     title: str = Field(min_length=1, max_length=500)
-    waived: int = Field(strict=True, ge=0)
+    waived: int = Field(default=0, strict=True, ge=0)
 
     @model_validator(mode="after")
     def valid_part_id(self) -> Self:
