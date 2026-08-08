@@ -12,7 +12,7 @@ anchors = [
 ]
 summary = "A bootstrap file may contain any number of comment lines interspersed between library-entry lines."
 related_clauses = []
-tags = []
+tags = ["bootstrap-file", "comment"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -37,7 +37,7 @@ anchors = [
 ]
 summary = "A bootstrap comment line is newline-terminated and has # as its first nonblank character."
 related_clauses = []
-tags = []
+tags = ["bootstrap-file", "comment", "lexical"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -64,7 +64,7 @@ summary = "The only nonblank content of a bootstrap library entry is an object-c
 related_clauses = [
     "J.4",
 ]
-tags = []
+tags = ["bootstrap-file", "file-path", "filename-extension", "object-code"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -89,7 +89,7 @@ anchors = [
 ]
 summary = "A bootstrap file may contain any number of library entries, with each entry occupying one line and holding exactly one library location."
 related_clauses = []
-tags = []
+tags = ["bootstrap-file", "lexical"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -114,7 +114,7 @@ anchors = [
 ]
 summary = "Each bootstrap library entry has at least one leading blank and may have any additional leading or trailing blanks."
 related_clauses = []
-tags = []
+tags = ["bootstrap-file", "lexical", "whitespace"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -140,7 +140,7 @@ summary = "When object code is identified through a bootstrap file, one instance
 related_clauses = [
     "J.4.1",
 ]
-tags = []
+tags = ["bootstrap-file", "file-path", "object-code"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -165,7 +165,7 @@ anchors = [
 ]
 summary = "The first line of an object-code bootstrap file shall contain the string #!SV_LIBRARIES."
 related_clauses = []
-tags = []
+tags = ["bootstrap-file", "lexical", "object-code"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -189,7 +189,7 @@ anchors = [
 ]
 summary = "When the same object-code file is specified by both methods, the bootstrap-file occurrence shall take precedence over the direct-library occurrence."
 related_clauses = []
-tags = []
+tags = ["bootstrap-file", "direct-library", "library-loading", "object-code"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -213,7 +213,7 @@ anchors = [
 ]
 summary = "A SystemVerilog application shall make bootstrap-file and direct-library object-code inclusion available concurrently and permit any mixture of the two methods."
 related_clauses = []
-tags = []
+tags = ["bootstrap-file", "direct-library", "object-code"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -237,7 +237,7 @@ anchors = [
 ]
 summary = "An Annex J relative file name processed without a preceding root-directory specification shall be resolved using the user's current working directory as the default root."
 related_clauses = []
-tags = []
+tags = ["file-path", "path-resolution"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -261,7 +261,7 @@ anchors = [
 ]
 summary = "A directly specified object-code library pathname shall omit its platform-specific filename extension."
 related_clauses = []
-tags = []
+tags = ["direct-library", "file-path", "filename-extension", "object-code"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -285,7 +285,7 @@ anchors = [
 ]
 summary = "For a directly specified extensionless object-code library pathname, the SystemVerilog application shall append the extension appropriate to the target platform."
 related_clauses = []
-tags = []
+tags = ["direct-library", "file-path", "filename-extension", "object-code"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -313,7 +313,7 @@ summary = "A simulator shall support including DPI foreign-language functionalit
 related_clauses = [
     "35.2",
 ]
-tags = []
+tags = ["dpi", "foreign-language", "object-code"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -337,7 +337,7 @@ anchors = [
 ]
 summary = "An object-code library shall be loaded no more than once even when specified multiple times."
 related_clauses = []
-tags = []
+tags = ["library-loading", "object-code"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -361,7 +361,7 @@ anchors = [
 ]
 summary = "Object-code libraries shall load in specification order: bootstrap library entries in file order, followed by direct-library specifications in occurrence order."
 related_clauses = []
-tags = []
+tags = ["library-loading", "object-code", "source-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -387,7 +387,7 @@ summary = "The bootstrap-file location facility may be used repeatedly to specif
 related_clauses = [
     "J.4.1",
 ]
-tags = []
+tags = ["bootstrap-file", "file-path"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -411,7 +411,7 @@ anchors = [
 ]
 summary = "The direct object-code library facility may be used repeatedly to specify multiple libraries."
 related_clauses = []
-tags = []
+tags = ["direct-library", "object-code"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -437,7 +437,7 @@ summary = "Each bootstrap-file or direct-library location may be specified as ei
 related_clauses = [
     "J.3",
 ]
-tags = []
+tags = ["file-path", "object-code", "path-resolution"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -461,7 +461,7 @@ anchors = [
 ]
 summary = "A shared library supplied for Annex J object-code inclusion shall have the filename extension appropriate to the target platform."
 related_clauses = []
-tags = []
+tags = ["filename-extension", "object-code", "shared-library"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -485,7 +485,7 @@ anchors = [
 ]
 summary = "Compiled object code supplied for Annex J inclusion shall be provided as a shared library."
 related_clauses = []
-tags = []
+tags = ["object-code", "shared-library"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -509,7 +509,7 @@ anchors = [
 ]
 summary = "A SystemVerilog application is required to load from a shared library only object code referenced by SystemVerilog code or registration functions; unreferenced additional functions need not be loaded."
 related_clauses = []
-tags = []
+tags = ["library-loading", "object-code", "shared-library"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -533,7 +533,7 @@ anchors = [
 ]
 summary = "When the Annex J root-directory facility specifies a directory, that directory shall be prepended to governed relative pathnames."
 related_clauses = []
-tags = []
+tags = ["file-path", "path-resolution"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"

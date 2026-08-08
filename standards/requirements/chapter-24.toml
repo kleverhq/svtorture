@@ -11,7 +11,7 @@ anchors = [
 ]
 summary = "If any program block contains an initial procedure, simulation shall perform an implicit $finish immediately after all threads and descendants originating from every program initial procedure have ended."
 related_clauses = []
-tags = []
+tags = ["program", "scheduling", "simulation-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -37,7 +37,7 @@ summary = "An anonymous program has the form `program; ... endprogram`, and its 
 related_clauses = [
     "24.6",
 ]
-tags = []
+tags = ["grammar", "program"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -66,7 +66,7 @@ related_clauses = [
     "26",
     "3.12.1",
 ]
-tags = []
+tags = ["namespace", "program", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -90,7 +90,7 @@ anchors = [
 ]
 summary = "An anonymous program shall not contain a hierarchical reference to another program scope."
 related_clauses = []
-tags = []
+tags = ["hierarchy", "program"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -116,7 +116,7 @@ anchors = [
 ]
 summary = "Blocking sequential code inherits the scheduling region of its calling thread, including subroutine code declared in a module, package, or interface when called by a program thread."
 related_clauses = []
-tags = []
+tags = ["program", "scheduling", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -140,7 +140,7 @@ anchors = [
 ]
 summary = "A hierarchical reference may extend from one named program scope into another program scope."
 related_clauses = []
-tags = []
+tags = ["hierarchy", "name-resolution", "program"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -166,7 +166,7 @@ anchors = [
 ]
 summary = "Code executing from a module context cannot call code declared in a program."
 related_clauses = []
-tags = []
+tags = ["module", "program", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -190,7 +190,7 @@ anchors = [
 ]
 summary = "A call to $exit from a thread that does not originate from a program initial procedure is ignored; an implementation may issue a warning."
 related_clauses = []
-tags = []
+tags = ["program", "simulation-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -214,7 +214,7 @@ anchors = [
 ]
 summary = "A package import in an ANSI program header shall be followed by a parameter-port list, a port-declaration list, or both."
 related_clauses = []
-tags = []
+tags = ["grammar", "import", "ports", "program"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -238,7 +238,7 @@ anchors = [
 ]
 summary = "A concurrent assertion in a program retains invariant assertion scheduling: it samples values in Preponed and evaluates in Observed, including when clocked by a program object."
 related_clauses = []
-tags = []
+tags = ["concurrent-assertion", "program", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -264,7 +264,7 @@ anchors = [
 ]
 summary = "A named program declaration shall match a non-ANSI, ANSI, wildcard-port, or extern grammar alternative, and its body items shall be restricted to the program-item productions."
 related_clauses = []
-tags = []
+tags = ["grammar", "program"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -290,7 +290,7 @@ anchors = [
 ]
 summary = "As soon as all initial procedures in one program reach their ends, that program shall terminate every descendant thread spawned by those initial procedures."
 related_clauses = []
-tags = []
+tags = ["process-control", "program"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -316,7 +316,7 @@ summary = "A statement or construct in a program that is sensitive to a design-s
 related_clauses = [
     "4.2",
 ]
-tags = []
+tags = ["program", "scheduling", "value-change"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -343,7 +343,7 @@ anchors = [
 ]
 summary = "A call to $exit() from a thread descended from a program initial procedure terminates every initial procedure and descendant thread in that originating program block."
 related_clauses = []
-tags = []
+tags = ["program", "scheduling", "simulation-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -367,7 +367,7 @@ anchors = [
 ]
 summary = "A program generate item shall not contain an item that would be illegal directly in a program declaration."
 related_clauses = []
-tags = []
+tags = ["generate", "program"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -391,7 +391,7 @@ anchors = [
 ]
 summary = "A nested program with no ports, or a top-level program not explicitly instantiated, is implicitly instantiated exactly once with an instance name equal to its declaration name."
 related_clauses = []
-tags = []
+tags = ["elaboration", "instantiation", "program"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -417,7 +417,7 @@ summary = "An initial procedure declared in a program is scheduled in the Reacti
 related_clauses = [
     "4.2",
 ]
-tags = []
+tags = ["program", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -443,7 +443,7 @@ summary = "Program code may call subroutines declared in other programs or in de
 related_clauses = [
     "24.3.1",
 ]
-tags = []
+tags = ["module", "program", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -467,7 +467,7 @@ anchors = [
 ]
 summary = "A program block may be nested within a module or interface and may share declarations in that enclosing scope with cooperating programs."
 related_clauses = []
-tags = []
+tags = ["hierarchy", "program", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -492,7 +492,7 @@ anchors = [
 ]
 summary = "Without a clocking block, a program-port update of a connected design variable, or driving and resolution of a connected net, occurs in the reactive region set; a sensitive design process then wakes in the active region set on the next scheduler-loop iteration."
 related_clauses = []
-tags = []
+tags = ["connectivity", "ports", "program", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -516,7 +516,7 @@ anchors = [
 ]
 summary = "A program port is a program-scope object and connects only to a design-scope net or variable because program instances occur only in design scopes."
 related_clauses = []
-tags = []
+tags = ["connectivity", "ports", "program"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -543,7 +543,7 @@ summary = "Program ports use module port declaration, connection, and instantiat
 related_clauses = [
     "23.2.2",
 ]
-tags = []
+tags = ["interface", "module", "ports", "program"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -567,7 +567,7 @@ anchors = [
 ]
 summary = "A program block shall not contain an always procedure, primitive, UDP, or a declaration or instance of a module, interface, or program."
 related_clauses = []
-tags = []
+tags = ["grammar", "program"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -594,7 +594,7 @@ summary = "A nonblocking assignment executed in program code schedules its updat
 related_clauses = [
     "4.2",
 ]
-tags = []
+tags = ["nba", "program", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -620,7 +620,7 @@ summary = "A program process resumed after a standard # delay is scheduled in th
 related_clauses = [
     "4.2",
 ]
-tags = []
+tags = ["program", "scheduling", "timing-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -645,7 +645,7 @@ anchors = [
 ]
 summary = "A program block creates a local scope that encapsulates its type, data, task, and function declarations."
 related_clauses = []
-tags = []
+tags = ["program", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -669,7 +669,7 @@ anchors = [
 ]
 summary = "Data declared directly within a program scope has static lifetime."
 related_clauses = []
-tags = []
+tags = ["lifetime", "program", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -696,7 +696,7 @@ anchors = [
 ]
 summary = "A reference from outside every program block to a program variable or net shall be an error."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "program", "visibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -720,7 +720,7 @@ anchors = [
 ]
 summary = "A timeunits declaration used as a non-port program item is legal only when it repeats and matches a previous timeunits declaration in the same time scope."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "program", "time-unit"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"

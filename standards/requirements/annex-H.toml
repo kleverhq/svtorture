@@ -11,7 +11,7 @@ anchors = [
 ]
 summary = "Every string member of a DPI aggregate shall be represented by const char* and obey the same ownership, lifetime, null-termination, and direction rules as a stand-alone string argument."
 related_clauses = []
-tags = []
+tags = ["aggregate", "argument-direction", "dpi", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -36,7 +36,7 @@ anchors = [
 ]
 summary = "svGetBitselBit and svGetBitselLogic shall return the scalar at normalized packed index i, and svPutBitselBit and svPutBitselLogic shall replace that indexed scalar in the corresponding canonical destination."
 related_clauses = []
-tags = []
+tags = ["array-indexing", "dpi", "four-state", "two-state"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -60,7 +60,7 @@ anchors = [
 ]
 summary = "A value crossing the DPI boundary in either direction shall be declared on the SystemVerilog side using a SystemVerilog data type; non-SystemVerilog data types do not form the SystemVerilog-side DPI interface."
 related_clauses = []
-tags = []
+tags = ["dpi", "formal-argument", "type-compatibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -85,7 +85,7 @@ anchors = [
 ]
 summary = "A DPI argument of type T passed by reference shall use C formal type T* pointing to the actual object; packed two-state and four-state values respectively use svBitVecVal* and svLogicVecVal*."
 related_clauses = []
-tags = []
+tags = ["dpi", "four-state", "pointer", "reference-argument", "representation", "two-state"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -109,7 +109,7 @@ anchors = [
 ]
 summary = "A SystemVerilog type that is neither packed nor contains packed elements shall use a C-compatible representation at the DPI boundary."
 related_clauses = []
-tags = []
+tags = ["dpi", "representation"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -135,7 +135,7 @@ anchors = [
 ]
 summary = "The C side of a DPI interface shall represent every boundary value with a C type rather than a SystemVerilog type spelling."
 related_clauses = []
-tags = []
+tags = ["dpi", "foreign-language", "type-compatibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -162,7 +162,7 @@ summary = "At every imported DPI call, each actual shall conform to its formal t
 related_clauses = [
     "35.5.1",
 ]
-tags = []
+tags = ["conversion", "dpi", "formal-argument", "type-compatibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -188,7 +188,7 @@ summary = "A DPI callee shall receive each actual according to the type and dire
 related_clauses = [
     "35.5.1",
 ]
-tags = []
+tags = ["argument-direction", "dpi", "formal-argument", "type-compatibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -212,7 +212,7 @@ anchors = [
 ]
 summary = "svdpi.h shall define s_vpi_vecval as two uint32_t fields aval and bval, typedef svLogicVecVal to that type, and typedef svBitVecVal to uint32_t, while respecting an existing VPI_VECVAL definition guard."
 related_clauses = []
-tags = []
+tags = ["dpi", "four-state", "typedef", "vector"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -239,7 +239,7 @@ summary = "A DPI import call shall receive context instrumentation only when its
 related_clauses = [
     "35.5.3",
 ]
-tags = []
+tags = ["context", "dpi", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -263,7 +263,7 @@ anchors = [
 ]
 summary = "A context imported-subroutine call is an optimization barrier because it may access any SystemVerilog data object through VPI or an embedded export, whereas a noncontext call shall not block optimizations."
 related_clauses = []
-tags = []
+tags = ["context", "dpi", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -287,7 +287,7 @@ anchors = [
 ]
 summary = "An imported subroutine may safely call VPI, exported SystemVerilog functions, or other APIs requiring simulator context only when declared context; effects of such calls from a noncontext import are unspecified."
 related_clauses = []
-tags = []
+tags = ["context", "dpi", "foreign-language", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -311,7 +311,7 @@ anchors = [
 ]
 summary = "Context shall propagate transitively from a running context import to an exported subroutine available in the same scope without requiring svSetScope, producing the same export execution context as an equivalent native SystemVerilog call chain."
 related_clauses = []
-tags = []
+tags = ["context", "dpi", "export", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -335,7 +335,7 @@ anchors = [
 ]
 summary = "A DPI imported or exported task or function may be declared in a module, program, interface, package, compilation-unit scope, or generate declarative scope."
 related_clauses = []
-tags = []
+tags = ["dpi", "scope", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -364,7 +364,7 @@ related_clauses = [
     "35.5.4",
     "H.14",
 ]
-tags = []
+tags = ["deprecated", "dpi", "representation"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -392,7 +392,7 @@ summary = "A sized non-open array formal shall pass by direct reference in platf
 related_clauses = [
     "H.7.6",
 ]
-tags = []
+tags = ["array-mapping", "dpi", "layout", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -416,7 +416,7 @@ anchors = [
 ]
 summary = "An unpacked array embedded in a structure shall have C-compatible layout regardless of its element type."
 related_clauses = []
-tags = []
+tags = ["aggregate", "dpi", "layout", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -443,7 +443,7 @@ related_clauses = [
     "35.5.5",
     "6.19",
 ]
-tags = []
+tags = ["dpi", "enum", "four-state", "representation"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -467,7 +467,7 @@ anchors = [
 ]
 summary = "SystemVerilog enumerated names are not exported as names to the C side of a DPI interface; C observes values through the mapped base representation."
 related_clauses = []
-tags = []
+tags = ["dpi", "enum", "representation"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -491,7 +491,7 @@ anchors = [
 ]
 summary = "A SystemVerilog-exported subroutine shall have the same C function header that a DPI import with the identical result type and formal argument list would require."
 related_clauses = []
-tags = []
+tags = ["dpi", "export", "function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -516,7 +516,7 @@ anchors = [
 ]
 summary = "An exported subroutine call uses the scope most recently selected by svSetScope when set; otherwise an import calling the export uses the instantiated scope containing that import declaration, so calls through separately instantiated imports can select distinct export contexts."
 related_clauses = []
-tags = []
+tags = ["context", "dpi", "export", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -540,7 +540,7 @@ anchors = [
 ]
 summary = "An exported inout string shall use const char** initially pointing to valid user-owned storage that SystemVerilog only reads and does not modify or free; a SystemVerilog value change shall replace the pointer with valid SystemVerilog string storage, whose lifetime C shall not assume and whose value C shall copy if retention is needed."
 related_clauses = []
-tags = []
+tags = ["argument-direction", "dpi", "export", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -564,7 +564,7 @@ anchors = [
 ]
 summary = "A C call to an exported input-string formal shall pass const char*, and SystemVerilog shall only read the string and shall not modify its characters."
 related_clauses = []
-tags = []
+tags = ["argument-direction", "dpi", "export", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -588,7 +588,7 @@ anchors = [
 ]
 summary = "An exported output string shall use const char** with no meaningful initial pointer; SystemVerilog shall write a valid string address, and C shall neither free nor assume the lifetime of that storage, copying it to C-owned memory if retention is needed."
 related_clauses = []
-tags = []
+tags = ["argument-direction", "dpi", "export", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -617,7 +617,7 @@ related_clauses = [
     "H.12.5",
     "H.14",
 ]
-tags = []
+tags = ["allocation", "dpi", "export", "reference-argument"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -643,7 +643,7 @@ summary = "The C interface of an exported SystemVerilog task shall return int st
 related_clauses = [
     "35.9",
 ]
-tags = []
+tags = ["disable", "dpi", "export", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -668,7 +668,7 @@ anchors = [
 ]
 summary = "A DPI function result, which is restricted to a small value type, shall be returned directly by C value using the C type equivalent to its SystemVerilog result type."
 related_clauses = []
-tags = []
+tags = ["dpi", "function", "return-value"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -695,7 +695,7 @@ anchors = [
 ]
 summary = "A DPI function result shall be byte, shortint, int, longint, real, shortreal, chandle, string, scalar bit, or scalar logic; scalar bit and logic results use the encodings defined by svdpi.h."
 related_clauses = []
-tags = []
+tags = ["dpi", "function", "return-value", "type-compatibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -720,7 +720,7 @@ anchors = [
 ]
 summary = "DPI C function and type names shall start with sv and continue as initially capitalized words without separators."
 related_clauses = []
-tags = []
+tags = ["dpi", "lexical", "namespace"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -745,7 +745,7 @@ anchors = [
 ]
 summary = "A context DPI import executes in the instantiated declarative scope containing its import declaration, not in the caller's scope; its context name is the fully qualified imported-subroutine name with the subroutine name removed."
 related_clauses = []
-tags = []
+tags = ["context", "dpi", "import", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -769,7 +769,7 @@ anchors = [
 ]
 summary = "An imported inout string shall arrive as const char** containing a valid SystemVerilog-provided string pointer that C shall neither free nor retain by lifetime assumption; C changes the string only by storing a valid new C string pointer, whose contents SystemVerilog copies on return without freeing the C storage."
 related_clauses = []
-tags = []
+tags = ["argument-direction", "dpi", "import", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -793,7 +793,7 @@ anchors = [
 ]
 summary = "For an imported input string, C receives a pointer supplied by SystemVerilog, shall not free it or assume its lifetime beyond the call, and changes to the local pointer value shall not propagate to SystemVerilog."
 related_clauses = []
-tags = []
+tags = ["argument-direction", "dpi", "lifetime", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -817,7 +817,7 @@ anchors = [
 ]
 summary = "An imported output string shall use const char** with no meaningful initial pointer; before return, C shall store a valid initialized const char* in it, and SystemVerilog shall copy from but not free the addressed C storage."
 related_clauses = []
-tags = []
+tags = ["argument-direction", "dpi", "import", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -841,7 +841,7 @@ anchors = [
 ]
 summary = "A SystemVerilog compiler shall not alter the C implementation or formal arguments of an imported DPI subroutine."
 related_clauses = []
-tags = []
+tags = ["dpi", "foreign-language", "formal-argument", "import"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -865,7 +865,7 @@ anchors = [
 ]
 summary = "Every C formal corresponding to an input argument of an imported DPI function shall have a const qualifier."
 related_clauses = []
-tags = []
+tags = ["argument-direction", "const", "dpi", "formal-argument"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -891,7 +891,7 @@ summary = "Foreign-language code shall not modify a DPI formal declared input in
 related_clauses = [
     "35.5.1.2",
 ]
-tags = []
+tags = ["argument-direction", "dpi", "foreign-language", "formal-argument"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -915,7 +915,7 @@ anchors = [
 ]
 summary = "DPI C macro names shall start with SV_ and continue with uppercase words separated by underscores."
 related_clauses = []
-tags = []
+tags = ["dpi", "lexical", "macro"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -939,7 +939,7 @@ anchors = [
 ]
 summary = "A scalar SystemVerilog bit value crossing DPI shall map to C unsigned char."
 related_clauses = []
-tags = []
+tags = ["conversion", "dpi", "representation", "two-state"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -963,7 +963,7 @@ anchors = [
 ]
 summary = "A SystemVerilog byte value crossing DPI shall map to C char."
 related_clauses = []
-tags = []
+tags = ["conversion", "dpi", "representation"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -987,7 +987,7 @@ anchors = [
 ]
 summary = "A SystemVerilog chandle value crossing DPI shall map to C void pointer."
 related_clauses = []
-tags = []
+tags = ["conversion", "dpi", "pointer", "representation"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1011,7 +1011,7 @@ anchors = [
 ]
 summary = "A SystemVerilog int value crossing DPI shall map to C int."
 related_clauses = []
-tags = []
+tags = ["conversion", "dpi", "representation"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1036,7 +1036,7 @@ anchors = [
 ]
 summary = "A scalar SystemVerilog logic or reg value crossing DPI shall map to C unsigned char using the state encodings defined by svdpi.h."
 related_clauses = []
-tags = []
+tags = ["conversion", "dpi", "four-state", "representation"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1060,7 +1060,7 @@ anchors = [
 ]
 summary = "A SystemVerilog longint value crossing DPI shall map to C long long."
 related_clauses = []
-tags = []
+tags = ["conversion", "dpi", "representation"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1084,7 +1084,7 @@ anchors = [
 ]
 summary = "A SystemVerilog real value crossing DPI shall map to C double."
 related_clauses = []
-tags = []
+tags = ["conversion", "dpi", "representation"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1108,7 +1108,7 @@ anchors = [
 ]
 summary = "A SystemVerilog shortint value crossing DPI shall map to C short int."
 related_clauses = []
-tags = []
+tags = ["conversion", "dpi", "representation"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1132,7 +1132,7 @@ anchors = [
 ]
 summary = "A SystemVerilog shortreal value crossing DPI shall map to C float."
 related_clauses = []
-tags = []
+tags = ["conversion", "dpi", "representation"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1156,7 +1156,7 @@ anchors = [
 ]
 summary = "A SystemVerilog string value crossing DPI shall map to C const char pointer."
 related_clauses = []
-tags = []
+tags = ["conversion", "dpi", "representation", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1185,7 +1185,7 @@ anchors = [
 ]
 summary = "For every SystemVerilog type used by a DPI import or export, the user shall provide an equivalent C type that matches the prescribed passing mode and formal direction; cross-language compilers do not infer coercions between the independent declarations."
 related_clauses = []
-tags = []
+tags = ["dpi", "foreign-language", "formal-argument", "type-compatibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1210,7 +1210,7 @@ anchors = [
 ]
 summary = "Every name introduced by the standardized DPI C interface shall begin with either the lowercase prefix sv or the uppercase prefix SV_."
 related_clauses = []
-tags = []
+tags = ["dpi", "lexical", "namespace"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1234,7 +1234,7 @@ anchors = [
 ]
 summary = "A noncontext imported subroutine shall not access SystemVerilog data objects other than its actual arguments; only those arguments may be read or written by the call."
 related_clauses = []
-tags = []
+tags = ["context", "dpi", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1258,7 +1258,7 @@ anchors = [
 ]
 summary = "Every non-open imported DPI formal is fully defined by its SystemVerilog import declaration and shall have exactly the packed and unpacked array ranges specified there."
 related_clauses = []
-tags = []
+tags = ["array-dimension", "dpi", "formal-argument", "range"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1283,7 +1283,7 @@ anchors = [
 ]
 summary = "DPI C access to SystemVerilog arrays shall use [n-1:0] for the single linearized packed dimension and [0:n-1] for unpacked dimensions, except that open-array unpacked dimensions retain their original SystemVerilog ranges."
 related_clauses = []
-tags = []
+tags = ["array-mapping", "dpi", "layout", "range"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1307,7 +1307,7 @@ anchors = [
 ]
 summary = "svdpi.h shall typedef svScope and svOpenArrayHandle as opaque void pointer handle types, representing an instance scope and an unsized-array object respectively."
 related_clauses = []
-tags = []
+tags = ["dpi", "pointer", "typedef"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1331,7 +1331,7 @@ anchors = [
 ]
 summary = "One open-array formal may accept actual arrays with differing ranges or element counts at different calls, subject to the formal's fixed type information."
 related_clauses = []
-tags = []
+tags = ["array-argument", "dpi", "open-array", "type-compatibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1356,7 +1356,7 @@ anchors = [
 ]
 summary = "For an open-array formal, its declaration fixes every sized dimension and all non-range type information; at each call, the actual fixes each unsized unpacked range and all actual packed dimensions determine one linearized normalized packed range."
 related_clauses = []
-tags = []
+tags = ["array-dimension", "dpi", "open-array", "range"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1382,7 +1382,7 @@ anchors = [
 ]
 summary = "For a stand-alone array passed to an open-array formal, each two-state or four-state scalar or packed element shall use canonical representation; every other element shall use the same C-compatible representation as an individual value of its type."
 related_clauses = []
-tags = []
+tags = ["array-argument", "dpi", "open-array", "representation"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1406,7 +1406,7 @@ anchors = [
 ]
 summary = "The C formal for every open-array argument, regardless of direction, shall const-qualify its svOpenArrayHandle; user code shall not modify the opaque handle."
 related_clauses = []
-tags = []
+tags = ["const", "dpi", "open-array", "pointer"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1436,7 +1436,7 @@ related_clauses = [
     "H.12",
     "H.7.1",
 ]
-tags = []
+tags = ["dpi", "open-array", "pointer", "protocol"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1463,7 +1463,7 @@ summary = "An unsized open-array formal is permitted only for a DPI import; a Sy
 related_clauses = [
     "35.5.6.1",
 ]
-tags = []
+tags = ["diagnostic", "dpi", "export", "open-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1488,7 +1488,7 @@ anchors = [
 ]
 summary = "Open-array query functions shall expose original ranges for unsized unpacked dimensions and one linearized normalized range for unsized packed dimensions; returned indices shall be usable with the corresponding open-array copy/access and canonical packed access functions."
 related_clauses = []
-tags = []
+tags = ["array-indexing", "dpi", "open-array", "range"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1516,7 +1516,7 @@ summary = "svLeft, svRight, svLow, svHigh, svIncrement, and svSize shall return 
 related_clauses = [
     "20.7",
 ]
-tags = []
+tags = ["array-query", "dpi", "open-array", "range"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1543,7 +1543,7 @@ related_clauses = [
     "35.5.6.1",
     "H.7.1",
 ]
-tags = []
+tags = ["array-dimension", "dpi", "open-array", "range"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1569,7 +1569,7 @@ anchors = [
 ]
 summary = "svGetArrElemPtr and its one-, two-, and three-index forms shall return an individual open-array element address when indices and handle are valid and the element has its standalone type representation; they shall return NULL for an invalid/null handle, out-of-range index, or scalar/packed element whose array representation differs from standalone representation."
 related_clauses = []
-tags = []
+tags = ["array-indexing", "dpi", "open-array", "pointer"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1595,7 +1595,7 @@ anchors = [
 ]
 summary = "An open-array element with a C-compatible noncanonical type shall be accessed by first computing its actual element address through the generic pointer API and casting that pointer to the matching C type."
 related_clauses = []
-tags = []
+tags = ["dpi", "open-array", "pointer", "representation"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1619,7 +1619,7 @@ anchors = [
 ]
 summary = "Open-array indexing APIs shall provide variable-argument-list forms for arbitrary index counts and specialized forms for one, two, and three indices."
 related_clauses = []
-tags = []
+tags = ["array-indexing", "dpi", "function", "open-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1645,7 +1645,7 @@ summary = "When a DPI formal has one unsized packed dimension, the actual argume
 related_clauses = [
     "35.5.6.1",
 ]
-tags = []
+tags = ["dpi", "open-array", "packed-array", "type-compatibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1671,7 +1671,7 @@ anchors = [
 ]
 summary = "The svPut{Bit,Logic}ArrElem*VecVal APIs shall copy one whole packed canonical vector from user storage into an open-array element, and corresponding svGet APIs shall copy it out, using original SystemVerilog unpacked indices and varargs or one-, two-, and three-index forms; user buffers shall be large enough for the entire element."
 related_clauses = []
-tags = []
+tags = ["dpi", "open-array", "packed-array", "vector"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1696,7 +1696,7 @@ anchors = [
 ]
 summary = "svGetBitArrElem and svGetLogicArrElem shall directly return scalar elements, and svPutBitArrElem and svPutLogicArrElem shall directly write scalar elements, with varargs and specialized one-, two-, and three-index forms."
 related_clauses = []
-tags = []
+tags = ["dpi", "four-state", "open-array", "two-state"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1722,7 +1722,7 @@ summary = "Each unpacked dimension of an actual DPI argument shall match the cor
 related_clauses = [
     "35.5.6.1",
 ]
-tags = []
+tags = ["array-dimension", "dpi", "open-array", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1748,7 +1748,7 @@ anchors = [
 ]
 summary = "svGetArrayPtr shall return the actual whole-array address and svSizeOfArray its byte size when an open-array actual has C-compatible contiguous layout; if its layout differs from C layout, they shall return NULL and 0 respectively."
 related_clauses = []
-tags = []
+tags = ["dpi", "layout", "open-array", "pointer"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1774,7 +1774,7 @@ summary = "Every non-open output or inout DPI argument shall pass by reference; 
 related_clauses = [
     "H.7.7",
 ]
-tags = []
+tags = ["argument-direction", "dpi", "reference-argument", "representation"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1798,7 +1798,7 @@ anchors = [
 ]
 summary = "After C returns to SystemVerilog, the simulator shall detect and handle value changes made to output and inout DPI arguments."
 related_clauses = []
-tags = []
+tags = ["argument-direction", "copy-out", "dpi", "value-change"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1822,7 +1822,7 @@ anchors = [
 ]
 summary = "A canonical packed value shall be stored in one or more 32-bit groups, with the first element containing bits 31:0 and successive elements containing increasingly significant groups."
 related_clauses = []
-tags = []
+tags = ["dpi", "layout", "packed-array", "vector"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1849,7 +1849,7 @@ related_clauses = [
     "6.22.2",
     "H.7.7",
 ]
-tags = []
+tags = ["aggregate", "dpi", "layout", "packed-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1873,7 +1873,7 @@ anchors = [
 ]
 summary = "svdpi.h shall provide SV_MASK(N), SV_GET_UNSIGNED_BITS(VALUE,N), and SV_GET_SIGNED_BITS(VALUE,N) with the defined masking and sign-extension behavior, including leaving a 32-bit value unchanged when N is 32."
 related_clauses = []
-tags = []
+tags = ["dpi", "layout", "macro", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1900,7 +1900,7 @@ summary = "Packed two-state DPI arrays shall use svBitVecVal and packed four-sta
 related_clauses = [
     "H.7.7",
 ]
-tags = []
+tags = ["dpi", "four-state", "representation", "two-state"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1924,7 +1924,7 @@ anchors = [
 ]
 summary = "SV_PACKED_DATA_NELEMS(WIDTH) shall evaluate to (WIDTH+31)>>5, the number of 32-bit canonical elements required for the packed width."
 related_clauses = []
-tags = []
+tags = ["dpi", "macro", "packed-array", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1954,7 +1954,7 @@ related_clauses = [
     "H.7.5",
     "6.22.2",
 ]
-tags = []
+tags = ["array-mapping", "dpi", "layout", "packed-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1978,7 +1978,7 @@ anchors = [
 ]
 summary = "A packed range [L:R] shall map to normalized C range [abs(L-R):0], preserving the SystemVerilog MSB at normalized index abs(L-R) and LSB at index 0."
 related_clauses = []
-tags = []
+tags = ["dpi", "layout", "packed-array", "range"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2002,7 +2002,7 @@ anchors = [
 ]
 summary = "Multiple packed dimensions of sizes i, j, and k shall linearize in row-major order to size i*j*k, with normalized element [l][m][n] at offset n + m*k + l*j*k."
 related_clauses = []
-tags = []
+tags = ["array-mapping", "dpi", "layout", "packed-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2029,7 +2029,7 @@ related_clauses = [
     "7.3.2",
     "H.10.1.2",
 ]
-tags = []
+tags = ["dpi", "four-state", "packed-union", "two-state"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2054,7 +2054,7 @@ anchors = [
 ]
 summary = "svGetPartselBit or svGetPartselLogic with start i and width w shall copy source bits [i+w-1:i] into destination bits [w-1:0] and, when w is less than 32, leave destination bits [31:w] unchanged."
 related_clauses = []
-tags = []
+tags = ["dpi", "four-state", "packed-array", "two-state"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2080,7 +2080,7 @@ anchors = [
 ]
 summary = "DPI part-select utilities apply only to packed bit or logic arrays, use normalized indexing, and support widths no greater than 32; behavior is undetermined if the selected range is not wholly within the packed array's normalized range."
 related_clauses = []
-tags = []
+tags = ["dpi", "packed-array", "range", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2105,7 +2105,7 @@ anchors = [
 ]
 summary = "svPutPartselBit or svPutPartselLogic with start i and width w shall copy source bits [w-1:0] into destination bits [i+w-1:i] without changing destination bits outside that range."
 related_clauses = []
-tags = []
+tags = ["dpi", "four-state", "packed-array", "two-state"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2130,7 +2130,7 @@ anchors = [
 ]
 summary = "DPI object code compiled on a given platform shall work without recompilation with every conforming SystemVerilog simulator on that platform."
 related_clauses = []
-tags = []
+tags = ["dpi", "linkage", "protocol"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2155,7 +2155,7 @@ anchors = [
 ]
 summary = "rand and randc or other representation-unrelated qualifiers on DPI formals or actuals shall not affect C-side processing; values are coerced to the unqualified representation without exposing or manipulating qualifier-associated state."
 related_clauses = []
-tags = []
+tags = ["conversion", "dpi", "representation", "type-compatibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2179,7 +2179,7 @@ anchors = [
 ]
 summary = "The standardized SystemVerilog-to-C range mapping shall apply identically to SystemVerilog calls into C and C calls into exported SystemVerilog subroutines."
 related_clauses = []
-tags = []
+tags = ["array-mapping", "dpi", "export", "range"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2203,7 +2203,7 @@ anchors = [
 ]
 summary = "A SystemVerilog reg parameter crossing DPI may use the same scalar state encodings as a logic parameter."
 related_clauses = []
-tags = []
+tags = ["dpi", "encoding", "four-state", "parameter"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2227,7 +2227,7 @@ anchors = [
 ]
 summary = "svdpi.h shall encode scalar states as sv_0=0, sv_1=1, sv_z=2, and sv_x=3."
 related_clauses = []
-tags = []
+tags = ["dpi", "encoding", "four-state"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2251,7 +2251,7 @@ anchors = [
 ]
 summary = "svdpi.h shall define svScalar as unsigned char and shall typedef both svBit and svLogic from svScalar."
 related_clauses = []
-tags = []
+tags = ["dpi", "four-state", "two-state", "typedef"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2275,7 +2275,7 @@ anchors = [
 ]
 summary = "svGetScopeFromName shall return the matching module, program, interface, or generate instance scope for a recognized fully qualified name and NULL for an unrecognized scope name."
 related_clauses = []
-tags = []
+tags = ["dpi", "name-resolution", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2299,7 +2299,7 @@ anchors = [
 ]
 summary = "A stand-alone array passed as an actual to a sized DPI formal shall have C-compatible layout regardless of its element type."
 related_clauses = []
-tags = []
+tags = ["array-argument", "dpi", "layout", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2331,7 +2331,7 @@ summary = "A non-open input formal shall pass directly by C value only when its 
 related_clauses = [
     "H.8.7",
 ]
-tags = []
+tags = ["argument-direction", "dpi", "formal-argument", "type-compatibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2355,7 +2355,7 @@ anchors = [
 ]
 summary = "A string formal's input, output, or inout direction applies to its const char* pointer value, not to the characters in the pointed-to string storage."
 related_clauses = []
-tags = []
+tags = ["argument-direction", "dpi", "pointer", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2379,7 +2379,7 @@ anchors = [
 ]
 summary = "When SystemVerilog passes a string value to C, the implementation shall lay out all characters according to C string conventions and include a trailing null character."
 related_clauses = []
-tags = []
+tags = ["dpi", "layout", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2406,7 +2406,7 @@ summary = "Every conforming simulator on every platform shall use the same imple
 related_clauses = [
     "I",
 ]
-tags = []
+tags = ["dpi", "linkage", "protocol"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2430,7 +2430,7 @@ anchors = [
 ]
 summary = "svGetCallerInfo shall return true and update valid file-name and line-number outputs when call-site information is available; otherwise it shall return false without modifying them. Any returned filename is simulator-owned, read-only, not freeable, and valid only until the next SystemVerilog function call."
 related_clauses = []
-tags = []
+tags = ["dpi", "source-location"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2454,7 +2454,7 @@ anchors = [
 ]
 summary = "svGetNameFromScope shall return the fully qualified name of the supplied svScope."
 related_clauses = []
-tags = []
+tags = ["dpi", "name-resolution", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2478,7 +2478,7 @@ anchors = [
 ]
 summary = "svGetScope shall return the active instance scope of the executing context import: its declaration scope unless svSetScope previously selected another active scope; its result is undefined from a noncontext import."
 related_clauses = []
-tags = []
+tags = ["context", "dpi", "scope", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2502,7 +2502,7 @@ anchors = [
 ]
 summary = "svGetTime shall retrieve current simulation time into svTimeVal in scaled-real or simulation-time form selected by its type field, scaled to the time unit of the supplied svScope or to the simulation time unit when scope is NULL."
 related_clauses = []
-tags = []
+tags = ["dpi", "simulation-time", "time-unit"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -2526,7 +2526,7 @@ anchors = [
 ]
 summary = "svGetUserData shall return the pointer previously stored for the given valid scope and key, and shall return NULL for an error or when no prior matching svPutUserData call exists."
 related_clauses = []
-tags = []
+tags = ["dpi", "scope", "user-data"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2551,7 +2551,7 @@ anchors = [
 ]
 summary = "svPutUserData shall store a non-NULL user-data pointer under a valid svScope and user key, returning 0 on success and -1 for NULL scope, NULL userData, invalid scope, or other errors; a key intended for unique storage shall be unique across all C code in the simulation."
 related_clauses = []
-tags = []
+tags = ["dpi", "scope", "user-data"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2575,7 +2575,7 @@ anchors = [
 ]
 summary = "svSetScope(scope) shall set the context used by subsequent export calls and return the previously active scope; without such a call, an export invoked while an import executes inherits that surrounding import's default scope."
 related_clauses = []
-tags = []
+tags = ["context", "dpi", "scope", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2601,7 +2601,7 @@ summary = "svdpi.h shall define svTimeVal with representation and semantics full
 related_clauses = [
     "I",
 ]
-tags = []
+tags = ["dpi", "pli", "simulation-time", "type-equivalence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -2626,7 +2626,7 @@ anchors = [
 ]
 summary = "Names of symbolic constants introduced by the DPI C interface shall start with sv_."
 related_clauses = []
-tags = []
+tags = ["dpi", "lexical", "namespace"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2651,7 +2651,7 @@ anchors = [
 ]
 summary = "svGetTimeUnit and svGetTimePrecision shall return the time unit and precision for the supplied instance scope; with NULL scope they shall return the corresponding simulation-wide values, equivalent respectively to vpi_get(vpiTimeUnit) and vpi_get(vpiTimePrecision)."
 related_clauses = []
-tags = []
+tags = ["dpi", "pli", "time-precision", "time-unit"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -2677,7 +2677,7 @@ summary = "DPI imports and exports may use unpacked arrays and unpacked structur
 related_clauses = [
     "35.5.6",
 ]
-tags = []
+tags = ["aggregate", "array-argument", "dpi", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2701,7 +2701,7 @@ anchors = [
 ]
 summary = "An unpacked aggregate composed entirely of unpacked elements and subaggregates shall be presented with layout compatible with the platform C compiler, even though unpacked aggregates may also legally contain packed elements."
 related_clauses = []
-tags = []
+tags = ["aggregate", "dpi", "layout", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2725,7 +2725,7 @@ anchors = [
 ]
 summary = "A DPI unpacked array may have an arbitrary number of unpacked dimensions; unlike packed dimensions, they remain separate dimensions subject to the applicable range mapping."
 related_clauses = []
-tags = []
+tags = ["array-dimension", "dpi", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2750,7 +2750,7 @@ anchors = [
 ]
 summary = "Each unpacked array dimension shall use ascending natural-index layout in C: SystemVerilog index min(L,R) maps to C index 0 and max(L,R) maps to abs(L-R), independent of declaration direction."
 related_clauses = []
-tags = []
+tags = ["dpi", "layout", "range", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2774,7 +2774,7 @@ anchors = [
 ]
 summary = "Each unsigned SystemVerilog basic integer type supported by DPI shall map to the unsigned C integer type corresponding to its signed mapping in Table H.1."
 related_clauses = []
-tags = []
+tags = ["conversion", "dpi", "representation"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2798,7 +2798,7 @@ anchors = [
 ]
 summary = "An unsigned basic integer formal is not ABI-equivalent to a same-width packed bit vector: byte unsigned and shortint unsigned inputs use unsigned char and unsigned short by value, while bit[7:0] and bit[15:0] use svBitVecVal by reference."
 related_clauses = []
-tags = []
+tags = ["conversion", "dpi", "packed-array", "type-equivalence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2822,7 +2822,7 @@ anchors = [
 ]
 summary = "For output or inout, an unsigned basic integer uses a pointer to its corresponding C scalar, while a same-width packed bit vector uses svBitVecVal pointer; these interfaces are not equivalent."
 related_clauses = []
-tags = []
+tags = ["argument-direction", "conversion", "dpi", "pointer"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2847,7 +2847,7 @@ anchors = [
 ]
 summary = "System-provided DPI user-data storage is keyed by both svScope context and user key; different contexts shall not share one stored association, so sharing a common C allocation across contexts requires storing its pointer separately in each context."
 related_clauses = []
-tags = []
+tags = ["context", "dpi", "scope", "user-data"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2872,7 +2872,7 @@ anchors = [
 ]
 summary = "svDpiVersion shall return the version string identifying the simulator's supported DPI canonical representation: \"1800-2005\" for the VPI-based canonical representation or \"SV3.1a\" for the prior svLogicVec32 representation."
 related_clauses = []
-tags = []
+tags = ["dpi", "representation", "version"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2902,7 +2902,7 @@ summary = "The model-independent VPI routines vpi_printf, vpi_vprintf, vpi_flush
 related_clauses = [
     "35.5.3",
 ]
-tags = []
+tags = ["context", "dpi", "pli", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -2928,7 +2928,7 @@ anchors = [
 ]
 summary = "Within a DPI context imported subroutine, model-oriented VPI operations such as vpi_iterate(vpiModule, NULL) shall operate reliably when the import has the required context instrumentation."
 related_clauses = []
-tags = []
+tags = ["context", "dpi", "pli", "vpi-iteration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2953,7 +2953,7 @@ anchors = [
 ]
 summary = "A DPI imported subroutine is not a VPI system-task call site; requesting vpiSysTfCall with vpi_handle from within an import shall produce an error rather than a system-task call handle."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "dpi", "pli", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2977,7 +2977,7 @@ anchors = [
 ]
 summary = "A VPI function executes with context associated with its call site, enabling retrieval of the call-site context handle and access to that site's arguments and surrounding scope."
 related_clauses = []
-tags = []
+tags = ["context", "dpi", "pli", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"

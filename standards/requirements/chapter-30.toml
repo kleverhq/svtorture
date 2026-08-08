@@ -11,7 +11,7 @@ anchors = [
 ]
 summary = "For a pending specify-path output transition, active paths are those whose inputs transitioned most recently and that are unconditional or have a true condition; simultaneous input transitions can make multiple paths active."
 related_clauses = []
-tags = []
+tags = ["conditional", "module-path", "path-resolution", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -35,7 +35,7 @@ anchors = [
 ]
 summary = "An edge-sensitive path's optional data-source expression may be any expression and describes data flow, but does not alter the model's actual propagation of data or events, which remains determined by the module's internal logic."
 related_clauses = []
-tags = []
+tags = ["edge-sensitive-path"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -59,7 +59,7 @@ anchors = [
 ]
 summary = "Two scheduled output transitions separated by less than the module-path delay form a pulse and, by default, are rejected so propagated transitions cannot be closer than that delay."
 related_clauses = []
-tags = []
+tags = ["module-path", "path-delay", "pulse-filtering", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -83,7 +83,7 @@ anchors = [
 ]
 summary = "By default, when a pulse's trailing edge is scheduled earlier than its leading edge, the leading edge is cancelled; if initial and final states match, no output transition occurs."
 related_clauses = []
-tags = []
+tags = ["module-path", "pulse-filtering", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -107,7 +107,7 @@ anchors = [
 ]
 summary = "By default, both error and reject pulse limits equal the corresponding module-path delay, yielding rejection of every pulse narrower than that delay."
 related_clauses = []
-tags = []
+tags = ["path-delay", "pulse-filtering", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -132,7 +132,7 @@ anchors = [
 ]
 summary = "When different delays are declared for the same edge-sensitive path, every declaration shall reference each port consistently as an entire port, bit-select, or part-select."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "edge-sensitive-path", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -157,7 +157,7 @@ anchors = [
 ]
 summary = "Multiple delay declarations for the same edge-sensitive path are permitted only when the edge, condition, or both make every declaration unique."
 related_clauses = []
-tags = []
+tags = ["conditional", "diagnostic", "edge-sensitive-path"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -184,7 +184,7 @@ summary = "An edge-sensitive module-path delay is activated only when the edge s
 related_clauses = [
     "30.4.5",
 ]
-tags = []
+tags = ["edge-sensitive-path", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -211,7 +211,7 @@ summary = "An edge-sensitive path is a parallel or full path with an optional `p
 related_clauses = [
     "A.7.2",
 ]
-tags = []
+tags = ["edge-sensitive-path", "grammar", "path-delay", "path-polarity"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -240,7 +240,7 @@ summary = "A module-path declaration containing multiple sources or multiple des
 related_clauses = [
     "30.4.6",
 ]
-tags = []
+tags = ["connectivity", "module-path", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -266,7 +266,7 @@ anchors = [
 ]
 summary = "The `*>` operator establishes a full connection in which every source bit connects to every destination bit; source and destination widths need not match."
 related_clauses = []
-tags = []
+tags = ["connectivity", "module-path", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -293,7 +293,7 @@ summary = "A module path between vectors of different widths shall use a full co
 related_clauses = [
     "30.4.5",
 ]
-tags = []
+tags = ["connectivity", "module-path", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -320,7 +320,7 @@ summary = "A module path between a vector and a scalar shall use a full connecti
 related_clauses = [
     "30.4.5",
 ]
-tags = []
+tags = ["connectivity", "module-path", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -346,7 +346,7 @@ summary = "The destination of a full (`*>`) edge-sensitive path shall be a nonem
 related_clauses = [
     "30.4.5",
 ]
-tags = []
+tags = ["edge-sensitive-path", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -374,7 +374,7 @@ related_clauses = [
     "30.4.2",
     "30.4.3",
 ]
-tags = []
+tags = ["edge-sensitive-path", "grammar", "module-path", "state-dependent-path"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -398,7 +398,7 @@ anchors = [
 ]
 summary = "An `ifnone` path supplies the default state-dependent path delay when all other conditions for that path are false."
 related_clauses = []
-tags = []
+tags = ["conditional", "state-dependent-path"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -422,7 +422,7 @@ anchors = [
 ]
 summary = "An `ifnone` condition shall specify the same module path source and destination as its corresponding state-dependent paths."
 related_clauses = []
-tags = []
+tags = ["connectivity", "diagnostic", "state-dependent-path"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -448,7 +448,7 @@ summary = "An `ifnone` declaration may describe only a simple module path."
 related_clauses = [
     "30.4.2",
 ]
-tags = []
+tags = ["diagnostic", "grammar", "state-dependent-path"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -472,7 +472,7 @@ anchors = [
 ]
 summary = "It is illegal to declare both an `ifnone` path and an unconditional simple path for the same module path."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "state-dependent-path"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -496,7 +496,7 @@ anchors = [
 ]
 summary = "If no corresponding state-dependent path exists, an `ifnone` module path shall behave as an unconditional simple module path."
 related_clauses = []
-tags = []
+tags = ["module-path", "state-dependent-path"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -528,7 +528,7 @@ anchors = [
 ]
 summary = "When x-transition delays are implicit, x→known state s uses the maximum delay from either other known state to s: x→0=max(z→0,1→0), x→1=max(z→1,0→1), and x→z=max(1→z,0→z)."
 related_clauses = []
-tags = []
+tags = ["four-state", "path-delay", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -560,7 +560,7 @@ anchors = [
 ]
 summary = "When x-transition delays are implicit, known state s→x uses the minimum delay from s to either other known state: 0→x=min(0→z,0→1), 1→x=min(1→z,1→0), and z→x=min(z→1,z→0)."
 related_clauses = []
-tags = []
+tags = ["four-state", "path-delay", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -584,7 +584,7 @@ anchors = [
 ]
 summary = "When multiple specify paths to an output are active, the scheduled output transition shall use the smallest transition-specific delay among those active paths."
 related_clauses = []
-tags = []
+tags = ["path-delay", "path-resolution", "scheduling", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -610,7 +610,7 @@ summary = "When a module path has both a module-path delay and distributed primi
 related_clauses = [
     "28.16",
 ]
-tags = []
+tags = ["path-delay", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -634,7 +634,7 @@ anchors = [
 ]
 summary = "A module path pairs a source that is an input or inout port with a destination that is an output or inout port."
 related_clauses = []
-tags = []
+tags = ["connectivity", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -659,7 +659,7 @@ anchors = [
 ]
 summary = "A state-dependent path conditional expression may use compile-time constant numbers and specify parameters as operands."
 related_clauses = []
-tags = []
+tags = ["conditional", "literal", "parameter", "state-dependent-path"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -684,7 +684,7 @@ anchors = [
 ]
 summary = "A state-dependent path conditional expression may use locally defined variables or nets and their bit-selects or part-selects as operands."
 related_clauses = []
-tags = []
+tags = ["conditional", "scope", "state-dependent-path"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -719,7 +719,7 @@ anchors = [
 ]
 summary = "A state-dependent path conditional expression may use only Table 30-1 operators: bitwise and reduction negation/AND/OR/XOR/XNOR/NAND/NOR, logical equality/inequality/AND/OR/NOT, concatenation, replication, and conditional selection."
 related_clauses = []
-tags = []
+tags = ["conditional", "operator", "state-dependent-path"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -744,7 +744,7 @@ anchors = [
 ]
 summary = "A state-dependent path conditional expression may use scalar or vector module input/inout ports, including their bit-selects and part-selects, as operands."
 related_clauses = []
-tags = []
+tags = ["conditional", "ports", "state-dependent-path"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -770,7 +770,7 @@ summary = "A module path shall be defined inside a specify block as a connection
 related_clauses = [
     "30.3",
 ]
-tags = []
+tags = ["block", "connectivity", "module-path"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -796,7 +796,7 @@ summary = "Module paths may connect any combination of scalar and vector source 
 related_clauses = [
     "30.4.5",
 ]
-tags = []
+tags = ["connectivity", "module-path", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -821,7 +821,7 @@ anchors = [
 ]
 summary = "A single declaration may use `*>` between comma-separated source and destination lists, including mixed-width scalars and vectors; it creates a full connection from every listed source to every listed destination."
 related_clauses = []
-tags = []
+tags = ["connectivity", "module-path", "ports", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -847,7 +847,7 @@ summary = "Multiple module-path sources may connect to the same destination, and
 related_clauses = [
     "30.5",
 ]
-tags = []
+tags = ["connectivity", "module-path", "path-delay"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -871,7 +871,7 @@ anchors = [
 ]
 summary = "A path delay expression that evaluates to a negative value shall be treated as zero."
 related_clauses = []
-tags = []
+tags = ["path-delay", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -895,7 +895,7 @@ anchors = [
 ]
 summary = "Negative module-path polarity shall be written by prefixing `-` to `=>` or `*>`."
 related_clauses = []
-tags = []
+tags = ["grammar", "path-polarity"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -921,7 +921,7 @@ summary = "If no showcancelled declaration applies to a module-path output, that
 related_clauses = [
     "30.7.4.2",
 ]
-tags = []
+tags = ["pulse-filtering"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -945,7 +945,7 @@ anchors = [
 ]
 summary = "When an edge-sensitive path omits its edge qualifier, the path is active on any transition of the input terminal."
 related_clauses = []
-tags = []
+tags = ["edge-sensitive-path", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -970,7 +970,7 @@ anchors = [
 ]
 summary = "Under on-detect X filtering, the pulse leading edge becomes a transition to x immediately when the pulse is detected, while its trailing edge becomes the transition from x."
 related_clauses = []
-tags = []
+tags = ["four-state", "pulse-filtering", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -994,7 +994,7 @@ anchors = [
 ]
 summary = "On-event is the default X-filtering method: the scheduled leading edge becomes a transition to x and the trailing edge becomes a transition from x, without changing either edge time."
 related_clauses = []
-tags = []
+tags = ["four-state", "pulse-filtering", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1020,7 +1020,7 @@ anchors = [
 ]
 summary = "The `=>` operator establishes a parallel connection from one source to one destination, connecting each source bit only to its corresponding destination bit; endpoints shall have equal bit widths."
 related_clauses = []
-tags = []
+tags = ["connectivity", "module-path", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1046,7 +1046,7 @@ summary = "The destination of a parallel (`=>`) edge-sensitive path shall be a s
 related_clauses = [
     "30.4.5",
 ]
-tags = []
+tags = ["edge-sensitive-path", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1072,7 +1072,7 @@ summary = "A path declaration shall be a semicolon-terminated simple, edge-sensi
 related_clauses = [
     "A.7.2",
 ]
-tags = []
+tags = ["conditional", "grammar", "state-dependent-path"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1097,7 +1097,7 @@ anchors = [
 ]
 summary = "Each module path delay value shall be a constant mintypmax expression composed from literals or specify parameters."
 related_clauses = []
-tags = []
+tags = ["literal", "mintypmax", "path-delay", "specparam"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1121,7 +1121,7 @@ anchors = [
 ]
 summary = "A path delay expression is either one typical value or three colon-separated values ordered minimum, typical, maximum."
 related_clauses = []
-tags = []
+tags = ["mintypmax", "path-delay", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1161,7 +1161,7 @@ summary = "Path-delay lists select transition delays per Table 30-2: 0→1 uses 
 related_clauses = [
     "30.5.2",
 ]
-tags = []
+tags = ["four-state", "path-delay", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1189,7 +1189,7 @@ related_clauses = [
     "A.7.4",
     "30.5.1",
 ]
-tags = []
+tags = ["grammar", "mintypmax", "path-delay", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1213,7 +1213,7 @@ anchors = [
 ]
 summary = "A module path destination shall be a net or variable connected to a module output or inout port."
 related_clauses = []
-tags = []
+tags = ["connectivity", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1244,7 +1244,7 @@ related_clauses = [
     "30.4.7.2",
     "30.4.7.3",
 ]
-tags = []
+tags = ["grammar", "path-polarity"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1271,7 +1271,7 @@ summary = "A module path polarity annotation describes whether transition direct
 related_clauses = [
     "30.4.7",
 ]
-tags = []
+tags = ["module-path", "path-polarity"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1295,7 +1295,7 @@ anchors = [
 ]
 summary = "A module path source shall be a net connected to a module input or inout port."
 related_clauses = []
-tags = []
+tags = ["connectivity", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1319,7 +1319,7 @@ anchors = [
 ]
 summary = "A `PATHPULSE$` declaration with no module-path endpoints applies its reject and error limits to every module path defined in that module."
 related_clauses = []
-tags = []
+tags = ["module-path", "pulse-filtering", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1345,7 +1345,7 @@ summary = "For a declaration containing multiple module paths, PATHPULSE$ shall 
 related_clauses = [
     "30.4.6",
 ]
-tags = []
+tags = ["connectivity", "ports", "pulse-filtering"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1371,7 +1371,7 @@ summary = "PATHPULSE$ endpoints shall obey module-path endpoint rules and shall 
 related_clauses = [
     "30.4.1",
 ]
-tags = []
+tags = ["ports", "pulse-filtering"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1395,7 +1395,7 @@ anchors = [
 ]
 summary = "When module-wide and path-specific `PATHPULSE$` declarations coexist, the path-specific limits take precedence for the named path."
 related_clauses = []
-tags = []
+tags = ["module-path", "pulse-filtering", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1419,7 +1419,7 @@ anchors = [
 ]
 summary = "When `PATHPULSE$` supplies only a reject-limit value, that value shall serve as both reject and error limits."
 related_clauses = []
-tags = []
+tags = ["pulse-filtering", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1444,7 +1444,7 @@ anchors = [
 ]
 summary = "A `PATHPULSE$` specparam in a specify block sets constant mintypmax reject and optional error limits, either module-wide or for a named input-to-output path."
 related_clauses = []
-tags = []
+tags = ["grammar", "mintypmax", "pulse-filtering", "specparam"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1468,7 +1468,7 @@ anchors = [
 ]
 summary = "Positive module-path polarity shall be written by prefixing `+` to `=>` or `*>`."
 related_clauses = []
-tags = []
+tags = ["grammar", "path-polarity"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1492,7 +1492,7 @@ anchors = [
 ]
 summary = "For each module-path transition delay, the pulse error limit shall be at least as large as the reject limit."
 related_clauses = []
-tags = []
+tags = ["path-delay", "pulse-filtering"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1516,7 +1516,7 @@ anchors = [
 ]
 summary = "Pulse filtering shall use the pulse limits associated with the transition delay that forms the pulse's trailing edge."
 related_clauses = []
-tags = []
+tags = ["path-delay", "pulse-filtering"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1544,7 +1544,7 @@ anchors = [
 ]
 summary = "A pulse at least as wide as the error limit propagates; one below the error limit but at least the reject limit produces x at the destination; one below the reject limit is rejected with no output pulse."
 related_clauses = []
-tags = []
+tags = ["four-state", "pulse-filtering", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1568,7 +1568,7 @@ anchors = [
 ]
 summary = "It is an error for a path output to appear in a pulse-style declaration after that output has already appeared in a module-path declaration."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "pulse-filtering", "source-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1594,7 +1594,7 @@ summary = "A specify-block pulse-style declaration shall use `pulsestyle_onevent
 related_clauses = [
     "A.7.1",
 ]
-tags = []
+tags = ["block", "grammar", "pulse-filtering"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1618,7 +1618,7 @@ anchors = [
 ]
 summary = "It is an error for a path output to appear in a showcancelled declaration after it has already appeared in a module-path declaration."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "pulse-filtering", "source-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1644,7 +1644,7 @@ summary = "A specify-block show-cancelled declaration shall use `showcancelled` 
 related_clauses = [
     "A.7.1",
 ]
-tags = []
+tags = ["block", "grammar", "pulse-filtering"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1668,7 +1668,7 @@ anchors = [
 ]
 summary = "With showcancelled behavior, a negative pulse is represented by a transition to x and then from x; on-event replaces the scheduled leading edge with x, while on-detect schedules x immediately when the negative pulse is detected."
 related_clauses = []
-tags = []
+tags = ["four-state", "pulse-filtering", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1694,7 +1694,7 @@ summary = "A simple path declaration is either a parenthesized parallel path usi
 related_clauses = [
     "A.7.2",
 ]
-tags = []
+tags = ["grammar", "module-path", "path-delay", "path-polarity"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1720,7 +1720,7 @@ summary = "Simple-path inputs and outputs name the corresponding input, output, 
 related_clauses = [
     "A.7.3",
 ]
-tags = []
+tags = ["grammar", "module-path", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1747,7 +1747,7 @@ summary = "A specify block is syntactically delimited by `specify` and `endspeci
 related_clauses = [
     "A.7.1",
 ]
-tags = []
+tags = ["block", "grammar"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1771,7 +1771,7 @@ anchors = [
 ]
 summary = "A specify block shall appear inside a module declaration."
 related_clauses = []
-tags = []
+tags = ["block", "module"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1797,7 +1797,7 @@ summary = "Each item in a specify block shall be a specparam declaration, pulse-
 related_clauses = [
     "A.7.1",
 ]
-tags = []
+tags = ["block", "grammar"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1824,7 +1824,7 @@ anchors = [
 ]
 summary = "A state-dependent path's specified delay affects propagation through its described module path only while its conditional expression evaluates true."
 related_clauses = []
-tags = []
+tags = ["conditional", "scheduling", "state-dependent-path"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1850,7 +1850,7 @@ summary = "A state-dependent path declaration is `if` with a parenthesized modul
 related_clauses = [
     "A.7.2",
 ]
-tags = []
+tags = ["conditional", "grammar", "state-dependent-path"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1874,7 +1874,7 @@ anchors = [
 ]
 summary = "When a state-dependent path conditional expression produces multiple bits, its least-significant bit shall be the condition result."
 related_clauses = []
-tags = []
+tags = ["conditional", "layout", "state-dependent-path"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1898,7 +1898,7 @@ anchors = [
 ]
 summary = "A state-dependent path receives its delay when its conditional expression evaluates to 1; an x or z result shall also be treated as true."
 related_clauses = []
-tags = []
+tags = ["conditional", "four-state", "state-dependent-path"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1922,7 +1922,7 @@ anchors = [
 ]
 summary = "When an edge-sensitive path names a vector port as its input terminal, the qualifying edge transition shall be detected on the vector's least-significant bit."
 related_clauses = []
-tags = []
+tags = ["edge-sensitive-path", "layout", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"

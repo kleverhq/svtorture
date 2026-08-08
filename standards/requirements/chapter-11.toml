@@ -11,7 +11,7 @@ anchors = [
 ]
 summary = "An addition is evaluated using the bit length of its largest operand, counting the assignment left-hand side as part of the sizing context."
 related_clauses = []
-tags = []
+tags = ["addition", "context", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -37,7 +37,7 @@ summary = "When both operands of a comparison are aggregate expressions, their t
 related_clauses = [
     "6.22.2",
 ]
-tags = []
+tags = ["aggregate", "comparison", "type-equivalence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -62,7 +62,7 @@ anchors = [
 ]
 summary = "For && and ->, a logically false first operand prevents evaluation of the second operand."
 related_clauses = []
-tags = []
+tags = ["implication", "logical", "short-circuit"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -88,7 +88,7 @@ anchors = [
 ]
 summary = "The +=, -=, /=, and *= assignment operators accept integral, real, and shortreal operands."
 related_clauses = []
-tags = []
+tags = ["arithmetic", "assignment", "integral", "real"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -116,7 +116,7 @@ anchors = [
 ]
 summary = "Arithmetic operators interpret unsigned nets and variables as unsigned, signed nets and variables as signed two's-complement, and real variables as signed floating-point values."
 related_clauses = []
-tags = []
+tags = ["arithmetic", "real", "signedness"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -140,7 +140,7 @@ anchors = [
 ]
 summary = "Arithmetic >>> fills vacated positions with zero for an unsigned result type and with the left operand's most-significant sign bit for a signed result type."
 related_clauses = []
-tags = []
+tags = ["shift", "signedness"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -164,7 +164,7 @@ anchors = [
 ]
 summary = "The >>>= and <<<= arithmetic-shift assignment operators accept integral operands only."
 related_clauses = []
-tags = []
+tags = ["assignment", "integral", "shift"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -188,7 +188,7 @@ anchors = [
 ]
 summary = "If any bit of any arithmetic-operator operand is x or z, the entire arithmetic result is x."
 related_clauses = []
-tags = []
+tags = ["arithmetic", "four-state"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -214,7 +214,7 @@ anchors = [
 ]
 summary = "Packed and unpacked arrays are legal expression operands; packed-array selections, elements, and slices and unpacked-array element selections, elements, and slices are also legal operands."
 related_clauses = []
-tags = []
+tags = ["array", "packed-array", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -238,7 +238,7 @@ anchors = [
 ]
 summary = "A value assigned to an unsigned net or variable shall be treated as unsigned, and a value assigned to a signed net or variable shall be treated as signed."
 related_clauses = []
-tags = []
+tags = ["assignment", "signedness"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -262,7 +262,7 @@ anchors = [
 ]
 summary = "An assignment operator is illegal in an event expression, in an expression within a procedural continuous assignment, or in any expression outside a procedural statement."
 related_clauses = []
-tags = []
+tags = ["assignment", "diagnostic"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -286,7 +286,7 @@ anchors = [
 ]
 summary = "An assignment expression evaluates and casts its right-hand side to the left-hand type, preserves that cast value, updates the left-hand side, and returns the preserved value with the left-hand side's data type."
 related_clauses = []
-tags = []
+tags = ["assignment", "conversion", "type-compatibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -313,7 +313,7 @@ summary = "Assignment evaluation determines right-hand size under 11.6 and exten
 related_clauses = [
     "11.6",
 ]
-tags = []
+tags = ["assignment", "conversion", "signedness", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -337,7 +337,7 @@ anchors = [
 ]
 summary = "The binary + operator produces the sum of its operands."
 related_clauses = []
-tags = []
+tags = ["addition", "arithmetic"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -362,7 +362,7 @@ anchors = [
 ]
 summary = "For binary +, -, *, /, %, &, |, ^, ^~, and ~^, result size is max(L(i), L(j))."
 related_clauses = []
-tags = []
+tags = ["arithmetic", "bitwise", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -386,7 +386,7 @@ anchors = [
 ]
 summary = "Binary +, -, *, /, and ** accept integral, real, and shortreal operands."
 related_clauses = []
-tags = []
+tags = ["arithmetic", "integral", "real"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -410,7 +410,7 @@ anchors = [
 ]
 summary = "Binary &, |, ^, ^~, and ~^ combine corresponding bits of integral operands with the named Boolean operation, producing one result bit per operand bit position."
 related_clauses = []
-tags = []
+tags = ["bitwise", "integral"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -434,7 +434,7 @@ anchors = [
 ]
 summary = "Binary &, |, ^, ~^, and ^~ accept integral operands only."
 related_clauses = []
-tags = []
+tags = ["bitwise", "integral"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -459,7 +459,7 @@ anchors = [
 ]
 summary = "The binary / operator divides its first operand by its second; integral division discards any fractional part by truncating toward zero."
 related_clauses = []
-tags = []
+tags = ["arithmetic", "integral"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -483,7 +483,7 @@ anchors = [
 ]
 summary = "Binary logical operators &&, ||, ->, and <-> accept integral, real, and shortreal operands."
 related_clauses = []
-tags = []
+tags = ["integral", "logical", "real"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -507,7 +507,7 @@ anchors = [
 ]
 summary = "The binary % operator accepts integral operands only."
 related_clauses = []
-tags = []
+tags = ["arithmetic", "integral"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -532,7 +532,7 @@ anchors = [
 ]
 summary = "The binary % operator returns the remainder of integral division; it returns zero for exact division and a nonzero remainder has the sign of the first operand."
 related_clauses = []
-tags = []
+tags = ["arithmetic", "integral", "signedness"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -556,7 +556,7 @@ anchors = [
 ]
 summary = "The binary * operator produces the product of its operands."
 related_clauses = []
-tags = []
+tags = ["arithmetic"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -580,7 +580,7 @@ anchors = [
 ]
 summary = "The binary - operator produces the first operand minus the second."
 related_clauses = []
-tags = []
+tags = ["arithmetic"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -604,7 +604,7 @@ anchors = [
 ]
 summary = "A bit-select denotes one bit and a part-select denotes adjacent bits of a vector net, vector variable, packed array, packed structure, or parameter as an operand."
 related_clauses = []
-tags = []
+tags = ["array-indexing", "array-slice", "vector"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -628,7 +628,7 @@ anchors = [
 ]
 summary = "A bit-select extracts one bit from a vector, packed array, packed structure, parameter, or concatenation, and its address expression is evaluated in a self-determined context."
 related_clauses = []
-tags = []
+tags = ["array-indexing", "context", "vector"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -655,7 +655,7 @@ anchors = [
 ]
 summary = "A vector bit-select acc[index] selects the bit whose declared index equals index, so identical address values can denote different physical bit positions for differing declared index ranges and directions."
 related_clauses = []
-tags = []
+tags = ["array-indexing", "layout", "vector"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -684,7 +684,7 @@ anchors = [
 ]
 summary = "For one-bit four-state operands, bitwise AND returns 0 if either operand is 0, returns 1 only for 1 & 1, and otherwise returns x; z therefore behaves as unknown for AND."
 related_clauses = []
-tags = []
+tags = ["bitwise", "four-state"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -708,7 +708,7 @@ anchors = [
 ]
 summary = "The &=, |=, and ^= assignment operators accept integral operands only."
 related_clauses = []
-tags = []
+tags = ["assignment", "bitwise", "integral"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -736,7 +736,7 @@ anchors = [
 ]
 summary = "For a one-bit four-state operand, bitwise negation ~ maps 0 to 1, 1 to 0, and both x and z to x."
 related_clauses = []
-tags = []
+tags = ["bitwise", "four-state"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -765,7 +765,7 @@ anchors = [
 ]
 summary = "For one-bit four-state operands, bitwise OR returns 1 if either operand is 1, returns 0 only for 0 | 0, and otherwise returns x; z therefore behaves as unknown for OR."
 related_clauses = []
-tags = []
+tags = ["bitwise", "four-state"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -795,7 +795,7 @@ anchors = [
 ]
 summary = "The ^~ and ~^ spellings are equivalent one-bit XNOR operations: they return 1 for equal known bits and 0 for unequal known bits, and return x if either operand is x or z."
 related_clauses = []
-tags = []
+tags = ["bitwise", "four-state"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -823,7 +823,7 @@ anchors = [
 ]
 summary = "For one-bit four-state operands, bitwise XOR returns 0 for equal known bits and 1 for unequal known bits; if either operand is x or z, it returns x."
 related_clauses = []
-tags = []
+tags = ["bitwise", "four-state"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -848,7 +848,7 @@ anchors = [
 ]
 summary = "Case equality === tests bit-for-bit equality including x and z values, and case inequality !== is its not-equal counterpart including x and z."
 related_clauses = []
-tags = []
+tags = ["equality", "four-state"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -873,7 +873,7 @@ anchors = [
 ]
 summary = "Binary case equality and inequality operators === and !== accept any operand type except real and shortreal."
 related_clauses = []
-tags = []
+tags = ["equality", "real"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -899,7 +899,7 @@ summary = "Case === and !== compare as procedural case does, treating x and z as
 related_clauses = [
     "12.5",
 ]
-tags = []
+tags = ["comparison", "equality", "four-state"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -923,7 +923,7 @@ anchors = [
 ]
 summary = "An integer produced by type coercion from a real value is signed."
 related_clauses = []
-tags = []
+tags = ["cast", "conversion", "real", "signedness"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -947,7 +947,7 @@ anchors = [
 ]
 summary = "Relational and equality operands mutually determine a comparison context of their derived type and maximum width, independent of the surrounding expression, while the actual comparison result remains one-bit unsigned."
 related_clauses = []
-tags = []
+tags = ["comparison", "context", "sizing", "type-inference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -971,7 +971,7 @@ anchors = [
 ]
 summary = "Comparison and reduction operator results are unsigned regardless of operand signedness."
 related_clauses = []
-tags = []
+tags = ["comparison", "reduction", "signedness"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -995,7 +995,7 @@ anchors = [
 ]
 summary = "A bare reference to a net, variable, or parameter is a legal operand and uses every bit of that object's value."
 related_clauses = []
-tags = []
+tags = ["layout", "vector"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1019,7 +1019,7 @@ anchors = [
 ]
 summary = "Each listed compound assignment operator has blocking-assignment semantics."
 related_clauses = []
-tags = []
+tags = ["assignment", "blocking-assignment"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1043,7 +1043,7 @@ anchors = [
 ]
 summary = "A left-hand index expression in a compound assignment is evaluated exactly once."
 related_clauses = []
-tags = []
+tags = ["assignment", "evaluation-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1067,7 +1067,7 @@ anchors = [
 ]
 summary = "When an assignment expression's left-hand side is a concatenation, its returned value has an unsigned integral type whose width is the sum of the concatenation operand widths."
 related_clauses = []
-tags = []
+tags = ["assignment", "concatenation", "signedness", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1091,7 +1091,7 @@ anchors = [
 ]
 summary = "A concatenation is treated as a packed vector of bits."
 related_clauses = []
-tags = []
+tags = ["concatenation", "packed-array", "vector"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1115,7 +1115,7 @@ anchors = [
 ]
 summary = "An unsized constant number is illegal as a concatenation operand because every operand width must be known to determine concatenation width."
 related_clauses = []
-tags = []
+tags = ["concatenation", "diagnostic", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1140,7 +1140,7 @@ anchors = [
 ]
 summary = "A concatenation's size is the sum of its self-determined operand lengths; a replication's size is multiplier i times the sum of its self-determined concatenation operand lengths."
 related_clauses = []
-tags = []
+tags = ["concatenation", "replication", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1164,7 +1164,7 @@ anchors = [
 ]
 summary = "Concatenation and replication operators accept integral operands."
 related_clauses = []
-tags = []
+tags = ["concatenation", "integral", "replication"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1188,7 +1188,7 @@ anchors = [
 ]
 summary = "A concatenation result is unsigned regardless of operand signedness."
 related_clauses = []
-tags = []
+tags = ["concatenation", "signedness"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1212,7 +1212,7 @@ anchors = [
 ]
 summary = "A bit-select or part-select of a concatenation is illegal as a net_lvalue, variable_lvalue, assignment left-hand side, or equivalent lvalue use."
 related_clauses = []
-tags = []
+tags = ["assignment", "concatenation", "diagnostic", "lvalue"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1236,7 +1236,7 @@ anchors = [
 ]
 summary = "A concatenation joins the bits produced by one or more expressions and is written as comma-separated expressions enclosed by { and }."
 related_clauses = []
-tags = []
+tags = ["concatenation", "grammar"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1263,7 +1263,7 @@ related_clauses = [
     "5.10",
     "5.11",
 ]
-tags = []
+tags = ["aggregate", "concatenation", "grammar", "literal"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1290,7 +1290,7 @@ summary = "For an ambiguous predicate and nonequivalent branch values of non-ass
 related_clauses = [
     "7.4.5",
 ]
-tags = []
+tags = ["aggregate", "array", "conditional"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1322,7 +1322,7 @@ related_clauses = [
     "11.6.1",
     "11.8.2",
 ]
-tags = []
+tags = ["conditional", "four-state", "integral", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1349,7 +1349,7 @@ summary = "For an ambiguous predicate and logically nonequivalent nonintegral or
 related_clauses = [
     "7.4.5",
 ]
-tags = []
+tags = ["aggregate", "conditional", "type-inference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1375,7 +1375,7 @@ summary = "For an x or z conditional predicate, both result expressions are eval
 related_clauses = [
     "11.4.5",
 ]
-tags = []
+tags = ["comparison", "conditional", "evaluation-order", "four-state"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1404,7 +1404,7 @@ anchors = [
 ]
 summary = "For class or interface-class branches: two null branches produce null; one null branch yields the non-null branch type; one-way assignment compatibility yields the destination-compatible opposing type; otherwise classes with a common base yield the closest common inherited type. A known condition returns the selected branch value."
 related_clauses = []
-tags = []
+tags = ["class-handle", "class-inheritance", "conditional", "type-compatibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1428,7 +1428,7 @@ anchors = [
 ]
 summary = "An integral conditional i ? j : k has size max(L(j), L(k)), and predicate i is self-determined."
 related_clauses = []
-tags = []
+tags = ["conditional", "self-determined", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1452,7 +1452,7 @@ anchors = [
 ]
 summary = "Otherwise, if one conditional branch is integral and the opposing branch is implicitly castable to integral, that cast is performed and integral conditional rules apply."
 related_clauses = []
-tags = []
+tags = ["conditional", "conversion", "integral"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1476,7 +1476,7 @@ anchors = [
 ]
 summary = "A true conditional predicate evaluates and returns only the first expression, while a false predicate evaluates and returns only the second expression."
 related_clauses = []
-tags = []
+tags = ["conditional", "evaluation-order", "short-circuit"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1500,7 +1500,7 @@ anchors = [
 ]
 summary = "Conditional branches promote to real if both are real or either is real (casting an integral or shortreal counterpart), and promote to shortreal when one is shortreal and the other integral (casting the integral branch)."
 related_clauses = []
-tags = []
+tags = ["conditional", "conversion", "real", "type-inference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1525,7 +1525,7 @@ anchors = [
 ]
 summary = "The right-associative conditional operator has a cond_predicate followed by ?, optional attributes, a first expression, :, and a second expression; a predicate may combine expressions or matching patterns with &&&."
 related_clauses = []
-tags = []
+tags = ["conditional", "grammar"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1549,7 +1549,7 @@ anchors = [
 ]
 summary = "The conditional operator accepts operands of any data type, subject to its result and compatibility rules."
 related_clauses = []
-tags = []
+tags = ["conditional", "type-compatibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1575,7 +1575,7 @@ summary = "When no preceding integral, numeric-promotion, implicit-cast, or clas
 related_clauses = [
     "6.22.2",
 ]
-tags = []
+tags = ["conditional", "type-equivalence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1601,7 +1601,7 @@ summary = "A conditional cond_predicate may be a traditional expression or may p
 related_clauses = [
     "12.6",
 ]
-tags = []
+tags = ["conditional", "pattern-matching"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1627,7 +1627,7 @@ summary = "A constant built-in method call used in a constant expression is eval
 related_clauses = [
     "5.13",
 ]
-tags = []
+tags = ["constant-expression", "elaboration", "function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -1654,7 +1654,7 @@ summary = "A built-in method can be a constant call only if it is side-effect fr
 related_clauses = [
     "5.13",
 ]
-tags = []
+tags = ["constant-expression", "function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -1680,7 +1680,7 @@ summary = "A constant expression may contain only constant numbers, strings, par
 related_clauses = [
     "13.4.3",
 ]
-tags = []
+tags = ["constant-expression", "function", "literal", "parameter"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -1708,7 +1708,7 @@ anchors = [
 ]
 summary = "An unsized constant number has a self-determined size of at least 32 bits, while a sized constant number has exactly its stated size."
 related_clauses = []
-tags = []
+tags = ["constant-expression", "literal", "self-determined", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -1733,7 +1733,7 @@ anchors = [
 ]
 summary = "A constant bit-select has a constant position; a constant part-select has constant position and width. Every part-select width is constant, every non-indexed part-select is constant, and an indexed part-select is constant exactly when its base is constant."
 related_clauses = []
-tags = []
+tags = ["array-indexing", "array-slice", "constant-expression"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1757,7 +1757,7 @@ anchors = [
 ]
 summary = "A constant system-function call used in a constant expression is evaluated at elaboration time."
 related_clauses = []
-tags = []
+tags = ["constant-expression", "elaboration", "function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1791,7 +1791,7 @@ related_clauses = [
     "20.9",
     "21.3.3",
 ]
-tags = []
+tags = ["constant-expression", "function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -1817,7 +1817,7 @@ anchors = [
 ]
 summary = "A context-determined expression has a size determined by both its own expression form and its containing expression, such as an assignment right-hand side sized partly by the left-hand side."
 related_clauses = []
-tags = []
+tags = ["context", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1841,7 +1841,7 @@ anchors = [
 ]
 summary = "The byte, shortint, int, integer, and longint data types are signed by default; all other data types are unsigned by default."
 related_clauses = []
-tags = []
+tags = ["signedness"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1868,7 +1868,7 @@ related_clauses = [
     "16.14.2",
     "18.5.3",
 ]
-tags = []
+tags = ["integral", "randomization"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1892,7 +1892,7 @@ anchors = [
 ]
 summary = "Division or modulus with a zero second operand produces an all-x result value."
 related_clauses = []
-tags = []
+tags = ["arithmetic", "four-state", "integral"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1916,7 +1916,7 @@ anchors = [
 ]
 summary = "The empty string literal \"\" is equivalent to ASCII NUL \"\\0\" with numeric value zero, and is distinct from the one-character string \"0\"."
 related_clauses = []
-tags = []
+tags = ["literal", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1940,7 +1940,7 @@ anchors = [
 ]
 summary = "Equality operators have lower precedence than relational operators."
 related_clauses = []
-tags = []
+tags = ["equality", "precedence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1964,7 +1964,7 @@ anchors = [
 ]
 summary = "All four equality operators compare operands bit for bit and return 1'b1 for a successful comparison and 1'b0 for a failed comparison; all four share the same precedence."
 related_clauses = []
-tags = []
+tags = ["comparison", "equality"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1989,7 +1989,7 @@ anchors = [
 ]
 summary = "Case/logical equality and relational operators return one bit and size both operands to max(L(i), L(j)) for the comparison."
 related_clauses = []
-tags = []
+tags = ["comparison", "equality", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2013,7 +2013,7 @@ anchors = [
 ]
 summary = "Each operand of logical equivalence <-> is evaluated exactly once."
 related_clauses = []
-tags = []
+tags = ["evaluation-order", "logical"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2042,7 +2042,7 @@ related_clauses = [
     "11.6",
     "11.8.1",
 ]
-tags = []
+tags = ["context", "conversion", "signedness", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2067,7 +2067,7 @@ anchors = [
 ]
 summary = "Expression size is determined by its operands and evaluation context."
 related_clauses = []
-tags = []
+tags = ["context", "conversion", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2091,7 +2091,7 @@ anchors = [
 ]
 summary = "An expression's resulting type depends only on its operands and not on any assignment left-hand side."
 related_clauses = []
-tags = []
+tags = ["type-inference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2115,7 +2115,7 @@ anchors = [
 ]
 summary = "A field select is a hierarchical name whose final dot's right side names a field of a struct- or union-typed variable; its field-select prefix is the name portion left of that final dot."
 related_clauses = []
-tags = []
+tags = ["name-resolution", "struct", "union"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2139,7 +2139,7 @@ anchors = [
 ]
 summary = "A value-returning function call is a legal expression operand."
 related_clauses = []
-tags = []
+tags = ["function", "operator", "return-value"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2163,7 +2163,7 @@ anchors = [
 ]
 summary = "A genvar identifier is legal as a constant_primary only within a loop generate construct."
 related_clauses = []
-tags = []
+tags = ["constant-expression", "generate"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -2189,7 +2189,7 @@ anchors = [
 ]
 summary = "Logical or case equality is legal for class or interface-class handles and null when one operand is assignment compatible with the other, and is legal for chandle and null operands; the operation compares the handle or chandle values."
 related_clauses = []
-tags = []
+tags = ["chandle", "class-handle", "comparison", "equality"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2213,7 +2213,7 @@ anchors = [
 ]
 summary = "In an unparenthesized expression containing operators of different precedence, higher-precedence operators group before lower-precedence operators."
 related_clauses = []
-tags = []
+tags = ["operator", "precedence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2237,7 +2237,7 @@ anchors = [
 ]
 summary = "Logical implication a -> b is equivalent to !a || b, and logical equivalence a <-> b is equivalent to (a -> b) && (b -> a)."
 related_clauses = []
-tags = []
+tags = ["implication", "logical"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2261,7 +2261,7 @@ anchors = [
 ]
 summary = "Prefix and postfix ++ and -- are legal unparenthesized assignment expressions and perform blocking updates."
 related_clauses = []
-tags = []
+tags = ["assignment", "blocking-assignment", "increment-decrement"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2285,7 +2285,7 @@ anchors = [
 ]
 summary = "Unary increment and decrement operators ++ and -- accept integral, real, and shortreal operands."
 related_clauses = []
-tags = []
+tags = ["arithmetic", "increment-decrement", "integral", "real"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2311,7 +2311,7 @@ anchors = [
 ]
 summary = "An indexed part-select uses base +: width to select width bits ascending from a runtime integer base or base -: width to select descending; width is a positive constant integer, and base and width expressions are self-determined."
 related_clauses = []
-tags = []
+tags = ["array-indexing", "array-slice", "constant-expression", "vector"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2335,7 +2335,7 @@ anchors = [
 ]
 summary = "An indexing select is one array, bit, part, or indexed-part operation; its prefix is an identifier or, for a multidimensional select, the preceding indexing select."
 related_clauses = []
-tags = []
+tags = ["array-indexing", "name-resolution"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2360,7 +2360,7 @@ anchors = [
 ]
 summary = "An inside range [A +/- B] is an absolute-tolerance range equivalent to [A - type(A)'(B) : A + type(A)'(B)]."
 related_clauses = []
-tags = []
+tags = ["conversion", "inside", "range"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -2384,7 +2384,7 @@ anchors = [
 ]
 summary = "An inside range [low:high] includes both bounds; $ denotes the left operand type's lowest or highest value according to bound position; bounds shall be singular types supporting <= and >=, and a low bound greater than the high bound makes an empty range."
 related_clauses = []
-tags = []
+tags = ["bounds", "comparison", "inside", "range"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2410,7 +2410,7 @@ summary = "inside compares nonintegral values with logical equality and integral
 related_clauses = [
     "11.4.6",
 ]
-tags = []
+tags = ["comparison", "four-state", "inside", "wildcard-equality"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2435,7 +2435,7 @@ anchors = [
 ]
 summary = "An inside expression has a left expression followed by inside and a braced comma-separated range_list; each value_range may be an expression, bounded or $-bounded range, or a +/− tolerance range in the grammar."
 related_clauses = []
-tags = []
+tags = ["grammar", "inside", "range"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -2462,7 +2462,7 @@ anchors = [
 ]
 summary = "The left operand of inside may be any singular expression and shall not be an aggregate expression."
 related_clauses = []
-tags = []
+tags = ["aggregate", "inside"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2487,7 +2487,7 @@ anchors = [
 ]
 summary = "An inside range [A +%- B] is a relative-percent-tolerance range equivalent to [A - type(A)'(A*B/100.0) : A + type(A)'(A*B/100.0)]."
 related_clauses = []
-tags = []
+tags = ["conversion", "inside", "range"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -2511,7 +2511,7 @@ anchors = [
 ]
 summary = "inside scans comma-separated set values and ranges until a match, returning 1'b1 for a match and 1'b0 when none match; an unpacked-array set expression is recursively traversed to its singular elements."
 related_clauses = []
-tags = []
+tags = ["array", "comparison", "inside"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2535,7 +2535,7 @@ anchors = [
 ]
 summary = "If inside finds no true match but at least one comparison is x, it returns 1'bx, equivalent to OR-reducing all member comparisons."
 related_clauses = []
-tags = []
+tags = ["comparison", "four-state", "inside"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2559,7 +2559,7 @@ anchors = [
 ]
 summary = "An integer literal without a base specifier is interpreted as a signed two's-complement value, while a literal with an unsigned base specifier is interpreted as unsigned."
 related_clauses = []
-tags = []
+tags = ["literal", "signedness"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2589,7 +2589,7 @@ anchors = [
 ]
 summary = "For integral ** with a nonzero base, positive exponents compute integral power with negative-base sign determined by exponent parity; negative exponents yield 0 when the base magnitude exceeds 1, yield 1 for base 1, and for base -1 yield -1 for odd exponent and 1 for even exponent."
 related_clauses = []
-tags = []
+tags = ["arithmetic", "integral", "signedness"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2618,7 +2618,7 @@ related_clauses = [
     "11.6.1",
     "11.8.1",
 ]
-tags = []
+tags = ["arithmetic", "four-state", "integral"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2642,7 +2642,7 @@ anchors = [
 ]
 summary = "During expression evaluation, each interim result takes the size of the largest operand, including an assignment left-hand side when applicable."
 related_clauses = []
-tags = []
+tags = ["context", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2666,7 +2666,7 @@ anchors = [
 ]
 summary = "An out-of-bounds bit-select or one with any x or z address bit returns x for a 4-state selected value and 0 for a 2-state selected value."
 related_clauses = []
-tags = []
+tags = ["array-indexing", "four-state", "invalid-index", "two-state"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2692,7 +2692,7 @@ summary = "Memory address meaning follows the memory's declared bounds; an out-o
 related_clauses = [
     "7.4.5",
 ]
-tags = []
+tags = ["array-indexing", "invalid-index", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2716,7 +2716,7 @@ anchors = [
 ]
 summary = "Reduction NAND, NOR, and XNOR return the bitwise inverse of reduction AND, OR, and XOR, respectively."
 related_clauses = []
-tags = []
+tags = ["bitwise", "reduction"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2740,7 +2740,7 @@ anchors = [
 ]
 summary = "Logical << and arithmetic <<< shift the left operand left by the unsigned count in the right operand and fill all vacated positions with zero."
 related_clauses = []
-tags = []
+tags = ["integral", "shift"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2764,7 +2764,7 @@ anchors = [
 ]
 summary = "A let declaration names an expression template with optional typed, implicit, or untyped formal ports, dimensions, and defaults; a let expression may use optional package scope and positional, omitted, or named actual expression arguments under Syntax 11-8."
 related_clauses = []
-tags = []
+tags = ["formal-argument", "grammar", "let", "named-argument"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2793,7 +2793,7 @@ anchors = [
 ]
 summary = "A let may be declared in a module, interface, program, checker, or clocking block."
 related_clauses = []
-tags = []
+tags = ["let", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2822,7 +2822,7 @@ anchors = [
 ]
 summary = "A let may be declared in a package, compilation-unit scope, generate block, sequential or parallel block, or subroutine."
 related_clauses = []
-tags = []
+tags = ["let", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2849,7 +2849,7 @@ summary = "A typed let formal shall be event or a type allowed by 16.6; for an e
 related_clauses = [
     "16.6",
 ]
-tags = []
+tags = ["event", "formal-argument", "let"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2873,7 +2873,7 @@ anchors = [
 ]
 summary = "A hierarchical reference to a let declaration is illegal."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "let", "name-resolution"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2897,7 +2897,7 @@ anchors = [
 ]
 summary = "Names in a let body that are not formals resolve from the let declaration scope, and within that scope the let body shall be declared before use."
 related_clauses = []
-tags = []
+tags = ["let", "name-resolution", "source-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2924,7 +2924,7 @@ related_clauses = [
     "16.9.3",
     "16.9.4",
 ]
-tags = []
+tags = ["assertion", "let", "sampled-value-function", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2948,7 +2948,7 @@ anchors = [
 ]
 summary = "Let instantiation substitutes actuals for formals, checks the expanded body for legality, and encloses the substituted result in parentheses to preserve the let body's evaluation priority."
 related_clauses = []
-tags = []
+tags = ["evaluation-order", "formal-argument", "let", "operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2972,7 +2972,7 @@ anchors = [
 ]
 summary = "A let declaration defines a port-customizable template expression whose instances may appear within other expressions."
 related_clauses = []
-tags = []
+tags = ["formal-argument", "let", "operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2999,7 +2999,7 @@ summary = "For a non-event typed let formal, each explicit or default actual's s
 related_clauses = [
     "6.22.4",
 ]
-tags = []
+tags = ["cast", "formal-argument", "let", "type-compatibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -3025,7 +3025,7 @@ anchors = [
 ]
 summary = "Constant numeric literals, including real literals, and string literals are legal expression operands."
 related_clauses = []
-tags = []
+tags = ["literal", "operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3049,7 +3049,7 @@ anchors = [
 ]
 summary = "Logical == or != returns 1'bx when x or z operand bits make the equality relation ambiguous."
 related_clauses = []
-tags = []
+tags = ["equality", "four-state"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3074,7 +3074,7 @@ anchors = [
 ]
 summary = "Logical equality == tests equality and logical inequality != tests inequality, with either result permitted to be unknown when operand uncertainty prevents determination."
 related_clauses = []
-tags = []
+tags = ["comparison", "equality"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3098,7 +3098,7 @@ anchors = [
 ]
 summary = "Binary logical equality and inequality operators == and != accept operands of any data type, subject to their compatibility rules."
 related_clauses = []
-tags = []
+tags = ["equality", "type-compatibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3123,7 +3123,7 @@ anchors = [
 ]
 summary = "The first operand of &&, ||, and -> is always evaluated."
 related_clauses = []
-tags = []
+tags = ["evaluation-order", "logical", "short-circuit"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3148,7 +3148,7 @@ anchors = [
 ]
 summary = "Logical ! maps a nonzero or true operand to 1'b0, zero or false to 1'b1, and an ambiguous truth value to 1'bx."
 related_clauses = []
-tags = []
+tags = ["four-state", "logical"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3172,7 +3172,7 @@ anchors = [
 ]
 summary = "Logical negation ! accepts integral, real, and shortreal operands."
 related_clauses = []
-tags = []
+tags = ["integral", "logical", "real"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3196,7 +3196,7 @@ anchors = [
 ]
 summary = "Logical && has higher precedence than ||; both rank below relational and equality operators. Right-associative -> and <-> share a lower level than the other logical operators and the conditional operator."
 related_clauses = []
-tags = []
+tags = ["logical", "precedence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3220,7 +3220,7 @@ anchors = [
 ]
 summary = "Logical &&, ||, ->, and <-> produce 1'b1 for true, 1'b0 for false, or 1'bx when the logical result is ambiguous."
 related_clauses = []
-tags = []
+tags = ["four-state", "logical"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3245,7 +3245,7 @@ anchors = [
 ]
 summary = "Logical &&, ||, ->, and <-> return one bit, and each operand's size is self-determined."
 related_clauses = []
-tags = []
+tags = ["logical", "self-determined", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3269,7 +3269,7 @@ anchors = [
 ]
 summary = "Logical >> shifts the left operand right by the right-operand count and fills vacated positions with zero."
 related_clauses = []
-tags = []
+tags = ["integral", "shift"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3293,7 +3293,7 @@ anchors = [
 ]
 summary = "The >>= and <<= logical-shift assignment operators accept integral operands only."
 related_clauses = []
-tags = []
+tags = ["assignment", "integral", "shift"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3320,7 +3320,7 @@ anchors = [
 ]
 summary = "The longest static prefix is the outermost static identifier, field select, or indexing select that is not itself a field- or indexing-select prefix of a larger static-prefix expression."
 related_clauses = []
-tags = []
+tags = ["array-indexing", "name-resolution"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3345,7 +3345,7 @@ anchors = [
 ]
 summary = "A memory address consists of the memory name followed by a bracketed address expression."
 related_clauses = []
-tags = []
+tags = ["array-indexing", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3369,7 +3369,7 @@ anchors = [
 ]
 summary = "A mintypmax expression is either one expression or three colon-separated expressions; its constant form similarly uses one or three constant expressions, with expression and constant-primary forms admitted by Syntax 11-7."
 related_clauses = []
-tags = []
+tags = ["grammar", "mintypmax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -3393,7 +3393,7 @@ anchors = [
 ]
 summary = "Operators may combine 2-state and 4-state values, with value semantics as if every operand were 4-state; when every operand is 2-state the result remains in the 2-state value set except when the operator semantics produce x, such as division by zero."
 related_clauses = []
-tags = []
+tags = ["four-state", "two-state"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3417,7 +3417,7 @@ anchors = [
 ]
 summary = "The %= modulus assignment operator accepts integral operands only."
 related_clauses = []
-tags = []
+tags = ["arithmetic", "assignment", "integral"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3443,7 +3443,7 @@ anchors = [
 ]
 summary = "A multidimensional memory or array element is addressed by its name followed by one bracketed integer expression for each addressed dimension; the selected element's declared type determines whether the result is a vector or scalar."
 related_clauses = []
-tags = []
+tags = ["array-dimension", "array-indexing", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3467,7 +3467,7 @@ anchors = [
 ]
 summary = "A multiplication is evaluated wide enough to preserve overflow bits when its result is assigned into a sufficiently wide context-determined destination."
 related_clauses = []
-tags = []
+tags = ["arithmetic", "context", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3494,7 +3494,7 @@ summary = "A net, or a bit-select or part-select of a net, is a legal expression
 related_clauses = [
     "6.7",
 ]
-tags = []
+tags = ["net", "operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3519,7 +3519,7 @@ anchors = [
 ]
 summary = "Every operator other than &&, ||, ->, and ?: evaluates all operand expressions, with optimizations permitted only when observable simulation behavior including side effects is unchanged."
 related_clauses = []
-tags = []
+tags = ["evaluation-order", "operator", "short-circuit"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3545,7 +3545,7 @@ anchors = [
 ]
 summary = "A non-indexed contiguous part-select is vect[msb_expr:lsb_expr]; both bounds are self-determined constant integer expressions and the first denotes the more-significant bit."
 related_clauses = []
-tags = []
+tags = ["array-slice", "constant-expression", "vector"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3572,7 +3572,7 @@ anchors = [
 ]
 summary = "For non-self-determined operands, any real operand makes the result real; otherwise any unsigned operand makes the result unsigned regardless of operator; otherwise all-signed operands make the result signed unless a specific rule overrides."
 related_clauses = []
-tags = []
+tags = ["real", "signedness", "type-inference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3597,7 +3597,7 @@ anchors = [
 ]
 summary = "Decimal numbers are signed; based numbers are unsigned unless their base specifier contains s, in which case they are signed."
 related_clauses = []
-tags = []
+tags = ["literal", "signedness"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3621,7 +3621,7 @@ anchors = [
 ]
 summary = "Any legal operand without an operator is itself an expression."
 related_clauses = []
-tags = []
+tags = ["operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3645,7 +3645,7 @@ anchors = [
 ]
 summary = "Operators of equal precedence associate left to right except conditional, implication, and equivalence operators, which associate right to left."
 related_clauses = []
-tags = []
+tags = ["associativity", "precedence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3680,7 +3680,7 @@ anchors = [
 ]
 summary = "From higher to lower precedence, the levels are exponentiation; multiplicative; additive; shifts; relational/inside/dist; equality; binary AND; binary XOR/XNOR; binary OR; logical AND; logical OR; and conditional. Each listed binary level is left-associative, including exponentiation as specified by this table, while conditional is right-associative."
 related_clauses = []
-tags = []
+tags = ["operator", "precedence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3706,7 +3706,7 @@ anchors = [
 ]
 summary = "Operator precedence follows Table 11-2 from highest to lowest: parenthesized calls/indexing, scope resolution, and member access occupy the highest left-associative level, followed by the unary arithmetic, logical, bitwise, reduction, increment, and decrement operators at the unary level."
 related_clauses = []
-tags = []
+tags = ["operator", "precedence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3733,7 +3733,7 @@ anchors = [
 ]
 summary = "Below conditional precedence, implication and equivalence form a right-associative level; assignment-family, distribution-weight, and nonblocking-assignment operators occupy the next nonassociative level; concatenation and replication have the lowest precedence."
 related_clauses = []
-tags = []
+tags = ["assignment", "concatenation", "precedence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3757,7 +3757,7 @@ anchors = [
 ]
 summary = "Assignment, conditional, unary, binary, increment/decrement, and stream operators are formed only with the tokens and operand arrangement specified by the operator grammar."
 related_clauses = []
-tags = []
+tags = ["grammar", "operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3782,7 +3782,7 @@ anchors = [
 ]
 summary = "For ||, a logically true first operand prevents evaluation of the second operand."
 related_clauses = []
-tags = []
+tags = ["logical", "short-circuit"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3806,7 +3806,7 @@ anchors = [
 ]
 summary = "A wholly out-of-range or x/z part-select reads as x and writes nothing; a partially out-of-range select reads x in out-of-range positions and valid bits elsewhere, and writes only in-range positions."
 related_clauses = []
-tags = []
+tags = ["array-slice", "four-state", "invalid-index", "vector"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3832,7 +3832,7 @@ anchors = [
 ]
 summary = "A parameter, local parameter, or specify parameter, and a bit-select or part-select of any such parameter, is a legal expression operand."
 related_clauses = []
-tags = []
+tags = ["operator", "parameter"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3856,7 +3856,7 @@ anchors = [
 ]
 summary = "A timing-control-free blocking assignment may appear within an expression only when the assignment is enclosed in parentheses."
 related_clauses = []
-tags = []
+tags = ["assignment", "blocking-assignment", "evaluation-order", "operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3880,7 +3880,7 @@ anchors = [
 ]
 summary = "Reduction AND, OR, and XOR fold the corresponding one-bit truth-table operation from the first two operand bits through each remaining bit and produce a single-bit result."
 related_clauses = []
-tags = []
+tags = ["bitwise", "reduction"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3904,7 +3904,7 @@ anchors = [
 ]
 summary = "The second operand of ** is self-determined in every case."
 related_clauses = []
-tags = []
+tags = ["arithmetic", "self-determined"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3928,7 +3928,7 @@ anchors = [
 ]
 summary = "The binary ** operator raises its first operand to the power specified by its second operand."
 related_clauses = []
-tags = []
+tags = ["arithmetic"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3954,7 +3954,7 @@ summary = "When context propagation reaches a simple operand, it is converted to
 related_clauses = [
     "11.5",
 ]
-tags = []
+tags = ["context", "conversion", "signedness", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3978,7 +3978,7 @@ anchors = [
 ]
 summary = "If either equality operand is real, the other operand is converted to an equivalent real value and the comparison is performed between real values."
 related_clauses = []
-tags = []
+tags = ["comparison", "conversion", "equality", "real"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4002,7 +4002,7 @@ anchors = [
 ]
 summary = "Increment and decrement applied to a real operand add or subtract 1.0, respectively."
 related_clauses = []
-tags = []
+tags = ["arithmetic", "increment-decrement", "real"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4026,7 +4026,7 @@ anchors = [
 ]
 summary = "Applying a logical, relational, or inside operator to real operands produces a single-bit result."
 related_clauses = []
-tags = []
+tags = ["comparison", "inside", "logical", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4052,7 +4052,7 @@ summary = "If either operand of ** is real, the power expression's result type i
 related_clauses = [
     "11.3.1",
 ]
-tags = []
+tags = ["arithmetic", "real", "type-inference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4076,7 +4076,7 @@ anchors = [
 ]
 summary = "If either relational operand is real, the other operand is converted to the equivalent real value and the comparison is performed between real values."
 related_clauses = []
-tags = []
+tags = ["comparison", "conversion", "real"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4100,7 +4100,7 @@ anchors = [
 ]
 summary = "When an operator result is real, each non-real context-determined operand is instead evaluated as self-determined and converted to real immediately before applying the operator."
 related_clauses = []
-tags = []
+tags = ["context", "conversion", "real"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4124,7 +4124,7 @@ anchors = [
 ]
 summary = "For operators other than the separately specified logical, relational, and inside cases, a real operand makes the result real; otherwise a shortreal operand makes it shortreal, excluding the conditional operator's predicate from this promotion decision."
 related_clauses = []
-tags = []
+tags = ["conversion", "real", "type-inference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4148,7 +4148,7 @@ anchors = [
 ]
 summary = "Direct or indirect recursive let instantiation is prohibited."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "let"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -4176,7 +4176,7 @@ anchors = [
 ]
 summary = "Each reduction-AND fold step returns 0 if either input is 0, returns 1 only for two 1 inputs, and otherwise returns x for uncertain x or z inputs."
 related_clauses = []
-tags = []
+tags = ["four-state", "reduction"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4201,7 +4201,7 @@ anchors = [
 ]
 summary = "Unary reductions &, ~&, |, ~|, ^, ~^, ^~ and logical ! return one bit and evaluate their operand as self-determined."
 related_clauses = []
-tags = []
+tags = ["reduction", "self-determined", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4225,7 +4225,7 @@ anchors = [
 ]
 summary = "Unary reduction operators &, ~&, |, ~|, ^, ~^, and ^~ accept integral operands only."
 related_clauses = []
-tags = []
+tags = ["bitwise", "integral", "reduction"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4253,7 +4253,7 @@ anchors = [
 ]
 summary = "Each reduction-OR fold step returns 1 if either input is 1, returns 0 only for two 0 inputs, and otherwise returns x for uncertain x or z inputs."
 related_clauses = []
-tags = []
+tags = ["four-state", "reduction"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4281,7 +4281,7 @@ anchors = [
 ]
 summary = "Each reduction-XOR fold step returns 0 for equal known inputs and 1 for unequal known inputs; it returns x if either input is x or z."
 related_clauses = []
-tags = []
+tags = ["four-state", "reduction"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4305,7 +4305,7 @@ anchors = [
 ]
 summary = "A relational expression returns 1'b1 when its specified relation is true and 1'b0 when false."
 related_clauses = []
-tags = []
+tags = ["comparison"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4332,7 +4332,7 @@ anchors = [
 ]
 summary = "The <, >, <=, and >= operators test whether the first operand is respectively less than, greater than, less than or equal to, or greater than or equal to the second operand."
 related_clauses = []
-tags = []
+tags = ["comparison"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4356,7 +4356,7 @@ anchors = [
 ]
 summary = "All relational operators have equal precedence, which is lower than arithmetic-operator precedence."
 related_clauses = []
-tags = []
+tags = ["comparison", "precedence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4380,7 +4380,7 @@ anchors = [
 ]
 summary = "Binary relational operators <, <=, >, and >= accept integral, real, and shortreal operands."
 related_clauses = []
-tags = []
+tags = ["comparison", "integral", "real"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4404,7 +4404,7 @@ anchors = [
 ]
 summary = "If either relational operand contains any x or z bit, the relational result is 1'bx."
 related_clauses = []
-tags = []
+tags = ["comparison", "four-state"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4428,7 +4428,7 @@ anchors = [
 ]
 summary = "A replication is written as a concatenation preceded within braces by a constant multiplier that is nonnegative and contains neither x nor z; its value joins that many copies of the concatenation."
 related_clauses = []
-tags = []
+tags = ["concatenation", "constant-expression", "replication"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4452,7 +4452,7 @@ anchors = [
 ]
 summary = "Each replication operand expression is evaluated exactly once, including when the multiplier is zero."
 related_clauses = []
-tags = []
+tags = ["evaluation-order", "replication"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4476,7 +4476,7 @@ anchors = [
 ]
 summary = "An expression containing a replication is illegal on an assignment left-hand side and as a connection to an output or inout port."
 related_clauses = []
-tags = []
+tags = ["assignment", "diagnostic", "lvalue", "replication"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4500,7 +4500,7 @@ anchors = [
 ]
 summary = "Operators on the same Table 11-2 row have equal precedence, and each successive row has lower precedence than the preceding row."
 related_clauses = []
-tags = []
+tags = ["precedence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4524,7 +4524,7 @@ anchors = [
 ]
 summary = "A bit-select or part-select of a scalar, real variable, or real parameter is illegal."
 related_clauses = []
-tags = []
+tags = ["array-indexing", "diagnostic", "real"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4550,7 +4550,7 @@ summary = "To bit-select or part-select an array element, every unpacked dimensi
 related_clauses = [
     "11.5.1",
 ]
-tags = []
+tags = ["array-indexing", "array-slice", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4575,7 +4575,7 @@ anchors = [
 ]
 summary = "Bit-select and part-select results are unsigned regardless of source signedness, including a part-select covering the entire vector."
 related_clauses = []
-tags = []
+tags = ["array-indexing", "array-slice", "signedness"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4599,7 +4599,7 @@ anchors = [
 ]
 summary = "A self-determined expression has a bit length determined solely by that expression and not by surrounding context."
 related_clauses = []
-tags = []
+tags = ["self-determined", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4623,7 +4623,7 @@ anchors = [
 ]
 summary = "A self-determined operand's sign and size are determined solely by that operand and are independent of the rest of the expression."
 related_clauses = []
-tags = []
+tags = ["self-determined", "signedness", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4649,7 +4649,7 @@ summary = "A shift right operand is always interpreted as unsigned and does not 
 related_clauses = [
     "11.8.1",
 ]
-tags = []
+tags = ["shift", "signedness", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4674,7 +4674,7 @@ anchors = [
 ]
 summary = "Logical shifts >> and << and arithmetic shifts >>> and <<< accept integral operands only."
 related_clauses = []
-tags = []
+tags = ["integral", "shift"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4699,7 +4699,7 @@ anchors = [
 ]
 summary = "For >>, <<, >>>, <<<, and **, result size is L(i), the left/base operand's length, while the right shift-count or exponent operand is self-determined."
 related_clauses = []
-tags = []
+tags = ["arithmetic", "self-determined", "shift", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4723,7 +4723,7 @@ anchors = [
 ]
 summary = "If a shift count contains x or z, the shift result is unknown."
 related_clauses = []
-tags = []
+tags = ["four-state", "shift"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4751,7 +4751,7 @@ related_clauses = [
     "11.4.7",
     "11.4.11",
 ]
-tags = []
+tags = ["evaluation-order", "operator", "short-circuit"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4775,7 +4775,7 @@ anchors = [
 ]
 summary = "Signed values use two's-complement representation except values assigned to real variables, which use floating-point representation."
 related_clauses = []
-tags = []
+tags = ["real", "signedness"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4801,7 +4801,7 @@ summary = "If both binary bitwise operands are signed, the result is signed and 
 related_clauses = [
     "11.8.2",
 ]
-tags = []
+tags = ["bitwise", "signedness", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4827,7 +4827,7 @@ summary = "If both equality operands are signed, they are compared as signed val
 related_clauses = [
     "11.8.2",
 ]
-tags = []
+tags = ["equality", "signedness", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4853,7 +4853,7 @@ summary = "If both relational operands are signed, they are compared as signed v
 related_clauses = [
     "11.8.2",
 ]
-tags = []
+tags = ["comparison", "signedness", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4877,7 +4877,7 @@ anchors = [
 ]
 summary = "$signed and $unsigned evaluate their input and return a one-dimensional packed array with the same bit count and value, respectively marked signed or unsigned."
 related_clauses = []
-tags = []
+tags = ["cast", "conversion", "signedness"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4901,7 +4901,7 @@ anchors = [
 ]
 summary = "Any nonlogical operation involving a signed value containing any x or z bit produces an all-x result whose type remains the expression's required type."
 related_clauses = []
-tags = []
+tags = ["four-state", "signedness"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4925,7 +4925,7 @@ anchors = [
 ]
 summary = "Widening a signed operand to a larger signed width fills new bits with x when the sign bit is x and with z when the sign bit is z."
 related_clauses = []
-tags = []
+tags = ["four-state", "signedness", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4949,7 +4949,7 @@ anchors = [
 ]
 summary = "Conversion between signed and unsigned interpretations preserves the bit representation and changes only its interpretation."
 related_clauses = []
-tags = []
+tags = ["conversion", "layout", "signedness"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4973,7 +4973,7 @@ anchors = [
 ]
 summary = "The binary simple assignment operator accepts operands of any data type, subject to the applicable assignment compatibility rules."
 related_clauses = []
-tags = []
+tags = ["assignment", "type-compatibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4997,7 +4997,7 @@ anchors = [
 ]
 summary = "An operand is simple exactly when it is an unparenthesized primary under A.8.4; parenthesized or compound expressions may be operands but are not simple operands."
 related_clauses = []
-tags = []
+tags = ["grammar", "operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5026,7 +5026,7 @@ anchors = [
 ]
 summary = "Static prefixes include identifiers, hierarchical object references, and package net/variable references; a field select is static when its prefix is static, and an indexing select is static when its prefix is static and its select expression is constant."
 related_clauses = []
-tags = []
+tags = ["array-indexing", "name-resolution", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5052,7 +5052,7 @@ anchors = [
 ]
 summary = "stream_expressions are processed left to right and recursively appended to the generic stream; a nested streaming concatenation or bit-stream-typed expression is bit-stream-cast to packed bit, with 2-state to 4-state conversion when required, then appended at the generic stream's right end."
 related_clauses = []
-tags = []
+tags = ["bit-stream", "conversion", "streaming"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5076,7 +5076,7 @@ anchors = [
 ]
 summary = "Streaming >> preserves left-to-right block order and ignores slice_size; streaming << slices from the right, reverses block order while preserving bits within each block, and retains an undersized leftmost remainder block without padding or truncation."
 related_clauses = []
-tags = []
+tags = ["bit-stream", "layout", "streaming"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5100,7 +5100,7 @@ anchors = [
 ]
 summary = "Streaming a class handle is illegal when it has local or protected members inaccessible at the streaming-operator location."
 related_clauses = []
-tags = []
+tags = ["class-handle", "diagnostic", "streaming", "visibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5125,7 +5125,7 @@ anchors = [
 ]
 summary = "A non-null class handle streams the referenced object's data members, not the handle, in declaration order, with base-class members before extended-class members."
 related_clauses = []
-tags = []
+tags = ["class-handle", "class-inheritance", "layout", "streaming"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5150,7 +5150,7 @@ anchors = [
 ]
 summary = "A null class-handle stream expression contributes no bits and is skipped; an implementation may optionally warn."
 related_clauses = []
-tags = []
+tags = ["class-handle", "streaming"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5174,7 +5174,7 @@ anchors = [
 ]
 summary = "Left-to-right and right-to-left stream operators accept integral operands."
 related_clauses = []
-tags = []
+tags = ["bit-stream", "integral", "streaming"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5198,7 +5198,7 @@ anchors = [
 ]
 summary = "A skipped stream expression is not appended to the stream, and processing proceeds with the next item."
 related_clauses = []
-tags = []
+tags = ["streaming"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5223,7 +5223,7 @@ anchors = [
 ]
 summary = "Stream reordering slices the generic stream into bit blocks; omitted slice_size defaults to 1, a simple-type slice uses that type's bit width, and a constant-integral slice size shall be positive rather than zero or negative."
 related_clauses = []
-tags = []
+tags = ["bit-stream", "constant-expression", "sizing", "streaming"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5250,7 +5250,7 @@ anchors = [
 ]
 summary = "For assignment from a streaming concatenation to a bit-stream object: a narrower fixed target is an error; a wider fixed target right-zero-pads the stream; a dynamic target resizes to the fewest elements whose width covers the stream and right-zero-pads any excess width."
 related_clauses = []
-tags = []
+tags = ["bit-stream", "conversion", "sizing", "streaming"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5275,7 +5275,7 @@ anchors = [
 ]
 summary = "A struct stream expression is recursively streamed member by member in declaration order."
 related_clauses = []
-tags = []
+tags = ["bit-stream", "layout", "streaming", "struct"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5302,7 +5302,7 @@ summary = "An unpacked array stream expression is recursively streamed element b
 related_clauses = [
     "12.7.3",
 ]
-tags = []
+tags = ["array", "bit-stream", "index-order", "streaming"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5327,7 +5327,7 @@ anchors = [
 ]
 summary = "A stream expression not matching any supported recursive category is skipped and shall cause an error."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "streaming"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5352,7 +5352,7 @@ anchors = [
 ]
 summary = "An untagged union stream expression is recursively streamed using its first-declared member."
 related_clauses = []
-tags = []
+tags = ["bit-stream", "streaming", "union"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5377,7 +5377,7 @@ anchors = [
 ]
 summary = "A stream expression may append with [array_range_expression], where the range expression is an index, explicit range, indexed +: range, or indexed -: range."
 related_clauses = []
-tags = []
+tags = ["grammar", "streaming"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5403,7 +5403,7 @@ summary = "During pack, with behaves as an array slice: only specified items are
 related_clauses = [
     "7.4.5",
 ]
-tags = []
+tags = ["array-slice", "bounds", "streaming"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5427,7 +5427,7 @@ anchors = [
 ]
 summary = "A with range is evaluated immediately before its array is streamed; it sees values unpacked earlier by the same operator, but sees previous values for variables unpacked later to its right."
 related_clauses = []
-tags = []
+tags = ["evaluation-order", "streaming"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5451,7 +5451,7 @@ anchors = [
 ]
 summary = "A streaming with range shall be integral and evaluate within fixed-array bounds or to positive values for dynamic arrays and queues; the expression before with may be any one-dimensional unpacked array including a queue."
 related_clauses = []
-tags = []
+tags = ["array-slice", "bounds", "streaming", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5475,7 +5475,7 @@ anchors = [
 ]
 summary = "During unpack, a variable-size array resizes to its with range; a fixed-array range extending outside the array is clipped and causes an error; when the range is smaller than the array, only designated locations change and all others remain unmodified."
 related_clauses = []
-tags = []
+tags = ["array-slice", "bounds", "diagnostic", "streaming"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5499,7 +5499,7 @@ anchors = [
 ]
 summary = "A streaming concatenation used as a general expression operand shall first be cast to a bit-stream type; when it is an assignment source, the target shall be a bit-stream data object or another streaming concatenation."
 related_clauses = []
-tags = []
+tags = ["bit-stream", "diagnostic", "streaming"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5524,7 +5524,7 @@ anchors = [
 ]
 summary = "A streaming concatenation uses { >> or <<, an optional simple-type or constant-expression slice size, and a braced comma-separated stream-concatenation }; each stream expression may have an optional with array-range selector using index, range, +:, or -: forms."
 related_clauses = []
-tags = []
+tags = ["grammar", "streaming"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5550,7 +5550,7 @@ summary = "A streaming concatenation may be an assignment target, an assignment 
 related_clauses = [
     "11.4.14.3",
 ]
-tags = []
+tags = ["assignment", "bit-stream", "lvalue", "streaming"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5574,7 +5574,7 @@ anchors = [
 ]
 summary = "Packing data containing any 4-state type produces a 4-state stream; packing exclusively 2-state data produces a 2-state stream."
 related_clauses = []
-tags = []
+tags = ["bit-stream", "four-state", "streaming", "two-state"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5602,7 +5602,7 @@ related_clauses = [
     "11.4.14.1",
     "11.4.14.2",
 ]
-tags = []
+tags = ["bit-stream", "evaluation-order", "streaming"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5628,7 +5628,7 @@ summary = "A streaming operator on the right packs bit-stream types into a bit s
 related_clauses = [
     "6.24.3",
 ]
-tags = []
+tags = ["bit-stream", "layout", "streaming"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5652,7 +5652,7 @@ anchors = [
 ]
 summary = "Pack and unpack skip null handles, unpacking never creates class objects, and any object hierarchy to reconstruct shall exist before unpacking."
 related_clauses = []
-tags = []
+tags = ["class-handle", "streaming"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5678,7 +5678,7 @@ summary = "Streaming unpack modifies only explicitly declared properties and sha
 related_clauses = [
     "18",
 ]
-tags = []
+tags = ["class-handle", "streaming"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5702,7 +5702,7 @@ anchors = [
 ]
 summary = "A streaming assignment target unpacks from a bit-stream expression or another streaming concatenation; excess source bits are consumed from the most-significant left end, while too few source bits cause an error."
 related_clauses = []
-tags = []
+tags = ["bit-stream", "diagnostic", "sizing", "streaming"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5726,7 +5726,7 @@ anchors = [
 ]
 summary = "Unpacking between 4-state streams and 2-state targets, or vice versa, performs the corresponding state-domain cast."
 related_clauses = []
-tags = []
+tags = ["bit-stream", "conversion", "four-state", "streaming", "two-state"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5752,7 +5752,7 @@ summary = "Concatenation of string objects is legal; generally, if any operand i
 related_clauses = [
     "6.16",
 ]
-tags = []
+tags = ["concatenation", "conversion", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5776,7 +5776,7 @@ anchors = [
 ]
 summary = "A string concatenation is legal only as an expression and is illegal on an assignment left-hand side."
 related_clauses = []
-tags = []
+tags = ["assignment", "concatenation", "lvalue", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5800,7 +5800,7 @@ anchors = [
 ]
 summary = "A string concatenation or replication result is not truncated; the string destination resizes to hold the complete result."
 related_clauses = []
-tags = []
+tags = ["concatenation", "sizing", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5824,7 +5824,7 @@ anchors = [
 ]
 summary = "String literals and string literals stored in vectors support copy by simple assignment, concatenation by {}, and comparison by equality operators."
 related_clauses = []
-tags = []
+tags = ["equality", "literal", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5850,7 +5850,7 @@ summary = "A string literal operand is a constant number formed from one 8-bit A
 related_clauses = [
     "5.9",
 ]
-tags = []
+tags = ["layout", "literal", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5874,7 +5874,7 @@ anchors = [
 ]
 summary = "Assigning a string literal into a wider vector pads unused most-significant positions on the left with zeros."
 related_clauses = []
-tags = []
+tags = ["layout", "literal", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5898,7 +5898,7 @@ anchors = [
 ]
 summary = "Replication braces may replicate a string object or string concatenation, and a string replication multiplier may be nonconstant."
 related_clauses = []
-tags = []
+tags = ["concatenation", "replication", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5922,7 +5922,7 @@ anchors = [
 ]
 summary = "String literals assigned to vectors are left-zero-padded, and comparison and concatenation treat padding zeros identically to original ASCII NUL characters."
 related_clauses = []
-tags = []
+tags = ["equality", "layout", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5948,7 +5948,7 @@ anchors = [
 ]
 summary = "Packed and unpacked structures and their members are legal expression operands; a bit-select or part-select of a packed structure is also a legal operand."
 related_clauses = []
-tags = []
+tags = ["aggregate", "packed-struct", "struct"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5972,7 +5972,7 @@ anchors = [
 ]
 summary = "A tagged-union expression's type shall be known from assignment, cast, or enclosing context; it produces that type and statically permits only its member names with member expressions of corresponding types."
 related_clauses = []
-tags = []
+tags = ["context", "tagged-union", "type-compatibility", "type-inference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5997,7 +5997,7 @@ anchors = [
 ]
 summary = "A packed or unpacked tagged-union expression is tagged member_identifier followed by the member-value primary, with that primary omitted for a void member."
 related_clauses = []
-tags = []
+tags = ["grammar", "tagged-union"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -6022,7 +6022,7 @@ anchors = [
 ]
 summary = "Tagged-union members and nested fields may be read or assigned with dot notation only when consistent with the current tag; implementations perform a run-time check as needed and report a run-time error for a tag-inconsistent access."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "tagged-union"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6046,7 +6046,7 @@ anchors = [
 ]
 summary = "Tolerance bounds are normalized to [low:high] regardless of A and B signedness, swapping computed values when needed; the range type is A's type, and real-to-integral tolerance conversion truncates rather than rounds."
 related_clauses = []
-tags = []
+tags = ["conversion", "inside", "range", "signedness"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -6070,7 +6070,7 @@ anchors = [
 ]
 summary = "A type_reference constant_primary may be a static cast's casting_type and may otherwise be used only with logical equality/inequality or case equality/inequality operators."
 related_clauses = []
-tags = []
+tags = ["equality", "type-reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -6095,7 +6095,7 @@ anchors = [
 ]
 summary = "Unary +, -, and ~ produce a result with the same bit length L(i) as their operand."
 related_clauses = []
-tags = []
+tags = ["arithmetic", "bitwise", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6119,7 +6119,7 @@ anchors = [
 ]
 summary = "Unary arithmetic operators have higher precedence than binary operators."
 related_clauses = []
-tags = []
+tags = ["arithmetic", "precedence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6143,7 +6143,7 @@ anchors = [
 ]
 summary = "Unary + and - accept integral, real, and shortreal operands."
 related_clauses = []
-tags = []
+tags = ["arithmetic", "integral", "real"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6167,7 +6167,7 @@ anchors = [
 ]
 summary = "Unary ~ negates every bit of its integral operand independently."
 related_clauses = []
-tags = []
+tags = ["bitwise", "integral"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6191,7 +6191,7 @@ anchors = [
 ]
 summary = "Unary bitwise negation ~ accepts integral operands only."
 related_clauses = []
-tags = []
+tags = ["bitwise", "integral"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6215,7 +6215,7 @@ anchors = [
 ]
 summary = "The result of unary ~ is unsigned for an unsigned operand and signed for a signed operand."
 related_clauses = []
-tags = []
+tags = ["bitwise", "signedness"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6240,7 +6240,7 @@ anchors = [
 ]
 summary = "Unary + returns its operand unchanged, while unary - returns the arithmetic negation of its operand."
 related_clauses = []
-tags = []
+tags = ["arithmetic"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6264,7 +6264,7 @@ anchors = [
 ]
 summary = "Without explicit extents, unpacking unbounded dynamic targets is greedy: the first dynamic item takes all stream data except that reserved for later fixed-size items, and later dynamic items remain empty."
 related_clauses = []
-tags = []
+tags = ["dynamic-array", "evaluation-order", "streaming", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6290,7 +6290,7 @@ anchors = [
 ]
 summary = "Packed, unpacked, and tagged unions and their members are legal expression operands; a bit-select or part-select of a packed union is also a legal operand."
 related_clauses = []
-tags = []
+tags = ["aggregate", "packed-union", "tagged-union", "union"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6314,7 +6314,7 @@ anchors = [
 ]
 summary = "If either binary bitwise operand is unsigned, the result is unsigned and a shorter operand is zero-extended to the longer operand's width."
 related_clauses = []
-tags = []
+tags = ["bitwise", "signedness", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6338,7 +6338,7 @@ anchors = [
 ]
 summary = "If either equality operand is unsigned, both operands are compared as unsigned values and the shorter operand is zero-extended to the longer width."
 related_clauses = []
-tags = []
+tags = ["equality", "signedness", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6362,7 +6362,7 @@ anchors = [
 ]
 summary = "If either relational operand is unsigned, both are compared as unsigned values, with the shorter operand zero-extended to the longer width."
 related_clauses = []
-tags = []
+tags = ["comparison", "signedness", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6388,7 +6388,7 @@ anchors = [
 ]
 summary = "The relative order of assignment operations and other operations within one expression is unspecified; for the specified expression combining i++ with assignment to i from initial value 10, each of 18, 19, and 20 is a permitted final value of j."
 related_clauses = []
-tags = []
+tags = ["assignment", "evaluation-order", "increment-decrement"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6412,7 +6412,7 @@ anchors = [
 ]
 summary = "A call to a user-defined function, system function, or method that returns a legal operand value is itself a legal expression operand."
 related_clauses = []
-tags = []
+tags = ["function", "operator", "return-value"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6439,7 +6439,7 @@ summary = "A variable, or a bit-select or part-select of a variable, is a legal 
 related_clauses = [
     "6.8",
 ]
-tags = []
+tags = ["operator", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6463,7 +6463,7 @@ anchors = [
 ]
 summary = "After any required widening, an assignment-source stream is implicitly cast to the target type."
 related_clauses = []
-tags = []
+tags = ["bit-stream", "conversion", "sizing", "streaming"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6487,7 +6487,7 @@ anchors = [
 ]
 summary = "Unequal-width wildcard equality operands are extended by the same signedness-dependent rules as logical equality operands before bitwise comparison."
 related_clauses = []
-tags = []
+tags = ["equality", "signedness", "sizing", "wildcard-equality"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6513,7 +6513,7 @@ anchors = [
 ]
 summary = "For ==? and !=?, each x or z bit in the right operand is a wildcard matching 0, 1, x, or z in the corresponding left bit; x and z in the left operand are not wildcards, and nonwildcard positions use logical equality semantics."
 related_clauses = []
-tags = []
+tags = ["four-state", "wildcard-equality"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6537,7 +6537,7 @@ anchors = [
 ]
 summary = "Binary wildcard equality and inequality operators ==? and !=? accept integral operands only."
 related_clauses = []
-tags = []
+tags = ["integral", "wildcard-equality"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6561,7 +6561,7 @@ anchors = [
 ]
 summary = "Wildcard equality and inequality have the same precedence as the other equality operators."
 related_clauses = []
-tags = []
+tags = ["precedence", "wildcard-equality"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6586,7 +6586,7 @@ anchors = [
 ]
 summary = "Wildcard equality and inequality return a one-bit self-determined result: 1'b1 for true, 1'b0 for false, and 1'bx when the relation remains unknown, including an unresolved left-side x or z not covered by a right-side wildcard."
 related_clauses = []
-tags = []
+tags = ["four-state", "wildcard-equality"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6610,7 +6610,7 @@ anchors = [
 ]
 summary = "For class handles, interface-class handles, chandles, and null, wildcard equality has the same semantics as logical equality."
 related_clauses = []
-tags = []
+tags = ["chandle", "class-handle", "equality", "wildcard-equality"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6634,7 +6634,7 @@ anchors = [
 ]
 summary = "A zero-multiplier replication has zero size and is ignored, but is legal only within a concatenation that also has at least one positive-size operand."
 related_clauses = []
-tags = []
+tags = ["concatenation", "diagnostic", "replication"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"

@@ -11,7 +11,7 @@ anchors = [
 ]
 summary = "If an abort condition occurs in the same simulation time step that the operand property evaluation ends, the abort condition takes precedence over the operand result."
 related_clauses = []
-tags = []
+tags = ["abort", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -37,7 +37,7 @@ summary = "Abort conditions may use sampled-value functions, but functions other
 related_clauses = [
     "16.9.3",
 ]
-tags = []
+tags = ["abort", "diagnostic", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -61,7 +61,7 @@ anchors = [
 ]
 summary = "Any nesting combination of accept_on, reject_on, sync_accept_on, and sync_reject_on is allowed."
 related_clauses = []
-tags = []
+tags = ["abort", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -86,7 +86,7 @@ anchors = [
 ]
 summary = "Abort properties are `accept_on`, `reject_on`, `sync_accept_on`, or `sync_reject_on` applied with an expression_or_dist abort condition and property operand; the first pair is asynchronous and the sync pair synchronous."
 related_clauses = []
-tags = []
+tags = ["abort", "lexical", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -110,7 +110,7 @@ anchors = [
 ]
 summary = "During accept_on or sync_accept_on evaluation, a true abort condition forces the overall property true; if it never becomes true, the result equals the operand property's result."
 related_clauses = []
-tags = []
+tags = ["abort", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -134,7 +134,7 @@ anchors = [
 ]
 summary = "A concurrent assertion action block shall not contain concurrent assert, assume, or cover statements, but may contain immediate assertions."
 related_clauses = []
-tags = []
+tags = ["action-block", "concurrent-assertion", "diagnostic"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -161,7 +161,7 @@ related_clauses = [
     "16.9.3",
     "16.9.4",
 ]
-tags = []
+tags = ["checker", "sampled-value"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -189,7 +189,7 @@ anchors = [
 ]
 summary = "When clocking events are juxtaposed, the later event immediately overrides and nullifies the earlier one; therefore `@(d) @(c) x` is equivalent to `@(c) x`."
 related_clauses = []
-tags = []
+tags = ["clocking-event", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -213,7 +213,7 @@ anchors = [
 ]
 summary = "An always property evaluated off its clock first aligns to that clock; precisely, `s_always[n:m] p` requires m+1 ticks counting an aligned/current tick as first and p true on ticks n+1 through m+1."
 related_clauses = []
-tags = []
+tags = ["clock-flow", "clocking-event", "property", "temporal-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -239,7 +239,7 @@ summary = "An always range minimum shall be a nonnegative integer constant; its 
 related_clauses = [
     "11.2.1",
 ]
-tags = []
+tags = ["constant-expression", "property", "range", "temporal-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -265,7 +265,7 @@ anchors = [
 ]
 summary = "For and/intersect, a local flowing from at least one operand flows out unless blocked; it is blocked if assigned and flowing out of both operands, or if blocked in at least one operand."
 related_clauses = []
-tags = []
+tags = ["local-variable-blocking", "local-variable-flow", "sequence", "thread"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -289,7 +289,7 @@ anchors = [
 ]
 summary = "At successful and/intersect completion, operand threads merge into one, and each local that flows out has its latest assigned value."
 related_clauses = []
-tags = []
+tags = ["local-variable-flow", "sequence", "thread"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -315,7 +315,7 @@ summary = "An assert property executes its pass action on true, fail action on f
 related_clauses = [
     "20.11",
 ]
-tags = []
+tags = ["action-block", "concurrent-assertion"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -341,7 +341,7 @@ summary = "Concurrent assert pass and fail statements execute in the Reactive re
 related_clauses = [
     "4",
 ]
-tags = []
+tags = ["action-block", "concurrent-assertion", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -367,7 +367,7 @@ summary = "A null statement denotes no action; when an assert statement omits el
 related_clauses = [
     "20.11",
 ]
-tags = []
+tags = ["action-block", "concurrent-assertion"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -395,7 +395,7 @@ anchors = [
 ]
 summary = "An assertion statement shall be an assert, assume, cover, or restrict statement."
 related_clauses = []
-tags = []
+tags = ["assertion-statement"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -419,7 +419,7 @@ anchors = [
 ]
 summary = "An assertion Boolean expression uses procedural-if interpretation: 0, x, and z are false, and every other value is true."
 related_clauses = []
-tags = []
+tags = ["assertion-expression", "four-state"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -445,7 +445,7 @@ summary = "Execution of assertion statements may be controlled by the assertion-
 related_clauses = [
     "20.11",
 ]
-tags = []
+tags = ["assertion-control", "concurrent-assertion", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -472,7 +472,7 @@ anchors = [
 ]
 summary = "Assertion disable resolution prefers an explicit disable iff over any default; absent explicit disable, it uses the scoped default; absent both, no inference occurs, equivalent to disable condition 1'b0."
 related_clauses = []
-tags = []
+tags = ["disable", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -498,7 +498,7 @@ summary = "An assertion expression is associated with a clock definition unless 
 related_clauses = [
     "16.14.6",
 ]
-tags = []
+tags = ["clocking-event", "sampled-value"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -522,7 +522,7 @@ anchors = [
 ]
 summary = "A function used in a concurrent assertion expression shall not have output, inout, or ref arguments; const ref arguments are permitted."
 related_clauses = []
-tags = []
+tags = ["argument-direction", "assertion-expression", "diagnostic", "function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -547,7 +547,7 @@ anchors = [
 ]
 summary = "A function used in a concurrent assertion expression shall be automatic or otherwise preserve no state, and shall have no side effects."
 related_clauses = []
-tags = []
+tags = ["assertion-expression", "diagnostic", "function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -571,7 +571,7 @@ anchors = [
 ]
 summary = "An optional statement label creates a named block around the assertion statement, whose hierarchical scope name is available through the %m format specification."
 related_clauses = []
-tags = []
+tags = ["assertion-statement", "block", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -595,7 +595,7 @@ anchors = [
 ]
 summary = "Within an assertion, a variable's sampled value is the valid value used throughout a clock tick, irrespective of simulation-value transitions during that tick."
 related_clauses = []
-tags = []
+tags = ["sampled-value"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -622,7 +622,7 @@ summary = "An assertion variable declaration shall explicitly specify an asserti
 related_clauses = [
     "16.6",
 ]
-tags = []
+tags = ["lexical", "local-variable", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -646,7 +646,7 @@ anchors = [
 ]
 summary = "An assumed property shall hold identically with or without random biasing; bias only chooses among free-variable values according to weights when a choice exists at a time."
 related_clauses = []
-tags = []
+tags = ["assumption", "concurrent-assertion", "property", "random-bias"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -672,7 +672,7 @@ anchors = [
 ]
 summary = "An assume property constrains the formal/dynamic environment so the property holds; in formal analysis it is a hypothesis for proving assertions and carries no obligation to verify the assumption itself."
 related_clauses = []
-tags = []
+tags = ["assumption", "concurrent-assertion"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -698,7 +698,7 @@ summary = "A null statement specifies no assume action; if else is omitted, an u
 related_clauses = [
     "20.11",
 ]
-tags = []
+tags = ["action-block", "assumption", "concurrent-assertion"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -723,7 +723,7 @@ anchors = [
 ]
 summary = "For random simulation input biasing, an assume expression may use the `expression dist { dist_list }` form."
 related_clauses = []
-tags = []
+tags = ["assumption", "concurrent-assertion", "random-bias"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -751,7 +751,7 @@ summary = "In simulation, assumptions are checked and failures reported; true ex
 related_clauses = [
     "20.11",
 ]
-tags = []
+tags = ["action-block", "assumption", "concurrent-assertion"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -779,7 +779,7 @@ anchors = [
 ]
 summary = "accept_on/reject_on are property-level asynchronous aborts evaluated at time-step granularity using sampled assertion-expression values; unlike disable iff, accept_on can force true rather than produce a disabled evaluation."
 related_clauses = []
-tags = []
+tags = ["abort", "property", "sampled-value"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -806,7 +806,7 @@ related_clauses = [
     "13.5.2",
     "16.6",
 ]
-tags = []
+tags = ["argument-direction", "formal-argument", "match-item", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -832,7 +832,7 @@ summary = "From a procedural assertion, an automatic variable may be passed to a
 related_clauses = [
     "16.14.6.1",
 ]
-tags = []
+tags = ["formal-argument", "match-item", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -856,7 +856,7 @@ anchors = [
 ]
 summary = "Every attached subroutine call executes at every sequence endpoint in source-list order, scheduled in Reactive; assertion evaluation neither waits for the calls nor receives data back from them."
 related_clauses = []
-tags = []
+tags = ["match-item", "scheduling", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -880,7 +880,7 @@ anchors = [
 ]
 summary = "An attached call may use a local actual only if the local flows out of the sequence or was assigned earlier in the match-item list; any argument expression containing a local shall be passed by value."
 related_clauses = []
-tags = []
+tags = ["formal-argument", "local-variable", "match-item", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -904,7 +904,7 @@ anchors = [
 ]
 summary = "When a sampled-value function references a past or future value of an automatic variable, it uses that automatic variable's current value instead."
 related_clauses = []
-tags = []
+tags = ["context", "sampled-value"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -928,7 +928,7 @@ anchors = [
 ]
 summary = "A sequence property without explicit strong/weak is weak in assert property and assume property statements, and strong in every other assertion statement."
 related_clauses = []
-tags = []
+tags = ["property", "property-strength", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -954,7 +954,7 @@ summary = "A local flows out of an or, and, or intersect composite only when the
 related_clauses = [
     "F.5.4",
 ]
-tags = []
+tags = ["local-variable", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -978,7 +978,7 @@ anchors = [
 ]
 summary = "$changed returns 1'b1 when the sampled expression value changed and 1'b0 otherwise."
 related_clauses = []
-tags = []
+tags = ["clocking-event", "sampled-value-function", "value-change"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1002,7 +1002,7 @@ anchors = [
 ]
 summary = "$changing_gclk(expression) is the Boolean complement of $steady_gclk(expression)."
 related_clauses = []
-tags = []
+tags = ["global-clock", "sampled-value-function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1028,7 +1028,7 @@ summary = "A clock event applies throughout its scope until superseded by an inn
 related_clauses = [
     "F.4.1",
 ]
-tags = []
+tags = ["clocking-event", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1052,7 +1052,7 @@ anchors = [
 ]
 summary = "If one variable appears both in an assertion's clock expression and its asserted expression, the clock expression uses the variable's current value while the asserted expression uses its sampled value."
 related_clauses = []
-tags = []
+tags = ["clocking-event", "context", "sampled-value"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1076,7 +1076,7 @@ anchors = [
 ]
 summary = "A clock flows into and left-to-right across named property or sequence instances, including sequence instances with triggered or matched applied, but a clock declared inside an instance does not flow out."
 related_clauses = []
-tags = []
+tags = ["clock-flow", "clocking-event", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1101,7 +1101,7 @@ anchors = [
 ]
 summary = "A clock flows into parenthesized subexpressions and left-to-right through a parenthesized sequence, but a clock introduced inside parentheses neither flows through a later replacement clock nor flows out of those parentheses."
 related_clauses = []
-tags = []
+tags = ["clock-flow", "clocking-event", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1125,7 +1125,7 @@ anchors = [
 ]
 summary = "The scope of a clocking event does not flow into a disable iff condition."
 related_clauses = []
-tags = []
+tags = ["clocking-event", "diagnostic", "disable", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1152,7 +1152,7 @@ anchors = [
 ]
 summary = "Inside a clocking block, property/sequence declarations shall have no explicit clock and are led by the block clock; multiclock declarations are forbidden; externally declared named instances used there shall be singly clocked with a clock identical to the block clock."
 related_clauses = []
-tags = []
+tags = ["clocking-block", "clocking-event", "diagnostic", "multiclock"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1176,7 +1176,7 @@ anchors = [
 ]
 summary = "A clocking-block variable referenced in a concurrent assertion is sampled only in its clocking block."
 related_clauses = []
-tags = []
+tags = ["clocking-block", "clocking-event", "sampled-value"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1202,7 +1202,7 @@ summary = "A clocking-block input variable used for assertion sampling shall use
 related_clauses = [
     "14",
 ]
-tags = []
+tags = ["clocking-block", "clocking-skew", "sampled-value"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1226,7 +1226,7 @@ anchors = [
 ]
 summary = "Any other expression is sampled recursively from its arguments; a contained function is invoked at expression evaluation using the sampled values of its arguments."
 related_clauses = []
-tags = []
+tags = ["sampled-value"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1250,7 +1250,7 @@ anchors = [
 ]
 summary = "Sequence concatenation can express overlap only by a ##0 delay that makes the first sequence endpoint coincide with the second sequence start; it cannot express other forms of overlap."
 related_clauses = []
-tags = []
+tags = ["sequence", "sequence-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1276,7 +1276,7 @@ summary = "Concurrent assertion action blocks use the same default error severit
 related_clauses = [
     "16.3",
 ]
-tags = []
+tags = ["action-block", "concurrent-assertion"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1300,7 +1300,7 @@ anchors = [
 ]
 summary = "A concurrent assertion is evaluated only in a time step in which its sequence, property, sampled-value function, or assertion-statement clocking event occurs."
 related_clauses = []
-tags = []
+tags = ["clocking-event", "sampled-value"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1327,7 +1327,7 @@ summary = "Concurrent assertions evaluate with clock semantics using sampled val
 related_clauses = [
     "16.5.1",
 ]
-tags = []
+tags = ["clocking-event", "concurrent-assertion", "sampled-value"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1353,7 +1353,7 @@ summary = "A verification statement outside an initial procedure has an implicit
 related_clauses = [
     "16.5",
 ]
-tags = []
+tags = ["clocking-event", "concurrent-assertion", "evaluation-attempt"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1385,7 +1385,7 @@ summary = "A concurrent assertion may appear as a statement in an always or init
 related_clauses = [
     "9.2",
 ]
-tags = []
+tags = ["concurrent-assertion", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1409,7 +1409,7 @@ anchors = [
 ]
 summary = "A concurrent assertion may be referenced by optional local or hierarchical name; a tool shall assign a reporting name if omitted, and an unnamed assertion creates no scope."
 related_clauses = []
-tags = []
+tags = ["concurrent-assertion", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1433,7 +1433,7 @@ anchors = [
 ]
 summary = "Concurrent assertions are evaluated in the Observed region."
 related_clauses = []
-tags = []
+tags = ["concurrent-assertion", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1459,7 +1459,7 @@ summary = "The property keyword marks an assertion statement as concurrent rathe
 related_clauses = [
     "16.14",
 ]
-tags = []
+tags = ["concurrent-assertion", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1483,7 +1483,7 @@ anchors = [
 ]
 summary = "Concurrent assertion syntax comprises optionally labeled assert property, assume property, cover property, cover sequence, or restrict property statements with their defined property/sequence specifications and action/statement forms."
 related_clauses = []
-tags = []
+tags = ["concurrent-assertion", "lexical"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1509,7 +1509,7 @@ summary = "A concurrent assertion expression shall not reference an automatic va
 related_clauses = [
     "16.14.6.1",
 ]
-tags = []
+tags = ["assertion-expression", "diagnostic"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1533,7 +1533,7 @@ anchors = [
 ]
 summary = "A concurrent assertion expression's overall result type shall be cast-compatible with an integral type, although its subexpressions need not individually be integral-compatible."
 related_clauses = []
-tags = []
+tags = ["assertion-expression", "diagnostic"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1557,7 +1557,7 @@ anchors = [
 ]
 summary = "A concurrent assertion expression shall not reference a variable of chandle type."
 related_clauses = []
-tags = []
+tags = ["assertion-expression", "chandle", "diagnostic"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1581,7 +1581,7 @@ anchors = [
 ]
 summary = "A concurrent assertion expression shall not reference a nonstatic class property or method."
 related_clauses = []
-tags = []
+tags = ["assertion-expression", "class-method", "class-property", "diagnostic"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1605,7 +1605,7 @@ anchors = [
 ]
 summary = "Concurrent assertion expression evaluation shall have no side effects, except that a sequence match item whose variable_lvalue is a local variable may use C-style assignment, increment, or decrement operators."
 related_clauses = []
-tags = []
+tags = ["assertion-expression", "diagnostic", "local-variable", "match-item"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1632,7 +1632,7 @@ anchors = [
 ]
 summary = "Consecutive repetition [*N] or [*min:max] matches the operand for the selected finite number of successive iterations, with one tick between matches and endpoint at the last; [*] equals [*0:$], [+] equals [*1:$], and [*n] equals [*n:n]."
 related_clauses = []
-tags = []
+tags = ["repetition", "sequence", "sequence-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1659,7 +1659,7 @@ related_clauses = [
     "6.24.1",
     "16.14.6",
 ]
-tags = []
+tags = ["context", "conversion", "sampled-value"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1685,7 +1685,7 @@ summary = "A disabled cover-property evaluation increments the attempt counter b
 related_clauses = [
     "40.5.2",
 ]
-tags = []
+tags = ["concurrent-assertion", "coverage", "disable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1709,7 +1709,7 @@ anchors = [
 ]
 summary = "A cover assertion monitors evaluation of its property for coverage rather than imposing an obligation."
 related_clauses = []
-tags = []
+tags = ["concurrent-assertion", "coverage", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1733,7 +1733,7 @@ anchors = [
 ]
 summary = "A cover statement may have an optional pass statement, which shall not contain a concurrent assert, assume, or cover statement."
 related_clauses = []
-tags = []
+tags = ["concurrent-assertion", "coverage", "diagnostic"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1759,7 +1759,7 @@ summary = "A cover property pass statement executes once per successful evaluati
 related_clauses = [
     "20.11",
 ]
-tags = []
+tags = ["concurrent-assertion", "coverage", "property", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1786,7 +1786,7 @@ anchors = [
 ]
 summary = "Property coverage results shall contain attempt count, success count capped at one per attempt, and vacuous-success count."
 related_clauses = []
-tags = []
+tags = ["concurrent-assertion", "coverage", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1811,7 +1811,7 @@ anchors = [
 ]
 summary = "Property coverage uses `cover property (property_spec) statement_or_null`."
 related_clauses = []
-tags = []
+tags = ["concurrent-assertion", "coverage", "lexical", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1837,7 +1837,7 @@ anchors = [
 ]
 summary = "Per-attempt cover-sequence match count equals executions of a match-increment function attached to the true consequent of an overlapped implication whose antecedent is the same clocked/disabled sequence expression."
 related_clauses = []
-tags = []
+tags = ["concurrent-assertion", "coverage", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1861,7 +1861,7 @@ anchors = [
 ]
 summary = "For each cover-sequence attempt, every sequence match that completes without occurrence of the disable iff condition shall be counted with multiplicity, and no other match shall be counted."
 related_clauses = []
-tags = []
+tags = ["concurrent-assertion", "coverage", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1888,7 +1888,7 @@ summary = "A cover-sequence pass statement executes with multiplicity once for e
 related_clauses = [
     "20.11",
 ]
-tags = []
+tags = ["concurrent-assertion", "coverage", "scheduling", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1914,7 +1914,7 @@ summary = "Tools shall collect and report cover sequence/property coverage at si
 related_clauses = [
     "39",
 ]
-tags = []
+tags = ["concurrent-assertion", "coverage", "property", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1940,7 +1940,7 @@ anchors = [
 ]
 summary = "Sequence coverage results shall include attempt count and match count, where one attempt may contribute multiple matches."
 related_clauses = []
-tags = []
+tags = ["concurrent-assertion", "coverage", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1966,7 +1966,7 @@ anchors = [
 ]
 summary = "Sequence coverage uses `cover sequence ([clocking_event] [disable iff (expression_or_dist)] sequence_expr) statement_or_null`."
 related_clauses = []
-tags = []
+tags = ["concurrent-assertion", "coverage", "lexical", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1995,7 +1995,7 @@ related_clauses = [
     "16.14.6",
     "17.7.2",
 ]
-tags = []
+tags = ["context", "sampled-value"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2019,7 +2019,7 @@ anchors = [
 ]
 summary = "A cycle-delay constant_primary shall be a compile-time constant expression yielding an integer, and all delay constants and range bounds shall be nonnegative."
 related_clauses = []
-tags = []
+tags = ["constant-expression", "cycle-delay", "sequence", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2043,7 +2043,7 @@ anchors = [
 ]
 summary = "A cycle_delay_range constant_primary shall not contain a constant_mintypmax_expression unless that mintypmax expression is also a constant_expression."
 related_clauses = []
-tags = []
+tags = ["cycle-delay", "diagnostic", "mintypmax", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2067,7 +2067,7 @@ anchors = [
 ]
 summary = "For a two-expression cycle-delay range, the upper expression shall be greater than or equal to the lower expression."
 related_clauses = []
-tags = []
+tags = ["cycle-delay", "sequence", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2091,7 +2091,7 @@ anchors = [
 ]
 summary = "In a cycle-delay range, $ denotes a finite but unbounded maximum delay."
 related_clauses = []
-tags = []
+tags = ["cycle-delay", "sequence", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2116,7 +2116,7 @@ anchors = [
 ]
 summary = "The delay abbreviation ##[*] is equivalent to ##[0:$], and ##[+] is equivalent to ##[1:$]."
 related_clauses = []
-tags = []
+tags = ["cycle-delay", "sequence", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2143,7 +2143,7 @@ related_clauses = [
     "6.22.4",
     "F.4.1",
 ]
-tags = []
+tags = ["conversion", "formal-argument", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2167,7 +2167,7 @@ anchors = [
 ]
 summary = "A local declared inside a sequence or property is not visible in the context that instantiates that sequence or property."
 related_clauses = []
-tags = []
+tags = ["local-variable", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2191,7 +2191,7 @@ anchors = [
 ]
 summary = "In module/interface/program/checker scope, a concurrent assertion lacking another leading clock is treated as explicitly led by the default clock; that default does not clock sequence/property declarations unless declared inside the default clocking block."
 related_clauses = []
-tags = []
+tags = ["clock-flow", "clocking-event", "default-clocking"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2215,7 +2215,7 @@ anchors = [
 ]
 summary = "A default disable applies throughout its scope independently of its textual position."
 related_clauses = []
-tags = []
+tags = ["disable", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2239,7 +2239,7 @@ anchors = [
 ]
 summary = "A default disable may be declared in module/interface/program or generate scope, applies to concurrent assertions in that scope and nested declarations/blocks, and is overridden by a nested default; names in its condition resolve from declaration scope."
 related_clauses = []
-tags = []
+tags = ["disable", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2263,7 +2263,7 @@ anchors = [
 ]
 summary = "A module-or-generate item declaration may be `default disable iff expression_or_dist;`."
 related_clauses = []
-tags = []
+tags = ["disable", "lexical"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2287,7 +2287,7 @@ anchors = [
 ]
 summary = "More than one default disable in the same module/interface/program/generate scope is an error, and a default scope does not cross into instantiated modules, interfaces, or programs."
 related_clauses = []
-tags = []
+tags = ["disable", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2314,7 +2314,7 @@ summary = "The default sampled value of an event's triggered method and a sequen
 related_clauses = [
     "15.5.3",
 ]
-tags = []
+tags = ["sampled-value", "sequence-method"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2339,7 +2339,7 @@ anchors = [
 ]
 summary = "An expression's default sampled value is obtained recursively by evaluating it from the default sampled values of its component subexpressions and variables."
 related_clauses = []
-tags = []
+tags = ["recursion", "sampled-value"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2366,7 +2366,7 @@ summary = "The default sampled value of a nonstatic variable or net is the defau
 related_clauses = [
     "6.8",
 ]
-tags = []
+tags = ["default-value", "sampled-value"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2393,7 +2393,7 @@ summary = "A static variable's default sampled value is its declaration-assigned
 related_clauses = [
     "6.8",
 ]
-tags = []
+tags = ["default-value", "sampled-value", "static"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2418,7 +2418,7 @@ anchors = [
 ]
 summary = "A deferred assertion action may pass inputs by value or by ref/const ref; by-value actual expressions, including nested function calls, are fully evaluated when the assertion expression is evaluated."
 related_clauses = []
-tags = []
+tags = ["action-block", "argument-direction", "deferred-assertion", "formal-argument"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2442,7 +2442,7 @@ anchors = [
 ]
 summary = "It is an error for a deferred assertion action to pass an automatic or dynamic variable to a ref or const ref formal."
 related_clauses = []
-tags = []
+tags = ["action-block", "deferred-assertion", "diagnostic", "formal-argument"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2470,7 +2470,7 @@ summary = "An observed deferred action subroutine executes in the Reactive regio
 related_clauses = [
     "4.4.2.9",
 ]
-tags = []
+tags = ["action-block", "deferred-assertion", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2495,7 +2495,7 @@ anchors = [
 ]
 summary = "A deferred immediate assertion action block may contain only a single subroutine call."
 related_clauses = []
-tags = []
+tags = ["action-block", "deferred-assertion"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2524,7 +2524,7 @@ summary = "A process reaches a deferred assertion flush point when it resumes af
 related_clauses = [
     "16.4.4",
 ]
-tags = []
+tags = ["assertion-queue", "deferred-assertion", "disable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2548,7 +2548,7 @@ anchors = [
 ]
 summary = "A deferred immediate assertion may be declared as a module_common_item outside a procedure."
 related_clauses = []
-tags = []
+tags = ["deferred-assertion", "module"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2572,7 +2572,7 @@ anchors = [
 ]
 summary = "Each execution of a deferred assertion is associated with its calling process, so executions of the same assertion from different processes maintain independent pending-report behavior."
 related_clauses = []
-tags = []
+tags = ["assertion-queue", "deferred-assertion", "process-independence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2596,7 +2596,7 @@ anchors = [
 ]
 summary = "A deferred immediate assertion delays reporting of its result rather than reporting immediately at evaluation."
 related_clauses = []
-tags = []
+tags = ["assertion-queue", "deferred-assertion"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2621,7 +2621,7 @@ anchors = [
 ]
 summary = "A deferred action's ref or const ref actual accesses the underlying variable's current value in the action's execution region: Reactive for observed deferred and Postponed for final deferred."
 related_clauses = []
-tags = []
+tags = ["context", "deferred-assertion"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2647,7 +2647,7 @@ summary = "At a deferred assertion flush point, the executing process's report q
 related_clauses = [
     "16.4.2",
 ]
-tags = []
+tags = ["assertion-queue", "deferred-assertion"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2671,7 +2671,7 @@ anchors = [
 ]
 summary = "On deferred assertion pass or failure, the selected action call—or default $error for a failure without else—and captured input values become a pending report in the currently executing process's deferred assertion report queue instead of executing immediately."
 related_clauses = []
-tags = []
+tags = ["assertion-queue", "deferred-assertion"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2698,7 +2698,7 @@ summary = "A disable condition uses current-cycle unsampled values, may referenc
 related_clauses = [
     "16.9.3",
 ]
-tags = []
+tags = ["disable", "property", "sampled-value"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2722,7 +2722,7 @@ anchors = [
 ]
 summary = "disable iff clauses shall not be nested, either explicitly or through property instantiation."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "disable", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2746,7 +2746,7 @@ anchors = [
 ]
 summary = "Each property attempt is independently disabled, with neither success nor failure, if its disable condition becomes true from the inclusive Observed-region attempt start through inclusive evaluation end; otherwise evaluation equals the underlying property_expr."
 related_clauses = []
-tags = []
+tags = ["disable", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2771,7 +2771,7 @@ anchors = [
 ]
 summary = "A property_spec may be formed by attaching `disable iff (expression_or_dist)` before a property_expr."
 related_clauses = []
-tags = []
+tags = ["disable", "lexical", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2798,7 +2798,7 @@ summary = "Disabling the outermost scope of a procedure flushes its whole pendin
 related_clauses = [
     "9.6.2",
 ]
-tags = []
+tags = ["assertion-queue", "disable", "procedural-assertion", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2826,7 +2826,7 @@ summary = "Disabling a procedure's outermost scope flushes its active deferred a
 related_clauses = [
     "9.6.2",
 ]
-tags = []
+tags = ["assertion-queue", "deferred-assertion", "disable", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2851,7 +2851,7 @@ anchors = [
 ]
 summary = "Disabling a specific deferred assertion cancels all pending reports for that assertion."
 related_clauses = []
-tags = []
+tags = ["deferred-assertion", "disable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2876,7 +2876,7 @@ anchors = [
 ]
 summary = "Disabling a specific procedural concurrent assertion clears all its pending queue instances while preserving pending instances of every other assertion."
 related_clauses = []
-tags = []
+tags = ["assertion-queue", "concurrent-assertion", "disable", "procedural-assertion"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2900,7 +2900,7 @@ anchors = [
 ]
 summary = "When a property containing dist is used in assert or cover, dist is equivalent to inside and all weight specifications are ignored."
 related_clauses = []
-tags = []
+tags = ["concurrent-assertion", "coverage", "inside", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2924,7 +2924,7 @@ anchors = [
 ]
 summary = "A formal receiving an expression that will be combined with an edge_identifier to form an event_expression shall not itself be typed event."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "event", "formal-argument", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2951,7 +2951,7 @@ summary = "An empty sequence match shall not activate triggered or matched."
 related_clauses = [
     "16.9.11",
 ]
-tags = []
+tags = ["diagnostic", "empty-match", "sequence", "sequence-method"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -2978,7 +2978,7 @@ anchors = [
 ]
 summary = "Concatenating empty and seq with ##0 never matches; for n>0, empty ##n seq equals ##(n-1) seq, and seq ##n empty equals seq ##(n-1) `true."
 related_clauses = []
-tags = []
+tags = ["empty-match", "sequence", "sequence-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3006,7 +3006,7 @@ related_clauses = [
     "16.9.4",
     "16.13.6",
 ]
-tags = []
+tags = ["sampled-value", "sequence", "sequence-method"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3030,7 +3030,7 @@ anchors = [
 ]
 summary = "For a formal of type event, the actual shall be an event_expression and every formal reference shall occur where an event_expression is legal."
 related_clauses = []
-tags = []
+tags = ["event", "formal-argument", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3054,7 +3054,7 @@ anchors = [
 ]
 summary = "An eventually property evaluated off its clock first aligns to that clock; precisely, `s_eventually[n:m] p` requires at least n+1 ticks counting an aligned/current tick as first and p true on one of ticks n+1 through m+1."
 related_clauses = []
-tags = []
+tags = ["clock-flow", "clocking-event", "property", "temporal-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3078,7 +3078,7 @@ anchors = [
 ]
 summary = "For Boolean a, `s_eventually a` equals `strong(##[*0:$] a)`, `eventually[2:5] a` equals `weak(##[2:5] a)`, and `s_eventually[2:5] a` equals `strong(##[2:5] a)`; corresponding nested always/eventually forms follow their quantified finite/infinite-clock semantics."
 related_clauses = []
-tags = []
+tags = ["property", "sequence", "temporal-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3104,7 +3104,7 @@ summary = "Expect success executes optional pass, failure executes optional else
 related_clauses = [
     "20.11",
 ]
-tags = []
+tags = ["action-block", "expect"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3128,7 +3128,7 @@ anchors = [
 ]
 summary = "Expect blocks its process until the property succeeds or fails, then stops that evaluation, unblocks, and schedules the following statement after processing the completion Observed region; no new evaluation starts until expect executes again."
 related_clauses = []
-tags = []
+tags = ["expect", "scheduling", "timing-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3152,7 +3152,7 @@ anchors = [
 ]
 summary = "Executing expect starts exactly one property evaluation thread at the subsequent clocking event, never at the current event."
 related_clauses = []
-tags = []
+tags = ["clocking-event", "expect"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3177,7 +3177,7 @@ anchors = [
 ]
 summary = "`expect (property_spec) action_block` is a procedural blocking statement that waits on evaluation of a named or inline property specification."
 related_clauses = []
-tags = []
+tags = ["expect", "lexical"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3203,7 +3203,7 @@ summary = "Expect may appear anywhere wait may appear and, because it blocks, it
 related_clauses = [
     "9.4.3",
 ]
-tags = []
+tags = ["expect", "timing-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3227,7 +3227,7 @@ anchors = [
 ]
 summary = "$falling_gclk returns 1'b1 exactly when the expression LSB changes to 0 at the next global clock tick; otherwise it returns 1'b0."
 related_clauses = []
-tags = []
+tags = ["edge-sensitivity", "global-clock", "sampled-value-function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3251,7 +3251,7 @@ anchors = [
 ]
 summary = "$fell returns 1'b1 exactly when the expression's least significant bit changed to 0; otherwise it returns 1'b0."
 related_clauses = []
-tags = []
+tags = ["clocking-event", "edge-sensitivity", "sampled-value-function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3275,7 +3275,7 @@ anchors = [
 ]
 summary = "An unflushed final deferred report matures in the Postponed region, schedules its action or default $error in that same region, and is then removed from its process queue."
 related_clauses = []
-tags = []
+tags = ["assertion-queue", "deferred-assertion", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3302,7 +3302,7 @@ anchors = [
 ]
 summary = "A property fails on a finite behavior when a bad state occurred; regardless of whether future obligations were met, no path extension can make it hold."
 related_clauses = []
-tags = []
+tags = ["finite-behavior", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3332,7 +3332,7 @@ summary = "Dynamic verification analyzes finite behaviors with four satisfaction
 related_clauses = [
     "F.5",
 ]
-tags = []
+tags = ["finite-behavior", "property", "property-strength"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3359,7 +3359,7 @@ anchors = [
 ]
 summary = "A finite behavior holds a property, but not strongly, when no bad state occurred and all future obligations are met, yet the property may hold or fail on a path extension."
 related_clauses = []
-tags = []
+tags = ["finite-behavior", "property", "property-strength"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3386,7 +3386,7 @@ anchors = [
 ]
 summary = "A property is pending on a finite behavior when no bad state occurred, future obligations remain unmet, and it may hold or fail on an extension."
 related_clauses = []
-tags = []
+tags = ["finite-behavior", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3411,7 +3411,7 @@ anchors = [
 ]
 summary = "first_match starts its operand attempt at the same tick and retains every operand match at the earliest ending tick while discarding all later-ending matches; if the operand has no match, neither does first_match."
 related_clauses = []
-tags = []
+tags = ["sequence", "sequence-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3437,7 +3437,7 @@ anchors = [
 ]
 summary = "For overlapped `#-#`, the consequent starts at a selected antecedent endpoint; for nonoverlapped `#=#`, a nonempty match starts it on the next clock tick, while an empty match uses the nearest consequent clock tick from antecedent start (current tick if singly clocked)."
 related_clauses = []
-tags = []
+tags = ["implication", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3464,7 +3464,7 @@ anchors = [
 ]
 summary = "A followed-by property returns true exactly when at least one antecedent match begins at the attempt start and its consequent succeeds from the form-specific match tick; no antecedent match returns false."
 related_clauses = []
-tags = []
+tags = ["implication", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3491,7 +3491,7 @@ anchors = [
 ]
 summary = "Followed-by is dual to implication: `s #-# p` equals `not (s |-> not p)`, and `s #=# p` equals `not (s |=> not p)`."
 related_clauses = []
-tags = []
+tags = ["implication", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3516,7 +3516,7 @@ anchors = [
 ]
 summary = "At property level, followed-by uses `sequence_expr #-# property_expr` or `sequence_expr #=# property_expr` to trigger monitoring of the property expression."
 related_clauses = []
-tags = []
+tags = ["implication", "lexical", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3540,7 +3540,7 @@ anchors = [
 ]
 summary = "`s #-# strong(t)` is semantically equivalent to `strong(s ##0 t)`, and `s #=# strong(t)` is semantically equivalent to `strong(s ##1 t)`."
 related_clauses = []
-tags = []
+tags = ["implication", "property", "property-strength", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3567,7 +3567,7 @@ summary = "Global future sampled-value functions use the subsequent global-clock
 related_clauses = [
     "16.5.1",
 ]
-tags = []
+tags = ["global-clock", "sampled-value", "sampled-value-function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3594,7 +3594,7 @@ summary = "In an assertion, $global_clock denotes the clocking_event declared by
 related_clauses = [
     "14.14",
 ]
-tags = []
+tags = ["clocking-event", "global-clock"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3620,7 +3620,7 @@ summary = "The action block associated with an assertion containing global-clock
 related_clauses = [
     "16.14.1",
 ]
-tags = []
+tags = ["action-block", "global-clock", "sampled-value-function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3644,7 +3644,7 @@ anchors = [
 ]
 summary = "An assertion attempt containing global future functions ends at its last assertion-clock tick as if future values were known, without extending the attempt interval to the following global-clock tick."
 related_clauses = []
-tags = []
+tags = ["evaluation-attempt", "global-clock", "sampled-value-function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3670,7 +3670,7 @@ summary = "disable iff and asynchronous assertion controls affect a global-futur
 related_clauses = [
     "20.11",
 ]
-tags = []
+tags = ["disable", "global-clock", "sampled-value-function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3697,7 +3697,7 @@ related_clauses = [
     "16.10",
     "16.11",
 ]
-tags = []
+tags = ["diagnostic", "global-clock", "match-item", "sampled-value-function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3721,7 +3721,7 @@ anchors = [
 ]
 summary = "Global-clock future sampled-value functions may appear only in property_expr or sequence_expr and therefore shall not appear in assertion action blocks."
 related_clauses = []
-tags = []
+tags = ["global-clock", "sampled-value-function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3745,7 +3745,7 @@ anchors = [
 ]
 summary = "The global-clock future function forms are $future_gclk, $rising_gclk, $falling_gclk, $steady_gclk, and $changing_gclk, each taking one expression."
 related_clauses = []
-tags = []
+tags = ["global-clock", "lexical", "sampled-value-function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3770,7 +3770,7 @@ anchors = [
 ]
 summary = "$past_gclk(v), $rose_gclk(v), $fell_gclk(v), $stable_gclk(v), and $changed_gclk(v) are definitionally equivalent to their ordinary sampled-value counterparts explicitly clocked by @$global_clock."
 related_clauses = []
-tags = []
+tags = ["global-clock", "sampled-value-function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3796,7 +3796,7 @@ summary = "Global-clock past sampled-value functions inherit ordinary sampled-va
 related_clauses = [
     "16.9.3",
 ]
-tags = []
+tags = ["global-clock", "sampled-value-function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3820,7 +3820,7 @@ anchors = [
 ]
 summary = "The global-clock past function forms are $past_gclk, $rose_gclk, $fell_gclk, $stable_gclk, and $changed_gclk, each taking one expression."
 related_clauses = []
-tags = []
+tags = ["global-clock", "lexical", "sampled-value-function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3847,7 +3847,7 @@ related_clauses = [
     "14.14",
     "16.5.1",
 ]
-tags = []
+tags = ["global-clock", "sampled-value-function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3872,7 +3872,7 @@ anchors = [
 ]
 summary = "Goto repetition [->count/range] takes a Boolean operand, requires finitely many possibly nonconsecutive matches separated by at least one tick with no intervening match, and ends at the last iterative match."
 related_clauses = []
-tags = []
+tags = ["repetition", "sequence", "sequence-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3898,7 +3898,7 @@ summary = "If a failing immediate assert or assume omits its else clause, the to
 related_clauses = [
     "20.11",
 ]
-tags = []
+tags = ["diagnostic", "immediate-assertion"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3922,7 +3922,7 @@ anchors = [
 ]
 summary = "For an immediate assert or assume, a present pass statement executes when the expression is true and a present else fail statement executes when it is false; the selected action block is enabled immediately after expression evaluation."
 related_clauses = []
-tags = []
+tags = ["action-block", "immediate-assertion"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3947,7 +3947,7 @@ anchors = [
 ]
 summary = "When an immediate assertion executes, its nontemporal expression passes for a true value and fails for 0, x, or z, using procedural-if condition interpretation."
 related_clauses = []
-tags = []
+tags = ["assertion-expression", "four-state", "immediate-assertion"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3971,7 +3971,7 @@ anchors = [
 ]
 summary = "Simple immediate assertion actions occur immediately upon evaluation, whereas deferred immediate assertion actions occur later in the same time step."
 related_clauses = []
-tags = []
+tags = ["action-block", "immediate-assertion"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3995,7 +3995,7 @@ anchors = [
 ]
 summary = "An immediate assertion executes as a procedural statement according to simulation event semantics."
 related_clauses = []
-tags = []
+tags = ["immediate-assertion", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4019,7 +4019,7 @@ anchors = [
 ]
 summary = "An immediate assertion is a statement item and may appear anywhere a procedural statement is permitted."
 related_clauses = []
-tags = []
+tags = ["block", "immediate-assertion"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4047,7 +4047,7 @@ anchors = [
 ]
 summary = "An immediate assertion shall use the defined assert, assume, or cover simple form, or its #0/final deferred form; assert and assume take an action block, while cover takes a statement or null."
 related_clauses = []
-tags = []
+tags = ["immediate-assertion", "lexical"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4073,7 +4073,7 @@ summary = "Tools shall collect immediate-cover coverage information and report i
 related_clauses = [
     "39",
 ]
-tags = []
+tags = ["coverage", "immediate-assertion"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4098,7 +4098,7 @@ anchors = [
 ]
 summary = "Reported immediate-cover results shall include the number of times the statement was evaluated."
 related_clauses = []
-tags = []
+tags = ["coverage", "immediate-assertion"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4122,7 +4122,7 @@ anchors = [
 ]
 summary = "If an immediate cover has a pass statement, it shall execute immediately after an expression evaluation that yields true."
 related_clauses = []
-tags = []
+tags = ["action-block", "coverage", "immediate-assertion"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4147,7 +4147,7 @@ anchors = [
 ]
 summary = "Reported immediate-cover results shall include the number of evaluations that succeeded."
 related_clauses = []
-tags = []
+tags = ["coverage", "immediate-assertion"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4173,7 +4173,7 @@ anchors = [
 ]
 summary = "Every property attempt is classified vacuous or nonvacuous; `a |-> b` with false a is a vacuous success independent of b and is considered neither an assertion pass nor failure for nonvacuous-intent interpretation."
 related_clauses = []
-tags = []
+tags = ["implication", "property", "vacuity"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4199,7 +4199,7 @@ anchors = [
 ]
 summary = "At elaboration, $inferred_clock returns the current resolved event expression obtained by clock flow and usable as a clocking event; encountering it without a current resolved event shall issue an error."
 related_clauses = []
-tags = []
+tags = ["clock-flow", "clocking-event", "concurrent-assertion", "elaboration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4227,7 +4227,7 @@ summary = "At elaboration, $inferred_disable returns the condition of the scoped
 related_clauses = [
     "16.15",
 ]
-tags = []
+tags = ["concurrent-assertion", "disable", "elaboration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4251,7 +4251,7 @@ anchors = [
 ]
 summary = "$inferred_clock/$inferred_disable may appear only as the entire default expression of a property, sequence, or checker formal; $inferred_clock additionally requires an untyped or event-typed formal."
 related_clauses = []
-tags = []
+tags = ["concurrent-assertion", "elaboration", "function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4275,7 +4275,7 @@ anchors = [
 ]
 summary = "An inferred function default is replaced by the expression resolved at instantiation: at the assertion location for a top-level property instance, by clock flow to a nested instance, and at checker-instance location for checker defaults."
 related_clauses = []
-tags = []
+tags = ["elaboration", "function", "hierarchy"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4299,7 +4299,7 @@ anchors = [
 ]
 summary = "With incoming outer clock c, every inherited semantic leading clock denotes c, making clocking q under that incoming clock equivalent to `@(c) q`."
 related_clauses = []
-tags = []
+tags = ["clock-flow", "clocking-event"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4323,7 +4323,7 @@ anchors = [
 ]
 summary = "A leading ## number or range delays the following sequence from the current clock tick; ##1 starts it one tick later and ##0 starts it on the current tick."
 related_clauses = []
-tags = []
+tags = ["cycle-delay", "sequence", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4347,7 +4347,7 @@ anchors = [
 ]
 summary = "A linear sequence matches a finite interval of consecutive clock ticks exactly when its ordered Boolean expressions are true at their corresponding successive ticks; a single-expression sequence matches one tick when that expression is true."
 related_clauses = []
-tags = []
+tags = ["sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4371,7 +4371,7 @@ anchors = [
 ]
 summary = "Parenthesized, comma-separated local assignments attached to a syntactic subsequence execute in list order at the endpoint of each nonempty match of that subsequence."
 related_clauses = []
-tags = []
+tags = ["local-variable", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4397,7 +4397,7 @@ summary = "A subsequence carrying a local variable assignment shall not admit an
 related_clauses = [
     "16.12.22",
 ]
-tags = []
+tags = ["diagnostic", "empty-match", "local-variable", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4421,7 +4421,7 @@ anchors = [
 ]
 summary = "Local variable assignments may attach to a repetition's operand sequence and execute for repeated matches, enabling value accumulation."
 related_clauses = []
-tags = []
+tags = ["local-variable", "repetition", "sequence", "sequence-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4447,7 +4447,7 @@ summary = "A local variable formal follows the assignment, reference, and flow r
 related_clauses = [
     "16.10",
 ]
-tags = []
+tags = ["formal-argument", "local-variable-flow", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4471,7 +4471,7 @@ anchors = [
 ]
 summary = "Each evaluation attempt of a named-sequence instance creates a new copy of every local variable formal."
 related_clauses = []
-tags = []
+tags = ["formal-argument", "local-variable", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4495,7 +4495,7 @@ anchors = [
 ]
 summary = "An inout or output local formal's entire actual shall be an in-scope local-variable reference with cast-compatible type, and the same local variable shall not be bound to two or more inout/output formals."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "formal-argument", "local-variable", "output"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4519,7 +4519,7 @@ anchors = [
 ]
 summary = "Every matching thread shall finish with each inout/output local formal assigned, then cast and copy its value to that thread's associated actual-local copy; multiple matching threads continue independently with distinct copies."
 related_clauses = []
-tags = []
+tags = ["copy-out", "formal-argument", "local-variable", "output"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4545,7 +4545,7 @@ summary = "It is an error for a named-sequence instance having an inout or outpu
 related_clauses = [
     "16.12.22",
 ]
-tags = []
+tags = ["diagnostic", "empty-match", "formal-argument", "output"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4569,7 +4569,7 @@ anchors = [
 ]
 summary = "If an explicit actual for a local input or inout formal references a local variable, that variable being unassigned at the reference point is an error."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "formal-argument", "local-variable", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4595,7 +4595,7 @@ summary = "Each local input or inout formal is initialized from a cast-compatibl
 related_clauses = [
     "6.22.4",
 ]
-tags = []
+tags = ["formal-argument", "initialization", "local-variable", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4623,7 +4623,7 @@ related_clauses = [
     "16.13.5",
     "16.13.6",
 ]
-tags = []
+tags = ["diagnostic", "formal-argument", "local-variable", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4647,7 +4647,7 @@ anchors = [
 ]
 summary = "A local output formal is unassigned at the beginning of each sequence-instance evaluation attempt."
 related_clauses = []
-tags = []
+tags = ["formal-argument", "local-variable", "output", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4673,7 +4673,7 @@ summary = "A local sequence formal shall use local with an explicit legal assert
 related_clauses = [
     "16.6",
 ]
-tags = []
+tags = ["formal-argument", "lexical", "local-variable", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4699,7 +4699,7 @@ summary = "A local input formal may declare a default actual subject to general 
 related_clauses = [
     "16.8",
 ]
-tags = []
+tags = ["formal-argument", "local-variable", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4723,7 +4723,7 @@ anchors = [
 ]
 summary = "A local formal's designation, direction, and type propagate to following identifier-only port items until a subsequent item specifies local or an explicit type."
 related_clauses = []
-tags = []
+tags = ["formal-argument", "local-variable", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4748,7 +4748,7 @@ anchors = [
 ]
 summary = "A local variable may be assigned and reassigned within the body of the sequence or property that declares it."
 related_clauses = []
-tags = []
+tags = ["local-variable", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4772,7 +4772,7 @@ anchors = [
 ]
 summary = "A local may be referenced only within its declaring sequence/property and only after initialization or subsequence assignment; increment/decrement and compound assignment implicitly reference the old value and therefore also require prior assignment."
 related_clauses = []
-tags = []
+tags = ["local-variable", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4796,7 +4796,7 @@ anchors = [
 ]
 summary = "Each named-sequence or property attempt creates fresh local copies and performs present initialization assignments in Observed declaration order, with all local-formal initializations before declared-local initializations, using sampled values from the attempt's starting time slot."
 related_clauses = []
-tags = []
+tags = ["local-variable", "local-variable-sampling", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4825,7 +4825,7 @@ related_clauses = [
     "16.12",
     "16.12.18",
 ]
-tags = []
+tags = ["lexical", "local-variable", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4849,7 +4849,7 @@ anchors = [
 ]
 summary = "A local variable may be used wherever a same-typed static variable can form an expression, including vector selects and array indices, but shall not appear in a clocking-event expression."
 related_clauses = []
-tags = []
+tags = ["clocking-event", "diagnostic", "local-variable", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4875,7 +4875,7 @@ summary = "When a local variable does not flow out of a subsequence, it becomes 
 related_clauses = [
     "F.5.4",
 ]
-tags = []
+tags = ["local-variable-flow", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4899,7 +4899,7 @@ anchors = [
 ]
 summary = "A local initializer may reference a previously declared local only if that prior local has an initializer, using its initialized value; locals have no default initial value and remain unassigned at attempt start when no initializer exists."
 related_clauses = []
-tags = []
+tags = ["local-variable", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4923,7 +4923,7 @@ anchors = [
 ]
 summary = "Hierarchical references to assertion local variables are prohibited."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "hierarchy", "local-variable", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4949,7 +4949,7 @@ summary = "Locals may be passed to a named sequence instance with matched and ar
 related_clauses = [
     "16.10",
 ]
-tags = []
+tags = ["local-variable-flow", "sequence", "sequence-method"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4973,7 +4973,7 @@ anchors = [
 ]
 summary = "Multiple source matches within one destination-clock cycle under matched fork the destination sequence thread for distinct local valuations, as if both operands of an or matched."
 related_clauses = []
-tags = []
+tags = ["local-variable-flow", "sequence", "sequence-method", "thread"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4999,7 +4999,7 @@ summary = "Using sequence.matched in any sampled-value function is an error."
 related_clauses = [
     "16.9.3",
 ]
-tags = []
+tags = ["diagnostic", "sampled-value-function", "sequence", "sequence-method"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5023,7 +5023,7 @@ anchors = [
 ]
 summary = "Once a procedural concurrent assertion evaluation attempt has matured, no disable statement affects that attempt."
 related_clauses = []
-tags = []
+tags = ["concurrent-assertion", "disable", "procedural-assertion"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5047,7 +5047,7 @@ anchors = [
 ]
 summary = "After a procedural temporal assertion matures, later procedural control flow affects neither its future completion nor activation state; its captured const/automatic values remain fixed throughout evaluation."
 related_clauses = []
-tags = []
+tags = ["concurrent-assertion", "procedural-assertion", "process-independence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5071,7 +5071,7 @@ anchors = [
 ]
 summary = "To apply empty-concatenation rules to a sequence admitting both empty and nonempty matches, the sequence is rewritten as the OR of its empty and nonempty cases."
 related_clauses = []
-tags = []
+tags = ["empty-match", "sequence", "sequence-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5097,7 +5097,7 @@ anchors = [
 ]
 summary = "A clock flows left-to-right through linear operators and distributes into every branching operand until replaced by another event; property conjunction created by multiple clocks follows the same branch distribution."
 related_clauses = []
-tags = []
+tags = ["clock-flow", "clocking-event", "multiclock", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5124,7 +5124,7 @@ anchors = [
 ]
 summary = "With clock flow, `@(c) x ##1 y |=> @(d) z` is equivalent to `@(c) x |=> y |=> @(d) z`."
 related_clauses = []
-tags = []
+tags = ["clocking-event", "implication", "multiclock", "sequence-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5149,7 +5149,7 @@ anchors = [
 ]
 summary = "A multiclock if/if-else tests its condition on the enclosing property clock and starts only the selected branch at that branch's nearest possibly coincident clock tick."
 related_clauses = []
-tags = []
+tags = ["clocking-event", "conditional", "multiclock", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5175,7 +5175,7 @@ summary = "For a multiclock named instance, a local initializes at the earliest 
 related_clauses = [
     "16.16.1",
 ]
-tags = []
+tags = ["clocking-event", "local-variable-sampling", "multiclock", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5199,7 +5199,7 @@ anchors = [
 ]
 summary = "matched is used to detect a source sequence endpoint from a differently clocked destination; an endpoint occurs whenever the source sequence expression matches."
 related_clauses = []
-tags = []
+tags = ["clocking-event", "multiclock", "sequence", "sequence-method"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5225,7 +5225,7 @@ summary = "A multiclock sequence/property may inherit default clocking as its le
 related_clauses = [
     "16.16.1",
 ]
-tags = []
+tags = ["clocking-event", "multiclock", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5254,7 +5254,7 @@ summary = "When concatenating differently clocked sequences, every maximal singl
 related_clauses = [
     "F.4.1",
 ]
-tags = []
+tags = ["clocking-event", "empty-match", "multiclock", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5278,7 +5278,7 @@ anchors = [
 ]
 summary = "For each antecedent match of a multiclock `|=>`, time advances from its endpoint to the nearest strictly future consequent-clock tick, where a consequent match/evaluation shall begin and succeed."
 related_clauses = []
-tags = []
+tags = ["clocking-event", "implication", "multiclock", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5303,7 +5303,7 @@ anchors = [
 ]
 summary = "For each multiclock `|->` antecedent match, the consequent starts at the nearest possibly coincident consequent-clock tick; a coincident tick starts immediately, otherwise behavior matches multiclock `|=>`, with consequent evaluation controlled by its clock."
 related_clauses = []
-tags = []
+tags = ["clocking-event", "implication", "multiclock", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5327,7 +5327,7 @@ anchors = [
 ]
 summary = "Any property may specify an explicit clock; it is multiclocked when a subproperty uses a different clock than the property clock or a subproperty is a multiclocked sequence."
 related_clauses = []
-tags = []
+tags = ["clocking-event", "multiclock", "property", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5351,7 +5351,7 @@ anchors = [
 ]
 summary = "A multiclock property's semantic-leading-clock set is computed inductively: sequence wrappers inherit their unique sequence clock; explicit clocks replace inherited entries; parentheses/not preserve sets; and/or union sets; implication takes antecedent clocks; conditional/case/nexttime/always/eventually/until/synchronous abort forms are inherited; asynchronous abort preserves operand set; instances use actual-substituted body sets."
 related_clauses = []
-tags = []
+tags = ["clocking-event", "multiclock", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5376,7 +5376,7 @@ anchors = [
 ]
 summary = "A multiclock property evaluates Boolean; a multiclock sequence is itself a multiclock property and evaluates true from a point if and only if it has a match beginning there."
 related_clauses = []
-tags = []
+tags = ["clocking-event", "multiclock", "property", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5401,7 +5401,7 @@ anchors = [
 ]
 summary = "A multiclock `s0 ##1 s1` starts s1 at the nearest strictly subsequent tick of s1's clock after s0's endpoint; the active clock changes when the clocks differ, and identical clocks yield ordinary singly clocked ##1 semantics."
 related_clauses = []
-tags = []
+tags = ["clocking-event", "multiclock", "sequence", "sequence-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5426,7 +5426,7 @@ anchors = [
 ]
 summary = "A multiclock `s0 ##0 s1` starts s1 at the nearest possibly coincident tick of s1's clock after s0's endpoint; coincident ticks do not advance time, otherwise it behaves as ##1, and identical clocks yield ordinary singly clocked ##0 semantics."
 related_clauses = []
-tags = []
+tags = ["clocking-event", "multiclock", "sequence", "sequence-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5450,7 +5450,7 @@ anchors = [
 ]
 summary = "Differently clocked or multiclocked sequence operands may be combined only by ##0 or ##1, not by any other sequence operator or delay."
 related_clauses = []
-tags = []
+tags = ["clocking-event", "multiclock", "sequence", "sequence-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5474,7 +5474,7 @@ anchors = [
 ]
 summary = "A multiclock sequence has one inductively determined semantic leading clock: unclocked is inherited, an explicit outer clock replaces inherited, parentheses preserve it, and ##0/##1 concatenation takes the first operand's leading clock."
 related_clauses = []
-tags = []
+tags = ["clocking-event", "multiclock", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5498,7 +5498,7 @@ anchors = [
 ]
 summary = "triggered may detect a multiclock sequence endpoint or an endpoint from within a multiclock sequence only when the instance's ending clock equals the clock of the triggered-use context."
 related_clauses = []
-tags = []
+tags = ["clocking-event", "multiclock", "sequence", "sequence-method"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5524,7 +5524,7 @@ anchors = [
 ]
 summary = "With clock flow, `@(c) x ##0 y |=> @(d) z` is equivalent to `@(c) x |-> y |=> @(d) z`."
 related_clauses = []
-tags = []
+tags = ["clocking-event", "implication", "multiclock", "sequence-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5548,7 +5548,7 @@ anchors = [
 ]
 summary = "If an assertion action block contains more than one severity system task, each task shall execute according to its procedural placement."
 related_clauses = []
-tags = []
+tags = ["action-block", "subroutine", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5580,7 +5580,7 @@ anchors = [
 ]
 summary = "A named property may be declared in a module, interface, program, clocking block, package, compilation-unit scope, generate block, or checker."
 related_clauses = []
-tags = []
+tags = ["property", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5604,7 +5604,7 @@ anchors = [
 ]
 summary = "A named property is instantiated by name, including a legal hierarchical name; nonformal variable references in its body resolve hierarchically from the property's declaration scope, as for sequences."
 related_clauses = []
-tags = []
+tags = ["hierarchy", "name-resolution", "property", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5630,7 +5630,7 @@ summary = "A named property may be forward-instantiated wherever property_spec i
 related_clauses = [
     "16.12.17",
 ]
-tags = []
+tags = ["property", "recursion"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5662,7 +5662,7 @@ anchors = [
 ]
 summary = "A named sequence may be declared in a module, interface, program, clocking block, package, compilation-unit scope, checker, or generate block."
 related_clauses = []
-tags = []
+tags = ["scope", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5689,7 +5689,7 @@ summary = "A named-sequence instance has the behavior of its name-resolved, actu
 related_clauses = [
     "F.4.1",
 ]
-tags = []
+tags = ["flattening", "formal-argument", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5718,7 +5718,7 @@ related_clauses = [
     "16.13.5",
     "23.6",
 ]
-tags = []
+tags = ["formal-argument", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5742,7 +5742,7 @@ anchors = [
 ]
 summary = "Nonformal names in a sequence declaration and default actuals resolve from declaration scope, whereas names in an instance's explicit actual arguments resolve from instance scope."
 related_clauses = []
-tags = []
+tags = ["formal-argument", "name-resolution", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5766,7 +5766,7 @@ anchors = [
 ]
 summary = "It is an error if named-sequence instantiations form a directed dependency cycle, including edges arising inside sequence bodies, default actuals, or actual arguments."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "formal-argument", "recursion", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5790,7 +5790,7 @@ anchors = [
 ]
 summary = "When an enclosing sequence reaches a named-sequence reference, the named subsequence must match starting at that same clock tick."
 related_clauses = []
-tags = []
+tags = ["sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5815,7 +5815,7 @@ anchors = [
 ]
 summary = "Nested abort operators evaluate in lexical outer-to-inner order: simultaneous true conditions are resolved by the outermost operator, while an inner abort occurring earlier determines the result before a later outer condition."
 related_clauses = []
-tags = []
+tags = ["abort", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5839,7 +5839,7 @@ anchors = [
 ]
 summary = "When evaluated off its clock tick, nexttime first aligns to that clock; `s_nexttime[n] p` requires n+1 clock ticks counting an aligned/current tick as first and evaluates p on the last, so index zero acts as alignment for weak and strong forms."
 related_clauses = []
-tags = []
+tags = ["clock-flow", "clocking-event", "property", "temporal-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5863,7 +5863,7 @@ anchors = [
 ]
 summary = "A nexttime or s_nexttime index shall be a nonnegative integer constant expression."
 related_clauses = []
-tags = []
+tags = ["constant-expression", "property", "temporal-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5887,7 +5887,7 @@ anchors = [
 ]
 summary = "Without explicit, default, or contextually inferred leading clock, the assertion's maximal property shall be a sequence/property instance from which a unique leading clock is determined."
 related_clauses = []
-tags = []
+tags = ["clock-flow", "clocking-event", "diagnostic"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5911,7 +5911,7 @@ anchors = [
 ]
 summary = "The language has no immediate restrict assertion statement."
 related_clauses = []
-tags = []
+tags = ["assertion-statement", "diagnostic"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5935,7 +5935,7 @@ anchors = [
 ]
 summary = "A local assigned in one parallel operand thread of or, and, or intersect shall not be accessed in its sibling operand thread."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "local-variable", "sequence", "thread"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5960,7 +5960,7 @@ anchors = [
 ]
 summary = "Nonconsecutive repetition [=count/range] takes a Boolean operand with goto-like iterative spacing but may extend after the final iterative match through arbitrarily many ticks on which the operand remains false, ending before its next match."
 related_clauses = []
-tags = []
+tags = ["repetition", "sequence", "sequence-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5984,7 +5984,7 @@ anchors = [
 ]
 summary = "A sequence used as a `|=>` antecedent shall admit at least one match, which may be empty-only."
 related_clauses = []
-tags = []
+tags = ["implication", "property", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6011,7 +6011,7 @@ anchors = [
 ]
 summary = "For `|=>`, a nonempty antecedent match starts its consequent on the next clock tick, while an empty match uses the nearest consequent clock tick from antecedent start (current tick if singly clocked); equivalently `sequence_expr |=> property_expr` is `sequence_expr ##1 true |-> property_expr`."
 related_clauses = []
-tags = []
+tags = ["implication", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6037,7 +6037,7 @@ summary = "A nonrecursive named-property instance behaves as its name-resolved F
 related_clauses = [
     "F.4.1",
 ]
-tags = []
+tags = ["flattening", "property", "recursion"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6061,7 +6061,7 @@ anchors = [
 ]
 summary = "An accept/reject abort property is nonvacuous exactly when its operand is nonvacuous and the abort condition never holds during evaluation—at any time step for asynchronous forms and at any clock event for synchronous forms."
 related_clauses = []
-tags = []
+tags = ["abort", "nonvacuity", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6087,7 +6087,7 @@ anchors = [
 ]
 summary = "Weak/ranged/strong always is nonvacuous exactly when an in-scope clock event has a nonvacuous operand attempt and the operand did not fail at any prior applicable clock event."
 related_clauses = []
-tags = []
+tags = ["nonvacuity", "property", "temporal-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6111,7 +6111,7 @@ anchors = [
 ]
 summary = "A disable-iff property specification attempt is nonvacuous exactly when its underlying property attempt is nonvacuous and the disable condition never holds in any time step of that attempt."
 related_clauses = []
-tags = []
+tags = ["disable", "nonvacuity", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6137,7 +6137,7 @@ anchors = [
 ]
 summary = "Strong unbounded/ranged and weak ranged eventually is nonvacuous exactly when an applicable clock event has a nonvacuous operand attempt and the operand did not hold at any prior applicable clock event."
 related_clauses = []
-tags = []
+tags = ["nonvacuity", "property", "temporal-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6162,7 +6162,7 @@ anchors = [
 ]
 summary = "A followed-by attempt is nonvacuous exactly when an antecedent endpoint/match exists and its consequent attempt is nonvacuous from the overlapped endpoint or the clock event following a nonoverlapped match."
 related_clauses = []
-tags = []
+tags = ["implication", "nonvacuity", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6186,7 +6186,7 @@ anchors = [
 ]
 summary = "An implication attempt is nonvacuous exactly when an antecedent endpoint/match exists and the consequent attempt launched at the overlapped endpoint or following nonoverlapped clock event is nonvacuous."
 related_clauses = []
-tags = []
+tags = ["implication", "nonvacuity", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6210,7 +6210,7 @@ anchors = [
 ]
 summary = "`p implies q` is nonvacuous exactly when p is true and nonvacuous and q is nonvacuous; `p iff q` is nonvacuous exactly when either operand attempt is nonvacuous."
 related_clauses = []
-tags = []
+tags = ["nonvacuity", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6237,7 +6237,7 @@ anchors = [
 ]
 summary = "Negation preserves operand nonvacuity; or/and are nonvacuous if either operand attempt is nonvacuous; if/if-else are nonvacuous exactly when the condition-selected branch is evaluated nonvacuously (and no-else requires a true condition)."
 related_clauses = []
-tags = []
+tags = ["nonvacuity", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6264,7 +6264,7 @@ anchors = [
 ]
 summary = "Weak or strong nexttime is nonvacuous exactly when the required one/indexed number of future clock events exists and the operand attempt beginning at the target event is nonvacuous."
 related_clauses = []
-tags = []
+tags = ["nonvacuity", "property", "temporal-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6288,7 +6288,7 @@ anchors = [
 ]
 summary = "A property case is nonvacuous exactly when the first matching item's selected property is nonvacuous, or when no item matches and a present default property's attempt is nonvacuous."
 related_clauses = []
-tags = []
+tags = ["conditional", "nonvacuity", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6312,7 +6312,7 @@ anchors = [
 ]
 summary = "A property instance attempt is nonvacuous exactly when its actual-for-formal substituted underlying property expression attempt is nonvacuous."
 related_clauses = []
-tags = []
+tags = ["formal-argument", "nonvacuity", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6339,7 +6339,7 @@ anchors = [
 ]
 summary = "Nonvacuity is structurally recursive; every evaluation attempt of a bare sequence property, strong(sequence_expr), or weak(sequence_expr) is nonvacuous."
 related_clauses = []
-tags = []
+tags = ["nonvacuity", "property", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6366,7 +6366,7 @@ anchors = [
 ]
 summary = "Until/s_until is nonvacuous at a clock where either operand attempt is nonvacuous, with right not holding and left holding previously; until_with/s_until_with instead require the left attempt itself nonvacuous at that clock under the same prior conditions."
 related_clauses = []
-tags = []
+tags = ["nonvacuity", "property", "temporal-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6390,7 +6390,7 @@ anchors = [
 ]
 summary = "An unflushed observed deferred report matures in the Observed region, becomes unflushable, executes its action or default $error in the Reactive region, and is then removed from its process queue."
 related_clauses = []
-tags = []
+tags = ["assertion-queue", "deferred-assertion", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6414,7 +6414,7 @@ anchors = [
 ]
 summary = "A local flows out of an or composite if and only if it flows out of every operand; a local not assigned before the composite and assigned in only one operand does not flow out."
 related_clauses = []
-tags = []
+tags = ["local-variable-flow", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6438,7 +6438,7 @@ anchors = [
 ]
 summary = "Each matching or operand continues as a separate thread carrying its own latest values for locals that flow out; those valuations need not agree between threads."
 related_clauses = []
-tags = []
+tags = ["local-variable-flow", "sequence", "thread"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6464,7 +6464,7 @@ anchors = [
 ]
 summary = "An outside-procedure `assert property (property_spec) action_block` is equivalent to `always assert property (property_spec) action_block`."
 related_clauses = []
-tags = []
+tags = ["concurrent-assertion", "evaluation-attempt"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6488,7 +6488,7 @@ anchors = [
 ]
 summary = "An assert, assume, cover, or restrict statement outside procedural context in a module, interface, or program starts a fresh property_spec evaluation attempt at every leading-clock event occurrence."
 related_clauses = []
-tags = []
+tags = ["concurrent-assertion", "evaluation-attempt"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6513,7 +6513,7 @@ anchors = [
 ]
 summary = "An outside-procedure `cover property (property_spec) statement_or_null` is equivalent to the same cover property statement prefixed by `always`."
 related_clauses = []
-tags = []
+tags = ["concurrent-assertion", "coverage", "evaluation-attempt"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6537,7 +6537,7 @@ anchors = [
 ]
 summary = "A sequence used as a `|->` antecedent shall be nondegenerate."
 related_clauses = []
-tags = []
+tags = ["implication", "property", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6566,7 +6566,7 @@ anchors = [
 ]
 summary = "For `|->`, zero antecedent matches return true; each of one or more matches launches a separate consequent at that match endpoint, and the implication is true exactly when every launched consequent succeeds."
 related_clauses = []
-tags = []
+tags = ["implication", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6590,7 +6590,7 @@ anchors = [
 ]
 summary = "$past expression1 and gating expression2 may be any assertion-legal expressions, and omitted expression2 defaults to 1'b1."
 related_clauses = []
-tags = []
+tags = ["formal-argument", "sampled-value-function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6616,7 +6616,7 @@ summary = "$past expression1 may reference automatic variables, including proced
 related_clauses = [
     "16.5.1",
 ]
-tags = []
+tags = ["context", "sampled-value-function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6640,7 +6640,7 @@ anchors = [
 ]
 summary = "$past may be used in any SystemVerilog expression, subject to its argument and clocking restrictions."
 related_clauses = []
-tags = []
+tags = ["sampled-value-function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6664,7 +6664,7 @@ anchors = [
 ]
 summary = "It is illegal for a $past clocking event or gating expression2 to reference an automatic variable."
 related_clauses = []
-tags = []
+tags = ["clocking-event", "diagnostic", "sampled-value-function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6689,7 +6689,7 @@ anchors = [
 ]
 summary = "An omitted $past optional argument between supplied arguments retains its comma placeholder and uses its default; omitted trailing arguments need no trailing commas."
 related_clauses = []
-tags = []
+tags = ["formal-argument", "sampled-value-function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6716,7 +6716,7 @@ anchors = [
 ]
 summary = "$past optionally accepts expression2 as a clock gate, number_of_ticks as the past-depth count, and clocking_event as the sampling event for expression1."
 related_clauses = []
-tags = []
+tags = ["formal-argument", "sampled-value-function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6743,7 +6743,7 @@ summary = "$past(expression1,k,expression2,event) returns expression1's sample a
 related_clauses = [
     "16.5.1",
 ]
-tags = []
+tags = ["sampled-value", "sampled-value-function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6767,7 +6767,7 @@ anchors = [
 ]
 summary = "$past number_of_ticks shall be an elaboration-time constant of at least 1 and defaults to 1 when omitted."
 related_clauses = []
-tags = []
+tags = ["constant-expression", "sampled-value-function", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6791,7 +6791,7 @@ anchors = [
 ]
 summary = "Procedural assertion argument capture rules also apply to action-block variables; captured const or automatic values may be read as action inputs but shall not be modified there."
 related_clauses = []
-tags = []
+tags = ["action-block", "concurrent-assertion", "procedural-assertion"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6817,7 +6817,7 @@ summary = "When queued, a procedural concurrent assertion snapshots const-expres
 related_clauses = [
     "16.5.1",
 ]
-tags = []
+tags = ["concurrent-assertion", "formal-argument", "procedural-assertion"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6844,7 +6844,7 @@ summary = "A procedural concurrent assertion without explicit clock first infers
 related_clauses = [
     "14.12",
 ]
-tags = []
+tags = ["clocking-event", "concurrent-assertion", "procedural-assertion"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6870,7 +6870,7 @@ anchors = [
 ]
 summary = "For a procedural assertion explicitly clocked differently from its procedure, only instances queued by procedural execution evaluate: a faster assertion clock may have unqueued ticks, while a faster procedure may mature multiple pending instances at one assertion-clock tick."
 related_clauses = []
-tags = []
+tags = ["clocking-event", "concurrent-assertion", "procedural-assertion"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6896,7 +6896,7 @@ summary = "At a procedural assertion flush point, the process's procedural asser
 related_clauses = [
     "16.14.6.2",
 ]
-tags = []
+tags = ["assertion-queue", "concurrent-assertion", "procedural-assertion"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6925,7 +6925,7 @@ summary = "A process reaches a procedural assertion flush point when it resumes 
 related_clauses = [
     "16.14.6.4",
 ]
-tags = []
+tags = ["assertion-queue", "concurrent-assertion", "procedural-assertion"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6949,7 +6949,7 @@ anchors = [
 ]
 summary = "Each pending procedural assertion instance matures in Observed of the current time step; it begins immediately if its leading clock occurred that step, otherwise enters the matured queue and begins on the next corresponding leading-clock event."
 related_clauses = []
-tags = []
+tags = ["assertion-queue", "evaluation-attempt", "procedural-assertion", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6973,7 +6973,7 @@ anchors = [
 ]
 summary = "It is illegal to use an automatic variable in a procedural concurrent assertion clocking event."
 related_clauses = []
-tags = []
+tags = ["clocking-event", "concurrent-assertion", "diagnostic", "procedural-assertion"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6998,7 +6998,7 @@ anchors = [
 ]
 summary = "Flush semantics suppress transient-value duplicates within ordinary procedural execution, but a Reactive-to-Active region loop may requeue the same procedural assertion and add a second evaluation attempt to the matured queue in one time step."
 related_clauses = []
-tags = []
+tags = ["concurrent-assertion", "procedural-assertion", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7022,7 +7022,7 @@ anchors = [
 ]
 summary = "A concurrent assertion statement may be embedded in a procedural block."
 related_clauses = []
-tags = []
+tags = ["concurrent-assertion", "procedural-assertion"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7048,7 +7048,7 @@ summary = "Reaching a procedural concurrent assertion does not evaluate it immed
 related_clauses = [
     "16.14.6.1",
 ]
-tags = []
+tags = ["assertion-queue", "concurrent-assertion", "evaluation-attempt", "procedural-assertion"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7074,7 +7074,7 @@ summary = "Procedural conditionals controlling whether a concurrent assertion is
 related_clauses = [
     "16.5.1",
 ]
-tags = []
+tags = ["concurrent-assertion", "context", "procedural-assertion"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7104,7 +7104,7 @@ anchors = [
 ]
 summary = "An always/initial context infers its unique qualifying event expression only when there is no blocking timing control, exactly one event control, and exactly one maximal event-variable, clocking-block, or edge expression whose referenced event/terms have no disallowed uses elsewhere in the procedure."
 related_clauses = []
-tags = []
+tags = ["clocking-event", "concurrent-assertion", "procedural-assertion"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7130,7 +7130,7 @@ summary = "Property case selector-to-item comparisons follow the case comparison
 related_clauses = [
     "12.5",
 ]
-tags = []
+tags = ["conditional", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7154,7 +7154,7 @@ anchors = [
 ]
 summary = "Property case linearly selects and evaluates the first matching nondefault item's property, otherwise evaluates default if present; with no match and no default it evaluates vacuously true without evaluating any item property."
 related_clauses = []
-tags = []
+tags = ["conditional", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7178,7 +7178,7 @@ anchors = [
 ]
 summary = "A property case default item is optional, and more than one default item is illegal."
 related_clauses = []
-tags = []
+tags = ["conditional", "diagnostic", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7203,7 +7203,7 @@ anchors = [
 ]
 summary = "A property case is a multiway Boolean decision with one or more items; each nondefault item has one or more comma-separated expression_or_dist labels and a property expression, and an optional default item may omit its colon."
 related_clauses = []
-tags = []
+tags = ["conditional", "lexical", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7228,7 +7228,7 @@ anchors = [
 ]
 summary = "A contextually inferred procedural clock supersedes default clocking and is treated as explicitly leading; an explicitly specified assertion leading clock also supersedes default clocking."
 related_clauses = []
-tags = []
+tags = ["clock-flow", "clocking-event", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7257,7 +7257,7 @@ anchors = [
 ]
 summary = "A property's clock may come from a clocked sequence instance, an explicit property clock, contextual procedural inference, an enclosing clocking block, or a default clock."
 related_clauses = []
-tags = []
+tags = ["clocking-event", "default-clocking", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7282,7 +7282,7 @@ anchors = [
 ]
 summary = "`property_expr1 and property_expr2` evaluates true if and only if both operands evaluate true."
 related_clauses = []
-tags = []
+tags = ["property", "temporal-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7307,7 +7307,7 @@ anchors = [
 ]
 summary = "Property declarations, ports, specifications, expressions, case items, instances, and actual arguments shall conform to the defined grammar, including optional formals, locals, clock/disable clauses, temporal/logical/control operators, and named/positional argument binding."
 related_clauses = []
-tags = []
+tags = ["lexical", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7332,7 +7332,7 @@ anchors = [
 ]
 summary = "A property declaration alone is never evaluated and produces no verification result; checking requires use within an assert, assume, or cover assertion statement."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "lexical", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7357,7 +7357,7 @@ anchors = [
 ]
 summary = "`property_expr1 or property_expr2` evaluates true if and only if at least one operand evaluates true."
 related_clauses = []
-tags = []
+tags = ["property", "temporal-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7381,7 +7381,7 @@ anchors = [
 ]
 summary = "Property evaluation produces either true or false, and properties may compose other property or sequence instances with property operators."
 related_clauses = []
-tags = []
+tags = ["property", "temporal-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7412,7 +7412,7 @@ related_clauses = [
     "16.12.18",
     "16.12.19",
 ]
-tags = []
+tags = ["formal-argument", "property", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7440,7 +7440,7 @@ summary = "In addition to named-sequence formal substitution positions, a named-
 related_clauses = [
     "16.8",
 ]
-tags = []
+tags = ["formal-argument", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7464,7 +7464,7 @@ anchors = [
 ]
 summary = "`if (condition) property` is true when condition is false or the property is true; with else, it is true exactly when the property selected by the condition is true."
 related_clauses = []
-tags = []
+tags = ["conditional", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7489,7 +7489,7 @@ anchors = [
 ]
 summary = "`property_expr1 iff property_expr2` evaluates true if and only if both operands evaluate to the same Boolean value."
 related_clauses = []
-tags = []
+tags = ["property", "temporal-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7514,7 +7514,7 @@ anchors = [
 ]
 summary = "`property_expr1 implies property_expr2` evaluates true if and only if the first operand is false or the second operand is true."
 related_clauses = []
-tags = []
+tags = ["property", "temporal-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7538,7 +7538,7 @@ anchors = [
 ]
 summary = "A property instance is legal in property_expr or property_spec context only when body-for-instance substitution with actual-for-formal substitution is legal there; in particular a disabled property cannot be an operand of a property-building operator."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "formal-argument", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7564,7 +7564,7 @@ summary = "Named-property local-variable formals and corresponding actuals follo
 related_clauses = [
     "16.8.2",
 ]
-tags = []
+tags = ["formal-argument", "local-variable", "property", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7588,7 +7588,7 @@ anchors = [
 ]
 summary = "A named-property local-variable formal shall have input direction, explicitly or by inference; output and inout are illegal."
 related_clauses = []
-tags = []
+tags = ["argument-direction", "formal-argument", "local-variable", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7612,7 +7612,7 @@ anchors = [
 ]
 summary = "Each evaluation attempt of `not property_expr` evaluates the operand and returns its Boolean opposite: true becomes false and false becomes true."
 related_clauses = []
-tags = []
+tags = ["property", "temporal-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7636,7 +7636,7 @@ anchors = [
 ]
 summary = "The property `not` operator switches the strength of its operand, including when the operand is a sequence property."
 related_clauses = []
-tags = []
+tags = ["property", "property-strength"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7660,7 +7660,7 @@ anchors = [
 ]
 summary = "A property attempt succeeds nonvacuously if and only if it evaluates true and is classified nonvacuous."
 related_clauses = []
-tags = []
+tags = ["nonvacuity", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7694,7 +7694,7 @@ summary = "Descending high precedence is expression operators, repetition, left 
 related_clauses = [
     "11.2",
 ]
-tags = []
+tags = ["precedence", "property", "temporal-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7723,7 +7723,7 @@ anchors = [
 ]
 summary = "Below or, descending property precedence is right-associative iff; right-associative until/s_until/until_with/s_until_with/implies; right-associative |->/|=>/#-#/#=#; unary always/s_always/eventually/s_eventually and |; then if-else/case/accept_on/reject_on/sync_accept_on/sync_reject_on."
 related_clauses = []
-tags = []
+tags = ["precedence", "property", "temporal-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7749,7 +7749,7 @@ summary = "A property may explicitly specify an optional clocking event, whose c
 related_clauses = [
     "16.16",
 ]
-tags = []
+tags = ["clocking-event", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7773,7 +7773,7 @@ anchors = [
 ]
 summary = "Terminal $ may be a passed or default property actual only for an untyped formal whose every reference is a cycle-delay upper bound or is forwarded as an actual to a named sequence or property."
 related_clauses = []
-tags = []
+tags = ["formal-argument", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7799,7 +7799,7 @@ summary = "Named-property typed formals and corresponding actuals follow the typ
 related_clauses = [
     "16.8.1",
 ]
-tags = []
+tags = ["formal-argument", "property", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7827,7 +7827,7 @@ related_clauses = [
     "16.6",
     "16.12.7",
 ]
-tags = []
+tags = ["formal-argument", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7854,7 +7854,7 @@ anchors = [
 ]
 summary = "Each actual expression of a recursive q instance in p shall either itself be a formal of p, contain no formal of p, or bind to a local-variable formal of q."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "formal-argument", "property", "recursion"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7878,7 +7878,7 @@ anchors = [
 ]
 summary = "Every direct or mutually recursive property instance shall occur after a positive advance in time within its declaration dependency cycle."
 related_clauses = []
-tags = []
+tags = ["property", "recursion", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7902,7 +7902,7 @@ anchors = [
 ]
 summary = "accept_on, reject_on, sync_accept_on, and sync_reject_on may be used within a recursive property."
 related_clauses = []
-tags = []
+tags = ["abort", "property", "recursion", "temporal-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7927,7 +7927,7 @@ anchors = [
 ]
 summary = "Named properties may be directly, indirectly, or mutually recursive when their declaration dependency involves self-instantiation, subject to recursive-property restrictions."
 related_clauses = []
-tags = []
+tags = ["property", "recursion"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7951,7 +7951,7 @@ anchors = [
 ]
 summary = "A recursive property declaration shall not use disable iff."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "disable", "property", "recursion"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7979,7 +7979,7 @@ summary = "Neither `not` nor s_nexttime, s_eventually, s_always, s_until, or s_u
 related_clauses = [
     "F.7",
 ]
-tags = []
+tags = ["diagnostic", "property", "property-strength", "recursion"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8004,7 +8004,7 @@ anchors = [
 ]
 summary = "`reject_on(c) p` equals `not(accept_on(c) not(p))`, and `sync_reject_on(c) p` equals `not(sync_accept_on(c) not(p))`."
 related_clauses = []
-tags = []
+tags = ["abort", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8028,7 +8028,7 @@ anchors = [
 ]
 summary = "During reject_on or sync_reject_on evaluation, a true abort condition forces the overall property false; if it never becomes true, the result equals the operand property's result."
 related_clauses = []
-tags = []
+tags = ["abort", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8055,7 +8055,7 @@ related_clauses = [
     "16.10",
     "16.11",
 ]
-tags = []
+tags = ["diagnostic", "repetition", "sequence", "sequence-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8080,7 +8080,7 @@ anchors = [
 ]
 summary = "restrict property constrains formal state space with assume-property semantics, but is not verified in simulation and has no action block."
 related_clauses = []
-tags = []
+tags = ["concurrent-assertion", "formal-verification", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8106,7 +8106,7 @@ anchors = [
 ]
 summary = "A restrict statement has exactly `restrict property (property_spec);` and shall have no action block."
 related_clauses = []
-tags = []
+tags = ["concurrent-assertion", "lexical", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8130,7 +8130,7 @@ anchors = [
 ]
 summary = "$rising_gclk returns 1'b1 exactly when the expression LSB changes to 1 at the next global clock tick; otherwise it returns 1'b0."
 related_clauses = []
-tags = []
+tags = ["edge-sensitivity", "global-clock", "sampled-value-function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8154,7 +8154,7 @@ anchors = [
 ]
 summary = "$rose returns 1'b1 exactly when the expression's least significant bit changed to 1; otherwise it returns 1'b0."
 related_clauses = []
-tags = []
+tags = ["clocking-event", "edge-sensitivity", "sampled-value-function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8178,7 +8178,7 @@ anchors = [
 ]
 summary = "A sampled dynamic-array, queue, or associative-array element shall remain available within the assertion until expression evaluation completes, even if the source array element is removed or the array resized after sampling."
 related_clauses = []
-tags = []
+tags = ["associative-array", "dynamic-array", "queue", "sampled-value"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8202,7 +8202,7 @@ anchors = [
 ]
 summary = "$sampled does not use a clocking event."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "sampled-value-function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8229,7 +8229,7 @@ related_clauses = [
     "16.5.1",
     "16.12",
 ]
-tags = []
+tags = ["sampled-value", "sampled-value-function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8255,7 +8255,7 @@ summary = "A sampled-value function may explicitly use a clocking event differen
 related_clauses = [
     "16.16",
 ]
-tags = []
+tags = ["clocking-event", "sampled-value", "sampled-value-function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8282,7 +8282,7 @@ related_clauses = [
     "16.5.1",
     "16.10",
 ]
-tags = []
+tags = ["diagnostic", "formal-argument", "sampled-value", "sampled-value-function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8318,7 +8318,7 @@ related_clauses = [
     "16.13.3",
     "16.14.6",
 ]
-tags = []
+tags = ["clocking-event", "sampled-value", "sampled-value-function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8342,7 +8342,7 @@ anchors = [
 ]
 summary = "$past, $rose, $fell, $stable, and $changed require a clocking event for their semantics, whether explicit or inferred, and use it to sample the argument expression."
 related_clauses = []
-tags = []
+tags = ["clocking-event", "sampled-value", "sampled-value-function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8366,7 +8366,7 @@ anchors = [
 ]
 summary = "The sampled-value system functions have the defined forms: $sampled(expression); $rose/$fell/$stable/$changed with an optional clocking event; and $past with optional tick count, gating expression, and clocking event in the specified nested order."
 related_clauses = []
-tags = []
+tags = ["lexical", "sampled-value-function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8390,7 +8390,7 @@ anchors = [
 ]
 summary = "Sampled-value functions may be used as expressions in procedural code and are not restricted to assertion constructs."
 related_clauses = []
-tags = []
+tags = ["sampled-value", "sampled-value-function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8414,7 +8414,7 @@ anchors = [
 ]
 summary = "A named-sequence instance shall supply an actual for every formal without a default, may override defaults, and may bind actuals by name or position."
 related_clauses = []
-tags = []
+tags = ["formal-argument", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8440,7 +8440,7 @@ summary = "When a named-sequence instance lies within a local variable's scope, 
 related_clauses = [
     "16.10",
 ]
-tags = []
+tags = ["formal-argument", "local-variable", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8467,7 +8467,7 @@ anchors = [
 ]
 summary = "For sequence1 and sequence2, both start together and must match, with endpoint at the later operand endpoint; when both operands are single sampled expressions, the sequence matches exactly when both are true."
 related_clauses = []
-tags = []
+tags = ["sequence", "sequence-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8494,7 +8494,7 @@ related_clauses = [
     "9.4.2.4",
     "16.7",
 ]
-tags = []
+tags = ["clocking-event", "sampled-value", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8519,7 +8519,7 @@ anchors = [
 ]
 summary = "A sequence used as a property shall be nondegenerate and shall admit no empty match."
 related_clauses = []
-tags = []
+tags = ["empty-match", "property", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8543,7 +8543,7 @@ anchors = [
 ]
 summary = "A sequence attempt beginning at a clock tick evaluates the relevant Boolean expressions from that tick over successive ticks until it finds a match or determines that no match can exist."
 related_clauses = []
-tags = []
+tags = ["evaluation-attempt", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8568,7 +8568,7 @@ anchors = [
 ]
 summary = "Sequence concatenation with ## specifies the cycle delay from the end of the first sequence to the beginning of the second."
 related_clauses = []
-tags = []
+tags = ["sequence", "sequence-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8592,7 +8592,7 @@ anchors = [
 ]
 summary = "A sequence's context determines evaluation time: its first expression is checked at the first clock tick at or after its trigger expression, and each successive undelayed element is checked at the next subsequent clock occurrence."
 related_clauses = []
-tags = []
+tags = ["sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8617,7 +8617,7 @@ anchors = [
 ]
 summary = "A named sequence declaration shall conform to the defined sequence/endsequence grammar, with optional formal ports, assertion variable declarations, sequence expression, end label, formal directions/types/defaults, and legal actual-argument forms."
 related_clauses = []
-tags = []
+tags = ["formal-argument", "lexical", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8644,7 +8644,7 @@ related_clauses = [
     "F.5.2",
     "F.5.5",
 ]
-tags = []
+tags = ["empty-match", "property", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8671,7 +8671,7 @@ related_clauses = [
     "16.9.2.1",
     "16.12.22",
 ]
-tags = []
+tags = ["empty-match", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -8705,7 +8705,7 @@ anchors = [
 ]
 summary = "A sequence expression shall conform to the defined grammar for delays, Boolean terms, sequence instances and arguments, match items, composition operators, clocking, and consecutive, nonconsecutive, or goto repetition abbreviations."
 related_clauses = []
-tags = []
+tags = ["lexical", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8734,7 +8734,7 @@ anchors = [
 ]
 summary = "A named-sequence formal may be referenced in its body in place of an identifier, expression, sequence_expr, event_expression, or terminal $ in a cycle-delay range."
 related_clauses = []
-tags = []
+tags = ["formal-argument", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8761,7 +8761,7 @@ related_clauses = [
     "16.8.1",
     "F.4.1",
 ]
-tags = []
+tags = ["default-argument", "formal-argument", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8785,7 +8785,7 @@ anchors = [
 ]
 summary = "A sequence formal argument shall not be redeclared as a local variable in the sequence declaration."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "formal-argument", "local-variable", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8809,7 +8809,7 @@ anchors = [
 ]
 summary = "Sequence formal arguments do not support a pass-by-value argument mode; value capture can instead be modeled by assigning the formal to a sequence local variable."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "formal-argument", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8835,7 +8835,7 @@ summary = "Sequence formal arguments support the data types permitted as operand
 related_clauses = [
     "16.6",
 ]
-tags = []
+tags = ["formal-argument", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8859,7 +8859,7 @@ anchors = [
 ]
 summary = "A sequence formal's specified type applies to every following formal identifier up to, but not including, the next explicitly specified type."
 related_clauses = []
-tags = []
+tags = ["formal-argument", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8885,7 +8885,7 @@ anchors = [
 ]
 summary = "For an intersect attempt, every pair of operand matches sharing length and match point yields a composite match with that shared length and point; if there is no such pair, the composite does not match."
 related_clauses = []
-tags = []
+tags = ["sequence", "sequence-operator", "thread"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8912,7 +8912,7 @@ anchors = [
 ]
 summary = "sequence1 intersect sequence2 matches only when both operands, started together, match with equal lengths and therefore equal end times."
 related_clauses = []
-tags = []
+tags = ["sequence", "sequence-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8936,7 +8936,7 @@ anchors = [
 ]
 summary = "A parenthesized sequence expression may carry comma-separated sequence match items, including operator assignments and increment/decrement expressions, followed by an optional sequence abbreviation."
 related_clauses = []
-tags = []
+tags = ["lexical", "local-variable", "match-item", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8962,7 +8962,7 @@ summary = "A task, task method, void function, void function method, or system t
 related_clauses = [
     "16.12.22",
 ]
-tags = []
+tags = ["diagnostic", "empty-match", "match-item", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8986,7 +8986,7 @@ anchors = [
 ]
 summary = "The parenthesized sequence match-item grammar permits operator assignment, increment/decrement expression, or subroutine call items and an optional sequence abbreviation."
 related_clauses = []
-tags = []
+tags = ["lexical", "match-item", "sequence", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -9013,7 +9013,7 @@ anchors = [
 ]
 summary = "Where allowed, `.matched` may be applied to a named sequence instance with or without arguments, an untyped formal, or a sequence-typed formal."
 related_clauses = []
-tags = []
+tags = ["lexical", "sequence", "sequence-method"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -9038,7 +9038,7 @@ anchors = [
 ]
 summary = "matched is sequence-expression-only, is set in Observed on a source endpoint, retains that source result across clocks, and remains set until the Observed region following the first destination-clock tick after the match; it is independent of source start point."
 related_clauses = []
-tags = []
+tags = ["sequence", "sequence-method"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -9062,7 +9062,7 @@ anchors = [
 ]
 summary = "A sequence with a method passed to a checker is substituted for its formal and clocked as though instantiated inside the checker."
 related_clauses = []
-tags = []
+tags = ["checker", "clocking-event", "formal-argument", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -9089,7 +9089,7 @@ summary = "A sequence on which a method is applied shall be explicitly clocked o
 related_clauses = [
     "16.9.3",
 ]
-tags = []
+tags = ["clocking-event", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -9115,7 +9115,7 @@ summary = "triggered and matched return one-bit Boolean independently of operand
 related_clauses = [
     "16.5.1",
 ]
-tags = []
+tags = ["sequence", "sequence-method"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -9139,7 +9139,7 @@ anchors = [
 ]
 summary = "A sequence with a method connected to a module/interface/program port or passed to a function/task is clocked as if instantiated at the module/interface/program instance or call site."
 related_clauses = []
-tags = []
+tags = ["clocking-event", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -9166,7 +9166,7 @@ related_clauses = [
     "16.9.3",
     "16.14.7",
 ]
-tags = []
+tags = ["clock-flow", "clocking-event", "elaboration", "formal-argument"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -9193,7 +9193,7 @@ anchors = [
 ]
 summary = "triggered and matched identify sequence endpoints and may be invoked as `.sequence_method` only on a named sequence instance with/without arguments, an untyped formal, or sequence-typed formal where legal."
 related_clauses = []
-tags = []
+tags = ["lexical", "sequence", "sequence-method"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -9224,7 +9224,7 @@ anchors = [
 ]
 summary = "Sequence operators follow descending precedence: repetition [*]/[=]/[->] (nonassociative), ## (left), throughout (right), within (left), intersect (left), and (left), then or (left)."
 related_clauses = []
-tags = []
+tags = ["lexical", "sequence", "sequence-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -9251,7 +9251,7 @@ anchors = [
 ]
 summary = "The binary sequence or takes two sequence operands; its match set is the union of both operands' match sets, preserving each match endpoint. For single-expression operands, it matches at a tick when at least one expression is true."
 related_clauses = []
-tags = []
+tags = ["sequence", "sequence-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -9275,7 +9275,7 @@ anchors = [
 ]
 summary = "Boolean expressions in sequence and property expressions shall evaluate from sampled values of all variables; this sampled-value rule does not apply to clocking-event expressions."
 related_clauses = []
-tags = []
+tags = ["assertion-expression", "property", "sampled-value", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -9300,7 +9300,7 @@ anchors = [
 ]
 summary = "For both strong and weak sequence properties, wrapping the sequence_expr in first_match does not change the property's truth value."
 related_clauses = []
-tags = []
+tags = ["property", "sequence", "sequence-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -9326,7 +9326,7 @@ summary = "A sequence property is sequence_expr, weak(sequence_expr), or strong(
 related_clauses = [
     "16.12.22",
 ]
-tags = []
+tags = ["empty-match", "property", "property-strength", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -9353,7 +9353,7 @@ summary = "A repetition count is either an exact nonnegative integer constant or
 related_clauses = [
     "11.2.1",
 ]
-tags = []
+tags = ["repetition", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -9377,7 +9377,7 @@ anchors = [
 ]
 summary = "When both repetition-range bounds are finite nonnegative integer constants, the minimum shall be less than or equal to the maximum."
 related_clauses = []
-tags = []
+tags = ["repetition", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -9401,7 +9401,7 @@ anchors = [
 ]
 summary = "A sequence denotes a set of linear sequences and matches a finite interval when at least one represented linear sequence matches that interval."
 related_clauses = []
-tags = []
+tags = ["sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -9425,7 +9425,7 @@ anchors = [
 ]
 summary = "Terminal $ may be a passed or default sequence actual only for an untyped formal whose every reference is an upper cycle-delay-range bound or is forwarded as another named-sequence actual."
 related_clauses = []
-tags = []
+tags = ["formal-argument", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -9455,7 +9455,7 @@ summary = "triggered returns a Boolean indicating whether its operand sequence r
 related_clauses = [
     "16.7",
 ]
-tags = []
+tags = ["sequence", "sequence-method"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -9479,7 +9479,7 @@ anchors = [
 ]
 summary = "For a formal of type sequence, the actual shall be a sequence_expr and references to the formal are legal only in sequence_expr positions or as operands of the sequence triggered and matched methods."
 related_clauses = []
-tags = []
+tags = ["formal-argument", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -9504,7 +9504,7 @@ anchors = [
 ]
 summary = "A sequence formal with no preceding type, or explicitly declared untyped, has untyped binding semantics and no implicit default type; untyped shall be written when such a formal follows a typed formal."
 related_clauses = []
-tags = []
+tags = ["formal-argument", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -9530,7 +9530,7 @@ anchors = [
 ]
 summary = "At property level, sequential implication conditionally monitors a consequent property on matches of an antecedent sequence, returns Boolean, and has overlapped `|->` and nonoverlapped `|=>` forms."
 related_clauses = []
-tags = []
+tags = ["implication", "lexical", "property"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -9556,7 +9556,7 @@ summary = "A severity system task used in an assertion action shall print the sa
 related_clauses = [
     "20.10",
 ]
-tags = []
+tags = ["action-block", "subroutine", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -9580,7 +9580,7 @@ anchors = [
 ]
 summary = "A simulation tool shall be capable of treating an immediate assume statement as an immediate assert statement so the assumed environment behavior can be verified."
 related_clauses = []
-tags = []
+tags = ["assumption", "immediate-assertion"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -9604,7 +9604,7 @@ anchors = [
 ]
 summary = "The sampled value of an expression consisting of one variable is that variable's sampled value."
 related_clauses = []
-tags = []
+tags = ["sampled-value"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -9628,7 +9628,7 @@ anchors = [
 ]
 summary = "For a singly clocked named sequence/property instance, local initialization assignments execute when each evaluation attempt begins, in a time step containing a tick of its sole governing clock."
 related_clauses = []
-tags = []
+tags = ["clocking-event", "local-variable", "sequence", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -9652,7 +9652,7 @@ anchors = [
 ]
 summary = "$stable returns 1'b1 when the entire sampled expression value did not change and 1'b0 otherwise."
 related_clauses = []
-tags = []
+tags = ["clocking-event", "sampled-value-function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -9676,7 +9676,7 @@ anchors = [
 ]
 summary = "A deferred assertion outside procedural code is a static deferred assertion and behaves as though contained in an always_comb procedure."
 related_clauses = []
-tags = []
+tags = ["deferred-assertion", "scheduling", "static"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -9700,7 +9700,7 @@ anchors = [
 ]
 summary = "$steady_gclk returns 1'b1 when the expression's next global-clock sampled value does not change and 1'b0 otherwise."
 related_clauses = []
-tags = []
+tags = ["global-clock", "sampled-value-function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -9724,7 +9724,7 @@ anchors = [
 ]
 summary = "Ranged strong `s_always [range] p` is true exactly when every specified tick exists and p holds at each; its range shall be bounded."
 related_clauses = []
-tags = []
+tags = ["property", "property-strength", "range", "temporal-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -9750,7 +9750,7 @@ anchors = [
 ]
 summary = "Strong `s_eventually p` is true exactly when p is true at some current or future tick; ranged strong eventually requires such a tick within its possibly unbounded range."
 related_clauses = []
-tags = []
+tags = ["property", "property-strength", "range", "temporal-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -9775,7 +9775,7 @@ anchors = [
 ]
 summary = "Strong `s_nexttime p` is true exactly when a next clock tick exists and p is true there; indexed `s_nexttime[n] p` requires n future ticks and p true at the nth."
 related_clauses = []
-tags = []
+tags = ["property", "property-strength", "temporal-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -9799,7 +9799,7 @@ anchors = [
 ]
 summary = "s_nexttime, s_always, s_eventually, s_until, s_until_with, and sequence strong are strong: they require the future terminating condition and enough property-clock ticks for it to occur."
 related_clauses = []
-tags = []
+tags = ["property", "property-strength", "temporal-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -9823,7 +9823,7 @@ anchors = [
 ]
 summary = "For Boolean expressions a and b, `a s_until_with b` is equivalent to `strong(a[*1:$] ##0 b)`."
 related_clauses = []
-tags = []
+tags = ["property", "property-strength", "sequence", "temporal-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -9848,7 +9848,7 @@ anchors = [
 ]
 summary = "sync_accept_on and sync_reject_on otherwise follow their asynchronous counterparts but test sampled abort conditions only in simulation time steps where their clocking event occurs."
 related_clauses = []
-tags = []
+tags = ["abort", "property", "sampled-value"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -9874,7 +9874,7 @@ anchors = [
 ]
 summary = "exp throughout seq is equivalent to (exp)[*0:$] intersect seq and matches a finite interval exactly when seq matches that interval and exp is true at every clock tick in it."
 related_clauses = []
-tags = []
+tags = ["sequence", "sequence-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -9898,7 +9898,7 @@ anchors = [
 ]
 summary = "triggered is true exactly at an operand endpoint, is set in Observed, and remains true through the rest of that time step; otherwise it is false."
 related_clauses = []
-tags = []
+tags = ["sequence", "sequence-method"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -9924,7 +9924,7 @@ summary = "triggered may be used in assertions, waits, and external Boolean expr
 related_clauses = [
     "9.4.4",
 ]
-tags = []
+tags = ["diagnostic", "formal-argument", "local-variable", "sequence-method"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -9950,7 +9950,7 @@ anchors = [
 ]
 summary = "A local actual flows out of triggered(instance) only if it flows out of the named sequence endpoint and the triggered application is a maximal Boolean expression with no negation or other operator applied."
 related_clauses = []
-tags = []
+tags = ["local-variable-flow", "sequence", "sequence-method"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -9977,7 +9977,7 @@ anchors = [
 ]
 summary = "A local may be passed to a named-sequence instance under triggered, but only as an entire actual argument, and the corresponding formal shall be assigned before any reference in the named-sequence declaration."
 related_clauses = []
-tags = []
+tags = ["local-variable-flow", "sequence", "sequence-method"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -10003,7 +10003,7 @@ summary = "triggered may be used with multiple clocks, but its operand sequence 
 related_clauses = [
     "16.13.5",
 ]
-tags = []
+tags = ["clocking-event", "multiclock", "sequence", "sequence-method"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -10027,7 +10027,7 @@ anchors = [
 ]
 summary = "If a triggered sequence instance has multiple same-cycle matches with different local valuations, evaluation forks into distinct threads for those valuations, as for matches of separate or operands."
 related_clauses = []
-tags = []
+tags = ["local-variable-flow", "sequence", "sequence-method", "thread"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -10051,7 +10051,7 @@ anchors = [
 ]
 summary = "Use of triggered shall not induce a circular dependency between sequences."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "sequence", "sequence-method"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -10077,7 +10077,7 @@ summary = "A typed formal referenced in a cycle-delay range, Boolean abbreviatio
 related_clauses = [
     "16.9.2",
 ]
-tags = []
+tags = ["cycle-delay", "formal-argument", "repetition", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -10105,7 +10105,7 @@ related_clauses = [
     "16.10",
     "16.12.19",
 ]
-tags = []
+tags = ["formal-argument", "match-item", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -10131,7 +10131,7 @@ summary = "A typed named-sequence formal shall have type sequence or a data type
 related_clauses = [
     "16.6",
 ]
-tags = []
+tags = ["conversion", "formal-argument", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -10155,7 +10155,7 @@ anchors = [
 ]
 summary = "A named sequence with no explicit clock inherits its clock from the external context in which it is instantiated, such as a property or assertion statement."
 related_clauses = []
-tags = []
+tags = ["clock-flow", "clocking-event", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -10180,7 +10180,7 @@ anchors = [
 ]
 summary = "A multiclock property has a unique semantic leading clock only when all leading clock events are identical; distinct event expressions remain nonidentical even if their signals currently have equal values."
 related_clauses = []
-tags = []
+tags = ["clock-flow", "clocking-event"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -10208,7 +10208,7 @@ anchors = [
 ]
 summary = "Until properties have four forms: weak nonoverlapping `p until q`, strong nonoverlapping `p s_until q`, weak overlapping `p until_with q`, and strong overlapping `p s_until_with q`."
 related_clauses = []
-tags = []
+tags = ["lexical", "property", "temporal-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -10233,7 +10233,7 @@ anchors = [
 ]
 summary = "Nonoverlapping until requires the left property from the attempt start through the tick before a right-property witness; overlapping until also requires it on the witness tick. Strong forms require a witness tick; weak forms also succeed without one if the left property holds at every existing tick."
 related_clauses = []
-tags = []
+tags = ["property", "temporal-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -10259,7 +10259,7 @@ anchors = [
 ]
 summary = "Rewriting an untyped formal retains the actual as an expression term and ordinarily parenthesizes and casts it to its self-determined type before substitution; terminal $ and a variable_lvalue actual are exempt."
 related_clauses = []
-tags = []
+tags = ["conversion", "formal-argument", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -10285,7 +10285,7 @@ summary = "An untyped formal referenced as a cycle-delay range, Boolean abbrevia
 related_clauses = [
     "16.9.2",
 ]
-tags = []
+tags = ["constant-expression", "elaboration", "formal-argument", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -10315,7 +10315,7 @@ summary = "To assign a local inside a named sequence and reference it in the ins
 related_clauses = [
     "16.8.2",
 ]
-tags = []
+tags = ["copy-out", "formal-argument", "local-variable-flow", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -10341,7 +10341,7 @@ summary = "An untyped sequence argument may pass an in-scope local variable into
 related_clauses = [
     "16.10",
 ]
-tags = []
+tags = ["formal-argument", "local-variable-flow", "sequence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -10367,7 +10367,7 @@ summary = "At or before the first occurrence of a value-change function's clock,
 related_clauses = [
     "16.5.1",
 ]
-tags = []
+tags = ["clocking-event", "sampled-value-function", "value-change"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -10393,7 +10393,7 @@ summary = "A value-change function returns a Boolean by comparing the current sa
 related_clauses = [
     "16.5.1",
 ]
-tags = []
+tags = ["clocking-event", "sampled-value-function", "value-change"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -10418,7 +10418,7 @@ anchors = [
 ]
 summary = "A variable's sampled value is its Preponed-region value for a time slot after time 0, and its default sampled value at time 0, except where a specified sampling exception applies."
 related_clauses = []
-tags = []
+tags = ["sampled-value", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -10444,7 +10444,7 @@ anchors = [
 ]
 summary = "Weak `always p` is true exactly when p holds at every existing current and future tick; ranged weak always requires p at every existing tick in its possibly unbounded range but does not require all specified ticks to exist."
 related_clauses = []
-tags = []
+tags = ["property", "property-strength", "range", "temporal-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -10470,7 +10470,7 @@ anchors = [
 ]
 summary = "Weak `nexttime p` is true if no next clock tick exists or p is true at it; indexed `nexttime[n] p` is true if fewer than n future ticks exist or p is true at the nth future tick."
 related_clauses = []
-tags = []
+tags = ["property", "property-strength", "temporal-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -10494,7 +10494,7 @@ anchors = [
 ]
 summary = "nexttime, always, until, eventually, until_with, and sequence weak are weak: they impose no terminating-condition requirement and do not require further clock ticks."
 related_clauses = []
-tags = []
+tags = ["property", "property-strength", "temporal-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -10518,7 +10518,7 @@ anchors = [
 ]
 summary = "Bounded weak `eventually [range] p` is true if p holds at an in-range tick or if not all in-range ticks exist; its range shall be bounded."
 related_clauses = []
-tags = []
+tags = ["property", "property-strength", "range", "temporal-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -10546,7 +10546,7 @@ anchors = [
 ]
 summary = "seq1 within seq2 abbreviates (1[*0:$] ##1 seq1 ##1 1[*0:$]) intersect seq2 and matches when seq2 spans the interval while a seq1 match lies wholly within it, starting no earlier and reaching its match point no later."
 related_clauses = []
-tags = []
+tags = ["sequence", "sequence-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -10570,7 +10570,7 @@ anchors = [
 ]
 summary = "A within sequence expression has the form sequence_expr within sequence_expr."
 related_clauses = []
-tags = []
+tags = ["lexical", "sequence", "sequence-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -10597,7 +10597,7 @@ summary = "Zero consecutive repetition samples no clock tick and matches only th
 related_clauses = [
     "F.4.3",
 ]
-tags = []
+tags = ["empty-match", "repetition", "sequence", "sequence-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"

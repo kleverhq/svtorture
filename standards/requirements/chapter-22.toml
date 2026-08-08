@@ -11,7 +11,7 @@ anchors = [
 ]
 summary = "`celldefine and `endcelldefine may appear anywhere in the source description, including within a design element; placing them outside design elements is only a recommendation."
 related_clauses = []
-tags = []
+tags = ["module", "preprocessor"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -35,7 +35,7 @@ anchors = [
 ]
 summary = "`celldefine causes subsequently encountered modules to be tagged as cell modules until `endcelldefine is the most recent of the two; the directives are independent, need not be paired, and may transition state multiple times."
 related_clauses = []
-tags = []
+tags = ["module", "preprocessor", "source-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -62,7 +62,7 @@ anchors = [
 ]
 summary = "An `ifdef or `elsif text block ends at the next recognized `elsif, `else, or `endif, and an `else block ends at the next recognized `endif; directive spellings inside comments, string literals, or macro definitions are hidden and do not terminate a block."
 related_clauses = []
-tags = []
+tags = ["conditional-compilation", "lexical", "preprocessor"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -88,7 +88,7 @@ anchors = [
 ]
 summary = "A conditional-compilation construct begins with `ifdef or `ifndef and a SystemVerilog macro identifier or parenthesized condition, permits optional source-text blocks, zero or more `elsif blocks, and an optional `else block, and ends with `endif; condition expressions may combine identifiers using `!`, `&&`, `||`, `->`, `<->`, and parentheses."
 related_clauses = []
-tags = []
+tags = ["conditional-compilation", "grammar", "macro", "preprocessor"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -114,7 +114,7 @@ anchors = [
 ]
 summary = "Conditional-compilation directives may appear anywhere in a source description and select which blocks of source text are included for compilation."
 related_clauses = []
-tags = []
+tags = ["conditional-compilation", "preprocessor"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -140,7 +140,7 @@ summary = "Whitespace does not affect conditional-block termination, and conditi
 related_clauses = [
     "5.2",
 ]
-tags = []
+tags = ["conditional-compilation", "lexical", "preprocessor"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -166,7 +166,7 @@ summary = "A compiler directive embedded in a conditional-compilation block is p
 related_clauses = [
     "22.6",
 ]
-tags = []
+tags = ["conditional-compilation", "preprocessor"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -199,7 +199,7 @@ related_clauses = [
     "11.8",
     "22.5",
 ]
-tags = []
+tags = ["conditional-compilation", "macro", "preprocessor"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -226,7 +226,7 @@ anchors = [
 ]
 summary = "An `ifdef or `elsif succeeds when its bare macro identifier is currently defined or its parenthesized expression resolves to 1; the first successful branch is processed and all later `elsif and `else branches are ignored, while failed branches are ignored and evaluation proceeds in source order, with `else processed only if none succeeded."
 related_clauses = []
-tags = []
+tags = ["conditional-compilation", "macro", "preprocessor", "source-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -252,7 +252,7 @@ anchors = [
 ]
 summary = "While `default_nettype none is in effect, every net must be explicitly declared and any otherwise implicit undeclared net is an error."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "nettype", "preprocessor"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -279,7 +279,7 @@ summary = "Multiple `default_nettype directives are permitted and the latest pro
 related_clauses = [
     "6.10",
 ]
-tags = []
+tags = ["nettype", "preprocessor", "source-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -304,7 +304,7 @@ anchors = [
 ]
 summary = "`default_nettype is legal only outside design elements and its value shall be wire, tri, tri0, tri1, wand, triand, wor, trior, trireg, uwire, or none."
 related_clauses = []
-tags = []
+tags = ["lexical", "nettype", "preprocessor"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -331,7 +331,7 @@ related_clauses = [
     "3.12.1",
     "5.6.4",
 ]
-tags = []
+tags = ["compilation-unit", "preprocessor", "source-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -358,7 +358,7 @@ related_clauses = [
     "3.12.1",
     "5.6.4",
 ]
-tags = []
+tags = ["lexical", "preprocessor"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -383,7 +383,7 @@ anchors = [
 ]
 summary = "Compiler-directive keywords are not ordinary SystemVerilog keywords; an ordinary identifier may have the same spelling as a directive keyword or macro name, and an unprefixed identifier remains distinct from the corresponding grave-accent-prefixed macro use."
 related_clauses = []
-tags = []
+tags = ["lexical", "macro", "namespace", "preprocessor"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -407,7 +407,7 @@ anchors = [
 ]
 summary = "A compiler-directive keyword by itself is considered undefined when tested by `ifdef or `elsif, even though directive names and text-macro names share a name space."
 related_clauses = []
-tags = []
+tags = ["conditional-compilation", "macro", "namespace", "preprocessor"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -431,7 +431,7 @@ anchors = [
 ]
 summary = "Unless a directive-specific rule says otherwise, a directive with a defined end may be followed on that same line by another valid language element; directives with indeterminate text permit this only when their defined termination does not require a newline."
 related_clauses = []
-tags = []
+tags = ["lexical", "preprocessor", "source-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -455,7 +455,7 @@ anchors = [
 ]
 summary = "A valid language element may precede a compiler directive on the same line when both the element and directive satisfy their respective placement rules."
 related_clauses = []
-tags = []
+tags = ["lexical", "preprocessor", "source-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -479,7 +479,7 @@ anchors = [
 ]
 summary = "A compiler directive shall occupy one line unless its directive-specific rules explicitly support multiple lines."
 related_clauses = []
-tags = []
+tags = ["lexical", "preprocessor"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -503,7 +503,7 @@ anchors = [
 ]
 summary = "An actual macro argument may be empty or whitespace-only; it substitutes the formal's default when present, otherwise it substitutes no text."
 related_clauses = []
-tags = []
+tags = ["macro", "preprocessor"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -527,7 +527,7 @@ anchors = [
 ]
 summary = "An omitted or empty actual for a nonempty-defaulted formal selects the default, but an actual consisting of a use of an empty macro first occupies the argument and then expands to empty text, thereby substituting no text instead of the default."
 related_clauses = []
-tags = []
+tags = ["macro", "preprocessor"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -551,7 +551,7 @@ anchors = [
 ]
 summary = "A macro definition may have blank replacement text; invoking such a macro substitutes no text."
 related_clauses = []
-tags = []
+tags = ["macro", "preprocessor"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -575,7 +575,7 @@ anchors = [
 ]
 summary = "`__FILE__ expands to a string literal containing the path by which the tool opened the current input file, rather than the short spelling supplied to `include or as an input argument; the path format is implementation-dependent."
 related_clauses = []
-tags = []
+tags = ["literal", "macro", "preprocessor", "source-location"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -599,7 +599,7 @@ anchors = [
 ]
 summary = "`ifndef with a macro identifier has the same conditional meaning as `ifdef applied to its logical negation, and `ifndef with a parenthesized condition has the same meaning as `ifdef applied to the negation of that entire condition."
 related_clauses = []
-tags = []
+tags = ["conditional-compilation", "macro", "preprocessor"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -627,7 +627,7 @@ summary = "Source text in an ignored conditional-compilation block must still co
 related_clauses = [
     "5",
 ]
-tags = []
+tags = ["conditional-compilation", "lexical", "preprocessor"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -651,7 +651,7 @@ anchors = [
 ]
 summary = "An absolute-path `include names exactly the file to include and is legal only in the double-quoted form, not the angle-bracket form."
 related_clauses = []
-tags = []
+tags = ["include"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -676,7 +676,7 @@ anchors = [
 ]
 summary = "For an angle-bracket filename, `include searches only an implementation-dependent location containing language-standard files, and interprets a relative path from that location."
 related_clauses = []
-tags = []
+tags = ["include"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -700,7 +700,7 @@ anchors = [
 ]
 summary = "On a line containing an `include directive, no other text is permitted except white space or a comment."
 related_clauses = []
-tags = []
+tags = ["include", "lexical", "preprocessor"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -724,7 +724,7 @@ anchors = [
 ]
 summary = "An implementation may impose a maximum include-file nesting depth, but that maximum shall permit at least 15 nested levels."
 related_clauses = []
-tags = []
+tags = ["include"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -748,7 +748,7 @@ anchors = [
 ]
 summary = "An included file may itself contain `include directives, but the resulting include-file nesting chain shall be finite."
 related_clauses = []
-tags = []
+tags = ["include"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -772,7 +772,7 @@ anchors = [
 ]
 summary = "An `include directive may be placed anywhere in a SystemVerilog source description, subject to its textual insertion semantics."
 related_clauses = []
-tags = []
+tags = ["include", "preprocessor"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -798,7 +798,7 @@ anchors = [
 ]
 summary = "For a relative filename in double quotes, `include searches the compiler current working directory and may also search user-specified locations; the filename may be a relative or full path."
 related_clauses = []
-tags = []
+tags = ["include"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -822,7 +822,7 @@ anchors = [
 ]
 summary = "An `include compiler directive consists of `include followed by a filename enclosed either in double quotes or in angle brackets."
 related_clauses = []
-tags = []
+tags = ["include", "lexical", "preprocessor"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -846,7 +846,7 @@ anchors = [
 ]
 summary = "Processing an `include directive inserts the entire contents of its selected source file at the directive location, with semantics as if that text appeared there directly."
 related_clauses = []
-tags = []
+tags = ["compilation-unit", "include", "source-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -870,7 +870,7 @@ anchors = [
 ]
 summary = "Within a keyword-directive block, only identifiers listed as reserved in the selected version are treated as reserved words; selecting a version does not change language semantics, token definitions, or other SystemVerilog behavior."
 related_clauses = []
-tags = []
+tags = ["keyword-set", "lexical", "preprocessor", "reserved-keyword"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -896,7 +896,7 @@ summary = "`begin_keywords and `end_keywords may be specified only outside desig
 related_clauses = [
     "3.2",
 ]
-tags = []
+tags = ["compilation-unit", "keyword-set", "preprocessor", "source-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -920,7 +920,7 @@ anchors = [
 ]
 summary = "`begin_keywords takes a quoted version specifier from 1800-2023, 1800-2017, 1800-2012, 1800-2009, 1800-2005, 1364-2005, 1364-2001, 1364-2001-noconfig, or 1364-1995, and `end_keywords takes no argument."
 related_clauses = []
-tags = []
+tags = ["keyword-set", "lexical", "preprocessor"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -946,7 +946,7 @@ anchors = [
 ]
 summary = "`begin_keywords and `end_keywords are distinct directives that shall be paired in source order, with `begin_keywords first and `end_keywords later, delimiting a source block whose reserved identifier set follows a selected IEEE 1364 or 1800 version."
 related_clauses = []
-tags = []
+tags = ["keyword-set", "preprocessor", "source-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -983,7 +983,7 @@ anchors = [
 ]
 summary = "Under `begin_keywords \"1364-1995\", all identifiers listed in Table 22-1 rows R19 through R30 are reserved keywords, from endfunction/parameter/tri0 through function/reg/wire."
 related_clauses = []
-tags = []
+tags = ["keyword-set", "lexical", "preprocessor", "reserved-keyword"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1009,7 +1009,7 @@ anchors = [
 ]
 summary = "Under `begin_keywords \"1364-1995\", highz0, release, wor, highz1, repeat, xnor, if, rnmos, and xor are reserved keywords."
 related_clauses = []
-tags = []
+tags = ["keyword-set", "lexical", "preprocessor", "reserved-keyword"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1053,7 +1053,7 @@ anchors = [
 ]
 summary = "Under `begin_keywords \"1364-1995\", every identifier listed in Table 22-1 rows R00 through R18 of the cited anchors is a reserved keyword."
 related_clauses = []
-tags = []
+tags = ["keyword-set", "lexical", "preprocessor", "reserved-keyword"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1084,7 +1084,7 @@ anchors = [
 ]
 summary = "Under `begin_keywords \"1364-2001\", all 1364-1995 keywords remain reserved and the additional Table 22-2 identifiers in rows R00 through R05 are reserved, from automatic/incdir/pulsestyle_onevent through endgenerate/localparam."
 related_clauses = []
-tags = []
+tags = ["keyword-set", "lexical", "preprocessor", "reserved-keyword"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1109,7 +1109,7 @@ anchors = [
 ]
 summary = "Under `begin_keywords \"1364-2001\", generate, noshowcancelled, genvar, and pulsestyle_ondetect are additional reserved keywords."
 related_clauses = []
-tags = []
+tags = ["keyword-set", "lexical", "preprocessor", "reserved-keyword"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1134,7 +1134,7 @@ anchors = [
 ]
 summary = "The 1364-2001-noconfig keyword set equals 1364-2001 except that cell, config, design, endconfig, incdir, include, instance, liblist, library, and use are not reserved."
 related_clauses = []
-tags = []
+tags = ["keyword-set", "lexical", "preprocessor", "reserved-keyword"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1160,7 +1160,7 @@ anchors = [
 ]
 summary = "The 1364-2005 keyword set includes all 1364-1995 and 1364-2001 reserved words and additionally reserves uwire."
 related_clauses = []
-tags = []
+tags = ["keyword-set", "lexical", "preprocessor", "reserved-keyword"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1185,7 +1185,7 @@ anchors = [
 ]
 summary = "Under `begin_keywords \"1800-2005\", every reserved word from the 1364-1995, 1364-2001, and 1364-2005 keyword sets remains reserved."
 related_clauses = []
-tags = []
+tags = ["keyword-set", "lexical", "preprocessor", "reserved-keyword"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1220,7 +1220,7 @@ anchors = [
 ]
 summary = "Under `begin_keywords \"1800-2005\", every Table 22-4 identifier in rows R00 through R11 is reserved, from alias/endsequence/pure through break/ignore_bins/static."
 related_clauses = []
-tags = []
+tags = ["keyword-set", "lexical", "preprocessor", "reserved-keyword"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1255,7 +1255,7 @@ anchors = [
 ]
 summary = "Under `begin_keywords \"1800-2005\", every Table 22-4 identifier in rows R12 through R23 is reserved, from byte/illegal_bins/string through cross/matches/unique."
 related_clauses = []
-tags = []
+tags = ["keyword-set", "lexical", "preprocessor", "reserved-keyword"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1287,7 +1287,7 @@ anchors = [
 ]
 summary = "Under `begin_keywords \"1800-2005\", every Table 22-4 identifier in rows R24 through R32 is reserved, from dist/modport/var through endproperty/protected."
 related_clauses = []
-tags = []
+tags = ["keyword-set", "lexical", "preprocessor", "reserved-keyword"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1318,7 +1318,7 @@ anchors = [
 ]
 summary = "Under `begin_keywords \"1800-2009\", every Table 22-5 identifier is additionally reserved, from accept_on/reject_on/sync_accept_on through nexttime/strong."
 related_clauses = []
-tags = []
+tags = ["keyword-set", "lexical", "preprocessor", "reserved-keyword"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1343,7 +1343,7 @@ anchors = [
 ]
 summary = "Under `begin_keywords \"1800-2009\", every identifier reserved by an earlier listed keyword version remains reserved."
 related_clauses = []
-tags = []
+tags = ["keyword-set", "lexical", "preprocessor", "reserved-keyword"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1369,7 +1369,7 @@ anchors = [
 ]
 summary = "Under `begin_keywords \"1800-2012\", every identifier reserved by previous versions remains reserved, and Table 22-6 row R00 additionally reserves implements and nettype."
 related_clauses = []
-tags = []
+tags = ["keyword-set", "lexical", "preprocessor", "reserved-keyword"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1393,7 +1393,7 @@ anchors = [
 ]
 summary = "Under `begin_keywords \"1800-2012\", interconnect and soft are reserved keywords."
 related_clauses = []
-tags = []
+tags = ["keyword-set", "lexical", "preprocessor", "reserved-keyword"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1419,7 +1419,7 @@ summary = "The 1800-2017 and 1800-2023 keyword sets each include all identifiers
 related_clauses = [
     "B",
 ]
-tags = []
+tags = ["keyword-set", "lexical", "preprocessor", "reserved-keyword"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -1445,7 +1445,7 @@ anchors = [
 ]
 summary = "A `line directive sets the maintained source line number and file name for the immediately following line to its specified values, and that mapping is not changed by `resetall."
 related_clauses = []
-tags = []
+tags = ["preprocessor", "source-location", "source-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1469,7 +1469,7 @@ anchors = [
 ]
 summary = "A `line directive may appear anywhere in a source description, but its line may contain only the directive and whitespace; comments or other text on that line are not allowed."
 related_clauses = []
-tags = []
+tags = ["lexical", "preprocessor", "source-location"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1494,7 +1494,7 @@ anchors = [
 ]
 summary = "A `line directive requires a positive integer line number, a string-literal full or relative filename, and level 0, 1, or 2; levels identify respectively an ordinary line, the first line after entering an include file, or the first line after exiting one."
 related_clauses = []
-tags = []
+tags = ["lexical", "preprocessor", "source-location"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1518,7 +1518,7 @@ anchors = [
 ]
 summary = "Source filename and line remapping by `line does not alter the mechanism used for library searching."
 related_clauses = []
-tags = []
+tags = ["library", "preprocessor", "source-location"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1542,7 +1542,7 @@ anchors = [
 ]
 summary = "`__LINE__ expands to the current input line number as a simple decimal number."
 related_clauses = []
-tags = []
+tags = ["literal", "macro", "preprocessor", "source-location"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1567,7 +1567,7 @@ anchors = [
 ]
 summary = "A function-like macro use requires a parenthesized comma-separated actual list; commas and right parentheses may occur within an actual or default only when protected by matched parentheses, brackets, braces, double-quoted or triple-quoted strings, or an escaped identifier."
 related_clauses = []
-tags = []
+tags = ["lexical", "literal", "macro", "preprocessor"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -1594,7 +1594,7 @@ anchors = [
 ]
 summary = "Each object-like macro use substitutes its replacement text unchanged, while each function-like macro use replaces every formal with the corresponding actual expression."
 related_clauses = []
-tags = []
+tags = ["macro", "preprocessor"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1618,7 +1618,7 @@ anchors = [
 ]
 summary = "If fewer actual arguments are supplied than formals, every remaining formal shall have a default and those defaults are substituted; it is an error when any remaining formal lacks a default."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "macro", "preprocessor"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1642,7 +1642,7 @@ anchors = [
 ]
 summary = "It is an error for a function-like macro call to supply more actual arguments than the macro has formal arguments."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "macro", "preprocessor"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1666,7 +1666,7 @@ anchors = [
 ]
 summary = "Whitespace is permitted between a macro name and the opening parenthesis of a macro use, and is required there when the macro name is an escaped identifier."
 related_clauses = []
-tags = []
+tags = ["lexical", "macro", "preprocessor"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1692,7 +1692,7 @@ summary = "Comments in macro text do not become substituted text; a line comment
 related_clauses = [
     "5.4",
 ]
-tags = []
+tags = ["lexical", "macro", "preprocessor"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -1718,7 +1718,7 @@ anchors = [
 ]
 summary = "After definition, a text macro may be used anywhere subsequently processed within that compilation unit, without any narrower language scope restriction."
 related_clauses = []
-tags = []
+tags = ["compilation-unit", "macro", "preprocessor", "visibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1743,7 +1743,7 @@ anchors = [
 ]
 summary = "A `define contains a macro identifier, an optional parenthesized comma-separated nonempty formal-argument list, and macro text; each formal is a simple identifier optionally followed by `=` and default text."
 related_clauses = []
-tags = []
+tags = ["grammar", "macro", "preprocessor"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1767,7 +1767,7 @@ anchors = [
 ]
 summary = "A `define directive may create a text-substitution macro either inside or outside a design element."
 related_clauses = []
-tags = []
+tags = ["macro", "preprocessor"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1794,7 +1794,7 @@ summary = "A compiler directive appearing in macro replacement text is ignored w
 related_clauses = [
     "22.2",
 ]
-tags = []
+tags = ["macro", "preprocessor", "source-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -1818,7 +1818,7 @@ anchors = [
 ]
 summary = "Macro invocations within a compiler directive are expanded while that directive is processed."
 related_clauses = []
-tags = []
+tags = ["macro", "preprocessor"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -1843,7 +1843,7 @@ anchors = [
 ]
 summary = "A formal may have default text after `=`; omission of its corresponding actual substitutes that default, and a default may explicitly be empty when `=` is followed by the comma or closing parenthesis."
 related_clauses = []
-tags = []
+tags = ["macro", "preprocessor"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1869,7 +1869,7 @@ summary = "Macro formal names are comma-separated simple identifiers in parenthe
 related_clauses = [
     "5.6.1",
 ]
-tags = []
+tags = ["lexical", "macro", "preprocessor"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -1895,7 +1895,7 @@ anchors = [
 ]
 summary = "A macro formal argument is in scope through the end of the macro replacement text and may be referenced there like an identifier."
 related_clauses = []
-tags = []
+tags = ["macro", "scope", "visibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1919,7 +1919,7 @@ anchors = [
 ]
 summary = "Each macro actual argument is substituted literally and in its entirety at every occurrence of its corresponding formal; if the resulting context evaluates multiple copies of an actual expression, that expression can be evaluated more than once."
 related_clauses = []
-tags = []
+tags = ["macro", "preprocessor"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1943,7 +1943,7 @@ anchors = [
 ]
 summary = "Ordinary and grave-accent quote or triple-quote forms may be mixed in macro text, but each ordinary quote or triple quote starts a string literal requiring a matching terminator, and every character inside that literal, including grave accents, remains literal in the replaced text."
 related_clauses = []
-tags = []
+tags = ["lexical", "literal", "macro", "preprocessor"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -1970,7 +1970,7 @@ anchors = [
 ]
 summary = "It is illegal for a text macro name to be the same as a compiler-directive keyword."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "macro", "namespace", "preprocessor"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1996,7 +1996,7 @@ summary = "A text macro name may be either a simple_identifier or an escaped_ide
 related_clauses = [
     "5.6",
 ]
-tags = []
+tags = ["lexical", "macro", "preprocessor"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2021,7 +2021,7 @@ anchors = [
 ]
 summary = "Macro replacement text may contain the grave-accent-quote operator; it contributes a quotation mark while permitting formal substitution and embedded macro expansion within the resulting quoted text, enabling construction of string literals from macro arguments."
 related_clauses = []
-tags = []
+tags = ["literal", "macro", "preprocessor"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2045,7 +2045,7 @@ anchors = [
 ]
 summary = "A text macro may be redefined; each use expands according to the latest definition processed before that use."
 related_clauses = []
-tags = []
+tags = ["macro", "preprocessor", "source-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2071,7 +2071,7 @@ summary = "When backslash-newline occurs within a string literal in macro text, 
 related_clauses = [
     "5.9",
 ]
-tags = []
+tags = ["lexical", "literal", "macro", "preprocessor"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -2104,7 +2104,7 @@ anchors = [
 ]
 summary = "A macro definition boundary or continuation shall not split a comment, number, string literal, identifier, keyword, or operator lexical token."
 related_clauses = []
-tags = []
+tags = ["lexical", "macro", "preprocessor"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2128,7 +2128,7 @@ anchors = [
 ]
 summary = "Macro replacement text may be arbitrary same-line text; a newline outside a triple-quoted string literal or block comment ends it unless immediately preceded by backslash, while backslash-newline continues it and expands as a newline without the backslash."
 related_clauses = []
-tags = []
+tags = ["lexical", "macro", "preprocessor"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -2154,7 +2154,7 @@ anchors = [
 ]
 summary = "The double-grave-accent macro operator delimits adjacent lexical tokens during replacement without inserting whitespace, allowing substituted arguments and adjacent text to form a single identifier token."
 related_clauses = []
-tags = []
+tags = ["lexical", "macro", "preprocessor"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2178,7 +2178,7 @@ anchors = [
 ]
 summary = "The grave-accent-triple-quote operator contributes a triple quotation mark and permits formal substitution and embedded macro expansion; unlike a literal triple-quoted string, an ordinary newline within this construction terminates the macro definition, while backslash-newline removes the backslash but preserves the newline in expansion."
 related_clauses = []
-tags = []
+tags = ["lexical", "literal", "macro", "preprocessor"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -2202,7 +2202,7 @@ anchors = [
 ]
 summary = "Newlines inside a triple-quoted string literal in macro replacement text do not terminate the macro definition."
 related_clauses = []
-tags = []
+tags = ["lexical", "literal", "macro", "preprocessor"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -2226,7 +2226,7 @@ anchors = [
 ]
 summary = "A text-macro use is a grave accent and macro identifier optionally followed by a parenthesized, comma-separated nonempty list of expression actual arguments."
 related_clauses = []
-tags = []
+tags = ["grammar", "macro", "preprocessor"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2250,7 +2250,7 @@ anchors = [
 ]
 summary = "Conditional-compilation constructs may nest; until an inner construct's matching `endif, its conditional directives govern only that inner construct and cannot terminate the enclosing construct's text block."
 related_clauses = []
-tags = []
+tags = ["conditional-compilation", "preprocessor", "source-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2274,7 +2274,7 @@ anchors = [
 ]
 summary = "Keyword-directive pairs may nest as a stack; each `end_keywords restores the version specifier that was active before its matching `begin_keywords."
 related_clauses = []
-tags = []
+tags = ["keyword-set", "preprocessor", "source-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2298,7 +2298,7 @@ anchors = [
 ]
 summary = "Macro uses contained in replacement text, actual arguments, or argument defaults are not expanded at outer-macro definition time; they expand only after their containing text is substituted into the outer replacement text."
 related_clauses = []
-tags = []
+tags = ["macro", "preprocessor", "source-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2322,7 +2322,7 @@ anchors = [
 ]
 summary = "Expanding a macro use supplied as an actual argument or default does not create new references to same-spelled formals of the containing top-level macro."
 related_clauses = []
-tags = []
+tags = ["macro", "scope", "visibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2346,7 +2346,7 @@ anchors = [
 ]
 summary = "A compiler directive shall not occur in the middle of another compiler directive, except that a macro usage is not itself considered a directive for this restriction."
 related_clauses = []
-tags = []
+tags = ["lexical", "macro", "preprocessor"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -2370,7 +2370,7 @@ anchors = [
 ]
 summary = "Compiler-directive spellings inside comments or string literals are not recognized as directives."
 related_clauses = []
-tags = []
+tags = ["lexical", "preprocessor"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -2394,7 +2394,7 @@ anchors = [
 ]
 summary = "Ordinary macro substitution and formal-argument substitution do not occur within string literals."
 related_clauses = []
-tags = []
+tags = ["lexical", "literal", "macro", "preprocessor"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2420,7 +2420,7 @@ anchors = [
 ]
 summary = "A `pragma consists of a simple-identifier pragma name and an optional comma-separated list of expressions; an expression may be a simple keyword, keyword `=` value, or value, and a value may be a parenthesized expression list, number, string, or identifier."
 related_clauses = []
-tags = []
+tags = ["grammar", "pragma", "preprocessor"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2444,7 +2444,7 @@ anchors = [
 ]
 summary = "The reset pragma restores tool-initial default values and state for every pragma name listed as its pragma keywords, while resetall restores tool-initial defaults for every pragma name recognized by the implementation."
 related_clauses = []
-tags = []
+tags = ["pragma", "preprocessor", "source-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2469,7 +2469,7 @@ anchors = [
 ]
 summary = "Within an included file, `__FILE__ and `__LINE__ reflect that included file; on return they restore the including-file values and advance `__LINE__ to the line after `include, while `line changes `__LINE__ and may change `__FILE__."
 related_clauses = []
-tags = []
+tags = ["include", "macro", "preprocessor", "source-location"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2494,7 +2494,7 @@ anchors = [
 ]
 summary = "It is an error for a macro's replacement expansion to contain a direct or indirect use of that same macro; a self-use occurring only within an actual argument or default is permitted and is not replacement-text recursion."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "macro", "preprocessor"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2519,7 +2519,7 @@ anchors = [
 ]
 summary = "Processing `resetall restores the non-cell-tagging state produced by `endcelldefine."
 related_clauses = []
-tags = []
+tags = ["module", "preprocessor", "source-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2546,7 +2546,7 @@ summary = "Processing `resetall restores the default implicit net type to wire."
 related_clauses = [
     "6.10",
 ]
-tags = []
+tags = ["nettype", "preprocessor", "source-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2570,7 +2570,7 @@ anchors = [
 ]
 summary = "A `resetall directive is illegal within a design element."
 related_clauses = []
-tags = []
+tags = ["lexical", "preprocessor"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2597,7 +2597,7 @@ summary = "`resetall does not affect compiler directives that have no default va
 related_clauses = [
     "22.5",
 ]
-tags = []
+tags = ["macro", "preprocessor", "source-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2622,7 +2622,7 @@ anchors = [
 ]
 summary = "Processing `resetall removes the previously selected `timescale state, after which the default time unit and precision are tool-specific rather than the prior explicit values."
 related_clauses = []
-tags = []
+tags = ["preprocessor", "source-order", "timescale"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2647,7 +2647,7 @@ anchors = [
 ]
 summary = "Processing `resetall restores the same normal unconnected-input-port behavior as `nounconnected_drive."
 related_clauses = []
-tags = []
+tags = ["preprocessor", "source-order", "unconnected-drive"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2671,7 +2671,7 @@ anchors = [
 ]
 summary = "Maintained source location increments its line number for each line read, resets the number to 1 and updates the name when a new file begins, saves the including file's location on include entry, restores it at include termination, and makes updated location information available through PLI."
 related_clauses = []
-tags = []
+tags = ["include", "pli", "source-location"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2699,7 +2699,7 @@ anchors = [
 ]
 summary = "Using a numeric parameter as a delay under a timescale does not change the parameter's stored numeric value; after the converted delay determines scheduled event times, those times are not rounded again when the assignments are scheduled."
 related_clauses = []
-tags = []
+tags = ["parameter", "simulation-time", "timescale"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2726,7 +2726,7 @@ summary = "A `timescale time-unit argument supplies the measurement unit for tim
 related_clauses = [
     "3.14",
 ]
-tags = []
+tags = ["simulation-time", "time-precision", "time-unit", "timescale"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2754,7 +2754,7 @@ related_clauses = [
     "3.14.2.2",
     "3.14.2.3",
 ]
-tags = []
+tags = ["source-order", "time-precision", "time-unit", "timescale"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2778,7 +2778,7 @@ anchors = [
 ]
 summary = "A `timescale directive is illegal within a design element."
 related_clauses = []
-tags = []
+tags = ["preprocessor", "timescale"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -2802,7 +2802,7 @@ anchors = [
 ]
 summary = "The time precision in a `timescale directive shall be at least as precise as its time unit and therefore cannot denote a longer time interval."
 related_clauses = []
-tags = []
+tags = ["time-precision", "time-unit", "timescale"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2827,7 +2827,7 @@ anchors = [
 ]
 summary = "A `timescale directive has a time-unit value, `/`, and a time-precision value; each value consists of magnitude 1, 10, or 100 and unit s, ms, us, ns, ps, or fs."
 related_clauses = []
-tags = []
+tags = ["preprocessor", "time-precision", "time-unit", "timescale"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2852,7 +2852,7 @@ anchors = [
 ]
 summary = "For modules, programs, or interfaces processed while `unconnected_drive pull1 or pull0 is the most recent of it and `nounconnected_drive, every unconnected input port is automatically pulled up or down respectively; `nounconnected_drive restores normal unconnected-port behavior, and the directives need not be paired."
 related_clauses = []
-tags = []
+tags = ["ports", "preprocessor", "source-order", "unconnected-drive"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2876,7 +2876,7 @@ anchors = [
 ]
 summary = "`unconnected_drive and `nounconnected_drive shall be specified outside design element declarations."
 related_clauses = []
-tags = []
+tags = ["preprocessor", "unconnected-drive"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2902,7 +2902,7 @@ anchors = [
 ]
 summary = "An `undef directive followed by a text-macro identifier removes that macro's prior `define definition in the compilation unit, leaving it with no value as though never defined."
 related_clauses = []
-tags = []
+tags = ["compilation-unit", "macro", "preprocessor", "source-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2928,7 +2928,7 @@ summary = "Processing `undefineall removes every text macro previously defined b
 related_clauses = [
     "22.5.1",
 ]
-tags = []
+tags = ["compilation-unit", "macro", "preprocessor", "source-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2952,7 +2952,7 @@ anchors = [
 ]
 summary = "`undefineall takes no arguments and may appear anywhere in the source description, including within a design element."
 related_clauses = []
-tags = []
+tags = ["macro", "preprocessor"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"

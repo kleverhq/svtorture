@@ -11,7 +11,7 @@ anchors = [
 ]
 summary = "Each argument in a PLI routine definition is mandatory unless that routine's definition explicitly marks the argument otherwise."
 related_clauses = []
-tags = []
+tags = ["formal-argument", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -35,7 +35,7 @@ anchors = [
 ]
 summary = "Defined action reasons fire at end of compile, start/end simulation, runtime error, PLI runtime error, timing-check violation, and signal occurrence as cbEndOfCompile, cbStartOfSimulation, cbEndOfSimulation, cbError, cbPLIError, cbTchkViolation, and cbSignal respectively."
 related_clauses = []
-tags = []
+tags = ["callback", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -59,7 +59,7 @@ anchors = [
 ]
 summary = "Action and feature callbacks receive an s_cb_data structure whose reason identifies the callback; cbTchkViolation obj identifies the timing check, cbInteractiveScopeChange obj identifies the new scope, and cbUnresolvedSystf user_data points to the unresolved name."
 related_clauses = []
-tags = []
+tags = ["callback", "object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -83,7 +83,7 @@ anchors = [
 ]
 summary = "Action/feature callback registration requires only reason, cb_rtn, and optionally user_data."
 related_clauses = []
-tags = []
+tags = ["callback", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -107,7 +107,7 @@ anchors = [
 ]
 summary = "Action callbacks occur in every VPI-compliant tool; feature callbacks represent optional tool-specific features that may be absent."
 related_clauses = []
-tags = []
+tags = ["callback", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -131,7 +131,7 @@ anchors = [
 ]
 summary = "Without vpiUserAllocFlag, vpi_get_value_array returns values in VPI-allocated storage that may be overwritten by a subsequent call, so preservation requires an application copy."
 related_clauses = []
-tags = []
+tags = ["array", "pli", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -155,7 +155,7 @@ anchors = [
 ]
 summary = "Requesting a format incompatible with the array element type is an error unless the compatibility is explicitly permitted."
 related_clauses = []
-tags = []
+tags = ["array", "diagnostic", "pli", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -179,7 +179,7 @@ anchors = [
 ]
 summary = "vpiIntVal array retrieval returns one 32-bit integer per indexed element through integers."
 related_clauses = []
-tags = []
+tags = ["array", "pli", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -203,7 +203,7 @@ anchors = [
 ]
 summary = "vpiLongIntVal returns num long values through longints and is permitted for vpiLongIntVar, vpiShortIntVar, or vpiByteVar arrays."
 related_clauses = []
-tags = []
+tags = ["array", "pli", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -227,7 +227,7 @@ anchors = [
 ]
 summary = "If vpi_get_value_array returns NULL in the selected value pointer, that indicates a VPI retrieval error."
 related_clauses = []
-tags = []
+tags = ["array", "diagnostic", "pli", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -251,7 +251,7 @@ anchors = [
 ]
 summary = "Four-state arrays support vpiRawFourStateVal and vpiVectorVal; two-state arrays support vpiRawTwoStateVal, while four-state formats may also read two-state arrays and vpiRawTwoStateVal may read four-state arrays."
 related_clauses = []
-tags = []
+tags = ["array", "four-state", "pli", "two-state"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -279,7 +279,7 @@ anchors = [
 ]
 summary = "vpiRawFourStateVal stores each element as consecutive aval then bval byte groups in rawvals, with ngroups=(elemBits+7)/8, 2*ngroups bytes per element, and caller buffers sized by that format rule."
 related_clauses = []
-tags = []
+tags = ["array", "four-state", "pli", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -303,7 +303,7 @@ anchors = [
 ]
 summary = "Raw array A/B bytes and vector words follow bit significance order: bit 0 is the LSB of the first A/B group, bit 8 begins the next byte group, and vector words follow the analogous 32-bit order."
 related_clauses = []
-tags = []
+tags = ["array", "bit-stream", "pli", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -328,7 +328,7 @@ anchors = [
 ]
 summary = "vpiRawTwoStateVal uses rawvals with A groups only, requires ngroups*num bytes, and caller buffers shall follow that format-specific sizing rule."
 related_clauses = []
-tags = []
+tags = ["array", "pli", "two-state", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -352,7 +352,7 @@ anchors = [
 ]
 summary = "vpiShortIntVal returns num short values through shortints and is permitted only for vpiShortIntVar or vpiByteVar element arrays."
 related_clauses = []
-tags = []
+tags = ["array", "pli", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -376,7 +376,7 @@ anchors = [
 ]
 summary = "vpiShortRealVal returns num float values through shortreals and is permitted only for vpiShortRealVar arrays."
 related_clauses = []
-tags = []
+tags = ["array", "pli", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -400,7 +400,7 @@ anchors = [
 ]
 summary = "index_p contains one starting index per unpacked dimension of obj, ordered as the dimensions appear left-to-right in HDL text."
 related_clauses = []
-tags = []
+tags = ["array", "index-order", "pli", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -424,7 +424,7 @@ anchors = [
 ]
 summary = "Array values are retrieved consecutively with the rightmost unpacked index varying fastest, each range traversed from its left bound toward its right bound, then successively slower indices, until num elements are returned."
 related_clauses = []
-tags = []
+tags = ["array", "index-order", "pli", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -448,7 +448,7 @@ anchors = [
 ]
 summary = "Requesting an array-value format not supported by clause 38.16 is an error."
 related_clauses = []
-tags = []
+tags = ["array", "diagnostic", "pli", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -473,7 +473,7 @@ anchors = [
 ]
 summary = "When vpiUserAllocFlag is set, vpi_get_value_array writes into the sufficiently sized application buffer addressed by value; for non-raw and non-vector formats its size is num times sizeof the selected union pointer's element type."
 related_clauses = []
-tags = []
+tags = ["array", "pli", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -497,7 +497,7 @@ anchors = [
 ]
 summary = "The application remains responsible for freeing memory it allocated for array retrieval even when an error overwrites the structure's value pointer with NULL."
 related_clauses = []
-tags = []
+tags = ["array", "pli", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -522,7 +522,7 @@ anchors = [
 ]
 summary = "vpiVectorVal array retrieval returns consecutive t_vpi_vecval A/B word groups through vectors, requiring ((elemBits+31)/32)*2*num words of storage."
 related_clauses = []
-tags = []
+tags = ["array", "pli", "unpacked-array", "vector"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -549,7 +549,7 @@ anchors = [
 ]
 summary = "vpi_user.h defines s_vpi_arrayvalue/p_vpi_arrayvalue with format, flags, and typed pointer union members for get and put array routines."
 related_clauses = []
-tags = []
+tags = ["array", "c-type", "pli", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -573,7 +573,7 @@ anchors = [
 ]
 summary = "Callback data and referenced structures belong to the simulator; the application copies data needed after return."
 related_clauses = []
-tags = []
+tags = ["callback", "lifetime", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -597,7 +597,7 @@ anchors = [
 ]
 summary = "Every callback registration sets reason to a predefined constant that determines callback timing."
 related_clauses = []
-tags = []
+tags = ["callback", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -621,7 +621,7 @@ anchors = [
 ]
 summary = "cb_rtn identifies the application routine invoked for the callback."
 related_clauses = []
-tags = []
+tags = ["callback", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -645,7 +645,7 @@ anchors = [
 ]
 summary = "Cancelling an event that has already occurred is not an error."
 related_clauses = []
-tags = []
+tags = ["event", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -669,7 +669,7 @@ anchors = [
 ]
 summary = "Cancelling a scheduled event removes that event but does not undo effects caused when it was scheduled, including inertial cancellation of other events."
 related_clauses = []
-tags = []
+tags = ["event", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -693,7 +693,7 @@ anchors = [
 ]
 summary = "cbAfterDelay occurs after a specified delay and before events in the resulting time queue, even if no event is present."
 related_clauses = []
-tags = []
+tags = ["callback", "pli", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -717,7 +717,7 @@ anchors = [
 ]
 summary = "For cbValueChange on an object with vpiArrayMember true, value is the changed member, index is its rightmost declaration-range index, and all indices are available via vpi_iterate(vpiIndex,obj)."
 related_clauses = []
-tags = []
+tags = ["array", "callback", "pli", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -741,7 +741,7 @@ anchors = [
 ]
 summary = "cbAssign and cbDeassign occur after procedural assign/deassign execution."
 related_clauses = []
-tags = []
+tags = ["callback", "pli", "procedural-assignment"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -765,7 +765,7 @@ anchors = [
 ]
 summary = "cbValueChange on a class variable fires when its reference changes to a new or null object; value is opaque/NULL and vpiObjId uniquely identifies the referred dynamic object, if any."
 related_clauses = []
-tags = []
+tags = ["callback", "class", "class-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -789,7 +789,7 @@ anchors = [
 ]
 summary = "cbCreateObj occurs after class construction/initialization or shallow-copy completion."
 related_clauses = []
-tags = []
+tags = ["callback", "class", "constructor", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -818,7 +818,7 @@ anchors = [
 ]
 summary = "vpi_user.h defines s_cb_data/p_cb_data with reason, callback routine, object, time, value, index, and user_data members and declared PLI types."
 related_clauses = []
-tags = []
+tags = ["c-type", "callback", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -842,7 +842,7 @@ anchors = [
 ]
 summary = "cbDisable occurs after disabling a named block or task containing a system task/function."
 related_clauses = []
-tags = []
+tags = ["callback", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -866,7 +866,7 @@ anchors = [
 ]
 summary = "For cbDisable, obj is a system task/function call, named begin/fork, task, or function handle."
 related_clauses = []
-tags = []
+tags = ["callback", "object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -890,7 +890,7 @@ anchors = [
 ]
 summary = "cbEndOfObject occurs when a transient object is about to be deleted as a result of a simulation event, with semantics corresponding to cbReclaimObj, cbEndOfFrame, or cbEndOfThread as appropriate."
 related_clauses = []
-tags = []
+tags = ["callback", "lifetime", "object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -914,7 +914,7 @@ anchors = [
 ]
 summary = "cbValueChange may target an event statement; execution invokes the callback with s_cb_data.value NULL."
 related_clauses = []
-tags = []
+tags = ["callback", "event", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -938,7 +938,7 @@ anchors = [
 ]
 summary = "cbForce and cbRelease occur after the corresponding operation."
 related_clauses = []
-tags = []
+tags = ["callback", "pli", "procedural-assignment"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -962,7 +962,7 @@ anchors = [
 ]
 summary = "vpiBinStrVal callback values are binary strings using 1, 0, x, and z."
 related_clauses = []
-tags = []
+tags = ["callback", "four-state", "pli", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -986,7 +986,7 @@ anchors = [
 ]
 summary = "vpiDecStrVal callback values are decimal strings using digits 0-9."
 related_clauses = []
-tags = []
+tags = ["callback", "pli", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1010,7 +1010,7 @@ anchors = [
 ]
 summary = "vpiHexStrVal callback values are hexadecimal strings using 0-f and x/X/z/Z."
 related_clauses = []
-tags = []
+tags = ["callback", "four-state", "pli", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1034,7 +1034,7 @@ anchors = [
 ]
 summary = "vpiIntVal callbacks return the trigger handle's integer value."
 related_clauses = []
-tags = []
+tags = ["callback", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1058,7 +1058,7 @@ anchors = [
 ]
 summary = "vpiObjTypeVal callbacks return the value in the closest format for the trigger object's type."
 related_clauses = []
-tags = []
+tags = ["callback", "pli", "type-compatibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1082,7 +1082,7 @@ anchors = [
 ]
 summary = "vpiOctStrVal callback values are octal strings using digits 0-7 and x/X/z/Z."
 related_clauses = []
-tags = []
+tags = ["callback", "four-state", "pli", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1106,7 +1106,7 @@ anchors = [
 ]
 summary = "vpiRealVal callbacks return the trigger handle's value as a double."
 related_clauses = []
-tags = []
+tags = ["callback", "pli", "real"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1130,7 +1130,7 @@ anchors = [
 ]
 summary = "vpiScalarVal callback values are vpi1, vpi0, vpiX, vpiZ, vpiH, or vpiL."
 related_clauses = []
-tags = []
+tags = ["callback", "four-state", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1154,7 +1154,7 @@ anchors = [
 ]
 summary = "vpiStrengthVal callbacks return value plus strength information and apply only to scalar objects."
 related_clauses = []
-tags = []
+tags = ["callback", "pli", "signal-strength"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1178,7 +1178,7 @@ anchors = [
 ]
 summary = "vpiStringVal callbacks return an ASCII string."
 related_clauses = []
-tags = []
+tags = ["callback", "pli", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1202,7 +1202,7 @@ anchors = [
 ]
 summary = "vpiTimeVal callbacks return the handle's integer value using two integer words."
 related_clauses = []
-tags = []
+tags = ["callback", "pli", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1226,7 +1226,7 @@ anchors = [
 ]
 summary = "vpiVectorVal callbacks return the object's value in aval/bval representation."
 related_clauses = []
-tags = []
+tags = ["callback", "four-state", "pli", "vector"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1250,7 +1250,7 @@ anchors = [
 ]
 summary = "cbStartOfFrame occurs when a task or function frame is activated after its automatic variables are created and initialized; cbEndOfFrame occurs when that task or function completes and the frame is about to end."
 related_clauses = []
-tags = []
+tags = ["callback", "lifetime", "pli", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1274,7 +1274,7 @@ anchors = [
 ]
 summary = "cbNextSimTime occurs before events in the next event queue."
 related_clauses = []
-tags = []
+tags = ["callback", "pli", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1298,7 +1298,7 @@ anchors = [
 ]
 summary = "cbForce/cbRelease/cbAssign/cbDeassign obj identifies the corresponding statement and value contains the resulting left-hand value, including post-release value."
 related_clauses = []
-tags = []
+tags = ["callback", "pli", "procedural-assignment"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1322,7 +1322,7 @@ anchors = [
 ]
 summary = "cbReclaimObj receives NULL time and a valid soon-to-be-reclaimed class-object handle whose properties are readable; using it for navigation or registration is undefined."
 related_clauses = []
-tags = []
+tags = ["callback", "class", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1346,7 +1346,7 @@ anchors = [
 ]
 summary = "cbReclaimObj occurs before automatic memory management reclaims a class object that has been marked as no longer used."
 related_clauses = []
-tags = []
+tags = ["callback", "class", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1370,7 +1370,7 @@ anchors = [
 ]
 summary = "cbSignal with index set to a legal operating-system signal causes the simulator to trap it, reach a safe point if possible, and invoke the callback."
 related_clauses = []
-tags = []
+tags = ["callback", "pli", "simulation-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1394,7 +1394,7 @@ anchors = [
 ]
 summary = "cbSizeChange occurs after a dynamic array, associative array, queue, or string is resized."
 related_clauses = []
-tags = []
+tags = ["array", "callback", "pli", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1418,7 +1418,7 @@ anchors = [
 ]
 summary = "cbStmt occurs before execution of the registered behavioral statement."
 related_clauses = []
-tags = []
+tags = ["callback", "pli", "statement-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1442,7 +1442,7 @@ anchors = [
 ]
 summary = "Every object in the stmt class is eligible for a cbStmt callback."
 related_clauses = []
-tags = []
+tags = ["callback", "pli", "statement-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1469,7 +1469,7 @@ anchors = [
 ]
 summary = "For vpiBegin, vpiNamedBegin, vpiFork, and vpiNamedFork, one cbStmt occurs before any contained statement executes and delivered obj identifies the block."
 related_clauses = []
-tags = []
+tags = ["block", "callback", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1494,7 +1494,7 @@ anchors = [
 ]
 summary = "For vpiDelayControl, cbStmt occurs when the delay control is encountered, before the delay occurs."
 related_clauses = []
-tags = []
+tags = ["callback", "pli", "timing-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1518,7 +1518,7 @@ anchors = [
 ]
 summary = "Immediately before statement execution, cbStmt receives new s_cb_data with cbStmt reason, registered routine/obj/user_data, current requested time or NULL if suppressed, value NULL, and index 0."
 related_clauses = []
-tags = []
+tags = ["callback", "pli", "statement-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1543,7 +1543,7 @@ anchors = [
 ]
 summary = "For vpiEventControl, cbStmt occurs when the control is encountered, before its event occurs."
 related_clauses = []
-tags = []
+tags = ["callback", "event", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1569,7 +1569,7 @@ anchors = [
 ]
 summary = "For vpiFor, cbStmt occurs before any control expression initially and before the incremental statement on every iteration."
 related_clauses = []
-tags = []
+tags = ["callback", "pli", "statement-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1594,7 +1594,7 @@ anchors = [
 ]
 summary = "For vpiForever, cbStmt occurs when first encountered and on every subsequent loop iteration."
 related_clauses = []
-tags = []
+tags = ["callback", "pli", "statement-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1619,7 +1619,7 @@ anchors = [
 ]
 summary = "For vpiIf and vpiIfElse, cbStmt occurs before evaluation of the condition expression."
 related_clauses = []
-tags = []
+tags = ["callback", "pli", "statement-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1643,7 +1643,7 @@ anchors = [
 ]
 summary = "Module-wide registration does not place callbacks on statements in protected code."
 related_clauses = []
-tags = []
+tags = ["callback", "pli", "protected-block", "statement-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1667,7 +1667,7 @@ anchors = [
 ]
 summary = "Module-wide registration returns one callback handle; passing it to vpi_remove_cb removes callbacks from every statement in the module instance."
 related_clauses = []
-tags = []
+tags = ["callback", "pli", "statement-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1691,7 +1691,7 @@ anchors = [
 ]
 summary = "Using a module-instance obj in vpi_register_cb places the callback on every callback-eligible statement in that instance."
 related_clauses = []
-tags = []
+tags = ["callback", "module", "pli", "statement-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1715,7 +1715,7 @@ anchors = [
 ]
 summary = "Multiple identical vpi_register_cb calls create multiple callbacks."
 related_clauses = []
-tags = []
+tags = ["callback", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1739,7 +1739,7 @@ anchors = [
 ]
 summary = "A cbStmt registration on protected code is disallowed, returns NULL, and prints an appropriate error message."
 related_clauses = []
-tags = []
+tags = ["callback", "diagnostic", "pli", "protected-block"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1763,7 +1763,7 @@ anchors = [
 ]
 summary = "cbStmt registration sets cb_rtn, an eligible statement obj, requested time type or suppression, unused value/index, and user_data."
 related_clauses = []
-tags = []
+tags = ["callback", "pli", "statement-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1788,7 +1788,7 @@ anchors = [
 ]
 summary = "For vpiRepeat, cbStmt occurs when first encountered and on every subsequent iteration."
 related_clauses = []
-tags = []
+tags = ["callback", "pli", "statement-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1820,7 +1820,7 @@ anchors = [
 ]
 summary = "For vpiWait, vpiCase, vpiAssignment, vpiAssignStmt, vpiDeassign, vpiDisable, vpiForce, vpiRelease, and vpiEventStmt, cbStmt occurs before the statement executes."
 related_clauses = []
-tags = []
+tags = ["callback", "pli", "statement-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1845,7 +1845,7 @@ anchors = [
 ]
 summary = "For vpiTaskCall and vpiSysTaskCall, cbStmt occurs before the task executes."
 related_clauses = []
-tags = []
+tags = ["callback", "pli", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1870,7 +1870,7 @@ anchors = [
 ]
 summary = "For vpiWhile, cbStmt occurs before condition evaluation on every loop iteration."
 related_clauses = []
-tags = []
+tags = ["callback", "pli", "statement-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1894,7 +1894,7 @@ anchors = [
 ]
 summary = "A cbValueChange registered with vpiStrengthVal fires on every strength change, even when logic value does not change."
 related_clauses = []
-tags = []
+tags = ["callback", "pli", "signal-strength"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1918,7 +1918,7 @@ anchors = [
 ]
 summary = "cbStartOfThread occurs whenever a thread is created, cbEnterThread whenever it resumes execution, and cbEndOfThread when it is deleted after all frames activated by that thread have ended."
 related_clauses = []
-tags = []
+tags = ["callback", "lifetime", "pli", "thread"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1942,7 +1942,7 @@ anchors = [
 ]
 summary = "cbAtEndOfSimTime occurs after nonblocking events and before the time slice enters its read-only phase."
 related_clauses = []
-tags = []
+tags = ["callback", "pli", "scheduling", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1966,7 +1966,7 @@ anchors = [
 ]
 summary = "cbNBASynch occurs immediately before nonblocking-assignment events are processed."
 related_clauses = []
-tags = []
+tags = ["callback", "nba", "pli", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1990,7 +1990,7 @@ anchors = [
 ]
 summary = "cbReadOnlySynch has read-write synchronization timing, but may not write values or schedule events before the next scheduled event."
 related_clauses = []
-tags = []
+tags = ["callback", "pli", "scheduling", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2014,7 +2014,7 @@ anchors = [
 ]
 summary = "cbReadWriteSynch occurs after events at the specified time, which may be before or after NBA processing."
 related_clauses = []
-tags = []
+tags = ["callback", "pli", "scheduling", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2038,7 +2038,7 @@ anchors = [
 ]
 summary = "cbAtStartOfSimTime occurs before events in a specified time queue and may be scheduled even if that queue has no event."
 related_clauses = []
-tags = []
+tags = ["callback", "pli", "scheduling", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2062,7 +2062,7 @@ anchors = [
 ]
 summary = "cbValueChange occurs after supported variable, expression, terminal, or event-statement changes, excluding class objects, dynamic arrays, strings, queues, and associative arrays."
 related_clauses = []
-tags = []
+tags = ["callback", "pli", "value-change"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2086,7 +2086,7 @@ anchors = [
 ]
 summary = "Registering cbForce, cbRelease, or cbDisable on a variable bit-select is illegal."
 related_clauses = []
-tags = []
+tags = ["callback", "diagnostic", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2111,7 +2111,7 @@ anchors = [
 ]
 summary = "When an error occurred and vpi_chk_error receives a non-NULL error_info_p, the referenced s_vpi_error_info is populated with information about that error."
 related_clauses = []
-tags = []
+tags = ["c-type", "diagnostic", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2135,7 +2135,7 @@ anchors = [
 ]
 summary = "A caller that does not need detailed error information may pass NULL to vpi_chk_error."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2159,7 +2159,7 @@ anchors = [
 ]
 summary = "Calling vpi_chk_error does not alter the VPI error status."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2191,7 +2191,7 @@ anchors = [
 ]
 summary = "After a VPI routine reports an error, vpi_chk_error returns the integer error constant corresponding to that error's severity level, ordered from vpiNotice (lowest) through vpiWarning, vpiError, vpiSystem, and vpiInternal (highest)."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2216,7 +2216,7 @@ anchors = [
 ]
 summary = "If the preceding VPI routine call produced no error, vpi_chk_error returns 0 (false)."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2241,7 +2241,7 @@ anchors = [
 ]
 summary = "vpi_chk_error takes one p_vpi_error_info pointer argument identifying the structure to receive error information."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2275,7 +2275,7 @@ anchors = [
 ]
 summary = "At call time, vpi_compare_objects returns 1 exactly when both handles refer to the same existing underlying simulation object; it returns 0 when objects differ or either represented object does not exist, with equivalence tracking dynamic indices and class-object identity."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli", "type-equivalence"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2301,7 +2301,7 @@ anchors = [
 ]
 summary = "vpi_compare_objects takes two vpiHandle arguments, each identifying an object."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2327,7 +2327,7 @@ summary = "vpi_control(vpiFinish, level) causes $finish with the supplied diagno
 related_clauses = [
     "20.2",
 ]
-tags = []
+tags = ["pli", "simulation-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2351,7 +2351,7 @@ anchors = [
 ]
 summary = "vpi_control(vpiSetInteractiveScope, scope_handle) immediately changes the tool's interactive scope to the supplied handle, which shall identify an object in the vpiScope class."
 related_clauses = []
-tags = []
+tags = ["pli", "scope", "simulation-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2377,7 +2377,7 @@ summary = "vpi_control(vpiReset, stop_value, reset_value, diagnostics_value) cau
 related_clauses = [
     "D.8",
 ]
-tags = []
+tags = ["pli", "simulation-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2401,7 +2401,7 @@ anchors = [
 ]
 summary = "vpi_control returns 1 on successful completion and 0 on failure."
 related_clauses = []
-tags = []
+tags = ["pli", "simulation-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2427,7 +2427,7 @@ anchors = [
 ]
 summary = "vpi_control takes a PLI_INT32 operation selector followed by a variable number of operation-specific arguments."
 related_clauses = []
-tags = []
+tags = ["pli", "simulation-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2453,7 +2453,7 @@ summary = "vpi_control(vpiStop, level) causes $stop with the supplied diagnostic
 related_clauses = [
     "20.2",
 ]
-tags = []
+tags = ["pli", "simulation-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2482,7 +2482,7 @@ anchors = [
 ]
 summary = "vpi_user.h defines s_vpi_delay and p_vpi_delay with the specified da, no_of_delays, time_type, mtm_flag, append_flag, and pulsere_flag members and declared types for get/put delay routines."
 related_clauses = []
-tags = []
+tags = ["layout", "path-delay", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2507,7 +2507,7 @@ anchors = [
 ]
 summary = "vpi_user.h defines s_vpi_error_info and p_vpi_error_info with the specified state, level, message, product, code, file, and line members and their declared PLI types."
 related_clauses = []
-tags = []
+tags = ["c-type", "diagnostic", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2531,7 +2531,7 @@ anchors = [
 ]
 summary = "Every VPI routine call other than vpi_chk_error resets the VPI error status."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2555,7 +2555,7 @@ anchors = [
 ]
 summary = "An event callback receives one pointer to a simulator-created s_cb_data distinct from the registration structure, with requested time/value information and user_data equivalent to registration."
 related_clauses = []
-tags = []
+tags = ["callback", "event", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2579,7 +2579,7 @@ anchors = [
 ]
 summary = "Event callback obj identifies its trigger; create uses class typespec, reclaim uses typespec or object, and NULL force/release means all events."
 related_clauses = []
-tags = []
+tags = ["callback", "event", "object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2603,7 +2603,7 @@ anchors = [
 ]
 summary = "Event callback time.type selects scaled real, simulation, or suppressed time; reclaim/end-object ignore it and pass no time."
 related_clauses = []
-tags = []
+tags = ["callback", "event", "pli", "time-format"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2627,7 +2627,7 @@ anchors = [
 ]
 summary = "Event callback value.format selects a Table 38-5 format or suppression; cbStmt ignores it and passes no value."
 related_clauses = []
-tags = []
+tags = ["callback", "event", "format-specifier", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2651,7 +2651,7 @@ anchors = [
 ]
 summary = "vpi_flush flushes the output buffers for the simulator output channel and current log file."
 related_clauses = []
-tags = []
+tags = ["file-io", "file-output", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2675,7 +2675,7 @@ anchors = [
 ]
 summary = "vpi_flush returns 0 on success and a nonzero value on failure."
 related_clauses = []
-tags = []
+tags = ["file-io", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2700,7 +2700,7 @@ anchors = [
 ]
 summary = "vpi_flush takes no arguments."
 related_clauses = []
-tags = []
+tags = ["file-io", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2724,7 +2724,7 @@ anchors = [
 ]
 summary = "For a Boolean property, vpi_get returns 1 for true and 0 for false."
 related_clauses = []
-tags = []
+tags = ["pli", "two-state"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2748,7 +2748,7 @@ anchors = [
 ]
 summary = "The application allocates the s_cb_data storage passed to vpi_get_cb_info."
 related_clauses = []
-tags = []
+tags = ["callback", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2772,7 +2772,7 @@ anchors = [
 ]
 summary = "vpi_get_cb_info writes information for the specified simulation-related callback into the supplied s_cb_data structure."
 related_clauses = []
-tags = []
+tags = ["callback", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2799,7 +2799,7 @@ anchors = [
 ]
 summary = "vpi_get_cb_info returns void and takes a callback vpiHandle plus a p_cb_data pointer to receive callback information."
 related_clauses = []
-tags = []
+tags = ["callback", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2823,7 +2823,7 @@ anchors = [
 ]
 summary = "vpi_get_data may be called only from an application routine invoked for cbStartOfRestart or cbEndOfRestart."
 related_clauses = []
-tags = []
+tags = ["callback", "pli", "save-restore"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2848,7 +2848,7 @@ anchors = [
 ]
 summary = "The application provides properly allocated writable storage at dataLoc for vpi_get_data."
 related_clauses = []
-tags = []
+tags = ["pli", "save-restore"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2872,7 +2872,7 @@ anchors = [
 ]
 summary = "If vpi_get_data requests more bytes than remain for an id, the tool issues a warning, copies the remaining stored bytes, fills the rest of dataLoc with zero bytes, and returns only the number of stored bytes retrieved."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "pli", "save-restore"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2896,7 +2896,7 @@ anchors = [
 ]
 summary = "An application may retrieve fewer bytes for an id than were stored by vpi_put_data."
 related_clauses = []
-tags = []
+tags = ["pli", "save-restore"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2921,7 +2921,7 @@ anchors = [
 ]
 summary = "vpi_get_data returns the actual number of stored bytes retrieved, and returns 0 on failure."
 related_clauses = []
-tags = []
+tags = ["pli", "save-restore"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2945,7 +2945,7 @@ anchors = [
 ]
 summary = "For each save/restart id, vpi_get_data copies requested data into dataLoc starting at the beginning on the first call and continuing where the preceding call left off on subsequent calls."
 related_clauses = []
-tags = []
+tags = ["pli", "save-restore"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2972,7 +2972,7 @@ anchors = [
 ]
 summary = "vpi_get_data takes a save/restart PLI_INT32 id, an application-storage PLI_BYTE8 pointer, and a PLI_INT32 requested byte count."
 related_clauses = []
-tags = []
+tags = ["pli", "save-restore"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2997,7 +2997,7 @@ anchors = [
 ]
 summary = "The application allocates the s_vpi_delay structure before passing its pointer to vpi_get_delays."
 related_clauses = []
-tags = []
+tags = ["path-delay", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3024,7 +3024,7 @@ anchors = [
 ]
 summary = "For vpi_get_delays, da points to an application-allocated s_vpi_time array that receives delay values, with required element count determined by the requested delay count, mtm_flag, and pulsere_flag."
 related_clauses = []
-tags = []
+tags = ["array", "path-delay", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3048,7 +3048,7 @@ anchors = [
 ]
 summary = "vpi_get_delays places delays in the application-provided da array in the same order that the delays occur in the SystemVerilog description."
 related_clauses = []
-tags = []
+tags = ["path-delay", "pli", "source-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3072,7 +3072,7 @@ anchors = [
 ]
 summary = "vpi_get_delays ignores the type flag in the s_vpi_time structure referenced by the delay structure."
 related_clauses = []
-tags = []
+tags = ["path-delay", "pli", "time-format"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3096,7 +3096,7 @@ anchors = [
 ]
 summary = "For an intermodule path object, s_vpi_delay.no_of_delays shall be 2 or 3."
 related_clauses = []
-tags = []
+tags = ["interconnect", "path-delay", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3123,7 +3123,7 @@ anchors = [
 ]
 summary = "When mtm_flag is true and pulsere_flag is false, da has 3 × no_of_delays elements; each delay occupies three consecutive elements ordered minimum, typical, maximum."
 related_clauses = []
-tags = []
+tags = ["layout", "path-delay", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3156,7 +3156,7 @@ anchors = [
 ]
 summary = "When mtm_flag and pulsere_flag are both true, da has 9 × no_of_delays elements; each delay occupies nine consecutive elements ordered minimum, typical, maximum delay; minimum, typical, maximum reject limit; and minimum, typical, maximum error limit."
 related_clauses = []
-tags = []
+tags = ["layout", "path-delay", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3181,7 +3181,7 @@ anchors = [
 ]
 summary = "When retrieving path-object delays, s_vpi_delay.no_of_delays shall be 1, 2, 3, 6, or 12."
 related_clauses = []
-tags = []
+tags = ["path-delay", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3206,7 +3206,7 @@ anchors = [
 ]
 summary = "When retrieving primitive-object delays, s_vpi_delay.no_of_delays shall be 2 or 3."
 related_clauses = []
-tags = []
+tags = ["path-delay", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3233,7 +3233,7 @@ anchors = [
 ]
 summary = "When mtm_flag is false and pulsere_flag is true, da has 3 × no_of_delays elements; each delay occupies three consecutive elements ordered delay, reject limit, error limit."
 related_clauses = []
-tags = []
+tags = ["layout", "path-delay", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3257,7 +3257,7 @@ anchors = [
 ]
 summary = "vpi_get_delays writes the specified object's delays or pulse limits into the supplied s_vpi_delay structure."
 related_clauses = []
-tags = []
+tags = ["path-delay", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3284,7 +3284,7 @@ anchors = [
 ]
 summary = "vpi_get_delays returns void and takes an object vpiHandle plus a p_vpi_delay destination pointer."
 related_clauses = []
-tags = []
+tags = ["path-delay", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3311,7 +3311,7 @@ anchors = [
 ]
 summary = "When mtm_flag and pulsere_flag are both false, s_vpi_delay.da contains no_of_delays elements, one per delay in order: da[0] is the first delay, da[1] the second, and so on."
 related_clauses = []
-tags = []
+tags = ["layout", "path-delay", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3335,7 +3335,7 @@ anchors = [
 ]
 summary = "The time_type flag in s_vpi_delay controls the format in which vpi_get_delays returns delay information."
 related_clauses = []
-tags = []
+tags = ["path-delay", "pli", "time-format"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3359,7 +3359,7 @@ anchors = [
 ]
 summary = "For a timing-check object, s_vpi_delay.no_of_delays shall equal the number of limits that exist in that timing check."
 related_clauses = []
-tags = []
+tags = ["path-delay", "pli", "timing-check"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3383,7 +3383,7 @@ anchors = [
 ]
 summary = "When vpi_get encounters an error, it returns vpiUndefined."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3407,7 +3407,7 @@ anchors = [
 ]
 summary = "When obj is NULL and prop is either vpiTimeUnit or vpiTimePrecision, vpi_get returns the simulation time unit."
 related_clauses = []
-tags = []
+tags = ["pli", "time-precision", "time-unit"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3435,7 +3435,7 @@ related_clauses = [
     "K",
     "M",
 ]
-tags = []
+tags = ["object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3459,7 +3459,7 @@ anchors = [
 ]
 summary = "Unless another rule permits the requested property, calling vpi_get on a protected object is an error."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "object-handle", "pli", "protected-block"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3485,7 +3485,7 @@ anchors = [
 ]
 summary = "vpi_get takes a PLI_INT32 property selector and a vpiHandle identifying the object whose property is requested."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3510,7 +3510,7 @@ anchors = [
 ]
 summary = "vpi_get_str returns a PLI_BYTE8 pointer to a character string containing the requested string-property value."
 related_clauses = []
-tags = []
+tags = ["pli", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3534,7 +3534,7 @@ anchors = [
 ]
 summary = "Unless another rule permits the requested property, calling vpi_get_str on a protected object is an error."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "pli", "protected-block", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3558,7 +3558,7 @@ anchors = [
 ]
 summary = "The temporary buffer used by vpi_get_str is distinct from the string buffer used for string values returned through s_vpi_value."
 related_clauses = []
-tags = []
+tags = ["pli", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3582,7 +3582,7 @@ anchors = [
 ]
 summary = "All vpi_get_str calls use the same temporary string buffer, so a subsequent call may replace the prior returned string."
 related_clauses = []
-tags = []
+tags = ["pli", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3608,7 +3608,7 @@ anchors = [
 ]
 summary = "vpi_get_str takes a PLI_INT32 property selector and a vpiHandle identifying the object whose string property is requested."
 related_clauses = []
-tags = []
+tags = ["pli", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3632,7 +3632,7 @@ anchors = [
 ]
 summary = "The application allocates the s_vpi_systf_data storage passed to vpi_get_systf_info."
 related_clauses = []
-tags = []
+tags = ["pli", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3656,7 +3656,7 @@ anchors = [
 ]
 summary = "vpi_get_systf_info writes information for the specified user-defined system task or function callback into the supplied s_vpi_systf_data structure."
 related_clauses = []
-tags = []
+tags = ["pli", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3683,7 +3683,7 @@ anchors = [
 ]
 summary = "vpi_get_systf_info returns void and takes a system-task/function callback vpiHandle plus a p_vpi_systf_data destination pointer."
 related_clauses = []
-tags = []
+tags = ["pli", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3707,7 +3707,7 @@ anchors = [
 ]
 summary = "The application allocates the s_vpi_time storage passed to vpi_get_time."
 related_clauses = []
-tags = []
+tags = ["pli", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3731,7 +3731,7 @@ anchors = [
 ]
 summary = "When obj is NULL, vpi_get_time returns the current simulation time using the simulation time unit."
 related_clauses = []
-tags = []
+tags = ["pli", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3755,7 +3755,7 @@ anchors = [
 ]
 summary = "For a non-NULL ordinary object, vpi_get_time returns the current simulation time using that object's timescale."
 related_clauses = []
-tags = []
+tags = ["pli", "simulation-time", "timescale"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3779,7 +3779,7 @@ anchors = [
 ]
 summary = "When obj is a time-queue object, vpi_get_time returns that future event's scheduled time using the simulation time unit."
 related_clauses = []
-tags = []
+tags = ["event", "pli", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3803,7 +3803,7 @@ anchors = [
 ]
 summary = "Before vpi_get_time is called, time_p->type selects whether the result is represented as scaled real time or simulation time."
 related_clauses = []
-tags = []
+tags = ["pli", "simulation-time", "time-format"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3829,7 +3829,7 @@ anchors = [
 ]
 summary = "vpi_get_time returns void and takes an object vpiHandle plus a p_vpi_time destination pointer."
 related_clauses = []
-tags = []
+tags = ["pli", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3854,7 +3854,7 @@ anchors = [
 ]
 summary = "For a user-defined system task or function call handle with data previously associated by vpi_put_userdata, vpi_get_userdata returns that associated pointer value."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli", "subroutine", "user-data"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3879,7 +3879,7 @@ anchors = [
 ]
 summary = "After a reset or restart, subsequent vpi_get_userdata calls return NULL."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli", "simulation-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3903,7 +3903,7 @@ anchors = [
 ]
 summary = "If vpi_get_userdata fails, it returns NULL."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "object-handle", "pli", "user-data"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3927,7 +3927,7 @@ anchors = [
 ]
 summary = "If no user data was previously associated with the object, vpi_get_userdata returns NULL."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli", "user-data"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3953,7 +3953,7 @@ anchors = [
 ]
 summary = "vpi_get_userdata takes a system-task or system-function call vpiHandle and returns a void pointer."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3977,7 +3977,7 @@ anchors = [
 ]
 summary = "The application allocates the s_vpi_arrayvalue structure passed to vpi_get_value_array."
 related_clauses = []
-tags = []
+tags = ["array", "c-type", "pli", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4001,7 +4001,7 @@ anchors = [
 ]
 summary = "For vpi_get_value_array, an element is an indexable array member with every unpacked index specified, and its data type is the array data type with all unpacked ranges removed."
 related_clauses = []
-tags = []
+tags = ["array", "pli", "type-compatibility", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4025,7 +4025,7 @@ anchors = [
 ]
 summary = "vpi_get_value_array retrieves contiguous elements only from static-lifetime unpacked variable or net arrays whose vpiArrayType is vpiStaticArray, that contain neither dynamic arrays nor dynamic elements, and whose elements are not themselves unpacked types."
 related_clauses = []
-tags = []
+tags = ["array", "pli", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4049,7 +4049,7 @@ anchors = [
 ]
 summary = "s_vpi_arrayvalue.format selects the layout of values returned by vpi_get_value_array."
 related_clauses = []
-tags = []
+tags = ["array", "layout", "pli", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4073,7 +4073,7 @@ anchors = [
 ]
 summary = "vpi_get_value_array places the requested array-section values in the supplied s_vpi_arrayvalue structure."
 related_clauses = []
-tags = []
+tags = ["array", "pli", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4102,7 +4102,7 @@ anchors = [
 ]
 summary = "vpi_get_value_array returns void and takes an unpacked-array vpiHandle, p_vpi_arrayvalue destination, PLI_INT32 index array identifying the section start, and PLI_UINT32 element count."
 related_clauses = []
-tags = []
+tags = ["array", "pli", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4126,7 +4126,7 @@ anchors = [
 ]
 summary = "For vpiBinStrVal, s_vpi_value.value.str is a binary string using characters 0, 1, x, and z."
 related_clauses = []
-tags = []
+tags = ["four-state", "pli", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4150,7 +4150,7 @@ anchors = [
 ]
 summary = "The application allocates the s_vpi_value storage passed to vpi_get_value."
 related_clauses = []
-tags = []
+tags = ["pli", "value-copy"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4174,7 +4174,7 @@ anchors = [
 ]
 summary = "For vpiDecStrVal, s_vpi_value.value.str is a string of decimal characters 0 through 9."
 related_clauses = []
-tags = []
+tags = ["pli", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4199,7 +4199,7 @@ anchors = [
 ]
 summary = "vpi_get_value fully evaluates the object expression in its source context, including side effects in index expressions and embedded function-call arguments; post-increment returns the pre-increment value while performing the increment."
 related_clauses = []
-tags = []
+tags = ["evaluation-order", "expression", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4227,7 +4227,7 @@ anchors = [
 ]
 summary = "For vpiHexStrVal, str uses hexadecimal digits and x/X/z/Z; a digit group is lowercase x or z when all represented bits are that state, and uppercase X or Z when only some are."
 related_clauses = []
-tags = []
+tags = ["four-state", "pli", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4252,7 +4252,7 @@ anchors = [
 ]
 summary = "For vpiIntVal, vpi_get_value returns the handle's integer value in the integer union member, mapping every X or Z bit to 0."
 related_clauses = []
-tags = []
+tags = ["four-state", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4282,7 +4282,7 @@ anchors = [
 ]
 summary = "With vpiObjTypeVal requested, vpi_get_value returns the closest format for the object and replaces format according to object type: integer vpiIntVal, real vpiRealVal, scalar vpiScalarVal or vpiStrengthVal, time vpiTimeVal with vpiSimTime, and vector vpiVectorVal."
 related_clauses = []
-tags = []
+tags = ["pli", "type-compatibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4310,7 +4310,7 @@ anchors = [
 ]
 summary = "For vpiOctStrVal, str uses octal digits and x/X/z/Z; a digit group is lowercase x or z when all represented bits are that unknown state, and uppercase X or Z when only some are."
 related_clauses = []
-tags = []
+tags = ["four-state", "pli", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4334,7 +4334,7 @@ anchors = [
 ]
 summary = "To preserve a logic value beyond the lifetime of vpi_get_value-provided storage, the application allocates its own storage and copies the value."
 related_clauses = []
-tags = []
+tags = ["pli", "value-copy"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4358,7 +4358,7 @@ anchors = [
 ]
 summary = "For vpiRealVal, vpi_get_value returns the handle's value as a double in the real union member."
 related_clauses = []
-tags = []
+tags = ["pli", "real"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4384,7 +4384,7 @@ summary = "A real-valued object requested in a format other than vpiRealVal or v
 related_clauses = [
     "6.12.1",
 ]
-tags = []
+tags = ["conversion", "pli", "real"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4408,7 +4408,7 @@ anchors = [
 ]
 summary = "A real-valued object requested as vpiStringVal is returned as a floating-point string in decimal notation with at most 16 digits of precision."
 related_clauses = []
-tags = []
+tags = ["pli", "real", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4432,7 +4432,7 @@ anchors = [
 ]
 summary = "The format field supplied in s_vpi_value selects the format of the value returned by vpi_get_value."
 related_clauses = []
-tags = []
+tags = ["format-specifier", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4456,7 +4456,7 @@ anchors = [
 ]
 summary = "vpi_get_value writes the simulation value of the specified VPI object into the supplied s_vpi_value structure."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4480,7 +4480,7 @@ anchors = [
 ]
 summary = "For vpiScalarVal, vpi_get_value returns the scalar union member as one of vpi1, vpi0, vpiX, vpiZ, vpiH, or vpiL."
 related_clauses = []
-tags = []
+tags = ["four-state", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4504,7 +4504,7 @@ anchors = [
 ]
 summary = "vpi_get_value uses a string-value buffer distinct from the temporary string buffer used by vpi_get_str."
 related_clauses = []
-tags = []
+tags = ["pli", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4531,7 +4531,7 @@ anchors = [
 ]
 summary = "vpi_get_value returns void and takes an expression vpiHandle plus a p_vpi_value destination pointer."
 related_clauses = []
-tags = []
+tags = ["expression", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4555,7 +4555,7 @@ anchors = [
 ]
 summary = "For vpiStrengthVal, vpi_get_value returns the object's logic value plus strength information through the strength union member."
 related_clauses = []
-tags = []
+tags = ["pli", "signal-strength"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4579,7 +4579,7 @@ anchors = [
 ]
 summary = "When vpiStrengthVal is requested, value.strength points to an s_vpi_strengthval array having at least one element per vector bit."
 related_clauses = []
-tags = []
+tags = ["array", "pli", "signal-strength", "vector"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4604,7 +4604,7 @@ anchors = [
 ]
 summary = "For vpiStringVal, vpi_get_value returns str by interpreting each 8-bit group of the object value as an ASCII character."
 related_clauses = []
-tags = []
+tags = ["pli", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4628,7 +4628,7 @@ anchors = [
 ]
 summary = "Each vpi_get_value call overwrites the routine's string-value buffer."
 related_clauses = []
-tags = []
+tags = ["pli", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4652,7 +4652,7 @@ anchors = [
 ]
 summary = "A constant whose vpiConstType is vpiStringConst is retrieved using either vpiStringVal or vpiVectorVal format."
 related_clauses = []
-tags = []
+tags = ["literal", "pli", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4676,7 +4676,7 @@ anchors = [
 ]
 summary = "For vpiTimeVal, vpi_get_value returns the handle's integer value through the time union member using two integer words."
 related_clauses = []
-tags = []
+tags = ["pli", "simulation-time", "time-format"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4702,7 +4702,7 @@ summary = "UDP table-entry ASCII retrieval uses an s_vpi_vecval array of ((symbo
 related_clauses = [
     "29.3.6",
 ]
-tags = []
+tags = ["encoding", "pli", "primitive", "udp"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4726,7 +4726,7 @@ anchors = [
 ]
 summary = "vpi_get_value provides storage for the str, time, vector, strength, and misc union members, and that storage remains valid only until the next vpi_get_value call."
 related_clauses = []
-tags = []
+tags = ["lifetime", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4750,7 +4750,7 @@ anchors = [
 ]
 summary = "For a reg or variable retrieved with strength information, vpi_get_value always reports strong strength."
 related_clauses = []
-tags = []
+tags = ["pli", "signal-strength", "variable"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4774,7 +4774,7 @@ anchors = [
 ]
 summary = "For vpiVectorVal, vpi_get_value returns the object value through the vector union member in aval/bval representation."
 related_clauses = []
-tags = []
+tags = ["four-state", "pli", "vector"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4802,7 +4802,7 @@ anchors = [
 ]
 summary = "On success, vpi_get_vlog_info places the invocation-option count, invocation-option values, and tool product and version strings in the supplied s_vpi_vlog_info structure."
 related_clauses = []
-tags = []
+tags = ["c-type", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4827,7 +4827,7 @@ anchors = [
 ]
 summary = "vpi_get_vlog_info returns 1 on success and 0 on failure."
 related_clauses = []
-tags = []
+tags = ["pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4852,7 +4852,7 @@ anchors = [
 ]
 summary = "vpi_get_vlog_info takes a p_vpi_vlog_info pointer to receive simulation-execution information."
 related_clauses = []
-tags = []
+tags = ["c-type", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4876,7 +4876,7 @@ anchors = [
 ]
 summary = "When vpi_get64 encounters an error, it returns vpiUndefined."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4904,7 +4904,7 @@ related_clauses = [
     "K",
     "M",
 ]
-tags = []
+tags = ["object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4928,7 +4928,7 @@ anchors = [
 ]
 summary = "Unless another rule permits the requested property, calling vpi_get64 on a protected object is an error."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "object-handle", "pli", "protected-block"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4954,7 +4954,7 @@ anchors = [
 ]
 summary = "vpi_get64 takes a PLI_INT32 property selector and a vpiHandle identifying the object whose 64-bit property is requested."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4978,7 +4978,7 @@ anchors = [
 ]
 summary = "If the index does not construct a legal SystemVerilog index-select expression, vpi_handle_by_index returns a null handle."
 related_clauses = []
-tags = []
+tags = ["array", "object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5002,7 +5002,7 @@ anchors = [
 ]
 summary = "Unless otherwise permitted, calling vpi_handle_by_index for a protected object is an error."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "object-handle", "pli", "protected-block"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5026,7 +5026,7 @@ anchors = [
 ]
 summary = "The obj argument to vpi_handle_by_index shall identify an object with the access-by-index property."
 related_clauses = []
-tags = []
+tags = ["array", "object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5050,7 +5050,7 @@ anchors = [
 ]
 summary = "For a reference object having the access-by-index property and a legal index selection, vpi_handle_by_index returns the handle to the object at that index."
 related_clauses = []
-tags = []
+tags = ["array", "object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5077,7 +5077,7 @@ anchors = [
 ]
 summary = "vpi_handle_by_index takes a vpiHandle reference object and a PLI_INT32 index and returns a vpiHandle."
 related_clauses = []
-tags = []
+tags = ["array", "object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5101,7 +5101,7 @@ anchors = [
 ]
 summary = "If the provided indices cannot construct a legal SystemVerilog index-select expression, vpi_handle_by_multi_index returns a null handle."
 related_clauses = []
-tags = []
+tags = ["array", "object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5125,7 +5125,7 @@ anchors = [
 ]
 summary = "The index array follows declaration dimensions from leftmost range to rightmost range and may then include a bit-select index."
 related_clauses = []
-tags = []
+tags = ["array", "index-order", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5149,7 +5149,7 @@ anchors = [
 ]
 summary = "Unless otherwise permitted, calling vpi_handle_by_multi_index for a protected object is an error."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "object-handle", "pli", "protected-block"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5173,7 +5173,7 @@ anchors = [
 ]
 summary = "The reference object passed to vpi_handle_by_multi_index shall have the access-by-index property."
 related_clauses = []
-tags = []
+tags = ["array", "object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5197,7 +5197,7 @@ anchors = [
 ]
 summary = "For a valid index list, vpi_handle_by_multi_index returns the corresponding valid SystemVerilog index-selected subobject of obj."
 related_clauses = []
-tags = []
+tags = ["array", "object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5225,7 +5225,7 @@ anchors = [
 ]
 summary = "vpi_handle_by_multi_index takes a reference-object vpiHandle, a PLI_INT32 index count, and a PLI_INT32 index array ordered leftmost index first, and returns a vpiHandle."
 related_clauses = []
-tags = []
+tags = ["array", "index-order", "object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5249,7 +5249,7 @@ anchors = [
 ]
 summary = "Unless otherwise permitted, lookup in a protected scope is an error; a hierarchical name that includes a protected scope is also an error."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "name-resolution", "object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5273,7 +5273,7 @@ anchors = [
 ]
 summary = "vpi_handle_by_name accepts simple or hierarchical names for objects having a fullname property and returns the specifically named object's handle."
 related_clauses = []
-tags = []
+tags = ["name-resolution", "object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5297,7 +5297,7 @@ anchors = [
 ]
 summary = "With scope NULL, vpi_handle_by_name searches from the hierarchy top level; with a scope handle, it searches only within that scope."
 related_clauses = []
-tags = []
+tags = ["name-resolution", "object-handle", "pli", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5324,7 +5324,7 @@ anchors = [
 ]
 summary = "vpi_handle_by_name takes a PLI_BYTE8 string naming an object and a SystemVerilog-scope vpiHandle and returns a vpiHandle."
 related_clauses = []
-tags = []
+tags = ["name-resolution", "object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5348,7 +5348,7 @@ anchors = [
 ]
 summary = "When output-port and input-port reference objects are supplied to vpi_handle_multi for an intermodule path, all of the ports shall have the same size."
 related_clauses = []
-tags = []
+tags = ["interconnect", "object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5375,7 +5375,7 @@ anchors = [
 ]
 summary = "vpi_handle_multi takes a PLI_INT32 requested object type followed by handles to two or more reference objects and returns a vpiHandle."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5399,7 +5399,7 @@ anchors = [
 ]
 summary = "Unless another rule permits it, calling vpi_handle for a protected object is an error."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "object-handle", "pli", "protected-block"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5423,7 +5423,7 @@ anchors = [
 ]
 summary = "vpi_handle returns the object of the requested type that has the specified one-to-one relationship with ref."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5450,7 +5450,7 @@ anchors = [
 ]
 summary = "vpi_handle takes a PLI_INT32 object-type selector and a reference-object vpiHandle and returns a vpiHandle."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5474,7 +5474,7 @@ anchors = [
 ]
 summary = "If ref has no associated objects of the requested type, vpi_iterate returns NULL."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli", "vpi-iteration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5498,7 +5498,7 @@ anchors = [
 ]
 summary = "Unless otherwise permitted, calling vpi_iterate for a protected object is an error."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "object-handle", "pli", "protected-block"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5522,7 +5522,7 @@ anchors = [
 ]
 summary = "vpi_iterate traverses documented one-to-many relationships and returns a vpiIterator usable by vpi_scan to visit all requested-type objects associated with ref."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli", "vpi-iteration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5549,7 +5549,7 @@ anchors = [
 ]
 summary = "vpi_iterate takes a PLI_INT32 requested object type and a reference-object vpiHandle and returns an iterator vpiHandle."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli", "vpi-iteration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5573,7 +5573,7 @@ anchors = [
 ]
 summary = "An iterator object shall automatically be freed when vpi_scan returns NULL because traversal completed or an error occurred."
 related_clauses = []
-tags = []
+tags = ["lifetime", "object-handle", "pli", "vpi-iteration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5597,7 +5597,7 @@ anchors = [
 ]
 summary = "vpi_handle(vpiUse, iterator_handle) returns the reference object from which the iterator was created."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli", "vpi-iteration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5622,7 +5622,7 @@ anchors = [
 ]
 summary = "Predefined descriptor 1 denotes the invoking tool's output channel and current log file and cannot be closed by vpi_mcd_close."
 related_clauses = []
-tags = []
+tags = ["file-io", "multichannel-descriptor", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5648,7 +5648,7 @@ summary = "vpi_mcd_close() shall accept a file descriptor created by the SystemV
 related_clauses = [
     "21.3.1",
 ]
-tags = []
+tags = ["file-descriptor", "file-io", "multichannel-descriptor", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5675,7 +5675,7 @@ summary = "vpi_mcd_close returns 0 if all selected files are closed and, on erro
 related_clauses = [
     "21.3.1",
 ]
-tags = []
+tags = ["file-io", "multichannel-descriptor", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5701,7 +5701,7 @@ summary = "vpi_mcd_close() shall close every file channel selected by a set bit 
 related_clauses = [
     "21.3.1",
 ]
-tags = []
+tags = ["file-io", "layout", "multichannel-descriptor", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5726,7 +5726,7 @@ anchors = [
 ]
 summary = "vpi_mcd_close takes a PLI_UINT32 multichannel descriptor identifying files to close."
 related_clauses = []
-tags = []
+tags = ["file-io", "multichannel-descriptor", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5752,7 +5752,7 @@ summary = "MCDs returned by vpi_mcd_open and MCD-form $fopen returns are mutuall
 related_clauses = [
     "21.3.1",
 ]
-tags = []
+tags = ["compatibility", "file-io", "multichannel-descriptor", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5776,7 +5776,7 @@ anchors = [
 ]
 summary = "vpi_mcd_flush flushes the output buffers for every file selected by mcd."
 related_clauses = []
-tags = []
+tags = ["file-io", "multichannel-descriptor", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5800,7 +5800,7 @@ anchors = [
 ]
 summary = "vpi_mcd_flush returns 0 on success and a nonzero value on failure."
 related_clauses = []
-tags = []
+tags = ["file-io", "multichannel-descriptor", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5825,7 +5825,7 @@ anchors = [
 ]
 summary = "vpi_mcd_flush takes a PLI_UINT32 multichannel descriptor identifying output files."
 related_clauses = []
-tags = []
+tags = ["file-io", "multichannel-descriptor", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5849,7 +5849,7 @@ anchors = [
 ]
 summary = "On error, vpi_mcd_name returns NULL."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "file-io", "multichannel-descriptor", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5873,7 +5873,7 @@ anchors = [
 ]
 summary = "For a valid single-channel descriptor, vpi_mcd_name returns the represented file's name."
 related_clauses = []
-tags = []
+tags = ["file-io", "multichannel-descriptor", "pli", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5899,7 +5899,7 @@ anchors = [
 ]
 summary = "vpi_mcd_name takes a PLI_UINT32 channel descriptor and returns a PLI_BYTE8 pointer to a file-name string."
 related_clauses = []
-tags = []
+tags = ["file-io", "multichannel-descriptor", "pli", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5923,7 +5923,7 @@ anchors = [
 ]
 summary = "A subsequent vpi_mcd_name call overwrites the previously returned string."
 related_clauses = []
-tags = []
+tags = ["file-io", "multichannel-descriptor", "pli", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5947,7 +5947,7 @@ anchors = [
 ]
 summary = "vpi_mcd_open returns 0 on error."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "file-io", "multichannel-descriptor", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5971,7 +5971,7 @@ anchors = [
 ]
 summary = "If the named file is already open through vpi_mcd_open or $fopen, vpi_mcd_open returns that file's descriptor number."
 related_clauses = []
-tags = []
+tags = ["file-io", "multichannel-descriptor", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5995,7 +5995,7 @@ anchors = [
 ]
 summary = "vpi_mcd_open opens the named file for writing and returns its corresponding MCD."
 related_clauses = []
-tags = []
+tags = ["file-io", "multichannel-descriptor", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6021,7 +6021,7 @@ anchors = [
 ]
 summary = "vpi_mcd_open takes a PLI_BYTE8 file-name string and returns a PLI_UINT32 multichannel descriptor."
 related_clauses = []
-tags = []
+tags = ["file-io", "multichannel-descriptor", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6046,7 +6046,7 @@ anchors = [
 ]
 summary = "vpi_mcd_printf writes simultaneously to every selected channel among up to 31 MCD channels, with bit 0 selecting channel 1, bit 1 channel 2, and so on; channel 1 is the invoking tool output/current log."
 related_clauses = []
-tags = []
+tags = ["display-format", "file-io", "multichannel-descriptor", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6072,7 +6072,7 @@ summary = "vpi_mcd_printf accepts an MCD returned by $fopen but shall not write 
 related_clauses = [
     "21.3.1",
 ]
-tags = []
+tags = ["compatibility", "display-format", "multichannel-descriptor", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6097,7 +6097,7 @@ anchors = [
 ]
 summary = "vpi_mcd_printf returns the number of characters printed, or EOF if an error occurs."
 related_clauses = []
-tags = []
+tags = ["display-format", "multichannel-descriptor", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6124,7 +6124,7 @@ anchors = [
 ]
 summary = "vpi_mcd_printf takes a PLI_UINT32 MCD and one or more C fprintf-compatible format strings with corresponding variadic arguments; those formats control the written text."
 related_clauses = []
-tags = []
+tags = ["display-format", "multichannel-descriptor", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6148,7 +6148,7 @@ anchors = [
 ]
 summary = "MCD channel 1 (LSB) is reserved for the invoking tool's output and current log, while channel 32 (MSB) is reserved to mark an fd returned by $fopen."
 related_clauses = []
-tags = []
+tags = ["file-io", "layout", "multichannel-descriptor", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6172,7 +6172,7 @@ anchors = [
 ]
 summary = "vpi_mcd_vprintf performs the same selected-channel formatted-output operation as vpi_mcd_printf, using an already-started varargs list."
 related_clauses = []
-tags = []
+tags = ["display-format", "multichannel-descriptor", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6196,7 +6196,7 @@ anchors = [
 ]
 summary = "vpi_mcd_vprintf returns the number of characters written."
 related_clauses = []
-tags = []
+tags = ["display-format", "multichannel-descriptor", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6223,7 +6223,7 @@ anchors = [
 ]
 summary = "vpi_mcd_vprintf takes a PLI_UINT32 MCD, a PLI_BYTE8 C printf-style format string, and an already-started va_list."
 related_clauses = []
-tags = []
+tags = ["display-format", "multichannel-descriptor", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6247,7 +6247,7 @@ anchors = [
 ]
 summary = "vpi_printf writes the formatted text to both the invoking tool's output channel and the current tool log file."
 related_clauses = []
-tags = []
+tags = ["display-format", "file-io", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6272,7 +6272,7 @@ anchors = [
 ]
 summary = "vpi_printf returns the number of characters printed, or EOF if an error occurs."
 related_clauses = []
-tags = []
+tags = ["display-format", "file-io", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6298,7 +6298,7 @@ anchors = [
 ]
 summary = "vpi_printf takes a PLI_BYTE8 C printf-compatible format string and corresponding variadic arguments."
 related_clauses = []
-tags = []
+tags = ["display-format", "file-io", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6322,7 +6322,7 @@ anchors = [
 ]
 summary = "vpiIntVal input supplies one 32-bit integer per target array element through integers."
 related_clauses = []
-tags = []
+tags = ["array", "pli", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6346,7 +6346,7 @@ anchors = [
 ]
 summary = "vpiLongIntVal input is num longs through longints and is appropriate for vpiLongIntVar arrays."
 related_clauses = []
-tags = []
+tags = ["array", "pli", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6370,7 +6370,7 @@ anchors = [
 ]
 summary = "For vpiArrayNet, supplied values override selected elements' resolved values until a driver of each element changes, after which normal net resolution reevaluates that element."
 related_clauses = []
-tags = []
+tags = ["array", "net", "pli", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6394,7 +6394,7 @@ anchors = [
 ]
 summary = "vpi_put_value_array behaves as vpiNoDelay and supports only vpiPropagateOff, vpiOneValue, or default vpiNoDelay flags; any other flag is an error."
 related_clauses = []
-tags = []
+tags = ["array", "pli", "timing-control", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6419,7 +6419,7 @@ anchors = [
 ]
 summary = "vpiOneValue applies one supplied element value to every element in the selected section, requiring data for only one element."
 related_clauses = []
-tags = []
+tags = ["array", "pli", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6444,7 +6444,7 @@ anchors = [
 ]
 summary = "vpiPropagateOff inhibits notification to the array's fanouts that one or more values changed."
 related_clauses = []
-tags = []
+tags = ["array", "pli", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6468,7 +6468,7 @@ anchors = [
 ]
 summary = "vpiRawFourStateVal is native for four-state arrays and vpiRawTwoStateVal for two-state arrays; on two-state targets four-state bvalbits are ignored, and on four-state targets two-state input assumes bvalbits zero."
 related_clauses = []
-tags = []
+tags = ["array", "four-state", "pli", "two-state"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6496,7 +6496,7 @@ anchors = [
 ]
 summary = "vpiRawFourStateVal input stores each element as aval then bval byte groups in rawvals, with ngroups=(elemBits+7)/8 and total storage 2*ngroups*num bytes."
 related_clauses = []
-tags = []
+tags = ["array", "four-state", "pli", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6520,7 +6520,7 @@ anchors = [
 ]
 summary = "Raw input bits follow significance order: element bit 0 is the LSB of first A/B bytes and bit 8 is the LSB of the next A/B bytes."
 related_clauses = []
-tags = []
+tags = ["array", "bit-stream", "pli", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6544,7 +6544,7 @@ anchors = [
 ]
 summary = "vpiRawTwoStateVal input uses rawvals like four-state layout but omits bval groups and uses ngroups*num bytes."
 related_clauses = []
-tags = []
+tags = ["array", "pli", "two-state", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6568,7 +6568,7 @@ anchors = [
 ]
 summary = "vpiShortIntVal input is num shorts through shortints and is appropriate only for vpiShortIntVar, vpiIntVar, or vpiLongIntVar arrays."
 related_clauses = []
-tags = []
+tags = ["array", "pli", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6592,7 +6592,7 @@ anchors = [
 ]
 summary = "vpiShortRealVal input is num floats through shortreals and is appropriate only for vpiShortRealVar arrays."
 related_clauses = []
-tags = []
+tags = ["array", "pli", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6616,7 +6616,7 @@ anchors = [
 ]
 summary = "index_p contains one starting index per unpacked dimension, ordered left-to-right as dimensions appear in HDL text."
 related_clauses = []
-tags = []
+tags = ["array", "index-order", "pli", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6640,7 +6640,7 @@ anchors = [
 ]
 summary = "Target elements advance with the rightmost unpacked index fastest and each declared range from left bound toward right bound until num values are loaded."
 related_clauses = []
-tags = []
+tags = ["array", "index-order", "pli", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6664,7 +6664,7 @@ anchors = [
 ]
 summary = "Specifying an array input format not supported by clause 38.35 is an error."
 related_clauses = []
-tags = []
+tags = ["array", "diagnostic", "pli", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6689,7 +6689,7 @@ anchors = [
 ]
 summary = "vpiVectorVal input supplies consecutive t_vpi_vecval A/B word groups through vectors, using ((elemBits+31)/32)*2*num words."
 related_clauses = []
-tags = []
+tags = ["array", "pli", "unpacked-array", "vector"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6713,7 +6713,7 @@ anchors = [
 ]
 summary = "vpi_put_data may be called only from an application routine invoked for cbStartOfSave or cbEndOfSave."
 related_clauses = []
-tags = []
+tags = ["callback", "pli", "save-restore"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6737,7 +6737,7 @@ anchors = [
 ]
 summary = "The standard imposes no restriction on the order in which applications write data for different save/restart IDs."
 related_clauses = []
-tags = []
+tags = ["pli", "save-restore"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6762,7 +6762,7 @@ anchors = [
 ]
 summary = "The standard imposes no restriction on how many times vpi_put_data may be called for a given save/restart ID."
 related_clauses = []
-tags = []
+tags = ["pli", "save-restore"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6787,7 +6787,7 @@ anchors = [
 ]
 summary = "vpi_put_data returns the number of bytes written, or 0 when an error is detected."
 related_clauses = []
-tags = []
+tags = ["pli", "save-restore"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6814,7 +6814,7 @@ anchors = [
 ]
 summary = "vpi_put_data takes a PLI_INT32 save/restart ID, a PLI_BYTE8 pointer to application data, and a PLI_INT32 byte count."
 related_clauses = []
-tags = []
+tags = ["pli", "save-restore"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6838,7 +6838,7 @@ anchors = [
 ]
 summary = "Multiple vpi_put_data calls for one ID form stored data that vpi_get_data can retrieve in differently sized chunks while preserving the stream."
 related_clauses = []
-tags = []
+tags = ["pli", "save-restore"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6862,7 +6862,7 @@ anchors = [
 ]
 summary = "vpi_put_data copies numOfBytes bytes from dataLoc into the implementation save/restart location, and numOfBytes shall be greater than zero."
 related_clauses = []
-tags = []
+tags = ["pli", "save-restore"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6889,7 +6889,7 @@ anchors = [
 ]
 summary = "For vpi_put_delays, da points to an application-allocated s_vpi_time array containing values to write, sized according to delay count, mtm_flag, and pulsere_flag."
 related_clauses = []
-tags = []
+tags = ["array", "path-delay", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6913,7 +6913,7 @@ anchors = [
 ]
 summary = "The application-provided delay array lists delays in the same order they occur in the SystemVerilog source description."
 related_clauses = []
-tags = []
+tags = ["path-delay", "pli", "source-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6938,7 +6938,7 @@ anchors = [
 ]
 summary = "The mtm_flag and pulsere_flag settings determine the number and ordering of s_vpi_time elements supplied per delay according to Table 38-4."
 related_clauses = []
-tags = []
+tags = ["layout", "path-delay", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6963,7 +6963,7 @@ anchors = [
 ]
 summary = "For an intermodule path object, vpi_put_delays requires no_of_delays to be 2 or 3."
 related_clauses = []
-tags = []
+tags = ["interconnect", "path-delay", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6990,7 +6990,7 @@ anchors = [
 ]
 summary = "When mtm_flag is true and pulsere_flag is false, da has 3 × no_of_delays elements, grouped minimum, typical, maximum for each delay in order."
 related_clauses = []
-tags = []
+tags = ["layout", "path-delay", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7023,7 +7023,7 @@ anchors = [
 ]
 summary = "When mtm_flag and pulsere_flag are true, da has 9 × no_of_delays elements total, with each delay represented in order by min/typ/max delay, min/typ/max reject limit, and min/typ/max error limit."
 related_clauses = []
-tags = []
+tags = ["layout", "path-delay", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7048,7 +7048,7 @@ anchors = [
 ]
 summary = "For a path-delay object, vpi_put_delays requires no_of_delays to be 1, 2, 3, 6, or 12."
 related_clauses = []
-tags = []
+tags = ["path-delay", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7072,7 +7072,7 @@ anchors = [
 ]
 summary = "When vpi_put_delays changes delays but not pulse limits, existing pulse-limit values remain unchanged."
 related_clauses = []
-tags = []
+tags = ["path-delay", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7097,7 +7097,7 @@ anchors = [
 ]
 summary = "For a primitive object, vpi_put_delays requires no_of_delays to be 2 or 3."
 related_clauses = []
-tags = []
+tags = ["path-delay", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7124,7 +7124,7 @@ anchors = [
 ]
 summary = "When mtm_flag is false and pulsere_flag is true, da has 3 × no_of_delays elements, grouped delay, reject limit, error limit for each delay in order."
 related_clauses = []
-tags = []
+tags = ["layout", "path-delay", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7148,7 +7148,7 @@ anchors = [
 ]
 summary = "vpi_put_delays sets an object's delays or timing limits from delay_p using the same delay ordering defined for vpi_get_delays."
 related_clauses = []
-tags = []
+tags = ["path-delay", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7175,7 +7175,7 @@ anchors = [
 ]
 summary = "vpi_put_delays returns void and takes an object vpiHandle plus a p_vpi_delay structure pointer."
 related_clauses = []
-tags = []
+tags = ["path-delay", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7201,7 +7201,7 @@ anchors = [
 ]
 summary = "When mtm_flag and pulsere_flag are false, da has no_of_delays elements, one per delay in source order."
 related_clauses = []
-tags = []
+tags = ["layout", "path-delay", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7226,7 +7226,7 @@ anchors = [
 ]
 summary = "For a timing-check object, vpi_put_delays requires no_of_delays to equal the number of existing timing-check limits."
 related_clauses = []
-tags = []
+tags = ["path-delay", "pli", "timing-check"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7250,7 +7250,7 @@ anchors = [
 ]
 summary = "vpi_put_userdata associates userdata with the specified user-defined system task or function call handle so vpi_get_userdata can later retrieve it."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli", "subroutine", "user-data"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7275,7 +7275,7 @@ anchors = [
 ]
 summary = "vpi_put_userdata returns 1 on success and 0 on failure."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli", "subroutine", "user-data"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7301,7 +7301,7 @@ anchors = [
 ]
 summary = "vpi_put_userdata takes a system task/function instance vpiHandle and a void pointer value to associate with it."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli", "subroutine", "user-data"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7325,7 +7325,7 @@ anchors = [
 ]
 summary = "The caller allocates s_vpi_arrayvalue and all storage it references and places values to set in that structure."
 related_clauses = []
-tags = []
+tags = ["array", "pli", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7349,7 +7349,7 @@ anchors = [
 ]
 summary = "An element for vpi_put_value_array has every unpacked index specified and the array data type with all unpacked ranges removed."
 related_clauses = []
-tags = []
+tags = ["array", "pli", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7373,7 +7373,7 @@ anchors = [
 ]
 summary = "vpi_put_value_array modifies contiguous elements only in static-lifetime vpiStaticArray variable/net arrays without dynamic arrays, dynamic elements, or elements of unpacked type."
 related_clauses = []
-tags = []
+tags = ["array", "pli", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7397,7 +7397,7 @@ anchors = [
 ]
 summary = "The caller sets s_vpi_arrayvalue.format to specify the input value layout, using supported scalar/vector/time/real or array-specific formats."
 related_clauses = []
-tags = []
+tags = ["array", "layout", "pli", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7426,7 +7426,7 @@ anchors = [
 ]
 summary = "vpi_put_value_array returns void and takes an unpacked-array handle, arrayvalue source, starting-index array, and PLI_UINT32 element count."
 related_clauses = []
-tags = []
+tags = ["array", "pli", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7450,7 +7450,7 @@ anchors = [
 ]
 summary = "The caller allocates s_vpi_value, all storage it references, and the s_vpi_time delay structure passed to vpi_put_value."
 related_clauses = []
-tags = []
+tags = ["pli", "value-copy"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7474,7 +7474,7 @@ anchors = [
 ]
 summary = "When calling vpi_put_value, the application provides storage for pointer-valued s_vpi_value union members."
 related_clauses = []
-tags = []
+tags = ["lifetime", "pli", "value-copy"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7499,7 +7499,7 @@ anchors = [
 ]
 summary = "vpiCancelEvent cancels the vpiSchedEvent passed as obj; value_p and time_p may be NULL, cancellation removes it from the queue and frees its handle."
 related_clauses = []
-tags = []
+tags = ["event", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7526,7 +7526,7 @@ summary = "vpiForceFlag immediately performs SystemVerilog procedural-force sema
 related_clauses = [
     "10.6.2",
 ]
-tags = []
+tags = ["force-release", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7550,7 +7550,7 @@ anchors = [
 ]
 summary = "vpiInertialDelay removes all scheduled events on the object before scheduling the new event."
 related_clauses = []
-tags = []
+tags = ["pli", "timing-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7574,7 +7574,7 @@ anchors = [
 ]
 summary = "vpi_put_value on a vpiNamedEvent toggles the named event and permits value_p to be NULL."
 related_clauses = []
-tags = []
+tags = ["event", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7598,7 +7598,7 @@ anchors = [
 ]
 summary = "For vpiNet/vpiNetBit under inertial, transport, pure-transport, or no-delay modes, the supplied value overrides resolution until any driver changes, then normal resolution is reevaluated."
 related_clauses = []
-tags = []
+tags = ["net", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7622,7 +7622,7 @@ anchors = [
 ]
 summary = "vpiNoDelay sets the object immediately and ignores time_p, which may be NULL."
 related_clauses = []
-tags = []
+tags = ["pli", "timing-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7646,7 +7646,7 @@ anchors = [
 ]
 summary = "vpiPureTransportDelay schedules the event without removing any object events."
 related_clauses = []
-tags = []
+tags = ["pli", "timing-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7670,7 +7670,7 @@ anchors = [
 ]
 summary = "Using vpiStringVal to put a value to a real variable or vpiRealFunc system-function call is illegal."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "pli", "real", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7697,7 +7697,7 @@ summary = "vpiReleaseFlag immediately performs procedural release, ignores time_
 related_clauses = [
     "10.6.2",
 ]
-tags = []
+tags = ["force-release", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7721,7 +7721,7 @@ anchors = [
 ]
 summary = "With vpiReturnEvent, a delayed newly scheduled event returns a vpiSchedEvent handle; without the mask, delay, or scheduled event, the return is NULL."
 related_clauses = []
-tags = []
+tags = ["event", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7745,7 +7745,7 @@ anchors = [
 ]
 summary = "For vpiScaledRealTime in vpi_put_value, the supplied time is interpreted using the target object's timescale."
 related_clauses = []
-tags = []
+tags = ["pli", "time-format", "timescale"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7774,7 +7774,7 @@ anchors = [
 ]
 summary = "vpi_put_value returns a vpiHandle and takes a vpiHandle object, p_vpi_value value pointer, p_vpi_time time pointer, and PLI_INT32 delay-mode flags."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7799,7 +7799,7 @@ anchors = [
 ]
 summary = "A user-defined system function's return value may be set with vpi_put_value only while its calltf is active and using vpiNoDelay; calls while inactive are ignored."
 related_clauses = []
-tags = []
+tags = ["function", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7823,7 +7823,7 @@ anchors = [
 ]
 summary = "vpiTransportDelay removes object events scheduled later than the new event before scheduling it."
 related_clauses = []
-tags = []
+tags = ["pli", "timing-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7847,7 +7847,7 @@ anchors = [
 ]
 summary = "Putting a value to a UDP instance requires vpiNoDelay; a sequential UDP is set immediately regardless of primitive delay, and any other delay mode is an error."
 related_clauses = []
-tags = []
+tags = ["pli", "primitive", "timing-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7871,7 +7871,7 @@ anchors = [
 ]
 summary = "Using vpiStrengthVal to put a value to a vector object is illegal."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "pli", "signal-strength", "vector"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7897,7 +7897,7 @@ anchors = [
 ]
 summary = "vpi_register_cb takes a p_cb_data describing callback timing and data and returns a handle to the registered callback object."
 related_clauses = []
-tags = []
+tags = ["callback", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7922,7 +7922,7 @@ anchors = [
 ]
 summary = "vpi_register_systf shall register callbacks for user-defined system tasks or functions."
 related_clauses = []
-tags = []
+tags = ["callback", "pli", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7948,7 +7948,7 @@ anchors = [
 ]
 summary = "vpi_register_systf accepts p_vpi_systf_data and returns a vpiHandle to the callback object."
 related_clauses = []
-tags = []
+tags = ["callback", "pli", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7972,7 +7972,7 @@ anchors = [
 ]
 summary = "vpi_release_handle on a scheduled-event handle frees the handle without affecting the scheduled event."
 related_clauses = []
-tags = []
+tags = ["event", "object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7996,7 +7996,7 @@ anchors = [
 ]
 summary = "vpi_release_handle shall free memory allocated for a VPI handle and shall not be called on an invalid handle."
 related_clauses = []
-tags = []
+tags = ["lifetime", "object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8023,7 +8023,7 @@ anchors = [
 ]
 summary = "vpi_release_handle accepts a vpiHandle obj and returns PLI_INT32 1 on success or 0 on failure."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8050,7 +8050,7 @@ anchors = [
 ]
 summary = "vpi_remove_cb accepts a callback-object vpiHandle registered by vpi_register_cb, removes it, returns PLI_INT32 1 on success or 0 on failure, and invalidates the handle after the call."
 related_clauses = []
-tags = []
+tags = ["callback", "object-handle", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8074,7 +8074,7 @@ anchors = [
 ]
 summary = "cbStartOfReset occurs before time reset; cbEndOfReset occurs after time/value restoration but before initial/always execution, for direct $reset and vpi_control(vpiReset)."
 related_clauses = []
-tags = []
+tags = ["callback", "pli", "simulation-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8099,7 +8099,7 @@ anchors = [
 ]
 summary = "On restart, all registered callbacks are removed except cbStartOfRestart and cbEndOfRestart, which are the only callbacks that remain."
 related_clauses = []
-tags = []
+tags = ["callback", "pli", "simulation-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8125,7 +8125,7 @@ anchors = [
 ]
 summary = "vpi_scan accepts a vpiHandle iterator returned by vpi_iterate and returns a vpiHandle to an object."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli", "vpi-iteration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8149,7 +8149,7 @@ anchors = [
 ]
 summary = "vpi_scan traverses instantiated hierarchy according to an object-type iterator from vpi_iterate; after it returns NULL the iterator is invalid and cannot be reused."
 related_clauses = []
-tags = []
+tags = ["object-handle", "pli", "vpi-iteration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8173,7 +8173,7 @@ anchors = [
 ]
 summary = "vlog_startup_routines shall be an array of C functions for registering system tasks and system functions."
 related_clauses = []
-tags = []
+tags = ["array", "pli", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8197,7 +8197,7 @@ anchors = [
 ]
 summary = "The tool vendor supplies a file containing vlog_startup_routines, to which PLI registration function names are added."
 related_clauses = []
-tags = []
+tags = ["array", "pli", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8222,7 +8222,7 @@ anchors = [
 ]
 summary = "A NULL-terminated static vlog_startup_routines function-pointer array provides initialization routines executed just after simulator invocation and has the declared C form."
 related_clauses = []
-tags = []
+tags = ["array", "pli", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8246,7 +8246,7 @@ anchors = [
 ]
 summary = "A VPI-compliant tool provides vlog_startup_routines support; users add entries, and the vendor defines its location and linking procedure."
 related_clauses = []
-tags = []
+tags = ["array", "pli", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8277,7 +8277,7 @@ summary = "vpi_user.h defines s_vpi_strengthval and p_vpi_strengthval with PLI_I
 related_clauses = [
     "K",
 ]
-tags = []
+tags = ["c-type", "pli", "signal-strength"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8301,7 +8301,7 @@ anchors = [
 ]
 summary = "If a user-defined system function's calltf does not put a return value during execution, the function returns default value 0."
 related_clauses = []
-tags = []
+tags = ["function", "pli", "return-value"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8325,7 +8325,7 @@ anchors = [
 ]
 summary = "compiletf/calltf/sizetf point to user routines and may individually be NULL; compiletf and sizetf run at build or first interactive invocation, while calltf runs on every simulation invocation."
 related_clauses = []
-tags = []
+tags = ["callback", "function", "pli", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8354,7 +8354,7 @@ anchors = [
 ]
 summary = "vpi_user.h defines s_vpi_systf_data and p_vpi_systf_data with type, sysfunctype, tfname, calltf, compiletf, sizetf, and user_data members having the specified PLI types."
 related_clauses = []
-tags = []
+tags = ["c-type", "pli", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8378,7 +8378,7 @@ anchors = [
 ]
 summary = "tfname begins with $ followed by one or more simple-identifier ASCII characters and has the SystemVerilog identifier length limit."
 related_clauses = []
-tags = []
+tags = ["lexical", "name-resolution", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8402,7 +8402,7 @@ anchors = [
 ]
 summary = "For vpiSysFunc only, sysfunctype selects vpiIntFunc, vpiRealFunc, vpiTimeFunc, vpiSizedFunc, or vpiSizedSignedFunc."
 related_clauses = []
-tags = []
+tags = ["function", "pli", "return-value"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8426,7 +8426,7 @@ anchors = [
 ]
 summary = "sizetf is called only for vpiSysFunc with vpiSizedFunc or vpiSizedSignedFunc; without sizetf such a function returns 32 bits."
 related_clauses = []
-tags = []
+tags = ["callback", "function", "pli", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8450,7 +8450,7 @@ anchors = [
 ]
 summary = "s_vpi_systf_data.type is vpiSysTask or vpiSysFunc and determines whether the registration is a system task or function."
 related_clauses = []
-tags = []
+tags = ["pli", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8474,7 +8474,7 @@ anchors = [
 ]
 summary = "user_data is the sole PLI_BYTE8* argument passed to compiletf, sizetf, and calltf."
 related_clauses = []
-tags = []
+tags = ["formal-argument", "pli", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8498,7 +8498,7 @@ anchors = [
 ]
 summary = "A simulation-time callback receives one new s_cb_data pointer, current simulation time, and user_data equivalent to registration."
 related_clauses = []
-tags = []
+tags = ["callback", "pli", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8523,7 +8523,7 @@ anchors = [
 ]
 summary = "Registering zero-delay cbReadWriteSynch during read-only synchronization reports an error and creates no callback."
 related_clauses = []
-tags = []
+tags = ["callback", "diagnostic", "pli", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8547,7 +8547,7 @@ anchors = [
 ]
 summary = "A zero-delay cbAtStartOfSimTime registered from cbAtStartOfSimTime executes another such callback in the same time slice."
 related_clauses = []
-tags = []
+tags = ["callback", "pli", "scheduling", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8571,7 +8571,7 @@ anchors = [
 ]
 summary = "Time-callback registration requires time.type vpiScaledRealTime or vpiSimTime; suppression or NULL is an error; numeric fields specify callback time/delay except that cbNextSimTime ignores them."
 related_clauses = []
-tags = []
+tags = ["callback", "pli", "simulation-time", "timing-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8595,7 +8595,7 @@ anchors = [
 ]
 summary = "For vpiScaledRealTime, obj determines callback time scaling."
 related_clauses = []
-tags = []
+tags = ["callback", "pli", "simulation-time", "timescale"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8619,7 +8619,7 @@ anchors = [
 ]
 summary = "All simulation-time callback reasons ignore value fields."
 related_clauses = []
-tags = []
+tags = ["callback", "pli", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8644,7 +8644,7 @@ anchors = [
 ]
 summary = "After a time slice has begun, zero-delay cbAtStartOfSimTime registration outside such a callback reports an error and creates no callback."
 related_clauses = []
-tags = []
+tags = ["callback", "diagnostic", "pli", "simulation-time"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8679,7 +8679,7 @@ anchors = [
 ]
 summary = "vpi_user.h defines s_vpi_time and p_vpi_time with PLI_INT32 type, PLI_UINT32 high/low simulation-time words, and double real scaled-time member for delay, time, and value routines."
 related_clauses = []
-tags = []
+tags = ["c-type", "pli", "simulation-time", "time-format"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8704,7 +8704,7 @@ anchors = [
 ]
 summary = "An application needing user data across save/restart stores it with vpi_put_data during save and retrieves it with vpi_get_data during restart."
 related_clauses = []
-tags = []
+tags = ["pli", "save-restore", "user-data"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8728,7 +8728,7 @@ anchors = [
 ]
 summary = "For a vpiVectorVal value-change callback, the system creates the associated s_vpi_vecval array and frees it when the callback returns."
 related_clauses = []
-tags = []
+tags = ["callback", "pli", "value-change", "vector"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8752,7 +8752,7 @@ anchors = [
 ]
 summary = "An implementation may use s_vpi_value.misc for alternative implementation-specific value types, but if it does so it provides one or more corresponding format types."
 related_clauses = []
-tags = []
+tags = ["format-specifier", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8781,7 +8781,7 @@ anchors = [
 ]
 summary = "vpi_user.h defines s_vpi_value/p_vpi_value with format and the specified union members and types for get and put value routines."
 related_clauses = []
-tags = []
+tags = ["c-type", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8805,7 +8805,7 @@ anchors = [
 ]
 summary = "A vector value uses an s_vpi_vecval array of ((vector_size-1)/32)+1 elements; vector bit 0 is bit 0 of element 0, vector bit 32 is bit 0 of element 1, and subsequent bits continue in 32-bit chunks."
 related_clauses = []
-tags = []
+tags = ["array", "bit-stream", "pli", "vector"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8834,7 +8834,7 @@ anchors = [
 ]
 summary = "vpi_user.h defines repeated PLI_UINT32 aval/bval words encoding bits as 00=0, 10=1, 11=X, 01=Z for get and put value routines."
 related_clauses = []
-tags = []
+tags = ["bit-stream", "four-state", "pli", "vector"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8858,7 +8858,7 @@ anchors = [
 ]
 summary = "s_vpi_vlog_info.argv contains exactly argc pointers to NUL-terminated command-line strings, with argv[0] containing the tool name."
 related_clauses = []
-tags = []
+tags = ["array", "pli", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8882,7 +8882,7 @@ anchors = [
 ]
 summary = "If a vendor supports an option-file command-line option, vpi_get_vlog_info represents it by the vendor option name followed by a pointer to a NUL-terminated pointer array whose entry 0 is the file name, remaining entries are NUL-terminated parsed option strings, and final entry is NULL; nested option-file options use the same representation recursively."
 related_clauses = []
-tags = []
+tags = ["array", "file-input", "pli", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8908,7 +8908,7 @@ anchors = [
 ]
 summary = "vpi_user.h defines s_vpi_vlog_info and p_vpi_vlog_info with PLI_INT32 argc, PLI_BYTE8 double-pointer argv, and PLI_BYTE8 pointers product and version."
 related_clauses = []
-tags = []
+tags = ["c-type", "pli", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8932,7 +8932,7 @@ anchors = [
 ]
 summary = "vpi_vprintf performs the same output operation as vpi_printf, using an already-started varargs list."
 related_clauses = []
-tags = []
+tags = ["display-format", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8959,7 +8959,7 @@ anchors = [
 ]
 summary = "vpi_vprintf accepts a PLI_BYTE8* C printf format and an already-started va_list, and returns PLI_INT32 number of characters written."
 related_clauses = []
-tags = []
+tags = ["display-format", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"

@@ -13,7 +13,7 @@ summary = "Each attribute instance delimited by (* and *) has an attribute-only 
 related_clauses = [
     "5.12",
 ]
-tags = []
+tags = ["attribute", "namespace"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -37,7 +37,7 @@ anchors = [
 ]
 summary = "Named or unnamed blocks, specify blocks, functions, and tasks introduce a block namespace shared by nested blocks, subroutines, parameters, events, variable declarations, and user-defined types."
 related_clauses = []
-tags = []
+tags = ["block", "namespace"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -61,7 +61,7 @@ anchors = [
 ]
 summary = "Compilation-unit scope has no name usable by an import declaration, and its declarations are not accessible through hierarchical references."
 related_clauses = []
-tags = []
+tags = ["compilation-unit", "visibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -89,7 +89,7 @@ related_clauses = [
     "23.11",
     "26.2",
 ]
-tags = []
+tags = ["bind", "compilation-unit", "namespace"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -113,7 +113,7 @@ anchors = [
 ]
 summary = "Outside design-element constructs, functions, tasks, checkers, parameters, events, nets, variables, and user-defined types share the compilation-unit-scope namespace."
 related_clauses = []
-tags = []
+tags = ["compilation-unit", "namespace"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -139,7 +139,7 @@ summary = "Except for task and function names, a compilation-unit name reference
 related_clauses = [
     "23.8.1",
 ]
-tags = []
+tags = ["compilation-unit", "name-resolution", "source-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -164,7 +164,7 @@ anchors = [
 ]
 summary = "A compilation unit is one or more source files compiled together; declarations outside any other scope belong to its local compilation-unit scope."
 related_clauses = []
-tags = []
+tags = ["compilation-unit", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -191,7 +191,7 @@ related_clauses = [
     "23.3.1",
     "23.8",
 ]
-tags = []
+tags = ["compilation-unit", "hierarchy", "name-resolution"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -217,7 +217,7 @@ anchors = [
 ]
 summary = "A compliant tool shall support both grouping all files on one compilation command into one unit with normal cross-file visibility and treating each file as a separate unit with compilation-unit declarations confined to that file."
 related_clauses = []
-tags = []
+tags = ["compilation-unit", "visibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -241,7 +241,7 @@ anchors = [
 ]
 summary = "Compilation and elaboration need not be distinct implementation phases; any required compile-time error may be reported at any point before simulation starts."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "elaboration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -267,7 +267,7 @@ summary = "Configurations specify binding of module instances to source represen
 related_clauses = [
     "33",
 ]
-tags = []
+tags = ["configuration", "library", "module"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -291,7 +291,7 @@ anchors = [
 ]
 summary = "Modules, primitives, programs, interfaces, and packages are visible in every compilation unit, but ordinary items declared in a compilation-unit scope cannot be accessed by source-language name from another compilation unit."
 related_clauses = []
-tags = []
+tags = ["compilation-unit", "visibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -315,7 +315,7 @@ anchors = [
 ]
 summary = "All nonnested module, primitive, program, and interface names share one global definitions namespace and shall not be reused for another such declaration in any compilation unit."
 related_clauses = []
-tags = []
+tags = ["namespace", "redeclaration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -340,7 +340,7 @@ anchors = [
 ]
 summary = "A compiler directive applies to subsequent text in its separately compiled unit but shall not affect another compilation unit."
 related_clauses = []
-tags = []
+tags = ["compilation-unit", "preprocessor", "source-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -366,7 +366,7 @@ summary = "Before simulation, elaboration resolves hierarchical names in the des
 related_clauses = [
     "23.10.4",
 ]
-tags = []
+tags = ["elaboration", "hierarchy", "name-resolution"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -392,7 +392,7 @@ summary = "Before simulation, elaboration binds design components and expands th
 related_clauses = [
     "23.10.4",
 ]
-tags = []
+tags = ["elaboration", "hierarchy", "instantiation"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -418,7 +418,7 @@ summary = "Before simulation, elaboration establishes net connectivity among des
 related_clauses = [
     "23.10.4",
 ]
-tags = []
+tags = ["connectivity", "elaboration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -444,7 +444,7 @@ summary = "Before simulation, elaboration computes parameter values used by the 
 related_clauses = [
     "23.10.4",
 ]
-tags = []
+tags = ["elaboration", "parameter"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -470,7 +470,7 @@ summary = "A function may have input, output, inout, and ref arguments."
 related_clauses = [
     "13.4",
 ]
-tags = []
+tags = ["argument-direction", "function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -496,7 +496,7 @@ summary = "Function execution does not block simulation time, although a functio
 related_clauses = [
     "13.4",
 ]
-tags = []
+tags = ["function", "timing-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -522,7 +522,7 @@ summary = "A function may be nonvoid or void; a nonvoid function call is an oper
 related_clauses = [
     "13.4",
 ]
-tags = []
+tags = ["function", "return-value"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -546,7 +546,7 @@ anchors = [
 ]
 summary = "Global time precision (simulation time unit) is the finest value among every timeprecision declaration, precision argument of timeunit, and precision argument of every `timescale in the design."
 related_clauses = []
-tags = []
+tags = ["simulation-time", "time-precision"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -572,7 +572,7 @@ summary = "An identifier at any hierarchy level may be referenced from another h
 related_clauses = [
     "23.6",
 ]
-tags = []
+tags = ["hierarchy", "name-resolution"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -598,7 +598,7 @@ summary = "Modules and interfaces may instantiate hierarchy-building blocks; pro
 related_clauses = [
     "23",
 ]
-tags = []
+tags = ["hierarchy", "instantiation"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -625,7 +625,7 @@ related_clauses = [
     "23.3",
     "24.3",
 ]
-tags = []
+tags = ["hierarchy", "top-level"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -649,7 +649,7 @@ anchors = [
 ]
 summary = "Text brought in by `include becomes part of the compilation unit containing the including file, including through nested includes."
 related_clauses = []
-tags = []
+tags = ["compilation-unit", "include"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -673,7 +673,7 @@ anchors = [
 ]
 summary = "When a file ends with an incomplete declaration, its compilation unit extends through successive files until the end of a file has no incomplete declaration."
 related_clauses = []
-tags = []
+tags = ["compilation-unit"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -699,7 +699,7 @@ summary = "Instantiating a module, interface, program, checker, or primitive cre
 related_clauses = [
     "23",
 ]
-tags = []
+tags = ["hierarchy", "instantiation"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -726,7 +726,7 @@ summary = "An interface instance is a named bundle of nets or variables that may
 related_clauses = [
     "25",
 ]
-tags = []
+tags = ["interface", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -753,7 +753,7 @@ summary = "An interface may contain parameters, constants, variables, type decla
 related_clauses = [
     "25",
 ]
-tags = []
+tags = ["interface"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -777,7 +777,7 @@ anchors = [
 ]
 summary = "Modules, interfaces, programs, and checkers each provide a local declaration scope; an identifier declared in one such scope does not affect or conflict with declarations in another building block."
 related_clauses = []
-tags = []
+tags = ["scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -801,7 +801,7 @@ anchors = [
 ]
 summary = "Text macro definitions take effect in the linear input-file order of a compilation unit; a later definition of the same macro name overrides the earlier definition for subsequent source text."
 related_clauses = []
-tags = []
+tags = ["macro", "preprocessor", "source-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -825,7 +825,7 @@ anchors = [
 ]
 summary = "Text macro names have a namespace global within one compilation unit and, because they use a leading backtick, remain unambiguous from names in other namespaces."
 related_clauses = []
-tags = []
+tags = ["macro", "namespace", "preprocessor"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -849,7 +849,7 @@ anchors = [
 ]
 summary = "It is an error for a design to mix design elements that have specified time unit and precision with design elements that have neither specified."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "time-precision", "time-unit"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -875,7 +875,7 @@ summary = "A modport controls a connected module's use of subroutines declared i
 related_clauses = [
     "25",
 ]
-tags = []
+tags = ["interface", "modport", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -901,7 +901,7 @@ summary = "A modport specifies interface-port directions as viewed from the conn
 related_clauses = [
     "25",
 ]
-tags = []
+tags = ["interface", "modport", "ports"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -925,7 +925,7 @@ anchors = [
 ]
 summary = "Within a module, interface, package, program, checker, or primitive namespace, module, interface, program, and checker declarations share names with functions, tasks, named blocks, instances, parameters, events, nets, variables, and user-defined types."
 related_clauses = []
-tags = []
+tags = ["namespace"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -952,7 +952,7 @@ related_clauses = [
     "23.3",
     "24.3",
 ]
-tags = []
+tags = ["hierarchy", "top-level"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -976,7 +976,7 @@ anchors = [
 ]
 summary = "Within any one namespace, redeclaring a name already introduced by a prior declaration is illegal unless a specific namespace rule explicitly permits reintroduction."
 related_clauses = []
-tags = []
+tags = ["namespace", "redeclaration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1003,7 +1003,7 @@ related_clauses = [
     "3.12.1",
     "26.3",
 ]
-tags = []
+tags = ["compilation-order", "package"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1027,7 +1027,7 @@ anchors = [
 ]
 summary = "Package identifiers share one global namespace across all compilation units, and a package name shall not be declared again in any unit."
 related_clauses = []
-tags = []
+tags = ["namespace", "package", "redeclaration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1053,7 +1053,7 @@ summary = "A package provides a declaration space whose declarations may be impo
 related_clauses = [
     "26",
 ]
-tags = []
+tags = ["import", "package", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1077,7 +1077,7 @@ anchors = [
 ]
 summary = "The PLI shall provide an iterator that traverses all compilation units."
 related_clauses = []
-tags = []
+tags = ["compilation-unit", "pli"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1101,7 +1101,7 @@ anchors = [
 ]
 summary = "Modules, interfaces, primitives, and programs introduce a port namespace for input, output, inout, and ref connections; it overlaps module and block namespaces, and a port name may be reintroduced in the module namespace by a same-name net or variable declaration."
 related_clauses = []
-tags = []
+tags = ["namespace", "ports", "redeclaration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1127,7 +1127,7 @@ summary = "A program may contain data and class declarations, subroutines, objec
 related_clauses = [
     "24",
 ]
-tags = []
+tags = ["program"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1156,7 +1156,7 @@ related_clauses = [
     "14",
     "24",
 ]
-tags = []
+tags = ["program", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1182,7 +1182,7 @@ summary = "A program block creates a scope that encapsulates its program-wide da
 related_clauses = [
     "24",
 ]
-tags = []
+tags = ["program", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1206,7 +1206,7 @@ anchors = [
 ]
 summary = "Unlike physical time units, step cannot be used to set or modify a time unit or time precision."
 related_clauses = []
-tags = []
+tags = ["simulation-time", "time-precision", "time-unit"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1230,7 +1230,7 @@ anchors = [
 ]
 summary = "The step time unit is equal to the design's global time precision."
 related_clauses = []
-tags = []
+tags = ["simulation-time", "time-precision", "time-unit"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1256,7 +1256,7 @@ summary = "A task may have any number of input, output, inout, and ref arguments
 related_clauses = [
     "13.3",
 ]
-tags = []
+tags = ["argument-direction", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1282,7 +1282,7 @@ summary = "A task may block simulation time, so task exit may occur at a later s
 related_clauses = [
     "13.3",
 ]
-tags = []
+tags = ["task", "timing-control"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1309,7 +1309,7 @@ summary = "A task is called as a statement and does not return a value."
 related_clauses = [
     "13.3",
 ]
-tags = []
+tags = ["return-value", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1339,7 +1339,7 @@ anchors = [
 ]
 summary = "Absent a local declaration, time unit and precision are chosen in order from an enclosing module/interface, the latest preceding `timescale in the unit, the compilation-unit time declaration, then the implementation default; compilation-unit time itself can be set only by timeunit/timeprecision declarations, not `timescale."
 related_clauses = []
-tags = []
+tags = ["source-order", "time-precision", "time-unit", "timescale"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1365,7 +1365,7 @@ summary = "timeunit and timeprecision declarations take time literals; timepreci
 related_clauses = [
     "5.8",
 ]
-tags = []
+tags = ["literal", "time-precision", "time-unit"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1389,7 +1389,7 @@ anchors = [
 ]
 summary = "A design element's time precision shall be at least as fine as its time unit and may not denote a longer interval."
 related_clauses = []
-tags = []
+tags = ["time-precision", "time-unit"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1413,7 +1413,7 @@ anchors = [
 ]
 summary = "Each module, program, package, interface, or compilation-unit time scope has at most one effective time unit and one effective precision; their initial declarations shall precede all other scope items, and later textual repetitions are legal only when they match the initial declarations."
 related_clauses = []
-tags = []
+tags = ["scope", "source-order", "time-precision", "time-unit"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1439,7 +1439,7 @@ anchors = [
 ]
 summary = "A simulation time value has a time unit that measures times and delays and a time precision that controls delay accuracy."
 related_clauses = []
-tags = []
+tags = ["simulation-time", "time-precision", "time-unit"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1470,7 +1470,7 @@ anchors = [
 ]
 summary = "Time units and precisions use magnitude 1, 10, or 100 with suffix s, ms, us, ns, ps, or fs, denoting seconds through femtoseconds and spanning 100 seconds through 1 femtosecond."
 related_clauses = []
-tags = []
+tags = ["literal", "time-precision", "time-unit"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1496,7 +1496,7 @@ anchors = [
 ]
 summary = "Before simulation, each design element's delay values are rounded to its own time precision relative to its time unit; equal unit and precision round to integers, and a precision ten times finer retains one decimal place, unaffected by finer precision elsewhere."
 related_clauses = []
-tags = []
+tags = ["simulation-time", "time-precision", "time-unit"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1523,7 +1523,7 @@ summary = "A `timescale supplies default unit and precision to following design 
 related_clauses = [
     "22.7",
 ]
-tags = []
+tags = ["source-order", "time-precision", "time-unit", "timescale"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1550,7 +1550,7 @@ summary = "The `timescale compiler directive has the form `timescale time_unit /
 related_clauses = [
     "22.7",
 ]
-tags = []
+tags = ["preprocessor", "time-precision", "time-unit", "timescale"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1578,7 +1578,7 @@ summary = "Within the current compilation unit, $unit:: uses the scope-resolutio
 related_clauses = [
     "26.3",
 ]
-tags = []
+tags = ["compilation-unit", "name-resolution", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1608,7 +1608,7 @@ related_clauses = [
     "23.8",
     "23.9",
 ]
-tags = []
+tags = ["compilation-unit", "hierarchy", "import", "name-resolution"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"

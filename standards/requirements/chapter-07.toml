@@ -13,7 +13,7 @@ summary = "An array actual may associate with an array formal exactly when the a
 related_clauses = [
     "7.6",
 ]
-tags = []
+tags = ["array-argument", "type-compatibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -37,7 +37,7 @@ anchors = [
 ]
 summary = "and() returns the bitwise AND of all element values, or with a with clause, the bitwise AND of the expression value evaluated for every element."
 related_clauses = []
-tags = []
+tags = ["array-reduction"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -63,7 +63,7 @@ summary = "Passing a fixed-size, dynamic, queue, or associative array argument b
 related_clauses = [
     "7.6",
 ]
-tags = []
+tags = ["array-argument", "array-assignment", "value-copy"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -88,7 +88,7 @@ anchors = [
 ]
 summary = "Array dimensions before the data identifier are packed dimensions; dimensions after it are unpacked dimensions, and multiple dimensions declare an array of arrays."
 related_clauses = []
-tags = []
+tags = ["array-dimension", "packed-array", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -112,7 +112,7 @@ anchors = [
 ]
 summary = "An indexed name may select one element from either a packed or unpacked array."
 related_clauses = []
-tags = []
+tags = ["array-indexing", "packed-array", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -136,7 +136,7 @@ anchors = [
 ]
 summary = "An individual element of a packed or unpacked array may be read and written."
 related_clauses = []
-tags = []
+tags = ["array-indexing", "packed-array", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -160,7 +160,7 @@ anchors = [
 ]
 summary = "Equality and inequality operations may compare compatible whole arrays or compatible array slices."
 related_clauses = []
-tags = []
+tags = ["array-comparison", "array-slice"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -186,7 +186,7 @@ anchors = [
 ]
 summary = "An assignment-compatible array source may be a complex expression containing array slices and concatenations; assigning it to a dynamic array sizes the target to the expression's element count and copies elements in expression order."
 related_clauses = []
-tags = []
+tags = ["array-assignment", "array-slice", "concatenation", "dynamic-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -210,7 +210,7 @@ anchors = [
 ]
 summary = "map() requires a with expression and returns an unpacked array with the source's same dimension ranges or associative key set and index type, replacing each element by its with-expression value whose self-determined type becomes the result element type."
 related_clauses = []
-tags = []
+tags = ["array-mapping", "array-method"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -235,7 +235,7 @@ anchors = [
 ]
 summary = "An array method call consists of an array expression, dot, method name, optional attributes and parenthesized iterator/index arguments, followed by an optional with(expression) clause."
 related_clauses = []
-tags = []
+tags = ["array-method"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -263,7 +263,7 @@ summary = "An array manipulation method iterates its elements to evaluate the wi
 related_clauses = [
     "7.12.4",
 ]
-tags = []
+tags = ["array-iterator", "array-method", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -289,7 +289,7 @@ anchors = [
 ]
 summary = "Specifying an iterator_argument in an array manipulation method call without a with clause is illegal."
 related_clauses = []
-tags = []
+tags = ["array-iterator", "array-method", "diagnostic"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -315,7 +315,7 @@ summary = "An array manipulation method call may be used as an implicit variable
 related_clauses = [
     "13.4.1",
 ]
-tags = []
+tags = ["array-indexing", "array-method"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -341,7 +341,7 @@ summary = "An array manipulation method's optional with clause shall contain one
 related_clauses = [
     "18.7",
 ]
-tags = []
+tags = ["array-method"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -365,7 +365,7 @@ anchors = [
 ]
 summary = "or() returns the bitwise OR of all element values, or with a with clause, the bitwise OR of the expression value evaluated for every element."
 related_clauses = []
-tags = []
+tags = ["array-reduction"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -389,7 +389,7 @@ anchors = [
 ]
 summary = "Array ordering methods reorder in place any fixed-size or dynamically sized unpacked array, but shall not be applied to associative arrays."
 related_clauses = []
-tags = []
+tags = ["array-ordering", "associative-array", "dynamic-array", "fixed-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -415,7 +415,7 @@ anchors = [
 ]
 summary = "Array ordering methods are void methods operating on the receiver, with an optional array-element iterator argument whose default name is item."
 related_clauses = []
-tags = []
+tags = ["array-iterator", "array-method", "array-ordering"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -439,7 +439,7 @@ anchors = [
 ]
 summary = "product() returns the product of all element values, or with a with clause, the product of the expression value evaluated for every element."
 related_clauses = []
-tags = []
+tags = ["array-reduction"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -465,7 +465,7 @@ summary = "A reduction method may reduce any unpacked array of integral values t
 related_clauses = [
     "7.12.1",
 ]
-tags = []
+tags = ["array-reduction", "integral", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -493,7 +493,7 @@ anchors = [
 ]
 summary = "A reduction returns one value of the element type when with is omitted or exactly the with-expression type and width when present; omission requires the operation on the element type and presence requires it on the expression type, with iterator default item."
 related_clauses = []
-tags = []
+tags = ["array-reduction", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -517,7 +517,7 @@ anchors = [
 ]
 summary = "reverse() reverses the array element order in place, and specifying a with clause on reverse() shall be a compiler error."
 related_clauses = []
-tags = []
+tags = ["array-ordering", "diagnostic"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -541,7 +541,7 @@ anchors = [
 ]
 summary = "rsort() orders array elements descending by the element value or optional with-expression value; omission of with requires <, >, and == on the element type, while presence requires them on the expression type."
 related_clauses = []
-tags = []
+tags = ["array-iterator", "array-method", "array-ordering", "comparison"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -565,7 +565,7 @@ anchors = [
 ]
 summary = "shuffle() randomizes array element order in place, and a with clause on shuffle() shall be a compiler error."
 related_clauses = []
-tags = []
+tags = ["array-ordering", "diagnostic", "randomization"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -589,7 +589,7 @@ anchors = [
 ]
 summary = "An assignment whose left-hand side contains an array slice is treated as one assignment to the entire slice."
 related_clauses = []
-tags = []
+tags = ["array-assignment", "array-slice"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -613,7 +613,7 @@ anchors = [
 ]
 summary = "A constant-width slice of a packed or nonassociative unpacked array may be read and written."
 related_clauses = []
-tags = []
+tags = ["array-indexing", "array-slice", "packed-array", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -638,7 +638,7 @@ anchors = [
 ]
 summary = "A slice name selects one or more contiguous array elements and retains the source array's packed or unpacked category."
 related_clauses = []
-tags = []
+tags = ["array-slice", "packed-array", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -662,7 +662,7 @@ anchors = [
 ]
 summary = "sort() orders array elements ascending by the element value or optional with-expression value; omission of with requires <, >, and == on the element type, while presence requires them on the expression type."
 related_clauses = []
-tags = []
+tags = ["array-iterator", "array-method", "array-ordering", "comparison"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -686,7 +686,7 @@ anchors = [
 ]
 summary = "sum() returns the sum of all element values, or with a with clause, the sum of the expression value evaluated for every element."
 related_clauses = []
-tags = []
+tags = ["array-reduction"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -713,7 +713,7 @@ summary = "Compatible packed or unpacked arrays may be read and written as whole
 related_clauses = [
     "7.6",
 ]
-tags = []
+tags = ["array-assignment", "packed-array", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -737,7 +737,7 @@ anchors = [
 ]
 summary = "xor() returns the bitwise XOR of all element values, or with a with clause, the bitwise XOR of the expression value evaluated for every element."
 related_clauses = []
-tags = []
+tags = ["array-reduction"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -761,7 +761,7 @@ anchors = [
 ]
 summary = "Passing an associative array by value creates a local copy for the called subroutine."
 related_clauses = []
-tags = []
+tags = ["array-argument", "associative-array", "value-copy"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -785,7 +785,7 @@ anchors = [
 ]
 summary = "An associative-array actual may be passed only to an associative-array formal with compatible element type and the same index type; associative arrays and nonassociative array formals or actuals shall not be mixed."
 related_clauses = []
-tags = []
+tags = ["array-argument", "associative-array", "index-type", "type-compatibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -812,7 +812,7 @@ summary = "An associative array is assignment compatible only with another assoc
 related_clauses = [
     "7.9.9",
 ]
-tags = []
+tags = ["array-assignment", "associative-array", "index-type", "type-compatibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -838,7 +838,7 @@ anchors = [
 ]
 summary = "An associative array declaration has form data_type array_id[index_type], where the element type may be any type allowed for fixed-size arrays and index_type names an existing type or is wildcard *; the index position shall not itself declare a type."
 related_clauses = []
-tags = []
+tags = ["associative-array", "index-type", "wildcard-index"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -864,7 +864,7 @@ anchors = [
 ]
 summary = "An associative array is a lookup table whose declared index type supplies keys and their ordering; associative indices are not restricted to integral types."
 related_clauses = []
-tags = []
+tags = ["associative-array", "index-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -888,7 +888,7 @@ anchors = [
 ]
 summary = "A newly declared associative array has no allocated entries; element storage appears only when an indexed entry is allocated."
 related_clauses = []
-tags = []
+tags = ["allocation", "associative-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -912,7 +912,7 @@ anchors = [
 ]
 summary = "An associative-array literal uses '{index:value} entries and may include a default:value item; assigning the literal may replace the entire array contents, while individual entries may also be written separately."
 related_clauses = []
-tags = []
+tags = ["array-literal", "associative-array", "default-value"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -939,7 +939,7 @@ related_clauses = [
     "7.6",
     "7.9.9",
 ]
-tags = []
+tags = ["array-comparison", "array-indexing", "array-slice", "associative-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -964,7 +964,7 @@ anchors = [
 ]
 summary = "Associative-array assignment first removes every existing target entry and then copies every source entry into the target."
 related_clauses = []
-tags = []
+tags = ["array-assignment", "associative-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -990,7 +990,7 @@ summary = "Specifying a default value for an associative array shall not change 
 related_clauses = [
     "7.9",
 ]
-tags = []
+tags = ["array-query", "associative-array", "default-value"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1018,7 +1018,7 @@ related_clauses = [
     "7.9.11",
     "7.4.5",
 ]
-tags = []
+tags = ["associative-array", "default-value", "diagnostic", "invalid-index"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1042,7 +1042,7 @@ anchors = [
 ]
 summary = "Calling delete() on an associative array without an index removes every entry."
 related_clauses = []
-tags = []
+tags = ["array-method", "associative-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1066,7 +1066,7 @@ anchors = [
 ]
 summary = "delete(index) removes the associative-array entry at the specified key; if no such entry exists, it performs no change and issues no warning."
 related_clauses = []
-tags = []
+tags = ["array-indexing", "array-method", "associative-array", "diagnostic"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1092,7 +1092,7 @@ anchors = [
 ]
 summary = "An associative array provides function void delete() with an optional input index argument; when supplied, the index shall be of the array's appropriate index type."
 related_clauses = []
-tags = []
+tags = ["array-method", "associative-array", "index-type"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1117,7 +1117,7 @@ anchors = [
 ]
 summary = "A nonexistent associative-array entry shall be dynamically allocated when used as an assignment target or as an actual argument passed by reference."
 related_clauses = []
-tags = []
+tags = ["allocation", "array-argument", "associative-array", "reference-argument"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1141,7 +1141,7 @@ anchors = [
 ]
 summary = "Associative-array elements are unpacked, so except for whole-array copying or comparison, an individual element shall be selected before its value is used in an expression."
 related_clauses = []
-tags = []
+tags = ["array-indexing", "associative-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1168,7 +1168,7 @@ anchors = [
 ]
 summary = "An associative array provides function int exists(input index), where index has the array's appropriate key type; it returns 1 if that entry exists and 0 otherwise."
 related_clauses = []
-tags = []
+tags = ["array-query", "associative-array", "index-type"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1195,7 +1195,7 @@ anchors = [
 ]
 summary = "For a non-wildcard associative array, function int first(ref index) requires an appropriate index-typed variable; on a nonempty array it stores the smallest key and returns 1, while on an empty array it returns 0."
 related_clauses = []
-tags = []
+tags = ["array-query", "associative-array", "index-type", "reference-argument"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1220,7 +1220,7 @@ anchors = [
 ]
 summary = "An associative-array index type is legal only if equality is defined for it; dynamically sized types may qualify, but real, shortreal, and any type containing real or shortreal are illegal index types."
 related_clauses = []
-tags = []
+tags = ["associative-array", "equality", "index-type"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1246,7 +1246,7 @@ summary = "Reading an associative array with an X/Z-containing 4-state index or 
 related_clauses = [
     "7.4.5",
 ]
-tags = []
+tags = ["associative-array", "diagnostic", "four-state", "invalid-index"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1270,7 +1270,7 @@ anchors = [
 ]
 summary = "Writing an associative array with an invalid index shall be ignored and shall issue a warning."
 related_clauses = []
-tags = []
+tags = ["associative-array", "diagnostic", "invalid-index"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1297,7 +1297,7 @@ anchors = [
 ]
 summary = "For a non-wildcard associative array, function int last(ref index) requires an appropriate index-typed variable; on a nonempty array it stores the largest key and returns 1, while on an empty array it returns 0."
 related_clauses = []
-tags = []
+tags = ["array-query", "associative-array", "index-type", "reference-argument"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1325,7 +1325,7 @@ anchors = [
 ]
 summary = "For a non-wildcard associative array, function int next(ref index) requires an appropriate key-typed variable; it finds the smallest key greater than the input key, stores and returns 1 for that key if found, otherwise leaves the argument unchanged and returns 0."
 related_clauses = []
-tags = []
+tags = ["array-query", "associative-array", "index-type", "reference-argument"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1351,7 +1351,7 @@ anchors = [
 ]
 summary = "An associative array provides no-argument functions int num() and int size(); each returns the current number of allocated entries, returning zero when the array is empty."
 related_clauses = []
-tags = []
+tags = ["array-query", "associative-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1378,7 +1378,7 @@ anchors = [
 ]
 summary = "For a non-wildcard associative array, function int prev(ref index) requires an appropriate key-typed variable; it finds the largest key smaller than the input key, stores and returns 1 for that key if found, otherwise leaves the argument unchanged and returns 0."
 related_clauses = []
-tags = []
+tags = ["array-query", "associative-array", "index-type", "reference-argument"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1403,7 +1403,7 @@ anchors = [
 ]
 summary = "When one construct both reads and writes a nonexistent associative entry, the entry shall be allocated and initialized to its user-specified or type default before the read portion occurs; the operation then applies to that initialized value."
 related_clauses = []
-tags = []
+tags = ["allocation", "associative-array", "default-value"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1427,7 +1427,7 @@ anchors = [
 ]
 summary = "The ref argument passed to first(), last(), next(), or prev() shall be assignment compatible with the associative array's index type."
 related_clauses = []
-tags = []
+tags = ["array-query", "associative-array", "reference-argument", "type-compatibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1451,7 +1451,7 @@ anchors = [
 ]
 summary = "If an integral traversal-method argument is narrower than the associative index type, the selected index shall be truncated to fit the argument and the method shall return -1 rather than its ordinary success status."
 related_clauses = []
-tags = []
+tags = ["array-query", "associative-array", "reference-argument", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1477,7 +1477,7 @@ summary = "A queue declared [$:N] is bounded: no valid index may exceed N and it
 related_clauses = [
     "7.10.5",
 ]
-tags = []
+tags = ["bounds", "queue", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1501,7 +1501,7 @@ anchors = [
 ]
 summary = "A bounded queue otherwise behaves as unbounded, but after any write all elements with indices above its declared upper bound shall be discarded and a warning shall be issued, leaving no element beyond the bound."
 related_clauses = []
-tags = []
+tags = ["bounds", "diagnostic", "queue"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1525,7 +1525,7 @@ anchors = [
 ]
 summary = "Class-handle keys have an implementation-chosen arbitrary ordering, but that ordering shall be deterministic."
 related_clauses = []
-tags = []
+tags = ["associative-array", "class-handle", "index-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1549,7 +1549,7 @@ anchors = [
 ]
 summary = "A class-indexed associative array accepts object handles of its declared class or any derived class; an index of any other type is illegal and shall cause a type-check error."
 related_clauses = []
-tags = []
+tags = ["associative-array", "class-handle", "diagnostic", "index-type"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1573,7 +1573,7 @@ anchors = [
 ]
 summary = "The null handle is a valid key for a class-indexed associative array."
 related_clauses = []
-tags = []
+tags = ["associative-array", "class-handle"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1597,7 +1597,7 @@ anchors = [
 ]
 summary = "A comma-separated declaration may declare multiple arrays only with one common data type and identical packed dimensions; each declarator may have its own unpacked dimensions."
 related_clauses = []
-tags = []
+tags = ["array-dimension", "packed-array", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -1624,7 +1624,7 @@ related_clauses = [
     "7.6",
     "34.5.6.1",
 ]
-tags = []
+tags = ["array-dimension", "dpi", "open-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1648,7 +1648,7 @@ anchors = [
 ]
 summary = "A dynamic array or queue actual shall not be passed to a DPI output formal that has unsized dimensions."
 related_clauses = []
-tags = []
+tags = ["array-argument", "dpi", "open-array", "output"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1677,7 +1677,7 @@ summary = "A dynamic array provides function void delete() with no arguments; ca
 related_clauses = [
     "7.5.3",
 ]
-tags = []
+tags = ["array-method", "dynamic-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1701,7 +1701,7 @@ anchors = [
 ]
 summary = "An empty unpacked dimension [] denotes a dynamic dimension, and any unpacked dimension position may be dynamic."
 related_clauses = []
-tags = []
+tags = ["array-dimension", "dynamic-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1726,7 +1726,7 @@ anchors = [
 ]
 summary = "Directly assigning array C to dynamic array B is equivalent to B = new[C.size()](C): B is resized to C's count and initialized from C's elements."
 related_clauses = []
-tags = []
+tags = ["array-assignment", "dynamic-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1750,7 +1750,7 @@ anchors = [
 ]
 summary = "A dynamic array may use any variable data type as its element type, including an array type."
 related_clauses = []
-tags = []
+tags = ["dynamic-array", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1774,7 +1774,7 @@ anchors = [
 ]
 summary = "An identifier denotes a dynamic array only when its leftmost unpacked dimension is dynamic; a later dynamic dimension makes containing elements dynamic subarrays."
 related_clauses = []
-tags = []
+tags = ["array-dimension", "dynamic-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1799,7 +1799,7 @@ anchors = [
 ]
 summary = "new[] may include a parenthesized array initialization expression, which shall be assignment compatible with the left-hand-side dynamic array and supplies initial element values."
 related_clauses = []
-tags = []
+tags = ["array-assignment", "dynamic-array", "initialization"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1826,7 +1826,7 @@ anchors = [
 ]
 summary = "new[] sets or changes a dynamic array's size and initializes its elements, and may be the right-hand side of a variable declaration assignment or blocking procedural assignment when the left-hand side denotes a dynamic array."
 related_clauses = []
-tags = []
+tags = ["array-assignment", "dynamic-array", "initialization"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1850,7 +1850,7 @@ anchors = [
 ]
 summary = "If new[] omits its optional initialization expression, every newly allocated element shall receive the default value of its element type."
 related_clauses = []
-tags = []
+tags = ["default-value", "dynamic-array", "initialization"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1874,7 +1874,7 @@ anchors = [
 ]
 summary = "Applying new[] to an initialized dynamic array destroys all previous contents unless those contents are explicitly supplied as the initializer."
 related_clauses = []
-tags = []
+tags = ["dynamic-array", "initialization"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1898,7 +1898,7 @@ anchors = [
 ]
 summary = "When new[] includes both size and initialization expressions, they have equal precedence and shall be evaluated left to right, evaluating the bracketed size expression before the parenthesized initializer."
 related_clauses = []
-tags = []
+tags = ["dynamic-array", "evaluation-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1922,7 +1922,7 @@ anchors = [
 ]
 summary = "Resizing or reinitializing a dynamic array with new[] makes every preexisting reference to its elements outdated."
 related_clauses = []
-tags = []
+tags = ["dynamic-array", "reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1946,7 +1946,7 @@ anchors = [
 ]
 summary = "The new[] size operand has type longint; a negative value is an error, zero produces an empty dynamic array, and a positive value establishes that many elements."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "dynamic-array", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1970,7 +1970,7 @@ anchors = [
 ]
 summary = "When a new[] initialization array is larger than the requested size, only its leading requested elements are retained; when smaller, copied elements are followed by element-type default values until the requested size is reached."
 related_clauses = []
-tags = []
+tags = ["dynamic-array", "initialization", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1994,7 +1994,7 @@ anchors = [
 ]
 summary = "A dynamic array may be resized while preserving its leading contents by using the same array as both assignment target and new[] initialization expression."
 related_clauses = []
-tags = []
+tags = ["dynamic-array", "initialization"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2021,7 +2021,7 @@ related_clauses = [
     "7.5.1",
     "7.6",
 ]
-tags = []
+tags = ["allocation", "dynamic-array", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2050,7 +2050,7 @@ summary = "A dynamic array provides function int size() with no arguments; it re
 related_clauses = [
     "7.5.2",
 ]
-tags = []
+tags = ["array-query", "dynamic-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2076,7 +2076,7 @@ summary = "For a dynamic array addr, addr.size() shall return the same value as 
 related_clauses = [
     "20.7",
 ]
-tags = []
+tags = ["array-query", "dynamic-array", "system-call"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2100,7 +2100,7 @@ anchors = [
 ]
 summary = "The empty queue {} is a valid queue value and may be produced by queue operations."
 related_clauses = []
-tags = []
+tags = ["array-literal", "queue"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2126,7 +2126,7 @@ summary = "When a structure variable declaration has an explicit initial value, 
 related_clauses = [
     "5.10",
 ]
-tags = []
+tags = ["default-value", "initialization", "struct"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2152,7 +2152,7 @@ anchors = [
 ]
 summary = "find_first_index() returns a queue containing the index of the first element satisfying its with expression, or an empty queue if none does."
 related_clauses = []
-tags = []
+tags = ["array-iterator", "array-locator", "queue"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2178,7 +2178,7 @@ anchors = [
 ]
 summary = "find_first() returns a queue containing the first element that satisfies its with expression, or an empty queue if none does."
 related_clauses = []
-tags = []
+tags = ["array-iterator", "array-locator", "queue"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2203,7 +2203,7 @@ anchors = [
 ]
 summary = "find_index() returns a queue containing the indices of all elements that satisfy its with expression."
 related_clauses = []
-tags = []
+tags = ["array-iterator", "array-locator", "queue"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2229,7 +2229,7 @@ anchors = [
 ]
 summary = "find_last_index() returns a queue containing the index of the last element satisfying its with expression, or an empty queue if none does."
 related_clauses = []
-tags = []
+tags = ["array-iterator", "array-locator", "queue"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2255,7 +2255,7 @@ anchors = [
 ]
 summary = "find_last() returns a queue containing the last element that satisfies its with expression, or an empty queue if none does."
 related_clauses = []
-tags = []
+tags = ["array-iterator", "array-locator", "queue"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2280,7 +2280,7 @@ anchors = [
 ]
 summary = "find() returns a queue containing all array elements that satisfy its with expression."
 related_clauses = []
-tags = []
+tags = ["array-iterator", "array-locator", "queue"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2304,7 +2304,7 @@ anchors = [
 ]
 summary = "find(), find_index(), find_first(), find_first_index(), find_last(), and find_last_index() require a with clause whose expression evaluates to Boolean."
 related_clauses = []
-tags = []
+tags = ["array-iterator", "array-locator", "diagnostic"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2328,7 +2328,7 @@ anchors = [
 ]
 summary = "An actual passed to a fixed-size multidimensional array formal shall have the same number of dimensions, compatible element type, and equal element count in every fixed dimension; corresponding index ranges may differ."
 related_clauses = []
-tags = []
+tags = ["array-argument", "array-dimension", "fixed-array", "type-compatibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2352,7 +2352,7 @@ anchors = [
 ]
 summary = "A fixed-size array formal may accept a dynamic-array or queue actual when its type is compatible and its runtime element count equals the fixed formal size."
 related_clauses = []
-tags = []
+tags = ["array-argument", "fixed-array", "sizing", "type-compatibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2376,7 +2376,7 @@ anchors = [
 ]
 summary = "A fixed-size unpacked dimension may use [constant_expression:constant_expression], whose integer bounds contain no X or Z bits and may be ascending, descending, equal, positive, negative, or zero."
 related_clauses = []
-tags = []
+tags = ["array-dimension", "bounds", "fixed-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2400,7 +2400,7 @@ anchors = [
 ]
 summary = "A fixed-size unpacked dimension may be a single positive constant integer [size], which is equivalent to range [0:size-1]."
 related_clauses = []
-tags = []
+tags = ["array-dimension", "fixed-array", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2424,7 +2424,7 @@ anchors = [
 ]
 summary = "An untagged union with packed but not soft is hard packed and all members shall have equal size; an untagged union with soft is soft packed, may omit packed, and permits unequal member sizes."
 related_clauses = []
-tags = []
+tags = ["packed-union", "sizing", "union"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -2448,7 +2448,7 @@ anchors = [
 ]
 summary = "An index locator returns queue of int for a nonassociative array and a queue of the associative index type for a typed associative array; wildcard-index associative arrays are illegal operands."
 related_clauses = []
-tags = []
+tags = ["array-locator", "index-type", "queue", "wildcard-index"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2473,7 +2473,7 @@ anchors = [
 ]
 summary = "An index expression for an integral-typed associative array shall be evaluated as cast to the declared index type, except that implicit conversion from real or shortreal is illegal."
 related_clauses = []
-tags = []
+tags = ["associative-array", "conversion", "index-type", "integral"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2497,7 +2497,7 @@ anchors = [
 ]
 summary = "Integral-typed associative-array keys are ordered numerically according to the declared index type's signedness: signed numerical order for signed types and unsigned numerical order for unsigned types."
 related_clauses = []
-tags = []
+tags = ["associative-array", "index-order", "integral", "signedness"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2521,7 +2521,7 @@ anchors = [
 ]
 summary = "A 4-state index expression containing any X or Z bit is invalid for an integral-typed associative array."
 related_clauses = []
-tags = []
+tags = ["associative-array", "four-state", "integral", "invalid-index"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2546,7 +2546,7 @@ anchors = [
 ]
 summary = "Reading a nonexistent unpacked-array entry of enumeration type shall return the Table 7-1 invalid-read value corresponding to the enumeration's base type."
 related_clauses = []
-tags = []
+tags = ["enum", "invalid-index", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2571,7 +2571,7 @@ anchors = [
 ]
 summary = "Reading a nonexistent unpacked-array entry whose element is a fixed-size unpacked array shall return an array of that fixed shape with every element set to its own type-specific Table 7-1 invalid-read value."
 related_clauses = []
-tags = []
+tags = ["fixed-array", "invalid-index", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2599,7 +2599,7 @@ anchors = [
 ]
 summary = "Reading a nonexistent unpacked-array entry whose element type is class, interface class, event, chandle, or virtual interface shall return null."
 related_clauses = []
-tags = []
+tags = ["invalid-index", "object-handle", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2624,7 +2624,7 @@ anchors = [
 ]
 summary = "Reading a nonexistent unpacked-array entry of 4-state integral type shall return 'x, while one of 2-state integral type shall return '0."
 related_clauses = []
-tags = []
+tags = ["four-state", "invalid-index", "two-state", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2648,7 +2648,7 @@ anchors = [
 ]
 summary = "Reading a nonexistent unpacked-array entry of real or shortreal type shall return 0.0."
 related_clauses = []
-tags = []
+tags = ["invalid-index", "real", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2672,7 +2672,7 @@ anchors = [
 ]
 summary = "Reading a nonexistent unpacked-array entry of string type shall return the empty string."
 related_clauses = []
-tags = []
+tags = ["invalid-index", "string", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2702,7 +2702,7 @@ summary = "Reading a nonexistent unpacked-array entry of unpacked-struct type sh
 related_clauses = [
     "7.2.2",
 ]
-tags = []
+tags = ["invalid-index", "unpacked-array", "unpacked-struct"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2727,7 +2727,7 @@ anchors = [
 ]
 summary = "Reading a nonexistent unpacked-array entry of unpacked-union type shall return the Table 7-1 invalid-read value for the type of the union's first declared member."
 related_clauses = []
-tags = []
+tags = ["invalid-index", "unpacked-array", "unpacked-union"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2752,7 +2752,7 @@ anchors = [
 ]
 summary = "Reading a nonexistent unpacked-array entry whose element is a dynamic array, queue, or associative array shall return a variable-size unpacked array with zero elements."
 related_clauses = []
-tags = []
+tags = ["invalid-index", "unpacked-array", "variable-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2780,7 +2780,7 @@ related_clauses = [
     "7.10.1",
     "7.8.6",
 ]
-tags = []
+tags = ["associative-array", "four-state", "invalid-index", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -2806,7 +2806,7 @@ summary = "Iterator index dimensions are numbered from 1 at the slowest-varying 
 related_clauses = [
     "20.7",
 ]
-tags = []
+tags = ["array-dimension", "array-iterator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2830,7 +2830,7 @@ anchors = [
 ]
 summary = "The iterator index method is named index by default; an array method call's optional index argument may supply a different method name to avoid conflicts with members or methods of the iterated element."
 related_clauses = []
-tags = []
+tags = ["array-iterator", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -2856,7 +2856,7 @@ anchors = [
 ]
 summary = "Within an array-method iterator expression, the iterator index method has form index_method_name(int dimension = 1) and returns the current index value for the requested dimension."
 related_clauses = []
-tags = []
+tags = ["array-iterator", "function"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -2881,7 +2881,7 @@ anchors = [
 ]
 summary = "Iterator index() returns int for nonassociative arrays and the declared associative index type for typed associative arrays; wildcard associative arrays shall not be used."
 related_clauses = []
-tags = []
+tags = ["array-iterator", "index-type", "wildcard-index"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2907,7 +2907,7 @@ summary = "For first/last locator methods, first and last mean nearest the leftm
 related_clauses = [
     "7.9",
 ]
-tags = []
+tags = ["array-locator", "index-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2931,7 +2931,7 @@ anchors = [
 ]
 summary = "Array locator methods operate on any unpacked array and return queue results; when no element qualifies or the input is empty the result is an empty queue, and traversal order is unspecified."
 related_clauses = []
-tags = []
+tags = ["array-locator", "queue", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2959,7 +2959,7 @@ anchors = [
 ]
 summary = "For min(), max(), unique(), and unique_index(), omitting with is legal only when <, >, and == are defined for the element type and behaves as with(item); when with is present, those operators shall be defined for the expression type."
 related_clauses = []
-tags = []
+tags = ["array-iterator", "array-locator", "comparison"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2983,7 +2983,7 @@ anchors = [
 ]
 summary = "max() returns a queue containing one array element whose with expression has the maximum value; if several elements tie, exactly one of them is returned."
 related_clauses = []
-tags = []
+tags = ["array-iterator", "array-locator", "queue"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3007,7 +3007,7 @@ anchors = [
 ]
 summary = "min() returns a queue containing one array element whose with expression has the minimum value; if several elements tie, exactly one of them is returned."
 related_clauses = []
-tags = []
+tags = ["array-iterator", "array-locator", "queue"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3032,7 +3032,7 @@ anchors = [
 ]
 summary = "In multidimensional arrays, all packed dimensions vary more rapidly than unpacked dimensions; within each dimension list the rightmost dimension varies most rapidly, and references place unpacked indices before packed indices."
 related_clauses = []
-tags = []
+tags = ["array-dimension", "layout", "packed-array", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -3058,7 +3058,7 @@ summary = "A packed array may have one or multiple packed dimensions; a one-dime
 related_clauses = [
     "6.9",
 ]
-tags = []
+tags = ["array-dimension", "packed-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3084,7 +3084,7 @@ summary = "An element of a net array may be used in the same ways as a scalar or
 related_clauses = [
     "27.4",
 ]
-tags = []
+tags = ["connectivity", "net", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3110,7 +3110,7 @@ summary = "When a data type declares a net without a user-defined nettype, any i
 related_clauses = [
     "6.7.1",
 ]
-tags = []
+tags = ["initialization", "net"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3134,7 +3134,7 @@ anchors = [
 ]
 summary = "An array of nets and an array of variables may be assigned in either direction when their data types are assignment compatible."
 related_clauses = []
-tags = []
+tags = ["array-assignment", "net", "type-compatibility", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3159,7 +3159,7 @@ anchors = [
 ]
 summary = "An expression may select bits from a packed array or integer type, with an integer type treated as numbered down to bit 0; selecting one or more contiguous bits of a one-dimensional packed array is a part-select."
 related_clauses = []
-tags = []
+tags = ["array-indexing", "layout", "packed-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -3183,7 +3183,7 @@ anchors = [
 ]
 summary = "Packed arrays support arbitrary-width integral values and corresponding-width arithmetic; an implementation may impose a maximum packed-array size, but that maximum shall be at least 65536 bits."
 related_clauses = []
-tags = []
+tags = ["integral", "packed-array", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3207,7 +3207,7 @@ anchors = [
 ]
 summary = "A packed array is a contiguous set of bits subdividable into elements and, when used as a primary, is treated as one vector."
 related_clauses = []
-tags = []
+tags = ["layout", "packed-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3231,7 +3231,7 @@ anchors = [
 ]
 summary = "A packed array element type shall be bit, logic, reg, an enumerated type, or recursively a packed array or packed structure."
 related_clauses = []
-tags = []
+tags = ["packed-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3256,7 +3256,7 @@ anchors = [
 ]
 summary = "A packed array may be assigned from an integer value; an unpacked array may not be assigned from an integer merely as a whole vector."
 related_clauses = []
-tags = []
+tags = ["array-assignment", "conversion", "packed-array", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -3281,7 +3281,7 @@ anchors = [
 ]
 summary = "A packed array may be treated as an integer operand in an expression; an unpacked array may not."
 related_clauses = []
-tags = []
+tags = ["integral", "packed-array", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -3305,7 +3305,7 @@ anchors = [
 ]
 summary = "A packed array declared signed is signed when viewed as a whole vector; each element is unsigned unless its named element type is signed, and every packed-array part-select is unsigned."
 related_clauses = []
-tags = []
+tags = ["layout", "packed-array", "signedness", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3329,7 +3329,7 @@ anchors = [
 ]
 summary = "For assignment, a packed array is a vector and may receive any vector expression regardless of the target's declared packed bounds."
 related_clauses = []
-tags = []
+tags = ["array-assignment", "packed-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3354,7 +3354,7 @@ anchors = [
 ]
 summary = "Each packed dimension shall be a two-bound range [constant_expression:constant_expression]; each bound shall be an integer without X or Z bits, and ascending, descending, and equal bounds are permitted."
 related_clauses = []
-tags = []
+tags = ["array-dimension", "bounds", "packed-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3378,7 +3378,7 @@ anchors = [
 ]
 summary = "A struct with a packed dimension shall use the packed keyword; a union with a packed dimension shall use packed, soft, or both as permitted by the struct_union grammar."
 related_clauses = []
-tags = []
+tags = ["grammar", "packed-struct", "packed-union", "union"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -3404,7 +3404,7 @@ anchors = [
 ]
 summary = "When used as a primary, a packed structure shall be treated as one contiguous vector whose member bit fields have no intervening gaps."
 related_clauses = []
-tags = []
+tags = ["layout", "packed-struct"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3428,7 +3428,7 @@ anchors = [
 ]
 summary = "An n-bit packed structure permits bit-selects and part-selects as a packed array with effective range [n-1:0]."
 related_clauses = []
-tags = []
+tags = ["array-indexing", "layout", "packed-struct"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3454,7 +3454,7 @@ summary = "Every member type of a packed structure shall be either a packed data
 related_clauses = [
     "6.11",
 ]
-tags = []
+tags = ["integral", "packed-struct"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3478,7 +3478,7 @@ anchors = [
 ]
 summary = "A packed structure is unsigned by default; its declared signedness controls whole-value arithmetic and logical operations, and members occupy bits from the first member at the most-significant end through later members in decreasing significance."
 related_clauses = []
-tags = []
+tags = ["layout", "packed-struct", "signedness"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3503,7 +3503,7 @@ anchors = [
 ]
 summary = "A packed structure is a 2-state vector exactly when all members are 2-state; if any member is 4-state, the whole is 4-state and accesses to 2-state members implicitly convert between the whole's 4-state domain and the member's 2-state domain."
 related_clauses = []
-tags = []
+tags = ["conversion", "four-state", "packed-struct", "two-state"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3527,7 +3527,7 @@ anchors = [
 ]
 summary = "A packed structure type may be defined by a typedef and subsequently used through that type name."
 related_clauses = []
-tags = []
+tags = ["packed-struct", "typedef"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3551,7 +3551,7 @@ anchors = [
 ]
 summary = "Every member of a packed tagged union shall have a packed type, but packed tagged union members may have unequal widths."
 related_clauses = []
-tags = []
+tags = ["packed-union", "tagged-union"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3581,7 +3581,7 @@ anchors = [
 ]
 summary = "A packed tagged union has the minimum tag width needed to encode every member plus the maximum member width; tag bits occupy the MSBs, active-member bits are LSB-aligned, intervening bits are undefined, all non-tag bits are undefined for a void member, and the representation applies recursively to nested tagged unions."
 related_clauses = []
-tags = []
+tags = ["layout", "packed-union", "sizing", "tagged-union"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3605,7 +3605,7 @@ anchors = [
 ]
 summary = "A packed array shall not be assigned directly to an unpacked array; such an assignment requires an explicit cast."
 related_clauses = []
-tags = []
+tags = ["conversion", "packed-array", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3630,7 +3630,7 @@ anchors = [
 ]
 summary = "An untagged packed union permits reading a different member from the one last written, reinterpreting the same packed bits independently of host-machine byte ordering."
 related_clauses = []
-tags = []
+tags = ["layout", "packed-union"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3656,7 +3656,7 @@ summary = "A packed union shall contain only members of integral data types."
 related_clauses = [
     "6.11.1",
 ]
-tags = []
+tags = ["integral", "packed-union"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3680,7 +3680,7 @@ anchors = [
 ]
 summary = "A packed union containing both 2-state and 4-state members is wholly 4-state, with implicit 4-to-2 conversion when reading a 2-state member and 2-to-4 conversion when writing it."
 related_clauses = []
-tags = []
+tags = ["conversion", "four-state", "packed-union", "two-state"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3704,7 +3704,7 @@ anchors = [
 ]
 summary = "A packed union primary is one vector, unsigned by default with whole-value arithmetic and logical behavior controlled by signedness, and permits selections over effective range [n-1:0] for its n-bit size."
 related_clauses = []
-tags = []
+tags = ["layout", "packed-union", "signedness", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3728,7 +3728,7 @@ anchors = [
 ]
 summary = "The predefined-width integer types byte, shortint, int, longint, integer, and time shall not be declared with packed array dimensions."
 related_clauses = []
-tags = []
+tags = ["array-dimension", "integral", "packed-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3754,7 +3754,7 @@ summary = "A predefined-width n-bit integer type matches a one-dimensional packe
 related_clauses = [
     "6.22",
 ]
-tags = []
+tags = ["packed-array", "sizing", "type-compatibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3779,7 +3779,7 @@ anchors = [
 ]
 summary = "Queue assignments formed from concatenations and slices shall produce the same queue values as their corresponding push_back, push_front, pop_front, pop_back, insert, indexed delete, or delete-all method forms identified in 7.10.4."
 related_clauses = []
-tags = []
+tags = ["array-assignment", "array-method", "queue"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3805,7 +3805,7 @@ summary = "Writing a queue value shall automatically resize the target queue to 
 related_clauses = [
     "7.10",
 ]
-tags = []
+tags = ["array-assignment", "queue", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3831,7 +3831,7 @@ summary = "A queue variable declared without an initial value shall initialize t
 related_clauses = [
     "10.10",
 ]
-tags = []
+tags = ["array-literal", "initialization", "queue"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3858,7 +3858,7 @@ anchors = [
 ]
 summary = "A queue provides function void delete([input integer index]); when the optional index is omitted, it removes every element and leaves the queue empty."
 related_clauses = []
-tags = []
+tags = ["array-method", "queue"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3882,7 +3882,7 @@ anchors = [
 ]
 summary = "delete(index) removes the queue item at a valid position; an index containing X/Z, below zero, or at least the current size leaves the queue unchanged, and a warning is optional."
 related_clauses = []
-tags = []
+tags = ["array-indexing", "array-method", "invalid-index", "queue"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3909,7 +3909,7 @@ anchors = [
 ]
 summary = "A queue is declared with unpacked dimension [$] or bounded dimension [$:constant_expression]; the optional right bound is the maximum last index and shall evaluate to a positive integer."
 related_clauses = []
-tags = []
+tags = ["array-dimension", "bounds", "queue"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3933,7 +3933,7 @@ anchors = [
 ]
 summary = "A queue is a variable-size unpacked array whose positional indices run from 0 for the first element through $ for the last, and it supports array indexing, slicing, concatenation, and equality operations while growing and shrinking automatically."
 related_clauses = []
-tags = []
+tags = ["array-comparison", "array-indexing", "array-slice", "queue"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3957,7 +3957,7 @@ anchors = [
 ]
 summary = "insert() with an index containing X/Z, below zero, or greater than the current queue size shall leave the queue unchanged; issuing a warning is optional."
 related_clauses = []
-tags = []
+tags = ["array-method", "invalid-index", "queue"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3983,7 +3983,7 @@ anchors = [
 ]
 summary = "A queue provides function void insert(input integer index, input element_t item), which inserts item at the specified position and shifts the existing item at that position and subsequent items toward the back."
 related_clauses = []
-tags = []
+tags = ["array-indexing", "array-method", "queue"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4009,7 +4009,7 @@ summary = "Reading a queue with an index containing X or Z or outside 0 through 
 related_clauses = [
     "7.4.5",
 ]
-tags = []
+tags = ["four-state", "invalid-index", "queue"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4033,7 +4033,7 @@ anchors = [
 ]
 summary = "Writing a queue at an X/Z-containing index or outside 0 through $+1 shall be ignored and issue a runtime warning; writing at exactly $+1 is legal."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "invalid-index", "queue"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4060,7 +4060,7 @@ summary = "After a queue method updates a queue, references to elements retained
 related_clauses = [
     "13.5.2",
 ]
-tags = []
+tags = ["array-method", "queue", "reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4086,7 +4086,7 @@ anchors = [
 ]
 summary = "A queue provides no-argument function element_t pop_back(), which removes and returns the last element."
 related_clauses = []
-tags = []
+tags = ["array-method", "queue"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4114,7 +4114,7 @@ summary = "Calling pop_back() on an empty queue shall return the Table 7-1 nonex
 related_clauses = [
     "7.4.5",
 ]
-tags = []
+tags = ["array-method", "default-value", "queue"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4140,7 +4140,7 @@ anchors = [
 ]
 summary = "A queue provides no-argument function element_t pop_front(), which removes and returns the first element."
 related_clauses = []
-tags = []
+tags = ["array-method", "queue"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4168,7 +4168,7 @@ summary = "Calling pop_front() on an empty queue shall return the Table 7-1 none
 related_clauses = [
     "7.4.5",
 ]
-tags = []
+tags = ["array-method", "default-value", "queue"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4194,7 +4194,7 @@ anchors = [
 ]
 summary = "A queue provides function void push_back(input element_t item), which inserts item at the end of the queue."
 related_clauses = []
-tags = []
+tags = ["array-method", "queue"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4220,7 +4220,7 @@ anchors = [
 ]
 summary = "A queue provides function void push_front(input element_t item), which inserts item at the front and shifts existing elements one position toward the back."
 related_clauses = []
-tags = []
+tags = ["array-method", "queue"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4246,7 +4246,7 @@ anchors = [
 ]
 summary = "A queue provides no-argument function int size(), returning its current number of items and zero when empty."
 related_clauses = []
-tags = []
+tags = ["array-query", "queue"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4271,7 +4271,7 @@ anchors = [
 ]
 summary = "Queue slice bounds are clamped to the queue range: Q[a:b] with a below zero is Q[0:b], and with b above $ is Q[a:$]."
 related_clauses = []
-tags = []
+tags = ["array-slice", "bounds", "queue"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4299,7 +4299,7 @@ anchors = [
 ]
 summary = "For valid ordered bounds, Q[a:b] contains b-a+1 consecutive elements; reversed bounds yield {}, Q[n:n] yields {Q[n]} when n is in range and {} otherwise, and any X/Z in either bound yields {}."
 related_clauses = []
-tags = []
+tags = ["array-slice", "four-state", "queue"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4323,7 +4323,7 @@ anchors = [
 ]
 summary = "Both bounds in a queue slice Q[a:b] may be arbitrary runtime integral expressions and need not be constant."
 related_clauses = []
-tags = []
+tags = ["array-slice", "queue"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4350,7 +4350,7 @@ related_clauses = [
     "10.9",
     "10.10",
 ]
-tags = []
+tags = ["array-literal", "queue"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4376,7 +4376,7 @@ anchors = [
 ]
 summary = "Any assignment to an entire queue, including assignment using unpacked concatenation, shall make every reference to an element of the prior queue outdated, even when the resulting value equals that of a queue method."
 related_clauses = []
-tags = []
+tags = ["array-assignment", "queue", "reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4400,7 +4400,7 @@ anchors = [
 ]
 summary = "A random qualifier on a structure-or-union member is legal only when the containing aggregate is an unpacked structure."
 related_clauses = []
-tags = []
+tags = ["randomization", "struct", "union", "unpacked-struct"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -4425,7 +4425,7 @@ anchors = [
 ]
 summary = "The width of an array slice or packed part-select shall be constant, while its starting position may be variable."
 related_clauses = []
-tags = []
+tags = ["array-indexing", "array-slice", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -4449,7 +4449,7 @@ anchors = [
 ]
 summary = "A single array expression may slice only one dimension; its other dimensions may each be selected by a single index."
 related_clauses = []
-tags = []
+tags = ["array-dimension", "array-slice"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -4476,7 +4476,7 @@ anchors = [
 ]
 summary = "A soft packed union has the width of its largest member, represents every member right-justified at the least-significant end, and applies these sizing and alignment rules recursively to nested soft packed unions."
 related_clauses = []
-tags = []
+tags = ["layout", "packed-union", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -4500,7 +4500,7 @@ anchors = [
 ]
 summary = "Assigning a member of a soft packed union shall update only that member's right-justified bits and leave all more-significant union bits beyond the member width unchanged."
 related_clauses = []
-tags = []
+tags = ["layout", "packed-union"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -4525,7 +4525,7 @@ anchors = [
 ]
 summary = "Successive typedef and variable declarations may add packed or unpacked dimensions in stages, producing a multidimensional array while preserving the dimension ordering contributed by each declaration."
 related_clauses = []
-tags = []
+tags = ["array-dimension", "packed-array", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -4549,7 +4549,7 @@ anchors = [
 ]
 summary = "The empty string is a valid key for a string-indexed associative array."
 related_clauses = []
-tags = []
+tags = ["associative-array", "string-index"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4574,7 +4574,7 @@ anchors = [
 ]
 summary = "A string-indexed associative array accepts string expressions and string literals of any length as indices; any other index type is illegal and shall cause a type-check error."
 related_clauses = []
-tags = []
+tags = ["associative-array", "diagnostic", "index-type", "string-index"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4598,7 +4598,7 @@ anchors = [
 ]
 summary = "Keys of a string-indexed associative array are ordered lexicographically from lesser to greater."
 related_clauses = []
-tags = []
+tags = ["associative-array", "index-order", "string-index"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4622,7 +4622,7 @@ anchors = [
 ]
 summary = "An unpacked structure member may declare an individual default value; its initializer shall be a constant expression and supplies that member's declared default value."
 related_clauses = []
-tags = []
+tags = ["constant-expression", "default-value", "struct"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4646,7 +4646,7 @@ anchors = [
 ]
 summary = "Individual default member values are illegal in packed structures and in unpacked structures that contain a union."
 related_clauses = []
-tags = []
+tags = ["default-value", "packed-struct", "union", "unpacked-struct"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4670,7 +4670,7 @@ anchors = [
 ]
 summary = "A structure or union type declaration shall match the struct_union grammar: one or more semicolon-terminated members, optional attributes and permitted qualifiers, and any packed dimensions following the closing brace."
 related_clauses = []
-tags = []
+tags = ["grammar", "struct", "union"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -4696,7 +4696,7 @@ anchors = [
 ]
 summary = "A structure without the packed qualifier is unpacked; its value can be referenced as a whole, each member can be referenced by its declared name, and an unpacked structure may contain members of any data type."
 related_clauses = []
-tags = []
+tags = ["struct", "unpacked-struct"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4720,7 +4720,7 @@ anchors = [
 ]
 summary = "A structure may be assigned, passed into a subroutine, or returned from a subroutine as one whole value."
 related_clauses = []
-tags = []
+tags = ["struct", "subroutine", "value-copy"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4744,7 +4744,7 @@ anchors = [
 ]
 summary = "A multidimensional-array reference may omit one or more indices only from the dimensions that vary most rapidly, yielding the corresponding subarray; omitting every index references the whole array."
 related_clauses = []
-tags = []
+tags = ["array-dimension", "array-indexing", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -4770,7 +4770,7 @@ summary = "A tagged-union member may be referenced using a tagged expression as 
 related_clauses = [
     "11.9",
 ]
-tags = []
+tags = ["tagged-union"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4798,7 +4798,7 @@ summary = "A tagged union stores a member-name tag together with its value; they
 related_clauses = [
     "11.9",
 ]
-tags = []
+tags = ["diagnostic", "tagged-union", "type-compatibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4823,7 +4823,7 @@ anchors = [
 ]
 summary = "An untagged union provides one shared storage object accessed through one named member type at a time, is unpacked by default, and may not have dynamic-type or chandle members; those member types are permitted only in tagged unions."
 related_clauses = []
-tags = []
+tags = ["tagged-union", "type-compatibility", "union", "unpacked-union"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4847,7 +4847,7 @@ anchors = [
 ]
 summary = "unique_index() returns exactly one source index for each distinct with-expression value; result order is unrelated to source order and any duplicate-valued element's index may represent its value."
 related_clauses = []
-tags = []
+tags = ["array-iterator", "array-locator", "queue"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4871,7 +4871,7 @@ anchors = [
 ]
 summary = "unique() returns one and only one source element for each distinct with-expression value present; result order is unrelated to source-array order."
 related_clauses = []
-tags = []
+tags = ["array-iterator", "array-locator", "queue"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4900,7 +4900,7 @@ summary = "Fixed-size arrays, dynamic arrays, queues, and their slices are assig
 related_clauses = [
     "6.22.2",
 ]
-tags = []
+tags = ["array-assignment", "type-compatibility", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4924,7 +4924,7 @@ anchors = [
 ]
 summary = "Unpacked-array assignment copies each source element to the corresponding target element by each array's left-to-right element order, independent of numerical index values or direction."
 related_clauses = []
-tags = []
+tags = ["array-assignment", "layout", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4950,7 +4950,7 @@ summary = "An unpacked array may have any element data type, including array typ
 related_clauses = [
     "7.4.4",
 ]
-tags = []
+tags = ["array-dimension", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4974,7 +4974,7 @@ anchors = [
 ]
 summary = "A signed qualifier associated with an unpacked-array declaration applies to each element, not to the unpacked array as a whole, because the whole array is not a vector."
 related_clauses = []
-tags = []
+tags = ["signedness", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -5004,7 +5004,7 @@ related_clauses = [
     "7.10",
     "7.4.4",
 ]
-tags = []
+tags = ["associative-array", "dynamic-array", "queue", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5028,7 +5028,7 @@ anchors = [
 ]
 summary = "An implementation may limit array size, but shall support unpacked arrays containing at least 16777216 elements."
 related_clauses = []
-tags = []
+tags = ["sizing", "unpacked-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -5052,7 +5052,7 @@ anchors = [
 ]
 summary = "A signed or unsigned qualifier is illegal on an unpacked structure declaration."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "struct", "unpacked-struct"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5076,7 +5076,7 @@ anchors = [
 ]
 summary = "When an unpacked union currently contains a structure, code where the complete union type is visible may inspect through another structure member the common initial sequence consisting of one or more corresponding initial members with equivalent types."
 related_clauses = []
-tags = []
+tags = ["struct", "type-compatibility", "union", "unpacked-union"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5100,7 +5100,7 @@ anchors = [
 ]
 summary = "An unpacked union variable declared without an explicit initial value shall initialize to the default initial value of the union's first member type in declaration order."
 related_clauses = []
-tags = []
+tags = ["default-value", "initialization", "union", "unpacked-union"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5124,7 +5124,7 @@ anchors = [
 ]
 summary = "An empty value or null in any element of a general associative-array index does not by itself make the index invalid."
 related_clauses = []
-tags = []
+tags = ["associative-array", "index-type", "invalid-index"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5148,7 +5148,7 @@ anchors = [
 ]
 summary = "If relational comparison is defined for an associative index type, its key ordering follows that comparison; otherwise ordering may vary across runs but shall remain stable within one simulation run while no keys are added or deleted."
 related_clauses = []
-tags = []
+tags = ["associative-array", "index-order", "index-type"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5172,7 +5172,7 @@ anchors = [
 ]
 summary = "An associative-array index expression of a general user-defined type is invalid if it or any contained element contains X or Z."
 related_clauses = []
-tags = []
+tags = ["associative-array", "four-state", "index-type", "invalid-index"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5196,7 +5196,7 @@ anchors = [
 ]
 summary = "When an unpacked-array assignment target is a queue or dynamic array, it shall first resize to the source element count and then copy elements in left-to-right correspondence."
 related_clauses = []
-tags = []
+tags = ["array-assignment", "sizing", "variable-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5221,7 +5221,7 @@ anchors = [
 ]
 summary = "A dynamic-array or queue formal may accept a compatible fixed-size array, dynamic array, or queue actual; corresponding dimension count and element type compatibility still apply."
 related_clauses = []
-tags = []
+tags = ["array-argument", "type-compatibility", "variable-array"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5245,7 +5245,7 @@ anchors = [
 ]
 summary = "Assigning a dynamic array or queue to a fixed-size array whose element count differs at runtime shall produce a runtime error and perform no assignment."
 related_clauses = []
-tags = []
+tags = ["array-assignment", "diagnostic", "fixed-array", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5270,7 +5270,7 @@ anchors = [
 ]
 summary = "A void structure-or-union member is legal only within a tagged union."
 related_clauses = []
-tags = []
+tags = ["tagged-union", "union"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5294,7 +5294,7 @@ anchors = [
 ]
 summary = "An associative array declared with wildcard index [*] may be indexed by any integral expression of arbitrary width."
 related_clauses = []
-tags = []
+tags = ["associative-array", "index-type", "wildcard-index"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5320,7 +5320,7 @@ summary = "An associative array with wildcard index type shall not be used as th
 related_clauses = [
     "12.7.3",
 ]
-tags = []
+tags = ["array-iteration", "diagnostic", "wildcard-index"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5346,7 +5346,7 @@ summary = "An associative array with wildcard index type shall not be used with 
 related_clauses = [
     "7.12",
 ]
-tags = []
+tags = ["array-locator", "wildcard-index"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5372,7 +5372,7 @@ anchors = [
 ]
 summary = "A wildcard associative index accepts integral expressions of differing widths and canonicalizes each numeric key by removing leading zero bits and using the resulting minimum-length representation."
 related_clauses = []
-tags = []
+tags = ["index-order", "sizing", "wildcard-index"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5396,7 +5396,7 @@ anchors = [
 ]
 summary = "Using a nonintegral value to index a wildcard associative array is illegal and shall result in an error."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "index-type", "wildcard-index"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5420,7 +5420,7 @@ anchors = [
 ]
 summary = "Wildcard associative-array keys are ordered numerically from smallest to largest."
 related_clauses = []
-tags = []
+tags = ["index-order", "wildcard-index"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5444,7 +5444,7 @@ anchors = [
 ]
 summary = "A wildcard associative-array index expression is self-determined and interpreted as unsigned."
 related_clauses = []
-tags = []
+tags = ["sizing", "wildcard-index"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5468,7 +5468,7 @@ anchors = [
 ]
 summary = "A 4-state wildcard associative-array index containing any X or Z bit is invalid."
 related_clauses = []
-tags = []
+tags = ["four-state", "invalid-index", "wildcard-index"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5492,7 +5492,7 @@ anchors = [
 ]
 summary = "A string literal used as a wildcard associative-array index is automatically cast to an equivalently sized bit vector."
 related_clauses = []
-tags = []
+tags = ["conversion", "literal", "wildcard-index"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"

@@ -11,7 +11,7 @@ anchors = [
 ]
 summary = "A break statement is legal only within a loop."
 related_clauses = []
-tags = []
+tags = ["loop"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -35,7 +35,7 @@ anchors = [
 ]
 summary = "When break executes in a loop, it immediately exits that loop; in a multidimensional foreach it exits the entire foreach rather than only the current dimension."
 related_clauses = []
-tags = []
+tags = ["array-iteration", "loop"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -60,7 +60,7 @@ anchors = [
 ]
 summary = "For ordinary case comparison, all controlling and item expressions are treated as unsigned if any is unsigned; they are treated as signed only when all are signed."
 related_clauses = []
-tags = []
+tags = ["case-selection", "signedness"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -84,7 +84,7 @@ anchors = [
 ]
 summary = "Before ordinary case comparison, the case expression and every case-item expression shall be made the width of the longest of those expressions."
 related_clauses = []
-tags = []
+tags = ["case-selection", "sizing"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -108,7 +108,7 @@ anchors = [
 ]
 summary = "A case expression may be constant, and its value shall be compared against the case-item expressions using normal case selection semantics."
 related_clauses = []
-tags = []
+tags = ["case-selection", "constant-expression"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -132,7 +132,7 @@ anchors = [
 ]
 summary = "A case statement may omit its default item, but shall not contain more than one default item."
 related_clauses = []
-tags = []
+tags = ["case-selection", "statement-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -156,7 +156,7 @@ anchors = [
 ]
 summary = "Within casez and casex literal numbers, a question-mark digit is permitted in place of Z and denotes a do-not-care bit."
 related_clauses = []
-tags = []
+tags = ["case-selection", "four-state", "literal", "wildcard-equality"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -180,7 +180,7 @@ anchors = [
 ]
 summary = "An ordinary case evaluates its case expression exactly once before evaluating and comparing case-item expressions in their source order; the default item is ignored during that search."
 related_clauses = []
-tags = []
+tags = ["case-selection", "evaluation-order", "source-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -204,7 +204,7 @@ anchors = [
 ]
 summary = "An ordinary case item matches only when every compared bit is exactly equal among the four values 0, 1, X, and Z."
 related_clauses = []
-tags = []
+tags = ["case-selection", "equality", "four-state"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -231,7 +231,7 @@ related_clauses = [
     "12.5",
     "12.5.3",
 ]
-tags = []
+tags = ["case-selection", "inside", "priority-selection", "unique"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -258,7 +258,7 @@ related_clauses = [
     "11.4.6",
     "11.4.13",
 ]
-tags = []
+tags = ["case-selection", "four-state", "inside", "wildcard-equality"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -282,7 +282,7 @@ anchors = [
 ]
 summary = "During ordinary case selection, the statement for the first matching item executes and the search terminates; if none matches, default executes when present and no item executes when absent."
 related_clauses = []
-tags = []
+tags = ["case-selection", "source-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -306,7 +306,7 @@ anchors = [
 ]
 summary = "A case-matches evaluates its tested expression exactly once and tests its value against nondefault items one at a time in source order."
 related_clauses = []
-tags = []
+tags = ["case-selection", "evaluation-order", "pattern-matching", "source-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -330,7 +330,7 @@ anchors = [
 ]
 summary = "A case-matches item is selected only after its pattern matches and binds identifiers and its optional Boolean filter evaluates to a determined nonzero value."
 related_clauses = []
-tags = []
+tags = ["case-selection", "pattern-matching"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -354,7 +354,7 @@ anchors = [
 ]
 summary = "In a case-matches item, a pattern may be followed by &&& and a Boolean filter; the pattern's implicit identifier scope extends through that item's filter and statement only, allowing identifiers to be reused in other items."
 related_clauses = []
-tags = []
+tags = ["case-selection", "pattern-matching", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -378,7 +378,7 @@ anchors = [
 ]
 summary = "A case-matches executes the statement of the first selected item and terminates its search; if no item is selected, default executes when present and no statement executes when absent."
 related_clauses = []
-tags = []
+tags = ["case-selection", "pattern-matching", "source-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -404,7 +404,7 @@ summary = "A priority or unique case-matches asserts that at least one case item
 related_clauses = [
     "12.5.3",
 ]
-tags = []
+tags = ["case-selection", "pattern-matching", "priority-selection", "unique"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -428,7 +428,7 @@ anchors = [
 ]
 summary = "A case-matches tested expression shall have a statically known type identical to the type of every case-item pattern."
 related_clauses = []
-tags = []
+tags = ["case-selection", "pattern-matching", "type-matching"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -454,7 +454,7 @@ summary = "A unique case-matches asserts that exactly one case item is selected,
 related_clauses = [
     "12.5.3",
 ]
-tags = []
+tags = ["case-selection", "pattern-matching", "unique"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -478,7 +478,7 @@ anchors = [
 ]
 summary = "A case-matches may use casez to ignore Z bits or casex to ignore both X and Z bits wherever pattern matching compares two bits, including tag bits and member bits."
 related_clauses = []
-tags = []
+tags = ["case-selection", "four-state", "pattern-matching", "wildcard-matching"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -502,7 +502,7 @@ anchors = [
 ]
 summary = "Both a case expression and ordinary case-item expressions may be nonconstant expressions."
 related_clauses = []
-tags = []
+tags = ["case-selection"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -528,7 +528,7 @@ summary = "A case statement shall match Syntax 12-3, using case, casez, or casex
 related_clauses = [
     "A.6.7",
 ]
-tags = []
+tags = ["case-selection", "inside", "pattern-matching", "statement-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -553,7 +553,7 @@ anchors = [
 ]
 summary = "In casez, a Z bit in either the case expression or an item is a do-not-care and that bit position is ignored; in casex, either X or Z in either operand makes the bit position a do-not-care."
 related_clauses = []
-tags = []
+tags = ["case-selection", "four-state", "wildcard-equality"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -577,7 +577,7 @@ anchors = [
 ]
 summary = "An identifier bound by a pattern in a conditional-expression predicate is in scope in remaining predicate clauses and the consequent expression, but not in earlier clauses or the alternative expression."
 related_clauses = []
-tags = []
+tags = ["conditional", "pattern-matching", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -603,7 +603,7 @@ summary = "When a pattern-enabled conditional predicate evaluates true, false, o
 related_clauses = [
     "11.4.11",
 ]
-tags = []
+tags = ["conditional", "four-state", "pattern-matching"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -627,7 +627,7 @@ anchors = [
 ]
 summary = "A conditional-expression predicate may combine Boolean and expression-matches-pattern clauses with &&&; clauses evaluate left to right, stop after the first failure, and all must succeed for a true predicate."
 related_clauses = []
-tags = []
+tags = ["conditional", "evaluation-order", "pattern-matching", "short-circuit"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -651,7 +651,7 @@ anchors = [
 ]
 summary = "A continue statement is legal only within a loop."
 related_clauses = []
-tags = []
+tags = ["loop"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -675,7 +675,7 @@ anchors = [
 ]
 summary = "When continue executes in a loop, it transfers to that loop's end while still executing any loop control; in a multidimensional foreach it advances after the current complete tuple of index values."
 related_clauses = []
-tags = []
+tags = ["array-iteration", "loop"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -701,7 +701,7 @@ anchors = [
 ]
 summary = "In nested if statements, an else associates with the closest preceding if that lacks an else; a begin-end block shall delimit an inner if when association with an outer if is intended."
 related_clauses = []
-tags = []
+tags = ["conditional", "statement-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -726,7 +726,7 @@ anchors = [
 ]
 summary = "A do-while loop executes its body before evaluating any expression usable as a Boolean at the end of each iteration, so the body executes at least once and repeats only while that expression is true."
 related_clauses = []
-tags = []
+tags = ["conditional", "evaluation-order", "loop"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -750,7 +750,7 @@ anchors = [
 ]
 summary = "A for initialization may contain one or more comma-separated declarations or assignments, and its step may contain one or more comma-separated assignments, increment/decrement expressions, or function calls."
 related_clauses = []
-tags = []
+tags = ["declaration", "loop", "statement-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -774,7 +774,7 @@ anchors = [
 ]
 summary = "A for loop may use control variables declared before the loop rather than declaring them in its initialization."
 related_clauses = []
-tags = []
+tags = ["declaration", "loop"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -798,7 +798,7 @@ anchors = [
 ]
 summary = "Within one for-loop initialization, either every control variable shall be locally declared or none shall be locally declared; declarations and assignments to predeclared controls shall not be mixed."
 related_clauses = []
-tags = []
+tags = ["declaration", "loop"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -822,7 +822,7 @@ anchors = [
 ]
 summary = "In a for initialization containing multiple local declarations, a later variable's initializer may reference local variables declared earlier in that initialization list."
 related_clauses = []
-tags = []
+tags = ["declaration", "loop", "source-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -846,7 +846,7 @@ anchors = [
 ]
 summary = "Variables declared in a for-loop initialization have automatic lifetime within the loop's implicit block."
 related_clauses = []
-tags = []
+tags = ["block", "lifetime", "loop"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -873,7 +873,7 @@ summary = "A for loop with declarations in its initialization creates an implici
 related_clauses = [
     "9.3.5",
 ]
-tags = []
+tags = ["block", "hierarchy", "loop", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -901,7 +901,7 @@ summary = "A for loop executes its optional initialization once, then repeatedly
 related_clauses = [
     "12.4",
 ]
-tags = []
+tags = ["evaluation-order", "four-state", "loop"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -925,7 +925,7 @@ anchors = [
 ]
 summary = "A foreach loop may iterate any packed or unpacked array; each listed loop variable corresponds to an array dimension, and a string is treated as a dynamic byte array indexed from 0 through N-1 for its N characters."
 related_clauses = []
-tags = []
+tags = ["array-iteration", "dynamic-array", "loop", "string"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -951,7 +951,7 @@ anchors = [
 ]
 summary = "A foreach loop shall list no more index-variable positions than the array has dimensions; a position may be omitted to skip iteration over that dimension, and omitted trailing positions need no trailing commas."
 related_clauses = []
-tags = []
+tags = ["array-dimension", "array-iteration", "loop", "statement-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -977,7 +977,7 @@ summary = "The array identifier of a foreach statement shall not include a funct
 related_clauses = [
     "13.4.1",
 ]
-tags = []
+tags = ["array-iteration", "declaration", "statement-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -1004,7 +1004,7 @@ summary = "Index variables implicitly declared by a foreach loop have automatic 
 related_clauses = [
     "12.7.1",
 ]
-tags = []
+tags = ["array-iteration", "block", "lifetime", "loop"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1028,7 +1028,7 @@ anchors = [
 ]
 summary = "When a foreach index variable is used other than to index its designated array, it is automatically cast to int for fixed-size or dynamic arrays, or to the declared associative index type for an associative array; an explicit cast may select another type."
 related_clauses = []
-tags = []
+tags = ["array-iteration", "conversion", "index-type"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1052,7 +1052,7 @@ anchors = [
 ]
 summary = "No foreach loop variable shall have the same identifier as the array being iterated."
 related_clauses = []
-tags = []
+tags = ["array-iteration", "name-resolution"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1076,7 +1076,7 @@ anchors = [
 ]
 summary = "A foreach loop index variable is read-only within the loop."
 related_clauses = []
-tags = []
+tags = ["array-iteration", "read-only"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1103,7 +1103,7 @@ related_clauses = [
     "9.3.5",
     "12.7.1",
 ]
-tags = []
+tags = ["array-iteration", "block", "hierarchy", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1127,7 +1127,7 @@ anchors = [
 ]
 summary = "Each foreach index variable is implicitly declared with a type consistent with the corresponding array index type."
 related_clauses = []
-tags = []
+tags = ["array-iteration", "declaration", "index-type", "type-compatibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1155,7 +1155,7 @@ summary = "Foreach maps variables to dimensions by dimension cardinality and ite
 related_clauses = [
     "20.7",
 ]
-tags = []
+tags = ["array-iteration", "index-order", "loop"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1179,7 +1179,7 @@ anchors = [
 ]
 summary = "A forever loop repeatedly executes its associated statement without an intrinsic termination condition."
 related_clauses = []
-tags = []
+tags = ["loop"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1203,7 +1203,7 @@ anchors = [
 ]
 summary = "In a function that returns a value, every return statement shall provide an expression of the function's return type."
 related_clauses = []
-tags = []
+tags = ["function", "return-value", "subroutine", "type-compatibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1230,7 +1230,7 @@ summary = "For an if predicate, a nonzero known value executes its associated st
 related_clauses = [
     "12.6.2",
 ]
-tags = []
+tags = ["conditional", "four-state"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1254,7 +1254,7 @@ anchors = [
 ]
 summary = "The conditions of an if-else-if chain shall be evaluated in source order until selection terminates the chain."
 related_clauses = []
-tags = []
+tags = ["conditional", "evaluation-order", "source-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1279,7 +1279,7 @@ anchors = [
 ]
 summary = "An if-else-if chain executes only the statement for the first true condition and then terminates; if none is true, an optional final else executes when present and no chain arm executes when absent."
 related_clauses = []
-tags = []
+tags = ["conditional", "source-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1306,7 +1306,7 @@ summary = "An if statement shall have a parenthesized conditional predicate and 
 related_clauses = [
     "A.6.6",
 ]
-tags = []
+tags = ["conditional", "pattern-matching", "statement-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1330,7 +1330,7 @@ anchors = [
 ]
 summary = "An identifier bound by an if-predicate pattern is in scope in all remaining predicate clauses and in that if's true arm, but not in earlier clauses or the else arm."
 related_clauses = []
-tags = []
+tags = ["conditional", "pattern-matching", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1354,7 +1354,7 @@ anchors = [
 ]
 summary = "An if pattern predicate consists of expression or expression-matches-pattern clauses separated by &&&, evaluated left to right with short-circuiting on the first failure; every clause must succeed for the predicate to be true."
 related_clauses = []
-tags = []
+tags = ["conditional", "evaluation-order", "pattern-matching", "short-circuit"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1378,7 +1378,7 @@ anchors = [
 ]
 summary = "In each expression-matches-pattern if clause, the expression and pattern shall have the same statically known type."
 related_clauses = []
-tags = []
+tags = ["conditional", "pattern-matching", "type-matching"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1402,7 +1402,7 @@ anchors = [
 ]
 summary = "A unique, unique0, or priority qualifier applies to the entire if-else-if series and shall not appear after an else within that series."
 related_clauses = []
-tags = []
+tags = ["conditional", "priority-selection", "unique"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1426,7 +1426,7 @@ anchors = [
 ]
 summary = "A break or continue inside a fork-join block shall not target a loop outside that fork-join block."
 related_clauses = []
-tags = []
+tags = ["block", "forkjoin", "loop"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1453,7 +1453,7 @@ summary = "A jump statement shall be break followed by a semicolon, continue fol
 related_clauses = [
     "A.6.5",
 ]
-tags = []
+tags = ["loop", "statement-syntax", "subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1480,7 +1480,7 @@ summary = "A loop statement shall match Syntax 12-5 as forever, repeat, while, f
 related_clauses = [
     "A.6.8",
 ]
-tags = []
+tags = ["loop", "statement-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1504,7 +1504,7 @@ anchors = [
 ]
 summary = "A constant-expression pattern shall have integral type and shall be statically type-checked against its known contextual type."
 related_clauses = []
-tags = []
+tags = ["constant-expression", "integral", "pattern-matching", "type-compatibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1528,7 +1528,7 @@ anchors = [
 ]
 summary = "A constant-expression pattern succeeds exactly when the corresponding matched value equals the constant's value."
 related_clauses = []
-tags = []
+tags = ["constant-expression", "pattern-matching"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1552,7 +1552,7 @@ anchors = [
 ]
 summary = "Each pattern creates a scope and implicitly declares every pattern identifier in that scope with the unique type determined by the identifier's pattern position."
 related_clauses = []
-tags = []
+tags = ["declaration", "pattern-matching", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1576,7 +1576,7 @@ anchors = [
 ]
 summary = "An identifier shall occur as a binding in at most one position within a single pattern."
 related_clauses = []
-tags = []
+tags = ["pattern-matching"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1602,7 +1602,7 @@ summary = "The priority and unique if qualifiers remain permitted when an if pre
 related_clauses = [
     "12.4.2",
 ]
-tags = []
+tags = ["conditional", "pattern-matching", "priority-selection", "unique"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1626,7 +1626,7 @@ anchors = [
 ]
 summary = "Pattern matching returns a determined one-bit 0 or 1 result and never X or Z, even when the matched value or pattern contains X or Z bits."
 related_clauses = []
-tags = []
+tags = ["four-state", "pattern-matching"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1650,7 +1650,7 @@ anchors = [
 ]
 summary = "A value and the pattern against which it is matched shall have the same statically checked type."
 related_clauses = []
-tags = []
+tags = ["pattern-matching", "type-matching"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1674,7 +1674,7 @@ anchors = [
 ]
 summary = "A structure pattern succeeds only when every specified nested member pattern recursively matches; named members may appear in any order and omitted named members are ignored."
 related_clauses = []
-tags = []
+tags = ["pattern-matching", "struct"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1699,7 +1699,7 @@ anchors = [
 ]
 summary = "An identifier pattern always matches any corresponding value and, on a successful overall match, the identifier shall receive that value using ordinary procedural-assignment semantics."
 related_clauses = []
-tags = []
+tags = ["pattern-matching", "procedural-assignment"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1726,7 +1726,7 @@ summary = "A pattern shall use Syntax 12-4 forms, recursively nesting parenthesi
 related_clauses = [
     "A.6.7.1",
 ]
-tags = []
+tags = ["pattern-matching", "statement-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -1752,7 +1752,7 @@ anchors = [
 ]
 summary = "A tagged-union pattern succeeds only when the value has the named tag and its member value recursively matches the nested pattern."
 related_clauses = []
-tags = []
+tags = ["pattern-matching", "tagged-union"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1776,7 +1776,7 @@ anchors = [
 ]
 summary = "The wildcard pattern .* always succeeds for its corresponding value."
 related_clauses = []
-tags = []
+tags = ["pattern-matching", "wildcard-matching"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1800,7 +1800,7 @@ anchors = [
 ]
 summary = "A priority-qualified case, casez, or casex shall act only on the first matching case item."
 related_clauses = []
-tags = []
+tags = ["case-selection", "priority-selection", "source-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1824,7 +1824,7 @@ anchors = [
 ]
 summary = "A priority-if chain shall evaluate its conditions in source order and select according to that priority when conditions overlap."
 related_clauses = []
-tags = []
+tags = ["conditional", "evaluation-order", "priority-selection", "source-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1861,7 +1861,7 @@ related_clauses = [
     "9",
     "13",
 ]
-tags = []
+tags = ["block", "function", "subroutine", "task"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1888,7 +1888,7 @@ summary = "A procedural statement or null statement shall match Syntax 12-1: an 
 related_clauses = [
     "A.6.4",
 ]
-tags = []
+tags = ["attribute", "block", "statement-syntax"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -1916,7 +1916,7 @@ summary = "Assertion control system tasks may control reporting of unique-case, 
 related_clauses = [
     "20.11",
 ]
-tags = []
+tags = ["assertion-control", "case-selection", "diagnostic", "unique"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1944,7 +1944,7 @@ related_clauses = [
     "4.4.1",
     "12.4.2.1",
 ]
-tags = []
+tags = ["case-selection", "diagnostic", "scheduling", "unique"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1968,7 +1968,7 @@ anchors = [
 ]
 summary = "When no item matches a priority-case or unique-case, a violation report shall be issued; it may be issued at compile time if determinable there, otherwise it shall be issued at run time."
 related_clauses = []
-tags = []
+tags = ["case-selection", "diagnostic", "priority-selection", "unique"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1994,7 +1994,7 @@ summary = "Qualified-case violation reports shall be associated, queued, flushed
 related_clauses = [
     "12.4.2.2",
 ]
-tags = []
+tags = ["case-selection", "diagnostic", "process-independence", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2020,7 +2020,7 @@ summary = "Qualified-case pending reports use the same per-process flush points 
 related_clauses = [
     "12.4.2.1",
 ]
-tags = []
+tags = ["case-selection", "diagnostic", "scheduling", "unique"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2046,7 +2046,7 @@ summary = "A qualified-case pending report matures in the Observed region under 
 related_clauses = [
     "12.4.2.1",
 ]
-tags = []
+tags = ["case-selection", "diagnostic", "scheduling", "unique"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2073,7 +2073,7 @@ related_clauses = [
     "4.4",
     "12.4.2.1",
 ]
-tags = []
+tags = ["case-selection", "diagnostic", "scheduling", "unique"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2099,7 +2099,7 @@ summary = "Assertion control system tasks may control reporting of unique-if, un
 related_clauses = [
     "20.11",
 ]
-tags = []
+tags = ["assertion-control", "conditional", "diagnostic", "unique"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2125,7 +2125,7 @@ summary = "Violation checks for unique-if, unique0-if, and priority-if shall not
 related_clauses = [
     "4.4.1",
 ]
-tags = []
+tags = ["conditional", "diagnostic", "scheduling", "unique"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2149,7 +2149,7 @@ anchors = [
 ]
 summary = "When no condition matches a unique-if or priority-if chain, a violation report shall be issued unless the chain has an explicit else."
 related_clauses = []
-tags = []
+tags = ["conditional", "diagnostic", "priority-selection", "unique"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2176,7 +2176,7 @@ anchors = [
 ]
 summary = "Qualified-if checks and pending reports are associated independently with each calling process: separate callers produce separate reports, retriggering one caller flushes only that process's pending reports, and does not flush another caller's report."
 related_clauses = []
-tags = []
+tags = ["conditional", "diagnostic", "process-independence", "scheduling"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2203,7 +2203,7 @@ anchors = [
 ]
 summary = "Before pending qualified-if reports mature, a process reaches a flush point when it resumes after an event control or wait, or when an always_comb/always_latch process resumes from a dependent-signal transition; at that point all pending reports in that process queue are discarded."
 related_clauses = []
-tags = []
+tags = ["conditional", "diagnostic", "scheduling", "unique"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2227,7 +2227,7 @@ anchors = [
 ]
 summary = "In the Observed region, every still-pending qualified-if violation report shall mature, become immune to later flushing, be reported through the tool's violation mechanism, and be removed from its process queue."
 related_clauses = []
-tags = []
+tags = ["conditional", "diagnostic", "scheduling", "unique"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2254,7 +2254,7 @@ summary = "A qualified-if violation check is evaluated when its statement execut
 related_clauses = [
     "4.4",
 ]
-tags = []
+tags = ["conditional", "diagnostic", "scheduling", "unique"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2278,7 +2278,7 @@ anchors = [
 ]
 summary = "A repeat loop evaluates its count expression exactly once before iteration and executes its body that fixed number of times."
 related_clauses = []
-tags = []
+tags = ["evaluation-order", "loop"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2303,7 +2303,7 @@ anchors = [
 ]
 summary = "A repeat-loop count that is negative, X, or Z shall be treated as zero, and the loop body shall not execute."
 related_clauses = []
-tags = []
+tags = ["four-state", "loop"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -2329,7 +2329,7 @@ anchors = [
 ]
 summary = "A return statement is legal only within a subroutine."
 related_clauses = []
-tags = []
+tags = ["subroutine"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2355,7 +2355,7 @@ summary = "When a type_reference is used as the data type in a net declaration, 
 related_clauses = [
     "6",
 ]
-tags = []
+tags = ["declaration", "statement-syntax", "type-reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2381,7 +2381,7 @@ summary = "When a type_reference is used as the data type in a variable declarat
 related_clauses = [
     "6",
 ]
-tags = []
+tags = ["declaration", "statement-syntax", "type-reference"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2405,7 +2405,7 @@ anchors = [
 ]
 summary = "A unique-case or unique0-case evaluates its case expression exactly once before evaluating any case-item expression."
 related_clauses = []
-tags = []
+tags = ["case-selection", "evaluation-order", "unique"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2430,7 +2430,7 @@ anchors = [
 ]
 summary = "A unique-case or unique0-case shall continue item evaluation after a match sufficiently to detect a second matching case item and shall issue a violation report when more than one item matches."
 related_clauses = []
-tags = []
+tags = ["case-selection", "diagnostic", "evaluation-order", "unique"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2454,7 +2454,7 @@ anchors = [
 ]
 summary = "When multiple items match a unique-case or unique0-case, only the statement of the source-first matching item executes; statements of other matching items do not."
 related_clauses = []
-tags = []
+tags = ["case-selection", "source-order", "unique"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2478,7 +2478,7 @@ anchors = [
 ]
 summary = "In unique-case or unique0-case, multiple matching expressions within one case item do not constitute a uniqueness violation."
 related_clauses = []
-tags = []
+tags = ["case-selection", "unique"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2503,7 +2503,7 @@ anchors = [
 ]
 summary = "A unique-if or unique0-if shall continue evaluating conditions after one becomes true sufficiently to detect a second true condition and shall issue a violation report when more than one condition is true."
 related_clauses = []
-tags = []
+tags = ["conditional", "diagnostic", "evaluation-order", "unique"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2527,7 +2527,7 @@ anchors = [
 ]
 summary = "When multiple conditions are true in a unique-if or unique0-if, only the statement for the source-first true condition executes; statements for other true conditions do not."
 related_clauses = []
-tags = []
+tags = ["conditional", "source-order", "unique"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2551,7 +2551,7 @@ anchors = [
 ]
 summary = "When no item matches a unique0-case, the implementation shall not issue a no-match violation report."
 related_clauses = []
-tags = []
+tags = ["case-selection", "diagnostic", "unique"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2575,7 +2575,7 @@ anchors = [
 ]
 summary = "When no condition matches a unique0-if chain, the implementation shall not issue a no-match violation report."
 related_clauses = []
-tags = []
+tags = ["conditional", "diagnostic", "unique"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2601,7 +2601,7 @@ summary = "A while loop tests its control expression before each iteration and r
 related_clauses = [
     "12.4",
 ]
-tags = []
+tags = ["conditional", "evaluation-order", "four-state", "loop"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
