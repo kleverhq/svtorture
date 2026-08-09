@@ -1,0 +1,20 @@
+schema_version = 1
+id = "ch19-clocking-event-automatic-sample"
+title = "A covergroup clocking event triggers automatic sampling"
+description = "A covergroup samples its coverpoint on a positive clock edge without an explicit sample method call."
+primary_requirement = "SV-2023-19-CLOCKING-EVENT-IMMEDIATE-SAMPLING"
+related_requirements = ["SV-2023-19-BIN-MATCH-COUNTING", "SV-2023-19-COVERGROUP-COVERAGE-EVENT-FORMS", "SV-2023-19-GET-INST-COVERAGE-METHOD", "SV-2023-19-PER-INSTANCE-OPTION"]
+standard_revision = "1800-2023"
+revision_applicability = { "1800-2012" = "applicable", "1800-2017" = "applicable", "1800-2023" = "applicable" }
+target_phase = "simulate"
+expectation = "accept"
+evidence = "mandatory"
+sources = ["top.sv"]
+covergroups = true
+top = "top"
+defines = []
+include_dirs = []
+runtime_args = []
+tags = ["scheduling"]
+limits = { timeout_seconds = 30, output_bytes = 65536, memory_mb = 2048, pids = 256 }
+oracle = { kind = "runtime-pass-marker", marker = "SVTORTURE_PASS:ch19-clocking-event-automatic-sample" }

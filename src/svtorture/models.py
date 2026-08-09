@@ -156,6 +156,7 @@ class ReasonCode(StrEnum):
     MISSING_ARTIFACT = "missing-artifact"
     INVALID_EXECUTION_PLAN = "invalid-execution-plan"
     UNSUPPORTED_PHASE = "unsupported-phase"
+    UNSUPPORTED_CAPABILITY = "unsupported-capability"
     UNSUPPORTED_REVISION = "unsupported-revision"
     NOT_APPLICABLE = "not-applicable"
     TOOL_UNAVAILABLE = "tool-unavailable"
@@ -429,9 +430,29 @@ def safe_relative_path(value: str) -> str:
         or "." in path.parts
         or "\\" in value
         or "\x00" in value
+        or path.as_posix() != value
     ):
         raise ValueError(f"unsafe relative path {value!r}")
     return value
+
+
+class LogicalLibrary(StrictModel):
+    name: str
+    sources: Annotated[tuple[str, ...], Field(min_length=1)]
+
+    @field_validator("name")
+    @classmethod
+    def valid_name(cls, value: str) -> str:
+        if TOP_RE.fullmatch(value) is None:
+            raise ValueError("invalid logical library identifier")
+        return value
+
+    @field_validator("sources")
+    @classmethod
+    def valid_library_sources(cls, value: tuple[str, ...]) -> tuple[str, ...]:
+        if len(value) != len(set(value)):
+            raise ValueError("duplicate logical library sources")
+        return tuple(safe_relative_path(item) for item in value)
 
 
 class CaseDefinition(StrictModel):
@@ -447,6 +468,9 @@ class CaseDefinition(StrictModel):
     expectation: Expectation
     evidence: EvidenceLevel
     sources: tuple[str, ...]
+    resources: tuple[str, ...] = ()
+    library_map: str | None = None
+    covergroups: bool = False
     top: str | None = None
     defines: tuple[str, ...] = ()
     include_dirs: tuple[str, ...] = ()
@@ -495,6 +519,18 @@ class CaseDefinition(StrictModel):
         if len(basenames) != len(set(basenames)):
             raise ValueError("source basenames must be unique for diagnostic identity")
         return safe
+
+    @field_validator("resources")
+    @classmethod
+    def valid_resources(cls, value: tuple[str, ...]) -> tuple[str, ...]:
+        if len(value) != len(set(value)):
+            raise ValueError("duplicate resources")
+        return tuple(safe_relative_path(item) for item in value)
+
+    @field_validator("library_map")
+    @classmethod
+    def valid_library_map(cls, value: str | None) -> str | None:
+        return None if value is None else safe_relative_path(value)
 
     @field_validator("include_dirs")
     @classmethod
@@ -564,6 +600,17 @@ class CaseDefinition(StrictModel):
                 raise ValueError("phase-exit oracle has no marker or anchor")
         if self.target_phase is not Phase.SIMULATE and self.runtime_args:
             raise ValueError("runtime_args are only valid for simulate cases")
+        declared_files = (*self.sources, *self.resources)
+        if self.library_map is not None:
+            declared_files += (self.library_map,)
+            if self.top is None:
+                raise ValueError("library_map requires a configuration top")
+        if len(declared_files) != len(set(declared_files)):
+            raise ValueError("case input paths cannot have multiple roles")
+        if self.covergroups and (
+            self.target_phase is not Phase.SIMULATE or self.expectation is not Expectation.ACCEPT
+        ):
+            raise ValueError("covergroups require a simulation acceptance oracle")
         return self
 
 
@@ -874,6 +921,23 @@ class ExecutionStage(StrictModel):
         return self
 
 
+class WorkFile(StrictModel):
+    path: str
+    content: str = Field(min_length=1, max_length=65536)
+
+    @field_validator("path")
+    @classmethod
+    def valid_path(cls, value: str) -> str:
+        return safe_relative_path(value)
+
+    @field_validator("content")
+    @classmethod
+    def valid_content(cls, value: str) -> str:
+        if "\x00" in value:
+            raise ValueError("generated work file contains NUL")
+        return value
+
+
 class ExecutionPlan(StrictModel):
     schema_version: ContractSchemaVersion
     case_id: str
@@ -883,6 +947,7 @@ class ExecutionPlan(StrictModel):
     backend: ExecutionBackend
     image: str | None = None
     wrapper: str | None = None
+    work_files: tuple[WorkFile, ...] = ()
     stages: tuple[ExecutionStage, ...]
 
     @model_validator(mode="after")
@@ -898,6 +963,9 @@ class ExecutionPlan(StrictModel):
         ids = [stage.id for stage in self.stages]
         if len(ids) != len(set(ids)):
             raise ValueError("duplicate stage ids")
+        work_paths = [item.path for item in self.work_files]
+        if len(work_paths) != len(set(work_paths)):
+            raise ValueError("duplicate generated work file paths")
         if any(stage.kind is StageKind.RUN for stage in self.stages[:-1]):
             raise ValueError("runtime stage must be last")
         if not any(
@@ -1007,7 +1075,10 @@ class NormalizedResult(StrictModel):
                 ReasonCode.OUTPUT_TRUNCATED,
                 ReasonCode.TARGET_PHASE_UNPROVEN,
             },
-            ResultStatus.UNSUPPORTED_CAPABILITY: {ReasonCode.UNSUPPORTED_PHASE},
+            ResultStatus.UNSUPPORTED_CAPABILITY: {
+                ReasonCode.UNSUPPORTED_PHASE,
+                ReasonCode.UNSUPPORTED_CAPABILITY,
+            },
             ResultStatus.UNSUPPORTED_REVISION: {ReasonCode.UNSUPPORTED_REVISION},
             ResultStatus.NOT_APPLICABLE: {ReasonCode.NOT_APPLICABLE},
             ResultStatus.SKIPPED_UNAVAILABLE: {ReasonCode.TOOL_UNAVAILABLE},

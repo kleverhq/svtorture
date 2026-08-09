@@ -38,6 +38,11 @@ export interface Oracle {
   anchor?: string | null;
 }
 
+export interface LogicalLibrary {
+  name: string;
+  sources: string[];
+}
+
 export interface CaseDefinition {
   id: string;
   title: string;
@@ -50,6 +55,10 @@ export interface CaseDefinition {
   expectation: string;
   evidence: string;
   sources: string[];
+  resources?: string[];
+  library_map?: string | null;
+  logical_libraries?: LogicalLibrary[] | null;
+  covergroups?: boolean;
   source_links?: Record<string, string>;
   top?: string | null;
   defines: string[];

@@ -40,17 +40,21 @@ tools/tools.toml ──► tools/*/tool.toml ──► adapter ──► typed E
 `catalog.py` checks requirement citations and waiver anchors against the
 committed anchor index. Waiver-only anchors leave the Requirements Coverage
 denominator, while cited anchors remain covered. The catalog also checks
-cross-references, safe paths, diagnostic anchors, marker uniqueness, source
-hashes, and the seed corpus. The annotator under
+cross-references, safe paths, diagnostic anchors, marker uniqueness, and the
+bytes of every declared source, include-tree member, resource, and library map.
+Undeclared case-directory files are rejected. The annotator under
 `standards/ieee-1800-2023-annotate/` builds the anchor index from a user-supplied
 PDF. Neither the annotator nor its generated text is part of runtime execution.
 
 A tool profile declares a cumulative phase ceiling and the command boundaries
 that its adapter can assess directly. Adapters declare commands, the furthest
 phase attempted by each command, and diagnostic normalization. `executor.py`
-runs argv arrays in isolated work directories and records bounded excerpts with
-full-stream hashes. Only `evaluator.py` compares those observations with the
-case oracle and labels the evidence as direct or cumulative.
+runs argv arrays in isolated work directories, materializes declared resources
+and bounded adapter-generated control files there, and records bounded excerpts
+with full-stream hashes. Adapter checks produce structural
+`unsupported-capability` results before backend execution. Only `evaluator.py`
+compares observations with the case oracle and labels the evidence as direct or
+cumulative.
 
 When either excerpt is truncated, the evaluator returns the inconclusive reason
 `output-truncated`. It does not evaluate partial text that might omit a second

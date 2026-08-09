@@ -202,7 +202,14 @@ def test_requirement_part_must_match_clause_and_id(catalog: Catalog) -> None:
 
 @pytest.mark.parametrize(
     "value",
-    ("../escape.sv", "/absolute.sv", "nested/../escape.sv", r"windows\\escape.sv"),
+    (
+        "../escape.sv",
+        "/absolute.sv",
+        "nested/../escape.sv",
+        "./top.sv",
+        "nested//top.sv",
+        r"windows\\escape.sv",
+    ),
 )
 def test_path_traversal_is_rejected(value: str) -> None:
     with pytest.raises(ValueError, match="unsafe relative path"):
@@ -338,6 +345,42 @@ def test_catalog_rejects_a_symlinked_case_source(catalog: Catalog, tmp_path: Pat
     source.symlink_to("actual.sv")
     with pytest.raises(CatalogError, match="symbolic link"):
         load_catalog(root)
+
+
+def test_resource_bytes_change_case_identity(catalog: Catalog, tmp_path: Path) -> None:
+    root = tmp_path / "repo"
+    _copy_catalog_tree(catalog, root)
+    before = load_catalog(root).cases["ch32-iopath-rise-annotates-path"].content_sha256
+    resource = root / "cases" / "ch32-iopath-rise-annotates-path" / "test.sdf"
+    resource.write_bytes(resource.read_bytes() + b"\n")
+
+    after = load_catalog(root).cases["ch32-iopath-rise-annotates-path"].content_sha256
+
+    assert after != before
+
+
+def test_catalog_rejects_missing_and_undeclared_resources(catalog: Catalog, tmp_path: Path) -> None:
+    root = tmp_path / "repo"
+    _copy_catalog_tree(catalog, root)
+    case_directory = root / "cases" / "ch32-iopath-rise-annotates-path"
+    resource = case_directory / "test.sdf"
+    resource.unlink()
+    with pytest.raises(CatalogError, match="missing or unsafe resource"):
+        load_catalog(root)
+
+    resource.write_text("restored", encoding="utf-8")
+    (case_directory / "undeclared.bin").write_bytes(b"undeclared")
+    with pytest.raises(CatalogError, match=r"undeclared case files: undeclared\.bin"):
+        load_catalog(root)
+
+
+def test_catalog_parses_the_declared_library_map(catalog: Catalog) -> None:
+    loaded = catalog.cases["ch33-basic-config-selects-design"]
+    assert [(item.name, item.sources) for item in loaded.logical_libraries] == [
+        ("work", ("top.sv",)),
+        ("libb", ("libb.sv",)),
+        ("liba", ("liba.sv",)),
+    ]
 
 
 def test_requirement_part_must_match_index(catalog: Catalog, tmp_path: Path) -> None:

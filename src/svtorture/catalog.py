@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import re
 import subprocess
 import tomllib
 from collections.abc import Iterable
@@ -23,6 +24,7 @@ from svtorture.models import (
     CorpusPartMetric,
     CorpusRatio,
     Expectation,
+    LogicalLibrary,
     OracleKind,
     Phase,
     RepositoryIdentity,
@@ -40,6 +42,7 @@ from svtorture.models import (
     ToolRegistry,
     WaiverPart,
     model_to_jsonable,
+    safe_relative_path,
     standard_location_sort_key,
 )
 
@@ -70,6 +73,7 @@ class LoadedCase:
     anchor_source: str | None
     anchor_line: int | None
     content_sha256: str
+    logical_libraries: tuple[LogicalLibrary, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -448,21 +452,61 @@ def _source_text(path: Path) -> str:
         raise CatalogError(f"{path}: source is not readable UTF-8: {error}") from error
 
 
-def _case_hash(definition: CaseDefinition, directory: Path) -> str:
-    digest_payload: list[dict[str, str]] = []
-    for source in definition.sources:
-        source_path = directory / source
-        digest_payload.append({"path": source, "sha256": sha256_bytes(source_path.read_bytes())})
+def _declared_case_files(definition: CaseDefinition, directory: Path) -> tuple[str, ...]:
+    declared = [*definition.sources, *definition.resources]
+    if definition.library_map is not None:
+        declared.append(definition.library_map)
     for include_dir in definition.include_dirs:
         directory_path = directory / include_dir
-        for path in sorted(item for item in directory_path.rglob("*") if item.is_file()):
-            digest_payload.append(
-                {
-                    "path": path.relative_to(directory).as_posix(),
-                    "sha256": sha256_bytes(path.read_bytes()),
-                }
-            )
+        declared.extend(
+            path.relative_to(directory).as_posix()
+            for path in sorted(item for item in directory_path.rglob("*") if item.is_file())
+        )
+    if len(declared) != len(set(declared)):
+        raise CatalogError("case inputs cannot have multiple declared roles")
+    return tuple(declared)
+
+
+def _case_hash(definition: CaseDefinition, directory: Path) -> str:
+    digest_payload = [
+        {"path": relative, "sha256": sha256_bytes((directory / relative).read_bytes())}
+        for relative in _declared_case_files(definition, directory)
+    ]
     return hash_json({"metadata": model_to_jsonable(definition), "files": digest_payload})
+
+
+def _library_map(path: Path, definition: CaseDefinition) -> tuple[LogicalLibrary, ...]:
+    text = _source_text(path)
+    libraries: list[LogicalLibrary] = []
+    mapped_sources: list[str] = []
+    for statement in text.split(";"):
+        statement = " ".join(
+            line.split("//", 1)[0].strip() for line in statement.splitlines()
+        ).strip()
+        if not statement:
+            continue
+        match = re.fullmatch(r"library\s+([A-Za-z_][A-Za-z0-9_$]*)\s+(.+)", statement)
+        if match is None:
+            raise CatalogError(f"{path}: unsupported library map statement {statement!r}")
+        sources = tuple(match.group(2).split())
+        if any("," in source for source in sources):
+            raise CatalogError(f"{path}: comma-separated library paths are unsupported")
+        try:
+            sources = tuple(safe_relative_path(item) for item in sources)
+        except ValueError as error:
+            raise CatalogError(f"{path}: {error}") from error
+        libraries.append(LogicalLibrary(name=match.group(1), sources=sources))
+        mapped_sources.extend(sources)
+    if not libraries:
+        raise CatalogError(f"{path}: library map is empty")
+    names = [item.name for item in libraries]
+    if len(names) != len(set(names)):
+        raise CatalogError(f"{path}: duplicate logical library")
+    if len(mapped_sources) != len(set(mapped_sources)):
+        raise CatalogError(f"{path}: source is mapped more than once")
+    if set(mapped_sources) != set(definition.sources):
+        raise CatalogError(f"{path}: library map must assign every declared source exactly once")
+    return tuple(libraries)
 
 
 def _case_path(directory: Path, relative: str, *, kind: str) -> Path:
@@ -524,8 +568,28 @@ def _load_case(path: Path, requirements: dict[str, Requirement]) -> LoadedCase:
         include_path = _case_path(directory, include_dir, kind="include directory")
         if not include_path.is_dir():
             raise CatalogError(f"{path}: missing or unsafe include directory {include_dir}")
-        if any(item.is_symlink() for item in include_path.rglob("*")):
-            raise CatalogError(f"{path}: include directory contains a symbolic link")
+
+    for resource in definition.resources:
+        resource_path = _case_path(directory, resource, kind="resource")
+        if not resource_path.is_file():
+            raise CatalogError(f"{path}: missing or unsafe resource {resource}")
+
+    logical_libraries: tuple[LogicalLibrary, ...] = ()
+    if definition.library_map is not None:
+        map_path = _case_path(directory, definition.library_map, kind="library map")
+        if not map_path.is_file():
+            raise CatalogError(f"{path}: missing or unsafe library map {definition.library_map}")
+        logical_libraries = _library_map(map_path, definition)
+
+    if any(item.is_symlink() for item in directory.rglob("*")):
+        raise CatalogError(f"{path}: case directory contains a symbolic link")
+    declared = {"case.toml", *_declared_case_files(definition, directory)}
+    actual = {
+        item.relative_to(directory).as_posix() for item in directory.rglob("*") if item.is_file()
+    }
+    undeclared = sorted(actual - declared)
+    if undeclared:
+        raise CatalogError(f"{path}: undeclared case files: {', '.join(undeclared)}")
 
     anchor_source: str | None = None
     anchor_line: int | None = None
@@ -562,6 +626,7 @@ def _load_case(path: Path, requirements: dict[str, Requirement]) -> LoadedCase:
         anchor_source=anchor_source,
         anchor_line=anchor_line,
         content_sha256=_case_hash(definition, directory),
+        logical_libraries=logical_libraries,
     )
 
 

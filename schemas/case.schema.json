@@ -133,6 +133,11 @@
   },
   "additionalProperties": false,
   "properties": {
+    "covergroups": {
+      "default": false,
+      "title": "Covergroups",
+      "type": "boolean"
+    },
     "defines": {
       "default": [],
       "items": {
@@ -165,6 +170,18 @@
       "title": "Include Dirs",
       "type": "array"
     },
+    "library_map": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Library Map"
+    },
     "limits": {
       "$ref": "#/$defs/ResourceLimits",
       "default": {
@@ -187,6 +204,14 @@
         "type": "string"
       },
       "title": "Related Requirements",
+      "type": "array"
+    },
+    "resources": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Resources",
       "type": "array"
     },
     "revision_applicability": {

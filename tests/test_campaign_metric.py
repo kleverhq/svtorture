@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import shutil
 import time
+from dataclasses import replace
 from pathlib import Path
 from threading import Barrier, Lock, get_ident
 
@@ -192,6 +193,56 @@ def test_unsupported_phase_is_recorded_without_execution(catalog: Catalog) -> No
     by_case = {result.case_id: result for result in campaign.results}
     assert by_case["ch04-nba-rhs-captured"].status is ResultStatus.UNSUPPORTED_CAPABILITY
     assert by_case["ch04-nba-rhs-captured"].reason is ReasonCode.UNSUPPORTED_PHASE
+
+
+def test_unsupported_feature_is_structural_before_execution(
+    catalog: Catalog, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    suite = SuiteDefinition(
+        schema_version=1,
+        id="advanced-test",
+        description="One structurally unsupported case.",
+        cases=("ch33-basic-config-selects-design",),
+    )
+    custom = replace(
+        catalog,
+        suites={**catalog.suites, suite.id: suite},
+        suite_cases={**catalog.suite_cases, suite.id: suite.cases},
+    )
+    tool = catalog.tools.tool("icarus")
+    profile = tool.profile("simulator")
+    recorded_tool = campaign_tool(tool, (profile.id,))
+    monkeypatch.setattr(
+        campaign_module,
+        "execute_plan",
+        lambda *args, **kwargs: pytest.fail("unsupported case executed"),
+    )
+    monkeypatch.setattr(campaign_module, "save_campaign", lambda root, campaign: None)
+
+    campaign = run_campaign(
+        custom,
+        (
+            PreparedTool(
+                definition=tool,
+                profile=profile,
+                selection=recorded_tool.selection,
+                image=recorded_tool.image,
+                reported_version=None,
+            ),
+        ),
+        suite_id=suite.id,
+    )
+    result = campaign.results[0]
+    assert result.status is ResultStatus.UNSUPPORTED_CAPABILITY
+    assert result.reason is ReasonCode.UNSUPPORTED_CAPABILITY
+    assert not result.observations
+
+    preparation = create_preparation_failure_campaign(
+        custom,
+        suite_id=suite.id,
+        tool_id=tool.id,
+    )
+    assert preparation.results[0].reason is ReasonCode.UNSUPPORTED_CAPABILITY
 
 
 def test_unsupported_revision_is_not_a_normal_result(catalog: Catalog) -> None:
@@ -461,17 +512,18 @@ def _variant(case: LoadedCase, root: Path) -> LoadedCase:
     ("tool_id", "profile_id", "expected"),
     (
         ("slang", "elaborator", 5),
-        ("icarus", "simulator", 12),
-        ("verilator", "simulator", 12),
+        ("icarus", "simulator", None),
+        ("verilator", "simulator", None),
     ),
 )
 def test_cumulative_phase_scope_sets_headline_denominator(
     catalog: Catalog,
     tool_id: str,
     profile_id: str,
-    expected: int,
+    expected: int | None,
 ) -> None:
     cases = tuple(catalog.cases[case_id] for case_id in catalog.suite_cases["all"])
+    expected = expected if expected is not None else len(cases)
     tool = campaign_tool(catalog.tools.tool(tool_id), (profile_id,))
     campaign = make_campaign(
         catalog,

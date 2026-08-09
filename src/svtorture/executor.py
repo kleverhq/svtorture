@@ -12,6 +12,7 @@ from threading import Event
 
 from svtorture.adapters.base import ToolAdapter
 from svtorture.catalog import LoadedCase
+from svtorture.hashing import sha256_bytes
 from svtorture.models import (
     CapturedStream,
     ExecutionBackend,
@@ -29,6 +30,22 @@ HOST_PATH_RE = re.compile(r"(?<![A-Za-z0-9_$])/(?:home|Users|private|tmp|root)/[
 
 class ExecutionError(RuntimeError):
     pass
+
+
+def _verify_resources(work_dir: Path, expected: Mapping[str, str]) -> None:
+    for relative, digest in expected.items():
+        resource = work_dir / relative
+        try:
+            valid = (
+                resource.is_file()
+                and not resource.is_symlink()
+                and resource.stat().st_mode & 0o222 == 0
+                and sha256_bytes(resource.read_bytes()) == digest
+            )
+        except OSError:
+            valid = False
+        if not valid:
+            raise ExecutionError(f"declared resource was modified during execution: {relative}")
 
 
 def _sanitize(text: str, replacements: Mapping[str, str]) -> str:
@@ -261,8 +278,24 @@ def execute_plan(
     if work_dir.exists():
         shutil.rmtree(work_dir)
     work_dir.mkdir(parents=True, mode=0o700)
+    resource_hashes: dict[str, str] = {}
+    try:
+        for relative in case.definition.resources:
+            destination = work_dir / relative
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            source = case.directory / relative
+            shutil.copyfile(source, destination)
+            destination.chmod(0o444)
+            resource_hashes[relative] = sha256_bytes(source.read_bytes())
+        for generated in plan.work_files:
+            destination = work_dir / generated.path
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            destination.write_text(generated.content, encoding="utf-8")
+    except OSError as error:
+        raise ExecutionError(f"cannot materialize execution inputs: {error}") from error
     observations: list[StageObservation] = []
     for stage in plan.stages:
+        _verify_resources(work_dir, resource_hashes)
         environment: dict[str, str] | None = None
         if plan.backend is ExecutionBackend.DOCKER:
             argv, portable = _docker_argv(plan, stage, case, work_dir)
@@ -284,6 +317,7 @@ def execute_plan(
             process_result = _classify_container(process_result)
         else:
             process_result = _classify_wrapper(process_result)
+        _verify_resources(work_dir, resource_hashes)
         observation = _observation(process_result, stage, portable, case, adapter, work_dir)
         observations.append(observation)
         if (

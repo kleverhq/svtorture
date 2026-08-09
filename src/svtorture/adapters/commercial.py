@@ -22,6 +22,7 @@ from svtorture.models import (
     StageKind,
     ToolDefinition,
     ToolProfile,
+    WorkFile,
 )
 
 
@@ -52,6 +53,9 @@ class VcsAdapter(ToolAdapter):
     def version_argv(self) -> tuple[str, ...]:
         return ("vcs", "-ID")
 
+    def check_case(self, case: LoadedCase) -> None:
+        del case
+
     def build_plan(
         self,
         case: LoadedCase,
@@ -62,37 +66,113 @@ class VcsAdapter(ToolAdapter):
         wrapper: str | None,
     ) -> ExecutionPlan:
         del image
+        self.check_case(case)
         executable = f"{WORK_ROOT}/simv"
         portable_executable = f"{PORTABLE_WORK_ROOT}/simv"
-        compile_argv: tuple[str, ...] = (
-            "vcs",
-            "-full64",
-            "-sverilog",
-            "-o",
-            executable,
-        )
-        portable_compile: tuple[str, ...] = (
-            "vcs",
-            "-full64",
-            "-sverilog",
-            "-o",
-            portable_executable,
-        )
-        compile_argv += include_argv(case, "plus") + define_argv(case, "plus")
-        portable_compile += include_argv(case, "plus", portable=True) + define_argv(case, "plus")
-        compile_argv += source_argv(case)
-        portable_compile += source_argv(case, portable=True)
-        stages = [
-            _stage(
-                "compile",
-                StageKind.COMPILE,
-                Phase.ELABORATE,
-                compile_argv,
-                portable_compile,
-                case,
-                "simv",
+        stages = []
+        work_files: tuple[WorkFile, ...] = ()
+        if case.definition.library_map is not None:
+            setup = ["WORK > work"]
+            generated: list[WorkFile] = []
+            for library in case.logical_libraries:
+                setup.append(f"{library.name} : ./libraries/{library.name}")
+                generated.append(
+                    WorkFile(path=f"libraries/{library.name}/.keep", content="generated\n")
+                )
+                library_argv = (
+                    "vlogan",
+                    "-full64",
+                    "-sverilog",
+                    "-work",
+                    library.name,
+                    *include_argv(case, "plus"),
+                    *define_argv(case, "plus"),
+                    *(f"/case/{source}" for source in library.sources),
+                )
+                portable_library_argv = (
+                    "vlogan",
+                    "-full64",
+                    "-sverilog",
+                    "-work",
+                    library.name,
+                    *include_argv(case, "plus", portable=True),
+                    *define_argv(case, "plus"),
+                    *(f"$CASE/{source}" for source in library.sources),
+                )
+                stages.append(
+                    _stage(
+                        f"compile-{library.name}",
+                        StageKind.COMPILE,
+                        Phase.PARSE,
+                        library_argv,
+                        portable_library_argv,
+                        case,
+                    )
+                )
+            generated.append(WorkFile(path="synopsys_sim.setup", content="\n".join(setup) + "\n"))
+            work_files = tuple(generated)
+            assert case.definition.top is not None
+            stages.append(
+                _stage(
+                    "elaborate",
+                    StageKind.COMPILE,
+                    Phase.ELABORATE,
+                    (
+                        "vcs",
+                        "-full64",
+                        "-sverilog",
+                        "-top",
+                        case.definition.top,
+                        "-o",
+                        executable,
+                        case.definition.top,
+                    ),
+                    (
+                        "vcs",
+                        "-full64",
+                        "-sverilog",
+                        "-top",
+                        case.definition.top,
+                        "-o",
+                        portable_executable,
+                        case.definition.top,
+                    ),
+                    case,
+                    "simv",
+                )
             )
-        ]
+        else:
+            compile_argv: tuple[str, ...] = (
+                "vcs",
+                "-full64",
+                "-sverilog",
+                "-o",
+                executable,
+            )
+            portable_compile: tuple[str, ...] = (
+                "vcs",
+                "-full64",
+                "-sverilog",
+                "-o",
+                portable_executable,
+            )
+            compile_argv += include_argv(case, "plus") + define_argv(case, "plus")
+            portable_compile += include_argv(case, "plus", portable=True) + define_argv(
+                case, "plus"
+            )
+            compile_argv += source_argv(case)
+            portable_compile += source_argv(case, portable=True)
+            stages.append(
+                _stage(
+                    "compile",
+                    StageKind.COMPILE,
+                    Phase.ELABORATE,
+                    compile_argv,
+                    portable_compile,
+                    case,
+                    "simv",
+                )
+            )
         if case.definition.target_phase is Phase.SIMULATE:
             stages.append(
                 _stage(
@@ -112,5 +192,6 @@ class VcsAdapter(ToolAdapter):
             target_phase=case.definition.target_phase,
             backend=ExecutionBackend.LOCAL_WRAPPER,
             wrapper=wrapper,
+            work_files=work_files,
             stages=tuple(stages),
         )

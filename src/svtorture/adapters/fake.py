@@ -75,6 +75,7 @@ class FakeAdapter(ToolAdapter):
         wrapper: str | None,
     ) -> ExecutionPlan:
         del wrapper
+        self.check_case(case)
         stages = [
             _stage(
                 "compile",

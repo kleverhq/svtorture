@@ -10,6 +10,7 @@ from pathlib import Path
 import pytest
 from pydantic import ValidationError
 
+from svtorture.adapters.commercial import VcsAdapter
 from svtorture.bundle import (
     assemble_dashboard_data,
     assemble_public_pages,
@@ -69,6 +70,35 @@ def _campaign(catalog: Catalog):
         for case in cases
     )
     return make_campaign(catalog, cases=cases, tool=tool, results=results)
+
+
+def test_vcs_configuration_bundle_preserves_plan_provenance(
+    catalog: Catalog, tmp_path: Path
+) -> None:
+    case = catalog.cases["ch33-basic-config-selects-design"]
+    tool = campaign_tool(catalog.tools.tool("vcs"), ("simulator",))
+    plan = VcsAdapter().build_plan(
+        case,
+        tool.definition,
+        tool.definition.profile("simulator"),
+        image=None,
+        wrapper="/private/wrapper",
+    )
+    observations = tuple(
+        observation(
+            stage_id=stage.id,
+            attempted_through_phase=stage.attempted_through_phase,
+            artifact_present=(True if stage.expected_artifact is not None else None),
+            stdout=(case.definition.oracle.marker or "") if stage.kind.value == "run" else "",
+        )
+        for stage in plan.stages
+    )
+    result = normalized(case, "vcs", "simulator", observations=observations)
+    campaign = make_campaign(catalog, cases=(case,), tool=tool, results=(result,))
+
+    root = export_campaign_bundle(catalog, campaign, tmp_path / "bundle")
+
+    validate_campaign_bundle(root)
 
 
 def test_bundle_export_is_compact_complete_and_deterministic(

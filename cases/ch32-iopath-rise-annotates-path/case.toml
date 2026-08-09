@@ -1,0 +1,20 @@
+schema_version = 1
+id = "ch32-iopath-rise-annotates-path"
+title = "An SDF IOPATH rise value annotates a specify path"
+description = "A rising input remains delayed until the SDF IOPATH rise delay has elapsed on the matching module path."
+primary_requirement = "SV-2023-32-IOPATH-MAPS-TO-SPECIFY-PATH"
+related_requirements = ["SV-2023-32-MATCH-SDF-DELAY-TO-SPECIFY-PATH", "SV-2023-32-SDF-ANNOTATE-TASK-SYNTAX"]
+standard_revision = "1800-2023"
+revision_applicability = { "1800-2012" = "applicable", "1800-2017" = "applicable", "1800-2023" = "applicable" }
+target_phase = "simulate"
+expectation = "accept"
+evidence = "mandatory"
+sources = ["top.sv"]
+resources = ["test.sdf"]
+top = "top"
+defines = []
+include_dirs = []
+runtime_args = []
+tags = ["module", "ports", "scheduling"]
+limits = { timeout_seconds = 30, output_bytes = 65536, memory_mb = 2048, pids = 256 }
+oracle = { kind = "runtime-pass-marker", marker = "SVTORTURE_PASS:ch32-iopath-rise-annotates-path" }

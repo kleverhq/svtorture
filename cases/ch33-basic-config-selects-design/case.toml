@@ -1,0 +1,20 @@
+schema_version = 1
+id = "ch33-basic-config-selects-design"
+title = "A configuration selects the design and default library"
+description = "A configuration root binds an unresolved leaf through its default library rather than library-map order."
+primary_requirement = "SV-2023-33-CONFIG-LIBLIST-SUPERSEDES-MAP-ORDER"
+related_requirements = ["SV-2023-33-CONFIG-DESIGN-DETERMINES-TOP", "SV-2023-33-DEFAULT-LIBLIST-BINDING", "SV-2023-33-DESIGN-SELECTS-TOP-CELL"]
+standard_revision = "1800-2023"
+revision_applicability = { "1800-2012" = "applicable", "1800-2017" = "applicable", "1800-2023" = "applicable" }
+target_phase = "simulate"
+expectation = "accept"
+evidence = "mandatory"
+sources = ["top.sv", "libb.sv", "liba.sv"]
+library_map = "lib.map"
+top = "cfg"
+defines = []
+include_dirs = []
+runtime_args = []
+tags = ["hierarchy", "module"]
+limits = { timeout_seconds = 30, output_bytes = 65536, memory_mb = 2048, pids = 256 }
+oracle = { kind = "runtime-pass-marker", marker = "SVTORTURE_PASS:ch33-basic-config-selects-design" }

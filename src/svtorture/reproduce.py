@@ -32,6 +32,7 @@ from svtorture.campaign import (
     load_campaign,
     load_campaign_location,
     load_runner_config,
+    structural_result,
     validate_plan_for_profile,
     verify_campaign_against_catalog,
     verify_result_against_case,
@@ -225,7 +226,12 @@ def _build_replay_context(
             raise ReproductionError("replay case identity does not match catalog")
         definition = catalog_case.model_dump(
             mode="json",
-            exclude={"content_sha256", "definition_sha256", "source_links"},
+            exclude={
+                "content_sha256",
+                "definition_sha256",
+                "source_links",
+                "logical_libraries",
+            },
             exclude_none=True,
         )
         if (
@@ -276,7 +282,12 @@ def _build_replay_context(
         raise ReproductionError("recorded case identity was not found")
     definition = case.model_dump(
         mode="json",
-        exclude={"content_sha256", "definition_sha256", "source_links"},
+        exclude={
+            "content_sha256",
+            "definition_sha256",
+            "source_links",
+            "logical_libraries",
+        },
         exclude_none=True,
     )
     if (
@@ -680,9 +691,18 @@ def _select_context(
         if current_case is None or current_case.content_sha256 != source.case.content_sha256:
             raise ReproductionError("current case does not match replay context")
         if current_case.definition != CaseDefinition.model_validate(
-            source.case.model_dump(exclude={"content_sha256", "definition_sha256", "source_links"})
+            source.case.model_dump(
+                exclude={
+                    "content_sha256",
+                    "definition_sha256",
+                    "source_links",
+                    "logical_libraries",
+                }
+            )
         ):
             raise ReproductionError("current case definition does not match replay context")
+        if current_case.logical_libraries != (source.case.logical_libraries or ()):
+            raise ReproductionError("current logical libraries do not match replay context")
         try:
             registered = catalog.tools.tool(tool_id)
         except KeyError as error:
@@ -728,40 +748,48 @@ def reproduce_case(
         campaign_tool.definition.adapter,
         diagnostic_rules=campaign_tool.definition.diagnostic_rules,
     )
-    wrapper = None
-    image = None
-    if campaign_tool.definition.execution.value == "docker":
-        image = _ensure_image(checkout, campaign_tool)
-    else:
-        wrapper = load_runner_config(root, campaign_tool.definition)
-        if not wrapper_available(wrapper):
-            raise ReproductionError("the required local runner is unavailable")
-    plan = adapter.build_plan(
-        loaded,
-        campaign_tool.definition,
-        profile,
-        image=image,
-        wrapper=wrapper.command[0] if wrapper else None,
-    )
-    try:
-        validate_plan_for_profile(
-            plan,
+    replayed = structural_result(loaded, campaign_tool.definition, profile)
+    if replayed is None:
+        wrapper = None
+        image = None
+        if campaign_tool.definition.execution.value == "docker":
+            image = _ensure_image(checkout, campaign_tool)
+        else:
+            wrapper = load_runner_config(root, campaign_tool.definition)
+            if not wrapper_available(wrapper):
+                raise ReproductionError("the required local runner is unavailable")
+        plan = adapter.build_plan(
             loaded,
             campaign_tool.definition,
             profile,
             image=image,
             wrapper=wrapper.command[0] if wrapper else None,
         )
-    except ValueError as error:
-        raise ReproductionError(f"invalid replay execution plan: {error}") from error
-    observations = execute_plan(
-        plan,
-        loaded,
-        adapter,
-        checkout / ".svtorture" / "reproduce-work" / metadata.id / tool_id / profile_id / case_id,
-        wrapper=wrapper,
-    )
-    replayed = evaluate(loaded, tool_id, profile_id, observations)
+        try:
+            validate_plan_for_profile(
+                plan,
+                loaded,
+                campaign_tool.definition,
+                profile,
+                image=image,
+                wrapper=wrapper.command[0] if wrapper else None,
+            )
+        except ValueError as error:
+            raise ReproductionError(f"invalid replay execution plan: {error}") from error
+        observations = execute_plan(
+            plan,
+            loaded,
+            adapter,
+            checkout
+            / ".svtorture"
+            / "reproduce-work"
+            / metadata.id
+            / tool_id
+            / profile_id
+            / case_id,
+            wrapper=wrapper,
+        )
+        replayed = evaluate(loaded, tool_id, profile_id, observations)
     differences: list[str] = []
     current_repository = repository_identity(root)
     if not metadata.repository.dirty and metadata.repository.commit != "unborn":

@@ -3,16 +3,19 @@ from __future__ import annotations
 import json
 import urllib.request
 import zipfile
+from dataclasses import replace
 from pathlib import Path
 from types import SimpleNamespace
 
 import pytest
 
 import svtorture.reproduce as reproduction
+from svtorture.adapters.commercial import VcsAdapter
 from svtorture.bundle import export_campaign_bundle, write_campaign_archive
+from svtorture.campaign import structural_result
 from svtorture.catalog import Catalog
 from svtorture.hashing import canonical_json_bytes, sha256_bytes
-from svtorture.models import Phase
+from svtorture.models import Phase, RunnerConfig
 from tests.helpers import campaign_tool, make_campaign, normalized, observation
 
 
@@ -78,6 +81,104 @@ def test_replay_uses_the_current_vendored_anchor_index(
         "checkout": checkout,
         "anchor_index": root / "standards" / "ieee-1800-2023-anchors.json",
     }
+
+
+def test_structural_unsupported_replay_does_not_prepare_a_backend(
+    catalog: Catalog,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    case = catalog.cases["ch33-basic-config-selects-design"]
+    tool = campaign_tool(catalog.tools.tool("icarus"), ("simulator",))
+    result = structural_result(case, tool.definition, tool.definition.profile("simulator"))
+    assert result is not None
+    campaign = make_campaign(catalog, cases=(case,), tool=tool, results=(result,))
+    monkeypatch.setattr(reproduction, "_ensure_checkout", lambda *_args: catalog.root)
+    monkeypatch.setattr(
+        reproduction,
+        "_ensure_image",
+        lambda *_args: pytest.fail("structural replay prepared an image"),
+    )
+
+    report = reproduction.reproduce_case(
+        catalog.root,
+        campaign,
+        tool_id="icarus",
+        profile_id="simulator",
+        case_id=case.definition.id,
+    )
+
+    assert report.replayed.status == result.status
+    assert report.replayed.reason == result.reason
+
+
+def test_configuration_bundle_replays_with_derived_libraries(
+    catalog: Catalog,
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    case = catalog.cases["ch33-basic-config-selects-design"]
+    tool = campaign_tool(catalog.tools.tool("vcs"), ("simulator",))
+    plan = VcsAdapter().build_plan(
+        case,
+        tool.definition,
+        tool.definition.profile("simulator"),
+        image=None,
+        wrapper="/private/wrapper",
+    )
+    observations = tuple(
+        observation(
+            stage_id=stage.id,
+            attempted_through_phase=stage.attempted_through_phase,
+            artifact_present=(True if stage.expected_artifact is not None else None),
+            stdout=(case.definition.oracle.marker or "") if stage.kind.value == "run" else "",
+        )
+        for stage in plan.stages
+    )
+    result = normalized(case, "vcs", "simulator", observations=observations)
+    campaign = make_campaign(catalog, cases=(case,), tool=tool, results=(result,))
+    root = export_campaign_bundle(catalog, campaign, tmp_path / "bundle")
+    context = reproduction.load_replay_location(
+        str(root / "manifest.json"),
+        tool_id="vcs",
+        profile_id="simulator",
+        case_id=case.definition.id,
+    )
+    assert context.case.logical_libraries is not None
+    forged_libraries = list(context.case.logical_libraries)
+    forged_libraries[0] = forged_libraries[0].model_copy(update={"name": "forged"})
+    forged_case = context.case.model_copy(update={"logical_libraries": tuple(forged_libraries)})
+    with pytest.raises(reproduction.ReproductionError, match="logical libraries"):
+        reproduction._select_context(
+            catalog,
+            replace(context, case=forged_case),
+            tool_id="vcs",
+            profile_id="simulator",
+            case_id=case.definition.id,
+        )
+
+    monkeypatch.setattr(reproduction, "_ensure_checkout", lambda *_args: catalog.root)
+    monkeypatch.setattr(reproduction, "load_catalog", lambda *_args, **_kwargs: catalog)
+    monkeypatch.setattr(
+        reproduction,
+        "load_runner_config",
+        lambda *_args: RunnerConfig(
+            schema_version=1,
+            command=("/private/wrapper",),
+        ),
+    )
+    monkeypatch.setattr(reproduction, "wrapper_available", lambda *_args: True)
+    monkeypatch.setattr(reproduction, "execute_plan", lambda *_args, **_kwargs: observations)
+
+    report = reproduction.reproduce_case(
+        catalog.root,
+        context,
+        tool_id="vcs",
+        profile_id="simulator",
+        case_id=case.definition.id,
+    )
+
+    assert report.replayed.status == result.status
+    assert report.replayed.reason == result.reason
 
 
 def test_rebuilt_image_must_match_recorded_image_id(

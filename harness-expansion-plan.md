@@ -30,9 +30,12 @@ This work will not create a general build graph, arbitrary shell stages, per-too
 - [x] (2026-08-09 19:47Z) Restored the ignored local VCS runner configuration from the main worktree, fixed its worktree-path translation locally, and verified both new cases conform under VCS X-2025.06.
 - [x] (2026-08-09 19:48Z) Completed Milestone 0 correctness, standards, and mandatory KISS/YAGNI reviews; corrected both primary requirement mappings and shrank/strengthened the ordered-source assertion.
 - [x] (2026-08-09 19:54Z) Milestone 0 control reviewers reported no substantive findings and the mandatory KISS control returned `Lean already. Ship.`; `just smoke` passed with 134 focused Python tests and 108 dashboard tests.
-- [ ] Commit Milestone 0.
-- [ ] Milestone 1: implement declared resources, logical libraries/configuration root, functional-covergroup activation, and structural capability preflight; port the SDF, configuration, and covergroup cases.
-- [ ] Run focused correctness and architecture reviews plus the mandatory KISS/YAGNI ponytail review for Milestone 1, resolve findings, validate, and commit.
+- [x] (2026-08-09 19:55Z) Committed Milestone 0 as `ca3cc0c`.
+- [x] (2026-08-09 20:32Z) Milestone 1 implementation complete pending review: declared resources, strict input inventory/hashing, standard library maps, bounded generated work files, covergroup activation, structural capability disposition, replay support, three cases, advanced suite, schemas, docs, and focused tests.
+- [x] (2026-08-09 20:32Z) Verified Milestone 1 end to end: all five advanced cases conform under VCS X-2025.06; Verilator conforms except its structural SDF limitation; Icarus conforms on SDF and reports structural configuration/covergroup limits; Slang remains phase-limited.
+- [x] (2026-08-10 00:07Z) Completed Milestone 1 correctness, architecture, standards, and mandatory KISS reviews plus repeated controls. Fixed SDF race discrimination, exact covergroup/configuration primaries, bundle/replay library provenance, resource mutation detection, canonical path aliases, and all simplification findings; final controls were clean.
+- [x] (2026-08-10 00:07Z) Milestone 1 validation passed: 213 non-Docker tests, `just smoke` with 143 focused Python and 108 dashboard tests, schemas, lint, typing, and the advanced multi-tool campaigns.
+- [ ] Commit Milestone 1.
 - [ ] Milestone 2: implement one bounded foreign-source path for DPI C/C++, port both DPI cases, classify foreign build failures, and support every capable current adapter.
 - [ ] Run focused correctness and architecture reviews plus the mandatory KISS/YAGNI ponytail review for Milestone 2, resolve findings, validate, and commit.
 - [ ] Milestone 3: extend the foreign path only where VPI needs startup/loading and visibility mechanics; port both VPI cases for every capable adapter.
@@ -72,6 +75,12 @@ This work will not create a general build graph, arbitrary shell stages, per-too
 
 - Observation: Ignored runner configuration is worktree-local, and the main worktree's VCS runner translated aliases with unrestricted string replacement. Replacing `/work` after `/case` corrupted absolute paths containing `/workspaces/`.
   Evidence: the first VCS campaign rejected every case with an unopenable source path. A local ignored runner copy now translates only an argument equal to or below the exact `/case` or `/work` prefix; the rerun produced 13 conforming results and one unrelated existing nonconformance.
+
+- Observation: VCS accepted the covergroup syntax but returned zero instance coverage until the standard `option.per_instance = 1` was set in the covergroup definition; neither `-cm line` nor `-lca` enabled the queried instance result.
+  Evidence: controlled X-2025.06 probes and the first advanced campaign failed with `coverage=0.000000`; the standard option enabled instance reporting without a VCS-specific adapter flag. Review then strengthened the oracle to two same-time-step events with different values. Both VCS X-2025.06 and Verilator 5.051 record only the final value and return 50%, producing legitimate nonconformance against `SV-2023-19-CLOCKING-EVENT-IMMEDIATE-SAMPLING` rather than a weakened pass.
+
+- Observation: A single standard library-map authority works across adapter strategies. Verilator consumes it directly with `--libmap`; VCS uses the strictly parsed declarations to generate its private setup and per-library `vlogan` stages.
+  Evidence: campaigns `20260809T203114Z-42787f77db72f127` and `20260809T203120Z-f696b9e1c7bfa7bb` produced conforming configuration evidence on VCS and Verilator respectively.
 
 ## Decision Log
 
@@ -145,7 +154,7 @@ This work will not create a general build graph, arbitrary shell stages, per-too
 
 ## Outcomes & Retrospective
 
-Milestone 0 is implemented, reviewed, control-reviewed, and end-to-end proven, pending its commit checkpoint. Two ordinary runtime cases demonstrate cross-file compilation-unit type/value visibility and macro visibility through the unchanged ordered `sources` contract. Verilator, Icarus, and VCS conform; Slang is correctly phase-limited. Review replaced overbroad primaries with the exact compilation-unit-scope and macro-visibility records and simplified the adapter-order test. The obsolete seed-size audit exposed by corpus growth was deleted rather than bypassed.
+Milestone 0 is committed as `ca3cc0c`. Milestone 1 is implemented, repeatedly reviewed, and validated, pending commit. The catalog fingerprints and validates every declared case input, rejects undeclared files and noncanonical path aliases, and detects any resource-copy mutation before accepting evidence. Standard library maps remain the sole logical-library authority; their validated derivation survives bundles and replay. Bounded generated setup text, covergroup activation, and one generic structural unsupported reason cover the three new cases without raw tool options. SDF and configuration results match the capability matrix. The strengthened immediate-sampling oracle intentionally records current Verilator/VCS nonconformance instead of weakening the requirement.
 
 ## Context and Orientation
 
@@ -297,3 +306,7 @@ Plan revision note (2026-08-09 19:43Z): Recorded Milestone 0 implementation, exa
 Plan revision note (2026-08-09 19:48Z): Recorded the restored ignored VCS runner, its local exact-prefix translation fix, successful X-2025.06 campaign, and Milestone 0 review fixes: exact primary mappings plus a shorter complete actual/portable source-order assertion.
 
 Plan revision note (2026-08-09 19:54Z): Recorded clean Milestone 0 correctness, standards, and mandatory KISS control passes plus the post-fix smoke evidence.
+
+Plan revision note (2026-08-09 20:32Z): Recorded the Milestone 1 contract/case implementation, generated schema and focused test evidence, VCS covergroup discovery, cross-adapter library-map strategy, and initial advanced campaign outcomes.
+
+Plan revision note (2026-08-10 00:07Z): Recorded all Milestone 1 review/control findings and fixes, final validation counts, bundle/replay provenance checks, immutable-resource verification, canonical path hardening, and the deliberate Verilator/VCS nonconformance exposed by the strengthened same-time-step covergroup oracle.

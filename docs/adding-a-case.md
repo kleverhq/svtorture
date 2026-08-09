@@ -54,6 +54,13 @@ Record `top`, include directories, defines, arguments, and resource limits in
 metadata. Tool flags and diagnostic wording do not belong here.
 
 Multi-file cases put package/compilation-unit order directly in `sources`.
+Declare non-HDL files such as SDF data in `resources`; every file in a case
+directory must be a source, an include-tree member, a resource, the declared
+`library_map`, or `case.toml`. A standard library map is the sole authority for
+logical-library membership, and `top` names its configuration root. Set
+`covergroups = true` when runtime functional coverage needs adapter activation.
+Cases still contain no compiler, simulator, coverage, or library flags.
+
 Negative evidence should locate the intended token or construct, not a later
 cascade.
 

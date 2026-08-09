@@ -15,12 +15,13 @@ from collections.abc import Callable, Iterable
 from concurrent.futures import Future, ThreadPoolExecutor, as_completed
 from dataclasses import dataclass
 from datetime import UTC, datetime
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 from threading import Event
 from typing import Any
 
 from pydantic import ValidationError
 
+from svtorture.adapters.base import UnsupportedCapability
 from svtorture.adapters.registry import adapter_for
 from svtorture.catalog import Catalog, LoadedCase, load_catalog, repository_identity
 from svtorture.evaluator import evaluate, synthetic_result
@@ -324,6 +325,24 @@ def validate_plan_for_profile(
         raise ValueError("execution plan backend identity does not match the prepared tool")
     if not profile.supports(plan.target_phase):
         raise ValueError("execution plan target exceeds the profile phase ceiling")
+    materialized = [
+        *case.definition.resources,
+        *(item.path for item in plan.work_files),
+        *(stage.expected_artifact for stage in plan.stages if stage.expected_artifact is not None),
+        *(f"{stage.id}.stdout.log" for stage in plan.stages),
+        *(f"{stage.id}.stderr.log" for stage in plan.stages),
+        *(f"wrapper-request-{stage.id}.json" for stage in plan.stages),
+    ]
+    for index, left in enumerate(materialized):
+        left_path = PurePosixPath(left)
+        for right in materialized[index + 1 :]:
+            right_path = PurePosixPath(right)
+            if (
+                left_path == right_path
+                or left_path in right_path.parents
+                or right_path in left_path.parents
+            ):
+                raise ValueError(f"execution work paths collide: {left!r} and {right!r}")
     covering = next(
         stage
         for stage in plan.stages
@@ -334,31 +353,11 @@ def validate_plan_for_profile(
         raise ValueError("execution plan contradicts the profile's direct phase metadata")
 
 
-def _worker_count(requested: int, work_count: int) -> int:
-    if requested < 0:
-        raise CampaignError("jobs must be nonnegative")
-    if work_count < 1:
-        raise CampaignError("a campaign needs at least one tool/case combination")
-    if requested:
-        available = requested
-    else:
-        try:
-            available = len(os.sched_getaffinity(0))
-        except (AttributeError, OSError):
-            available = os.cpu_count() or 1
-    return min(max(1, available), work_count)
-
-
-def _run_campaign_case(
-    prepared_tool: PreparedTool,
+def structural_result(
     loaded: LoadedCase,
-    work_root: Path,
-    cancel_event: Event,
-) -> NormalizedResult:
-    if cancel_event.is_set():
-        raise ProcessCancelled("campaign execution was cancelled")
-    tool = prepared_tool.definition
-    profile = prepared_tool.profile
+    tool: ToolDefinition,
+    profile: ToolProfile,
+) -> NormalizedResult | None:
     case = loaded.definition
     if not profile.supports(case.target_phase):
         return synthetic_result(
@@ -389,8 +388,52 @@ def _run_campaign_case(
             profile.id,
             ResultStatus.UNSUPPORTED_REVISION,
             ReasonCode.UNSUPPORTED_REVISION,
-            (f"The 2023 source/oracle cannot be applied to {profile.standard_revision.value}."),
+            f"The 2023 source/oracle cannot be applied to {profile.standard_revision.value}.",
         )
+    adapter = adapter_for(tool.adapter, diagnostic_rules=tool.diagnostic_rules)
+    try:
+        adapter.check_case(loaded)
+    except UnsupportedCapability as error:
+        return synthetic_result(
+            loaded,
+            tool.id,
+            profile.id,
+            ResultStatus.UNSUPPORTED_CAPABILITY,
+            ReasonCode.UNSUPPORTED_CAPABILITY,
+            str(error),
+        )
+    return None
+
+
+def _worker_count(requested: int, work_count: int) -> int:
+    if requested < 0:
+        raise CampaignError("jobs must be nonnegative")
+    if work_count < 1:
+        raise CampaignError("a campaign needs at least one tool/case combination")
+    if requested:
+        available = requested
+    else:
+        try:
+            available = len(os.sched_getaffinity(0))
+        except (AttributeError, OSError):
+            available = os.cpu_count() or 1
+    return min(max(1, available), work_count)
+
+
+def _run_campaign_case(
+    prepared_tool: PreparedTool,
+    loaded: LoadedCase,
+    work_root: Path,
+    cancel_event: Event,
+) -> NormalizedResult:
+    if cancel_event.is_set():
+        raise ProcessCancelled("campaign execution was cancelled")
+    tool = prepared_tool.definition
+    profile = prepared_tool.profile
+    case = loaded.definition
+    structural = structural_result(loaded, tool, profile)
+    if structural is not None:
+        return structural
     if tool.execution.value == "local-wrapper" and not wrapper_available(prepared_tool.wrapper):
         return synthetic_result(
             loaded,
@@ -644,33 +687,13 @@ def verify_result_against_case(
     if result.target_phase is not loaded.definition.target_phase:
         raise CampaignError(f"campaign result {result.case_id} has a wrong target phase")
     profile = campaign_tool.definition.profile(result.profile_id)
-    case = loaded.definition
-    structural_disposition: tuple[ResultStatus, ReasonCode] | None = None
-    if not profile.supports(case.target_phase):
+    structural = structural_result(loaded, campaign_tool.definition, profile)
+    structural_disposition = None if structural is None else (structural.status, structural.reason)
+    if structural_disposition is None and campaign_tool.preparation_error is not None:
         structural_disposition = (
-            ResultStatus.UNSUPPORTED_CAPABILITY,
-            ReasonCode.UNSUPPORTED_PHASE,
+            ResultStatus.HARNESS_ERROR,
+            ReasonCode.TOOL_PREPARATION_FAILURE,
         )
-    else:
-        applicability = case.revision_applicability[profile.standard_revision]
-        if applicability is Applicability.NOT_APPLICABLE:
-            structural_disposition = (
-                ResultStatus.NOT_APPLICABLE,
-                ReasonCode.NOT_APPLICABLE,
-            )
-        elif applicability in {
-            Applicability.NOT_ASSESSED,
-            Applicability.CHANGED_EXPECTATION,
-        }:
-            structural_disposition = (
-                ResultStatus.UNSUPPORTED_REVISION,
-                ReasonCode.UNSUPPORTED_REVISION,
-            )
-        elif campaign_tool.preparation_error is not None:
-            structural_disposition = (
-                ResultStatus.HARNESS_ERROR,
-                ReasonCode.TOOL_PREPARATION_FAILURE,
-            )
     if structural_disposition is not None:
         if result.observations or (result.status, result.reason) != structural_disposition:
             raise CampaignError(
@@ -880,49 +903,9 @@ def create_preparation_failure_campaign(
     )
     results: list[NormalizedResult] = []
     for loaded in selected:
-        case = loaded.definition
-        if not profile.supports(case.target_phase):
-            results.append(
-                synthetic_result(
-                    loaded,
-                    tool.id,
-                    profile.id,
-                    ResultStatus.UNSUPPORTED_CAPABILITY,
-                    ReasonCode.UNSUPPORTED_PHASE,
-                    (f"{tool.display_name}/{profile.id} cannot reach {case.target_phase.value}."),
-                )
-            )
-            continue
-        applicability = case.revision_applicability[profile.standard_revision]
-        if applicability is Applicability.NOT_APPLICABLE:
-            results.append(
-                synthetic_result(
-                    loaded,
-                    tool.id,
-                    profile.id,
-                    ResultStatus.NOT_APPLICABLE,
-                    ReasonCode.NOT_APPLICABLE,
-                    f"The case is not applicable to {profile.standard_revision.value}.",
-                )
-            )
-            continue
-        if applicability in {
-            Applicability.NOT_ASSESSED,
-            Applicability.CHANGED_EXPECTATION,
-        }:
-            results.append(
-                synthetic_result(
-                    loaded,
-                    tool.id,
-                    profile.id,
-                    ResultStatus.UNSUPPORTED_REVISION,
-                    ReasonCode.UNSUPPORTED_REVISION,
-                    (
-                        "The 2023 source/oracle cannot be applied to "
-                        f"{profile.standard_revision.value}."
-                    ),
-                )
-            )
+        structural = structural_result(loaded, tool, profile)
+        if structural is not None:
+            results.append(structural)
             continue
         results.append(
             synthetic_result(

@@ -36,6 +36,10 @@ class DiagnosticFallback:
     severity: str | None = None
 
 
+class UnsupportedCapability(ValueError):
+    """The profile reaches the target phase but lacks required case mechanics."""
+
+
 class ToolAdapter(ABC):
     """Adapters expose capabilities, build typed plans, and normalize diagnostics."""
 
@@ -48,6 +52,15 @@ class ToolAdapter(ABC):
 
     def __init__(self, fallbacks: Iterable[DiagnosticFallback] = ()) -> None:
         self.fallbacks = tuple(fallbacks)
+
+    def check_case(self, case: LoadedCase) -> None:
+        definition = case.definition
+        if definition.library_map is not None:
+            raise UnsupportedCapability("logical libraries and configurations are unsupported")
+        if definition.covergroups:
+            raise UnsupportedCapability("functional covergroup execution is unsupported")
+        if any(Path(resource).suffix.casefold() == ".sdf" for resource in definition.resources):
+            raise UnsupportedCapability("SDF annotation is unsupported")
 
     @abstractmethod
     def build_plan(

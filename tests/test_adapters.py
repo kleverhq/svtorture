@@ -4,12 +4,12 @@ from dataclasses import replace
 
 import pytest
 
-from svtorture.adapters.base import ToolAdapter
+from svtorture.adapters.base import ToolAdapter, UnsupportedCapability
 from svtorture.adapters.commercial import VcsAdapter
 from svtorture.adapters.open_source import IcarusAdapter, SlangAdapter, VerilatorAdapter
 from svtorture.campaign import validate_plan_for_profile
 from svtorture.catalog import Catalog, LoadedCase
-from svtorture.models import ExecutionStage, Phase, StageKind
+from svtorture.models import ExecutionStage, Phase, StageKind, WorkFile
 
 
 @pytest.mark.parametrize(
@@ -240,6 +240,89 @@ def test_ordered_sources_reach_every_adapter(
     assert [
         argument for argument in plan.stages[0].portable_argv if argument.endswith(".sv")
     ] == portable
+
+
+def test_adapters_own_advanced_case_mechanics(catalog: Catalog) -> None:
+    sdf = catalog.cases["ch32-iopath-rise-annotates-path"]
+    icarus = catalog.tools.tool("icarus")
+    sdf_plan = IcarusAdapter().build_plan(
+        sdf,
+        icarus,
+        icarus.profile("simulator"),
+        image="image",
+        wrapper=None,
+    )
+    assert "-gspecify" in sdf_plan.stages[0].argv
+    with pytest.raises(UnsupportedCapability, match="SDF"):
+        VerilatorAdapter().check_case(sdf)
+
+    covergroup = catalog.cases["ch19-clocking-event-automatic-sample"]
+    verilator = catalog.tools.tool("verilator")
+    coverage_plan = VerilatorAdapter().build_plan(
+        covergroup,
+        verilator,
+        verilator.profile("simulator"),
+        image="image",
+        wrapper=None,
+    )
+    assert "--coverage-user" in coverage_plan.stages[0].argv
+    with pytest.raises(UnsupportedCapability, match="covergroups"):
+        IcarusAdapter().check_case(covergroup)
+
+
+def test_library_map_plans_are_adapter_owned(catalog: Catalog) -> None:
+    case = catalog.cases["ch33-basic-config-selects-design"]
+    verilator = catalog.tools.tool("verilator")
+    verilator_plan = VerilatorAdapter().build_plan(
+        case,
+        verilator,
+        verilator.profile("simulator"),
+        image="image",
+        wrapper=None,
+    )
+    assert "--libmap" in verilator_plan.stages[0].argv
+    assert "/case/lib.map" in verilator_plan.stages[0].argv
+
+    vcs = catalog.tools.tool("vcs")
+    vcs_plan = VcsAdapter().build_plan(
+        case,
+        vcs,
+        vcs.profile("simulator"),
+        image=None,
+        wrapper="/private/wrapper",
+    )
+    assert [stage.id for stage in vcs_plan.stages] == [
+        "compile-work",
+        "compile-libb",
+        "compile-liba",
+        "elaborate",
+        "run",
+    ]
+    assert {item.path for item in vcs_plan.work_files} == {
+        "libraries/work/.keep",
+        "libraries/liba/.keep",
+        "libraries/libb/.keep",
+        "synopsys_sim.setup",
+    }
+    validate_plan_for_profile(
+        vcs_plan,
+        case,
+        vcs,
+        vcs.profile("simulator"),
+        image=None,
+        wrapper="/private/wrapper",
+    )
+
+
+def test_plan_validation_rejects_materialized_path_collisions(catalog: Catalog) -> None:
+    case = catalog.cases["ch32-iopath-rise-annotates-path"]
+    tool = catalog.tools.tool("icarus")
+    profile = tool.profile("simulator")
+    plan = IcarusAdapter().build_plan(case, tool, profile, image="image", wrapper=None)
+    plan = plan.model_copy(update={"work_files": (WorkFile(path="test.sdf", content="x"),)})
+
+    with pytest.raises(ValueError, match="work paths collide"):
+        validate_plan_for_profile(plan, case, tool, profile, image="image", wrapper=None)
 
 
 @pytest.mark.parametrize(

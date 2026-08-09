@@ -17,6 +17,7 @@ from svtorture.models import (
     CorpusMetrics,
     EvidenceLevel,
     EvidenceMode,
+    LogicalLibrary,
     ManifestHashes,
     MetricBreakdown,
     Phase,
@@ -244,6 +245,7 @@ class DashboardIndex(StrictModel):
 
 class DashboardCase(CaseDefinition):
     content_sha256: Sha256
+    logical_libraries: tuple[LogicalLibrary, ...] | None = None
     definition_sha256: Sha256
     source_links: dict[str, SourceUrl]
 
@@ -251,6 +253,17 @@ class DashboardCase(CaseDefinition):
 
     @model_validator(mode="after")
     def complete_source_links(self) -> Self:
+        if (self.library_map is None) != (self.logical_libraries is None):
+            raise ValueError("logical libraries must match the declared library map")
+        if self.logical_libraries is not None:
+            names = [library.name for library in self.logical_libraries]
+            if len(names) != len(set(names)):
+                raise ValueError("logical library names must be unique")
+            mapped = tuple(
+                source for library in self.logical_libraries for source in library.sources
+            )
+            if len(mapped) != len(set(mapped)) or set(mapped) != set(self.sources):
+                raise ValueError("logical libraries must assign every source exactly once")
         if set(self.source_links) != set(self.sources):
             raise ValueError("case source links must match its source files")
         if any(not value for value in self.source_links.values()):

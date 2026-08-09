@@ -123,6 +123,11 @@
           "title": "Content Sha256",
           "type": "string"
         },
+        "covergroups": {
+          "default": false,
+          "title": "Covergroups",
+          "type": "boolean"
+        },
         "defines": {
           "default": [],
           "items": {
@@ -160,6 +165,18 @@
           "title": "Include Dirs",
           "type": "array"
         },
+        "library_map": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Library Map"
+        },
         "limits": {
           "$ref": "#/$defs/ResourceLimits",
           "default": {
@@ -168,6 +185,21 @@
             "pids": 256,
             "timeout_seconds": 30
           }
+        },
+        "logical_libraries": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/LogicalLibrary"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Logical Libraries"
         },
         "oracle": {
           "$ref": "#/$defs/Oracle"
@@ -182,6 +214,14 @@
             "type": "string"
           },
           "title": "Related Requirements",
+          "type": "array"
+        },
+        "resources": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Resources",
           "type": "array"
         },
         "revision_applicability": {
@@ -292,6 +332,29 @@
       ],
       "title": "Expectation",
       "type": "string"
+    },
+    "LogicalLibrary": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "sources": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Sources",
+          "type": "array"
+        }
+      },
+      "required": [
+        "name",
+        "sources"
+      ],
+      "title": "LogicalLibrary",
+      "type": "object"
     },
     "Oracle": {
       "additionalProperties": false,

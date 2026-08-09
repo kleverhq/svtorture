@@ -9,6 +9,7 @@ from svtorture.adapters.base import (
     WORK_ROOT,
     DiagnosticPattern,
     ToolAdapter,
+    UnsupportedCapability,
     define_argv,
     include_argv,
     source_argv,
@@ -61,6 +62,12 @@ class SlangAdapter(ToolAdapter):
     def version_argv(self) -> tuple[str, ...]:
         return ("slang", "--version")
 
+    def check_case(self, case: LoadedCase) -> None:
+        if case.definition.covergroups:
+            raise UnsupportedCapability("Slang has no functional coverage runtime")
+        if any(resource.casefold().endswith(".sdf") for resource in case.definition.resources):
+            raise UnsupportedCapability("Slang has no SDF simulation runtime")
+
     def build_plan(
         self,
         case: LoadedCase,
@@ -71,6 +78,7 @@ class SlangAdapter(ToolAdapter):
         wrapper: str | None,
     ) -> ExecutionPlan:
         del wrapper
+        self.check_case(case)
         base: tuple[str, ...] = ("slang", "--std=1800-2023", "--single-unit")
         portable: tuple[str, ...] = base
         if case.definition.target_phase is Phase.PREPROCESS:
@@ -85,6 +93,9 @@ class SlangAdapter(ToolAdapter):
         else:
             if case.definition.target_phase is Phase.SIMULATE:
                 raise ValueError("Slang does not implement simulation")
+        if case.definition.library_map is not None:
+            base += ("--libmap", f"/case/{case.definition.library_map}")
+            portable += ("--libmap", f"$CASE/{case.definition.library_map}")
         base += include_argv(case, "split") + define_argv(case, "joined")
         portable += include_argv(case, "split", portable=True) + define_argv(case, "joined")
         base += source_argv(case)
@@ -137,6 +148,12 @@ class IcarusAdapter(ToolAdapter):
     def version_argv(self) -> tuple[str, ...]:
         return ("iverilog", "-V")
 
+    def check_case(self, case: LoadedCase) -> None:
+        if case.definition.library_map is not None:
+            raise UnsupportedCapability("Icarus does not support configurations")
+        if case.definition.covergroups:
+            raise UnsupportedCapability("Icarus does not support covergroups")
+
     def build_plan(
         self,
         case: LoadedCase,
@@ -147,6 +164,7 @@ class IcarusAdapter(ToolAdapter):
         wrapper: str | None,
     ) -> ExecutionPlan:
         del wrapper
+        self.check_case(case)
         output = f"{WORK_ROOT}/sim.vvp"
         portable_output = f"{PORTABLE_WORK_ROOT}/sim.vvp"
         preprocessing = case.definition.target_phase is Phase.PREPROCESS
@@ -164,6 +182,9 @@ class IcarusAdapter(ToolAdapter):
         if case.definition.top and not preprocessing:
             compile_argv += ("-s", case.definition.top)
             portable_compile += ("-s", case.definition.top)
+        if any(resource.casefold().endswith(".sdf") for resource in case.definition.resources):
+            compile_argv += ("-gspecify",)
+            portable_compile += ("-gspecify",)
         compile_argv += include_argv(case, "joined") + define_argv(case, "joined")
         portable_compile += include_argv(case, "joined", portable=True) + define_argv(
             case, "joined"
@@ -233,6 +254,10 @@ class VerilatorAdapter(ToolAdapter):
     def version_argv(self) -> tuple[str, ...]:
         return ("verilator", "--version")
 
+    def check_case(self, case: LoadedCase) -> None:
+        if any(resource.casefold().endswith(".sdf") for resource in case.definition.resources):
+            raise UnsupportedCapability("Verilator does not implement SDF annotation")
+
     def build_plan(
         self,
         case: LoadedCase,
@@ -243,6 +268,7 @@ class VerilatorAdapter(ToolAdapter):
         wrapper: str | None,
     ) -> ExecutionPlan:
         del wrapper
+        self.check_case(case)
         base: tuple[str, ...] = (
             "verilator",
             "--language",
@@ -277,6 +303,12 @@ class VerilatorAdapter(ToolAdapter):
         if case.definition.top and not preprocessing:
             base += ("--top-module", case.definition.top)
             portable += ("--top-module", case.definition.top)
+        if case.definition.library_map is not None:
+            base += ("--libmap", f"/case/{case.definition.library_map}")
+            portable += ("--libmap", f"$CASE/{case.definition.library_map}")
+        if case.definition.covergroups:
+            base += ("--coverage-user",)
+            portable += ("--coverage-user",)
         base += include_argv(case, "joined") + define_argv(case, "joined")
         portable += include_argv(case, "joined", portable=True) + define_argv(case, "joined")
         base += source_argv(case)
