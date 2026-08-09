@@ -27,13 +27,7 @@ from svtorture.campaign import (
     run_campaign,
     wrapper_available,
 )
-from svtorture.catalog import (
-    Catalog,
-    CatalogError,
-    load_catalog,
-    mvp_audit,
-    write_json_schema,
-)
+from svtorture.catalog import Catalog, CatalogError, load_catalog, write_json_schema
 from svtorture.evaluator import exit_code_for_results
 from svtorture.images import ImageError, build_image, load_cached_image, recipe_hash
 from svtorture.models import (
@@ -220,7 +214,6 @@ def validate(
     ] = True,
 ) -> None:
     catalog = _catalog()
-    counts = mvp_audit(catalog)
     if schemas:
         with tempfile.TemporaryDirectory(prefix="svtorture-schema-") as temporary:
             generated = Path(temporary)
@@ -242,9 +235,7 @@ def validate(
                         err=True,
                     )
                     raise typer.Exit(2)
-    typer.echo(
-        "validated " + ", ".join(f"{name}={value}" for name, value in sorted(counts.items()))
-    )
+    typer.echo(f"validated cases={len(catalog.cases)}")
 
 
 @app.command("schemas")

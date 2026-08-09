@@ -2,10 +2,27 @@ from __future__ import annotations
 
 import json
 import re
+from dataclasses import replace
 
+import pytest
 from typer.testing import CliRunner
 
+import svtorture.cli as cli
+from svtorture.catalog import Catalog
 from svtorture.cli import app
+
+
+def test_validate_accepts_catalog_beyond_seed_size(
+    catalog: Catalog, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    cases = dict(catalog.cases)
+    cases["extra"] = next(iter(cases.values()))
+    monkeypatch.setattr(cli, "_catalog", lambda: replace(catalog, cases=cases))
+
+    result = CliRunner().invoke(app, ["validate", "--no-schemas"])
+
+    assert result.exit_code == 0, result.output
+    assert result.stdout == "validated cases=13\n"
 
 
 def test_ci_matrix_is_selected_from_generic_public_policy() -> None:
