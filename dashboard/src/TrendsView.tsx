@@ -47,7 +47,7 @@ export const TREND_OPTIONS: TrendDefinition[] = [
     label: "Coverage",
     unit: "percent",
     description:
-      "Requirements shows referenced anchors; Cases shows requirements linked from cases. Both are divided by the selected corpus total.",
+      "Requirements divides referenced anchors by eligible anchors after waiver-only exclusions; Cases divides requirements linked from cases by catalog requirements for the selected parts.",
     referenceDescription: "The horizontal reference marks 100%.",
   },
   {

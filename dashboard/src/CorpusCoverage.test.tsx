@@ -15,7 +15,15 @@ afterEach(cleanup);
 
 describe("CorpusCoverage", () => {
   it("shows compact requirement metrics and an expandable part breakdown", () => {
-    const metric = makeTestDataset().corpus_coverage.requirements;
+    const base = makeTestDataset().corpus_coverage.requirements;
+    const metric = {
+      ...base,
+      breakdown: base.breakdown.map((part, index) => {
+        if (index !== 0) return part;
+        const { waived: _waived, ...legacyPart } = part;
+        return legacyPart;
+      }),
+    };
     render(<CorpusCoverage kind="requirements" metric={metric} />);
 
     const region = screen.getByRole("region", {
@@ -31,7 +39,7 @@ describe("CorpusCoverage", () => {
     expect(formula).toBeTruthy();
     expect(details.contains(formula)).toBe(false);
     expect(formula?.textContent).toContain(
-      "unique referenced anchors / all standard anchors",
+      "unique referenced anchors / eligible standard anchors after waiver-only exclusions",
     );
     expect(
       within(summary).getByText("Standard anchors vs requirements:"),
@@ -42,7 +50,9 @@ describe("CorpusCoverage", () => {
       within(summary)
         .getByText("Coverage")
         .parentElement?.getAttribute("title"),
-    ).toContain("unique referenced anchors / all standard anchors × 100");
+    ).toContain(
+      "unique referenced anchors / eligible standard anchors after waiver-only exclusions × 100",
+    );
     expect(
       within(summary).getByText("Density").parentElement?.getAttribute("title"),
     ).toContain("requirements per covered anchor");
@@ -54,10 +64,16 @@ describe("CorpusCoverage", () => {
         name: /Chapter 13: Tasks and functions/,
       }),
     ).toBeTruthy();
+    expect(within(region).getByRole("columnheader", { name: "Waived" })).toBeTruthy();
+    const legacyChapter = within(region).getByRole("row", {
+      name: /Chapter 5: Lexical conventions/,
+    });
+    expect(within(legacyChapter).getByText("0")).toBeTruthy();
     const annex = within(region).getByRole("row", {
       name: /Annex A: Formal syntax/,
     });
     expect(within(annex).getByText("0 / 224")).toBeTruthy();
+    expect(within(annex).getByText("17")).toBeTruthy();
     expect(within(annex).getByText("—")).toBeTruthy();
   });
 
@@ -85,6 +101,7 @@ describe("CorpusCoverage", () => {
               denominator: item.denominator,
             },
             density: { numerator: 0, denominator: 0 },
+            waived: 0,
           })),
         }}
       />,
@@ -121,6 +138,7 @@ describe("CorpusCoverage", () => {
     ).toContain("cases per covered requirement");
 
     fireEvent.click(summary);
+    expect(within(region).queryByRole("columnheader", { name: "Waived" })).toBeNull();
     const annex = within(region).getByRole("row", {
       name: /Annex A: Formal syntax/,
     });

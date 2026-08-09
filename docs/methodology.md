@@ -75,14 +75,17 @@ corpus manifest, completeness, exact tool commit/tags/version, image digest,
 timestamp, and campaign ID. Corpus changes are visibly marked in Trends.
 
 Each campaign stores four operands used for corpus trends. Requirements Coverage
-is the number of unique cited standard anchors divided by all anchors in the
-committed index. Requirements Density is the number of unique
+is the number of unique cited standard anchors divided by eligible anchors. An
+eligible anchor is any committed anchor except one that is waived and not cited
+by a requirement. A cited anchor therefore remains covered even when it also
+appears in a waiver. Requirements Density is the number of unique
 requirement-to-anchor pairs divided by cited anchors. Cases Coverage is the
 number of requirements linked as primary or related divided by all requirements.
 Cases Density is the number of unique case-to-requirement pairs divided by linked
 requirements.
 
 The campaign stores the same operands for every chapter and annex, including
-parts with zero values. When several parts are selected, the dashboard sums
-their operands before applying the formula. The values describe the full catalog
-and do not depend on tool, profile, suite, or result filters.
+parts with zero values. Requirement breakdowns also store the number of
+waiver-only anchors excluded in each part. When several parts are selected, the
+dashboard sums their operands before applying the formula. The values describe
+the full catalog and do not depend on tool, profile, suite, or result filters.

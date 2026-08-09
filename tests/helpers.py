@@ -238,4 +238,5 @@ def copy_catalog(
         suite_cases=dict(catalog.suite_cases),
         tools=catalog.tools,
         standard_sections=catalog.standard_sections,
+        waived_anchors=catalog.waived_anchors,
     )

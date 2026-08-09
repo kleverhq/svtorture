@@ -83,6 +83,7 @@ export function makeTestDataset(): Dataset {
           title: "Lexical conventions",
           coverage: { numerator: 1, denominator: 300 },
           density: { numerator: 1, denominator: 1 },
+          waived: 7,
         },
         {
           kind: "chapter" as const,
@@ -90,6 +91,7 @@ export function makeTestDataset(): Dataset {
           title: "Tasks and functions",
           coverage: { numerator: 2, denominator: 16439 },
           density: { numerator: 2, denominator: 2 },
+          waived: 11,
         },
         {
           kind: "annex" as const,
@@ -97,6 +99,7 @@ export function makeTestDataset(): Dataset {
           title: "Formal syntax",
           coverage: { numerator: 0, denominator: 224 },
           density: { numerator: 0, denominator: 0 },
+          waived: 17,
         },
       ],
     },
@@ -110,6 +113,7 @@ export function makeTestDataset(): Dataset {
           title: "Lexical conventions",
           coverage: { numerator: 0, denominator: 0 },
           density: { numerator: 0, denominator: 0 },
+          waived: 0,
         },
         {
           kind: "chapter" as const,
@@ -117,6 +121,7 @@ export function makeTestDataset(): Dataset {
           title: "Tasks and functions",
           coverage: { numerator: 1, denominator: 1 },
           density: { numerator: 1, denominator: 1 },
+          waived: 0,
         },
         {
           kind: "annex" as const,
@@ -124,6 +129,7 @@ export function makeTestDataset(): Dataset {
           title: "Formal syntax",
           coverage: { numerator: 0, denominator: 0 },
           density: { numerator: 0, denominator: 0 },
+          waived: 0,
         },
       ],
     },

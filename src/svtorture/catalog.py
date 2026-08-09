@@ -38,6 +38,7 @@ from svtorture.models import (
     ToolIndex,
     ToolManifest,
     ToolRegistry,
+    WaiverPart,
     model_to_jsonable,
     standard_location_sort_key,
 )
@@ -82,6 +83,7 @@ class Catalog:
     suite_cases: dict[str, tuple[str, ...]]
     tools: ToolRegistry
     standard_sections: tuple[StandardSection, ...]
+    waived_anchors: frozenset[str]
 
     @property
     def requirements(self) -> dict[str, Requirement]:
@@ -141,6 +143,7 @@ class Catalog:
                 link for link in requirement_links if anchor_parts[link[1]] == identity
             }
             covered_anchors = {anchor for _, anchor in part_requirement_links}
+            waived_anchors = (set(part.anchors) & self.waived_anchors) - covered_anchors
             requirement_breakdown.append(
                 CorpusPartMetric(
                     id=part.id,
@@ -148,12 +151,13 @@ class Catalog:
                     title=part.title,
                     coverage=CorpusRatio(
                         numerator=len(covered_anchors),
-                        denominator=len(part.anchors),
+                        denominator=len(part.anchors) - len(waived_anchors),
                     ),
                     density=CorpusRatio(
                         numerator=len(part_requirement_links),
                         denominator=len(covered_anchors),
                     ),
+                    waived=len(waived_anchors),
                 )
             )
 
@@ -177,6 +181,7 @@ class Catalog:
                         numerator=len(part_case_links),
                         denominator=len(covered_requirements),
                     ),
+                    waived=0,
                 )
             )
 
@@ -359,6 +364,50 @@ def _load_requirements(root: Path, standard_index: _StandardIndex) -> Requiremen
     return inventory
 
 
+def _load_waivers(root: Path, standard_index: _StandardIndex) -> frozenset[str]:
+    directory = root / "standards" / "waivers"
+
+    def waiver_path(part: _StandardPart) -> Path:
+        if part.kind is StandardPartKind.CHAPTER:
+            return directory / f"chapter-{int(part.id):02d}.json"
+        return directory / f"annex-{part.id}.json"
+
+    expected_paths = {waiver_path(part) for part in standard_index.parts}
+    actual_paths = {*directory.glob("chapter-*.json"), *directory.glob("annex-*.json")}
+    if actual_paths != expected_paths:
+        missing = sorted(path.name for path in expected_paths - actual_paths)
+        extra = sorted(path.name for path in actual_paths - expected_paths)
+        raise CatalogError(f"{directory}: part index mismatch; missing={missing}, extra={extra}")
+
+    anchors_by_part = {part.id: frozenset(part.anchors) for part in standard_index.parts}
+    waiver_ids: set[str] = set()
+    waived_anchors: set[str] = set()
+    for part in standard_index.parts:
+        path = waiver_path(part)
+        try:
+            document = WaiverPart.model_validate(_read_json(path))
+        except ValidationError as error:
+            raise CatalogError(f"{path}: {error}") from error
+        if document.part != part.id:
+            raise CatalogError(
+                f"{path}: declared part {document.part} does not match index {part.id}"
+            )
+        for waiver in document.waivers:
+            if waiver.id in waiver_ids:
+                raise CatalogError(f"{path}: duplicate waiver id {waiver.id}")
+            waiver_ids.add(waiver.id)
+            unknown = [
+                anchor for anchor in waiver.anchors if anchor not in anchors_by_part[part.id]
+            ]
+            if unknown:
+                raise CatalogError(
+                    f"{waiver.id}: anchors absent from declared IEEE 1800-2023 part: "
+                    f"{', '.join(unknown)}"
+                )
+            waived_anchors.update(waiver.anchors)
+    return frozenset(waived_anchors)
+
+
 def _validate_controlled_tags(
     inventory: RequirementInventory,
     cases: Iterable[CaseDefinition],
@@ -521,6 +570,7 @@ def load_catalog(root: Path, *, anchor_index: Path | None = None) -> Catalog:
     anchor_index = (anchor_index or root / "standards" / "ieee-1800-2023-anchors.json").resolve()
     standard_index = _standard_index(anchor_index)
     inventory = _load_requirements(root, standard_index)
+    waived_anchors = _load_waivers(root, standard_index)
     tags = _parse(root / "standards" / "tags.toml", TagRegistry)
     requirements = {item.id: item for item in inventory.requirements}
 
@@ -651,6 +701,7 @@ def load_catalog(root: Path, *, anchor_index: Path | None = None) -> Catalog:
         suite_cases=suite_cases,
         tools=tools,
         standard_sections=standard_index.sections,
+        waived_anchors=waived_anchors,
     )
 
 
@@ -683,7 +734,7 @@ def write_json_schema(root: Path, output: Path) -> None:
         CampaignVerdicts,
         DashboardIndex,
     )
-    from svtorture.models import Campaign, NormalizedResult  # local to avoid cycles
+    from svtorture.models import Campaign, NormalizedResult, WaiverPart  # local to avoid cycles
 
     tag_values = [tag.id for tag in _parse(root / "standards" / "tags.toml", TagRegistry).tags]
     case_schema = CaseDefinition.model_json_schema()
@@ -720,6 +771,7 @@ def write_json_schema(root: Path, output: Path) -> None:
         "tags.schema.json": TagRegistry.model_json_schema(),
         "tool.schema.json": ToolManifest.model_json_schema(),
         "tools.schema.json": ToolIndex.model_json_schema(),
+        "waiver-part.schema.json": WaiverPart.model_json_schema(),
     }
     output.mkdir(parents=True, exist_ok=True)
     for path in output.glob("*.json"):

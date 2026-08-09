@@ -71,6 +71,7 @@ def _parallel_catalog(catalog: Catalog) -> Catalog:
         suite_cases={**catalog.suite_cases, "parallel-test": case_ids},
         tools=catalog.tools,
         standard_sections=catalog.standard_sections,
+        waived_anchors=catalog.waived_anchors,
     )
 
 
@@ -231,6 +232,7 @@ def test_unsupported_revision_is_not_a_normal_result(catalog: Catalog) -> None:
         suite_cases={"revision-test": (definition.id,)},
         tools=catalog.tools,
         standard_sections=catalog.standard_sections,
+        waived_anchors=catalog.waived_anchors,
     )
     campaign = run_campaign(
         custom,
