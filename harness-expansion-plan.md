@@ -24,8 +24,13 @@ This work will not create a general build graph, arbitrary shell stages, per-too
 - [x] (2026-08-09 19:18Z) Resolved VCS VPI through the documented `-P` PLI-table path: use a standard case-local system task call, an adapter-generated table in `/work`, direct C/C++ linking, and `-debug_access+all`; do not use the compile-setup `-load` hook.
 - [x] (2026-08-09 19:25Z) Ran fresh correctness and KISS control reviews; they found two execution-contract blockers and one overbroad validation rule, all resolved below.
 - [x] (2026-08-09 19:31Z) Ran the final narrow correctness and mandatory KISS controls; added materialization collision checks and kept phase provenance non-null by excluding `foreign-build` stages by kind.
-- [ ] Commit the reviewed temporary execution plan.
-- [ ] Milestone 0: port and verify the two ordered multi-file cases without adding compilation-unit metadata.
+- [x] (2026-08-09 19:33Z) Committed the reviewed temporary execution plan as `d2145ce`.
+- [x] (2026-08-09 19:43Z) Milestone 0 implementation complete pending review: ported both ordered multi-file cases with no metadata changes, generalized the existing source-order test across adapters, and removed the obsolete dead MVP-size audit.
+- [x] (2026-08-09 19:43Z) Verified Milestone 0 on Verilator and Icarus; Slang returned the expected phase-limited structural result.
+- [x] (2026-08-09 19:47Z) Restored the ignored local VCS runner configuration from the main worktree, fixed its worktree-path translation locally, and verified both new cases conform under VCS X-2025.06.
+- [x] (2026-08-09 19:48Z) Completed Milestone 0 correctness, standards, and mandatory KISS/YAGNI reviews; corrected both primary requirement mappings and shrank/strengthened the ordered-source assertion.
+- [x] (2026-08-09 19:54Z) Milestone 0 control reviewers reported no substantive findings and the mandatory KISS control returned `Lean already. Ship.`; `just smoke` passed with 134 focused Python tests and 108 dashboard tests.
+- [ ] Commit Milestone 0.
 - [ ] Milestone 1: implement declared resources, logical libraries/configuration root, functional-covergroup activation, and structural capability preflight; port the SDF, configuration, and covergroup cases.
 - [ ] Run focused correctness and architecture reviews plus the mandatory KISS/YAGNI ponytail review for Milestone 1, resolve findings, validate, and commit.
 - [ ] Milestone 2: implement one bounded foreign-source path for DPI C/C++, port both DPI cases, classify foreign build failures, and support every capable current adapter.
@@ -58,6 +63,15 @@ This work will not create a general build graph, arbitrary shell stages, per-too
 
 - Observation: The repository has historically kept metadata schema version 1 while adding strict optional manifest fields; only major evidence-semantics changes introduced a new contract version.
   Evidence: commits `54ad6dd` and `dc05fbf` in `src/svtorture/models.py`. Optional advanced case fields therefore do not justify parallel v1/v2 case models.
+
+- Observation: The main-branch CLI intentionally stopped enforcing the 10–12-case MVP seed, but the now-dead `mvp_audit` function and its direct unit test still rejected the expanded corpus.
+  Evidence: commit `b6d0733` removed the only product caller; after adding cases, `test_seed_catalog_meets_mvp` failed at 14 cases. Deleting the dead function/test completes the main-branch intent instead of inventing a filtered seed subset.
+
+- Observation: Exact current-image campaign evidence confirms the existing ordered-source contract is sufficient for the two new cases.
+  Evidence: campaign `20260809T193930Z-f3e65ee43f08d16e` reported both new cases conforming under Verilator `645b8cdf240c` and Icarus `72998c54151e`; Slang stopped structurally at `unsupported-phase` before plan construction. Campaign `20260809T194658Z-c1de6eef2204f6f5` reported both conforming under VCS X-2025.06.
+
+- Observation: Ignored runner configuration is worktree-local, and the main worktree's VCS runner translated aliases with unrestricted string replacement. Replacing `/work` after `/case` corrupted absolute paths containing `/workspaces/`.
+  Evidence: the first VCS campaign rejected every case with an unopenable source path. A local ignored runner copy now translates only an argument equal to or below the exact `/case` or `/work` prefix; the rerun produced 13 conforming results and one unrelated existing nonconformance.
 
 ## Decision Log
 
@@ -131,7 +145,7 @@ This work will not create a general build graph, arbitrary shell stages, per-too
 
 ## Outcomes & Retrospective
 
-No implementation milestone is complete yet. The branch is current with `main`; baseline `just smoke` passes; adapter, fixture, contract, and VCS documentation probes are complete; and three rounds of correctness plus mandatory KISS review produced a concrete minimal design. This section will be updated after every implementation milestone with commands, results, review findings, and remaining limitations.
+Milestone 0 is implemented, reviewed, control-reviewed, and end-to-end proven, pending its commit checkpoint. Two ordinary runtime cases demonstrate cross-file compilation-unit type/value visibility and macro visibility through the unchanged ordered `sources` contract. Verilator, Icarus, and VCS conform; Slang is correctly phase-limited. Review replaced overbroad primaries with the exact compilation-unit-scope and macro-visibility records and simplified the adapter-order test. The obsolete seed-size audit exposed by corpus growth was deleted rather than bypassed.
 
 ## Context and Orientation
 
@@ -277,3 +291,9 @@ Plan revision note (2026-08-09 19:18Z): Resolved that blocker from bundled VCS S
 Plan revision note (2026-08-09 19:25Z): Incorporated the fresh control reviews. Added the missing minimal generated-work-file contract, defined generic read-only resource materialization for relative runtime access, separated VCS HDL analysis from its harness-owned mixed foreign build, and narrowed validation from all advanced mechanics to only the selected foreign and covergroup requirements.
 
 Plan revision note (2026-08-09 19:31Z): Incorporated the final narrow controls. Added exact/prefix collision validation across all materialized work paths and kept phase provenance non-null, using `foreign-build` kind—not nullable phase—to exclude native prerequisites from conformance evidence.
+
+Plan revision note (2026-08-09 19:43Z): Recorded Milestone 0 implementation, exact open-source campaign evidence, the initially unavailable VCS runner, and removal of the dead MVP-size audit exposed by expanding beyond the former seed corpus.
+
+Plan revision note (2026-08-09 19:48Z): Recorded the restored ignored VCS runner, its local exact-prefix translation fix, successful X-2025.06 campaign, and Milestone 0 review fixes: exact primary mappings plus a shorter complete actual/portable source-order assertion.
+
+Plan revision note (2026-08-09 19:54Z): Recorded clean Milestone 0 correctness, standards, and mandatory KISS control passes plus the post-fix smoke evidence.

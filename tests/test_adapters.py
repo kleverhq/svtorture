@@ -195,32 +195,51 @@ def test_stage_kind_cannot_claim_an_incoherent_phase(catalog: Catalog) -> None:
         )
 
 
-def test_include_define_and_ordered_sources_are_adapter_inputs(catalog: Catalog) -> None:
-    include_case = catalog.cases["ch22-include-trailing-comment"]
-    multi_case = catalog.cases["ch26-multifile-package-import"]
+def test_include_define_inputs_reach_adapter(catalog: Catalog) -> None:
+    case = catalog.cases["ch22-include-trailing-comment"]
     tool = catalog.tools.tool("icarus")
-    adapter = IcarusAdapter()
-    include_plan = adapter.build_plan(
-        include_case,
+    plan = IcarusAdapter().build_plan(
+        case,
         tool,
         tool.profile("elaborator"),
         image="image",
         wrapper=None,
     )
-    argv = include_plan.stages[0].argv
+    argv = plan.stages[0].argv
     assert "-I/case/include" in argv
     assert "-DSVTORTURE_EXTERNAL_BIAS=1" in argv
-    multi_plan = adapter.build_plan(
-        multi_case,
+
+
+@pytest.mark.parametrize(
+    ("tool_id", "adapter_type", "case_id"),
+    (
+        ("slang", SlangAdapter, "ch26-multifile-package-import"),
+        ("icarus", IcarusAdapter, "ch03-unit-prior-type-across-files"),
+        ("verilator", VerilatorAdapter, "ch03-unit-prior-type-across-files"),
+        ("vcs", VcsAdapter, "ch03-unit-prior-type-across-files"),
+    ),
+)
+def test_ordered_sources_reach_every_adapter(
+    catalog: Catalog,
+    tool_id: str,
+    adapter_type: type[ToolAdapter],
+    case_id: str,
+) -> None:
+    case = catalog.cases[case_id]
+    tool = catalog.tools.tool(tool_id)
+    plan = adapter_type().build_plan(
+        case,
         tool,
-        tool.profile("elaborator"),
-        image="image",
-        wrapper=None,
+        tool.profile("simulator" if tool_id != "slang" else "elaborator"),
+        image=("image" if tool_id != "vcs" else None),
+        wrapper=("/private/wrapper" if tool_id == "vcs" else None),
     )
-    source_arguments = [
-        argument for argument in multi_plan.stages[0].argv if argument.startswith("/case/")
-    ]
-    assert source_arguments[-2:] == ["/case/values_pkg.sv", "/case/top.sv"]
+    expected = [f"/case/{source}" for source in case.definition.sources]
+    portable = [f"$CASE/{source}" for source in case.definition.sources]
+    assert [argument for argument in plan.stages[0].argv if argument.endswith(".sv")] == expected
+    assert [
+        argument for argument in plan.stages[0].portable_argv if argument.endswith(".sv")
+    ] == portable
 
 
 @pytest.mark.parametrize(

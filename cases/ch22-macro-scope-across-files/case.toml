@@ -1,0 +1,19 @@
+schema_version = 1
+id = "ch22-macro-scope-across-files"
+title = "A directive remains active across files in one compilation unit"
+description = "A macro defined in the first ordered source remains visible when the second source is processed in the same compilation unit."
+primary_requirement = "SV-2023-22-MACRO-COMPILATION-UNIT-VISIBILITY"
+related_requirements = ["SV-2023-22-DIRECTIVE-COMPILATION-UNIT-SCOPE", "SV-2023-03-COMPILATION-UNIT-USE-MODELS"]
+standard_revision = "1800-2023"
+revision_applicability = { "1800-2012" = "applicable", "1800-2017" = "applicable", "1800-2023" = "applicable" }
+target_phase = "simulate"
+expectation = "accept"
+evidence = "mandatory"
+sources = ["definitions.sv", "top.sv"]
+top = "top"
+defines = []
+include_dirs = []
+runtime_args = []
+tags = ["macro", "preprocessor"]
+limits = { timeout_seconds = 30, output_bytes = 65536, memory_mb = 2048, pids = 256 }
+oracle = { kind = "runtime-pass-marker", marker = "SVTORTURE_PASS:ch22-macro-scope-across-files" }

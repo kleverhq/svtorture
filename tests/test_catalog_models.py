@@ -12,13 +12,7 @@ from svtorture.campaign import (
     load_campaign,
     verify_campaign_against_catalog,
 )
-from svtorture.catalog import (
-    Catalog,
-    CatalogError,
-    load_catalog,
-    mvp_audit,
-    write_json_schema,
-)
+from svtorture.catalog import Catalog, CatalogError, load_catalog, write_json_schema
 from svtorture.evaluator import synthetic_result
 from svtorture.models import (
     Campaign,
@@ -48,15 +42,6 @@ def _copy_catalog_tree(catalog: Catalog, destination: Path) -> None:
             target,
             ignore=shutil.ignore_patterns("ieee-1800-2023-annotate"),
         )
-
-
-def test_seed_catalog_meets_mvp(catalog: Catalog) -> None:
-    assert catalog.inventory.schema_version == 3
-    counts = mvp_audit(catalog)
-    assert counts["cases"] == 12
-    assert counts["chapters"] == 11
-    assert counts["simulation_acceptance"] >= 4
-    assert counts["rejection"] >= 2
 
 
 def test_repository_directories_have_navigation_readmes(catalog: Catalog) -> None:
