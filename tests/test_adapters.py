@@ -13,7 +13,6 @@ from svtorture.catalog import Catalog, LoadedCase
 from svtorture.models import (
     ExecutionPlan,
     ExecutionStage,
-    ForeignInterface,
     Phase,
     StageKind,
     WorkFile,
@@ -461,16 +460,51 @@ def test_plan_validation_requires_foreign_stage_to_match_case(catalog: Catalog) 
         )
 
 
-def test_vcs_rejects_vpi_until_startup_mechanics_exist(catalog: Catalog) -> None:
-    original = catalog.cases["ch35-c-source-import"]
-    case = replace(
-        original,
-        definition=original.definition.model_copy(update={"foreign": ForeignInterface.VPI}),
+@pytest.mark.parametrize(
+    ("tool_id", "adapter"),
+    (
+        ("icarus", IcarusAdapter()),
+        ("verilator", VerilatorAdapter()),
+        ("vcs", VcsAdapter()),
+    ),
+)
+def test_vpi_plans_own_registration_and_loading(
+    catalog: Catalog,
+    tool_id: str,
+    adapter: ToolAdapter,
+) -> None:
+    case = catalog.cases["ch36-vpi-after-delay-callback"]
+    tool = catalog.tools.tool(tool_id)
+    plan = adapter.build_plan(
+        case,
+        tool,
+        tool.profile("simulator"),
+        image="image" if tool_id != "vcs" else None,
+        wrapper="/private/wrapper" if tool_id == "vcs" else None,
     )
-    with pytest.raises(UnsupportedCapability, match="VPI"):
-        VcsAdapter().check_case(case)
-    with pytest.raises(UnsupportedCapability, match="VPI"):
-        IcarusAdapter().check_case(case)
+    assert tuple(stage.kind for stage in plan.stages) == (
+        StageKind.COMPILE,
+        StageKind.FOREIGN_BUILD,
+        StageKind.RUN,
+    )
+    if tool_id != "vcs":
+        generated_source = next(
+            work_file.content
+            for work_file in plan.work_files
+            if work_file.path.endswith("svtorture-vpi-startup.cpp")
+        )
+        assert "abort" not in generated_source
+    if tool_id == "icarus":
+        assert "iverilog-vpi" in plan.work_files[1].content
+        assert "-m" in plan.stages[-1].argv
+    elif tool_id == "verilator":
+        assert "--vpi" in plan.stages[0].argv
+        assert "--public-flat-rw" in plan.stages[0].argv
+        assert plan.work_files[0].path == "svtorture-vpi-startup.cpp"
+    else:
+        assert plan.work_files[0].content == "$svtorture_vpi call=svtorture_calltf\n"
+        assert "-debug_access+all" in plan.work_files[1].content
+        assert "-P svtorture-vpi.tab" in plan.work_files[1].content
 
 
 def test_plan_validation_rejects_materialized_path_collisions(catalog: Catalog) -> None:

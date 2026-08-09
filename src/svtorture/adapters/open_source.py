@@ -25,7 +25,45 @@ from svtorture.models import (
     StageKind,
     ToolDefinition,
     ToolProfile,
+    WorkFile,
 )
+
+ICARUS_VPI_STARTUP_SOURCE = """#include "vpi_user.h"
+
+extern "C" PLI_INT32 svtorture_calltf(PLI_BYTE8*);
+
+static void register_vpi() {
+    s_vpi_systf_data task{};
+    task.type = vpiSysTask;
+    task.tfname = const_cast<PLI_BYTE8*>("$svtorture_vpi");
+    task.calltf = svtorture_calltf;
+    vpi_register_systf(&task);
+}
+
+extern "C" {
+void (*vlog_startup_routines[])() = {register_vpi, nullptr};
+}
+"""
+
+VERILATOR_VPI_STARTUP_SOURCE = """#include "vpi_user.h"
+
+extern "C" PLI_INT32 svtorture_calltf(PLI_BYTE8*);
+
+static PLI_INT32 start_of_simulation(p_cb_data) {
+    return svtorture_calltf(nullptr);
+}
+
+static void register_vpi() {
+    s_cb_data callback{};
+    callback.reason = cbStartOfSimulation;
+    callback.cb_rtn = start_of_simulation;
+    vpi_register_cb(&callback);
+}
+
+extern "C" {
+void (*vlog_startup_routines[])() = {register_vpi, nullptr};
+}
+"""
 
 
 def _stage(
@@ -155,8 +193,6 @@ class IcarusAdapter(ToolAdapter):
     def check_case(self, case: LoadedCase) -> None:
         if case.definition.foreign is ForeignInterface.DPI:
             raise UnsupportedCapability("Icarus does not support DPI")
-        if case.definition.foreign is ForeignInterface.VPI:
-            raise UnsupportedCapability("Icarus VPI support is not enabled")
         if case.definition.library_map is not None:
             raise UnsupportedCapability("Icarus does not support configurations")
         if case.definition.covergroups:
@@ -210,9 +246,59 @@ class IcarusAdapter(ToolAdapter):
                 None if preprocessing else "sim.vvp",
             )
         ]
+        work_files: tuple[WorkFile, ...] = ()
+        if case.definition.foreign is ForeignInterface.VPI:
+            sources = " ".join(f"../{source}" for source in case.definition.foreign_sources)
+            work_files = (
+                WorkFile(
+                    path="svtorture-vpi-build/svtorture-vpi-startup.cpp",
+                    content=ICARUS_VPI_STARTUP_SOURCE,
+                ),
+                WorkFile(
+                    path="svtorture-vpi.mk",
+                    content=(
+                        ".PHONY: svtorture-vpi-build/svtorture.vpi\n"
+                        "svtorture-vpi-build/svtorture.vpi:\n"
+                        "\tcd svtorture-vpi-build && "
+                        f"iverilog-vpi --name=svtorture {sources} "
+                        "svtorture-vpi-startup.cpp\n"
+                    ),
+                ),
+            )
+            stages.append(
+                _stage(
+                    "foreign-build",
+                    StageKind.FOREIGN_BUILD,
+                    Phase.ELABORATE,
+                    (
+                        "make",
+                        "-f",
+                        f"{WORK_ROOT}/svtorture-vpi.mk",
+                        "svtorture-vpi-build/svtorture.vpi",
+                    ),
+                    (
+                        "make",
+                        "-f",
+                        f"{PORTABLE_WORK_ROOT}/svtorture-vpi.mk",
+                        "svtorture-vpi-build/svtorture.vpi",
+                    ),
+                    case,
+                    "svtorture-vpi-build/svtorture.vpi",
+                )
+            )
         if case.definition.target_phase is Phase.SIMULATE:
-            run = ("vvp", output, *case.definition.runtime_args)
-            portable_run = ("vvp", portable_output, *case.definition.runtime_args)
+            plugin = (
+                ("-M", f"{WORK_ROOT}/svtorture-vpi-build", "-m", "svtorture")
+                if case.definition.foreign is ForeignInterface.VPI
+                else ()
+            )
+            portable_plugin = (
+                ("-M", f"{PORTABLE_WORK_ROOT}/svtorture-vpi-build", "-m", "svtorture")
+                if case.definition.foreign is ForeignInterface.VPI
+                else ()
+            )
+            run = ("vvp", *plugin, output, *case.definition.runtime_args)
+            portable_run = ("vvp", *portable_plugin, portable_output, *case.definition.runtime_args)
             stages.append(
                 _stage(
                     "run",
@@ -232,6 +318,7 @@ class IcarusAdapter(ToolAdapter):
             backend=ExecutionBackend.DOCKER,
             image=image,
             stages=tuple(stages),
+            work_files=work_files,
         )
 
 
@@ -263,8 +350,6 @@ class VerilatorAdapter(ToolAdapter):
         return ("verilator", "--version")
 
     def check_case(self, case: LoadedCase) -> None:
-        if case.definition.foreign is ForeignInterface.VPI:
-            raise UnsupportedCapability("Verilator VPI support is not enabled")
         if any(resource.casefold().endswith(".sdf") for resource in case.definition.resources):
             raise UnsupportedCapability("Verilator does not implement SDF annotation")
 
@@ -279,6 +364,7 @@ class VerilatorAdapter(ToolAdapter):
     ) -> ExecutionPlan:
         del wrapper
         self.check_case(case)
+        work_files: tuple[WorkFile, ...] = ()
         base: tuple[str, ...] = (
             "verilator",
             "--language",
@@ -314,6 +400,9 @@ class VerilatorAdapter(ToolAdapter):
         if case.definition.covergroups:
             base += ("--coverage-user",)
             portable += ("--coverage-user",)
+        if case.definition.foreign is ForeignInterface.VPI:
+            base += ("--vpi", "--public-flat-rw", "--bbox-sys")
+            portable += ("--vpi", "--public-flat-rw", "--bbox-sys")
         base += include_argv(case, "joined") + define_argv(case, "joined")
         portable += include_argv(case, "joined", portable=True) + define_argv(case, "joined")
         base += source_argv(case)
@@ -321,6 +410,15 @@ class VerilatorAdapter(ToolAdapter):
         if case.definition.foreign is not None:
             base += ("--exe", *foreign_source_argv(case))
             portable += ("--exe", *foreign_source_argv(case, portable=True))
+            if case.definition.foreign is ForeignInterface.VPI:
+                work_files = (
+                    WorkFile(
+                        path="svtorture-vpi-startup.cpp",
+                        content=VERILATOR_VPI_STARTUP_SOURCE,
+                    ),
+                )
+                base += (f"{WORK_ROOT}/svtorture-vpi-startup.cpp",)
+                portable += (f"{PORTABLE_WORK_ROOT}/svtorture-vpi-startup.cpp",)
         artifact = None
         if case.definition.target_phase is Phase.SIMULATE:
             artifact = (
@@ -386,4 +484,5 @@ class VerilatorAdapter(ToolAdapter):
             backend=ExecutionBackend.DOCKER,
             image=image,
             stages=tuple(stages),
+            work_files=work_files,
         )

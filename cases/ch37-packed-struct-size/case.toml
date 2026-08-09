@@ -1,0 +1,21 @@
+schema_version = 2
+id = "ch37-packed-struct-size"
+title = "VPI reports a packed structure's bit width"
+description = "A case-local VPI system task looks up a packed structure variable by name and checks its vpiSize bit width."
+primary_requirement = "SV-2023-37-VARIABLE-SIZE-BY-KIND"
+related_requirements = ["SV-2023-37-HANDLE-BY-NAME"]
+standard_revision = "1800-2023"
+revision_applicability = { "1800-2012" = "applicable", "1800-2017" = "applicable", "1800-2023" = "applicable" }
+target_phase = "simulate"
+expectation = "accept"
+evidence = "mandatory"
+sources = ["top.sv"]
+resources = ["vpi.cpp"]
+foreign = "vpi"
+top = "top"
+defines = []
+include_dirs = []
+runtime_args = []
+tags = ["packed-struct", "sizing"]
+limits = { timeout_seconds = 30, output_bytes = 65536, memory_mb = 2048, pids = 256 }
+oracle = { kind = "runtime-pass-marker", marker = "SVTORTURE_PASS:ch37-packed-struct-size" }

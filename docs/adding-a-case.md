@@ -60,7 +60,12 @@ directory must be a source, an include-tree member, a resource, the declared
 logical-library membership, and `top` names its configuration root. Set
 `covergroups = true` when runtime functional coverage needs adapter activation.
 For DPI, put C/C++ files in `resources` and set `foreign = "dpi"`; adapters
-provide compilers, standard headers, and linking. Cases still contain no compiler, simulator, coverage, or library flags.
+provide compilers, standard headers, and linking. VPI cases set `foreign = "vpi"`
+and invoke the case-local `$svtorture_vpi` system task once, unconditionally at
+time zero; adapters own loading and object visibility. Icarus registers that
+task, VCS maps it through its PLI table, and Verilator invokes the same calltf at
+simulation start because its current VPI lacks system-task registration. Cases
+still contain no compiler, simulator, coverage, or library flags.
 
 Negative evidence should locate the intended token or construct, not a later
 cascade.

@@ -24,7 +24,7 @@ LABEL org.opencontainers.image.revision="$TOOL_SHA"
 LABEL org.opencontainers.image.licenses="GPL-2.0-or-later"
 RUN apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-       libbz2-1.0 libreadline8 zlib1g \
+       g++ libbz2-1.0 libreadline8 make zlib1g \
     && rm -rf /var/lib/apt/lists/* \
     && useradd --system --uid 10001 --no-create-home svtool
 COPY --from=build /opt/iverilog /opt/iverilog

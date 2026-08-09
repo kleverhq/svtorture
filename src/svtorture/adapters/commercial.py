@@ -56,8 +56,6 @@ class VcsAdapter(ToolAdapter):
         return ("vcs", "-ID")
 
     def check_case(self, case: LoadedCase) -> None:
-        if case.definition.foreign is ForeignInterface.VPI:
-            raise UnsupportedCapability("VCS VPI support is not enabled")
         if case.definition.foreign is not None and case.definition.library_map is not None:
             raise UnsupportedCapability("combined foreign and library modes are unsupported")
 
@@ -175,26 +173,46 @@ class VcsAdapter(ToolAdapter):
                 )
             )
             foreign_sources = case.definition.foreign_sources
-            compiler = (
-                "$(CC)" if all(source.endswith(".c") for source in foreign_sources) else "$(CXX)"
-            )
-            compiler_inputs = " ".join(
-                f"-x {'c' if source.endswith('.c') else 'c++'} {source}"
-                for source in foreign_sources
-            )
-            work_files = (
-                WorkFile(
-                    path="svtorture-foreign.mk",
-                    content=(
-                        ".PHONY: simv\n"
-                        "simv:\n"
-                        f"\t{compiler} -shared -fPIC -I$(VCS_HOME)/include "
-                        f"{compiler_inputs} -o foreign.so\n"
-                        f"\tvcs -full64 -sverilog -top {case.definition.top} "
-                        f"-o simv {case.definition.top} foreign.so\n"
+            if case.definition.foreign is ForeignInterface.VPI:
+                work_files = (
+                    WorkFile(
+                        path="svtorture-vpi.tab",
+                        content="$svtorture_vpi call=svtorture_calltf\n",
                     ),
-                ),
-            )
+                    WorkFile(
+                        path="svtorture-foreign.mk",
+                        content=(
+                            ".PHONY: simv\n"
+                            "simv:\n"
+                            f"\tvcs -full64 -sverilog +vpi -debug_access+all "
+                            f"-P svtorture-vpi.tab -top {case.definition.top} "
+                            f"-o simv {case.definition.top} {' '.join(foreign_sources)}\n"
+                        ),
+                    ),
+                )
+            else:
+                compiler = (
+                    "$(CC)"
+                    if all(source.endswith(".c") for source in foreign_sources)
+                    else "$(CXX)"
+                )
+                compiler_inputs = " ".join(
+                    f"-x {'c' if source.endswith('.c') else 'c++'} {source}"
+                    for source in foreign_sources
+                )
+                work_files = (
+                    WorkFile(
+                        path="svtorture-foreign.mk",
+                        content=(
+                            ".PHONY: simv\n"
+                            "simv:\n"
+                            f"\t{compiler} -shared -fPIC -I$(VCS_HOME)/include "
+                            f"{compiler_inputs} -o foreign.so\n"
+                            f"\tvcs -full64 -sverilog -top {case.definition.top} "
+                            f"-o simv {case.definition.top} foreign.so\n"
+                        ),
+                    ),
+                )
             stages.append(
                 _stage(
                     "foreign-build",
