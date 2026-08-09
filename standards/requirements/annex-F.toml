@@ -682,7 +682,7 @@ anchors = [
 ]
 summary = "For `0 < m < n`, `R1 ##[m:n] R2` is semantically `R1 ##1 1[*m-1:n-1] ##1 R2`."
 related_clauses = []
-tags = ["sequence", "sequence-operator"]
+tags = ["cycle-delay", "sequence", "sequence-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1526,7 +1526,7 @@ anchors = [
 ]
 summary = "Clock transformation distributes through unit-delay sequence concatenation: each operand is transformed under the same clock and remains joined by `##1`."
 related_clauses = []
-tags = ["clock-flow", "sequence", "sequence-operator"]
+tags = ["clock-flow", "cycle-delay", "sequence", "sequence-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1550,7 +1550,7 @@ anchors = [
 ]
 summary = "Clock transformation distributes through fused sequence concatenation, transforming both operands under the same clock and preserving `##0`."
 related_clauses = []
-tags = ["clock-flow", "sequence", "sequence-operator"]
+tags = ["clock-flow", "cycle-delay", "sequence", "sequence-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2418,7 +2418,7 @@ anchors = [
 ]
 summary = "For `m > 1`, `R1 ##m R2` is semantically `R1 ##1 1[*m-1] ##1 R2`."
 related_clauses = []
-tags = ["sequence", "sequence-operator"]
+tags = ["cycle-delay", "sequence", "sequence-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2803,7 +2803,7 @@ anchors = [
 ]
 summary = "A fused concatenation `r1 ##0 r2` does not admit an empty match."
 related_clauses = []
-tags = ["empty-match", "sequence", "sequence-operator"]
+tags = ["cycle-delay", "empty-match", "sequence", "sequence-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -4871,7 +4871,7 @@ anchors = [
 ]
 summary = "For `m < n`, prefix delay `##[m:n] R` is semantically `1[*m:n] ##1 R`."
 related_clauses = []
-tags = ["sequence", "sequence-operator"]
+tags = ["cycle-delay", "sequence", "sequence-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4895,7 +4895,7 @@ anchors = [
 ]
 summary = "Prefix delay `##m R` is semantically `1[*m] ##1 R`."
 related_clauses = []
-tags = ["sequence", "sequence-operator"]
+tags = ["cycle-delay", "sequence", "sequence-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4919,7 +4919,7 @@ anchors = [
 ]
 summary = "Prefix delay shorthand `##[+] R` is semantically `##[1:$] R`."
 related_clauses = []
-tags = ["sequence", "sequence-operator"]
+tags = ["cycle-delay", "sequence", "sequence-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4943,7 +4943,7 @@ anchors = [
 ]
 summary = "Prefix delay shorthand `##[*] R` is semantically `##[0:$] R`."
 related_clauses = []
-tags = ["sequence", "sequence-operator"]
+tags = ["cycle-delay", "sequence", "sequence-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4967,7 +4967,7 @@ anchors = [
 ]
 summary = "Prefix delay `##[m:$] R` is semantically `1[*m:$] ##1 R`."
 related_clauses = []
-tags = ["sequence", "sequence-operator"]
+tags = ["cycle-delay", "sequence", "sequence-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6455,7 +6455,7 @@ anchors = [
 ]
 summary = "Sequence conjunction `R1 and R2` is semantically `((R1 ##1 1[*0:$]) intersect R2) or (R1 intersect (R2 ##1 1[*0:$]))`, allowing either operand to supply the later endpoint."
 related_clauses = []
-tags = ["sequence", "sequence-operator"]
+tags = ["cycle-delay", "sequence", "sequence-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6652,7 +6652,7 @@ anchors = [
 ]
 summary = "`R1 within R2` is semantically `(1[*0:$] ##1 R1 ##1 1[*0:$]) intersect R2`."
 related_clauses = []
-tags = ["sequence", "sequence-operator"]
+tags = ["cycle-delay", "sequence", "sequence-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7140,7 +7140,7 @@ anchors = [
 ]
 summary = "A word tightly satisfies `R1 ##0 R2` exactly when it can be split with one shared letter that ends the tight `R1` match and begins the tight `R2` match."
 related_clauses = []
-tags = ["sequence", "sequence-operator", "tight-satisfaction"]
+tags = ["cycle-delay", "sequence", "sequence-operator", "tight-satisfaction"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7189,7 +7189,7 @@ anchors = [
 ]
 summary = "`R1 ##1 R2` tightly satisfies with locals exactly when the word splits into an `R1` word and `R2` word, with `R1`'s output context passed as `R2`'s input context."
 related_clauses = []
-tags = ["local-variable", "sequence", "sequence-operator", "tight-satisfaction"]
+tags = ["cycle-delay", "local-variable", "sequence", "sequence-operator", "tight-satisfaction"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7267,7 +7267,7 @@ anchors = [
 ]
 summary = "`R1 ##0 R2` tightly satisfies with locals exactly when the operands' tightly satisfying words share one boundary letter and `R1`'s output context is passed as `R2`'s input context."
 related_clauses = []
-tags = ["local-variable", "sequence", "sequence-operator", "tight-satisfaction"]
+tags = ["cycle-delay", "local-variable", "sequence", "sequence-operator", "tight-satisfaction"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7566,7 +7566,7 @@ anchors = [
 ]
 summary = "A word tightly satisfies `R1 ##1 R2` exactly when it can be split into a prefix tightly satisfying `R1` and a suffix tightly satisfying `R2`."
 related_clauses = []
-tags = ["sequence", "sequence-operator", "tight-satisfaction"]
+tags = ["cycle-delay", "sequence", "sequence-operator", "tight-satisfaction"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -7845,7 +7845,7 @@ anchors = [
 ]
 summary = "For `m > 0`, `R1 ##[m:$] R2` is semantically `R1 ##1 1[*m-1:$] ##1 R2`."
 related_clauses = []
-tags = ["sequence", "sequence-operator"]
+tags = ["cycle-delay", "sequence", "sequence-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8292,7 +8292,7 @@ anchors = [
 ]
 summary = "For `n > 0`, `R1 ##[0:n] R2` is semantically the alternative of `R1 ##0 R2` and `R1 ##[1:n] R2`."
 related_clauses = []
-tags = ["sequence", "sequence-operator"]
+tags = ["cycle-delay", "sequence", "sequence-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8316,7 +8316,7 @@ anchors = [
 ]
 summary = "`R1 ##[0:$] R2` is semantically the alternative of `R1 ##0 R2` and `R1 ##[1:$] R2`."
 related_clauses = []
-tags = ["sequence", "sequence-operator"]
+tags = ["cycle-delay", "sequence", "sequence-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -8364,7 +8364,7 @@ anchors = [
 ]
 summary = "`R1 ##[0:0] R2` is semantically the fused concatenation `R1 ##0 R2`."
 related_clauses = []
-tags = ["sequence", "sequence-operator"]
+tags = ["cycle-delay", "sequence", "sequence-operator"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
