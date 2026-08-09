@@ -63,7 +63,7 @@ anchors = [
 ]
 summary = "An automatic bin is named `auto[value]`, where value is a single value or `low:high` range; for enum points, value is the associated enumerated constant name."
 related_clauses = []
-tags = ["coverage-bin"]
+tags = ["coverage-bin", "coverpoint"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -87,7 +87,7 @@ anchors = [
 ]
 summary = "When fewer automatic bins than 2^M possible values are created, values are assigned uniformly in ascending order and any indivisible remainder is included in the last bin."
 related_clauses = []
-tags = ["coverage-bin"]
+tags = ["coverage-bin", "coverpoint"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -111,7 +111,7 @@ anchors = [
 ]
 summary = "Automatically created bins contain only 2-state values; samples containing any X or Z bits are excluded from those bins."
 related_clauses = []
-tags = ["coverage-bin", "four-state", "two-state"]
+tags = ["coverage-bin", "coverpoint", "four-state", "two-state"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -190,7 +190,7 @@ anchors = [
 ]
 summary = "An implementation shall issue a warning when an unsigned-effective-type coverpoint compares against a signed bin expression having a negative value."
 related_clauses = []
-tags = ["conversion", "coverage-bin", "diagnostic"]
+tags = ["conversion", "coverage-bin", "coverpoint", "diagnostic"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -214,7 +214,7 @@ anchors = [
 ]
 summary = "An implementation shall warn when assigning a bin expression to the coverpoint's effective type would produce a value unequal to the original under normal `==` comparison."
 related_clauses = []
-tags = ["conversion", "coverage-bin", "diagnostic"]
+tags = ["conversion", "coverage-bin", "coverpoint", "diagnostic"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -262,7 +262,7 @@ anchors = [
 ]
 summary = "A bin-level trailing `iff` is evaluated at sampling, and when false prevents that bin's count from incrementing even if its value or transition otherwise matches."
 related_clauses = []
-tags = ["conditional", "coverage-bin", "coverage-sampling"]
+tags = ["conditional", "coverage-bin", "coverage-sampling", "coverpoint"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -310,7 +310,7 @@ anchors = [
 ]
 summary = "A bin `with` expression behaves as if evaluated for every candidate range-list value when the covergroup instance is constructed."
 related_clauses = []
-tags = ["coverage-bin", "coverage-expression", "instantiation"]
+tags = ["coverage-bin", "coverage-expression", "coverpoint", "instantiation"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -360,7 +360,7 @@ summary = "By default `with` filtering occurs before values are distributed amon
 related_clauses = [
     "19.7.1",
 ]
-tags = ["coverage-bin", "coverage-expression", "coverage-option"]
+tags = ["coverage-bin", "coverage-expression", "coverage-option", "coverpoint"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -386,7 +386,7 @@ summary = "A bin `with` clause includes only candidate range-list values for whi
 related_clauses = [
     "12.4",
 ]
-tags = ["coverage-bin", "coverage-expression"]
+tags = ["coverage-bin", "coverage-expression", "coverpoint"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -412,7 +412,7 @@ summary = "The expression in a bin `with` clause shall produce a result assignme
 related_clauses = [
     "19.5.1.1",
 ]
-tags = ["conversion", "coverage-bin", "coverage-expression"]
+tags = ["conversion", "coverage-bin", "coverage-expression", "coverpoint"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -436,7 +436,7 @@ anchors = [
 ]
 summary = "Applying a bin `with` expression shall preserve equivalent duplicate bin items and their order."
 related_clauses = []
-tags = ["coverage-bin", "coverage-expression", "source-order"]
+tags = ["coverage-bin", "coverage-expression", "coverpoint", "source-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -460,7 +460,7 @@ anchors = [
 ]
 summary = "An implementation shall warn when a non-wildcard bin expression yields any X or Z bits; this warning condition does not apply to wildcard bins because their X/Z digits expand to 0/1."
 related_clauses = []
-tags = ["coverage-bin", "diagnostic", "four-state"]
+tags = ["coverage-bin", "coverpoint", "diagnostic", "four-state"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -484,7 +484,7 @@ anchors = [
 ]
 summary = "When a cross select expression applies `binsof` to transition bins, selection uses the last value of each transition."
 related_clauses = []
-tags = ["coverage-bin", "coverage-transition"]
+tags = ["coverage-bin", "coverage-transition", "coverpoint"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -1208,7 +1208,7 @@ anchors = [
 ]
 summary = "The `$` primary is legal as an unbounded endpoint in a covergroup value range."
 related_clauses = []
-tags = ["coverage-bin", "covergroup", "grammar", "range"]
+tags = ["coverage-bin", "covergroup", "coverpoint", "grammar", "range"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2759,7 +2759,7 @@ anchors = [
 ]
 summary = "For cumulative point-bin coverage across instances, a bin is covered only when its accumulated hit count reaches the maximum `at_least` value among all accumulated instances."
 related_clauses = []
-tags = ["coverage-bin", "coverage-metric"]
+tags = ["coverage-bin", "coverage-metric", "coverpoint"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2785,7 +2785,7 @@ summary = "A default bin cannot be explicitly ignored."
 related_clauses = [
     "19.5.5",
 ]
-tags = ["coverage-bin"]
+tags = ["coverage-bin", "coverpoint"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2835,7 +2835,7 @@ anchors = [
 ]
 summary = "A `default` bin captures sampled values not in any defined state bin, and `default sequence` captures transitions not in any defined transition bin."
 related_clauses = []
-tags = ["coverage-bin", "coverage-transition"]
+tags = ["coverage-bin", "coverage-transition", "coverpoint"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2859,7 +2859,7 @@ anchors = [
 ]
 summary = "A `default sequence` bin increments only when no other nondefault transition bin increments and no previously started transition-bin match remains pending."
 related_clauses = []
-tags = ["coverage-bin", "coverage-transition"]
+tags = ["coverage-bin", "coverage-transition", "coverpoint"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -2883,7 +2883,7 @@ anchors = [
 ]
 summary = "A `default sequence` transition bin shall not use the multiple-bin `[]` form."
 related_clauses = []
-tags = ["coverage-bin", "coverage-transition", "grammar"]
+tags = ["coverage-bin", "coverage-transition", "coverpoint", "grammar"]
 
 [requirements.revision_applicability.1800-2012]
 status = "same-rule-different-clause"
@@ -3155,7 +3155,7 @@ anchors = [
 ]
 summary = "The boolean `detect_overlap` option defaults false; when true, it requires a warning for overlap between two bins' value-range or transition lists. It is allowed at covergroup and coverpoint scope, not cross scope, and a group value defaults its coverpoints."
 related_clauses = []
-tags = ["coverage-bin", "coverage-option", "diagnostic"]
+tags = ["coverage-bin", "coverage-option", "coverpoint", "diagnostic"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3424,7 +3424,7 @@ anchors = [
 ]
 summary = "When fewer fixed bins than listed values are requested, values are assigned in source order with floor(total values/bin count), at least one per bin, and all remainder in the last bin; duplicate listed values are retained and may occur in multiple bins."
 related_clauses = []
-tags = ["coverage-bin", "source-order"]
+tags = ["coverage-bin", "coverpoint", "source-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3448,7 +3448,7 @@ anchors = [
 ]
 summary = "When a fixed-bin count exceeds the number of listed values, each value is assigned to one bin in order and the remaining bins are empty."
 related_clauses = []
-tags = ["coverage-bin"]
+tags = ["coverage-bin", "coverpoint"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3674,7 +3674,7 @@ anchors = [
 ]
 summary = "Each ignore-bin state value is removed from every ordinary state bin after values have been distributed to specified bins."
 related_clauses = []
-tags = ["coverage-bin"]
+tags = ["coverage-bin", "coverpoint"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3698,7 +3698,7 @@ anchors = [
 ]
 summary = "An ignored transition bin shall not specify an unbounded or simulation-dependent-length sequence."
 related_clauses = []
-tags = ["coverage-bin", "coverage-transition"]
+tags = ["coverage-bin", "coverage-transition", "coverpoint"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3722,7 +3722,7 @@ anchors = [
 ]
 summary = "A covered transition sequence is removed when it cannot match without also matching an ignored transition sequence."
 related_clauses = []
-tags = ["coverage-bin", "coverage-transition"]
+tags = ["coverage-bin", "coverage-transition", "coverpoint"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3746,7 +3746,7 @@ anchors = [
 ]
 summary = "A value listed in a state ignore bin does not suppress a transition merely because that transition includes the value."
 related_clauses = []
-tags = ["coverage-bin", "coverage-transition"]
+tags = ["coverage-bin", "coverage-transition", "coverpoint"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3770,7 +3770,7 @@ anchors = [
 ]
 summary = "Illegal state values are removed from ordinary state bins after distribution, and a covered transition is removed when it cannot match without also matching an illegal transition sequence."
 related_clauses = []
-tags = ["coverage-bin", "coverage-transition"]
+tags = ["coverage-bin", "coverage-transition", "coverpoint"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3794,7 +3794,7 @@ anchors = [
 ]
 summary = "Sampling an illegal value or transition issues a run-time error, even when the same match is also included in another bin."
 related_clauses = []
-tags = ["coverage-bin", "coverage-transition", "diagnostic"]
+tags = ["coverage-bin", "coverage-transition", "coverpoint", "diagnostic"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3842,7 +3842,7 @@ anchors = [
 ]
 summary = "An illegal transition bin shall not specify an unbounded or simulation-dependent-length sequence."
 related_clauses = []
-tags = ["coverage-bin", "coverage-transition", "diagnostic"]
+tags = ["coverage-bin", "coverage-transition", "coverpoint", "diagnostic"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3866,7 +3866,7 @@ anchors = [
 ]
 summary = "A value listed in an illegal state bin does not by itself affect a transition sequence containing that value."
 related_clauses = []
-tags = ["coverage-bin", "coverage-transition"]
+tags = ["coverage-bin", "coverage-transition", "coverpoint"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3891,7 +3891,7 @@ anchors = [
 ]
 summary = "The numeric `at_least` option defaults to 1 and sets the minimum hit count for each bin; a bin with fewer hits is not covered."
 related_clauses = []
-tags = ["coverage-bin", "coverage-option", "covergroup"]
+tags = ["coverage-bin", "coverage-option", "covergroup", "coverpoint"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -3917,7 +3917,7 @@ anchors = [
 ]
 summary = "The numeric `auto_bin_max` option defaults to 64 and limits automatic bins when a coverpoint has no explicit bins; it is allowed at covergroup and coverpoint scope, not cross scope, and a group value defaults its coverpoints."
 related_clauses = []
-tags = ["coverage-bin", "coverage-option", "covergroup"]
+tags = ["coverage-bin", "coverage-option", "covergroup", "coverpoint"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4149,7 +4149,7 @@ anchors = [
 ]
 summary = "An integral range denotes every discrete integral value between inclusive endpoints, while a real range denotes every real value between inclusive endpoints."
 related_clauses = []
-tags = ["coverage-bin", "coverage-real"]
+tags = ["coverage-bin", "coverage-real", "coverpoint"]
 
 [requirements.revision_applicability.1800-2012]
 status = "changed-expectation"
@@ -4199,7 +4199,7 @@ anchors = [
 ]
 summary = "Integral open-array state bins are named `binname[value]`; fixed arrays of N state bins are named `binname[0]` through `binname[N-1]`."
 related_clauses = []
-tags = ["coverage-bin", "grammar"]
+tags = ["coverage-bin", "coverpoint", "grammar"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4248,7 +4248,7 @@ anchors = [
 ]
 summary = "Merged bins overlap across instances exactly by equal generated names: scalar bins share `binname`; open state bins use value, fixed bins use index, automatic bins use original value/range unaffected by ignore/illegal removal except emptying, open transitions use bounded transition, and automatic cross bins use the complete component-bin-name tuple."
 related_clauses = []
-tags = ["coverage-bin", "name-resolution"]
+tags = ["coverage-bin", "coverpoint", "name-resolution"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4275,7 +4275,7 @@ related_clauses = [
     "19.11.1",
     "19.11.2",
 ]
-tags = ["coverage-bin", "coverage-metric"]
+tags = ["coverage-bin", "coverage-metric", "coverpoint"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4347,7 +4347,7 @@ anchors = [
 ]
 summary = "A non-wildcard integral value or transition bin may contain four-state values, and X or Z in the bin matches only X or Z in the same sampled bit positions using case-equality semantics."
 related_clauses = []
-tags = ["coverage-bin", "four-state"]
+tags = ["coverage-bin", "coverpoint", "four-state"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4497,7 +4497,7 @@ anchors = [
 ]
 summary = "If at least one value in a warned bin range is valid, the effective range is the intersection of the specified range and values representable by the coverpoint's effective type."
 related_clauses = []
-tags = ["conversion", "coverage-bin"]
+tags = ["conversion", "coverage-bin", "coverpoint"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -4635,7 +4635,7 @@ summary = "A real bin value using `+/- tolerance` denotes the inclusive absolute
 related_clauses = [
     "11.4.13",
 ]
-tags = ["coverage-bin", "coverage-real"]
+tags = ["coverage-bin", "coverage-real", "coverpoint"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -4659,7 +4659,7 @@ anchors = [
 ]
 summary = "A `with` expression is not allowed for bins of a real coverpoint type."
 related_clauses = []
-tags = ["coverage-bin", "coverage-expression", "coverage-real", "diagnostic"]
+tags = ["coverage-bin", "coverage-expression", "coverage-real", "coverpoint", "diagnostic"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -4707,7 +4707,7 @@ anchors = [
 ]
 summary = "A default bin for a real expression shall be a single bin; open-array `[]` and fixed-array `[N]` forms are illegal."
 related_clauses = []
-tags = ["coverage-bin", "coverage-real"]
+tags = ["coverage-bin", "coverage-real", "coverpoint"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -4731,7 +4731,7 @@ anchors = [
 ]
 summary = "Real fixed bins are indexed 0 through N-1; range intervals and individual values are distributed in source order using floor(item count/N), at least one item per bin, with remainder in the last bin and duplicate items retained."
 related_clauses = []
-tags = ["coverage-bin", "coverage-real", "source-order"]
+tags = ["coverage-bin", "coverage-real", "coverpoint", "source-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -4755,7 +4755,7 @@ anchors = [
 ]
 summary = "When a real fixed-bin count exceeds the number of range-interval and individual-value items, the excess bins are empty."
 related_clauses = []
-tags = ["coverage-bin", "coverage-real"]
+tags = ["coverage-bin", "coverage-real", "coverpoint"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -4779,7 +4779,7 @@ anchors = [
 ]
 summary = "When multiple ranges in one real open bin array produce identical intervals, those identical intervals are merged into one bin."
 related_clauses = []
-tags = ["coverage-bin", "coverage-real"]
+tags = ["coverage-bin", "coverage-real", "coverpoint"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -4803,7 +4803,7 @@ anchors = [
 ]
 summary = "For an open real bin array, intervals consecutively span each range from its minimum to maximum, each bin covers values in its interval, and a range no wider than the interval size produces one bin."
 related_clauses = []
-tags = ["coverage-bin", "coverage-real"]
+tags = ["coverage-bin", "coverage-real", "coverpoint"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -4827,7 +4827,7 @@ anchors = [
 ]
 summary = "A real open-array interval bin name encodes its low and high endpoints with brackets for inclusive endpoints and `)` for an exclusive high endpoint; an individual-value bin is named `binname[value]`."
 related_clauses = []
-tags = ["coverage-bin", "coverage-real"]
+tags = ["coverage-bin", "coverage-real", "coverpoint"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -4853,7 +4853,7 @@ summary = "A real range wider than `type_option.real_interval` is partitioned by
 related_clauses = [
     "19.7.1",
 ]
-tags = ["coverage-bin", "coverage-option", "coverage-real"]
+tags = ["coverage-bin", "coverage-option", "coverage-real", "coverpoint"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -4880,7 +4880,7 @@ summary = "A real bin value using `+%- tolerance` denotes an inclusive relative 
 related_clauses = [
     "11.4.13",
 ]
-tags = ["coverage-bin", "coverage-real"]
+tags = ["coverage-bin", "coverage-real", "coverpoint"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -4904,7 +4904,7 @@ anchors = [
 ]
 summary = "The `$` primary is legal in a real covergroup value range, but a real range containing `$` is one indivisible bin item and is not partitioned into intervals."
 related_clauses = []
-tags = ["coverage-bin", "coverage-real"]
+tags = ["coverage-bin", "coverage-real", "coverpoint"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -4931,7 +4931,7 @@ summary = "For real coverpoint ranges, a bin name without brackets creates one b
 related_clauses = [
     "11.4.13",
 ]
-tags = ["coverage-bin", "coverage-real", "grammar"]
+tags = ["coverage-bin", "coverage-real", "coverpoint", "grammar"]
 
 [requirements.revision_applicability.1800-2012]
 status = "not-applicable"
@@ -5322,7 +5322,7 @@ anchors = [
 ]
 summary = "A transition bin's count increments when the sampled transition sequence completely matches any one ordered sequence in its transition list."
 related_clauses = []
-tags = ["coverage-bin", "coverage-transition"]
+tags = ["coverage-bin", "coverage-transition", "coverpoint"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5349,7 +5349,7 @@ summary = "Transition-bin declarations shall conform to the transition-bin gramm
 related_clauses = [
     "16.9",
 ]
-tags = ["coverage-bin", "coverage-transition", "grammar"]
+tags = ["coverage-bin", "coverage-transition", "coverpoint", "grammar"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5374,7 +5374,7 @@ anchors = [
 ]
 summary = "A particular transition bin increments at most once on any one coverpoint sample, even if multiple matches complete on that sample."
 related_clauses = []
-tags = ["coverage-bin", "coverage-sampling", "coverage-transition"]
+tags = ["coverage-bin", "coverage-sampling", "coverage-transition", "coverpoint"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5501,7 +5501,7 @@ anchors = [
 ]
 summary = "For a transition open-bin array declared `binname[]`, each bounded transition receives a bin named `binname[transition]`."
 related_clauses = []
-tags = ["coverage-bin", "coverage-transition"]
+tags = ["coverage-bin", "coverage-transition", "coverpoint"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -5525,7 +5525,7 @@ anchors = [
 ]
 summary = "A transition bin increments for every complete sequence match, including matches that overlap in sampled-value history."
 related_clauses = []
-tags = ["coverage-bin", "coverage-transition"]
+tags = ["coverage-bin", "coverage-transition", "coverpoint"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6119,7 +6119,7 @@ summary = "For an integral coverpoint range list, a bin name without brackets cr
 related_clauses = [
     "11.4.13",
 ]
-tags = ["coverage-bin", "grammar"]
+tags = ["coverage-bin", "coverpoint", "grammar"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6144,7 +6144,7 @@ anchors = [
 ]
 summary = "A bin range shall not participate if either endpoint contains X/Z or every value in the range would trigger a value-resolution warning."
 related_clauses = []
-tags = ["coverage-bin", "diagnostic"]
+tags = ["coverage-bin", "coverpoint", "diagnostic"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6169,7 +6169,7 @@ anchors = [
 ]
 summary = "When a singleton value in a bin range list or set expression triggers a value-resolution warning, that singleton shall not participate in the bin's values."
 related_clauses = []
-tags = ["coverage-bin", "diagnostic"]
+tags = ["coverage-bin", "coverpoint", "diagnostic"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6193,7 +6193,7 @@ anchors = [
 ]
 summary = "For value resolution in wildcard bins, X and Z digits in a bin expression are expanded to all corresponding 0/1 values before type-resolution rules are applied."
 related_clauses = []
-tags = ["conversion", "coverage-bin", "four-state"]
+tags = ["conversion", "coverage-bin", "coverpoint", "four-state"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6217,7 +6217,7 @@ anchors = [
 ]
 summary = "In a wildcard bin definition, each X, Z, or `?` digit is a wildcard matching either 0 or 1."
 related_clauses = []
-tags = ["coverage-bin", "four-state"]
+tags = ["coverage-bin", "coverpoint", "four-state"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -6241,7 +6241,7 @@ anchors = [
 ]
 summary = "Wildcard bins expand wildcard digits only over 2-state values; sampled values containing X or Z are excluded from wildcard-bin matches."
 related_clauses = []
-tags = ["coverage-bin", "four-state", "two-state"]
+tags = ["coverage-bin", "coverpoint", "four-state", "two-state"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
