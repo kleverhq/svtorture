@@ -1,0 +1,21 @@
+schema_version = 2
+id = "ch35-c-source-import"
+title = "A DPI-C import links to a case-local C definition"
+description = "A SystemVerilog imported function calls a separately compiled C definition through DPI-C linkage."
+primary_requirement = "SV-2023-35-DPI-C-PROTOCOL-LINKAGE-SUPPORT"
+related_requirements = ["SV-2023-35-DPI-GLOBAL-LINKAGE-SYMBOLS", "SV-2023-35-IMPORTED-FUNCTION-CALL-SYNTAX", "SV-2023-H-DPI-MAP-INT-INT"]
+standard_revision = "1800-2023"
+revision_applicability = { "1800-2012" = "applicable", "1800-2017" = "applicable", "1800-2023" = "applicable" }
+target_phase = "simulate"
+expectation = "accept"
+evidence = "mandatory"
+sources = ["top.sv"]
+resources = ["dpi.c"]
+foreign = "dpi"
+top = "top"
+defines = []
+include_dirs = []
+runtime_args = []
+tags = ["subroutine"]
+limits = { timeout_seconds = 30, output_bytes = 65536, memory_mb = 2048, pids = 256 }
+oracle = { kind = "runtime-pass-marker", marker = "SVTORTURE_PASS:ch35-c-source-import" }

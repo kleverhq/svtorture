@@ -9,6 +9,7 @@ from svtorture.adapters.base import (
     WORK_ROOT,
     DiagnosticPattern,
     ToolAdapter,
+    UnsupportedCapability,
     define_argv,
     include_argv,
     source_argv,
@@ -18,6 +19,7 @@ from svtorture.catalog import LoadedCase
 from svtorture.models import (
     ExecutionBackend,
     ExecutionPlan,
+    ForeignInterface,
     Phase,
     StageKind,
     ToolDefinition,
@@ -54,7 +56,10 @@ class VcsAdapter(ToolAdapter):
         return ("vcs", "-ID")
 
     def check_case(self, case: LoadedCase) -> None:
-        del case
+        if case.definition.foreign is ForeignInterface.VPI:
+            raise UnsupportedCapability("VCS VPI support is not enabled")
+        if case.definition.foreign is not None and case.definition.library_map is not None:
+            raise UnsupportedCapability("combined foreign and library modes are unsupported")
 
     def build_plan(
         self,
@@ -141,6 +146,76 @@ class VcsAdapter(ToolAdapter):
                     "simv",
                 )
             )
+        elif case.definition.foreign is not None:
+            assert case.definition.top is not None
+            analysis_argv = (
+                "vlogan",
+                "-full64",
+                "-sverilog",
+                *include_argv(case, "plus"),
+                *define_argv(case, "plus"),
+                *source_argv(case),
+            )
+            portable_analysis = (
+                "vlogan",
+                "-full64",
+                "-sverilog",
+                *include_argv(case, "plus", portable=True),
+                *define_argv(case, "plus"),
+                *source_argv(case, portable=True),
+            )
+            stages.append(
+                _stage(
+                    "compile",
+                    StageKind.COMPILE,
+                    Phase.PARSE,
+                    analysis_argv,
+                    portable_analysis,
+                    case,
+                )
+            )
+            foreign_sources = case.definition.foreign_sources
+            compiler = (
+                "$(CC)" if all(source.endswith(".c") for source in foreign_sources) else "$(CXX)"
+            )
+            compiler_inputs = " ".join(
+                f"-x {'c' if source.endswith('.c') else 'c++'} {source}"
+                for source in foreign_sources
+            )
+            work_files = (
+                WorkFile(
+                    path="svtorture-foreign.mk",
+                    content=(
+                        ".PHONY: simv\n"
+                        "simv:\n"
+                        f"\t{compiler} -shared -fPIC -I$(VCS_HOME)/include "
+                        f"{compiler_inputs} -o foreign.so\n"
+                        f"\tvcs -full64 -sverilog -top {case.definition.top} "
+                        f"-o simv {case.definition.top} foreign.so\n"
+                    ),
+                ),
+            )
+            stages.append(
+                _stage(
+                    "foreign-build",
+                    StageKind.FOREIGN_BUILD,
+                    Phase.ELABORATE,
+                    (
+                        "make",
+                        "-f",
+                        f"{WORK_ROOT}/svtorture-foreign.mk",
+                        "simv",
+                    ),
+                    (
+                        "make",
+                        "-f",
+                        f"{PORTABLE_WORK_ROOT}/svtorture-foreign.mk",
+                        "simv",
+                    ),
+                    case,
+                    "simv",
+                )
+            )
         else:
             compile_argv: tuple[str, ...] = (
                 "vcs",
@@ -185,7 +260,7 @@ class VcsAdapter(ToolAdapter):
                 )
             )
         return ExecutionPlan(
-            schema_version=2,
+            schema_version=3,
             case_id=case.definition.id,
             tool_id=tool.id,
             profile_id=profile.id,

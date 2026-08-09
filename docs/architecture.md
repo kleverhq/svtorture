@@ -30,7 +30,7 @@ tools/tools.toml ──► tools/*/tool.toml ──► adapter ──► typed E
                          immutable Campaign JSON
                                       │
                                       ▼ derived projection
-                    version-6 portable campaign bundle
+                    version-7 portable campaign bundle
                                       │
                                       ▼ lazy static resources
                            React evidence dashboard
@@ -58,7 +58,9 @@ cumulative.
 
 When either excerpt is truncated, the evaluator returns the inconclusive reason
 `output-truncated`. It does not evaluate partial text that might omit a second
-pass marker or an internal-error diagnostic.
+pass marker or an internal-error diagnostic. A `foreign-build` stage is a typed
+prerequisite rather than standards evidence; missing toolchains and failed
+C/C++ compilation or linking remain harness-owned.
 
 Open-source tools always run in Docker. Runtime containers have no network,
 use a read-only root filesystem, drop capabilities, and enforce PID and memory
@@ -66,7 +68,7 @@ bounds. Case input is read-only, while each case receives a writable work mount.
 Full logs and generated artifacts stay under `.svtorture/work`; campaigns keep
 only sanitized, bounded evidence.
 
-Commercial execution uses the same version-2 `ExecutionPlan`,
+Commercial execution uses the same version-3 `ExecutionPlan`,
 `StageObservation`, and `NormalizedResult` contracts. A plan records its target
 phase. Each stage and observation records `attempted_through_phase`, and the
 result records `direct`, `cumulative`, or `not-observed` evidence. An ignored
@@ -103,8 +105,8 @@ repository/run/SHA, checks tool definitions against the committed registry,
 requires pullable GHCR digests, and scans the compact bundle projection for
 private paths and common credential forms.
 
-The canonical schema-version-5 `Campaign` remains the complete local evidence
-record. `bundle.py` derives strict schema-version-6 manifest, catalog, compact
+The canonical schema-version-6 `Campaign` remains the complete local evidence
+record. `bundle.py` derives strict schema-version-7 manifest, catalog, compact
 verdict, and case-centric evidence resources without changing evaluator or
 metric semantics. Local assembly writes `index.json` and `trends.json` for any
 number of validated bundle directories or ZIPs. The browser loads those small

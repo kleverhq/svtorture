@@ -3,13 +3,21 @@ from __future__ import annotations
 from dataclasses import replace
 
 import pytest
+from pydantic import ValidationError
 
 from svtorture.adapters.base import ToolAdapter, UnsupportedCapability
 from svtorture.adapters.commercial import VcsAdapter
 from svtorture.adapters.open_source import IcarusAdapter, SlangAdapter, VerilatorAdapter
 from svtorture.campaign import validate_plan_for_profile
 from svtorture.catalog import Catalog, LoadedCase
-from svtorture.models import ExecutionStage, Phase, StageKind, WorkFile
+from svtorture.models import (
+    ExecutionPlan,
+    ExecutionStage,
+    ForeignInterface,
+    Phase,
+    StageKind,
+    WorkFile,
+)
 
 
 @pytest.mark.parametrize(
@@ -183,7 +191,7 @@ def test_plan_backend_identity_must_match_prepared_tool(catalog: Catalog) -> Non
 
 def test_stage_kind_cannot_claim_an_incoherent_phase(catalog: Catalog) -> None:
     case = catalog.cases["ch04-nba-rhs-captured"]
-    with pytest.raises(ValueError, match="compile stages cannot claim simulation"):
+    with pytest.raises(ValueError, match="build stages cannot claim simulation"):
         ExecutionStage(
             id="compile",
             kind=StageKind.COMPILE,
@@ -312,6 +320,157 @@ def test_library_map_plans_are_adapter_owned(catalog: Catalog) -> None:
         image=None,
         wrapper="/private/wrapper",
     )
+
+
+@pytest.mark.parametrize(
+    ("tool_id", "adapter", "image", "wrapper", "expected"),
+    (
+        (
+            "verilator",
+            VerilatorAdapter(),
+            "image",
+            None,
+            (StageKind.COMPILE, StageKind.FOREIGN_BUILD, StageKind.RUN),
+        ),
+        (
+            "vcs",
+            VcsAdapter(),
+            None,
+            "/private/wrapper",
+            (StageKind.COMPILE, StageKind.FOREIGN_BUILD, StageKind.RUN),
+        ),
+    ),
+)
+@pytest.mark.parametrize(
+    "case_id",
+    ("ch35-c-source-import", "ch35-open-unpacked-array-runtime"),
+)
+def test_dpi_plans_separate_foreign_builds(
+    catalog: Catalog,
+    tool_id: str,
+    adapter: ToolAdapter,
+    image: str | None,
+    wrapper: str | None,
+    expected: tuple[StageKind, ...],
+    case_id: str,
+) -> None:
+    case = catalog.cases[case_id]
+    tool = catalog.tools.tool(tool_id)
+    profile = tool.profile("simulator")
+    plan = adapter.build_plan(
+        case,
+        tool,
+        profile,
+        image=image,
+        wrapper=wrapper,
+    )
+    assert tuple(stage.kind for stage in plan.stages) == expected
+    validate_plan_for_profile(
+        plan,
+        case,
+        tool,
+        profile,
+        image=image,
+        wrapper=wrapper,
+    )
+    if tool_id == "verilator":
+        assert "--exe" in plan.stages[0].argv
+    else:
+        assert "\tvcs " in plan.work_files[0].content
+        assert plan.stages[1].expected_artifact == "simv"
+
+    with pytest.raises(UnsupportedCapability, match="DPI"):
+        IcarusAdapter().check_case(case)
+
+
+def test_vcs_compiles_mixed_foreign_sources_with_their_languages(catalog: Catalog) -> None:
+    original = catalog.cases["ch35-c-source-import"]
+    case = replace(
+        original,
+        definition=original.definition.model_copy(update={"resources": ("native.c", "native.cpp")}),
+    )
+    tool = catalog.tools.tool("vcs")
+    plan = VcsAdapter().build_plan(
+        case,
+        tool,
+        tool.profile("simulator"),
+        image=None,
+        wrapper="/private/wrapper",
+    )
+    makefile = plan.work_files[0].content
+    assert "\t$(CXX) -shared -fPIC" in makefile
+    assert "-x c native.c" in makefile
+    assert "-x c++ native.cpp" in makefile
+    assert ".o" not in makefile
+
+
+def test_plan_validation_requires_foreign_stage_to_match_case(catalog: Catalog) -> None:
+    tool = catalog.tools.tool("verilator")
+    profile = tool.profile("simulator")
+    foreign_case = catalog.cases["ch35-c-source-import"]
+    foreign_plan = VerilatorAdapter().build_plan(
+        foreign_case,
+        tool,
+        profile,
+        image="image",
+        wrapper=None,
+    )
+    legacy_value = foreign_plan.model_dump(mode="json")
+    legacy_value["schema_version"] = 2
+    with pytest.raises(ValidationError, match="execution schema version 3"):
+        ExecutionPlan.model_validate(legacy_value)
+
+    without_build = foreign_plan.model_copy(
+        update={"stages": (foreign_plan.stages[0], foreign_plan.stages[-1])}
+    )
+    with pytest.raises(ValueError, match="does not match the case contract"):
+        validate_plan_for_profile(
+            without_build,
+            foreign_case,
+            tool,
+            profile,
+            image="image",
+            wrapper=None,
+        )
+
+    ordinary_case = catalog.cases["ch04-nba-rhs-captured"]
+    ordinary_plan = VerilatorAdapter().build_plan(
+        ordinary_case,
+        tool,
+        profile,
+        image="image",
+        wrapper=None,
+    )
+    with_build = ordinary_plan.model_copy(
+        update={
+            "stages": (
+                ordinary_plan.stages[0],
+                foreign_plan.stages[1],
+                ordinary_plan.stages[-1],
+            )
+        }
+    )
+    with pytest.raises(ValueError, match="does not match the case contract"):
+        validate_plan_for_profile(
+            with_build,
+            ordinary_case,
+            tool,
+            profile,
+            image="image",
+            wrapper=None,
+        )
+
+
+def test_vcs_rejects_vpi_until_startup_mechanics_exist(catalog: Catalog) -> None:
+    original = catalog.cases["ch35-c-source-import"]
+    case = replace(
+        original,
+        definition=original.definition.model_copy(update={"foreign": ForeignInterface.VPI}),
+    )
+    with pytest.raises(UnsupportedCapability, match="VPI"):
+        VcsAdapter().check_case(case)
+    with pytest.raises(UnsupportedCapability, match="VPI"):
+        IcarusAdapter().check_case(case)
 
 
 def test_plan_validation_rejects_materialized_path_collisions(catalog: Catalog) -> None:

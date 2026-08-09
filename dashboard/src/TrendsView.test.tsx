@@ -149,10 +149,10 @@ function secondCampaign(dataset: Dataset): Campaign {
 
 function historyFromDataset(dataset: Dataset): CampaignTrends {
   return {
-    schema_version: 6,
+    schema_version: 7,
     kind: "campaign-trends",
     campaigns: dataset.campaigns.map((campaign) => ({
-      schema_version: 6,
+      schema_version: 7,
       kind: "campaign-summary",
       id: campaign.id,
       started_at: campaign.started_at,

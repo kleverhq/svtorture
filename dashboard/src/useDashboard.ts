@@ -119,8 +119,8 @@ function requireHeader(
   kind: string,
 ): Record<string, unknown> {
   const item = requireRecord(value, kind);
-  if (item.schema_version !== 6 || item.kind !== kind) {
-    throw new Error(`expected schema version 6 ${kind}`);
+  if ((item.schema_version !== 6 && item.schema_version !== 7) || item.kind !== kind) {
+    throw new Error(`expected schema version 6 or 7 ${kind}`);
   }
   return item;
 }
@@ -212,7 +212,21 @@ function validateEvidence(value: unknown): asserts value is CampaignEvidence {
   const item = requireHeader(value, "campaign-evidence");
   requireString(item.campaign_id, "campaign-evidence.campaign_id");
   requireArray(item.case_ids, "campaign-evidence.case_ids");
-  requireArray(item.results, "campaign-evidence.results");
+  for (const value of requireArray(item.results, "campaign-evidence.results")) {
+    const result = requireRecord(value, "campaign evidence result");
+    const observations = requireArray(result.observations, "campaign evidence observations");
+    if (
+      result.schema_version === 2 &&
+      (result.reason === "toolchain-unavailable" ||
+        result.reason === "foreign-build-failure" ||
+        observations.some(
+          (observation) =>
+            requireRecord(observation, "campaign evidence observation").kind === "foreign-build",
+        ))
+    ) {
+      throw new Error("foreign build evidence requires result schema version 3");
+    }
+  }
 }
 
 async function sha256(bytes: ArrayBuffer): Promise<string> {

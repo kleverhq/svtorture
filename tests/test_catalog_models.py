@@ -145,6 +145,28 @@ def test_unknown_metadata_is_rejected(catalog: Catalog) -> None:
         CaseDefinition.model_validate(value)
 
 
+def test_foreign_interface_requires_a_runtime_c_or_cpp_resource(catalog: Catalog) -> None:
+    value = catalog.cases["ch04-nba-rhs-captured"].definition.model_dump(mode="json")
+    value["schema_version"] = 2
+    value["foreign"] = "dpi"
+    value["resources"] = ["payload.txt"]
+    with pytest.raises(ValidationError, match=r"declared C or C\+\+ resource"):
+        CaseDefinition.model_validate(value)
+
+
+def test_foreign_case_inputs_require_schema_version_two(catalog: Catalog) -> None:
+    value = catalog.cases["ch35-c-source-import"].definition.model_dump(mode="json")
+    value["schema_version"] = 1
+    with pytest.raises(ValidationError, match="foreign case inputs require schema_version 2"):
+        CaseDefinition.model_validate(value)
+
+
+def test_schema_version_one_advanced_cases_remain_readable(catalog: Catalog) -> None:
+    value = catalog.cases["ch19-clocking-event-automatic-sample"].definition.model_dump(mode="json")
+    value["schema_version"] = 1
+    assert CaseDefinition.model_validate(value).schema_version == 1
+
+
 def test_boolean_schema_version_is_rejected(catalog: Catalog) -> None:
     value = catalog.cases["ch04-nba-rhs-captured"].definition.model_dump(mode="json")
     value["schema_version"] = True

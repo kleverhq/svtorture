@@ -20,6 +20,7 @@ from svtorture.models import (
     ExecutionStage,
     RawOutcome,
     RunnerConfig,
+    StageKind,
     StageObservation,
 )
 from svtorture.process import ProcessResult, StreamCapture, run_process
@@ -180,10 +181,19 @@ def _wrapper_argv(
     return actual, portable, environment
 
 
-def _classify_container(result: ProcessResult) -> ProcessResult:
+def _classify_container(result: ProcessResult, stage: ExecutionStage) -> ProcessResult:
     if result.outcome is not RawOutcome.NORMAL_EXIT:
         return result
     assert result.exit_code is not None
+    if result.exit_code in {126, 127} and stage.kind is StageKind.FOREIGN_BUILD:
+        return ProcessResult(
+            outcome=RawOutcome.LAUNCH_FAILURE,
+            exit_code=None,
+            signal=None,
+            duration_seconds=result.duration_seconds,
+            stdout=result.stdout,
+            stderr=result.stderr,
+        )
     if result.exit_code in {125, 126, 127}:
         return ProcessResult(
             outcome=RawOutcome.CONTAINER_FAILURE,
@@ -205,7 +215,7 @@ def _classify_container(result: ProcessResult) -> ProcessResult:
     return result
 
 
-def _classify_wrapper(result: ProcessResult) -> ProcessResult:
+def _classify_wrapper(result: ProcessResult, stage: ExecutionStage) -> ProcessResult:
     """Map the wrapper protocol's EX_UNAVAILABLE status into a typed outcome."""
 
     if result.outcome is RawOutcome.NORMAL_EXIT and result.exit_code == 69:
@@ -219,7 +229,7 @@ def _classify_wrapper(result: ProcessResult) -> ProcessResult:
         )
     # Licensed wrappers normally front a private Docker runtime; preserve the
     # same reserved launch and signal ownership rules when they propagate it.
-    return _classify_container(result)
+    return _classify_container(result, stage)
 
 
 def _observation(
@@ -314,9 +324,9 @@ def execute_plan(
             cancel_event=cancel_event,
         )
         if plan.backend is ExecutionBackend.DOCKER:
-            process_result = _classify_container(process_result)
+            process_result = _classify_container(process_result, stage)
         else:
-            process_result = _classify_wrapper(process_result)
+            process_result = _classify_wrapper(process_result, stage)
         _verify_resources(work_dir, resource_hashes)
         observation = _observation(process_result, stage, portable, case, adapter, work_dir)
         observations.append(observation)

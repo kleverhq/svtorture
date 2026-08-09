@@ -364,7 +364,7 @@ def test_campaign_corpus_metrics_are_strictly_verified(catalog: Catalog) -> None
         suite_id="smoke",
         expected_tool_ids=("slang",),
     )
-    assert campaign.schema_version == 5
+    assert campaign.schema_version == 6
     assert campaign.corpus_metrics == catalog.corpus_metrics()
     changed_requirements = campaign.corpus_metrics.requirements.model_copy(
         update={

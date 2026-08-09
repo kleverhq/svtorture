@@ -11,6 +11,7 @@ import pytest
 
 import svtorture.reproduce as reproduction
 from svtorture.adapters.commercial import VcsAdapter
+from svtorture.adapters.open_source import VerilatorAdapter
 from svtorture.bundle import export_campaign_bundle, write_campaign_archive
 from svtorture.campaign import structural_result
 from svtorture.catalog import Catalog
@@ -179,6 +180,58 @@ def test_configuration_bundle_replays_with_derived_libraries(
 
     assert report.replayed.status == result.status
     assert report.replayed.reason == result.reason
+
+
+def test_dpi_bundle_replays_foreign_stage_provenance(
+    catalog: Catalog,
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    case = catalog.cases["ch35-c-source-import"]
+    tool = campaign_tool(catalog.tools.tool("verilator"), ("simulator",))
+    plan = VerilatorAdapter().build_plan(
+        case,
+        tool.definition,
+        tool.definition.profile("simulator"),
+        image=tool.image.reference if tool.image else None,
+        wrapper=None,
+    )
+    observations = tuple(
+        observation(
+            stage_id=stage.id,
+            kind=stage.kind,
+            attempted_through_phase=stage.attempted_through_phase,
+            artifact_present=(True if stage.expected_artifact is not None else None),
+            stdout=(case.definition.oracle.marker or "") if stage.kind.value == "run" else "",
+        )
+        for stage in plan.stages
+    )
+    result = normalized(case, "verilator", "simulator", observations=observations)
+    campaign = make_campaign(catalog, cases=(case,), tool=tool, results=(result,))
+    root = export_campaign_bundle(catalog, campaign, tmp_path / "bundle")
+    context = reproduction.load_replay_location(
+        str(root / "manifest.json"),
+        tool_id="verilator",
+        profile_id="simulator",
+        case_id=case.definition.id,
+    )
+    monkeypatch.setattr(reproduction, "_ensure_checkout", lambda *_args: catalog.root)
+    monkeypatch.setattr(reproduction, "load_catalog", lambda *_args, **_kwargs: catalog)
+    monkeypatch.setattr(reproduction, "_ensure_image", lambda *_args: "image")
+    monkeypatch.setattr(reproduction, "execute_plan", lambda *_args, **_kwargs: observations)
+
+    report = reproduction.reproduce_case(
+        catalog.root,
+        context,
+        tool_id="verilator",
+        profile_id="simulator",
+        case_id=case.definition.id,
+    )
+
+    assert [item.kind for item in report.replayed.observations] == [
+        item.kind for item in plan.stages
+    ]
+    assert report.replayed.status == result.status
 
 
 def test_rebuilt_image_must_match_recorded_image_id(

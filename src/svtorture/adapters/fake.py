@@ -105,7 +105,7 @@ class FakeAdapter(ToolAdapter):
         elif case.definition.expectation is Expectation.DIAGNOSTIC:
             raise ValueError("fake non-runtime diagnostics are represented in compile action")
         return ExecutionPlan(
-            schema_version=2,
+            schema_version=3,
             case_id=case.definition.id,
             tool_id=tool.id,
             profile_id=profile.id,

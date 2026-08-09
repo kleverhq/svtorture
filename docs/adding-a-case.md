@@ -59,7 +59,8 @@ directory must be a source, an include-tree member, a resource, the declared
 `library_map`, or `case.toml`. A standard library map is the sole authority for
 logical-library membership, and `top` names its configuration root. Set
 `covergroups = true` when runtime functional coverage needs adapter activation.
-Cases still contain no compiler, simulator, coverage, or library flags.
+For DPI, put C/C++ files in `resources` and set `foreign = "dpi"`; adapters
+provide compilers, standard headers, and linking. Cases still contain no compiler, simulator, coverage, or library flags.
 
 Negative evidence should locate the intended token or construct, not a later
 cascade.

@@ -39,6 +39,7 @@ from svtorture.models import (
     ReasonCode,
     ResultStatus,
     RunnerConfig,
+    StageKind,
     ToolDefinition,
     ToolProfile,
     ToolSelection,
@@ -325,6 +326,9 @@ def validate_plan_for_profile(
         raise ValueError("execution plan backend identity does not match the prepared tool")
     if not profile.supports(plan.target_phase):
         raise ValueError("execution plan target exceeds the profile phase ceiling")
+    has_foreign_stage = any(stage.kind is StageKind.FOREIGN_BUILD for stage in plan.stages)
+    if has_foreign_stage != (case.definition.foreign is not None):
+        raise ValueError("foreign build stage does not match the case contract")
     materialized = [
         *case.definition.resources,
         *(item.path for item in plan.work_files),
@@ -573,7 +577,7 @@ def run_campaign(
         for result in recorded_results
     )
     campaign = Campaign(
-        schema_version=5,
+        schema_version=6,
         id=campaign_id,
         started_at=started,
         finished_at=finished,
@@ -850,7 +854,7 @@ def create_missing_campaign(
         }
     )
     campaign = Campaign(
-        schema_version=5,
+        schema_version=6,
         id=f"{now:%Y%m%dT%H%M%SZ}-missing-{identity_hash[:12]}",
         started_at=now,
         finished_at=now,
@@ -934,7 +938,7 @@ def create_preparation_failure_campaign(
         }
     )
     campaign = Campaign(
-        schema_version=5,
+        schema_version=6,
         id=f"{now:%Y%m%dT%H%M%SZ}-preparation-{identity_hash[:12]}",
         started_at=now,
         finished_at=now,
@@ -1045,7 +1049,7 @@ def aggregate_campaigns(
     aggregate_id = f"{finished:%Y%m%dT%H%M%SZ}-aggregate-{identity_hash[:12]}"
     aggregate_results = _attach_reproduction(results, aggregate_id, trust)
     aggregate = Campaign(
-        schema_version=5,
+        schema_version=6,
         id=aggregate_id,
         started_at=min(item.started_at for item in campaigns),
         finished_at=finished,

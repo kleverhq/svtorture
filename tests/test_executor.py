@@ -6,7 +6,7 @@ from pathlib import Path
 import pytest
 
 import svtorture.executor as executor_module
-from svtorture.adapters.open_source import IcarusAdapter
+from svtorture.adapters.open_source import IcarusAdapter, VerilatorAdapter
 from svtorture.catalog import Catalog
 from svtorture.executor import ExecutionError, execute_plan
 from svtorture.models import RawOutcome, WorkFile
@@ -66,3 +66,35 @@ def test_executor_materializes_declared_and_generated_inputs(
     monkeypatch.setattr(executor_module, "run_process", mutate_resource)
     with pytest.raises(ExecutionError, match="resource was modified"):
         execute_plan(plan, case, adapter, tmp_path / "mutated")
+
+
+def test_missing_foreign_toolchain_has_stage_specific_ownership(catalog: Catalog) -> None:
+    case = catalog.cases["ch35-c-source-import"]
+    tool = catalog.tools.tool("verilator")
+    plan = VerilatorAdapter().build_plan(
+        case,
+        tool,
+        tool.profile("simulator"),
+        image="image",
+        wrapper=None,
+    )
+    empty = StreamCapture(
+        data=b"",
+        size_bytes=0,
+        sha256=hashlib.sha256(b"").hexdigest(),
+        truncated=False,
+    )
+    missing = ProcessResult(
+        outcome=RawOutcome.NORMAL_EXIT,
+        exit_code=127,
+        signal=None,
+        duration_seconds=0.0,
+        stdout=empty,
+        stderr=empty,
+    )
+
+    foreign = executor_module._classify_container(missing, plan.stages[1])
+    compile_stage = executor_module._classify_container(missing, plan.stages[0])
+
+    assert foreign.outcome is RawOutcome.LAUNCH_FAILURE
+    assert compile_stage.outcome is RawOutcome.CONTAINER_FAILURE

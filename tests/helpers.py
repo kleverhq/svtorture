@@ -49,6 +49,7 @@ def observation(
     *,
     attempted_through_phase: Phase,
     stage_id: str | None = None,
+    kind: StageKind | None = None,
     exit_code: int | None = 0,
     outcome: RawOutcome = RawOutcome.NORMAL_EXIT,
     signal: int | None = None,
@@ -60,7 +61,9 @@ def observation(
     stdout_truncated: bool = False,
     stderr_truncated: bool = False,
 ) -> StageObservation:
-    kind = StageKind.RUN if attempted_through_phase is Phase.SIMULATE else StageKind.COMPILE
+    kind = kind or (
+        StageKind.RUN if attempted_through_phase is Phase.SIMULATE else StageKind.COMPILE
+    )
     return StageObservation(
         stage_id=stage_id or ("run" if kind is StageKind.RUN else "compile"),
         kind=kind,
@@ -165,7 +168,7 @@ def normalized(
             else EvidenceMode.CUMULATIVE
         )
     return NormalizedResult(
-        schema_version=2,
+        schema_version=3,
         case_id=case.definition.id,
         requirement_id=case.definition.primary_requirement,
         tool_id=tool_id,
@@ -199,7 +202,7 @@ def make_campaign(
     case_ids = tuple(case.definition.id for case in cases)
     selection_hash = hash_json(_selection_payload("test", case_ids, (tool,), expected))
     return Campaign(
-        schema_version=5,
+        schema_version=6,
         id=campaign_id,
         started_at=datetime(2026, 1, 1, tzinfo=UTC),
         finished_at=datetime(2026, 1, 1, 0, 0, 1, tzinfo=UTC),

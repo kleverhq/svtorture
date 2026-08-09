@@ -3,15 +3,18 @@ from __future__ import annotations
 from dataclasses import replace
 
 import pytest
+from pydantic import ValidationError
 
 from svtorture.catalog import Catalog
 from svtorture.evaluator import evaluate, exit_code_for_results, synthetic_result
 from svtorture.models import (
     EvidenceMode,
+    NormalizedResult,
     Phase,
     RawOutcome,
     ReasonCode,
     ResultStatus,
+    StageKind,
 )
 from tests.helpers import observation, targeted
 
@@ -85,6 +88,81 @@ def test_internal_error_never_satisfies_negative_case(catalog: Catalog) -> None:
         ResultStatus.INCONCLUSIVE,
         ReasonCode.INTERNAL_ERROR,
     )
+
+
+@pytest.mark.parametrize(
+    ("changes", "reason"),
+    (
+        ({"exit_code": 1}, ReasonCode.FOREIGN_BUILD_FAILURE),
+        (
+            {"outcome": RawOutcome.TIMEOUT, "exit_code": None},
+            ReasonCode.FOREIGN_BUILD_FAILURE,
+        ),
+        (
+            {"outcome": RawOutcome.SIGNAL, "exit_code": None, "signal": 11},
+            ReasonCode.FOREIGN_BUILD_FAILURE,
+        ),
+        ({"internal_error": True}, ReasonCode.FOREIGN_BUILD_FAILURE),
+        ({"artifact_present": False}, ReasonCode.FOREIGN_BUILD_FAILURE),
+        (
+            {"outcome": RawOutcome.LAUNCH_FAILURE, "exit_code": None},
+            ReasonCode.TOOLCHAIN_UNAVAILABLE,
+        ),
+    ),
+)
+def test_foreign_build_failures_are_harness_owned(
+    catalog: Catalog,
+    changes: dict[str, object],
+    reason: ReasonCode,
+) -> None:
+    case = catalog.cases["ch35-c-source-import"]
+    build = observation(
+        attempted_through_phase=Phase.ELABORATE,
+        stage_id="foreign-build",
+        kind=StageKind.FOREIGN_BUILD,
+        artifact_present=True,
+    ).model_copy(update=changes)
+
+    result = evaluate(
+        case,
+        "tool",
+        "simulator",
+        (
+            observation(attempted_through_phase=Phase.ELABORATE),
+            build,
+        ),
+    )
+
+    assert result.status is ResultStatus.HARNESS_ERROR
+    assert result.reason is reason
+
+
+def test_successful_foreign_build_is_not_conformance_evidence(catalog: Catalog) -> None:
+    case = catalog.cases["ch35-c-source-import"]
+    result = evaluate(
+        case,
+        "tool",
+        "simulator",
+        (
+            observation(attempted_through_phase=Phase.ELABORATE),
+            observation(
+                attempted_through_phase=Phase.ELABORATE,
+                stage_id="foreign-build",
+                kind=StageKind.FOREIGN_BUILD,
+                artifact_present=True,
+            ),
+            observation(
+                attempted_through_phase=Phase.SIMULATE,
+                stdout=case.definition.oracle.marker or "",
+            ),
+        ),
+    )
+    assert result.status is ResultStatus.CONFORMING
+    assert result.evidence_mode is EvidenceMode.DIRECT
+    legacy_value = result.model_dump(mode="json")
+    legacy_value["schema_version"] = 2
+    with pytest.raises(ValidationError, match="result schema version 3"):
+        NormalizedResult.model_validate(legacy_value)
 
 
 @pytest.mark.parametrize("line_offset", (1, 7))

@@ -59,6 +59,7 @@ export interface CaseDefinition {
   library_map?: string | null;
   logical_libraries?: LogicalLibrary[] | null;
   covergroups?: boolean;
+  foreign?: "dpi" | "vpi" | null;
   source_links?: Record<string, string>;
   top?: string | null;
   defines: string[];
@@ -89,7 +90,7 @@ export interface Diagnostic {
 
 export interface Observation {
   stage_id: string;
-  kind: "compile" | "run";
+  kind: "compile" | "foreign-build" | "run";
   attempted_through_phase: string;
   outcome: string;
   exit_code?: number | null;
@@ -273,7 +274,7 @@ export type DashboardMetric = Omit<
 >;
 
 export interface CampaignManifest {
-  schema_version: 6;
+  schema_version: 6 | 7;
   kind: "campaign-manifest";
   id: string;
   started_at: string;
@@ -302,7 +303,7 @@ export interface CampaignManifest {
 }
 
 export interface CampaignCatalog {
-  schema_version: 6;
+  schema_version: 6 | 7;
   kind: "campaign-catalog";
   campaign_id: string;
   requirements: Requirement[];
@@ -322,7 +323,7 @@ export interface CampaignVerdict {
 }
 
 export interface CampaignVerdicts {
-  schema_version: 6;
+  schema_version: 6 | 7;
   kind: "campaign-verdicts";
   campaign_id: string;
   case_count: number;
@@ -335,7 +336,7 @@ export interface CampaignVerdicts {
 }
 
 export interface CampaignEvidence {
-  schema_version: 6;
+  schema_version: 6 | 7;
   kind: "campaign-evidence";
   campaign_id: string;
   case_ids: string[];
@@ -352,7 +353,7 @@ export interface ArchiveMetadata {
 }
 
 export interface CampaignSummary {
-  schema_version: 6;
+  schema_version: 6 | 7;
   kind: "campaign-summary";
   id: string;
   started_at: string;
@@ -367,13 +368,13 @@ export interface CampaignSummary {
 }
 
 export interface CampaignTrends {
-  schema_version: 6;
+  schema_version: 6 | 7;
   kind: "campaign-trends";
   campaigns: CampaignSummary[];
 }
 
 export interface DashboardIndex {
-  schema_version: 6;
+  schema_version: 6 | 7;
   kind: "dashboard-index";
   default_campaign_id: string;
   campaigns: Array<{ id: string; manifest: string }>;

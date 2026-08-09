@@ -30,14 +30,17 @@ This work will not create a general build graph, arbitrary shell stages, per-too
 - [x] (2026-08-09 19:47Z) Restored the ignored local VCS runner configuration from the main worktree, fixed its worktree-path translation locally, and verified both new cases conform under VCS X-2025.06.
 - [x] (2026-08-09 19:48Z) Completed Milestone 0 correctness, standards, and mandatory KISS/YAGNI reviews; corrected both primary requirement mappings and shrank/strengthened the ordered-source assertion.
 - [x] (2026-08-09 19:54Z) Milestone 0 control reviewers reported no substantive findings and the mandatory KISS control returned `Lean already. Ship.`; `just smoke` passed with 134 focused Python tests and 108 dashboard tests.
-- [x] (2026-08-09 19:55Z) Committed Milestone 0 as `ca3cc0c`.
+- [x] (2026-08-09 19:55Z) Committed Milestone 0 as `d3a4d48`.
 - [x] (2026-08-09 20:32Z) Milestone 1 implementation complete pending review: declared resources, strict input inventory/hashing, standard library maps, bounded generated work files, covergroup activation, structural capability disposition, replay support, three cases, advanced suite, schemas, docs, and focused tests.
 - [x] (2026-08-09 20:32Z) Verified Milestone 1 end to end: all five advanced cases conform under VCS X-2025.06; Verilator conforms except its structural SDF limitation; Icarus conforms on SDF and reports structural configuration/covergroup limits; Slang remains phase-limited.
 - [x] (2026-08-10 00:07Z) Completed Milestone 1 correctness, architecture, standards, and mandatory KISS reviews plus repeated controls. Fixed SDF race discrimination, exact covergroup/configuration primaries, bundle/replay library provenance, resource mutation detection, canonical path aliases, and all simplification findings; final controls were clean.
 - [x] (2026-08-10 00:07Z) Milestone 1 validation passed: 213 non-Docker tests, `just smoke` with 143 focused Python and 108 dashboard tests, schemas, lint, typing, and the advanced multi-tool campaigns.
-- [ ] Commit Milestone 1.
-- [ ] Milestone 2: implement one bounded foreign-source path for DPI C/C++, port both DPI cases, classify foreign build failures, and support every capable current adapter.
-- [ ] Run focused correctness and architecture reviews plus the mandatory KISS/YAGNI ponytail review for Milestone 2, resolve findings, validate, and commit.
+- [x] (2026-08-10 00:09Z) Committed Milestone 1 as `a65f018`.
+- [x] (2026-08-09 21:20Z) Milestone 2 implementation complete pending review: one `foreign` enum, C/C++ resources, typed foreign-build stages, harness-owned native failures, Verilator generated-make flow, VCS analysis/build split, two DPI cases, schemas/docs, and focused evaluator/adapter/executor/replay tests.
+- [x] (2026-08-09 21:20Z) Verified both DPI cases conform under current Verilator and VCS; Icarus reports structural `unsupported-capability` and Slang remains phase-limited.
+- [x] (2026-08-10 01:18Z) Ran Milestone 2 correctness, architecture, standards, and mandatory KISS/YAGNI reviews. Fixed legacy v1 advanced-case reading, v6 dashboard loading, VCS mixed-link failure ownership, foreign-source duplication, public version documentation, and v3 foreign-evidence guards; focused checks and fresh Verilator/VCS advanced campaigns pass as expected.
+- [x] (2026-08-10 01:38Z) Fresh Milestone 2 control reviews are clean: correctness reported `No substantive findings` and mandatory ponytail reported `Lean already. Ship.` Final `just smoke` passed with 161 focused Python, 17 annotator, and 110 dashboard tests; the final VCS advanced campaign kept both DPI cases conforming.
+- [ ] Commit Milestone 2.
 - [ ] Milestone 3: extend the foreign path only where VPI needs startup/loading and visibility mechanics; port both VPI cases for every capable adapter.
 - [ ] Run focused correctness and architecture reviews plus the mandatory KISS/YAGNI ponytail review for Milestone 3, resolve findings, validate, and commit.
 - [ ] Add the explicit advanced suite, concise durable authoring documentation, generated schemas, replay/bundle/publication compatibility, and end-to-end evidence available in this environment.
@@ -64,8 +67,8 @@ This work will not create a general build graph, arbitrary shell stages, per-too
 - Observation: Icarus itself provides `iverilog-vpi`, but the project image omits a C++ compiler. A callback plugin worked when built outside the image; the packed-structure query then crashed, which is execution evidence rather than structural lack of VPI.
   Evidence: `tools/icarus/Dockerfile` and focused `iverilog-vpi`/`vvp` probes.
 
-- Observation: The repository has historically kept metadata schema version 1 while adding strict optional manifest fields; only major evidence-semantics changes introduced a new contract version.
-  Evidence: commits `54ad6dd` and `dc05fbf` in `src/svtorture/models.py`. Optional advanced case fields therefore do not justify parallel v1/v2 case models.
+- Observation: Milestone 1 emitted non-foreign advanced fields under case schema version 1, so rejecting those combinations when adding version 2 would break replay and dashboard reading of the immediately preceding contract.
+  Evidence: commit `a65f018` and focused compatibility tests. Readers therefore retain v1 non-foreign advanced cases, while newly authored advanced cases use v2 and the new foreign interface requires it.
 
 - Observation: The main-branch CLI intentionally stopped enforcing the 10–12-case MVP seed, but the now-dead `mvp_audit` function and its direct unit test still rejected the expanded corpus.
   Evidence: commit `b6d0733` removed the only product caller; after adding cases, `test_seed_catalog_meets_mvp` failed at 14 cases. Deleting the dead function/test completes the main-branch intent instead of inventing a filtered seed subset.
@@ -96,9 +99,9 @@ This work will not create a general build graph, arbitrary shell stages, per-too
   Rationale: Tool manifests currently describe stable profile and execution policy. Focused probes confirmed that support depends on adapter mechanics and profile phase, so a generic feature registry would duplicate adapter knowledge and violate the explicit non-goal.
   Date/Author: 2026-08-09 / coding agent.
 
-- Decision: Keep existing metadata and contract version numbers unless implementation changes evidence semantics in a backward-incompatible way; add optional strict fields with empty defaults.
-  Rationale: This is the repository's established metadata evolution pattern, avoids changing all existing cases, and preserves current campaign/replay models.
-  Date/Author: 2026-08-09 / coding agent.
+- Decision: Preserve version-1 metadata for existing cases, suites, tools, tags, and runner configuration; author new advanced cases as case metadata version 2 and require version 2 for the new foreign field, while retaining v1 non-foreign advanced cases for Milestone 1 compatibility. Emit execution/result version 3, campaign version 6, and dashboard-resource version 7 while accepting their immediately preceding versions.
+  Rationale: Foreign stage semantics require a machine-readable boundary, but rejecting already-emitted v1 resource/map/covergroup cases would break replay. Narrow version types avoid accidentally widening unrelated metadata contracts.
+  Date/Author: 2026-08-10 / coding agent after compatibility testing.
 
 - Decision: Represent only four proven case concepts: exact `resources`, one exact standard `library_map` path, a boolean functional-covergroup request, and `foreign = "dpi" | "vpi"`. Reuse existing `top` as the configuration root and infer C/C++ compilation inputs from resource suffixes.
   Rationale: The standard map file already owns source-to-logical-library membership, so duplicating that mapping in TOML creates two authorities. Every remaining field is consumed by one of the nine cases. Separate language, compiler, flags, outputs, startup symbols, capability lists, and build-graph fields would duplicate information or expose adapter policy.
@@ -128,12 +131,12 @@ This work will not create a general build graph, arbitrary shell stages, per-too
   Rationale: Adapters construct side-effect-free argv plans and currently have no work-directory path. Generated control text is required, while arbitrary generators, binary payloads, stage-local files, environment maps, and shell commands are not.
   Date/Author: 2026-08-09 / coding agent after control review.
 
-- Decision: Expose ordinary declared resources at their preserved relative paths in `/work` as executor-prepared read-only copies, while keeping the authoritative case inputs read-only under `/case`. Library maps and foreign compilation inputs continue to use explicit `/case` paths.
-  Rationale: Standard source calls such as `$sdf_annotate("test.sdf")` must remain tool-neutral and all stages run from `/work`. A generic copy of already validated and hashed resources is smaller than per-stage cwd or bind-mount contracts and works for Docker and local runners.
+- Decision: Expose ordinary declared resources at their preserved relative paths in `/work` as executor-prepared read-only copies, while keeping the authoritative case inputs read-only under `/case`. Foreign compilers consume the same integrity-checked `/work` copies; library maps continue to use explicit `/case` paths.
+  Rationale: Standard source calls such as `$sdf_annotate("test.sdf")` must remain tool-neutral and all stages run from `/work`. One generic copy path is smaller than per-stage cwd or bind-mount contracts, works for Docker and local runners, and prevents foreign tools from bypassing post-copy integrity checks.
   Date/Author: 2026-08-09 / coding agent after control review.
 
-- Decision: For VCS DPI/VPI, run `vlogan` first as the SystemVerilog compile observation, then run `vcs` with fixed foreign inputs as the `foreign-build` stage, then run `simv`. Treat failure of the mixed elaboration/native-link stage as harness-owned.
-  Rationale: VCS's documented driver owns native compilation and linking and does not expose a portable compiler include root through the current runner protocol. The preceding HDL analysis preserves syntax rejection evidence; the second stage is where fixed foreign integration and link failures occur. Extending private-runner path expansion would be larger and less portable.
+- Decision: For VCS DPI, run `vlogan` first as the SystemVerilog compile observation, then one adapter-generated make target that compiles the shared library and invokes `vcs` for mixed elaboration/linking as the `foreign-build` stage, then run `simv`. Treat every failure in that mixed stage as harness-owned.
+  Rationale: The preceding HDL analysis preserves syntax rejection evidence; native compilation and VCS integration are inseparable harness prerequisites for execution and must not become tool nonconformance. The existing runner environment exposes the documented DPI include root without new protocol fields.
   Date/Author: 2026-08-09 / coding agent after control review.
 
 - Decision: Keep the top-level foreign failure status as `harness-error`; distinguish a compiler/linker nonzero exit from SystemVerilog evidence so it cannot become `nonconforming`.
@@ -154,7 +157,7 @@ This work will not create a general build graph, arbitrary shell stages, per-too
 
 ## Outcomes & Retrospective
 
-Milestone 0 is committed as `ca3cc0c`. Milestone 1 is implemented, repeatedly reviewed, and validated, pending commit. The catalog fingerprints and validates every declared case input, rejects undeclared files and noncanonical path aliases, and detects any resource-copy mutation before accepting evidence. Standard library maps remain the sole logical-library authority; their validated derivation survives bundles and replay. Bounded generated setup text, covergroup activation, and one generic structural unsupported reason cover the three new cases without raw tool options. SDF and configuration results match the capability matrix. The strengthened immediate-sampling oracle intentionally records current Verilator/VCS nonconformance instead of weakening the requirement.
+Milestones 0 and 1 are committed as `d3a4d48` and `a65f018` respectively. Milestone 2 is implemented, reviewed, and end-to-end proven, pending a clean control pass and commit. The catalog fingerprints and validates every declared case input, rejects undeclared files and noncanonical path aliases, and detects any resource-copy mutation before accepting evidence. Standard library maps remain the sole logical-library authority; their validated derivation survives bundles and replay. Bounded generated setup text, covergroup activation, and one generic structural unsupported reason cover the three new cases without raw tool options. SDF and configuration results match the capability matrix. The strengthened immediate-sampling oracle intentionally records current Verilator/VCS nonconformance instead of weakening the requirement.
 
 ## Context and Orientation
 
@@ -310,3 +313,7 @@ Plan revision note (2026-08-09 19:54Z): Recorded clean Milestone 0 correctness, 
 Plan revision note (2026-08-09 20:32Z): Recorded the Milestone 1 contract/case implementation, generated schema and focused test evidence, VCS covergroup discovery, cross-adapter library-map strategy, and initial advanced campaign outcomes.
 
 Plan revision note (2026-08-10 00:07Z): Recorded all Milestone 1 review/control findings and fixes, final validation counts, bundle/replay provenance checks, immutable-resource verification, canonical path hardening, and the deliberate Verilator/VCS nonconformance exposed by the strengthened same-time-step covergroup oracle.
+
+Plan revision note (2026-08-09 21:20Z): Recorded Milestone 2 implementation and campaigns. Verilator now translates HDL and generates a main before a separate make-based foreign build; VCS analyzes HDL before its mixed elaboration/native build. Both DPI cases conform on both capable simulators, while structural limitations remain observation-free.
+
+Plan revision note (2026-08-10 01:38Z): Recorded Milestone 2 compatibility and control-review fixes. V1 non-foreign advanced evidence remains readable, dashboard readers accept v6/v7, foreign evidence requires v3, and one VCS foreign-build recipe owns native compilation plus VCS linking. Final correctness and KISS controls are clean.

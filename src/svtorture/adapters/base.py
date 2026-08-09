@@ -59,6 +59,8 @@ class ToolAdapter(ABC):
             raise UnsupportedCapability("logical libraries and configurations are unsupported")
         if definition.covergroups:
             raise UnsupportedCapability("functional covergroup execution is unsupported")
+        if definition.foreign is not None:
+            raise UnsupportedCapability("foreign interface execution is unsupported")
         if any(Path(resource).suffix.casefold() == ".sdf" for resource in definition.resources):
             raise UnsupportedCapability("SDF annotation is unsupported")
 
@@ -186,6 +188,11 @@ def _portable_source(source: str) -> str:
 def source_argv(case: LoadedCase, portable: bool = False) -> tuple[str, ...]:
     root = PORTABLE_CASE_ROOT if portable else CASE_ROOT
     return tuple(f"{root}/{source}" for source in case.definition.sources)
+
+
+def foreign_source_argv(case: LoadedCase, portable: bool = False) -> tuple[str, ...]:
+    root = PORTABLE_WORK_ROOT if portable else WORK_ROOT
+    return tuple(f"{root}/{source}" for source in case.definition.foreign_sources)
 
 
 def include_argv(case: LoadedCase, style: str, *, portable: bool = False) -> tuple[str, ...]:

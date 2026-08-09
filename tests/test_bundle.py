@@ -42,6 +42,7 @@ from svtorture.models import (
     Phase,
     ReasonCode,
     ResultStatus,
+    StageKind,
     standard_location_sort_key,
 )
 from svtorture.publish import PublicationError
@@ -526,7 +527,7 @@ def test_public_pages_contains_all_summaries_and_only_latest_detail(
     trends = json.loads((output / "data" / "trends.json").read_text(encoding="utf-8"))
     assert [item["id"] for item in index["campaigns"]] == [second_manifest.id]
     assert trends == {
-        "schema_version": 6,
+        "schema_version": 7,
         "kind": "campaign-trends",
         "campaigns": [summary.model_dump(mode="json", exclude_none=True) for summary in summaries],
     }
@@ -599,6 +600,29 @@ def test_dashboard_schema_snapshots_require_discriminants_and_reuse_summary_sche
     assert catalog["properties"]["standard_sections"]["items"] == {
         "$ref": "#/$defs/StandardSection"
     }
+
+
+def test_dashboard_rejects_v2_foreign_evidence() -> None:
+    with pytest.raises(ValidationError, match="result schema version 3"):
+        DashboardEvidenceResult(
+            schema_version=2,
+            case_id="case",
+            requirement_id="requirement",
+            tool_id="tool",
+            profile_id="simulator",
+            target_phase=Phase.SIMULATE,
+            evidence_mode=EvidenceMode.NOT_OBSERVED,
+            status=ResultStatus.HARNESS_ERROR,
+            reason=ReasonCode.FOREIGN_BUILD_FAILURE,
+            summary="Foreign build failed.",
+            evidence=EvidenceLevel.MANDATORY,
+            observations=(
+                observation(
+                    attempted_through_phase=Phase.ELABORATE,
+                    kind=StageKind.FOREIGN_BUILD,
+                ),
+            ),
+        )
 
 
 def test_compact_verdict_and_evidence_packing_scale_to_ten_thousand_cases() -> None:
