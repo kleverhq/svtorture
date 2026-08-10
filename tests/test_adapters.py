@@ -382,27 +382,6 @@ def test_dpi_plans_separate_foreign_builds(
         IcarusAdapter().check_case(case)
 
 
-def test_vcs_compiles_mixed_foreign_sources_with_their_languages(catalog: Catalog) -> None:
-    original = catalog.cases["ch35-c-source-import"]
-    case = replace(
-        original,
-        definition=original.definition.model_copy(update={"resources": ("native.c", "native.cpp")}),
-    )
-    tool = catalog.tools.tool("vcs")
-    plan = VcsAdapter().build_plan(
-        case,
-        tool,
-        tool.profile("simulator"),
-        image=None,
-        wrapper="/private/wrapper",
-    )
-    makefile = plan.work_files[0].content
-    assert "\t$(CXX) -shared -fPIC" in makefile
-    assert "-x c native.c" in makefile
-    assert "-x c++ native.cpp" in makefile
-    assert ".o" not in makefile
-
-
 def test_plan_validation_requires_foreign_stage_to_match_case(catalog: Catalog) -> None:
     tool = catalog.tools.tool("verilator")
     profile = tool.profile("simulator")

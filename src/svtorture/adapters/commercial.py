@@ -191,15 +191,9 @@ class VcsAdapter(ToolAdapter):
                     ),
                 )
             else:
-                compiler = (
-                    "$(CC)"
-                    if all(source.endswith(".c") for source in foreign_sources)
-                    else "$(CXX)"
-                )
-                compiler_inputs = " ".join(
-                    f"-x {'c' if source.endswith('.c') else 'c++'} {source}"
-                    for source in foreign_sources
-                )
+                source = foreign_sources[0]
+                compiler = "$(CC)" if source.endswith(".c") else "$(CXX)"
+                language = "c" if source.endswith(".c") else "c++"
                 work_files = (
                     WorkFile(
                         path="svtorture-foreign.mk",
@@ -207,7 +201,7 @@ class VcsAdapter(ToolAdapter):
                             ".PHONY: simv\n"
                             "simv:\n"
                             f"\t{compiler} -shared -fPIC -I$(VCS_HOME)/include "
-                            f"{compiler_inputs} -o foreign.so\n"
+                            f"-x {language} {source} -o foreign.so\n"
                             f"\tvcs -full64 -sverilog -top {case.definition.top} "
                             f"-o simv {case.definition.top} foreign.so\n"
                         ),

@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import hashlib
+import shutil
+from dataclasses import replace
 from pathlib import Path
 
 import pytest
@@ -37,6 +39,7 @@ def test_executor_materializes_declared_and_generated_inputs(
         assert (cwd / "test.sdf").read_bytes() == (case.directory / "test.sdf").read_bytes()
         assert (cwd / "test.sdf").stat().st_mode & 0o222 == 0
         assert (cwd / "generated" / "setup.txt").read_text() == "setup\n"
+        assert (cwd / "generated" / "setup.txt").stat().st_mode & 0o222 == 0
         return ProcessResult(
             outcome=RawOutcome.NORMAL_EXIT,
             exit_code=0,
@@ -64,8 +67,74 @@ def test_executor_materializes_declared_and_generated_inputs(
         )
 
     monkeypatch.setattr(executor_module, "run_process", mutate_resource)
-    with pytest.raises(ExecutionError, match="resource was modified"):
-        execute_plan(plan, case, adapter, tmp_path / "mutated")
+    with pytest.raises(ExecutionError, match="execution input was modified"):
+        execute_plan(plan, case, adapter, tmp_path / "mutated-resource")
+
+    def mutate_generated(argv: tuple[str, ...], *, cwd: Path, **kwargs: object) -> ProcessResult:
+        del argv, kwargs
+        generated = cwd / "generated" / "setup.txt"
+        generated.chmod(0o644)
+        generated.write_text("modified", encoding="utf-8")
+        return ProcessResult(
+            outcome=RawOutcome.NORMAL_EXIT,
+            exit_code=0,
+            signal=None,
+            duration_seconds=0.0,
+            stdout=empty,
+            stderr=empty,
+        )
+
+    monkeypatch.setattr(executor_module, "run_process", mutate_generated)
+    with pytest.raises(ExecutionError, match="execution input was modified"):
+        execute_plan(plan, case, adapter, tmp_path / "mutated-generated")
+
+
+@pytest.mark.parametrize(
+    ("mutation", "message"),
+    (("source", "case inputs changed"), ("undeclared", "undeclared case files")),
+)
+def test_executor_rejects_case_changes_after_catalog_loading(
+    catalog: Catalog,
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+    mutation: str,
+    message: str,
+) -> None:
+    original = catalog.cases["ch32-iopath-rise-annotates-path"]
+    directory = shutil.copytree(original.directory, tmp_path / f"case-{mutation}")
+    case = replace(original, directory=directory, metadata_path=directory / "case.toml")
+    tool = catalog.tools.tool("icarus")
+    adapter = IcarusAdapter()
+    plan = adapter.build_plan(
+        case,
+        tool,
+        tool.profile("simulator"),
+        image="image",
+        wrapper=None,
+    )
+    empty = StreamCapture(
+        data=b"",
+        size_bytes=0,
+        sha256=hashlib.sha256(b"").hexdigest(),
+        truncated=False,
+    )
+
+    def mutate_case(argv: tuple[str, ...], **kwargs: object) -> ProcessResult:
+        del argv, kwargs
+        path = directory / ("top.sv" if mutation == "source" else "undeclared.txt")
+        path.write_text("module changed; endmodule\n", encoding="utf-8")
+        return ProcessResult(
+            outcome=RawOutcome.NORMAL_EXIT,
+            exit_code=0,
+            signal=None,
+            duration_seconds=0.0,
+            stdout=empty,
+            stderr=empty,
+        )
+
+    monkeypatch.setattr(executor_module, "run_process", mutate_case)
+    with pytest.raises(ExecutionError, match=message):
+        execute_plan(plan, case, adapter, tmp_path / f"work-{mutation}")
 
 
 def test_missing_foreign_toolchain_has_stage_specific_ownership(catalog: Catalog) -> None:

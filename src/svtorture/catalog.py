@@ -467,10 +467,36 @@ def _declared_case_files(definition: CaseDefinition, directory: Path) -> tuple[s
     return tuple(declared)
 
 
-def _case_hash(definition: CaseDefinition, directory: Path) -> str:
+def case_content_hash(definition: CaseDefinition, directory: Path) -> str:
+    if any(item.is_symlink() for item in directory.rglob("*")):
+        raise CatalogError(f"{directory}: case directory contains a symbolic link")
+    for relative in (*definition.sources, *definition.resources):
+        if not _case_path(directory, relative, kind="case input").is_file():
+            raise CatalogError(f"{directory}: missing case input {relative}")
+    if (
+        definition.library_map is not None
+        and not _case_path(directory, definition.library_map, kind="library map").is_file()
+    ):
+        raise CatalogError(f"{directory}: missing library map {definition.library_map}")
+    for relative in definition.include_dirs:
+        if not _case_path(directory, relative, kind="include directory").is_dir():
+            raise CatalogError(f"{directory}: missing include directory {relative}")
+
+    declared_files = _declared_case_files(definition, directory)
+    declared = {"case.toml", *declared_files}
+    actual = {
+        item.relative_to(directory).as_posix() for item in directory.rglob("*") if item.is_file()
+    }
+    missing = sorted(declared - actual)
+    if missing:
+        raise CatalogError(f"{directory}: missing case files: {', '.join(missing)}")
+    undeclared = sorted(actual - declared)
+    if undeclared:
+        raise CatalogError(f"{directory}: undeclared case files: {', '.join(undeclared)}")
+
     digest_payload = [
         {"path": relative, "sha256": sha256_bytes((directory / relative).read_bytes())}
-        for relative in _declared_case_files(definition, directory)
+        for relative in declared_files
     ]
     return hash_json({"metadata": model_to_jsonable(definition), "files": digest_payload})
 
@@ -581,16 +607,6 @@ def _load_case(path: Path, requirements: dict[str, Requirement]) -> LoadedCase:
             raise CatalogError(f"{path}: missing or unsafe library map {definition.library_map}")
         logical_libraries = _library_map(map_path, definition)
 
-    if any(item.is_symlink() for item in directory.rglob("*")):
-        raise CatalogError(f"{path}: case directory contains a symbolic link")
-    declared = {"case.toml", *_declared_case_files(definition, directory)}
-    actual = {
-        item.relative_to(directory).as_posix() for item in directory.rglob("*") if item.is_file()
-    }
-    undeclared = sorted(actual - declared)
-    if undeclared:
-        raise CatalogError(f"{path}: undeclared case files: {', '.join(undeclared)}")
-
     anchor_source: str | None = None
     anchor_line: int | None = None
     if definition.oracle.kind is OracleKind.RUNTIME_PASS_MARKER:
@@ -625,7 +641,7 @@ def _load_case(path: Path, requirements: dict[str, Requirement]) -> LoadedCase:
         metadata_path=path.resolve(),
         anchor_source=anchor_source,
         anchor_line=anchor_line,
-        content_sha256=_case_hash(definition, directory),
+        content_sha256=case_content_hash(definition, directory),
         logical_libraries=logical_libraries,
     )
 

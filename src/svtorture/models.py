@@ -632,8 +632,8 @@ class CaseDefinition(StrictModel):
                 raise ValueError("foreign interfaces require a simulation acceptance oracle")
             if self.top is None:
                 raise ValueError("foreign interfaces require an explicit top")
-            if not self.foreign_sources:
-                raise ValueError("foreign interfaces require a declared C or C++ resource")
+            if len(self.foreign_sources) != 1:
+                raise ValueError("foreign interfaces require exactly one C or C++ resource")
             if any(
                 re.fullmatch(r"[A-Za-z0-9_./-]+", source) is None for source in self.foreign_sources
             ):
@@ -645,7 +645,7 @@ class CaseDefinition(StrictModel):
         return tuple(
             resource
             for resource in self.resources
-            if PurePosixPath(resource).suffix.casefold() in {".c", ".cc", ".cpp", ".cxx"}
+            if PurePosixPath(resource).suffix in {".c", ".cc", ".cpp", ".cxx"}
         )
 
 

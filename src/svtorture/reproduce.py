@@ -588,7 +588,7 @@ def load_replay_location(
     profile_id: str,
     case_id: str,
 ) -> ReplaySource:
-    """Load a canonical campaign or one selected v6 replay context."""
+    """Load a canonical campaign or one selected v6/v7 replay context."""
 
     parsed = urllib.parse.urlparse(location)
     if parsed.scheme:

@@ -25,7 +25,7 @@ from svtorture.adapters.base import UnsupportedCapability
 from svtorture.adapters.registry import adapter_for
 from svtorture.catalog import Catalog, LoadedCase, load_catalog, repository_identity
 from svtorture.evaluator import evaluate, synthetic_result
-from svtorture.executor import ExecutionError, execute_plan
+from svtorture.executor import ExecutionError, execute_plan, observation_stops_execution
 from svtorture.hashing import hash_json
 from svtorture.models import (
     Applicability,
@@ -756,6 +756,13 @@ def verify_result_against_case(
     if recorded_provenance != expected_provenance[: len(recorded_provenance)]:
         raise CampaignError(
             f"campaign phase provenance does not match its execution plan for "
+            f"{result.tool_id}/{result.profile_id}/{result.case_id}"
+        )
+    if len(result.observations) < len(plan.stages) and not observation_stops_execution(
+        result.observations[-1]
+    ):
+        raise CampaignError(
+            f"campaign has an incomplete successful observation prefix for "
             f"{result.tool_id}/{result.profile_id}/{result.case_id}"
         )
 

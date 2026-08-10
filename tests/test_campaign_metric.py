@@ -383,6 +383,23 @@ def test_campaign_corpus_metrics_are_strictly_verified(catalog: Catalog) -> None
         verify_campaign_against_catalog(catalog, tampered)
 
 
+def test_campaign_rejects_an_incomplete_successful_plan_prefix(catalog: Catalog) -> None:
+    case = catalog.cases["ch04-nba-rhs-captured"]
+    tool = campaign_tool(catalog.tools.tool("fake"), ("simulator",))
+    result = normalized(
+        case,
+        "fake",
+        "simulator",
+        status=ResultStatus.NONCONFORMING,
+        reason=ReasonCode.UNEXPECTED_REJECT,
+        observations=(observation(attempted_through_phase=Phase.ELABORATE),),
+    )
+    campaign = make_campaign(catalog, cases=(case,), tool=tool, results=(result,))
+
+    with pytest.raises(CampaignError, match="incomplete successful observation prefix"):
+        verify_campaign_against_catalog(catalog, campaign)
+
+
 def test_preparation_failure_emits_a_normalized_result_grid(catalog: Catalog) -> None:
     campaign = create_preparation_failure_campaign(
         catalog,

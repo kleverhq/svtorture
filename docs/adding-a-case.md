@@ -59,8 +59,8 @@ directory must be a source, an include-tree member, a resource, the declared
 `library_map`, or `case.toml`. A standard library map is the sole authority for
 logical-library membership, and `top` names its configuration root. Set
 `covergroups = true` when runtime functional coverage needs adapter activation.
-For DPI, put C/C++ files in `resources` and set `foreign = "dpi"`; adapters
-provide compilers, standard headers, and linking. VPI cases set `foreign = "vpi"`
+For DPI, put exactly one C/C++ source and any headers in `resources`, then set
+`foreign = "dpi"`; adapters provide compilers, standard headers, and linking. VPI cases set `foreign = "vpi"`
 and invoke the case-local `$svtorture_vpi` system task once, unconditionally at
 time zero; adapters own loading and object visibility. Icarus registers that
 task, VCS maps it through its PLI table, and Verilator invokes the same calltf at
