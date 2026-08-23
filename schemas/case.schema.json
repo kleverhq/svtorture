@@ -140,6 +140,13 @@
     }
   },
   "additionalProperties": false,
+  "if": {
+    "properties": {
+      "schema_version": {
+        "const": 1
+      }
+    }
+  },
   "properties": {
     "covergroups": {
       "default": false,
@@ -339,6 +346,14 @@
     "sources",
     "oracle"
   ],
+  "then": {
+    "properties": {
+      "covergroups": false,
+      "foreign": false,
+      "library_map": false,
+      "resources": false
+    }
+  },
   "title": "CaseDefinition",
   "type": "object"
 }

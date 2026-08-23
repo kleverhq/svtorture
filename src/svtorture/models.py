@@ -466,6 +466,20 @@ class LogicalLibrary(StrictModel):
 
 
 class CaseDefinition(StrictModel):
+    model_config = ConfigDict(
+        json_schema_extra={
+            "if": {"properties": {"schema_version": {"const": 1}}},
+            "then": {
+                "properties": {
+                    "resources": False,
+                    "library_map": False,
+                    "covergroups": False,
+                    "foreign": False,
+                }
+            },
+        }
+    )
+
     schema_version: CaseSchemaVersion
     id: str
     title: SafeText
@@ -611,8 +625,9 @@ class CaseDefinition(StrictModel):
                 raise ValueError("phase-exit oracle has no marker or anchor")
         if self.target_phase is not Phase.SIMULATE and self.runtime_args:
             raise ValueError("runtime_args are only valid for simulate cases")
-        if self.foreign is not None and self.schema_version < 2:
-            raise ValueError("foreign case inputs require schema_version 2")
+        advanced_fields = {"resources", "library_map", "covergroups", "foreign"}
+        if self.schema_version < 2 and advanced_fields & self.model_fields_set:
+            raise ValueError("advanced case inputs require schema_version 2")
         declared_files = (*self.sources, *self.resources)
         if self.library_map is not None:
             declared_files += (self.library_map,)
@@ -1018,8 +1033,10 @@ class ExecutionPlan(StrictModel):
             phase_reaches(stage.attempted_through_phase, self.target_phase) for stage in self.stages
         ):
             raise ValueError("execution plan does not attempt the target phase")
-        if self.schema_version < 3 and foreign:
-            raise ValueError("foreign build stages require execution schema version 3")
+        if self.schema_version < 3 and (foreign or self.work_files):
+            raise ValueError(
+                "foreign build stages and generated work files require schema version 3"
+            )
         return self
 
 

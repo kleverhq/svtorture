@@ -117,6 +117,13 @@
     },
     "DashboardCase": {
       "additionalProperties": false,
+      "if": {
+        "properties": {
+          "schema_version": {
+            "const": 1
+          }
+        }
+      },
       "properties": {
         "content_sha256": {
           "pattern": "^[0-9a-f]{64}$",
@@ -324,6 +331,14 @@
         "definition_sha256",
         "source_links"
       ],
+      "then": {
+        "properties": {
+          "covergroups": false,
+          "foreign": false,
+          "library_map": false,
+          "resources": false
+        }
+      },
       "title": "DashboardCase",
       "type": "object"
     },

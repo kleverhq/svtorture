@@ -86,6 +86,15 @@ def test_generated_schemas_use_the_controlled_tag_registry(catalog: Catalog) -> 
         (catalog.root / "schemas" / "requirements.schema.json").read_text()
     )
     assert case_schema["properties"]["tags"]["items"]["enum"] == expected
+    version_one_gate = case_schema["then"]
+    assert version_one_gate == {
+        "properties": {
+            "covergroups": False,
+            "foreign": False,
+            "library_map": False,
+            "resources": False,
+        }
+    }
     requirement_properties = requirement_schema["$defs"]["Requirement"]["properties"]
     assert requirement_properties["tags"]["items"]["enum"] == expected
     assert requirement_properties["anchors"]["minItems"] == 1
@@ -160,17 +169,37 @@ def test_foreign_interface_requires_one_c_or_cpp_resource(
         CaseDefinition.model_validate(value)
 
 
-def test_foreign_case_inputs_require_schema_version_two(catalog: Catalog) -> None:
-    value = catalog.cases["ch35-c-source-import"].definition.model_dump(mode="json")
+@pytest.mark.parametrize(
+    "case_id",
+    (
+        "ch32-iopath-rise-annotates-path",
+        "ch33-basic-config-selects-design",
+        "ch19-clocking-event-automatic-sample",
+        "ch35-c-source-import",
+    ),
+)
+def test_advanced_case_inputs_require_schema_version_two(catalog: Catalog, case_id: str) -> None:
+    value = catalog.cases[case_id].definition.model_dump(mode="json")
     value["schema_version"] = 1
-    with pytest.raises(ValidationError, match="foreign case inputs require schema_version 2"):
+    with pytest.raises(ValidationError, match="advanced case inputs require schema_version 2"):
         CaseDefinition.model_validate(value)
 
 
-def test_schema_version_one_advanced_cases_remain_readable(catalog: Catalog) -> None:
-    value = catalog.cases["ch19-clocking-event-automatic-sample"].definition.model_dump(mode="json")
-    value["schema_version"] = 1
-    assert CaseDefinition.model_validate(value).schema_version == 1
+@pytest.mark.parametrize(
+    ("field", "value"),
+    (("resources", []), ("library_map", None), ("covergroups", False), ("foreign", None)),
+)
+def test_schema_version_one_rejects_explicit_advanced_defaults(
+    catalog: Catalog, field: str, value: object
+) -> None:
+    definition = catalog.cases["ch04-nba-rhs-captured"].definition
+    data = definition.model_dump(
+        mode="json", exclude={"resources", "library_map", "covergroups", "foreign"}
+    )
+    data["schema_version"] = 1
+    data[field] = value
+    with pytest.raises(ValidationError, match="advanced case inputs require schema_version 2"):
+        CaseDefinition.model_validate(data)
 
 
 def test_boolean_schema_version_is_rejected(catalog: Catalog) -> None:

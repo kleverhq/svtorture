@@ -395,7 +395,21 @@ def test_plan_validation_requires_foreign_stage_to_match_case(catalog: Catalog) 
     )
     legacy_value = foreign_plan.model_dump(mode="json")
     legacy_value["schema_version"] = 2
-    with pytest.raises(ValidationError, match="execution schema version 3"):
+    with pytest.raises(ValidationError, match="schema version 3"):
+        ExecutionPlan.model_validate(legacy_value)
+
+    ordinary_case = catalog.cases["ch04-nba-rhs-captured"]
+    ordinary_plan = VerilatorAdapter().build_plan(
+        ordinary_case,
+        tool,
+        profile,
+        image="image",
+        wrapper=None,
+    )
+    legacy_value = ordinary_plan.model_dump(mode="json")
+    legacy_value["schema_version"] = 2
+    legacy_value["work_files"] = [{"path": "setup.txt", "content": "generated\n"}]
+    with pytest.raises(ValidationError, match="generated work files require schema version 3"):
         ExecutionPlan.model_validate(legacy_value)
 
     without_build = foreign_plan.model_copy(
@@ -411,14 +425,6 @@ def test_plan_validation_requires_foreign_stage_to_match_case(catalog: Catalog) 
             wrapper=None,
         )
 
-    ordinary_case = catalog.cases["ch04-nba-rhs-captured"]
-    ordinary_plan = VerilatorAdapter().build_plan(
-        ordinary_case,
-        tool,
-        profile,
-        image="image",
-        wrapper=None,
-    )
     with_build = ordinary_plan.model_copy(
         update={
             "stages": (
