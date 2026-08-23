@@ -22,7 +22,7 @@ def test_validate_accepts_catalog_beyond_seed_size(
     result = CliRunner().invoke(app, ["validate", "--no-schemas"])
 
     assert result.exit_code == 0, result.output
-    assert result.stdout == "validated cases=13\n"
+    assert result.stdout == f"validated cases={len(cases)}\n"
 
 
 def test_ci_matrix_is_selected_from_generic_public_policy() -> None:

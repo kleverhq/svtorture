@@ -1,0 +1,21 @@
+schema_version = 2
+id = "ch36-vpi-after-delay-callback"
+title = "VPI delay callbacks precede occupied and empty time queues"
+description = "A case-local VPI system task schedules cbAfterDelay for occupied and empty queues, checking exact delay and execution before queued events."
+primary_requirement = "SV-2023-38-VPI-CB-AFTER-DELAY"
+related_requirements = ["SV-2023-36-CALLBACK-SIMULATION-TIME"]
+standard_revision = "1800-2023"
+revision_applicability = { "1800-2012" = "applicable", "1800-2017" = "applicable", "1800-2023" = "applicable" }
+target_phase = "simulate"
+expectation = "accept"
+evidence = "mandatory"
+sources = ["top.sv"]
+resources = ["vpi.cpp"]
+foreign = "vpi"
+top = "top"
+defines = []
+include_dirs = []
+runtime_args = []
+tags = ["scheduling"]
+limits = { timeout_seconds = 30, output_bytes = 65536, memory_mb = 2048, pids = 256 }
+oracle = { kind = "runtime-pass-marker", marker = "SVTORTURE_PASS:ch36-vpi-after-delay-callback" }

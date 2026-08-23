@@ -3,13 +3,20 @@ from __future__ import annotations
 from dataclasses import replace
 
 import pytest
+from pydantic import ValidationError
 
-from svtorture.adapters.base import ToolAdapter
+from svtorture.adapters.base import ToolAdapter, UnsupportedCapability
 from svtorture.adapters.commercial import VcsAdapter
 from svtorture.adapters.open_source import IcarusAdapter, SlangAdapter, VerilatorAdapter
 from svtorture.campaign import validate_plan_for_profile
 from svtorture.catalog import Catalog, LoadedCase
-from svtorture.models import ExecutionStage, Phase, StageKind
+from svtorture.models import (
+    ExecutionPlan,
+    ExecutionStage,
+    Phase,
+    StageKind,
+    WorkFile,
+)
 
 
 @pytest.mark.parametrize(
@@ -183,7 +190,7 @@ def test_plan_backend_identity_must_match_prepared_tool(catalog: Catalog) -> Non
 
 def test_stage_kind_cannot_claim_an_incoherent_phase(catalog: Catalog) -> None:
     case = catalog.cases["ch04-nba-rhs-captured"]
-    with pytest.raises(ValueError, match="compile stages cannot claim simulation"):
+    with pytest.raises(ValueError, match="build stages cannot claim simulation"):
         ExecutionStage(
             id="compile",
             kind=StageKind.COMPILE,
@@ -195,32 +202,305 @@ def test_stage_kind_cannot_claim_an_incoherent_phase(catalog: Catalog) -> None:
         )
 
 
-def test_include_define_and_ordered_sources_are_adapter_inputs(catalog: Catalog) -> None:
-    include_case = catalog.cases["ch22-include-trailing-comment"]
-    multi_case = catalog.cases["ch26-multifile-package-import"]
+def test_include_define_inputs_reach_adapter(catalog: Catalog) -> None:
+    case = catalog.cases["ch22-include-trailing-comment"]
     tool = catalog.tools.tool("icarus")
-    adapter = IcarusAdapter()
-    include_plan = adapter.build_plan(
-        include_case,
+    plan = IcarusAdapter().build_plan(
+        case,
         tool,
         tool.profile("elaborator"),
         image="image",
         wrapper=None,
     )
-    argv = include_plan.stages[0].argv
+    argv = plan.stages[0].argv
     assert "-I/case/include" in argv
     assert "-DSVTORTURE_EXTERNAL_BIAS=1" in argv
-    multi_plan = adapter.build_plan(
-        multi_case,
+
+
+@pytest.mark.parametrize(
+    ("tool_id", "adapter_type", "case_id"),
+    (
+        ("slang", SlangAdapter, "ch26-multifile-package-import"),
+        ("icarus", IcarusAdapter, "ch03-unit-prior-type-across-files"),
+        ("verilator", VerilatorAdapter, "ch03-unit-prior-type-across-files"),
+        ("vcs", VcsAdapter, "ch03-unit-prior-type-across-files"),
+    ),
+)
+def test_ordered_sources_reach_every_adapter(
+    catalog: Catalog,
+    tool_id: str,
+    adapter_type: type[ToolAdapter],
+    case_id: str,
+) -> None:
+    case = catalog.cases[case_id]
+    tool = catalog.tools.tool(tool_id)
+    plan = adapter_type().build_plan(
+        case,
         tool,
-        tool.profile("elaborator"),
+        tool.profile("simulator" if tool_id != "slang" else "elaborator"),
+        image=("image" if tool_id != "vcs" else None),
+        wrapper=("/private/wrapper" if tool_id == "vcs" else None),
+    )
+    expected = [f"/case/{source}" for source in case.definition.sources]
+    portable = [f"$CASE/{source}" for source in case.definition.sources]
+    assert [argument for argument in plan.stages[0].argv if argument.endswith(".sv")] == expected
+    assert [
+        argument for argument in plan.stages[0].portable_argv if argument.endswith(".sv")
+    ] == portable
+
+
+def test_adapters_own_advanced_case_mechanics(catalog: Catalog) -> None:
+    sdf = catalog.cases["ch32-iopath-rise-annotates-path"]
+    icarus = catalog.tools.tool("icarus")
+    sdf_plan = IcarusAdapter().build_plan(
+        sdf,
+        icarus,
+        icarus.profile("simulator"),
         image="image",
         wrapper=None,
     )
-    source_arguments = [
-        argument for argument in multi_plan.stages[0].argv if argument.startswith("/case/")
+    assert "-gspecify" in sdf_plan.stages[0].argv
+    with pytest.raises(UnsupportedCapability, match="SDF"):
+        VerilatorAdapter().check_case(sdf)
+
+    covergroup = catalog.cases["ch19-clocking-event-automatic-sample"]
+    verilator = catalog.tools.tool("verilator")
+    coverage_plan = VerilatorAdapter().build_plan(
+        covergroup,
+        verilator,
+        verilator.profile("simulator"),
+        image="image",
+        wrapper=None,
+    )
+    assert "--coverage-user" in coverage_plan.stages[0].argv
+    with pytest.raises(UnsupportedCapability, match="covergroups"):
+        IcarusAdapter().check_case(covergroup)
+
+
+def test_library_map_plans_are_adapter_owned(catalog: Catalog) -> None:
+    case = catalog.cases["ch33-basic-config-selects-design"]
+    verilator = catalog.tools.tool("verilator")
+    verilator_plan = VerilatorAdapter().build_plan(
+        case,
+        verilator,
+        verilator.profile("simulator"),
+        image="image",
+        wrapper=None,
+    )
+    assert "--libmap" in verilator_plan.stages[0].argv
+    assert "/case/lib.map" in verilator_plan.stages[0].argv
+
+    vcs = catalog.tools.tool("vcs")
+    vcs_plan = VcsAdapter().build_plan(
+        case,
+        vcs,
+        vcs.profile("simulator"),
+        image=None,
+        wrapper="/private/wrapper",
+    )
+    assert [stage.id for stage in vcs_plan.stages] == [
+        "compile-work",
+        "compile-libb",
+        "compile-liba",
+        "elaborate",
+        "run",
     ]
-    assert source_arguments[-2:] == ["/case/values_pkg.sv", "/case/top.sv"]
+    assert {item.path for item in vcs_plan.work_files} == {
+        "libraries/work/.keep",
+        "libraries/liba/.keep",
+        "libraries/libb/.keep",
+        "synopsys_sim.setup",
+    }
+    validate_plan_for_profile(
+        vcs_plan,
+        case,
+        vcs,
+        vcs.profile("simulator"),
+        image=None,
+        wrapper="/private/wrapper",
+    )
+
+
+@pytest.mark.parametrize(
+    ("tool_id", "adapter", "image", "wrapper", "expected"),
+    (
+        (
+            "verilator",
+            VerilatorAdapter(),
+            "image",
+            None,
+            (StageKind.COMPILE, StageKind.FOREIGN_BUILD, StageKind.RUN),
+        ),
+        (
+            "vcs",
+            VcsAdapter(),
+            None,
+            "/private/wrapper",
+            (StageKind.COMPILE, StageKind.FOREIGN_BUILD, StageKind.RUN),
+        ),
+    ),
+)
+@pytest.mark.parametrize(
+    "case_id",
+    ("ch35-c-source-import", "ch35-open-unpacked-array-runtime"),
+)
+def test_dpi_plans_separate_foreign_builds(
+    catalog: Catalog,
+    tool_id: str,
+    adapter: ToolAdapter,
+    image: str | None,
+    wrapper: str | None,
+    expected: tuple[StageKind, ...],
+    case_id: str,
+) -> None:
+    case = catalog.cases[case_id]
+    tool = catalog.tools.tool(tool_id)
+    profile = tool.profile("simulator")
+    plan = adapter.build_plan(
+        case,
+        tool,
+        profile,
+        image=image,
+        wrapper=wrapper,
+    )
+    assert tuple(stage.kind for stage in plan.stages) == expected
+    validate_plan_for_profile(
+        plan,
+        case,
+        tool,
+        profile,
+        image=image,
+        wrapper=wrapper,
+    )
+    if tool_id == "verilator":
+        assert "--exe" in plan.stages[0].argv
+    else:
+        assert "\tvcs " in plan.work_files[0].content
+        assert plan.stages[1].expected_artifact == "simv"
+
+    with pytest.raises(UnsupportedCapability, match="DPI"):
+        IcarusAdapter().check_case(case)
+
+
+def test_plan_validation_requires_foreign_stage_to_match_case(catalog: Catalog) -> None:
+    tool = catalog.tools.tool("verilator")
+    profile = tool.profile("simulator")
+    foreign_case = catalog.cases["ch35-c-source-import"]
+    foreign_plan = VerilatorAdapter().build_plan(
+        foreign_case,
+        tool,
+        profile,
+        image="image",
+        wrapper=None,
+    )
+    legacy_value = foreign_plan.model_dump(mode="json")
+    legacy_value["schema_version"] = 2
+    with pytest.raises(ValidationError, match="schema version 3"):
+        ExecutionPlan.model_validate(legacy_value)
+
+    ordinary_case = catalog.cases["ch04-nba-rhs-captured"]
+    ordinary_plan = VerilatorAdapter().build_plan(
+        ordinary_case,
+        tool,
+        profile,
+        image="image",
+        wrapper=None,
+    )
+    legacy_value = ordinary_plan.model_dump(mode="json")
+    legacy_value["schema_version"] = 2
+    legacy_value["work_files"] = [{"path": "setup.txt", "content": "generated\n"}]
+    with pytest.raises(ValidationError, match="generated work files require schema version 3"):
+        ExecutionPlan.model_validate(legacy_value)
+
+    without_build = foreign_plan.model_copy(
+        update={"stages": (foreign_plan.stages[0], foreign_plan.stages[-1])}
+    )
+    with pytest.raises(ValueError, match="does not match the case contract"):
+        validate_plan_for_profile(
+            without_build,
+            foreign_case,
+            tool,
+            profile,
+            image="image",
+            wrapper=None,
+        )
+
+    with_build = ordinary_plan.model_copy(
+        update={
+            "stages": (
+                ordinary_plan.stages[0],
+                foreign_plan.stages[1],
+                ordinary_plan.stages[-1],
+            )
+        }
+    )
+    with pytest.raises(ValueError, match="does not match the case contract"):
+        validate_plan_for_profile(
+            with_build,
+            ordinary_case,
+            tool,
+            profile,
+            image="image",
+            wrapper=None,
+        )
+
+
+@pytest.mark.parametrize(
+    ("tool_id", "adapter"),
+    (
+        ("icarus", IcarusAdapter()),
+        ("verilator", VerilatorAdapter()),
+        ("vcs", VcsAdapter()),
+    ),
+)
+def test_vpi_plans_own_registration_and_loading(
+    catalog: Catalog,
+    tool_id: str,
+    adapter: ToolAdapter,
+) -> None:
+    case = catalog.cases["ch36-vpi-after-delay-callback"]
+    tool = catalog.tools.tool(tool_id)
+    plan = adapter.build_plan(
+        case,
+        tool,
+        tool.profile("simulator"),
+        image="image" if tool_id != "vcs" else None,
+        wrapper="/private/wrapper" if tool_id == "vcs" else None,
+    )
+    assert tuple(stage.kind for stage in plan.stages) == (
+        StageKind.COMPILE,
+        StageKind.FOREIGN_BUILD,
+        StageKind.RUN,
+    )
+    if tool_id != "vcs":
+        generated_source = next(
+            work_file.content
+            for work_file in plan.work_files
+            if work_file.path.endswith("svtorture-vpi-startup.cpp")
+        )
+        assert "abort" not in generated_source
+    if tool_id == "icarus":
+        assert "iverilog-vpi" in plan.work_files[1].content
+        assert "-m" in plan.stages[-1].argv
+    elif tool_id == "verilator":
+        assert "--vpi" in plan.stages[0].argv
+        assert "--public-flat-rw" in plan.stages[0].argv
+        assert plan.work_files[0].path == "svtorture-vpi-startup.cpp"
+    else:
+        assert plan.work_files[0].content == "$svtorture_vpi call=svtorture_calltf\n"
+        assert "-debug_access+all" in plan.work_files[1].content
+        assert "-P svtorture-vpi.tab" in plan.work_files[1].content
+
+
+def test_plan_validation_rejects_materialized_path_collisions(catalog: Catalog) -> None:
+    case = catalog.cases["ch32-iopath-rise-annotates-path"]
+    tool = catalog.tools.tool("icarus")
+    profile = tool.profile("simulator")
+    plan = IcarusAdapter().build_plan(case, tool, profile, image="image", wrapper=None)
+    plan = plan.model_copy(update={"work_files": (WorkFile(path="test.sdf", content="x"),)})
+
+    with pytest.raises(ValueError, match="work paths collide"):
+        validate_plan_for_profile(plan, case, tool, profile, image="image", wrapper=None)
 
 
 @pytest.mark.parametrize(

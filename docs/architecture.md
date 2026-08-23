@@ -30,7 +30,7 @@ tools/tools.toml ──► tools/*/tool.toml ──► adapter ──► typed E
                          immutable Campaign JSON
                                       │
                                       ▼ derived projection
-                    version-6 portable campaign bundle
+                    version-7 portable campaign bundle
                                       │
                                       ▼ lazy static resources
                            React evidence dashboard
@@ -40,21 +40,27 @@ tools/tools.toml ──► tools/*/tool.toml ──► adapter ──► typed E
 `catalog.py` checks requirement citations and waiver anchors against the
 committed anchor index. Waiver-only anchors leave the Requirements Coverage
 denominator, while cited anchors remain covered. The catalog also checks
-cross-references, safe paths, diagnostic anchors, marker uniqueness, source
-hashes, and the seed corpus. The annotator under
+cross-references, safe paths, diagnostic anchors, marker uniqueness, and the
+bytes of every declared source, include-tree member, resource, and library map.
+Undeclared case-directory files are rejected. The annotator under
 `standards/ieee-1800-2023-annotate/` builds the anchor index from a user-supplied
 PDF. Neither the annotator nor its generated text is part of runtime execution.
 
 A tool profile declares a cumulative phase ceiling and the command boundaries
 that its adapter can assess directly. Adapters declare commands, the furthest
 phase attempted by each command, and diagnostic normalization. `executor.py`
-runs argv arrays in isolated work directories and records bounded excerpts with
-full-stream hashes. Only `evaluator.py` compares those observations with the
-case oracle and labels the evidence as direct or cumulative.
+runs argv arrays in isolated work directories, materializes declared resources
+and bounded adapter-generated control files there, and records bounded excerpts
+with full-stream hashes. Adapter checks produce structural
+`unsupported-capability` results before backend execution. Only `evaluator.py`
+compares observations with the case oracle and labels the evidence as direct or
+cumulative.
 
 When either excerpt is truncated, the evaluator returns the inconclusive reason
 `output-truncated`. It does not evaluate partial text that might omit a second
-pass marker or an internal-error diagnostic.
+pass marker or an internal-error diagnostic. A `foreign-build` stage is a typed
+prerequisite rather than standards evidence; missing toolchains and failed
+C/C++ compilation or linking remain harness-owned.
 
 Open-source tools always run in Docker. Runtime containers have no network,
 use a read-only root filesystem, drop capabilities, and enforce PID and memory
@@ -62,7 +68,7 @@ bounds. Case input is read-only, while each case receives a writable work mount.
 Full logs and generated artifacts stay under `.svtorture/work`; campaigns keep
 only sanitized, bounded evidence.
 
-Commercial execution uses the same version-2 `ExecutionPlan`,
+Commercial execution uses the same version-3 `ExecutionPlan`,
 `StageObservation`, and `NormalizedResult` contracts. A plan records its target
 phase. Each stage and observation records `attempted_through_phase`, and the
 result records `direct`, `cumulative`, or `not-observed` evidence. An ignored
@@ -99,8 +105,8 @@ repository/run/SHA, checks tool definitions against the committed registry,
 requires pullable GHCR digests, and scans the compact bundle projection for
 private paths and common credential forms.
 
-The canonical schema-version-5 `Campaign` remains the complete local evidence
-record. `bundle.py` derives strict schema-version-6 manifest, catalog, compact
+The canonical schema-version-6 `Campaign` remains the complete local evidence
+record. `bundle.py` derives strict schema-version-7 manifest, catalog, compact
 verdict, and case-centric evidence resources without changing evaluator or
 metric semantics. Local assembly writes `index.json` and `trends.json` for any
 number of validated bundle directories or ZIPs. The browser loads those small

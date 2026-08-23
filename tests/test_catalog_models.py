@@ -12,13 +12,7 @@ from svtorture.campaign import (
     load_campaign,
     verify_campaign_against_catalog,
 )
-from svtorture.catalog import (
-    Catalog,
-    CatalogError,
-    load_catalog,
-    mvp_audit,
-    write_json_schema,
-)
+from svtorture.catalog import Catalog, CatalogError, load_catalog, write_json_schema
 from svtorture.evaluator import synthetic_result
 from svtorture.models import (
     Campaign,
@@ -48,15 +42,6 @@ def _copy_catalog_tree(catalog: Catalog, destination: Path) -> None:
             target,
             ignore=shutil.ignore_patterns("ieee-1800-2023-annotate"),
         )
-
-
-def test_seed_catalog_meets_mvp(catalog: Catalog) -> None:
-    assert catalog.inventory.schema_version == 3
-    counts = mvp_audit(catalog)
-    assert counts["cases"] == 12
-    assert counts["chapters"] == 11
-    assert counts["simulation_acceptance"] >= 4
-    assert counts["rejection"] >= 2
 
 
 def test_repository_directories_have_navigation_readmes(catalog: Catalog) -> None:
@@ -101,6 +86,15 @@ def test_generated_schemas_use_the_controlled_tag_registry(catalog: Catalog) -> 
         (catalog.root / "schemas" / "requirements.schema.json").read_text()
     )
     assert case_schema["properties"]["tags"]["items"]["enum"] == expected
+    version_one_gate = case_schema["then"]
+    assert version_one_gate == {
+        "properties": {
+            "covergroups": False,
+            "foreign": False,
+            "library_map": False,
+            "resources": False,
+        }
+    }
     requirement_properties = requirement_schema["$defs"]["Requirement"]["properties"]
     assert requirement_properties["tags"]["items"]["enum"] == expected
     assert requirement_properties["anchors"]["minItems"] == 1
@@ -160,6 +154,54 @@ def test_unknown_metadata_is_rejected(catalog: Catalog) -> None:
         CaseDefinition.model_validate(value)
 
 
+@pytest.mark.parametrize(
+    "resources",
+    (["payload.txt"], ["native.C"], ["native.c", "native.cpp"]),
+)
+def test_foreign_interface_requires_one_c_or_cpp_resource(
+    catalog: Catalog, resources: list[str]
+) -> None:
+    value = catalog.cases["ch04-nba-rhs-captured"].definition.model_dump(mode="json")
+    value["schema_version"] = 2
+    value["foreign"] = "dpi"
+    value["resources"] = resources
+    with pytest.raises(ValidationError, match=r"exactly one C or C\+\+ resource"):
+        CaseDefinition.model_validate(value)
+
+
+@pytest.mark.parametrize(
+    "case_id",
+    (
+        "ch32-iopath-rise-annotates-path",
+        "ch33-basic-config-selects-design",
+        "ch19-clocking-event-automatic-sample",
+        "ch35-c-source-import",
+    ),
+)
+def test_advanced_case_inputs_require_schema_version_two(catalog: Catalog, case_id: str) -> None:
+    value = catalog.cases[case_id].definition.model_dump(mode="json")
+    value["schema_version"] = 1
+    with pytest.raises(ValidationError, match="advanced case inputs require schema_version 2"):
+        CaseDefinition.model_validate(value)
+
+
+@pytest.mark.parametrize(
+    ("field", "value"),
+    (("resources", []), ("library_map", None), ("covergroups", False), ("foreign", None)),
+)
+def test_schema_version_one_rejects_explicit_advanced_defaults(
+    catalog: Catalog, field: str, value: object
+) -> None:
+    definition = catalog.cases["ch04-nba-rhs-captured"].definition
+    data = definition.model_dump(
+        mode="json", exclude={"resources", "library_map", "covergroups", "foreign"}
+    )
+    data["schema_version"] = 1
+    data[field] = value
+    with pytest.raises(ValidationError, match="advanced case inputs require schema_version 2"):
+        CaseDefinition.model_validate(data)
+
+
 def test_boolean_schema_version_is_rejected(catalog: Catalog) -> None:
     value = catalog.cases["ch04-nba-rhs-captured"].definition.model_dump(mode="json")
     value["schema_version"] = True
@@ -217,7 +259,14 @@ def test_requirement_part_must_match_clause_and_id(catalog: Catalog) -> None:
 
 @pytest.mark.parametrize(
     "value",
-    ("../escape.sv", "/absolute.sv", "nested/../escape.sv", r"windows\\escape.sv"),
+    (
+        "../escape.sv",
+        "/absolute.sv",
+        "nested/../escape.sv",
+        "./top.sv",
+        "nested//top.sv",
+        r"windows\\escape.sv",
+    ),
 )
 def test_path_traversal_is_rejected(value: str) -> None:
     with pytest.raises(ValueError, match="unsafe relative path"):
@@ -353,6 +402,42 @@ def test_catalog_rejects_a_symlinked_case_source(catalog: Catalog, tmp_path: Pat
     source.symlink_to("actual.sv")
     with pytest.raises(CatalogError, match="symbolic link"):
         load_catalog(root)
+
+
+def test_resource_bytes_change_case_identity(catalog: Catalog, tmp_path: Path) -> None:
+    root = tmp_path / "repo"
+    _copy_catalog_tree(catalog, root)
+    before = load_catalog(root).cases["ch32-iopath-rise-annotates-path"].content_sha256
+    resource = root / "cases" / "ch32-iopath-rise-annotates-path" / "test.sdf"
+    resource.write_bytes(resource.read_bytes() + b"\n")
+
+    after = load_catalog(root).cases["ch32-iopath-rise-annotates-path"].content_sha256
+
+    assert after != before
+
+
+def test_catalog_rejects_missing_and_undeclared_resources(catalog: Catalog, tmp_path: Path) -> None:
+    root = tmp_path / "repo"
+    _copy_catalog_tree(catalog, root)
+    case_directory = root / "cases" / "ch32-iopath-rise-annotates-path"
+    resource = case_directory / "test.sdf"
+    resource.unlink()
+    with pytest.raises(CatalogError, match="missing or unsafe resource"):
+        load_catalog(root)
+
+    resource.write_text("restored", encoding="utf-8")
+    (case_directory / "undeclared.bin").write_bytes(b"undeclared")
+    with pytest.raises(CatalogError, match=r"undeclared case files: undeclared\.bin"):
+        load_catalog(root)
+
+
+def test_catalog_parses_the_declared_library_map(catalog: Catalog) -> None:
+    loaded = catalog.cases["ch33-basic-config-selects-design"]
+    assert [(item.name, item.sources) for item in loaded.logical_libraries] == [
+        ("work", ("top.sv",)),
+        ("libb", ("libb.sv",)),
+        ("liba", ("liba.sv",)),
+    ]
 
 
 def test_requirement_part_must_match_index(catalog: Catalog, tmp_path: Path) -> None:

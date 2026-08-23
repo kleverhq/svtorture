@@ -63,8 +63,8 @@ The frontend uses:
 - Vitest, Testing Library, and jsdom for unit tests.
 
 `src/svtorture/publish.py` owns the public trust gate, while
-`src/svtorture/bundle.py` creates and validates the strict version-6 portable
-resources. The browser loads `data/index.json` and `data/trends.json` first,
+`src/svtorture/bundle.py` creates strict version-7 portable resources and also
+validates version 6. The browser loads `data/index.json` and `data/trends.json` first,
 then the selected campaign's manifest, catalog, and compact verdicts. Full
 observations remain unloaded until a case detail requests its evidence shard.
 The React model derives filters, comparable-campaign changes, and aggregate

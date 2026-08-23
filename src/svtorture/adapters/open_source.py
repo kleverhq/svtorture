@@ -9,7 +9,9 @@ from svtorture.adapters.base import (
     WORK_ROOT,
     DiagnosticPattern,
     ToolAdapter,
+    UnsupportedCapability,
     define_argv,
+    foreign_source_argv,
     include_argv,
     source_argv,
 )
@@ -18,11 +20,50 @@ from svtorture.models import (
     ExecutionBackend,
     ExecutionPlan,
     ExecutionStage,
+    ForeignInterface,
     Phase,
     StageKind,
     ToolDefinition,
     ToolProfile,
+    WorkFile,
 )
+
+ICARUS_VPI_STARTUP_SOURCE = """#include "vpi_user.h"
+
+extern "C" PLI_INT32 svtorture_calltf(PLI_BYTE8*);
+
+static void register_vpi() {
+    s_vpi_systf_data task{};
+    task.type = vpiSysTask;
+    task.tfname = const_cast<PLI_BYTE8*>("$svtorture_vpi");
+    task.calltf = svtorture_calltf;
+    vpi_register_systf(&task);
+}
+
+extern "C" {
+void (*vlog_startup_routines[])() = {register_vpi, nullptr};
+}
+"""
+
+VERILATOR_VPI_STARTUP_SOURCE = """#include "vpi_user.h"
+
+extern "C" PLI_INT32 svtorture_calltf(PLI_BYTE8*);
+
+static PLI_INT32 start_of_simulation(p_cb_data) {
+    return svtorture_calltf(nullptr);
+}
+
+static void register_vpi() {
+    s_cb_data callback{};
+    callback.reason = cbStartOfSimulation;
+    callback.cb_rtn = start_of_simulation;
+    vpi_register_cb(&callback);
+}
+
+extern "C" {
+void (*vlog_startup_routines[])() = {register_vpi, nullptr};
+}
+"""
 
 
 def _stage(
@@ -61,6 +102,14 @@ class SlangAdapter(ToolAdapter):
     def version_argv(self) -> tuple[str, ...]:
         return ("slang", "--version")
 
+    def check_case(self, case: LoadedCase) -> None:
+        if case.definition.foreign is not None:
+            raise UnsupportedCapability("Slang has no foreign interface runtime")
+        if case.definition.covergroups:
+            raise UnsupportedCapability("Slang has no functional coverage runtime")
+        if any(resource.casefold().endswith(".sdf") for resource in case.definition.resources):
+            raise UnsupportedCapability("Slang has no SDF simulation runtime")
+
     def build_plan(
         self,
         case: LoadedCase,
@@ -71,6 +120,7 @@ class SlangAdapter(ToolAdapter):
         wrapper: str | None,
     ) -> ExecutionPlan:
         del wrapper
+        self.check_case(case)
         base: tuple[str, ...] = ("slang", "--std=1800-2023", "--single-unit")
         portable: tuple[str, ...] = base
         if case.definition.target_phase is Phase.PREPROCESS:
@@ -85,12 +135,15 @@ class SlangAdapter(ToolAdapter):
         else:
             if case.definition.target_phase is Phase.SIMULATE:
                 raise ValueError("Slang does not implement simulation")
+        if case.definition.library_map is not None:
+            base += ("--libmap", f"/case/{case.definition.library_map}")
+            portable += ("--libmap", f"$CASE/{case.definition.library_map}")
         base += include_argv(case, "split") + define_argv(case, "joined")
         portable += include_argv(case, "split", portable=True) + define_argv(case, "joined")
         base += source_argv(case)
         portable += source_argv(case, portable=True)
         return ExecutionPlan(
-            schema_version=2,
+            schema_version=3,
             case_id=case.definition.id,
             tool_id=tool.id,
             profile_id=profile.id,
@@ -137,6 +190,14 @@ class IcarusAdapter(ToolAdapter):
     def version_argv(self) -> tuple[str, ...]:
         return ("iverilog", "-V")
 
+    def check_case(self, case: LoadedCase) -> None:
+        if case.definition.foreign is ForeignInterface.DPI:
+            raise UnsupportedCapability("Icarus does not support DPI")
+        if case.definition.library_map is not None:
+            raise UnsupportedCapability("Icarus does not support configurations")
+        if case.definition.covergroups:
+            raise UnsupportedCapability("Icarus does not support covergroups")
+
     def build_plan(
         self,
         case: LoadedCase,
@@ -147,6 +208,7 @@ class IcarusAdapter(ToolAdapter):
         wrapper: str | None,
     ) -> ExecutionPlan:
         del wrapper
+        self.check_case(case)
         output = f"{WORK_ROOT}/sim.vvp"
         portable_output = f"{PORTABLE_WORK_ROOT}/sim.vvp"
         preprocessing = case.definition.target_phase is Phase.PREPROCESS
@@ -164,6 +226,9 @@ class IcarusAdapter(ToolAdapter):
         if case.definition.top and not preprocessing:
             compile_argv += ("-s", case.definition.top)
             portable_compile += ("-s", case.definition.top)
+        if any(resource.casefold().endswith(".sdf") for resource in case.definition.resources):
+            compile_argv += ("-gspecify",)
+            portable_compile += ("-gspecify",)
         compile_argv += include_argv(case, "joined") + define_argv(case, "joined")
         portable_compile += include_argv(case, "joined", portable=True) + define_argv(
             case, "joined"
@@ -181,9 +246,59 @@ class IcarusAdapter(ToolAdapter):
                 None if preprocessing else "sim.vvp",
             )
         ]
+        work_files: tuple[WorkFile, ...] = ()
+        if case.definition.foreign is ForeignInterface.VPI:
+            sources = " ".join(f"../{source}" for source in case.definition.foreign_sources)
+            work_files = (
+                WorkFile(
+                    path="svtorture-vpi-build/svtorture-vpi-startup.cpp",
+                    content=ICARUS_VPI_STARTUP_SOURCE,
+                ),
+                WorkFile(
+                    path="svtorture-vpi.mk",
+                    content=(
+                        ".PHONY: svtorture-vpi-build/svtorture.vpi\n"
+                        "svtorture-vpi-build/svtorture.vpi:\n"
+                        "\tcd svtorture-vpi-build && "
+                        f"iverilog-vpi --name=svtorture {sources} "
+                        "svtorture-vpi-startup.cpp\n"
+                    ),
+                ),
+            )
+            stages.append(
+                _stage(
+                    "foreign-build",
+                    StageKind.FOREIGN_BUILD,
+                    Phase.ELABORATE,
+                    (
+                        "make",
+                        "-f",
+                        f"{WORK_ROOT}/svtorture-vpi.mk",
+                        "svtorture-vpi-build/svtorture.vpi",
+                    ),
+                    (
+                        "make",
+                        "-f",
+                        f"{PORTABLE_WORK_ROOT}/svtorture-vpi.mk",
+                        "svtorture-vpi-build/svtorture.vpi",
+                    ),
+                    case,
+                    "svtorture-vpi-build/svtorture.vpi",
+                )
+            )
         if case.definition.target_phase is Phase.SIMULATE:
-            run = ("vvp", output, *case.definition.runtime_args)
-            portable_run = ("vvp", portable_output, *case.definition.runtime_args)
+            plugin = (
+                ("-M", f"{WORK_ROOT}/svtorture-vpi-build", "-m", "svtorture")
+                if case.definition.foreign is ForeignInterface.VPI
+                else ()
+            )
+            portable_plugin = (
+                ("-M", f"{PORTABLE_WORK_ROOT}/svtorture-vpi-build", "-m", "svtorture")
+                if case.definition.foreign is ForeignInterface.VPI
+                else ()
+            )
+            run = ("vvp", *plugin, output, *case.definition.runtime_args)
+            portable_run = ("vvp", *portable_plugin, portable_output, *case.definition.runtime_args)
             stages.append(
                 _stage(
                     "run",
@@ -195,7 +310,7 @@ class IcarusAdapter(ToolAdapter):
                 )
             )
         return ExecutionPlan(
-            schema_version=2,
+            schema_version=3,
             case_id=case.definition.id,
             tool_id=tool.id,
             profile_id=profile.id,
@@ -203,6 +318,7 @@ class IcarusAdapter(ToolAdapter):
             backend=ExecutionBackend.DOCKER,
             image=image,
             stages=tuple(stages),
+            work_files=work_files,
         )
 
 
@@ -233,6 +349,10 @@ class VerilatorAdapter(ToolAdapter):
     def version_argv(self) -> tuple[str, ...]:
         return ("verilator", "--version")
 
+    def check_case(self, case: LoadedCase) -> None:
+        if any(resource.casefold().endswith(".sdf") for resource in case.definition.resources):
+            raise UnsupportedCapability("Verilator does not implement SDF annotation")
+
     def build_plan(
         self,
         case: LoadedCase,
@@ -243,6 +363,8 @@ class VerilatorAdapter(ToolAdapter):
         wrapper: str | None,
     ) -> ExecutionPlan:
         del wrapper
+        self.check_case(case)
+        work_files: tuple[WorkFile, ...] = ()
         base: tuple[str, ...] = (
             "verilator",
             "--language",
@@ -257,15 +379,10 @@ class VerilatorAdapter(ToolAdapter):
             base += ("--timing", "-Wno-fatal", "-Wpedantic")
             portable += ("--timing", "-Wno-fatal", "-Wpedantic")
             if case.definition.target_phase is Phase.SIMULATE:
-                base += (
-                    "--binary",
-                    "--Mdir",
-                    f"{WORK_ROOT}/obj",
-                    "-o",
-                    "sim",
-                )
+                mode = ("--cc", "--main") if case.definition.foreign is not None else ("--binary",)
+                base += (*mode, "--Mdir", f"{WORK_ROOT}/obj", "-o", "sim")
                 portable += (
-                    "--binary",
+                    *mode,
                     "--Mdir",
                     f"{PORTABLE_WORK_ROOT}/obj",
                     "-o",
@@ -277,11 +394,38 @@ class VerilatorAdapter(ToolAdapter):
         if case.definition.top and not preprocessing:
             base += ("--top-module", case.definition.top)
             portable += ("--top-module", case.definition.top)
+        if case.definition.library_map is not None:
+            base += ("--libmap", f"/case/{case.definition.library_map}")
+            portable += ("--libmap", f"$CASE/{case.definition.library_map}")
+        if case.definition.covergroups:
+            base += ("--coverage-user",)
+            portable += ("--coverage-user",)
+        if case.definition.foreign is ForeignInterface.VPI:
+            base += ("--vpi", "--public-flat-rw", "--bbox-sys")
+            portable += ("--vpi", "--public-flat-rw", "--bbox-sys")
         base += include_argv(case, "joined") + define_argv(case, "joined")
         portable += include_argv(case, "joined", portable=True) + define_argv(case, "joined")
         base += source_argv(case)
         portable += source_argv(case, portable=True)
-        artifact = "obj/sim" if case.definition.target_phase is Phase.SIMULATE else None
+        if case.definition.foreign is not None:
+            base += ("--exe", *foreign_source_argv(case))
+            portable += ("--exe", *foreign_source_argv(case, portable=True))
+            if case.definition.foreign is ForeignInterface.VPI:
+                work_files = (
+                    WorkFile(
+                        path="svtorture-vpi-startup.cpp",
+                        content=VERILATOR_VPI_STARTUP_SOURCE,
+                    ),
+                )
+                base += (f"{WORK_ROOT}/svtorture-vpi-startup.cpp",)
+                portable += (f"{PORTABLE_WORK_ROOT}/svtorture-vpi-startup.cpp",)
+        artifact = None
+        if case.definition.target_phase is Phase.SIMULATE:
+            artifact = (
+                f"obj/V{case.definition.top}.mk"
+                if case.definition.foreign is not None
+                else "obj/sim"
+            )
         stages: list[ExecutionStage] = [
             _stage(
                 "compile",
@@ -293,6 +437,33 @@ class VerilatorAdapter(ToolAdapter):
                 artifact,
             )
         ]
+        if case.definition.foreign is not None:
+            assert case.definition.top is not None
+            stages.append(
+                _stage(
+                    "foreign-build",
+                    StageKind.FOREIGN_BUILD,
+                    Phase.ELABORATE,
+                    (
+                        "make",
+                        "-C",
+                        f"{WORK_ROOT}/obj",
+                        "-f",
+                        f"V{case.definition.top}.mk",
+                        "sim",
+                    ),
+                    (
+                        "make",
+                        "-C",
+                        f"{PORTABLE_WORK_ROOT}/obj",
+                        "-f",
+                        f"V{case.definition.top}.mk",
+                        "sim",
+                    ),
+                    case,
+                    "obj/sim",
+                )
+            )
         if case.definition.target_phase is Phase.SIMULATE:
             stages.append(
                 _stage(
@@ -305,7 +476,7 @@ class VerilatorAdapter(ToolAdapter):
                 )
             )
         return ExecutionPlan(
-            schema_version=2,
+            schema_version=3,
             case_id=case.definition.id,
             tool_id=tool.id,
             profile_id=profile.id,
@@ -313,4 +484,5 @@ class VerilatorAdapter(ToolAdapter):
             backend=ExecutionBackend.DOCKER,
             image=image,
             stages=tuple(stages),
+            work_files=work_files,
         )

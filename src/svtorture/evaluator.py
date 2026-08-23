@@ -12,6 +12,7 @@ from svtorture.models import (
     RawOutcome,
     ReasonCode,
     ResultStatus,
+    StageKind,
     StageObservation,
     phase_reaches,
 )
@@ -26,7 +27,7 @@ def synthetic_result(
     summary: str,
 ) -> NormalizedResult:
     return NormalizedResult(
-        schema_version=2,
+        schema_version=3,
         case_id=case.definition.id,
         requirement_id=case.definition.primary_requirement,
         tool_id=tool_id,
@@ -82,7 +83,7 @@ def _result(
     if observations:
         reproduction = " ".join(shlex.quote(item) for item in observations[-1].portable_argv)
     return NormalizedResult(
-        schema_version=2,
+        schema_version=3,
         case_id=case.definition.id,
         requirement_id=case.definition.primary_requirement,
         tool_id=tool_id,
@@ -96,6 +97,51 @@ def _result(
         observations=observations,
         reproduction_command=reproduction,
     )
+
+
+def _foreign_failure(
+    case: LoadedCase,
+    tool_id: str,
+    profile_id: str,
+    observations: tuple[StageObservation, ...],
+) -> NormalizedResult | None:
+    for observation in observations:
+        if observation.kind is not StageKind.FOREIGN_BUILD:
+            continue
+        if observation.outcome is RawOutcome.LAUNCH_FAILURE:
+            return _result(
+                case,
+                tool_id,
+                profile_id,
+                ResultStatus.HARNESS_ERROR,
+                ReasonCode.TOOLCHAIN_UNAVAILABLE,
+                "The foreign compiler or linker is unavailable.",
+                observations,
+            )
+        if observation.outcome in {
+            RawOutcome.BACKEND_UNAVAILABLE,
+            RawOutcome.CONTAINER_FAILURE,
+        }:
+            continue
+        failed = (
+            observation.outcome is not RawOutcome.NORMAL_EXIT
+            or observation.exit_code != 0
+            or observation.internal_error
+            or observation.stdout.truncated
+            or observation.stderr.truncated
+            or observation.artifact_present is False
+        )
+        if failed:
+            return _result(
+                case,
+                tool_id,
+                profile_id,
+                ResultStatus.HARNESS_ERROR,
+                ReasonCode.FOREIGN_BUILD_FAILURE,
+                "The fixed foreign source failed to compile or link.",
+                observations,
+            )
+    return None
 
 
 def _operational_failure(
@@ -217,6 +263,9 @@ def evaluate(
             "The execution plan produced no observations.",
             observations,
         )
+    foreign = _foreign_failure(case, tool_id, profile_id, observations)
+    if foreign is not None:
+        return foreign
     operational = _operational_failure(case, tool_id, profile_id, observations)
     if operational is not None:
         return operational
