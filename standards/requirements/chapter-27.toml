@@ -11,7 +11,7 @@ anchors = [
 ]
 summary = "Alternative blocks within one conditional-generate construct may share a name because at most one is instantiated."
 related_clauses = []
-tags = []
+tags = ["conditional", "generate", "namespace"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -35,7 +35,7 @@ anchors = [
 ]
 summary = "A named conditional-generate block shall not share its name with a declaration or with a block in another conditional- or loop-generate construct in the same scope, even when the conflicting block is not selected."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "generate", "namespace", "redeclaration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -59,7 +59,7 @@ anchors = [
 ]
 summary = "A selected named conditional-generate block declares a generate-block instance whose name identifies its scope and participates in normal hierarchical naming."
 related_clauses = []
-tags = []
+tags = ["block", "generate", "hierarchy", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -83,7 +83,7 @@ anchors = [
 ]
 summary = "An if-generate or case-generate evaluates constant expressions during elaboration and instantiates at most one selected alternative generate block; if no alternative matches, none is instantiated."
 related_clauses = []
-tags = []
+tags = ["conditional", "elaboration", "generate"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -108,7 +108,7 @@ anchors = [
 ]
 summary = "A conditional-generate block may be named or unnamed and may consist of one item without begin/end; except for direct conditional nesting, it still creates a separate scope and hierarchy level when instantiated."
 related_clauses = []
-tags = []
+tags = ["block", "generate", "hierarchy", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -132,7 +132,7 @@ anchors = [
 ]
 summary = "A selected unnamed conditional-generate block creates a scope, but its declarations cannot be hierarchically referenced except from within hierarchy instantiated by that block."
 related_clauses = []
-tags = []
+tags = ["generate", "hierarchy", "scope", "visibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -157,7 +157,7 @@ anchors = [
 ]
 summary = "When a conditional-generate block's sole unbracketed item is another conditional-generate construct, the inner construct is directly nested: no intervening scope is created, its alternatives belong to the outer construct and may share outer alternative names, and their names conflict with declarations in the outer enclosing scope; this rule applies only between conditional constructs, not loops."
 related_clauses = []
-tags = []
+tags = ["conditional", "generate", "namespace", "redeclaration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -181,7 +181,7 @@ anchors = [
 ]
 summary = "It is an error for a generate-block instance-array name to conflict with any other declaration, including another generate-block instance array."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "generate", "namespace", "redeclaration"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -205,7 +205,7 @@ anchors = [
 ]
 summary = "Except for port declarations, specify blocks, and specparam declarations, module items—including nested generate constructs—are permitted in a generate block."
 related_clauses = []
-tags = []
+tags = ["generate", "module"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -231,7 +231,7 @@ summary = "Constructs inside an instantiated generate block may directly referen
 related_clauses = [
     "23.9",
 ]
-tags = []
+tags = ["generate", "scope", "visibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -255,7 +255,7 @@ anchors = [
 ]
 summary = "A generate block shall not contain a port declaration, specify block, or specparam declaration."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "generate"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -279,7 +279,7 @@ anchors = [
 ]
 summary = "Each elaborated generate-block instance creates a hierarchy level and brings its enclosed objects, behavioral constructs, and module instances into existence; an uninstantiated alternative does not."
 related_clauses = []
-tags = []
+tags = ["elaboration", "generate", "hierarchy", "instantiation"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -303,7 +303,7 @@ anchors = [
 ]
 summary = "Generate regions, loop-generate constructs, conditional if/case-generate constructs, generate blocks, and generate items shall conform to the productions in Syntax 27-1."
 related_clauses = []
-tags = []
+tags = ["generate", "grammar"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -328,7 +328,7 @@ anchors = [
 ]
 summary = "In nested if-generate constructs, an else associates with the nearest unmatched if-generate construct."
 related_clauses = []
-tags = []
+tags = ["conditional", "generate"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -352,7 +352,7 @@ anchors = [
 ]
 summary = "A generate item shall be an interface-or-generate item in an interface, a module-or-generate item in a module outside an interface, and a checker-or-generate item in a checker."
 related_clauses = []
-tags = []
+tags = ["checker", "generate", "interface", "module"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -378,7 +378,7 @@ summary = "A parameter declared in a generate block has localparam semantics and
 related_clauses = [
     "6.20.4",
 ]
-tags = []
+tags = ["generate", "parameter"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -402,7 +402,7 @@ anchors = [
 ]
 summary = "Each generate keyword that starts a generate region shall be matched by an endgenerate keyword."
 related_clauses = []
-tags = []
+tags = ["generate"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -426,7 +426,7 @@ anchors = [
 ]
 summary = "A generate/endgenerate region is optional, may occur only directly within a module, and shall not nest inside another generate region."
 related_clauses = []
-tags = []
+tags = ["generate", "module"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -452,7 +452,7 @@ summary = "Enclosing otherwise identical directly module-level generate construc
 related_clauses = [
     "3.12",
 ]
-tags = []
+tags = ["elaboration", "generate"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -476,7 +476,7 @@ anchors = [
 ]
 summary = "Every expression in a generate scheme shall be a constant expression whose value is deterministic at elaboration time."
 related_clauses = []
-tags = []
+tags = ["constant-expression", "elaboration", "generate"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -502,7 +502,7 @@ summary = "A generate scheme is evaluated during elaboration, before simulation,
 related_clauses = [
     "3.12",
 ]
-tags = []
+tags = ["elaboration", "generate"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -526,7 +526,7 @@ anchors = [
 ]
 summary = "A genvar is used as an integer during elaboration to evaluate a loop-generate scheme and create its block instances; the genvar does not exist as a simulation-time object."
 related_clauses = []
-tags = []
+tags = ["elaboration", "generate", "genvar"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -550,7 +550,7 @@ anchors = [
 ]
 summary = "It is an error if any bit of the genvar is x or z during loop-generate evaluation."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "four-state", "generate", "genvar"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -576,7 +576,7 @@ summary = "A genvar may be referenced only within a loop generate scheme; a refe
 related_clauses = [
     "27.3",
 ]
-tags = []
+tags = ["generate", "genvar", "name-resolution"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -600,7 +600,7 @@ anchors = [
 ]
 summary = "It is an error if a genvar value repeats during evaluation of one loop-generate scheme."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "generate", "genvar"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -624,7 +624,7 @@ anchors = [
 ]
 summary = "It is an error if evaluation of a loop-generate scheme does not terminate."
 related_clauses = []
-tags = []
+tags = ["diagnostic", "generate", "genvar"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -649,7 +649,7 @@ anchors = [
 ]
 summary = "A loop-generate index shall be a genvar declared before use, either by a prior genvar declaration or by the optional genvar declaration in its initialization."
 related_clauses = []
-tags = []
+tags = ["generate", "genvar"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -673,7 +673,7 @@ anchors = [
 ]
 summary = "The initialization and iteration assignments of a loop-generate scheme shall assign to the same genvar."
 related_clauses = []
-tags = []
+tags = ["generate", "genvar"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -698,7 +698,7 @@ anchors = [
 ]
 summary = "Each loop-generate block instance contains an implicit integer localparam with the loop index's name and type, set to that instance's elaboration-time index value; references to the name inside the block denote this localparam."
 related_clauses = []
-tags = []
+tags = ["generate", "genvar", "parameter"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -722,7 +722,7 @@ anchors = [
 ]
 summary = "The implicit loop-index localparam may be used wherever an integer parameter is allowed and may be referenced hierarchically."
 related_clauses = []
-tags = []
+tags = ["generate", "genvar", "hierarchy", "parameter"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -746,7 +746,7 @@ anchors = [
 ]
 summary = "The right-hand side of a loop-generate initialization assignment shall not reference the loop index."
 related_clauses = []
-tags = []
+tags = ["generate", "genvar"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -772,7 +772,7 @@ summary = "Each named loop-generate block instance has the hierarchical componen
 related_clauses = [
     "23.6",
 ]
-tags = []
+tags = ["generate", "genvar", "hierarchy"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -798,7 +798,7 @@ summary = "A name declared in an instantiated named generate block can be refere
 related_clauses = [
     "23.6",
 ]
-tags = []
+tags = ["generate", "hierarchy", "name-resolution"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -822,7 +822,7 @@ anchors = [
 ]
 summary = "A named loop-generate block declares an array of block instances indexed by the genvar values used during elaboration; indices may be sparse, and the array declaration exists even when no instance is generated."
 related_clauses = []
-tags = []
+tags = ["array", "generate", "genvar", "hierarchy"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -846,7 +846,7 @@ anchors = [
 ]
 summary = "Nested loop-generate constructs shall not use the same genvar, because the outer block's implicit localparam shadows that genvar name."
 related_clauses = []
-tags = []
+tags = ["generate", "genvar", "name-resolution", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -870,7 +870,7 @@ anchors = [
 ]
 summary = "A generate construct may contain a recursive instantiation of its enclosing module when parameter-controlled elaboration terminates in a finite model hierarchy."
 related_clauses = []
-tags = []
+tags = ["elaboration", "generate", "instantiation", "module"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -894,7 +894,7 @@ anchors = [
 ]
 summary = "A loop-generate block may be a single item without begin/end and, whether named or unnamed, still creates a separate scope and hierarchy level when instantiated."
 related_clauses = []
-tags = []
+tags = ["block", "generate", "hierarchy", "scope"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -919,7 +919,7 @@ anchors = [
 ]
 summary = "For external-interface reference, generate constructs in each scope are numbered in textual order starting at 1, and every unnamed block receives genblk<n> using its enclosing construct's number; leading zeros are added to n as needed to avoid an explicitly declared name conflict."
 related_clauses = []
-tags = []
+tags = ["generate", "hierarchy", "name-resolution", "source-order"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
@@ -943,7 +943,7 @@ anchors = [
 ]
 summary = "Declarations in an unnamed generate block cannot be hierarchically referenced from outside hierarchy instantiated by that block."
 related_clauses = []
-tags = []
+tags = ["generate", "hierarchy", "scope", "visibility"]
 
 [requirements.revision_applicability.1800-2012]
 status = "applicable"
