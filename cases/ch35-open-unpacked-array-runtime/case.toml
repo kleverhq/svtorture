@@ -1,0 +1,21 @@
+schema_version = 2
+id = "ch35-open-unpacked-array-runtime"
+title = "A DPI open array preserves actual bounds and writable elements"
+description = "A C++ import observes the actual descending unpacked-array range and updates an inout element through the standard open-array API."
+primary_requirement = "SV-2023-35-OPEN-ARRAY-CALL-SITE-RANGES"
+related_requirements = ["SV-2023-35-DPI-INOUT-COPY-IN-OUT", "SV-2023-35-DPI-OPEN-ARRAY-LEGALITY", "SV-2023-H-DPI-OPEN-ARRAY-ORIGINAL-INDEX-ACCESS", "SV-2023-H-DPI-OPEN-ARRAY-QUERY-SEMANTICS"]
+standard_revision = "1800-2023"
+revision_applicability = { "1800-2012" = "applicable", "1800-2017" = "applicable", "1800-2023" = "applicable" }
+target_phase = "simulate"
+expectation = "accept"
+evidence = "mandatory"
+sources = ["top.sv"]
+resources = ["dpi.cpp"]
+foreign = "dpi"
+top = "top"
+defines = []
+include_dirs = []
+runtime_args = []
+tags = ["copy-out", "subroutine"]
+limits = { timeout_seconds = 30, output_bytes = 65536, memory_mb = 2048, pids = 256 }
+oracle = { kind = "runtime-pass-marker", marker = "SVTORTURE_PASS:ch35-open-unpacked-array-runtime" }

@@ -1,0 +1,19 @@
+schema_version = 2
+id = "ch03-unit-prior-type-across-files"
+title = "A prior compilation-unit type is visible across source files"
+description = "Two ordered files form one compilation unit, allowing the later module to use an earlier type and unit-scope variable."
+primary_requirement = "SV-2023-03-COMPILATION-UNIT-SCOPE"
+related_requirements = ["SV-2023-03-COMPILATION-UNIT-PRIOR-DECLARATION", "SV-2023-03-COMPILATION-UNIT-USE-MODELS", "SV-2023-03-UNIT-SCOPE-QUALIFICATION"]
+standard_revision = "1800-2023"
+revision_applicability = { "1800-2012" = "applicable", "1800-2017" = "applicable", "1800-2023" = "applicable" }
+target_phase = "simulate"
+expectation = "accept"
+evidence = "mandatory"
+sources = ["decls.sv", "top.sv"]
+top = "top"
+defines = []
+include_dirs = []
+runtime_args = []
+tags = ["module"]
+limits = { timeout_seconds = 30, output_bytes = 65536, memory_mb = 2048, pids = 256 }
+oracle = { kind = "runtime-pass-marker", marker = "SVTORTURE_PASS:ch03-unit-prior-type-across-files" }

@@ -28,6 +28,14 @@
       "title": "Expectation",
       "type": "string"
     },
+    "ForeignInterface": {
+      "enum": [
+        "dpi",
+        "vpi"
+      ],
+      "title": "ForeignInterface",
+      "type": "string"
+    },
     "Oracle": {
       "additionalProperties": false,
       "properties": {
@@ -132,7 +140,19 @@
     }
   },
   "additionalProperties": false,
+  "if": {
+    "properties": {
+      "schema_version": {
+        "const": 1
+      }
+    }
+  },
   "properties": {
+    "covergroups": {
+      "default": false,
+      "title": "Covergroups",
+      "type": "boolean"
+    },
     "defines": {
       "default": [],
       "items": {
@@ -153,6 +173,17 @@
     "expectation": {
       "$ref": "#/$defs/Expectation"
     },
+    "foreign": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ForeignInterface"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
     "id": {
       "title": "Id",
       "type": "string"
@@ -164,6 +195,18 @@
       },
       "title": "Include Dirs",
       "type": "array"
+    },
+    "library_map": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Library Map"
     },
     "limits": {
       "$ref": "#/$defs/ResourceLimits",
@@ -189,6 +232,14 @@
       "title": "Related Requirements",
       "type": "array"
     },
+    "resources": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Resources",
+      "type": "array"
+    },
     "revision_applicability": {
       "additionalProperties": {
         "$ref": "#/$defs/Applicability"
@@ -208,7 +259,7 @@
       "type": "array"
     },
     "schema_version": {
-      "maximum": 1,
+      "maximum": 2,
       "minimum": 1,
       "title": "Schema Version",
       "type": "integer"
@@ -295,6 +346,14 @@
     "sources",
     "oracle"
   ],
+  "then": {
+    "properties": {
+      "covergroups": false,
+      "foreign": false,
+      "library_map": false,
+      "resources": false
+    }
+  },
   "title": "CaseDefinition",
   "type": "object"
 }

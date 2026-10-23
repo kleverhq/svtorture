@@ -17,6 +17,7 @@ from svtorture.models import (
     CorpusMetrics,
     EvidenceLevel,
     EvidenceMode,
+    LogicalLibrary,
     ManifestHashes,
     MetricBreakdown,
     Phase,
@@ -25,13 +26,14 @@ from svtorture.models import (
     Requirement,
     ResultStatus,
     SafeText,
+    StageKind,
     StageObservation,
     StandardSection,
     StrictModel,
     standard_location_sort_key,
 )
 
-DashboardSchemaVersion = Annotated[int, Field(strict=True, ge=6, le=6)]
+DashboardSchemaVersion = Annotated[int, Field(strict=True, ge=6, le=7)]
 StrictCount = Annotated[int, Field(strict=True, ge=0)]
 Sha256 = Annotated[str, Field(pattern=SHA256_RE.pattern)]
 FullCommit = Annotated[str, Field(pattern=SHA_RE.pattern)]
@@ -152,7 +154,7 @@ class ArchiveMetadata(StrictModel):
 
 
 class CampaignSummary(StrictModel):
-    schema_version: DashboardSchemaVersion = 6
+    schema_version: DashboardSchemaVersion = 7
     kind: Literal["campaign-summary"] = "campaign-summary"
     id: str = Field(pattern=CAMPAIGN_ID_RE.pattern)
     started_at: datetime
@@ -187,7 +189,7 @@ class CampaignSummary(StrictModel):
 
 
 class CampaignTrends(StrictModel):
-    schema_version: DashboardSchemaVersion = 6
+    schema_version: DashboardSchemaVersion = 7
     kind: Literal["campaign-trends"] = "campaign-trends"
     campaigns: tuple[CampaignSummary, ...]
 
@@ -223,7 +225,7 @@ class DashboardSchemas(StrictModel):
 
 
 class DashboardIndex(StrictModel):
-    schema_version: DashboardSchemaVersion = 6
+    schema_version: DashboardSchemaVersion = 7
     kind: Literal["dashboard-index"] = "dashboard-index"
     default_campaign_id: str = Field(pattern=CAMPAIGN_ID_RE.pattern)
     campaigns: tuple[DashboardIndexCampaign, ...]
@@ -244,6 +246,7 @@ class DashboardIndex(StrictModel):
 
 class DashboardCase(CaseDefinition):
     content_sha256: Sha256
+    logical_libraries: tuple[LogicalLibrary, ...] | None = None
     definition_sha256: Sha256
     source_links: dict[str, SourceUrl]
 
@@ -251,6 +254,17 @@ class DashboardCase(CaseDefinition):
 
     @model_validator(mode="after")
     def complete_source_links(self) -> Self:
+        if (self.library_map is None) != (self.logical_libraries is None):
+            raise ValueError("logical libraries must match the declared library map")
+        if self.logical_libraries is not None:
+            names = [library.name for library in self.logical_libraries]
+            if len(names) != len(set(names)):
+                raise ValueError("logical library names must be unique")
+            mapped = tuple(
+                source for library in self.logical_libraries for source in library.sources
+            )
+            if len(mapped) != len(set(mapped)) or set(mapped) != set(self.sources):
+                raise ValueError("logical libraries must assign every source exactly once")
         if set(self.source_links) != set(self.sources):
             raise ValueError("case source links must match its source files")
         if any(not value for value in self.source_links.values()):
@@ -259,7 +273,7 @@ class DashboardCase(CaseDefinition):
 
 
 class CampaignCatalog(StrictModel):
-    schema_version: DashboardSchemaVersion = 6
+    schema_version: DashboardSchemaVersion = 7
     kind: Literal["campaign-catalog"] = "campaign-catalog"
     campaign_id: str = Field(pattern=CAMPAIGN_ID_RE.pattern)
     requirements: tuple[Requirement, ...]
@@ -326,7 +340,7 @@ class CampaignCaseVerdicts(StrictModel):
 
 
 class CampaignVerdicts(StrictModel):
-    schema_version: DashboardSchemaVersion = 6
+    schema_version: DashboardSchemaVersion = 7
     kind: Literal["campaign-verdicts"] = "campaign-verdicts"
     campaign_id: str = Field(pattern=CAMPAIGN_ID_RE.pattern)
     case_count: StrictCount
@@ -346,7 +360,7 @@ class CampaignVerdicts(StrictModel):
 
 
 class DashboardEvidenceResult(StrictModel):
-    schema_version: Annotated[int, Field(strict=True, ge=2, le=2)]
+    schema_version: Annotated[int, Field(strict=True, ge=2, le=3)]
     case_id: str
     requirement_id: str
     tool_id: str
@@ -360,9 +374,18 @@ class DashboardEvidenceResult(StrictModel):
     observations: tuple[StageObservation, ...] = ()
     known_issue: str | None = Field(default=None, max_length=500)
 
+    @model_validator(mode="after")
+    def foreign_evidence_requires_current_schema(self) -> Self:
+        if self.schema_version < 3 and (
+            self.reason in {ReasonCode.TOOLCHAIN_UNAVAILABLE, ReasonCode.FOREIGN_BUILD_FAILURE}
+            or any(observation.kind is StageKind.FOREIGN_BUILD for observation in self.observations)
+        ):
+            raise ValueError("foreign build evidence requires result schema version 3")
+        return self
+
 
 class CampaignEvidenceShard(StrictModel):
-    schema_version: DashboardSchemaVersion = 6
+    schema_version: DashboardSchemaVersion = 7
     kind: Literal["campaign-evidence"] = "campaign-evidence"
     campaign_id: str = Field(pattern=CAMPAIGN_ID_RE.pattern)
     case_ids: tuple[str, ...]
@@ -393,7 +416,7 @@ class DashboardCaseIdentity(StrictModel):
 
 
 class CampaignManifest(StrictModel):
-    schema_version: DashboardSchemaVersion = 6
+    schema_version: DashboardSchemaVersion = 7
     kind: Literal["campaign-manifest"] = "campaign-manifest"
     id: str = Field(pattern=CAMPAIGN_ID_RE.pattern)
     started_at: datetime

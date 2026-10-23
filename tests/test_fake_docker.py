@@ -8,7 +8,7 @@ import pytest
 
 from svtorture.adapters.fake import FakeAdapter
 from svtorture.campaign import PreparedTool, run_campaign
-from svtorture.catalog import Catalog, LoadedCase
+from svtorture.catalog import Catalog, LoadedCase, case_content_hash
 from svtorture.evaluator import evaluate
 from svtorture.executor import execute_plan
 from svtorture.images import build_image
@@ -192,7 +192,7 @@ def test_fake_container_timeout_is_inconclusive(
         metadata_path=original.metadata_path,
         anchor_source=original.anchor_source,
         anchor_line=original.anchor_line,
-        content_sha256=original.content_sha256,
+        content_sha256=case_content_hash(definition, original.directory),
     )
     adapter = FakeAdapter("timeout")
     tool = catalog.tools.tool("fake")

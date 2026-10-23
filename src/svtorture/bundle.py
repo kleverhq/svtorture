@@ -313,6 +313,8 @@ def _catalog(catalog: Catalog, campaign: Campaign) -> CampaignCatalog:
                 },
             }
         )
+        if loaded.logical_libraries:
+            value["logical_libraries"] = loaded.logical_libraries
         cases.append(DashboardCase.model_validate(value))
     return CampaignCatalog(
         campaign_id=campaign.id,
@@ -572,7 +574,12 @@ def validate_campaign_bundle(campaign_root: Path) -> CampaignManifest:
     for catalog_case in catalog.cases:
         definition = catalog_case.model_dump(
             mode="json",
-            exclude={"content_sha256", "definition_sha256", "source_links"},
+            exclude={
+                "content_sha256",
+                "definition_sha256",
+                "source_links",
+                "logical_libraries",
+            },
             exclude_none=True,
         )
         if hash_json(definition) != catalog_case.definition_sha256:
@@ -700,13 +707,21 @@ def validate_campaign_bundle(campaign_root: Path) -> CampaignManifest:
     loaded_cases = {
         case.id: LoadedCase(
             definition=CaseDefinition.model_validate(
-                case.model_dump(exclude={"content_sha256", "definition_sha256", "source_links"})
+                case.model_dump(
+                    exclude={
+                        "content_sha256",
+                        "definition_sha256",
+                        "source_links",
+                        "logical_libraries",
+                    }
+                )
             ),
             directory=Path(".") / case.id,
             metadata_path=Path(".") / case.id / "case.toml",
             anchor_source=None,
             anchor_line=None,
             content_sha256=case.content_sha256,
+            logical_libraries=case.logical_libraries or (),
         )
         for case in catalog.cases
     }

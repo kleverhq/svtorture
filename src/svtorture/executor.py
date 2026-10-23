@@ -11,7 +11,8 @@ from pathlib import Path
 from threading import Event
 
 from svtorture.adapters.base import ToolAdapter
-from svtorture.catalog import LoadedCase
+from svtorture.catalog import CatalogError, LoadedCase, case_content_hash
+from svtorture.hashing import sha256_bytes
 from svtorture.models import (
     CapturedStream,
     ExecutionBackend,
@@ -19,6 +20,7 @@ from svtorture.models import (
     ExecutionStage,
     RawOutcome,
     RunnerConfig,
+    StageKind,
     StageObservation,
 )
 from svtorture.process import ProcessResult, StreamCapture, run_process
@@ -29,6 +31,39 @@ HOST_PATH_RE = re.compile(r"(?<![A-Za-z0-9_$])/(?:home|Users|private|tmp|root)/[
 
 class ExecutionError(RuntimeError):
     pass
+
+
+def _verify_case(case: LoadedCase) -> None:
+    try:
+        digest = case_content_hash(case.definition, case.directory)
+    except (CatalogError, OSError) as error:
+        raise ExecutionError(f"cannot verify case inputs: {error}") from error
+    if digest != case.content_sha256:
+        raise ExecutionError("case inputs changed after catalog loading")
+
+
+def _verify_work_inputs(work_dir: Path, expected: Mapping[str, str]) -> None:
+    for relative, digest in expected.items():
+        path = work_dir / relative
+        try:
+            valid = (
+                path.is_file()
+                and not path.is_symlink()
+                and path.stat().st_mode & 0o222 == 0
+                and sha256_bytes(path.read_bytes()) == digest
+            )
+        except OSError:
+            valid = False
+        if not valid:
+            raise ExecutionError(f"execution input was modified: {relative}")
+
+
+def observation_stops_execution(observation: StageObservation) -> bool:
+    return (
+        observation.outcome is not RawOutcome.NORMAL_EXIT
+        or observation.exit_code != 0
+        or observation.artifact_present is False
+    )
 
 
 def _sanitize(text: str, replacements: Mapping[str, str]) -> str:
@@ -163,10 +198,19 @@ def _wrapper_argv(
     return actual, portable, environment
 
 
-def _classify_container(result: ProcessResult) -> ProcessResult:
+def _classify_container(result: ProcessResult, stage: ExecutionStage) -> ProcessResult:
     if result.outcome is not RawOutcome.NORMAL_EXIT:
         return result
     assert result.exit_code is not None
+    if result.exit_code in {126, 127} and stage.kind is StageKind.FOREIGN_BUILD:
+        return ProcessResult(
+            outcome=RawOutcome.LAUNCH_FAILURE,
+            exit_code=None,
+            signal=None,
+            duration_seconds=result.duration_seconds,
+            stdout=result.stdout,
+            stderr=result.stderr,
+        )
     if result.exit_code in {125, 126, 127}:
         return ProcessResult(
             outcome=RawOutcome.CONTAINER_FAILURE,
@@ -188,7 +232,7 @@ def _classify_container(result: ProcessResult) -> ProcessResult:
     return result
 
 
-def _classify_wrapper(result: ProcessResult) -> ProcessResult:
+def _classify_wrapper(result: ProcessResult, stage: ExecutionStage) -> ProcessResult:
     """Map the wrapper protocol's EX_UNAVAILABLE status into a typed outcome."""
 
     if result.outcome is RawOutcome.NORMAL_EXIT and result.exit_code == 69:
@@ -202,7 +246,7 @@ def _classify_wrapper(result: ProcessResult) -> ProcessResult:
         )
     # Licensed wrappers normally front a private Docker runtime; preserve the
     # same reserved launch and signal ownership rules when they propagate it.
-    return _classify_container(result)
+    return _classify_container(result, stage)
 
 
 def _observation(
@@ -258,11 +302,32 @@ def execute_plan(
 ) -> tuple[StageObservation, ...]:
     """Execute stages in order, stopping whenever a prerequisite did not complete."""
 
+    _verify_case(case)
     if work_dir.exists():
         shutil.rmtree(work_dir)
     work_dir.mkdir(parents=True, mode=0o700)
+    input_hashes: dict[str, str] = {}
+    try:
+        for relative in case.definition.resources:
+            destination = work_dir / relative
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            source = case.directory / relative
+            shutil.copyfile(source, destination)
+            destination.chmod(0o444)
+            input_hashes[relative] = sha256_bytes(destination.read_bytes())
+        for generated in plan.work_files:
+            destination = work_dir / generated.path
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            destination.write_text(generated.content, encoding="utf-8")
+            destination.chmod(0o444)
+            input_hashes[generated.path] = sha256_bytes(destination.read_bytes())
+    except OSError as error:
+        raise ExecutionError(f"cannot materialize execution inputs: {error}") from error
+    _verify_case(case)
     observations: list[StageObservation] = []
     for stage in plan.stages:
+        _verify_case(case)
+        _verify_work_inputs(work_dir, input_hashes)
         environment: dict[str, str] | None = None
         if plan.backend is ExecutionBackend.DOCKER:
             argv, portable = _docker_argv(plan, stage, case, work_dir)
@@ -281,15 +346,13 @@ def execute_plan(
             cancel_event=cancel_event,
         )
         if plan.backend is ExecutionBackend.DOCKER:
-            process_result = _classify_container(process_result)
+            process_result = _classify_container(process_result, stage)
         else:
-            process_result = _classify_wrapper(process_result)
+            process_result = _classify_wrapper(process_result, stage)
+        _verify_case(case)
+        _verify_work_inputs(work_dir, input_hashes)
         observation = _observation(process_result, stage, portable, case, adapter, work_dir)
         observations.append(observation)
-        if (
-            observation.outcome is not RawOutcome.NORMAL_EXIT
-            or observation.exit_code != 0
-            or observation.artifact_present is False
-        ):
+        if observation_stops_execution(observation):
             break
     return tuple(observations)

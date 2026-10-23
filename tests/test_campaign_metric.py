@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import shutil
 import time
+from dataclasses import replace
 from pathlib import Path
 from threading import Barrier, Lock, get_ident
 
@@ -194,6 +195,56 @@ def test_unsupported_phase_is_recorded_without_execution(catalog: Catalog) -> No
     assert by_case["ch04-nba-rhs-captured"].reason is ReasonCode.UNSUPPORTED_PHASE
 
 
+def test_unsupported_feature_is_structural_before_execution(
+    catalog: Catalog, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    suite = SuiteDefinition(
+        schema_version=1,
+        id="advanced-test",
+        description="One structurally unsupported case.",
+        cases=("ch33-basic-config-selects-design",),
+    )
+    custom = replace(
+        catalog,
+        suites={**catalog.suites, suite.id: suite},
+        suite_cases={**catalog.suite_cases, suite.id: suite.cases},
+    )
+    tool = catalog.tools.tool("icarus")
+    profile = tool.profile("simulator")
+    recorded_tool = campaign_tool(tool, (profile.id,))
+    monkeypatch.setattr(
+        campaign_module,
+        "execute_plan",
+        lambda *args, **kwargs: pytest.fail("unsupported case executed"),
+    )
+    monkeypatch.setattr(campaign_module, "save_campaign", lambda root, campaign: None)
+
+    campaign = run_campaign(
+        custom,
+        (
+            PreparedTool(
+                definition=tool,
+                profile=profile,
+                selection=recorded_tool.selection,
+                image=recorded_tool.image,
+                reported_version=None,
+            ),
+        ),
+        suite_id=suite.id,
+    )
+    result = campaign.results[0]
+    assert result.status is ResultStatus.UNSUPPORTED_CAPABILITY
+    assert result.reason is ReasonCode.UNSUPPORTED_CAPABILITY
+    assert not result.observations
+
+    preparation = create_preparation_failure_campaign(
+        custom,
+        suite_id=suite.id,
+        tool_id=tool.id,
+    )
+    assert preparation.results[0].reason is ReasonCode.UNSUPPORTED_CAPABILITY
+
+
 def test_unsupported_revision_is_not_a_normal_result(catalog: Catalog) -> None:
     original = catalog.cases["ch04-nba-rhs-captured"]
     applicability = dict(original.definition.revision_applicability)
@@ -313,7 +364,7 @@ def test_campaign_corpus_metrics_are_strictly_verified(catalog: Catalog) -> None
         suite_id="smoke",
         expected_tool_ids=("slang",),
     )
-    assert campaign.schema_version == 5
+    assert campaign.schema_version == 6
     assert campaign.corpus_metrics == catalog.corpus_metrics()
     changed_requirements = campaign.corpus_metrics.requirements.model_copy(
         update={
@@ -330,6 +381,23 @@ def test_campaign_corpus_metrics_are_strictly_verified(catalog: Catalog) -> None
     )
     with pytest.raises(CampaignError, match="current corpus metrics"):
         verify_campaign_against_catalog(catalog, tampered)
+
+
+def test_campaign_rejects_an_incomplete_successful_plan_prefix(catalog: Catalog) -> None:
+    case = catalog.cases["ch04-nba-rhs-captured"]
+    tool = campaign_tool(catalog.tools.tool("fake"), ("simulator",))
+    result = normalized(
+        case,
+        "fake",
+        "simulator",
+        status=ResultStatus.NONCONFORMING,
+        reason=ReasonCode.UNEXPECTED_REJECT,
+        observations=(observation(attempted_through_phase=Phase.ELABORATE),),
+    )
+    campaign = make_campaign(catalog, cases=(case,), tool=tool, results=(result,))
+
+    with pytest.raises(CampaignError, match="incomplete successful observation prefix"):
+        verify_campaign_against_catalog(catalog, campaign)
 
 
 def test_preparation_failure_emits_a_normalized_result_grid(catalog: Catalog) -> None:
@@ -461,17 +529,18 @@ def _variant(case: LoadedCase, root: Path) -> LoadedCase:
     ("tool_id", "profile_id", "expected"),
     (
         ("slang", "elaborator", 5),
-        ("icarus", "simulator", 12),
-        ("verilator", "simulator", 12),
+        ("icarus", "simulator", None),
+        ("verilator", "simulator", None),
     ),
 )
 def test_cumulative_phase_scope_sets_headline_denominator(
     catalog: Catalog,
     tool_id: str,
     profile_id: str,
-    expected: int,
+    expected: int | None,
 ) -> None:
     cases = tuple(catalog.cases[case_id] for case_id in catalog.suite_cases["all"])
+    expected = expected if expected is not None else len(cases)
     tool = campaign_tool(catalog.tools.tool(tool_id), (profile_id,))
     campaign = make_campaign(
         catalog,

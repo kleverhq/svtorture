@@ -33,8 +33,10 @@ StandardPart = Annotated[str, Field(pattern=STANDARD_PART_PATTERN)]
 StandardLocation = Annotated[str, Field(pattern=STANDARD_LOCATION_PATTERN)]
 StandardAnchor = Annotated[str, Field(pattern=STANDARD_ANCHOR_PATTERN)]
 MetadataSchemaVersion = Annotated[int, Field(strict=True, ge=1, le=1)]
+CaseSchemaVersion = Annotated[int, Field(strict=True, ge=1, le=2)]
 ContractSchemaVersion = Annotated[int, Field(strict=True, ge=2, le=2)]
-CampaignSchemaVersion = Annotated[int, Field(strict=True, ge=5, le=5)]
+ExecutionSchemaVersion = Annotated[int, Field(strict=True, ge=2, le=3)]
+CampaignSchemaVersion = Annotated[int, Field(strict=True, ge=5, le=6)]
 RequirementSchemaVersion = Annotated[int, Field(strict=True, ge=3, le=3)]
 
 
@@ -113,8 +115,14 @@ class ExecutionBackend(StrEnum):
     LOCAL_WRAPPER = "local-wrapper"
 
 
+class ForeignInterface(StrEnum):
+    DPI = "dpi"
+    VPI = "vpi"
+
+
 class StageKind(StrEnum):
     COMPILE = "compile"
+    FOREIGN_BUILD = "foreign-build"
     RUN = "run"
 
 
@@ -156,9 +164,12 @@ class ReasonCode(StrEnum):
     MISSING_ARTIFACT = "missing-artifact"
     INVALID_EXECUTION_PLAN = "invalid-execution-plan"
     UNSUPPORTED_PHASE = "unsupported-phase"
+    UNSUPPORTED_CAPABILITY = "unsupported-capability"
     UNSUPPORTED_REVISION = "unsupported-revision"
     NOT_APPLICABLE = "not-applicable"
     TOOL_UNAVAILABLE = "tool-unavailable"
+    TOOLCHAIN_UNAVAILABLE = "toolchain-unavailable"
+    FOREIGN_BUILD_FAILURE = "foreign-build-failure"
     MANIFEST_MISMATCH = "manifest-mismatch"
     OUTPUT_TRUNCATED = "output-truncated"
     TARGET_PHASE_UNPROVEN = "target-phase-unproven"
@@ -429,13 +440,47 @@ def safe_relative_path(value: str) -> str:
         or "." in path.parts
         or "\\" in value
         or "\x00" in value
+        or path.as_posix() != value
     ):
         raise ValueError(f"unsafe relative path {value!r}")
     return value
 
 
+class LogicalLibrary(StrictModel):
+    name: str
+    sources: Annotated[tuple[str, ...], Field(min_length=1)]
+
+    @field_validator("name")
+    @classmethod
+    def valid_name(cls, value: str) -> str:
+        if TOP_RE.fullmatch(value) is None:
+            raise ValueError("invalid logical library identifier")
+        return value
+
+    @field_validator("sources")
+    @classmethod
+    def valid_library_sources(cls, value: tuple[str, ...]) -> tuple[str, ...]:
+        if len(value) != len(set(value)):
+            raise ValueError("duplicate logical library sources")
+        return tuple(safe_relative_path(item) for item in value)
+
+
 class CaseDefinition(StrictModel):
-    schema_version: MetadataSchemaVersion
+    model_config = ConfigDict(
+        json_schema_extra={
+            "if": {"properties": {"schema_version": {"const": 1}}},
+            "then": {
+                "properties": {
+                    "resources": False,
+                    "library_map": False,
+                    "covergroups": False,
+                    "foreign": False,
+                }
+            },
+        }
+    )
+
+    schema_version: CaseSchemaVersion
     id: str
     title: SafeText
     description: SafeText
@@ -447,6 +492,10 @@ class CaseDefinition(StrictModel):
     expectation: Expectation
     evidence: EvidenceLevel
     sources: tuple[str, ...]
+    resources: tuple[str, ...] = ()
+    library_map: str | None = None
+    covergroups: bool = False
+    foreign: ForeignInterface | None = None
     top: str | None = None
     defines: tuple[str, ...] = ()
     include_dirs: tuple[str, ...] = ()
@@ -495,6 +544,18 @@ class CaseDefinition(StrictModel):
         if len(basenames) != len(set(basenames)):
             raise ValueError("source basenames must be unique for diagnostic identity")
         return safe
+
+    @field_validator("resources")
+    @classmethod
+    def valid_resources(cls, value: tuple[str, ...]) -> tuple[str, ...]:
+        if len(value) != len(set(value)):
+            raise ValueError("duplicate resources")
+        return tuple(safe_relative_path(item) for item in value)
+
+    @field_validator("library_map")
+    @classmethod
+    def valid_library_map(cls, value: str | None) -> str | None:
+        return None if value is None else safe_relative_path(value)
 
     @field_validator("include_dirs")
     @classmethod
@@ -564,7 +625,43 @@ class CaseDefinition(StrictModel):
                 raise ValueError("phase-exit oracle has no marker or anchor")
         if self.target_phase is not Phase.SIMULATE and self.runtime_args:
             raise ValueError("runtime_args are only valid for simulate cases")
+        advanced_fields = {"resources", "library_map", "covergroups", "foreign"}
+        if self.schema_version < 2 and advanced_fields & self.model_fields_set:
+            raise ValueError("advanced case inputs require schema_version 2")
+        declared_files = (*self.sources, *self.resources)
+        if self.library_map is not None:
+            declared_files += (self.library_map,)
+            if self.top is None:
+                raise ValueError("library_map requires a configuration top")
+        if len(declared_files) != len(set(declared_files)):
+            raise ValueError("case input paths cannot have multiple roles")
+        if self.covergroups and (
+            self.target_phase is not Phase.SIMULATE or self.expectation is not Expectation.ACCEPT
+        ):
+            raise ValueError("covergroups require a simulation acceptance oracle")
+        if self.foreign is not None:
+            if (
+                self.target_phase is not Phase.SIMULATE
+                or self.expectation is not Expectation.ACCEPT
+            ):
+                raise ValueError("foreign interfaces require a simulation acceptance oracle")
+            if self.top is None:
+                raise ValueError("foreign interfaces require an explicit top")
+            if len(self.foreign_sources) != 1:
+                raise ValueError("foreign interfaces require exactly one C or C++ resource")
+            if any(
+                re.fullmatch(r"[A-Za-z0-9_./-]+", source) is None for source in self.foreign_sources
+            ):
+                raise ValueError("foreign source paths contain unsupported build characters")
         return self
+
+    @property
+    def foreign_sources(self) -> tuple[str, ...]:
+        return tuple(
+            resource
+            for resource in self.resources
+            if PurePosixPath(resource).suffix in {".c", ".cc", ".cpp", ".cxx"}
+        )
 
 
 class SuiteDefinition(StrictModel):
@@ -863,8 +960,8 @@ class ExecutionStage(StrictModel):
     def valid_command(self) -> Self:
         if self.kind is StageKind.RUN and self.attempted_through_phase is not Phase.SIMULATE:
             raise ValueError("runtime stages must attempt through simulation")
-        if self.kind is StageKind.COMPILE and self.attempted_through_phase is Phase.SIMULATE:
-            raise ValueError("compile stages cannot claim simulation evidence")
+        if self.kind is not StageKind.RUN and self.attempted_through_phase is Phase.SIMULATE:
+            raise ValueError("build stages cannot claim simulation evidence")
         if not self.argv or not self.portable_argv:
             raise ValueError("execution argv must not be empty")
         if len(self.argv) != len(self.portable_argv):
@@ -874,8 +971,25 @@ class ExecutionStage(StrictModel):
         return self
 
 
+class WorkFile(StrictModel):
+    path: str
+    content: str = Field(min_length=1, max_length=65536)
+
+    @field_validator("path")
+    @classmethod
+    def valid_path(cls, value: str) -> str:
+        return safe_relative_path(value)
+
+    @field_validator("content")
+    @classmethod
+    def valid_content(cls, value: str) -> str:
+        if "\x00" in value:
+            raise ValueError("generated work file contains NUL")
+        return value
+
+
 class ExecutionPlan(StrictModel):
-    schema_version: ContractSchemaVersion
+    schema_version: ExecutionSchemaVersion
     case_id: str
     tool_id: str
     profile_id: str
@@ -883,6 +997,7 @@ class ExecutionPlan(StrictModel):
     backend: ExecutionBackend
     image: str | None = None
     wrapper: str | None = None
+    work_files: tuple[WorkFile, ...] = ()
     stages: tuple[ExecutionStage, ...]
 
     @model_validator(mode="after")
@@ -898,12 +1013,30 @@ class ExecutionPlan(StrictModel):
         ids = [stage.id for stage in self.stages]
         if len(ids) != len(set(ids)):
             raise ValueError("duplicate stage ids")
+        work_paths = [item.path for item in self.work_files]
+        if len(work_paths) != len(set(work_paths)):
+            raise ValueError("duplicate generated work file paths")
         if any(stage.kind is StageKind.RUN for stage in self.stages[:-1]):
             raise ValueError("runtime stage must be last")
+        foreign = [
+            index
+            for index, stage in enumerate(self.stages)
+            if stage.kind is StageKind.FOREIGN_BUILD
+        ]
+        if len(foreign) > 1:
+            raise ValueError("execution plan permits only one foreign build stage")
+        if foreign and not any(
+            stage.kind is StageKind.COMPILE for stage in self.stages[: foreign[0]]
+        ):
+            raise ValueError("foreign build must follow SystemVerilog compilation")
         if not any(
             phase_reaches(stage.attempted_through_phase, self.target_phase) for stage in self.stages
         ):
             raise ValueError("execution plan does not attempt the target phase")
+        if self.schema_version < 3 and (foreign or self.work_files):
+            raise ValueError(
+                "foreign build stages and generated work files require schema version 3"
+            )
         return self
 
 
@@ -950,8 +1083,8 @@ class StageObservation(StrictModel):
     def coherent_outcome(self) -> Self:
         if self.kind is StageKind.RUN and self.attempted_through_phase is not Phase.SIMULATE:
             raise ValueError("runtime observations must attempt through simulation")
-        if self.kind is StageKind.COMPILE and self.attempted_through_phase is Phase.SIMULATE:
-            raise ValueError("compile observations cannot claim simulation evidence")
+        if self.kind is not StageKind.RUN and self.attempted_through_phase is Phase.SIMULATE:
+            raise ValueError("build observations cannot claim simulation evidence")
         if self.outcome is RawOutcome.NORMAL_EXIT:
             if self.exit_code is None or self.signal is not None:
                 raise ValueError("normal exit requires only a nonnegative exit_code")
@@ -968,7 +1101,7 @@ class StageObservation(StrictModel):
 
 
 class NormalizedResult(StrictModel):
-    schema_version: ContractSchemaVersion
+    schema_version: ExecutionSchemaVersion
     case_id: str
     requirement_id: str
     tool_id: str
@@ -1007,13 +1140,18 @@ class NormalizedResult(StrictModel):
                 ReasonCode.OUTPUT_TRUNCATED,
                 ReasonCode.TARGET_PHASE_UNPROVEN,
             },
-            ResultStatus.UNSUPPORTED_CAPABILITY: {ReasonCode.UNSUPPORTED_PHASE},
+            ResultStatus.UNSUPPORTED_CAPABILITY: {
+                ReasonCode.UNSUPPORTED_PHASE,
+                ReasonCode.UNSUPPORTED_CAPABILITY,
+            },
             ResultStatus.UNSUPPORTED_REVISION: {ReasonCode.UNSUPPORTED_REVISION},
             ResultStatus.NOT_APPLICABLE: {ReasonCode.NOT_APPLICABLE},
             ResultStatus.SKIPPED_UNAVAILABLE: {ReasonCode.TOOL_UNAVAILABLE},
             ResultStatus.HARNESS_ERROR: {
                 ReasonCode.CONTAINER_FAILURE,
                 ReasonCode.LAUNCH_FAILURE,
+                ReasonCode.TOOLCHAIN_UNAVAILABLE,
+                ReasonCode.FOREIGN_BUILD_FAILURE,
                 ReasonCode.INVALID_EXECUTION_PLAN,
                 ReasonCode.MANIFEST_MISMATCH,
                 ReasonCode.TOOL_PREPARATION_FAILURE,
@@ -1056,6 +1194,11 @@ class NormalizedResult(StrictModel):
         }
         if self.status in synthetic_statuses and self.observations:
             raise ValueError("a structural synthetic result cannot carry observations")
+        if self.schema_version < 3 and (
+            self.reason in {ReasonCode.TOOLCHAIN_UNAVAILABLE, ReasonCode.FOREIGN_BUILD_FAILURE}
+            or any(observation.kind is StageKind.FOREIGN_BUILD for observation in self.observations)
+        ):
+            raise ValueError("foreign build evidence requires result schema version 3")
         return self
 
 

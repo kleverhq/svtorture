@@ -25,12 +25,12 @@ vi.mock("./useDashboard", () => ({
     if (!dataset) return { loading: true };
     const selectedId = requestedCampaignId || dataset.campaigns[0]?.id;
     const trends = {
-      schema_version: 6 as const,
+      schema_version: 7 as const,
       kind: "campaign-trends" as const,
       campaigns: [
         ...(dashboardMock.historical ? [dashboardMock.historical] : []),
         ...dataset.campaigns.map((campaign) => ({
-          schema_version: 6 as const,
+          schema_version: 7 as const,
           kind: "campaign-summary" as const,
           id: campaign.id,
           started_at: campaign.started_at,
@@ -47,7 +47,7 @@ vi.mock("./useDashboard", () => ({
       ],
     };
     const index = {
-      schema_version: 6 as const,
+      schema_version: 7 as const,
       kind: "dashboard-index" as const,
       default_campaign_id: dataset.campaigns[0]?.id ?? "missing",
       campaigns: dataset.campaigns.map((campaign) => ({
@@ -630,7 +630,7 @@ describe("App overview navigation", () => {
     const campaign = dataset.campaigns[0]!;
     const historicalId = "20250101T000000Z-historical";
     dashboardMock.historical = {
-      schema_version: 6,
+      schema_version: 7,
       kind: "campaign-summary",
       id: historicalId,
       started_at: "2025-01-01T00:00:00Z",

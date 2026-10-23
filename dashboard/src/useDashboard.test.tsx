@@ -21,11 +21,11 @@ function fixture() {
   const verdicts = JSON.parse(verdictsBody) as CampaignVerdicts;
   const evidence = JSON.parse(evidenceBody) as CampaignEvidence;
   const trends: CampaignTrends = {
-    schema_version: 6,
+    schema_version: 7,
     kind: "campaign-trends",
     campaigns: [
       {
-        schema_version: 6,
+        schema_version: 7,
         kind: "campaign-summary",
         id: manifest.id,
         started_at: manifest.started_at,
@@ -40,7 +40,7 @@ function fixture() {
     ],
   };
   const index: DashboardIndex = {
-    schema_version: 6,
+    schema_version: 7,
     kind: "dashboard-index",
     default_campaign_id: manifest.id,
     campaigns: [{ id: manifest.id, manifest: `campaigns/${manifest.id}/manifest.json` }],
@@ -71,6 +71,13 @@ function fixture() {
       [`${prefix}evidence/0000.json`, evidenceBody],
     ]),
   };
+}
+
+async function sha256(body: string): Promise<string> {
+  const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(body));
+  return [...new Uint8Array(digest)]
+    .map((value) => value.toString(16).padStart(2, "0"))
+    .join("");
 }
 
 function installFetch(resources: Map<string, string>) {
@@ -139,6 +146,20 @@ describe("useDashboard", () => {
     ]);
   });
 
+  it("loads schema-version-6 index and trend resources", async () => {
+    const data = fixture();
+    data.index.schema_version = 6;
+    data.trends.schema_version = 6;
+    data.trends.campaigns[0]!.schema_version = 6;
+    data.resources.set("/data/index.json", JSON.stringify(data.index));
+    data.resources.set("/data/trends.json", JSON.stringify(data.trends));
+    installFetch(data.resources);
+    const { result } = renderHook(() => useDashboard("", "", "", true, false));
+
+    await waitFor(() => expect(result.current.trends).toBeTruthy());
+    expect(result.current.error).toBeUndefined();
+  });
+
   it("preserves a trend-only historical deep link and exposes its Release", async () => {
     const data = fixture();
     const historical = {
@@ -180,6 +201,26 @@ describe("useDashboard", () => {
       expect(fetchMock).toHaveBeenCalledTimes(2);
     },
   );
+
+  it("rejects schema-version-2 foreign evidence", async () => {
+    const data = fixture();
+    const evidence = JSON.parse(evidenceBody) as CampaignEvidence;
+    evidence.results[0]!.observations[0]!.kind = "foreign-build";
+    const body = JSON.stringify(evidence);
+    const reference = data.manifest.resources.evidence[0]!;
+    reference.bytes = new TextEncoder().encode(body).byteLength;
+    reference.sha256 = await sha256(body);
+    const prefix = `/data/campaigns/${data.manifest.id}/`;
+    data.resources.set(`${prefix}manifest.json`, JSON.stringify(data.manifest));
+    data.resources.set(`${prefix}evidence/0000.json`, body);
+    installFetch(data.resources);
+    const { result } = renderHook(() => useDashboard("", "", ""));
+
+    await waitFor(() => expect(result.current.dataset).toBeTruthy());
+    await expect(
+      result.current.loadCaseEvidence!(data.catalog.cases[0]!.id),
+    ).rejects.toThrow("result schema version 3");
+  });
 
   it("rejects strict nested schema violations and referenced hash mismatches", async () => {
     const malformed = fixture();
